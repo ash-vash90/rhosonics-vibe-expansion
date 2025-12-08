@@ -82,7 +82,7 @@ export const BrandEthos = () => {
             className={`p-6 bg-card ${idx < 2 ? 'md:border-r border-b md:border-b-0' : ''} border-border group hover:bg-slate-50 transition-colors`}
           >
             <div className="flex items-start justify-between mb-4">
-              <span className="font-logo text-4xl text-slate-200 group-hover:text-primary transition-colors">
+              <span className="font-data text-4xl text-slate-200 group-hover:text-primary transition-colors">
                 {item.num}
               </span>
               <div className="text-muted-foreground group-hover:text-primary transition-colors">

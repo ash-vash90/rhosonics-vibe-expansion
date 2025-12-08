@@ -256,7 +256,7 @@
 
   /* Section Headers */
   .section-header {
-    @apply font-logo font-medium text-3xl md:text-4xl mb-8 text-foreground tracking-tight;
+    @apply font-ui font-semibold text-3xl md:text-4xl mb-8 text-foreground tracking-tight;
   }
 
   .section-label {
@@ -265,7 +265,7 @@
 
   /* Bold section header variant */
   .section-header-bold {
-    @apply font-logo font-semibold text-4xl md:text-6xl lg:text-7xl text-foreground tracking-tight leading-[1.1];
+    @apply font-ui font-bold text-4xl md:text-6xl lg:text-7xl text-foreground tracking-tight leading-[1.1];
   }
 
   /* Section Divider */
