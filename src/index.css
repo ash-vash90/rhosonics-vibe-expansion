@@ -72,13 +72,20 @@
 
     /* Custom Rhosonics Tokens */
     --gradient-brand: linear-gradient(135deg, hsl(var(--rho-green-accent)) 0%, hsl(var(--rho-green)) 100%);
-    --gradient-obsidian: linear-gradient(135deg, hsl(225 20% 18%) 0%, hsl(var(--rho-obsidian)) 100%);
+    --gradient-obsidian: linear-gradient(180deg, hsl(225 25% 18%) 0%, hsl(var(--rho-obsidian)) 100%);
     --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--rho-green) / 0.15) 0%, transparent 50%);
+    --gradient-metal: linear-gradient(135deg, hsl(210 40% 98%) 0%, hsl(214 32% 91%) 100%);
+    --gradient-ore: linear-gradient(180deg, hsl(215 25% 27%) 0%, hsl(var(--rho-obsidian)) 100%);
     --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-    --shadow-elevated: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-elevated: 0 15px 30px -5px rgb(0 0 0 / 0.12), 0 10px 10px -5px rgb(0 0 0 / 0.08);
+    --shadow-cutout: drop-shadow(0 15px 30px rgba(0,0,0,0.15));
     --shadow-glow: 0 0 60px -10px hsl(var(--rho-green) / 0.4);
     --shadow-glow-sm: 0 0 30px -5px hsl(var(--rho-green) / 0.3);
-    --chamfer-btn: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+    
+    /* Chamfer clips */
+    --chamfer-lg: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
+    --chamfer-md: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+    --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
   }
 
   .dark {
@@ -165,35 +172,81 @@
     clip-path: var(--chamfer-btn);
   }
 
-  /* Label Tech Style */
+  /* Label Tech Style - Larger, bolder */
   .label-tech {
+    @apply font-data text-sm uppercase tracking-wide font-medium;
+  }
+
+  .label-tech-sm {
     @apply font-data text-xs uppercase tracking-wider;
+  }
+
+  /* Chamfer shapes */
+  .chamfer-lg {
+    clip-path: var(--chamfer-lg);
+  }
+  
+  .chamfer-md {
+    clip-path: var(--chamfer-md);
+  }
+  
+  .chamfer-sm {
+    clip-path: var(--chamfer-sm);
   }
 
   /* Card Variants */
   .card-base {
-    @apply bg-card border border-border rounded-lg shadow-sm transition-all duration-200;
+    @apply bg-card border border-border rounded-lg transition-all duration-200;
     box-shadow: var(--shadow-card);
   }
 
   .card-base:hover {
     box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
   }
 
-  /* Premium gradient card - use sparingly */
+  /* Premium gradient card - use sparingly for hero elements */
   .card-gradient {
-    @apply rounded-lg overflow-hidden relative;
-    background: linear-gradient(135deg, hsl(var(--rho-obsidian)) 0%, hsl(225 25% 16%) 100%);
-    border: 1px solid hsl(225 20% 22%);
+    @apply overflow-hidden relative;
+    background: var(--gradient-ore);
+    border: 1px solid hsl(225 20% 25%);
     color: hsl(var(--slate-100));
+    clip-path: var(--chamfer-lg);
   }
 
   .card-gradient::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at top right, hsl(var(--rho-green) / 0.12) 0%, transparent 50%);
+    background: radial-gradient(ellipse at top right, hsl(var(--rho-green) / 0.15) 0%, transparent 50%);
     pointer-events: none;
+  }
+
+  /* Slate card - medium grey industrial look */
+  .card-slate {
+    @apply overflow-hidden relative transition-all duration-200;
+    background: hsl(var(--slate-600));
+    border: 1px solid hsl(var(--slate-500));
+    color: hsl(var(--slate-100));
+    clip-path: var(--chamfer-md);
+  }
+
+  .card-slate:hover {
+    background: hsl(var(--slate-700));
+    transform: translateY(-2px);
+  }
+
+  /* Metal card - light gradient */
+  .card-metal {
+    @apply overflow-hidden relative transition-all duration-200;
+    background: var(--gradient-metal);
+    border: 1px solid hsl(var(--slate-300));
+    clip-path: var(--chamfer-md);
+  }
+
+  .card-metal:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
   }
 
   .card-eco {
@@ -209,30 +262,46 @@
   }
 
   .card-obsidian {
-    @apply rounded-lg overflow-hidden transition-all duration-300;
+    @apply overflow-hidden transition-all duration-200;
     background: hsl(var(--rho-obsidian));
     border: 1px solid hsl(225 20% 20%);
     color: hsl(var(--slate-100));
+    clip-path: var(--chamfer-md);
   }
 
   .card-obsidian:hover {
     border-color: hsl(var(--rho-green) / 0.5);
-    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
   }
 
-  /* Glowing accent card */
-  .card-glow {
-    @apply relative rounded-lg overflow-hidden;
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
+  /* Corner brackets for technical framing */
+  .bracket-frame {
+    @apply relative;
   }
 
-  .card-glow::before {
+  .bracket-frame::before,
+  .bracket-frame::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at top, hsl(var(--rho-green) / 0.08) 0%, transparent 60%);
+    width: 20px;
+    height: 20px;
+    border-color: hsl(var(--slate-400));
+    opacity: 0.5;
     pointer-events: none;
+  }
+
+  .bracket-frame::before {
+    top: 0;
+    left: 0;
+    border-top: 2px solid;
+    border-left: 2px solid;
+  }
+
+  .bracket-frame::after {
+    bottom: 0;
+    right: 0;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
   }
 
   /* Color Swatch */

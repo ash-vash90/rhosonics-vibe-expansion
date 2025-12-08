@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RhosonicsLogo } from "../RhosonicsLogo";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X, Zap, ChevronRight } from "lucide-react";
 
 interface NavSection {
   id: string;
@@ -68,9 +68,12 @@ export const Navigation = () => {
   };
 
   return (
-    <nav className="w-full lg:w-72 bg-rho-obsidian text-slate-100 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto flex-shrink-0 z-50 border-r border-slate-800">
+    <nav className="w-full lg:w-72 bg-rho-obsidian text-slate-100 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto flex-shrink-0 z-50">
+      {/* Green accent bar */}
+      <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-primary hidden lg:block" />
+      
       {/* Header */}
-      <div className="p-6 border-b border-slate-800 flex justify-between items-center">
+      <div className="p-6 border-b border-slate-800/80 flex justify-between items-center">
         <button 
           onClick={() => scrollToSection('intro')}
           className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
@@ -81,7 +84,7 @@ export const Navigation = () => {
           <span className="font-logo text-lg tracking-tight">Rhosonics</span>
         </button>
         <button
-          className="lg:hidden text-slate-400 border border-slate-700 rounded p-2 hover:border-slate-500 transition-colors"
+          className="lg:hidden text-slate-400 border border-slate-700 p-2 chamfer-sm hover:border-primary hover:text-primary transition-colors"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -92,20 +95,21 @@ export const Navigation = () => {
       <div className={`p-6 space-y-6 overflow-y-auto ${isOpen ? 'block' : 'hidden lg:block'}`}>
         {navSections.map((section) => (
           <div key={section.id}>
-            <div className="label-tech mb-3 text-slate-600">
+            <div className="label-tech mb-3 text-slate-500">
               <span className="text-primary">{section.id}</span>
-              <span className="mx-1.5 text-slate-700">/</span>
+              <span className="mx-2 text-slate-700">/</span>
               {section.label}
             </div>
             {section.items.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`nav-link mb-2 text-left w-full ${
+                className={`nav-link mb-2 text-left w-full flex items-center justify-between group ${
                   item.highlight ? 'text-primary font-medium' : ''
                 }`}
               >
-                {item.label}
+                <span>{item.label}</span>
+                <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
               </button>
             ))}
           </div>
@@ -113,9 +117,12 @@ export const Navigation = () => {
 
         {/* Version Badge */}
         <div className="pt-6 border-t border-slate-800">
-          <div className="flex items-center gap-2.5 text-slate-500">
-            <Zap className="w-3.5 h-3.5 text-primary" />
-            <span className="label-tech">SYSTEM ACTIVE</span>
+          <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 chamfer-sm">
+            <Zap className="w-4 h-4 text-primary" />
+            <div>
+              <span className="label-tech-sm text-slate-500 block">STATUS</span>
+              <span className="text-sm text-slate-300 font-medium">System Active</span>
+            </div>
           </div>
         </div>
       </div>
