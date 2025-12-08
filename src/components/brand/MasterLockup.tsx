@@ -48,7 +48,7 @@ export const MasterLockup = () => {
         {/* Replay Button */}
         <button 
           onClick={replayAnimation}
-          className="absolute bottom-6 right-6 flex items-center gap-2 label-tech text-slate-500 hover:text-primary transition-colors px-4 py-2 bg-slate-800/50 chamfer-sm"
+          className="absolute bottom-6 right-6 flex items-center gap-2 label-tech text-slate-500 hover:text-primary transition-colors px-4 py-2 bg-slate-800/50 rounded-lg"
         >
           <RotateCcw className="w-4 h-4" />
           REPLAY
@@ -62,7 +62,7 @@ export const MasterLockup = () => {
 
       {/* Lockup Variations */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div className="card-metal p-8 flex flex-col items-center justify-center bracket-frame group">
+        <div className="card-base p-8 flex flex-col items-center justify-center group border-2 border-slate-200">
           <div className="flex items-center gap-2.5 mb-4">
             <div className="w-8 h-8">
               <RhosonicsLogo variant="gradient" />
@@ -72,7 +72,7 @@ export const MasterLockup = () => {
           <span className="label-tech text-slate-400 group-hover:text-primary transition-colors">HORIZONTAL</span>
         </div>
 
-        <div className="card-metal p-8 flex flex-col items-center justify-center bracket-frame group">
+        <div className="card-base p-8 flex flex-col items-center justify-center group border-2 border-slate-200">
           <div className="flex flex-col items-center gap-2 mb-4">
             <div className="w-12 h-12">
               <RhosonicsLogo variant="gradient" />
@@ -82,7 +82,7 @@ export const MasterLockup = () => {
           <span className="label-tech text-slate-400 group-hover:text-primary transition-colors">STACKED</span>
         </div>
 
-        <div className="card-metal p-8 flex flex-col items-center justify-center bracket-frame group">
+        <div className="card-base p-8 flex flex-col items-center justify-center group border-2 border-slate-200">
           <div className="w-10 h-10 mb-4">
             <RhosonicsLogo variant="gradient" />
           </div>
@@ -93,7 +93,7 @@ export const MasterLockup = () => {
       {/* Clear Space Rules */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         <div className="card-slate p-6 flex gap-4">
-          <div className="w-12 h-12 bg-slate-500/50 flex items-center justify-center flex-shrink-0 chamfer-sm">
+          <div className="w-12 h-12 bg-slate-500/50 flex items-center justify-center flex-shrink-0 rounded-lg">
             <Scan className="w-6 h-6 text-slate-100" />
           </div>
           <div>
@@ -104,7 +104,7 @@ export const MasterLockup = () => {
           </div>
         </div>
         <div className="card-slate p-6 flex gap-4">
-          <div className="w-12 h-12 bg-slate-500/50 flex items-center justify-center flex-shrink-0 chamfer-sm">
+          <div className="w-12 h-12 bg-slate-500/50 flex items-center justify-center flex-shrink-0 rounded-lg">
             <Layers className="w-6 h-6 text-slate-100" />
           </div>
           <div>

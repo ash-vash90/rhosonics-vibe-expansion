@@ -14,6 +14,7 @@ import { ImageryGuidelines } from "@/components/brand/ImageryGuidelines";
 import { VoiceTone } from "@/components/brand/VoiceTone";
 import { MotionDesign } from "@/components/brand/MotionDesign";
 import { DosAndDonts } from "@/components/brand/DosAndDonts";
+import { TechComparison } from "@/components/brand/TechComparison";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { Zap } from "lucide-react";
 
@@ -38,13 +39,14 @@ const Index = () => {
         <VoiceTone />
         <MotionDesign />
         <DosAndDonts />
+        <TechComparison />
         
         {/* Footer */}
         <footer className="mt-20 pt-8 border-t-2 border-slate-200">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="flex items-center gap-4">
-              <div className="w-8 h-8 bg-slate-100 flex items-center justify-center chamfer-sm">
-                <RhosonicsLogo variant="gradient" className="w-5 h-5" />
+              <div className="w-8 h-8">
+                <RhosonicsLogo variant="gradient" className="w-8 h-8" />
               </div>
               <div>
                 <span className="label-tech text-slate-600">

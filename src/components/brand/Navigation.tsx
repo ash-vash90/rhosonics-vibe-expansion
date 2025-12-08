@@ -84,7 +84,7 @@ export const Navigation = () => {
           <span className="font-logo text-lg tracking-tight">Rhosonics</span>
         </button>
         <button
-          className="lg:hidden text-slate-400 border border-slate-700 p-2 chamfer-sm hover:border-primary hover:text-primary transition-colors"
+          className="lg:hidden text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -117,7 +117,7 @@ export const Navigation = () => {
 
         {/* Version Badge */}
         <div className="pt-6 border-t border-slate-800">
-          <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 chamfer-sm">
+          <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 rounded-md">
             <Zap className="w-4 h-4 text-primary" />
             <div>
               <span className="label-tech-sm text-slate-500 block">STATUS</span>

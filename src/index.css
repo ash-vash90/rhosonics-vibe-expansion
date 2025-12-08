@@ -207,11 +207,10 @@
 
   /* Premium gradient card - use sparingly for hero elements */
   .card-gradient {
-    @apply overflow-hidden relative;
+    @apply overflow-hidden relative rounded-xl;
     background: var(--gradient-ore);
     border: 1px solid hsl(225 20% 25%);
     color: hsl(var(--slate-100));
-    clip-path: var(--chamfer-lg);
   }
 
   .card-gradient::before {
@@ -224,11 +223,10 @@
 
   /* Slate card - medium grey industrial look */
   .card-slate {
-    @apply overflow-hidden relative transition-all duration-200;
+    @apply overflow-hidden relative transition-all duration-200 rounded-lg;
     background: hsl(var(--slate-600));
     border: 1px solid hsl(var(--slate-500));
     color: hsl(var(--slate-100));
-    clip-path: var(--chamfer-md);
   }
 
   .card-slate:hover {
@@ -238,10 +236,9 @@
 
   /* Metal card - light gradient */
   .card-metal {
-    @apply overflow-hidden relative transition-all duration-200;
+    @apply overflow-hidden relative transition-all duration-200 rounded-lg;
     background: var(--gradient-metal);
     border: 1px solid hsl(var(--slate-300));
-    clip-path: var(--chamfer-md);
   }
 
   .card-metal:hover {
@@ -262,11 +259,10 @@
   }
 
   .card-obsidian {
-    @apply overflow-hidden transition-all duration-200;
+    @apply overflow-hidden transition-all duration-200 rounded-lg;
     background: hsl(var(--rho-obsidian));
     border: 1px solid hsl(225 20% 20%);
     color: hsl(var(--slate-100));
-    clip-path: var(--chamfer-md);
   }
 
   .card-obsidian:hover {
