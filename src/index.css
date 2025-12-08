@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -119,18 +119,18 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
   }
 
   /* Typography Classes */
   .font-logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
   }
 
   .font-ui {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
   }
 
   .font-data {
@@ -172,17 +172,32 @@
 
   /* Card Variants */
   .card-base {
-    @apply bg-card border border-border rounded-lg shadow-sm transition-all duration-300;
+    @apply bg-card border border-border rounded-lg shadow-sm transition-all duration-200;
     box-shadow: var(--shadow-card);
   }
 
   .card-base:hover {
     box-shadow: var(--shadow-elevated);
-    transform: translateY(-2px);
+  }
+
+  /* Premium gradient card - use sparingly */
+  .card-gradient {
+    @apply rounded-lg overflow-hidden relative;
+    background: linear-gradient(135deg, hsl(var(--rho-obsidian)) 0%, hsl(225 25% 16%) 100%);
+    border: 1px solid hsl(225 20% 22%);
+    color: hsl(var(--slate-100));
+  }
+
+  .card-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top right, hsl(var(--rho-green) / 0.12) 0%, transparent 50%);
+    pointer-events: none;
   }
 
   .card-eco {
-    @apply rounded-lg overflow-hidden relative transition-all duration-300;
+    @apply rounded-lg overflow-hidden relative transition-all duration-200;
     background: hsl(var(--eco-surface));
     border: 1px solid hsl(var(--eco-border));
     box-shadow: var(--shadow-card);
@@ -241,16 +256,21 @@
 
   /* Section Headers */
   .section-header {
-    @apply font-logo font-bold text-4xl md:text-5xl mb-8 text-foreground tracking-tight;
+    @apply font-logo font-medium text-3xl md:text-4xl mb-8 text-foreground tracking-tight;
   }
 
   .section-label {
     @apply label-tech mb-4 text-primary;
   }
 
+  /* Bold section header variant */
+  .section-header-bold {
+    @apply font-logo font-semibold text-4xl md:text-6xl lg:text-7xl text-foreground tracking-tight leading-[1.1];
+  }
+
   /* Section Divider */
   .section-divider {
-    @apply relative my-20;
+    @apply relative my-16;
   }
 
   .section-divider::before {
