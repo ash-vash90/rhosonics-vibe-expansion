@@ -29,12 +29,12 @@ export const BrandEthos = () => {
         {/* The Persona - Gradient card for emphasis */}
         <div className="card-gradient p-10 relative z-10">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 bg-primary/20 flex items-center justify-center chamfer-sm">
+            <div className="w-12 h-12 bg-primary/20 flex items-center justify-center rounded-lg">
               <Target className="w-6 h-6 text-primary" />
             </div>
             <span className="label-tech text-slate-400">THE PERSONA</span>
           </div>
-          <h3 className="text-2xl font-semibold text-slate-100 mb-3">Senior Engineer</h3>
+          <h3 className="text-2xl font-semibold text-slate-100 mb-3 font-ui">Senior Engineer</h3>
           <p className="text-slate-300 leading-relaxed text-lg">
             Direct, knowledgeable, data-driven. We avoid marketing fluff 
             in favor of technical specifications and proven ROI.
@@ -44,12 +44,12 @@ export const BrandEthos = () => {
         {/* The Aesthetic - Slate card */}
         <div className="card-slate p-10">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 bg-slate-500/50 flex items-center justify-center chamfer-sm">
+            <div className="w-12 h-12 bg-slate-500/50 flex items-center justify-center rounded-lg">
               <Radar className="w-6 h-6 text-slate-100" />
             </div>
             <span className="label-tech text-slate-400">THE AESTHETIC</span>
           </div>
-          <h3 className="text-2xl font-semibold text-slate-100 mb-3">Lab in the Field</h3>
+          <h3 className="text-2xl font-semibold text-slate-100 mb-3 font-ui">Lab in the Field</h3>
           <p className="text-slate-300 leading-relaxed text-lg">
             Clean white space meets heavy industrial textures. 
             High contrast data displays. Precision paired with ruggedness.
@@ -81,13 +81,13 @@ export const BrandEthos = () => {
         ].map((item, idx) => (
           <div 
             key={item.num}
-            className="card-metal p-8 group bracket-frame"
+            className="card-metal p-8 group"
           >
             <div className="flex items-start justify-between mb-6">
               <span className="font-data text-5xl font-bold text-slate-300 group-hover:text-primary transition-colors">
                 {item.num}
               </span>
-              <div className="w-10 h-10 bg-slate-200 flex items-center justify-center chamfer-sm text-slate-600 group-hover:bg-primary group-hover:text-white transition-all">
+              <div className="w-10 h-10 bg-slate-200 flex items-center justify-center rounded-lg text-slate-600 group-hover:bg-primary group-hover:text-white transition-all">
                 {item.icon}
               </div>
             </div>
