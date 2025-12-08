@@ -1,96 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Rhosonics Brand Colors */
+    --rho-green: 138 53% 40%;
+    --rho-green-accent: 88 61% 45%;
+    --rho-obsidian: 225 33% 10%;
+    
+    /* Eco Tints */
+    --eco-surface: 126 43% 95%;
+    --eco-border: 126 50% 90%;
+    
+    /* Slate Scale */
+    --slate-50: 210 40% 98%;
+    --slate-100: 210 40% 96%;
+    --slate-200: 214 32% 91%;
+    --slate-300: 213 27% 84%;
+    --slate-400: 215 20% 65%;
+    --slate-500: 215 16% 47%;
+    --slate-600: 215 19% 35%;
+    --slate-700: 215 25% 27%;
+    --slate-800: 217 33% 17%;
+    --slate-900: 222 47% 11%;
+
+    /* Semantic Tokens */
+    --background: var(--slate-50);
+    --foreground: var(--rho-obsidian);
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: var(--rho-obsidian);
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: var(--rho-obsidian);
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: var(--rho-green);
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: var(--slate-100);
+    --secondary-foreground: var(--rho-obsidian);
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: var(--slate-100);
+    --muted-foreground: var(--slate-500);
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: var(--eco-surface);
+    --accent-foreground: var(--rho-green);
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: var(--slate-200);
+    --input: var(--slate-200);
+    --ring: var(--rho-green);
 
-    --radius: 0.5rem;
+    --radius: 0.375rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Sidebar */
+    --sidebar-background: var(--rho-obsidian);
+    --sidebar-foreground: var(--slate-100);
+    --sidebar-primary: var(--rho-green);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 225 25% 15%;
+    --sidebar-accent-foreground: var(--slate-100);
+    --sidebar-border: 225 20% 20%;
+    --sidebar-ring: var(--rho-green);
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom Rhosonics Tokens */
+    --gradient-brand: linear-gradient(135deg, hsl(var(--rho-green-accent)) 0%, hsl(var(--rho-green)) 100%);
+    --gradient-obsidian: linear-gradient(135deg, hsl(225 20% 18%) 0%, hsl(var(--rho-obsidian)) 100%);
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-elevated: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --chamfer-btn: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: var(--rho-obsidian);
+    --foreground: var(--slate-100);
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 225 25% 12%;
+    --card-foreground: var(--slate-100);
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 225 25% 12%;
+    --popover-foreground: var(--slate-100);
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: var(--rho-green);
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 225 20% 18%;
+    --secondary-foreground: var(--slate-100);
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 225 20% 18%;
+    --muted-foreground: var(--slate-400);
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 225 20% 18%;
+    --accent-foreground: var(--slate-100);
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: var(--slate-100);
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 225 20% 20%;
+    --input: 225 20% 20%;
+    --ring: var(--rho-green);
   }
 }
 
@@ -100,6 +113,188 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+
+  /* Typography Classes */
+  .font-logo {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .font-ui {
+    font-family: 'Instrument Sans', sans-serif;
+  }
+
+  .font-data {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+}
+
+@layer components {
+  /* Brand Gradient Background */
+  .bg-brand-gradient {
+    background: var(--gradient-brand);
+  }
+
+  .bg-obsidian-gradient {
+    background: var(--gradient-obsidian);
+  }
+
+  /* Chamfered Button Shape */
+  .chamfer-shape {
+    clip-path: var(--chamfer-btn);
+  }
+
+  /* Label Tech Style */
+  .label-tech {
+    @apply font-data text-xs uppercase tracking-wider;
+  }
+
+  /* Card Variants */
+  .card-base {
+    @apply bg-card border border-border rounded-md shadow-sm;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-eco {
+    @apply rounded-md overflow-hidden relative;
+    background: hsl(var(--eco-surface));
+    border: 1px solid hsl(var(--eco-border));
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-obsidian {
+    @apply rounded-md overflow-hidden;
+    background: hsl(var(--rho-obsidian));
+    border: 1px solid hsl(225 20% 20%);
+    color: hsl(var(--slate-100));
+  }
+
+  /* Color Swatch */
+  .swatch {
+    @apply h-28 p-4 rounded-md flex flex-col justify-between;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .swatch-sm {
+    @apply h-20 p-3 rounded-md flex flex-col justify-end;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  /* Section Headers */
+  .section-header {
+    @apply font-ui font-bold text-3xl mb-8 text-foreground;
+  }
+
+  .section-label {
+    @apply label-tech mb-4 text-primary;
+  }
+
+  /* Navigation Link */
+  .nav-link {
+    @apply block text-sm transition-colors duration-200;
+    color: hsl(var(--slate-400));
+  }
+
+  .nav-link:hover {
+    color: hsl(var(--slate-100));
+  }
+
+  .nav-link-active {
+    color: hsl(var(--slate-100));
+    font-weight: 500;
+  }
+
+  /* Pattern Backgrounds */
+  .bg-pattern-topo {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 10 40 10 60 0 C 80 -10 100 0 100 10' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.05'/%3E%3Cpath d='M0 20 C 30 30 50 15 100 25' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.05'/%3E%3Cpath d='M0 50 C 40 60 70 40 100 60' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.05'/%3E%3Cpath d='M0 80 C 50 90 60 70 100 90' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.05'/%3E%3C/svg%3E");
+    background-size: cover;
+  }
+
+  .bg-pattern-topo-dark {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 C 20 10 40 10 60 0 C 80 -10 100 0 100 10' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.08'/%3E%3Cpath d='M0 20 C 30 30 50 15 100 25' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.08'/%3E%3Cpath d='M0 50 C 40 60 70 40 100 60' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.08'/%3E%3Cpath d='M0 80 C 50 90 60 70 100 90' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: cover;
+  }
+
+  .bg-pattern-minerals {
+    background-color: hsl(var(--rho-obsidian));
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23ffffff' stroke-width='1' opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M60 20L30 50L0 20M30 0v10M30 60V50' stroke-dasharray='4,4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .bg-pattern-semicon {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h80v80H0V0zm10 10v60h60V10H10zm5 5h50v50H15V15zm5 5v40h40V20H20z' fill='%2333993c' fill-opacity='0.02'/%3E%3Cpath d='M40 0v10M0 40h10M40 80V70M80 40H70' stroke='%2333993c' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='40' cy='40' r='2' fill='%2333993c' opacity='0.1'/%3E%3C/svg%3E");
+  }
+
+  .bg-pattern-dredging {
+    background-color: hsl(var(--slate-100));
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%2394a3b8' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  /* Animations */
+  @keyframes bootSequence {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes textReveal {
+    0% { opacity: 0; filter: blur(4px); }
+    100% { opacity: 1; filter: none; }
+  }
+
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  @keyframes slideInRight {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  .animate-boot {
+    animation: bootSequence 0.5s ease-out forwards;
+    transform-origin: bottom right;
+  }
+
+  .animate-text-reveal {
+    animation: textReveal 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-pulse-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+  }
+
+  /* Animation Delays */
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
+
+  /* Hover Transforms */
+  .hover-lift {
+    @apply transition-transform duration-200;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
   }
 }
