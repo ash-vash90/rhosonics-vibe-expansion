@@ -21,49 +21,39 @@ const Index = () => {
     <div className="flex flex-col lg:flex-row min-h-screen bg-background">
       <Navigation />
       
-      <main className="flex-1 p-8 md:p-12 lg:p-20 max-w-[1600px] mx-auto w-full relative">
-        {/* Subtle grid background */}
-        <div className="fixed inset-0 bg-grid opacity-30 pointer-events-none" />
+      <main className="flex-1 p-8 md:p-12 lg:p-16 xl:p-20 max-w-[1400px] mx-auto w-full">
+        <BrandEthos />
+        <MasterLockup />
+        <MissionVision />
+        <ColorMatrix />
+        <TypographyScale />
+        <SpacingSystem />
+        <LogoAssets />
+        <IconGuidelines />
+        <InterfaceKit />
+        <EcoComponents />
+        <IndustryApplications />
+        <ImageryGuidelines />
+        <VoiceTone />
+        <MotionDesign />
+        <DosAndDonts />
         
-        <div className="relative z-10">
-          <BrandEthos />
-          <MasterLockup />
-          <MissionVision />
-          <ColorMatrix />
-          <TypographyScale />
-          <SpacingSystem />
-          <LogoAssets />
-          <IconGuidelines />
-          <InterfaceKit />
-          <EcoComponents />
-          <IndustryApplications />
-          <ImageryGuidelines />
-          <VoiceTone />
-          <MotionDesign />
-          <DosAndDonts />
-          
-          {/* Footer */}
-          <footer className="mt-24 pt-12 border-t border-border">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-8">
-                  <RhosonicsLogo variant="gradient" />
-                </div>
-                <div>
-                  <div className="label-tech text-muted-foreground">
-                    RHOSONICS DESIGN SYSTEM
-                  </div>
-                  <div className="text-xs text-muted-foreground/60 mt-1">
-                    Built for precision. Designed for impact.
-                  </div>
-                </div>
+        {/* Footer */}
+        <footer className="mt-20 pt-8 border-t border-border">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6">
+                <RhosonicsLogo variant="gradient" />
               </div>
-              <div className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} Rhosonics. All rights reserved.
-              </div>
+              <span className="label-tech text-muted-foreground">
+                RHOSONICS DESIGN SYSTEM V.FINAL
+              </span>
             </div>
-          </footer>
-        </div>
+            <div className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Rhosonics. All rights reserved.
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   );
