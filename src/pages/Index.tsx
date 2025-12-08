@@ -15,6 +15,7 @@ import { VoiceTone } from "@/components/brand/VoiceTone";
 import { MotionDesign } from "@/components/brand/MotionDesign";
 import { DosAndDonts } from "@/components/brand/DosAndDonts";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
+import { Zap } from "lucide-react";
 
 const Index = () => {
   return (
@@ -39,18 +40,21 @@ const Index = () => {
         <DosAndDonts />
         
         {/* Footer */}
-        <footer className="mt-20 pt-8 border-t border-border">
+        <footer className="mt-20 pt-8 border-t-2 border-slate-200">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6">
-                <RhosonicsLogo variant="gradient" />
+            <div className="flex items-center gap-4">
+              <div className="w-8 h-8 bg-slate-100 flex items-center justify-center chamfer-sm">
+                <RhosonicsLogo variant="gradient" className="w-5 h-5" />
               </div>
-              <span className="label-tech text-muted-foreground">
-                RHOSONICS DESIGN SYSTEM V.FINAL
-              </span>
+              <div>
+                <span className="label-tech text-slate-600">
+                  RHOSONICS DESIGN SYSTEM
+                </span>
+              </div>
             </div>
-            <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Rhosonics. All rights reserved.
+            <div className="flex items-center gap-2 text-sm text-slate-500">
+              <Zap className="w-4 h-4 text-primary" />
+              <span>© {new Date().getFullYear()} Rhosonics. All rights reserved.</span>
             </div>
           </div>
         </footer>
