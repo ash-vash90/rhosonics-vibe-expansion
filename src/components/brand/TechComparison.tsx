@@ -45,33 +45,33 @@ export const TechComparison = () => {
       </p>
 
       {/* Highlight Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12" role="list" aria-label="Key performance metrics">
         {highlights.map((item, idx) => (
-          <div key={idx} className="card-base p-6 text-center group">
-            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary group-hover:bg-primary group-hover:text-white transition-all">
+          <article key={idx} className="card-metal p-4 sm:p-6 text-center group" role="listitem">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-200 rounded-lg flex items-center justify-center mx-auto mb-4 text-slate-600 group-hover:bg-primary group-hover:text-white transition-all" aria-hidden="true">
               {item.icon}
             </div>
-            <div className="label-tech text-slate-400 mb-1">{item.label}</div>
-            <div className="text-3xl font-bold text-foreground font-data">{item.value}</div>
-            <div className="text-sm text-slate-500 mt-1">{item.desc}</div>
-          </div>
+            <div className="label-ui text-slate-500 mb-1">{item.label}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-foreground font-ui">{item.value}</div>
+            <div className="text-xs sm:text-sm text-slate-500 mt-1">{item.desc}</div>
+          </article>
         ))}
       </div>
 
       {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Energy Consumption Bar Chart */}
-        <div className="card-gradient p-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-8">
+        {/* Energy Consumption Bar Chart - hero card with chamfer */}
+        <div className="card-gradient chamfer-lg p-6 sm:p-8">
           <div className="flex items-center gap-3 mb-6">
-            <Droplets className="w-5 h-5 text-primary" />
-            <span className="label-tech text-slate-400">ENERGY CONSUMPTION</span>
+            <Droplets className="w-5 h-5 text-primary" aria-hidden="true" />
+            <span className="label-ui text-slate-400">ENERGY CONSUMPTION</span>
           </div>
           <p className="text-slate-300 mb-6">Watts per measurement cycle</p>
-          <div className="h-64">
+          <div className="h-64" role="img" aria-label="Bar chart comparing energy consumption across technologies">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={energyData} layout="vertical">
                 <XAxis type="number" domain={[0, 100]} tick={{ fill: 'hsl(var(--slate-400))', fontSize: 12 }} axisLine={{ stroke: 'hsl(var(--slate-600))' }} />
-                <YAxis type="category" dataKey="name" tick={{ fill: 'hsl(var(--slate-300))', fontSize: 13, fontFamily: 'JetBrains Mono' }} axisLine={false} tickLine={false} width={80} />
+                <YAxis type="category" dataKey="name" tick={{ fill: 'hsl(var(--slate-300))', fontSize: 13, fontFamily: 'Instrument Sans' }} axisLine={false} tickLine={false} width={80} />
                 <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                   {energyData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fill} />
@@ -83,21 +83,21 @@ export const TechComparison = () => {
         </div>
 
         {/* Radar Comparison */}
-        <div className="card-base p-8 border-2 border-slate-200">
+        <div className="card-metal p-6 sm:p-8">
           <div className="flex items-center gap-3 mb-6">
-            <Gauge className="w-5 h-5 text-primary" />
-            <span className="label-tech text-slate-600">MULTI-FACTOR ANALYSIS</span>
+            <Gauge className="w-5 h-5 text-primary" aria-hidden="true" />
+            <span className="label-ui text-slate-500">MULTI-FACTOR ANALYSIS</span>
           </div>
-          <p className="text-slate-500 mb-6">Performance across key metrics</p>
-          <div className="h-64">
+          <p className="text-slate-600 mb-6">Performance across key metrics</p>
+          <div className="h-64" role="img" aria-label="Radar chart showing multi-factor performance comparison">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={radarData}>
-                <PolarGrid stroke="hsl(var(--slate-200))" />
-                <PolarAngleAxis dataKey="metric" tick={{ fill: 'hsl(var(--slate-500))', fontSize: 11 }} />
+                <PolarGrid stroke="hsl(var(--slate-300))" />
+                <PolarAngleAxis dataKey="metric" tick={{ fill: 'hsl(var(--slate-600))', fontSize: 11 }} />
                 <Radar name="SDM ECO" dataKey="sdm" stroke="hsl(var(--rho-green))" fill="hsl(var(--rho-green))" fillOpacity={0.3} strokeWidth={2} />
                 <Radar name="Nuclear" dataKey="nuclear" stroke="hsl(var(--slate-400))" fill="hsl(var(--slate-400))" fillOpacity={0.1} strokeWidth={1} />
                 <Radar name="Coriolis" dataKey="coriolis" stroke="hsl(var(--slate-300))" fill="hsl(var(--slate-300))" fillOpacity={0.1} strokeWidth={1} />
-                <Legend wrapperStyle={{ fontSize: 12, fontFamily: 'JetBrains Mono' }} />
+                <Legend wrapperStyle={{ fontSize: 12, fontFamily: 'Instrument Sans' }} />
               </RadarChart>
             </ResponsiveContainer>
           </div>
@@ -105,19 +105,19 @@ export const TechComparison = () => {
       </div>
 
       {/* Detailed Comparison Table */}
-      <div className="card-base overflow-hidden border-2 border-slate-200">
-        <div className="p-6 border-b border-slate-200 bg-slate-50">
-          <span className="label-tech text-slate-600">DETAILED SPECIFICATIONS</span>
+      <div className="card-metal overflow-hidden">
+        <div className="p-4 sm:p-6 border-b border-slate-300 bg-slate-100">
+          <span className="label-ui text-slate-600">DETAILED SPECIFICATIONS</span>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full" role="table" aria-label="Technology comparison specifications">
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50/50">
-                <th className="text-left p-4 font-data text-sm text-slate-500">TECHNOLOGY</th>
-                <th className="text-center p-4 font-data text-sm text-slate-500">ENERGY (W)</th>
-                <th className="text-center p-4 font-data text-sm text-slate-500">ACCURACY (%)</th>
-                <th className="text-center p-4 font-data text-sm text-slate-500">MAINT. (h/yr)</th>
-                <th className="text-center p-4 font-data text-sm text-slate-500">REL. COST</th>
+                <th scope="col" className="text-left p-3 sm:p-4 font-ui text-xs sm:text-sm font-semibold text-slate-600 uppercase tracking-wider">Technology</th>
+                <th scope="col" className="text-center p-3 sm:p-4 font-ui text-xs sm:text-sm font-semibold text-slate-600 uppercase tracking-wider">Energy (W)</th>
+                <th scope="col" className="text-center p-3 sm:p-4 font-ui text-xs sm:text-sm font-semibold text-slate-600 uppercase tracking-wider">Accuracy (%)</th>
+                <th scope="col" className="text-center p-3 sm:p-4 font-ui text-xs sm:text-sm font-semibold text-slate-600 uppercase tracking-wider hidden sm:table-cell">Maint. (h/yr)</th>
+                <th scope="col" className="text-center p-3 sm:p-4 font-ui text-xs sm:text-sm font-semibold text-slate-600 uppercase tracking-wider">Rel. Cost</th>
               </tr>
             </thead>
             <tbody>
@@ -126,14 +126,14 @@ export const TechComparison = () => {
                   key={row.name} 
                   className={`border-b border-slate-100 ${idx === 0 ? 'bg-primary/5' : ''}`}
                 >
-                  <td className={`p-4 font-data font-semibold ${idx === 0 ? 'text-primary' : 'text-foreground'}`}>
+                  <td className={`p-3 sm:p-4 font-ui font-semibold ${idx === 0 ? 'text-primary' : 'text-foreground'}`}>
                     {row.name}
-                    {idx === 0 && <span className="ml-2 text-xs bg-primary text-white px-2 py-0.5 rounded-full">BEST</span>}
+                    {idx === 0 && <span className="ml-2 text-xs bg-primary text-white px-2 py-0.5 rounded-full font-medium">BEST</span>}
                   </td>
-                  <td className="text-center p-4 font-data text-slate-600">{row.energy}</td>
-                  <td className="text-center p-4 font-data text-slate-600">{row.accuracy}</td>
-                  <td className="text-center p-4 font-data text-slate-600">{row.maintenance}</td>
-                  <td className="text-center p-4 font-data text-slate-600">{row.cost}%</td>
+                  <td className="text-center p-3 sm:p-4 font-data text-slate-600">{row.energy}</td>
+                  <td className="text-center p-3 sm:p-4 font-data text-slate-600">{row.accuracy}</td>
+                  <td className="text-center p-3 sm:p-4 font-data text-slate-600 hidden sm:table-cell">{row.maintenance}</td>
+                  <td className="text-center p-3 sm:p-4 font-data text-slate-600">{row.cost}%</td>
                 </tr>
               ))}
             </tbody>

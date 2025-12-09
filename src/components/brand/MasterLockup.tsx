@@ -18,18 +18,17 @@ export const MasterLockup = () => {
       </div>
       <h2 className="section-header">Master Lockup</h2>
 
-      {/* Main lockup display - gradient card for impact */}
-      <div className="card-gradient flex flex-col items-center justify-center py-24 md:py-32 relative overflow-hidden">
-        {/* Scan lines texture */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, hsl(var(--slate-100)) 2px, hsl(var(--slate-100)) 4px)'
-        }} />
+      {/* Main lockup display - hero gradient card with chamfer */}
+      <div className="card-gradient chamfer-lg flex flex-col items-center justify-center py-16 sm:py-24 md:py-32 relative overflow-hidden">
+        {/* Wave pattern background */}
+        <div className="absolute inset-0 bg-wave-subtle opacity-40 pointer-events-none" aria-hidden="true" />
         
         {/* Main Lockup */}
-        <div key={key} className="flex items-center gap-4 relative z-10">
+        <div key={key} className="flex items-center gap-4 relative z-10 px-4">
           <div 
             className="flex-shrink-0" 
-            style={{ width: 'clamp(3rem, 8vw, 5rem)', height: 'clamp(3rem, 8vw, 5rem)' }}
+            style={{ width: 'clamp(3.5rem, 10vw, 6rem)', height: 'clamp(3.5rem, 10vw, 6rem)' }}
+            aria-hidden="true"
           >
             <RhosonicsLogo variant="gradient" animated />
           </div>
@@ -48,14 +47,15 @@ export const MasterLockup = () => {
         {/* Replay Button */}
         <button 
           onClick={replayAnimation}
-          className="absolute bottom-6 right-6 flex items-center gap-2 label-tech text-slate-500 hover:text-primary transition-colors px-4 py-2 bg-slate-800/50 rounded-lg"
+          className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 label-ui text-slate-400 hover:text-primary transition-colors px-3 py-2 bg-slate-800/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-slate-900"
+          aria-label="Replay logo animation"
         >
-          <RotateCcw className="w-4 h-4" />
-          REPLAY
+          <RotateCcw className="w-4 h-4" aria-hidden="true" />
+          <span className="hidden sm:inline">REPLAY</span>
         </button>
 
         {/* Spec label */}
-        <div className="absolute top-6 left-6 label-tech-sm text-slate-500">
+        <div className="absolute top-4 left-4 sm:top-6 sm:left-6 label-tech text-slate-500" aria-hidden="true">
           LOCKUP.HORIZONTAL.V1
         </div>
       </div>
