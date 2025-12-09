@@ -54,6 +54,14 @@ const navSections: NavSection[] = [
       { id: "dos-donts", label: "Do's & Don'ts" },
     ],
   },
+  {
+    id: "06",
+    label: "ANALYSIS",
+    items: [
+      { id: "comparison", label: "Tech Comparison" },
+      { id: "cases", label: "Case Studies", highlight: true },
+    ],
+  },
 ];
 
 export const Navigation = () => {

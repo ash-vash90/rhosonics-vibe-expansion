@@ -172,13 +172,19 @@
     clip-path: var(--chamfer-btn);
   }
 
-  /* Label Tech Style - Larger, bolder */
+  /* Label Tech Style - for technical labels and data */
   .label-tech {
     @apply font-data text-sm uppercase tracking-wide font-medium;
+    letter-spacing: 0.05em;
   }
 
   .label-tech-sm {
     @apply font-data text-xs uppercase tracking-wider;
+  }
+
+  /* Label UI - for general UI labels */
+  .label-ui {
+    @apply font-ui text-xs uppercase tracking-wider font-medium;
   }
 
   /* Chamfer shapes */
@@ -205,12 +211,18 @@
     transform: translateY(-2px);
   }
 
-  /* Premium gradient card - use sparingly for hero elements */
+  /* Premium gradient card - use for hero elements with optional chamfer */
   .card-gradient {
-    @apply overflow-hidden relative rounded-xl;
+    @apply overflow-hidden relative;
     background: var(--gradient-ore);
     border: 1px solid hsl(225 20% 25%);
     color: hsl(var(--slate-100));
+    border-radius: 0.75rem;
+  }
+
+  .card-gradient.chamfer-lg {
+    clip-path: var(--chamfer-lg);
+    border-radius: 0;
   }
 
   .card-gradient::before {
@@ -223,22 +235,24 @@
 
   /* Slate card - medium grey industrial look */
   .card-slate {
-    @apply overflow-hidden relative transition-all duration-200 rounded-lg;
-    background: hsl(var(--slate-600));
-    border: 1px solid hsl(var(--slate-500));
+    @apply overflow-hidden relative transition-all duration-200;
+    background: linear-gradient(145deg, hsl(215 19% 40%) 0%, hsl(215 19% 35%) 100%);
+    border: 1px solid hsl(var(--slate-400));
     color: hsl(var(--slate-100));
+    border-radius: 0.5rem;
   }
 
   .card-slate:hover {
-    background: hsl(var(--slate-700));
+    background: linear-gradient(145deg, hsl(215 19% 38%) 0%, hsl(215 19% 32%) 100%);
     transform: translateY(-2px);
   }
 
-  /* Metal card - light gradient */
+  /* Metal card - brushed aluminum feel */
   .card-metal {
-    @apply overflow-hidden relative transition-all duration-200 rounded-lg;
-    background: var(--gradient-metal);
+    @apply overflow-hidden relative transition-all duration-200;
+    background: linear-gradient(145deg, hsl(210 40% 98%) 0%, hsl(214 32% 93%) 50%, hsl(213 27% 88%) 100%);
     border: 1px solid hsl(var(--slate-300));
+    border-radius: 0.5rem;
   }
 
   .card-metal:hover {
@@ -430,6 +444,28 @@
       linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
       linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
     background-size: 40px 40px;
+  }
+
+  /* Ultrasonic Wave Patterns */
+  .bg-wave-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='60' viewBox='0 0 200 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 Q 25 10 50 30 T 100 30 T 150 30 T 200 30' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3Cpath d='M0 35 Q 25 55 50 35 T 100 35 T 150 35 T 200 35' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.25'/%3E%3Cpath d='M0 25 Q 25 5 50 25 T 100 25 T 150 25 T 200 25' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.25'/%3E%3C/svg%3E");
+    background-size: 200px 60px;
+    background-repeat: repeat-x;
+    background-position: center;
+  }
+
+  .bg-wave-subtle {
+    background-image: url("data:image/svg+xml,%3Csvg width='300' height='40' viewBox='0 0 300 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 Q 37.5 5 75 20 T 150 20 T 225 20 T 300 20' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.15'/%3E%3Cpath d='M0 25 Q 37.5 35 75 25 T 150 25 T 225 25 T 300 25' stroke='%23ffffff' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
+    background-size: 300px 40px;
+    background-repeat: repeat-x;
+    background-position: center;
+  }
+
+  .bg-wave-hero {
+    background-image: url("data:image/svg+xml,%3Csvg width='400' height='100' viewBox='0 0 400 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 50 20 100 50 T 200 50 T 300 50 T 400 50' stroke='%2333993c' stroke-width='2' fill='none' opacity='0.08'/%3E%3Cpath d='M0 60 Q 50 80 100 60 T 200 60 T 300 60 T 400 60' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.05'/%3E%3Cpath d='M0 40 Q 50 10 100 40 T 200 40 T 300 40 T 400 40' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.05'/%3E%3C/svg%3E");
+    background-size: 400px 100px;
+    background-repeat: repeat-x;
+    background-position: bottom;
   }
 }
 

@@ -15,6 +15,7 @@ import { VoiceTone } from "@/components/brand/VoiceTone";
 import { MotionDesign } from "@/components/brand/MotionDesign";
 import { DosAndDonts } from "@/components/brand/DosAndDonts";
 import { TechComparison } from "@/components/brand/TechComparison";
+import { CaseStudies } from "@/components/brand/CaseStudies";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { Zap } from "lucide-react";
 
@@ -23,7 +24,7 @@ const Index = () => {
     <div className="flex flex-col lg:flex-row min-h-screen bg-background">
       <Navigation />
       
-      <main className="flex-1 p-8 md:p-12 lg:p-16 xl:p-20 max-w-[1400px] mx-auto w-full">
+      <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1400px] mx-auto w-full">
         <BrandEthos />
         <MasterLockup />
         <MissionVision />
@@ -40,22 +41,23 @@ const Index = () => {
         <MotionDesign />
         <DosAndDonts />
         <TechComparison />
+        <CaseStudies />
         
         {/* Footer */}
-        <footer className="mt-20 pt-8 border-t-2 border-slate-200">
+        <footer className="mt-20 pt-8 border-t-2 border-slate-200" role="contentinfo">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="flex items-center gap-4">
-              <div className="w-8 h-8">
+              <div className="w-8 h-8" aria-hidden="true">
                 <RhosonicsLogo variant="gradient" className="w-8 h-8" />
               </div>
               <div>
-                <span className="label-tech text-slate-600">
+                <span className="label-ui text-slate-600">
                   RHOSONICS DESIGN SYSTEM
                 </span>
               </div>
             </div>
             <div className="flex items-center gap-2 text-sm text-slate-500">
-              <Zap className="w-4 h-4 text-primary" />
+              <Zap className="w-4 h-4 text-primary" aria-hidden="true" />
               <span>© {new Date().getFullYear()} Rhosonics. All rights reserved.</span>
             </div>
           </div>

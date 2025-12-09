@@ -35,26 +35,26 @@ export const RhosonicsLogo = ({
         </linearGradient>
       </defs>
       
-      {/* Arc 1 - Innermost */}
+      {/* Arc 1 - Innermost - positioned to fill bottom-right */}
       <g className={cn(animated && "animate-boot delay-100 opacity-0")} style={{ transformOrigin: 'bottom right' }}>
         <path 
-          d="M 80 60 L 80 49 A 31 31 0 0 0 49 80 L 60 80 A 20 20 0 0 1 80 60 Z" 
+          d="M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z" 
           fill={getFill()} 
         />
       </g>
       
       {/* Arc 2 - Middle */}
-      <g className={cn(animated && "animate-boot delay-200 opacity-0")} style={{ transformOrigin: 'bottom right' }} opacity="0.93">
+      <g className={cn(animated && "animate-boot delay-200 opacity-0")} style={{ transformOrigin: 'bottom right' }}>
         <path 
-          d="M 80 41 L 80 30 A 50 50 0 0 0 30 80 L 41 80 A 39 39 0 0 1 80 41 Z" 
+          d="M 80 34 L 80 21 A 59 59 0 0 0 21 80 L 34 80 A 46 46 0 0 1 80 34 Z" 
           fill={getFill()} 
         />
       </g>
       
       {/* Arc 3 - Outermost */}
-      <g className={cn(animated && "animate-boot delay-300 opacity-0")} style={{ transformOrigin: 'bottom right' }} opacity="0.86">
+      <g className={cn(animated && "animate-boot delay-300 opacity-0")} style={{ transformOrigin: 'bottom right' }}>
         <path 
-          d="M 80 22 L 80 11 A 69 69 0 0 0 11 80 L 22 80 A 58 58 0 0 1 80 22 Z" 
+          d="M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z" 
           fill={getFill()} 
         />
       </g>
