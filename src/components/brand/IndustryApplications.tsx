@@ -10,23 +10,27 @@ export const IndustryApplications = () => {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {/* Mineral Processing */}
-        <div className="card-base bg-pattern-minerals text-slate-100 border-slate-700 overflow-hidden">
-          <div className="p-6 border-b border-slate-800 flex justify-between items-center relative z-10">
-            <span className="label-tech text-primary">MINERALS</span>
-            <Beaker className="w-5 h-5 text-slate-500" />
-          </div>
-          <div className="p-6 relative z-10">
-            <div className="font-ui text-sm text-slate-400 mb-1">Thickener Underflow</div>
-            <div className="font-ui font-bold text-3xl mb-4">1.68 SG</div>
+        {/* Mineral Processing - Earth tones */}
+        <div className="relative overflow-hidden rounded-lg border border-earth-ochre/30">
+          <div className="absolute inset-0 bg-pattern-minerals" />
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-earth-ochre to-earth-ochre-dark" />
+          <div className="relative">
+            <div className="p-6 border-b border-slate-800/50 flex justify-between items-center">
+              <span className="label-tech text-earth-ochre">MINERALS</span>
+              <Beaker className="w-5 h-5 text-earth-ochre-light" />
+            </div>
+            <div className="p-6 text-slate-100">
+              <div className="font-ui text-sm text-slate-400 mb-1">Thickener Underflow</div>
+              <div className="font-ui font-bold text-3xl mb-4">1.68 SG</div>
 
-            <div className="bg-slate-800/80 rounded p-3 border border-slate-700">
-              <div className="flex items-center gap-2 mb-1">
-                <div className="w-2 h-2 rounded-full bg-primary"></div>
-                <span className="font-data text-xs text-primary">ECO IMPACT</span>
-              </div>
-              <div className="text-sm text-slate-300">
-                Maximized water recovery reduces tailings volume.
+              <div className="bg-slate-800/80 rounded p-3 border border-earth-ochre/20">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-2 h-2 rounded-full bg-earth-ochre"></div>
+                  <span className="font-data text-xs text-earth-ochre">FIELD DATA</span>
+                </div>
+                <div className="text-sm text-slate-300">
+                  Maximized water recovery reduces tailings volume.
+                </div>
               </div>
             </div>
           </div>
@@ -47,7 +51,7 @@ export const IndustryApplications = () => {
             <div className="bg-eco-surface/80 rounded p-3 border border-eco-border">
               <div className="flex items-center gap-2 mb-1">
                 <Recycle className="w-3 h-3 text-primary" />
-                <span className="font-data text-xs text-primary">WASTE REDUCTION</span>
+                <span className="font-data text-xs text-primary">ECO IMPACT</span>
               </div>
               <div className="text-sm text-muted-foreground">
                 Precise dosing prevents chemical overuse.
@@ -80,15 +84,15 @@ export const IndustryApplications = () => {
         </div>
       </div>
 
-      {/* Pattern Legend */}
-      <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
+      {/* Pattern Legend with earth accent */}
+      <div className="p-6 bg-slate-50 rounded-lg border border-slate-200 border-l-4 border-l-earth-ochre">
         <h4 className="font-ui font-bold text-lg mb-4">Industry Pattern Reference</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-pattern-minerals rounded border border-slate-600"></div>
+            <div className="w-16 h-16 bg-pattern-minerals rounded border border-earth-ochre/50"></div>
             <div>
               <div className="font-ui font-medium text-foreground">Minerals</div>
-              <div className="text-sm text-muted-foreground">Crystal lattice / geometric</div>
+              <div className="text-sm text-earth-ochre-dark">Crystal lattice / field ops</div>
             </div>
           </div>
           <div className="flex items-center gap-4">
