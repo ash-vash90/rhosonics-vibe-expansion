@@ -3,7 +3,6 @@ import { BarChart2, TrendingUp, Droplets, Gauge, ArrowRight } from "lucide-react
 const caseStudies = [
   {
     id: "dredging",
-    label: "CASE STUDY",
     industry: "Dredging",
     title: "North Sea Sediment Monitoring",
     stat: "42%",
@@ -15,11 +14,9 @@ const caseStudies = [
       { label: "ROI Period", value: "8 mo" },
     ],
     icon: <Droplets className="w-6 h-6" />,
-    accentColor: "primary",
   },
   {
     id: "mining",
-    label: "CASE STUDY",
     industry: "Mining",
     title: "Copper Tailings Optimization",
     stat: "31%",
@@ -31,11 +28,9 @@ const caseStudies = [
       { label: "Maintenance", value: "< 4h/yr" },
     ],
     icon: <Gauge className="w-6 h-6" />,
-    accentColor: "slate",
   },
   {
     id: "wastewater",
-    label: "CASE STUDY",
     industry: "Wastewater",
     title: "Municipal Sludge Processing",
     stat: "28%",
@@ -47,7 +42,6 @@ const caseStudies = [
       { label: "Compliance", value: "100%" },
     ],
     icon: <TrendingUp className="w-6 h-6" />,
-    accentColor: "eco",
   },
 ];
 
@@ -70,7 +64,7 @@ export const CaseStudies = () => {
           <article 
             key={study.id}
             className={`group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
-              idx === 0 ? 'card-gradient chamfer-lg' : 'card-metal'
+              idx === 0 ? 'card-gradient chamfer-lg' : idx === 1 ? 'card-earth' : 'card-metal'
             }`}
           >
             {/* Wave pattern background */}
@@ -79,47 +73,57 @@ export const CaseStudies = () => {
             <div className="relative p-8">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
-                <span className="text-xs uppercase tracking-wider text-slate-500 font-ui font-medium">
+                <span className={`text-xs uppercase tracking-wider font-ui font-medium ${
+                  idx === 0 ? 'text-slate-400' : idx === 1 ? 'text-earth-ochre-dark' : 'text-slate-500'
+                }`}>
                   {study.industry}
                 </span>
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all ${
                   idx === 0 
                     ? 'bg-primary/20 text-primary' 
-                    : 'bg-slate-200 text-slate-600 group-hover:bg-primary group-hover:text-white'
-                } transition-all`}>
+                    : idx === 1 
+                      ? 'bg-earth-ochre/20 text-earth-ochre-dark group-hover:bg-earth-ochre group-hover:text-white'
+                      : 'bg-slate-200 text-slate-600 group-hover:bg-primary group-hover:text-white'
+                }`}>
                   {study.icon}
                 </div>
               </div>
 
               {/* Main stat */}
               <div className="mb-6">
-                <div className={`text-5xl font-bold font-ui tracking-tight mb-1 ${
-                  idx === 0 ? 'text-primary' : 'text-foreground group-hover:text-primary'
-                } transition-colors`}>
+                <div className={`text-5xl font-bold font-ui tracking-tight mb-1 transition-colors ${
+                  idx === 0 ? 'text-primary' : idx === 1 ? 'text-earth-ochre-dark group-hover:text-earth-ochre' : 'text-foreground group-hover:text-primary'
+                }`}>
                   {study.stat}
                 </div>
-                <div className={`text-sm font-medium ${idx === 0 ? 'text-slate-300' : 'text-slate-500'}`}>
+                <div className={`text-sm font-medium ${
+                  idx === 0 ? 'text-slate-300' : idx === 1 ? 'text-earth-clay' : 'text-slate-500'
+                }`}>
                   {study.statLabel}
                 </div>
               </div>
 
               {/* Title & Description */}
-              <h3 className={`text-xl font-semibold font-ui mb-3 ${idx === 0 ? 'text-slate-100' : 'text-foreground'}`}>
+              <h3 className={`text-xl font-semibold font-ui mb-3 ${
+                idx === 0 ? 'text-slate-100' : 'text-foreground'
+              }`}>
                 {study.title}
               </h3>
-              <p className={`text-sm leading-relaxed mb-6 ${idx === 0 ? 'text-slate-300' : 'text-slate-500'}`}>
+              <p className={`text-sm leading-relaxed mb-6 ${
+                idx === 0 ? 'text-slate-300' : idx === 1 ? 'text-earth-clay' : 'text-slate-500'
+              }`}>
                 {study.description}
               </p>
 
               {/* Metrics */}
               <div className={`grid grid-cols-3 gap-2 p-4 rounded-lg ${
-                idx === 0 ? 'bg-slate-800/50' : 'bg-slate-100'
+                idx === 0 ? 'bg-slate-800/50' : idx === 1 ? 'bg-earth-ochre/10' : 'bg-slate-100'
               }`}>
                 {study.metrics.map((metric) => (
                   <div key={metric.label} className="text-center">
-                    <div className={`text-xs uppercase tracking-wider mb-1 ${
-                      idx === 0 ? 'text-slate-500' : 'text-slate-400'
-                    } font-ui`}>
+                    <div className={`text-xs uppercase tracking-wider mb-1 font-ui ${
+                      idx === 0 ? 'text-slate-500' : idx === 1 ? 'text-earth-ochre' : 'text-slate-400'
+                    }`}>
                       {metric.label}
                     </div>
                     <div className={`text-sm font-semibold font-ui ${
@@ -136,7 +140,9 @@ export const CaseStudies = () => {
                 className={`mt-6 flex items-center gap-2 text-sm font-medium transition-all ${
                   idx === 0 
                     ? 'text-primary hover:text-primary/80' 
-                    : 'text-slate-600 hover:text-primary'
+                    : idx === 1 
+                      ? 'text-earth-ochre-dark hover:text-earth-ochre'
+                      : 'text-slate-600 hover:text-primary'
                 }`}
                 aria-label={`Read full ${study.industry} case study`}
               >
@@ -148,8 +154,8 @@ export const CaseStudies = () => {
         ))}
       </div>
 
-      {/* Stats bar */}
-      <div className="card-obsidian p-6 relative overflow-hidden">
+      {/* Stats bar with earth accent */}
+      <div className="card-obsidian p-6 relative overflow-hidden border-l-4 border-earth-ochre">
         <div className="absolute inset-0 bg-wave-subtle opacity-30" aria-hidden="true" />
         <div className="relative grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[

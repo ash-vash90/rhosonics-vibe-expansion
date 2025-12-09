@@ -13,6 +13,13 @@
     --rho-obsidian: 225 33% 10%;
     --rho-obsidian-light: 225 25% 15%;
     
+    /* Earth Tones - Field Aesthetic */
+    --earth-ochre: 45 30% 50%;
+    --earth-ochre-light: 45 35% 65%;
+    --earth-ochre-dark: 42 35% 35%;
+    --earth-sand: 40 30% 85%;
+    --earth-clay: 30 25% 45%;
+    
     /* Eco Tints */
     --eco-surface: 126 43% 95%;
     --eco-border: 126 50% 90%;
@@ -76,11 +83,14 @@
     --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--rho-green) / 0.15) 0%, transparent 50%);
     --gradient-metal: linear-gradient(135deg, hsl(210 40% 98%) 0%, hsl(214 32% 91%) 100%);
     --gradient-ore: linear-gradient(180deg, hsl(215 25% 27%) 0%, hsl(var(--rho-obsidian)) 100%);
+    --gradient-earth: linear-gradient(145deg, hsl(var(--earth-ochre-light)) 0%, hsl(var(--earth-ochre)) 100%);
+    --gradient-field: linear-gradient(180deg, hsl(var(--earth-sand)) 0%, hsl(40 25% 92%) 100%);
     --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
     --shadow-elevated: 0 15px 30px -5px rgb(0 0 0 / 0.12), 0 10px 10px -5px rgb(0 0 0 / 0.08);
     --shadow-cutout: drop-shadow(0 15px 30px rgba(0,0,0,0.15));
     --shadow-glow: 0 0 60px -10px hsl(var(--rho-green) / 0.4);
     --shadow-glow-sm: 0 0 30px -5px hsl(var(--rho-green) / 0.3);
+    --shadow-earth: 0 4px 20px -5px hsl(var(--earth-ochre) / 0.25);
     
     /* Chamfer clips */
     --chamfer-lg: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
@@ -282,6 +292,38 @@
   .card-obsidian:hover {
     border-color: hsl(var(--rho-green) / 0.5);
     transform: translateY(-2px);
+  }
+
+  /* Earth card - warm ochre field aesthetic */
+  .card-earth {
+    @apply overflow-hidden relative transition-all duration-200;
+    background: var(--gradient-field);
+    border: 1px solid hsl(var(--earth-ochre-light));
+    border-radius: 0.5rem;
+  }
+
+  .card-earth::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, hsl(var(--earth-ochre)), hsl(var(--earth-ochre-dark)));
+  }
+
+  .card-earth:hover {
+    box-shadow: var(--shadow-earth);
+    transform: translateY(-2px);
+  }
+
+  /* Earth accent border */
+  .border-earth {
+    border-color: hsl(var(--earth-ochre) / 0.3);
+  }
+
+  .border-earth-strong {
+    border-color: hsl(var(--earth-ochre));
   }
 
   /* Corner brackets for technical framing */

@@ -72,6 +72,13 @@ export default {
           surface: "hsl(var(--eco-surface))",
           border: "hsl(var(--eco-border))",
         },
+        earth: {
+          ochre: "hsl(var(--earth-ochre))",
+          "ochre-light": "hsl(var(--earth-ochre-light))",
+          "ochre-dark": "hsl(var(--earth-ochre-dark))",
+          sand: "hsl(var(--earth-sand))",
+          clay: "hsl(var(--earth-clay))",
+        },
         slate: {
           50: "hsl(var(--slate-50))",
           100: "hsl(var(--slate-100))",
