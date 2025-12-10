@@ -37,21 +37,21 @@ export const TechComparison = () => {
       <div className="border-t-2 border-slate-200 pt-16 mb-8" />
       <div className="flex items-center gap-3 mb-2">
         <Gauge className="w-5 h-5 text-primary" />
-        <span className="label-tech text-primary">TECHNOLOGY</span>
+        <span className="font-data text-xs uppercase tracking-wider text-primary">TECHNOLOGY</span>
       </div>
       <h2 className="section-header">SDM ECO vs Competition</h2>
       <p className="text-slate-500 text-lg max-w-2xl mb-12">
         How our Sonic Density Measurement technology compares to nuclear, Coriolis, and traditional ultrasonic solutions.
       </p>
 
-      {/* Highlight Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12" role="list" aria-label="Key performance metrics">
+      {/* Highlight Stats - Open layout */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-12 py-8 border-y border-slate-200" role="list" aria-label="Key performance metrics">
         {highlights.map((item, idx) => (
-          <article key={idx} className="card-metal p-4 sm:p-6 text-center group" role="listitem">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-200 rounded-lg flex items-center justify-center mx-auto mb-4 text-slate-600 group-hover:bg-primary group-hover:text-white transition-all" aria-hidden="true">
+          <article key={idx} className="text-center group" role="listitem">
+            <div className="w-10 h-10 bg-slate-100 rounded flex items-center justify-center mx-auto mb-3 text-slate-500 group-hover:bg-primary group-hover:text-white transition-all" aria-hidden="true">
               {item.icon}
             </div>
-            <div className="label-ui text-slate-500 mb-1">{item.label}</div>
+            <div className="font-data text-xs uppercase tracking-wider text-slate-500 mb-1">{item.label}</div>
             <div className="text-2xl sm:text-3xl font-bold text-foreground font-ui">{item.value}</div>
             <div className="text-xs sm:text-sm text-slate-500 mt-1">{item.desc}</div>
           </article>
@@ -64,7 +64,7 @@ export const TechComparison = () => {
         <div className="card-gradient chamfer-lg p-6 sm:p-8">
           <div className="flex items-center gap-3 mb-6">
             <Droplets className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="label-ui text-slate-400">ENERGY CONSUMPTION</span>
+            <span className="font-data text-xs uppercase tracking-wider text-slate-400">ENERGY CONSUMPTION</span>
           </div>
           <p className="text-slate-300 mb-6">Watts per measurement cycle</p>
           <div className="h-64" role="img" aria-label="Bar chart comparing energy consumption across technologies">
@@ -86,7 +86,7 @@ export const TechComparison = () => {
         <div className="card-metal p-6 sm:p-8">
           <div className="flex items-center gap-3 mb-6">
             <Gauge className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="label-ui text-slate-500">MULTI-FACTOR ANALYSIS</span>
+            <span className="font-data text-xs uppercase tracking-wider text-slate-500">MULTI-FACTOR ANALYSIS</span>
           </div>
           <p className="text-slate-600 mb-6">Performance across key metrics</p>
           <div className="h-64" role="img" aria-label="Radar chart showing multi-factor performance comparison">
@@ -104,10 +104,10 @@ export const TechComparison = () => {
         </div>
       </div>
 
-      {/* Detailed Comparison Table */}
-      <div className="card-metal overflow-hidden">
-        <div className="p-4 sm:p-6 border-b border-slate-300 bg-slate-100">
-          <span className="label-ui text-slate-600">DETAILED SPECIFICATIONS</span>
+      {/* Detailed Comparison Table - Simple border treatment */}
+      <div className="border border-slate-200 rounded-lg overflow-hidden">
+        <div className="p-4 sm:p-6 border-b border-slate-200 bg-slate-50">
+          <span className="font-data text-xs uppercase tracking-wider text-slate-600">DETAILED SPECIFICATIONS</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full" role="table" aria-label="Technology comparison specifications">

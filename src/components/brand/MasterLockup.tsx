@@ -60,56 +60,56 @@ export const MasterLockup = () => {
         </div>
       </div>
 
-      {/* Lockup Variations */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div className="card-base p-8 flex flex-col items-center justify-center group border-2 border-slate-200">
-          <div className="flex items-center gap-2.5 mb-4">
+      {/* Lockup Variations - Simple inline display */}
+      <div className="flex flex-wrap items-end justify-center gap-12 mt-12 py-8 border-y border-slate-200">
+        <div className="flex flex-col items-center group">
+          <div className="flex items-center gap-2.5 mb-3">
             <div className="w-8 h-8">
               <RhosonicsLogo variant="gradient" />
             </div>
             <span className="font-logo text-xl text-foreground">Rhosonics</span>
           </div>
-          <span className="label-tech text-slate-400 group-hover:text-primary transition-colors">HORIZONTAL</span>
+          <span className="font-data text-xs uppercase tracking-wider text-slate-400 group-hover:text-primary transition-colors">HORIZONTAL</span>
         </div>
 
-        <div className="card-base p-8 flex flex-col items-center justify-center group border-2 border-slate-200">
-          <div className="flex flex-col items-center gap-2 mb-4">
+        <div className="flex flex-col items-center group">
+          <div className="flex flex-col items-center gap-2 mb-3">
             <div className="w-12 h-12">
               <RhosonicsLogo variant="gradient" />
             </div>
             <span className="font-logo text-lg text-foreground">Rhosonics</span>
           </div>
-          <span className="label-tech text-slate-400 group-hover:text-primary transition-colors">STACKED</span>
+          <span className="font-data text-xs uppercase tracking-wider text-slate-400 group-hover:text-primary transition-colors">STACKED</span>
         </div>
 
-        <div className="card-base p-8 flex flex-col items-center justify-center group border-2 border-slate-200">
-          <div className="w-10 h-10 mb-4">
+        <div className="flex flex-col items-center group">
+          <div className="w-10 h-10 mb-3">
             <RhosonicsLogo variant="gradient" />
           </div>
-          <span className="label-tech text-slate-400 group-hover:text-primary transition-colors">ICON ONLY</span>
+          <span className="font-data text-xs uppercase tracking-wider text-slate-400 group-hover:text-primary transition-colors">ICON ONLY</span>
         </div>
       </div>
 
-      {/* Clear Space Rules */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-        <div className="card-slate p-6 flex gap-4">
-          <div className="w-12 h-12 bg-slate-500/50 flex items-center justify-center flex-shrink-0 rounded-lg">
-            <Scan className="w-6 h-6 text-slate-100" />
+      {/* Clear Space Rules - Inline text blocks */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        <div className="flex gap-4">
+          <div className="w-10 h-10 bg-slate-100 flex items-center justify-center flex-shrink-0 rounded">
+            <Scan className="w-5 h-5 text-slate-500" />
           </div>
           <div>
-            <div className="label-tech text-slate-300 mb-1">CLEAR SPACE</div>
-            <p className="text-slate-400">
+            <div className="font-data text-xs uppercase tracking-wider text-slate-500 mb-1">CLEAR SPACE</div>
+            <p className="text-slate-600 text-sm">
               Maintain clear space equal to the height of the smallest arc around all sides.
             </p>
           </div>
         </div>
-        <div className="card-slate p-6 flex gap-4">
-          <div className="w-12 h-12 bg-slate-500/50 flex items-center justify-center flex-shrink-0 rounded-lg">
-            <Layers className="w-6 h-6 text-slate-100" />
+        <div className="flex gap-4">
+          <div className="w-10 h-10 bg-slate-100 flex items-center justify-center flex-shrink-0 rounded">
+            <Layers className="w-5 h-5 text-slate-500" />
           </div>
           <div>
-            <div className="label-tech text-slate-300 mb-1">MINIMUM SIZE</div>
-            <p className="text-slate-400">
+            <div className="font-data text-xs uppercase tracking-wider text-slate-500 mb-1">MINIMUM SIZE</div>
+            <p className="text-slate-600 text-sm">
               Digital: 24px min. Print: 10mm min. Below this, use icon-only mark.
             </p>
           </div>

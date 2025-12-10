@@ -51,7 +51,7 @@ export const CaseStudies = () => {
       <div className="border-t-2 border-slate-200 pt-16 mb-8" />
       <div className="flex items-center gap-3 mb-2">
         <BarChart2 className="w-5 h-5 text-primary" aria-hidden="true" />
-        <span className="label-tech text-primary">ANALYSIS</span>
+        <span className="font-data text-xs uppercase tracking-wider text-primary">ANALYSIS</span>
       </div>
       <h2 className="section-header">Case Studies</h2>
       <p className="text-slate-500 text-lg max-w-2xl mb-12">
@@ -75,7 +75,7 @@ export const CaseStudies = () => {
             <div className="relative p-8">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
-                <span className={`text-xs uppercase tracking-wider font-ui font-medium ${
+                <span className={`font-data text-xs uppercase tracking-wider ${
                   idx === 0 ? 'text-slate-400' : idx === 1 ? 'text-earth-ochre-dark' : 'text-slate-500'
                 }`}>
                   {study.industry}
@@ -123,7 +123,7 @@ export const CaseStudies = () => {
               }`}>
                 {study.metrics.map((metric) => (
                   <div key={metric.label} className="text-center">
-                    <div className={`text-xs uppercase tracking-wider mb-1 font-ui ${
+                    <div className={`font-data text-xs uppercase tracking-wider mb-1 ${
                       idx === 0 ? 'text-slate-500' : idx === 1 ? 'text-earth-ochre' : 'text-slate-400'
                     }`}>
                       {metric.label}
@@ -156,10 +156,9 @@ export const CaseStudies = () => {
         ))}
       </div>
 
-      {/* Stats bar with earth accent */}
-      <div className="card-obsidian p-6 relative overflow-hidden border-l-4 border-earth-ochre">
-        <div className="absolute inset-0 bg-wave-subtle opacity-30" aria-hidden="true" />
-        <div className="relative grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      {/* Stats bar - simple open layout */}
+      <div className="py-8 border-t border-slate-200 mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { value: "500+", label: "Installations worldwide" },
             { value: "35+", label: "Years of expertise" },
@@ -167,8 +166,8 @@ export const CaseStudies = () => {
             { value: "< 2yr", label: "Typical payback" },
           ].map((stat) => (
             <div key={stat.label}>
-              <div className="text-2xl md:text-3xl font-bold text-slate-100 font-ui mb-1">{stat.value}</div>
-              <div className="text-xs text-slate-400 uppercase tracking-wider font-ui">{stat.label}</div>
+              <div className="text-2xl md:text-3xl font-bold text-foreground font-ui mb-1">{stat.value}</div>
+              <div className="font-data text-xs text-slate-500 uppercase tracking-wider">{stat.label}</div>
             </div>
           ))}
         </div>
