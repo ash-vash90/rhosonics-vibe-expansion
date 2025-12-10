@@ -509,6 +509,32 @@
     background-repeat: repeat-x;
     background-position: bottom;
   }
+
+  /* Terrain Textures - Field Aesthetic */
+  .bg-terrain-contour {
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 Q 50 30 100 45 T 200 35' stroke='%23a69359' stroke-width='1' fill='none' opacity='0.15'/%3E%3Cpath d='M0 80 Q 60 65 120 85 T 200 70' stroke='%23a69359' stroke-width='1' fill='none' opacity='0.12'/%3E%3Cpath d='M0 120 Q 40 135 90 115 T 200 125' stroke='%23a69359' stroke-width='1' fill='none' opacity='0.1'/%3E%3Cpath d='M0 160 Q 70 150 130 165 T 200 155' stroke='%23a69359' stroke-width='1' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+  }
+
+  .bg-terrain-strata {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='100' height='100' fill='none'/%3E%3Cpath d='M0 15 L100 20 M0 35 L100 30 M0 55 L100 60 M0 75 L100 70 M0 95 L100 90' stroke='%23a69359' stroke-width='0.5' fill='none' opacity='0.08'/%3E%3Ccircle cx='25' cy='45' r='2' fill='%23a69359' opacity='0.05'/%3E%3Ccircle cx='70' cy='75' r='3' fill='%23a69359' opacity='0.04'/%3E%3Ccircle cx='85' cy='25' r='1.5' fill='%23a69359' opacity='0.06'/%3E%3C/svg%3E");
+    background-size: 100px 100px;
+    background-repeat: repeat;
+  }
+
+  .bg-terrain-grain {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a69359' opacity='0.04'%3E%3Ccircle cx='5' cy='5' r='1'/%3E%3Ccircle cx='25' cy='15' r='0.8'/%3E%3Ccircle cx='45' cy='8' r='1.2'/%3E%3Ccircle cx='15' cy='35' r='0.6'/%3E%3Ccircle cx='35' cy='42' r='1'/%3E%3Ccircle cx='55' cy='32' r='0.7'/%3E%3Ccircle cx='10' cy='55' r='0.9'/%3E%3Ccircle cx='40' cy='58' r='0.5'/%3E%3Ccircle cx='52' cy='52' r='1.1'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 60px 60px;
+    background-repeat: repeat;
+  }
+
+  .bg-terrain-ore {
+    background-color: hsl(var(--rho-obsidian));
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23a69359' stroke-width='0.5' opacity='0.12'%3E%3Cpolygon points='30,10 45,25 35,40 15,35 10,20'/%3E%3Cpolygon points='80,30 100,40 95,60 75,65 65,50'/%3E%3Cpolygon points='40,70 55,75 60,95 45,105 30,90'/%3E%3Cpolygon points='90,80 110,85 105,105 85,110 80,95'/%3E%3C/g%3E%3Cg fill='%23a69359' opacity='0.06'%3E%3Ccircle cx='25' cy='25' r='2'/%3E%3Ccircle cx='85' cy='48' r='1.5'/%3E%3Ccircle cx='48' cy='85' r='2.5'/%3E%3Ccircle cx='95' cy='95' r='1.8'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    background-repeat: repeat;
+  }
 }
 
 @layer utilities {

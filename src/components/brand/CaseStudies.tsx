@@ -67,8 +67,10 @@ export const CaseStudies = () => {
               idx === 0 ? 'card-gradient chamfer-lg' : idx === 1 ? 'card-earth' : 'card-metal'
             }`}
           >
-            {/* Wave pattern background */}
-            <div className="absolute inset-0 opacity-10 bg-wave-pattern" aria-hidden="true" />
+            {/* Background texture */}
+            <div className={`absolute inset-0 opacity-20 ${
+              idx === 0 ? 'bg-wave-pattern' : idx === 1 ? 'bg-terrain-contour' : 'bg-wave-pattern'
+            }`} aria-hidden="true" />
             
             <div className="relative p-8">
               {/* Header */}

@@ -12,7 +12,8 @@ export const IndustryApplications = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Mineral Processing - Earth tones */}
         <div className="relative overflow-hidden rounded-lg border border-earth-ochre/30">
-          <div className="absolute inset-0 bg-pattern-minerals" />
+          <div className="absolute inset-0 bg-terrain-ore" />
+          <div className="absolute inset-0 bg-terrain-strata opacity-30" />
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-earth-ochre to-earth-ochre-dark" />
           <div className="relative">
             <div className="p-6 border-b border-slate-800/50 flex justify-between items-center">

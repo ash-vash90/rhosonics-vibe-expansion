@@ -47,19 +47,22 @@ export const BrandEthos = () => {
           </div>
         </article>
 
-        {/* The Aesthetic - Metal card */}
-        <article className="card-metal p-6 sm:p-10">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 bg-slate-300 flex items-center justify-center rounded-lg" aria-hidden="true">
-              <Radar className="w-6 h-6 text-slate-700" />
+        {/* The Aesthetic - Metal card with subtle terrain */}
+        <article className="card-metal p-6 sm:p-10 relative overflow-hidden">
+          <div className="absolute inset-0 bg-terrain-grain opacity-50" aria-hidden="true" />
+          <div className="relative">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-slate-300 flex items-center justify-center rounded-lg" aria-hidden="true">
+                <Radar className="w-6 h-6 text-slate-700" />
+              </div>
+              <span className="label-ui text-slate-500">THE AESTHETIC</span>
             </div>
-            <span className="label-ui text-slate-500">THE AESTHETIC</span>
+            <h3 className="text-2xl font-semibold text-foreground mb-3 font-ui">Lab in the Field</h3>
+            <p className="text-slate-600 leading-relaxed text-lg">
+              Clean white space meets heavy industrial textures. 
+              High contrast data displays. Precision paired with ruggedness.
+            </p>
           </div>
-          <h3 className="text-2xl font-semibold text-foreground mb-3 font-ui">Lab in the Field</h3>
-          <p className="text-slate-600 leading-relaxed text-lg">
-            Clean white space meets heavy industrial textures. 
-            High contrast data displays. Precision paired with ruggedness.
-          </p>
         </article>
       </div>
 
