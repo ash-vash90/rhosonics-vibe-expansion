@@ -17,7 +17,7 @@ export const IndustryApplications = () => {
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-earth-ochre to-earth-ochre-dark" />
           <div className="relative">
             <div className="p-6 border-b border-slate-800/50 flex justify-between items-center">
-              <span className="label-tech text-earth-ochre">MINERALS</span>
+              <span className="font-data text-xs uppercase tracking-wider text-earth-ochre">MINERALS</span>
               <Beaker className="w-5 h-5 text-earth-ochre-light" />
             </div>
             <div className="p-6 text-slate-100">
@@ -40,7 +40,7 @@ export const IndustryApplications = () => {
         {/* Semiconductor */}
         <div className="card-base bg-pattern-semicon border-primary/30 overflow-hidden">
           <div className="p-6 border-b border-slate-100 flex justify-between items-center relative z-10">
-            <span className="label-tech text-foreground">SEMICONDUCTOR</span>
+            <span className="font-data text-xs uppercase tracking-wider text-foreground">SEMICONDUCTOR</span>
             <Cpu className="w-5 h-5 text-slate-400" />
           </div>
           <div className="p-6 relative z-10">
@@ -64,7 +64,7 @@ export const IndustryApplications = () => {
         {/* Dredging */}
         <div className="card-base bg-pattern-dredging overflow-hidden">
           <div className="p-6 border-b border-slate-200 flex justify-between items-center relative z-10">
-            <span className="label-tech text-muted-foreground">DREDGING</span>
+            <span className="font-data text-xs uppercase tracking-wider text-muted-foreground">DREDGING</span>
             <Anchor className="w-5 h-5 text-slate-400" />
           </div>
           <div className="p-6 relative z-10">
