@@ -1,5 +1,6 @@
 import { RhosonicsLogo } from "../RhosonicsLogo";
-import { ArrowRight, Menu } from "lucide-react";
+import { ArrowRight, Menu, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const InterfaceKit = () => {
   return (
@@ -9,23 +10,55 @@ export const InterfaceKit = () => {
       {/* Buttons */}
       <h3 className="label-tech text-slate-500 mb-4">BUTTONS</h3>
       <div className="card-base p-8 mb-8">
-        <div className="flex flex-wrap gap-4 mb-6">
-          <button className="chamfer-shape bg-primary text-primary-foreground px-5 py-2.5 font-data text-xs uppercase tracking-wider hover:brightness-110 transition-all hover:-translate-y-0.5">
-            Primary Action
-          </button>
-          <button className="chamfer-shape bg-card text-muted-foreground px-5 py-2.5 font-data text-xs uppercase tracking-wider border border-border hover:border-slate-400 hover:text-foreground transition-all">
-            Secondary
-          </button>
-          <button className="chamfer-shape bg-primary/10 text-primary px-5 py-2.5 font-data text-xs uppercase tracking-wider border border-eco-border hover:bg-primary hover:text-primary-foreground transition-all">
-            Eco Action
-          </button>
-          <button className="chamfer-shape bg-rho-obsidian text-slate-100 px-5 py-2.5 font-data text-xs uppercase tracking-wider hover:brightness-125 transition-all">
-            Dark Variant
-          </button>
+        {/* Standard Buttons */}
+        <div className="mb-8">
+          <span className="label-tech text-xs text-muted-foreground block mb-3">STANDARD VARIANTS</span>
+          <div className="flex flex-wrap gap-4">
+            <Button variant="default">Primary Action</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="destructive">Destructive</Button>
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground">
-          All buttons use the chamfered clip-path for a distinctive industrial look. 
-          The 6px corner cut mirrors the arc geometry of the logo.
+
+        {/* Chamfered Buttons - Industrial Style */}
+        <div className="mb-8">
+          <span className="label-tech text-xs text-muted-foreground block mb-3">CHAMFERED VARIANTS — INDUSTRIAL AESTHETIC</span>
+          <div className="flex flex-wrap gap-4">
+            <Button variant="chamfer" size="chamfer-default">
+              <Zap className="w-4 h-4" />
+              Primary Chamfer
+            </Button>
+            <Button variant="chamfer-outline" size="chamfer-default">
+              Outline Chamfer
+            </Button>
+            <Button variant="chamfer-obsidian" size="chamfer-default">
+              Obsidian Chamfer
+            </Button>
+            <Button variant="chamfer-earth" size="chamfer-default">
+              Earth Chamfer
+            </Button>
+          </div>
+        </div>
+
+        {/* Large Chamfered Buttons */}
+        <div className="mb-6">
+          <span className="label-tech text-xs text-muted-foreground block mb-3">LARGE CHAMFERED — HERO CTAs</span>
+          <div className="flex flex-wrap gap-4">
+            <Button variant="chamfer" size="chamfer-lg">
+              Start Measurement
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+            <Button variant="chamfer-obsidian" size="chamfer-lg">
+              Configure System
+            </Button>
+          </div>
+        </div>
+
+        <p className="text-sm text-muted-foreground border-t border-border pt-4 mt-6">
+          Chamfered buttons use <code className="font-data text-primary">clip-path</code> for a distinctive industrial look.
+          The angled corners mirror the arc geometry of the Rhosonics logo and reinforce the field equipment aesthetic.
         </p>
       </div>
 
@@ -80,9 +113,9 @@ export const InterfaceKit = () => {
               <span className="font-data text-lg text-muted-foreground">%</span>
             </div>
             <div className="label-tech mt-2 mb-6 text-muted-foreground">Solids Concentration</div>
-            <button className="chamfer-shape bg-primary text-primary-foreground px-5 py-2.5 font-data text-xs uppercase tracking-wider hover:brightness-110 transition-all">
+            <Button variant="chamfer" size="chamfer-default">
               View Details
-            </button>
+            </Button>
           </div>
         </div>
       </div>

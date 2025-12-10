@@ -1,23 +1,32 @@
+import { Suspense, lazy } from "react";
 import { Navigation } from "@/components/brand/Navigation";
 import { BrandEthos } from "@/components/brand/BrandEthos";
-import { MasterLockup } from "@/components/brand/MasterLockup";
-import { MissionVision } from "@/components/brand/MissionVision";
-import { ColorMatrix } from "@/components/brand/ColorMatrix";
-import { TypographyScale } from "@/components/brand/TypographyScale";
-import { SpacingSystem } from "@/components/brand/SpacingSystem";
-import { LogoAssets } from "@/components/brand/LogoAssets";
-import { IconGuidelines } from "@/components/brand/IconGuidelines";
-import { InterfaceKit } from "@/components/brand/InterfaceKit";
-import { EcoComponents } from "@/components/brand/EcoComponents";
-import { IndustryApplications } from "@/components/brand/IndustryApplications";
-import { ImageryGuidelines } from "@/components/brand/ImageryGuidelines";
-import { VoiceTone } from "@/components/brand/VoiceTone";
-import { MotionDesign } from "@/components/brand/MotionDesign";
-import { DosAndDonts } from "@/components/brand/DosAndDonts";
-import { TechComparison } from "@/components/brand/TechComparison";
-import { CaseStudies } from "@/components/brand/CaseStudies";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { Zap } from "lucide-react";
+
+// Lazy load heavier components for better initial load performance
+const MasterLockup = lazy(() => import("@/components/brand/MasterLockup"));
+const MissionVision = lazy(() => import("@/components/brand/MissionVision"));
+const ColorMatrix = lazy(() => import("@/components/brand/ColorMatrix"));
+const TypographyScale = lazy(() => import("@/components/brand/TypographyScale"));
+const SpacingSystem = lazy(() => import("@/components/brand/SpacingSystem"));
+const LogoAssets = lazy(() => import("@/components/brand/LogoAssets"));
+const IconGuidelines = lazy(() => import("@/components/brand/IconGuidelines"));
+const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
+const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
+const IndustryApplications = lazy(() => import("@/components/brand/IndustryApplications"));
+const ImageryGuidelines = lazy(() => import("@/components/brand/ImageryGuidelines"));
+const VoiceTone = lazy(() => import("@/components/brand/VoiceTone"));
+const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
+const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
+const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
+const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
+
+const SectionLoader = () => (
+  <div className="py-16 flex justify-center">
+    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 const Index = () => {
   return (
@@ -26,22 +35,24 @@ const Index = () => {
       
       <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1400px] mx-auto w-full">
         <BrandEthos />
-        <MasterLockup />
-        <MissionVision />
-        <ColorMatrix />
-        <TypographyScale />
-        <SpacingSystem />
-        <LogoAssets />
-        <IconGuidelines />
-        <InterfaceKit />
-        <EcoComponents />
-        <IndustryApplications />
-        <ImageryGuidelines />
-        <VoiceTone />
-        <MotionDesign />
-        <DosAndDonts />
-        <TechComparison />
-        <CaseStudies />
+        <Suspense fallback={<SectionLoader />}>
+          <MasterLockup />
+          <MissionVision />
+          <ColorMatrix />
+          <TypographyScale />
+          <SpacingSystem />
+          <LogoAssets />
+          <IconGuidelines />
+          <InterfaceKit />
+          <EcoComponents />
+          <IndustryApplications />
+          <ImageryGuidelines />
+          <VoiceTone />
+          <MotionDesign />
+          <DosAndDonts />
+          <TechComparison />
+          <CaseStudies />
+        </Suspense>
         
         {/* Footer */}
         <footer className="mt-20 pt-8 border-t-2 border-slate-200" role="contentinfo">
