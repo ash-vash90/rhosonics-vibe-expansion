@@ -1,27 +1,39 @@
 import { Radar, Target, Leaf, Sparkles } from "lucide-react";
+import { RhosonicsLogo } from "../RhosonicsLogo";
+import { UltrasonicWaves } from "./UltrasonicWaves";
 
 export const BrandEthos = () => {
   return (
     <section id="intro" className="mb-24" aria-labelledby="brand-ethos-title">
-      {/* Bold Hero with wave background */}
-      <div className="mb-16 relative">
+      {/* Animated Hero with ultrasonic waves */}
+      <div className="mb-16 relative overflow-hidden">
+        {/* Background wave pattern */}
         <div className="absolute inset-0 bg-wave-hero opacity-50 pointer-events-none" aria-hidden="true" />
+
+        {/* Animated ultrasonic wave visualization */}
+        <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[500px] h-[300px] opacity-20 pointer-events-none hidden lg:block" aria-hidden="true">
+          <UltrasonicWaves color="hsl(138 53% 40%)" waveCount={7} />
+        </div>
+
+        {/* Animated logo backdrop */}
+        <div className="absolute right-8 top-8 w-32 h-32 opacity-10 pointer-events-none hidden md:block animate-logo-pulse" aria-hidden="true">
+          <RhosonicsLogo variant="gradient" />
+        </div>
+
         <div className="relative">
-          <div className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-slate-100 border border-slate-200 rounded-md">
+          <div className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-slate-100 border border-slate-200 rounded-md animate-fade-in-up">
             <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
-            <span className="font-data text-xs uppercase tracking-wider text-slate-600">DESIGN SYSTEM V.FINAL</span>
+            <span className="font-data text-xs uppercase tracking-wider text-slate-600">DESIGN SYSTEM V1.0</span>
           </div>
-          
-          <h1 id="brand-ethos-title" className="section-header-bold mb-6">
-            Precision.
-            <br />
-            <span className="gradient-text">Resilience.</span>
-            <br />
-            Intelligence.
+
+          <h1 id="brand-ethos-title" className="text-fluid-hero font-ui font-bold mb-6 text-foreground tracking-tight leading-[1.1]">
+            <span className="block animate-text-reveal" style={{ animationDelay: "0.1s" }}>Precision.</span>
+            <span className="block gradient-text animate-text-reveal" style={{ animationDelay: "0.3s" }}>Resilience.</span>
+            <span className="block animate-text-reveal" style={{ animationDelay: "0.5s" }}>Intelligence.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-500 max-w-xl leading-relaxed font-medium">
-            Industrial measurement meets sustainable engineering. 
+          <p className="text-fluid-lg text-slate-500 max-w-xl leading-relaxed font-medium prose-optimal animate-fade-in-up" style={{ animationDelay: "0.7s" }}>
+            Industrial measurement meets sustainable engineering.
             Every element is purpose-built for extreme environments.
           </p>
         </div>
