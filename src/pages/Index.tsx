@@ -21,6 +21,7 @@ const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
 const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
 const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
+const BrandAssets = lazy(() => import("@/components/brand/BrandAssets"));
 
 const SectionLoader = () => (
   <div className="py-16 flex justify-center">
@@ -52,6 +53,7 @@ const Index = () => {
           <DosAndDonts />
           <TechComparison />
           <CaseStudies />
+          <BrandAssets />
         </Suspense>
         
         {/* Footer */}
