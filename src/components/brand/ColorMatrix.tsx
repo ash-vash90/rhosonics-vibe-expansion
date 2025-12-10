@@ -1,11 +1,6 @@
-import { useState } from "react";
-import { Check, Copy } from "lucide-react";
-import { toast } from "sonner";
-
 interface ColorSwatchProps {
   name: string;
   hex: string;
-  hsl?: string;
   usage: string;
   bgClass: string;
   textClass: string;
@@ -14,47 +9,18 @@ interface ColorSwatchProps {
   dontUse: string;
 }
 
-const CopyButton = ({ value, label }: { value: string; label: string }) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(value);
-    setCopied(true);
-    toast.success(`Copied ${label}: ${value}`);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-data bg-white/20 hover:bg-white/30 rounded transition-all"
-      title={`Copy ${label}`}
-    >
-      {copied ? (
-        <Check className="w-3 h-3" />
-      ) : (
-        <Copy className="w-3 h-3" />
-      )}
-      {value}
-    </button>
-  );
-};
-
-const ColorSwatch = ({ name, hex, hsl, usage, bgClass, textClass, description, doUse, dontUse }: ColorSwatchProps) => (
-  <div className="flex flex-col md:flex-row gap-6 p-6 bg-card border border-border rounded-lg shadow-card items-start group">
-    <div className={`swatch ${bgClass} ${textClass} border-none w-full md:w-56 shrink-0 relative overflow-hidden`}>
+const ColorSwatch = ({ name, hex, usage, bgClass, textClass, description, doUse, dontUse }: ColorSwatchProps) => (
+  <div className="flex flex-col md:flex-row gap-6 p-6 bg-card border border-border rounded-lg shadow-card items-start">
+    <div className={`swatch ${bgClass} ${textClass} border-none w-full md:w-48 shrink-0`}>
       <div>
-        <span className="font-bold text-sm block mb-2">{name}</span>
-        <div className="flex flex-wrap gap-2">
-          <CopyButton value={hex} label="HEX" />
-          {hsl && <CopyButton value={hsl} label="HSL" />}
-        </div>
+        <span className="font-bold text-sm block">{name}</span>
+        <code className="label-tech opacity-70">{hex}</code>
       </div>
       <span className="label-tech opacity-50">{usage}</span>
     </div>
     <div className="flex-1 py-1">
       <h3 className="font-ui font-bold text-lg text-foreground mb-2">{name}</h3>
-      <p className="text-sm text-muted-foreground mb-4 leading-relaxed prose-optimal">{description}</p>
+      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{description}</p>
       <div className="flex flex-wrap gap-3">
         <span className="text-xs font-data font-medium text-primary bg-eco-surface px-3 py-1 rounded border border-eco-border">
           USE FOR: {doUse}
@@ -67,104 +33,11 @@ const ColorSwatch = ({ name, hex, hsl, usage, bgClass, textClass, description, d
   </div>
 );
 
-// WCAG Contrast Ratio Calculator
-const getContrastRatio = (hex1: string, hex2: string): number => {
-  const getLuminance = (hex: string): number => {
-    const rgb = hex.replace('#', '').match(/.{2}/g)?.map(x => parseInt(x, 16) / 255) || [0, 0, 0];
-    const [r, g, b] = rgb.map(c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  };
-
-  const l1 = getLuminance(hex1);
-  const l2 = getLuminance(hex2);
-  const lighter = Math.max(l1, l2);
-  const darker = Math.min(l1, l2);
-
-  return (lighter + 0.05) / (darker + 0.05);
-};
-
-const ContrastChecker = () => {
-  const [fg, setFg] = useState("#33993c");
-  const [bg, setBg] = useState("#ffffff");
-
-  const ratio = getContrastRatio(fg, bg);
-  const passAA = ratio >= 4.5;
-  const passAAA = ratio >= 7;
-
-  return (
-    <div className="card-base p-6">
-      <h4 className="font-ui font-bold text-foreground mb-4">Contrast Checker</h4>
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <label className="label-tech text-muted-foreground block mb-2">Foreground</label>
-          <div className="flex gap-2">
-            <input
-              type="color"
-              value={fg}
-              onChange={(e) => setFg(e.target.value)}
-              className="w-10 h-10 rounded cursor-pointer"
-            />
-            <input
-              type="text"
-              value={fg}
-              onChange={(e) => setFg(e.target.value)}
-              className="flex-1 px-3 py-2 font-data text-sm border border-border rounded bg-background"
-            />
-          </div>
-        </div>
-        <div>
-          <label className="label-tech text-muted-foreground block mb-2">Background</label>
-          <div className="flex gap-2">
-            <input
-              type="color"
-              value={bg}
-              onChange={(e) => setBg(e.target.value)}
-              className="w-10 h-10 rounded cursor-pointer"
-            />
-            <input
-              type="text"
-              value={bg}
-              onChange={(e) => setBg(e.target.value)}
-              className="flex-1 px-3 py-2 font-data text-sm border border-border rounded bg-background"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Preview */}
-      <div
-        className="p-6 rounded-lg mb-4 text-center"
-        style={{ backgroundColor: bg, color: fg }}
-      >
-        <span className="font-ui font-bold text-2xl">Sample Text</span>
-        <p className="text-sm mt-1">The quick brown fox jumps over the lazy dog.</p>
-      </div>
-
-      {/* Results */}
-      <div className="flex items-center justify-between">
-        <div>
-          <span className="font-data text-3xl font-bold text-foreground">{ratio.toFixed(2)}:1</span>
-          <span className="text-muted-foreground text-sm ml-2">contrast ratio</span>
-        </div>
-        <div className="flex gap-2">
-          <span className={`px-3 py-1 rounded font-data text-xs ${passAA ? 'bg-primary text-primary-foreground' : 'bg-red-100 text-destructive'}`}>
-            AA {passAA ? '✓' : '✗'}
-          </span>
-          <span className={`px-3 py-1 rounded font-data text-xs ${passAAA ? 'bg-primary text-primary-foreground' : 'bg-red-100 text-destructive'}`}>
-            AAA {passAAA ? '✓' : '✗'}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export const ColorMatrix = () => {
   const primaryColors: ColorSwatchProps[] = [
     {
       name: "Rhosonics Green",
       hex: "#33993c",
-      hsl: "hsl(138, 53%, 40%)",
       usage: "SOLID UI",
       bgClass: "bg-primary",
       textClass: "text-primary-foreground",
@@ -175,7 +48,6 @@ export const ColorMatrix = () => {
     {
       name: "Lime Accent",
       hex: "#73B82E",
-      hsl: "hsl(88, 61%, 45%)",
       usage: "GRADIENTS ONLY",
       bgClass: "bg-rho-green-accent",
       textClass: "text-primary-foreground",
@@ -186,7 +58,6 @@ export const ColorMatrix = () => {
     {
       name: "Obsidian",
       hex: "#111522",
-      hsl: "hsl(225, 33%, 10%)",
       usage: "SURFACE",
       bgClass: "bg-rho-obsidian",
       textClass: "text-slate-100",
@@ -200,7 +71,6 @@ export const ColorMatrix = () => {
     {
       name: "Earth Ochre",
       hex: "#a69359",
-      hsl: "hsl(45, 30%, 50%)",
       usage: "FIELD ACCENT",
       bgClass: "bg-earth-ochre",
       textClass: "text-white",
@@ -211,7 +81,6 @@ export const ColorMatrix = () => {
     {
       name: "Earth Sand",
       hex: "#d9d0b8",
-      hsl: "hsl(40, 30%, 85%)",
       usage: "SURFACE",
       bgClass: "bg-earth-sand",
       textClass: "text-earth-clay",
@@ -222,7 +91,6 @@ export const ColorMatrix = () => {
     {
       name: "Earth Clay",
       hex: "#7a6b4e",
-      hsl: "hsl(30, 25%, 45%)",
       usage: "DEEP ACCENT",
       bgClass: "bg-earth-clay",
       textClass: "text-white",
@@ -236,7 +104,6 @@ export const ColorMatrix = () => {
     {
       name: "Eco Surface",
       hex: "#ecf8ed",
-      hsl: "hsl(126, 43%, 95%)",
       usage: "CARD BG",
       bgClass: "bg-eco-surface",
       textClass: "text-muted-foreground",
@@ -247,7 +114,6 @@ export const ColorMatrix = () => {
     {
       name: "Eco Border",
       hex: "#d9f2db",
-      hsl: "hsl(126, 50%, 90%)",
       usage: "ELEMENTS",
       bgClass: "bg-eco-border",
       textClass: "text-muted-foreground",
@@ -257,30 +123,9 @@ export const ColorMatrix = () => {
     },
   ];
 
-  const slateColors = [
-    { name: "50", hex: "#f8fafc", bg: "bg-slate-50", text: "text-slate-600" },
-    { name: "100", hex: "#f1f5f9", bg: "bg-slate-100", text: "text-slate-600" },
-    { name: "200", hex: "#e2e8f0", bg: "bg-slate-200", text: "text-slate-600" },
-    { name: "300", hex: "#cbd5e1", bg: "bg-slate-300", text: "text-slate-700" },
-    { name: "400", hex: "#94a3b8", bg: "bg-slate-400", text: "text-slate-100" },
-    { name: "500", hex: "#64748b", bg: "bg-slate-500", text: "text-slate-100" },
-    { name: "600", hex: "#475569", bg: "bg-slate-600", text: "text-slate-100" },
-    { name: "700", hex: "#334155", bg: "bg-slate-700", text: "text-slate-100" },
-    { name: "800", hex: "#1e293b", bg: "bg-slate-800", text: "text-slate-100" },
-    { name: "900", hex: "#0f172a", bg: "bg-slate-900", text: "text-slate-100" },
-  ];
-
-  const handleCopySlate = async (hex: string, name: string) => {
-    await navigator.clipboard.writeText(hex);
-    toast.success(`Copied Slate ${name}: ${hex}`);
-  };
-
   return (
     <section id="colors" className="mb-32">
       <h2 className="section-header">Color Matrix</h2>
-      <p className="text-muted-foreground mb-8 prose-optimal">
-        Click any color value to copy it to your clipboard. All colors include HEX and HSL values for flexibility.
-      </p>
 
       {/* Primary Colors */}
       <div className="flex flex-col gap-6 mb-12">
@@ -307,24 +152,23 @@ export const ColorMatrix = () => {
 
       {/* Slate Scale */}
       <h3 className="label-tech text-slate-500 mb-4">THE SLATE SCALE</h3>
-      <p className="text-muted-foreground text-sm mb-4">Click to copy hex values</p>
       <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2">
-        {slateColors.map((shade) => (
-          <button
-            key={shade.name}
-            onClick={() => handleCopySlate(shade.hex, shade.name)}
-            className={`swatch-sm ${shade.bg} ${shade.text} cursor-pointer hover:scale-105 transition-transform`}
-            title={`Copy ${shade.hex}`}
-          >
+        {[
+          { name: "50", bg: "bg-slate-50", text: "text-slate-600" },
+          { name: "100", bg: "bg-slate-100", text: "text-slate-600" },
+          { name: "200", bg: "bg-slate-200", text: "text-slate-600" },
+          { name: "300", bg: "bg-slate-300", text: "text-slate-700" },
+          { name: "400", bg: "bg-slate-400", text: "text-slate-100" },
+          { name: "500", bg: "bg-slate-500", text: "text-slate-100" },
+          { name: "600", bg: "bg-slate-600", text: "text-slate-100" },
+          { name: "700", bg: "bg-slate-700", text: "text-slate-100" },
+          { name: "800", bg: "bg-slate-800", text: "text-slate-100" },
+          { name: "900", bg: "bg-slate-900", text: "text-slate-100" },
+        ].map((shade) => (
+          <div key={shade.name} className={`swatch-sm ${shade.bg} ${shade.text}`}>
             <span className="font-data text-xs font-bold">{shade.name}</span>
-          </button>
+          </div>
         ))}
-      </div>
-
-      {/* Contrast Checker */}
-      <div className="mt-12">
-        <h3 className="label-tech text-slate-500 mb-4">ACCESSIBILITY</h3>
-        <ContrastChecker />
       </div>
 
       {/* Gradient Examples */}
