@@ -78,6 +78,7 @@ export default {
           "ochre-dark": "hsl(var(--earth-ochre-dark))",
           sand: "hsl(var(--earth-sand))",
           clay: "hsl(var(--earth-clay))",
+          amber: "hsl(var(--earth-amber))",
         },
         slate: {
           50: "hsl(var(--slate-50))",

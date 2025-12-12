@@ -6,6 +6,7 @@ import { Zap } from "lucide-react";
 
 // Lazy load heavier components for better initial load performance
 const MasterLockup = lazy(() => import("@/components/brand/MasterLockup"));
+const OriginStory = lazy(() => import("@/components/brand/OriginStory"));
 const MissionVision = lazy(() => import("@/components/brand/MissionVision"));
 const ColorMatrix = lazy(() => import("@/components/brand/ColorMatrix"));
 const TypographyScale = lazy(() => import("@/components/brand/TypographyScale"));
@@ -37,6 +38,7 @@ const Index = () => {
         <BrandEthos />
         <Suspense fallback={<SectionLoader />}>
           <MasterLockup />
+          <OriginStory />
           <MissionVision />
           <ColorMatrix />
           <TypographyScale />
