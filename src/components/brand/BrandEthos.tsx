@@ -24,6 +24,12 @@ export const BrandEthos = () => {
             Industrial measurement meets sustainable engineering. 
             Every element is purpose-built for extreme environments.
           </p>
+          
+          {/* Origin story - subtle nod to garage roots */}
+          <div className="mt-8 flex items-center gap-4 text-sm text-slate-400">
+            <div className="w-8 h-px bg-gradient-to-r from-earth-ochre to-transparent" />
+            <span className="font-data tracking-wide">EST. 1984 — FROM GARAGE TO GLOBAL</span>
+          </div>
         </div>
       </div>
 
@@ -72,9 +78,9 @@ export const BrandEthos = () => {
           {[
             {
               num: "01",
-              title: "Measure Everything",
-              desc: "If you can't measure it, you can't improve it.",
-              icon: <Target className="w-5 h-5" aria-hidden="true" />
+              title: "Garage Spirit",
+              desc: "Innovation born from curiosity, not committees. We keep that startup hunger.",
+              icon: <Sparkles className="w-5 h-5" aria-hidden="true" />
             },
             {
               num: "02", 
@@ -84,8 +90,8 @@ export const BrandEthos = () => {
             },
             {
               num: "03",
-              title: "Sustainable Impact",
-              desc: "Precision measurement enables resource optimization.",
+              title: "Legacy Forward",
+              desc: "Honoring our roots while measuring the future.",
               icon: <Leaf className="w-5 h-5" aria-hidden="true" />
             }
           ].map((item) => (

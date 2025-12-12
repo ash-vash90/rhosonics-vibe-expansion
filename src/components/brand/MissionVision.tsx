@@ -77,6 +77,19 @@ export const MissionVision = () => {
           </div>
         </div>
       </div>
+
+      {/* Legacy Statement */}
+      <div className="mt-12 border-l-2 border-earth-ochre pl-6 py-4">
+        <blockquote className="text-lg text-slate-600 italic leading-relaxed mb-3">
+          "Started in a garage, first measured beer for Heineken—now measuring the world."
+        </blockquote>
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-px bg-earth-ochre/50" />
+          <span className="font-data text-xs uppercase tracking-wider text-earth-ochre">
+            Continuing the founder's legacy
+          </span>
+        </div>
+      </div>
     </section>
   );
 };
