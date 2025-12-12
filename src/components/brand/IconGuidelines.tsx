@@ -9,7 +9,6 @@ import {
   Factory,
   Cpu,
   Anchor,
-  ArrowRight,
   CheckCircle2,
   AlertCircle,
   Info

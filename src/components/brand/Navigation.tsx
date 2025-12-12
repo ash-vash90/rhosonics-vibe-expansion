@@ -14,6 +14,7 @@ const navSections: NavSection[] = [
     label: "FOUNDATION",
     items: [
       { id: "intro", label: "Brand Ethos" },
+      { id: "origin", label: "Our Story", highlight: true },
       { id: "lockup", label: "Master Lockup" },
       { id: "mission", label: "Mission & Vision" },
     ],
