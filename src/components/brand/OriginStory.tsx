@@ -13,10 +13,10 @@ export const OriginStory = () => {
       </div>
 
       {/* Main Story Block - Workshop aesthetic */}
-      <div className="relative overflow-hidden rounded-lg border border-border/50 bg-slate-900">
+      <div className="relative overflow-hidden rounded-lg border border-border/50 bg-card">
         {/* Workshop grid background */}
-        <div className="absolute inset-0 bg-workshop-grid opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-slate-800/50" />
+        <div className="absolute inset-0 bg-workshop-grid opacity-20" />
+        <div className="absolute inset-0 bg-gradient-to-br from-earth-ochre/5 via-transparent to-primary/5" />
         
         {/* Content */}
         <div className="relative p-8 md:p-12">
@@ -91,8 +91,8 @@ export const OriginStory = () => {
         {/* Milestone 3 - Global */}
         <div className="group relative">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-primary transition-colors">
-              <Globe className="w-5 h-5 text-primary" />
+            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-eco-forest/60 transition-colors">
+              <Globe className="w-5 h-5 text-eco-forest" />
             </div>
             <div>
               <div className="font-data text-xs text-earth-ochre mb-1">TODAY</div>
