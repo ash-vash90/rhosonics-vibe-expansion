@@ -13,43 +13,44 @@ export const OriginStory = () => {
       </div>
 
       {/* Main Story Block - Workshop aesthetic */}
-      <div className="relative overflow-hidden rounded-lg border-2 border-earth-ochre/30 bg-workshop-grid">
+      <div className="relative overflow-hidden rounded-lg border border-border/50 bg-slate-900">
         {/* Workshop grid background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-earth-sand/80 via-transparent to-earth-ochre/10" />
+        <div className="absolute inset-0 bg-workshop-grid opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-slate-800/50" />
         
         {/* Content */}
         <div className="relative p-8 md:p-12">
           {/* Timeline marker */}
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-12 h-12 rounded-full bg-earth-amber/20 border-2 border-earth-amber flex items-center justify-center">
-              <span className="font-data text-lg text-earth-ochre-dark font-bold">84</span>
+            <div className="w-12 h-12 rounded-full bg-slate-800 border-2 border-earth-ochre/60 flex items-center justify-center">
+              <span className="font-data text-lg text-earth-ochre font-bold">84</span>
             </div>
-            <div className="h-px flex-1 bg-gradient-to-r from-earth-amber/50 to-transparent" />
-            <span className="font-data text-sm text-earth-ochre uppercase tracking-wider">The Netherlands</span>
+            <div className="h-px flex-1 bg-gradient-to-r from-earth-ochre/40 to-transparent" />
+            <span className="font-data text-sm text-earth-ochre/80 uppercase tracking-wider">The Netherlands</span>
           </div>
 
           {/* Story narrative */}
           <div className="max-w-3xl">
-            <p className="text-xl md:text-2xl font-ui text-foreground leading-relaxed mb-6">
+            <p className="text-xl md:text-2xl font-ui text-slate-100 leading-relaxed mb-6">
               It started with a simple question in a Dutch garage: 
               <span className="text-earth-ochre font-semibold"> how do you measure the density of beer?</span>
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+            <p className="text-lg text-slate-400 leading-relaxed mb-8">
               A local brewer needed precision. Our founder had curiosity and a workbench. 
               What began as a single ultrasonic measurement device became the foundation 
               for an entirely new approach to industrial process control.
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-slate-400 leading-relaxed">
               Four decades later, that same garage spirit—the belief that better measurement 
               leads to a better world—drives every sensor we build.
             </p>
           </div>
 
           {/* Rivet accents */}
-          <div className="absolute top-4 left-4 w-3 h-3 rounded-full bg-earth-clay/40 border border-earth-clay/60" />
-          <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-earth-clay/40 border border-earth-clay/60" />
-          <div className="absolute bottom-4 left-4 w-3 h-3 rounded-full bg-earth-clay/40 border border-earth-clay/60" />
-          <div className="absolute bottom-4 right-4 w-3 h-3 rounded-full bg-earth-clay/40 border border-earth-clay/60" />
+          <div className="absolute top-4 left-4 w-3 h-3 rounded-full bg-slate-700 border border-earth-ochre/30" />
+          <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-slate-700 border border-earth-ochre/30" />
+          <div className="absolute bottom-4 left-4 w-3 h-3 rounded-full bg-slate-700 border border-earth-ochre/30" />
+          <div className="absolute bottom-4 right-4 w-3 h-3 rounded-full bg-slate-700 border border-earth-ochre/30" />
         </div>
       </div>
 
@@ -58,7 +59,7 @@ export const OriginStory = () => {
         {/* Milestone 1 - Garage */}
         <div className="group relative">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-earth-sand border border-earth-ochre/30 flex items-center justify-center group-hover:border-earth-ochre transition-colors">
+            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-earth-ochre/60 transition-colors">
               <Wrench className="w-5 h-5 text-earth-ochre" />
             </div>
             <div>
@@ -74,7 +75,7 @@ export const OriginStory = () => {
         {/* Milestone 2 - First Brew */}
         <div className="group relative">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-earth-sand border border-earth-ochre/30 flex items-center justify-center group-hover:border-earth-amber transition-colors">
+            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-earth-amber/60 transition-colors">
               <Beaker className="w-5 h-5 text-earth-amber" />
             </div>
             <div>
@@ -90,7 +91,7 @@ export const OriginStory = () => {
         {/* Milestone 3 - Global */}
         <div className="group relative">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-earth-sand border border-earth-ochre/30 flex items-center justify-center group-hover:border-primary transition-colors">
+            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-primary transition-colors">
               <Globe className="w-5 h-5 text-primary" />
             </div>
             <div>
