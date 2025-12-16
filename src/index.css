@@ -161,6 +161,18 @@
     font-weight: 500;
   }
 
+  /* Force data font inside Recharts SVG (ticks, labels, legend) */
+  .recharts-wrapper svg text,
+  .recharts-wrapper svg tspan,
+  .recharts-surface text,
+  .recharts-surface tspan,
+  .recharts-cartesian-axis-tick-value,
+  .recharts-legend-item-text,
+  .recharts-label {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 500 !important;
+  }
+
   /* Selection highlight */
   ::selection {
     background: hsl(var(--rho-green) / 0.3);
