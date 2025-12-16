@@ -690,22 +690,22 @@ export const ChartGenerator = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Configuration */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <div>
-          <label className="label-tech mb-2 block text-foreground/70">Chart Title *</label>
+          <label className="label-tech mb-2 block text-foreground/70 text-xs sm:text-sm">Chart Title *</label>
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g., Energy Consumption Comparison"
-            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-h-[44px]"
           />
         </div>
         <div>
-          <label className="label-tech mb-2 block text-foreground/70">Chart Type</label>
+          <label className="label-tech mb-2 block text-foreground/70 text-xs sm:text-sm">Chart Type</label>
           <Select value={chartType} onValueChange={setChartType}>
-            <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+            <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[44px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-popover border-border max-h-[300px]">
@@ -722,36 +722,36 @@ export const ChartGenerator = () => {
           </Select>
         </div>
         <div>
-          <label className="label-tech mb-2 block text-foreground/70">X-Axis Label</label>
+          <label className="label-tech mb-2 block text-foreground/70 text-xs sm:text-sm">X-Axis Label</label>
           <Input
             value={xAxisLabel}
             onChange={(e) => setXAxisLabel(e.target.value)}
             placeholder="e.g., Technology"
-            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-h-[44px]"
           />
         </div>
         <div>
-          <label className="label-tech mb-2 block text-foreground/70">Y-Axis Label</label>
+          <label className="label-tech mb-2 block text-foreground/70 text-xs sm:text-sm">Y-Axis Label</label>
           <Input
             value={yAxisLabel}
             onChange={(e) => setYAxisLabel(e.target.value)}
             placeholder="e.g., kWh/year"
-            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-h-[44px]"
           />
         </div>
       </div>
 
       {/* Axis & Layout Settings */}
-      <div className="p-4 bg-muted/30 rounded-lg border border-border">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="flex items-center justify-between md:col-span-1">
-            <label className="label-tech text-foreground/70">Show Axis Titles</label>
+      <div className="p-3 sm:p-4 bg-muted/30 rounded-lg border border-border">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className="flex items-center justify-between col-span-2 sm:col-span-1">
+            <label className="label-tech text-foreground/70 text-xs">Axis Titles</label>
             <Switch checked={showAxisTitles} onCheckedChange={setShowAxisTitles} />
           </div>
           <div>
-            <label className="label-tech mb-2 block text-foreground/70">Aspect Ratio</label>
+            <label className="label-tech mb-1.5 sm:mb-2 block text-foreground/70 text-xs">Aspect Ratio</label>
             <Select value={aspectRatio} onValueChange={setAspectRatio}>
-              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[40px] text-xs sm:text-sm">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-popover border-border">
@@ -764,9 +764,9 @@ export const ChartGenerator = () => {
             </Select>
           </div>
           <div>
-            <label className="label-tech mb-2 block text-foreground/70">Animation</label>
+            <label className="label-tech mb-1.5 sm:mb-2 block text-foreground/70 text-xs">Animation</label>
             <Select value={animationPreset} onValueChange={setAnimationPreset}>
-              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[40px] text-xs sm:text-sm">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-popover border-border">
@@ -779,9 +779,9 @@ export const ChartGenerator = () => {
             </Select>
           </div>
           <div>
-            <label className="label-tech mb-2 block text-foreground/70">PNG Export Scale</label>
+            <label className="label-tech mb-1.5 sm:mb-2 block text-foreground/70 text-xs">PNG Scale</label>
             <Select value={String(pngScale)} onValueChange={(v) => setPngScale(Number(v))}>
-              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[40px] text-xs sm:text-sm">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-popover border-border">
@@ -797,19 +797,19 @@ export const ChartGenerator = () => {
       </div>
 
       {/* Brand Colors */}
-      <div className="p-4 bg-muted/30 rounded-lg border border-border space-y-4">
-        <div className="flex items-center gap-2 mb-2">
+      <div className="p-3 sm:p-4 bg-muted/30 rounded-lg border border-border space-y-3 sm:space-y-4">
+        <div className="flex items-center gap-2 mb-1 sm:mb-2">
           <Palette className="w-4 h-4 text-primary" />
-          <span className="label-tech text-foreground/70">Brand Colors</span>
+          <span className="label-tech text-foreground/70 text-xs sm:text-sm">Brand Colors</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <div>
             <label className="text-xs font-data text-muted-foreground mb-1 block">Primary</label>
             <Select value={primaryColor} onValueChange={setPrimaryColor}>
-              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[40px]">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 rounded" style={{ backgroundColor: getColorValue(primaryColor) }} />
-                  <SelectValue />
+                  <span className="text-xs sm:text-sm truncate"><SelectValue /></span>
                 </div>
               </SelectTrigger>
               <SelectContent className="bg-popover border-border">
@@ -829,10 +829,10 @@ export const ChartGenerator = () => {
               <div>
                 <label className="text-xs font-data text-muted-foreground mb-1 block">Secondary</label>
                 <Select value={secondaryColor} onValueChange={setSecondaryColor}>
-                  <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+                  <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[40px]">
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 rounded" style={{ backgroundColor: getColorValue(secondaryColor) }} />
-                      <SelectValue />
+                      <span className="text-xs sm:text-sm truncate"><SelectValue /></span>
                     </div>
                   </SelectTrigger>
                   <SelectContent className="bg-popover border-border">
@@ -850,10 +850,10 @@ export const ChartGenerator = () => {
               <div>
                 <label className="text-xs font-data text-muted-foreground mb-1 block">Tertiary</label>
                 <Select value={tertiaryColor} onValueChange={setTertiaryColor}>
-                  <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+                  <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[40px]">
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 rounded" style={{ backgroundColor: getColorValue(tertiaryColor) }} />
-                      <SelectValue />
+                      <span className="text-xs sm:text-sm truncate"><SelectValue /></span>
                     </div>
                   </SelectTrigger>
                   <SelectContent className="bg-popover border-border">
@@ -874,15 +874,15 @@ export const ChartGenerator = () => {
       </div>
 
       {/* Background & Style */}
-      <div className="p-4 bg-muted/30 rounded-lg border border-border">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="p-3 sm:p-4 bg-muted/30 rounded-lg border border-border">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <label className="label-tech mb-2 block text-foreground/70">Background Gradient</label>
+            <label className="label-tech mb-1.5 sm:mb-2 block text-foreground/70 text-xs">Background</label>
             <Select value={bgGradient} onValueChange={setBgGradient}>
-              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[40px]">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-4 rounded border border-border" style={{ background: getGradientValue(bgGradient) }} />
-                  <SelectValue />
+                  <span className="text-xs sm:text-sm truncate"><SelectValue /></span>
                 </div>
               </SelectTrigger>
               <SelectContent className="bg-popover border-border">
@@ -899,19 +899,19 @@ export const ChartGenerator = () => {
           </div>
 
           <div>
-            <label className="label-tech mb-2 block text-foreground/70">Export Padding (px)</label>
+            <label className="label-tech mb-1.5 sm:mb-2 block text-foreground/70 text-xs">Padding (px)</label>
             <Input
               type="number"
               min={0}
               max={80}
               value={exportPadding}
               onChange={(e) => setExportPadding(Number(e.target.value || 0))}
-              className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-data focus:border-primary focus:ring-primary/20"
+              className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-data focus:border-primary focus:ring-primary/20 min-h-[40px]"
             />
           </div>
 
-          <div className="flex items-center justify-between md:pt-7">
-            <label className="label-tech text-foreground/70">Use Chamfer Corners</label>
+          <div className="flex items-center justify-between sm:pt-6">
+            <label className="label-tech text-foreground/70 text-xs">Chamfer</label>
             <Switch checked={useChamfer} onCheckedChange={setUseChamfer} />
           </div>
         </div>
@@ -919,69 +919,81 @@ export const ChartGenerator = () => {
 
       {/* Description */}
       <div>
-        <label className="label-tech mb-2 block text-foreground/70">Description (optional)</label>
+        <label className="label-tech mb-2 block text-foreground/70 text-xs sm:text-sm">Description (optional)</label>
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Brief description of what this chart shows"
-          className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20"
+          className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20 min-h-[80px]"
         />
       </div>
 
       {/* Data Points */}
       <div>
-        <div className="flex items-center justify-between mb-3">
-          <label className="label-tech text-foreground/70">
+        <div className="flex items-center justify-between mb-2 sm:mb-3">
+          <label className="label-tech text-foreground/70 text-xs sm:text-sm">
             Data Points {isMultiSeries && "(Multi-Series)"}
           </label>
-          <Button variant="outline" size="sm" onClick={addDataPoint}>
+          <Button variant="outline" size="sm" onClick={addDataPoint} className="touch-manipulation min-h-[36px]">
             <Plus className="w-4 h-4 mr-1" />
             Add
           </Button>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           {dataPoints.map((point, index) => (
-            <div key={index} className="flex gap-2 items-center">
-              <Input
-                value={point.name}
-                onChange={(e) => updateDataPoint(index, "name", e.target.value)}
-                placeholder="Label"
-                className="flex-1 bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
-              />
-              <Input
-                type="number"
-                value={point.value}
-                onChange={(e) => updateDataPoint(index, "value", e.target.value)}
-                placeholder="Val 1"
-                className="w-20 bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
-              />
-              {isMultiSeries && (
-                <>
+            <div key={index} className="p-3 bg-muted/20 rounded-lg border border-border space-y-2">
+              {/* Label row */}
+              <div className="flex gap-2 items-center">
+                <Input
+                  value={point.name}
+                  onChange={(e) => updateDataPoint(index, "name", e.target.value)}
+                  placeholder="Label"
+                  className="flex-1 bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-h-[40px] text-sm"
+                />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => removeDataPoint(index)}
+                  disabled={dataPoints.length <= 1}
+                  className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 touch-manipulation h-10 w-10 flex-shrink-0"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+              {/* Values row */}
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <label className="text-[10px] text-muted-foreground mb-1 block">Value 1</label>
                   <Input
                     type="number"
-                    value={point.value2 || 0}
-                    onChange={(e) => updateDataPoint(index, "value2", e.target.value)}
-                    placeholder="Val 2"
-                    className="w-20 bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
+                    value={point.value}
+                    onChange={(e) => updateDataPoint(index, "value", e.target.value)}
+                    className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-h-[36px] text-sm"
                   />
-                  <Input
-                    type="number"
-                    value={point.value3 || 0}
-                    onChange={(e) => updateDataPoint(index, "value3", e.target.value)}
-                    placeholder="Val 3"
-                    className="w-20 bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
-                  />
-                </>
-              )}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => removeDataPoint(index)}
-                disabled={dataPoints.length <= 1}
-                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
+                </div>
+                {isMultiSeries && (
+                  <>
+                    <div>
+                      <label className="text-[10px] text-muted-foreground mb-1 block">Value 2</label>
+                      <Input
+                        type="number"
+                        value={point.value2 || 0}
+                        onChange={(e) => updateDataPoint(index, "value2", e.target.value)}
+                        className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-h-[36px] text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-muted-foreground mb-1 block">Value 3</label>
+                      <Input
+                        type="number"
+                        value={point.value3 || 0}
+                        onChange={(e) => updateDataPoint(index, "value3", e.target.value)}
+                        className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-h-[36px] text-sm"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -989,24 +1001,24 @@ export const ChartGenerator = () => {
 
       {/* Live Preview */}
       <div className="pt-4 border-t border-border">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2">
-            <label className="label-tech text-primary">Live Preview</label>
+            <label className="label-tech text-primary text-xs sm:text-sm">Live Preview</label>
             {animationPreset !== "none" && (
-              <Button variant="ghost" size="sm" onClick={replayAnimation} className="h-7 px-2">
+              <Button variant="ghost" size="sm" onClick={replayAnimation} className="h-7 px-2 touch-manipulation">
                 <RotateCcw className="w-3 h-3 mr-1" />
                 Replay
               </Button>
             )}
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={handleDownloadSvg}>
-              <FileDown className="w-4 h-4 mr-2" />
-              SVG
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1">
+            <Button variant="outline" size="sm" onClick={handleDownloadSvg} className="touch-manipulation min-h-[36px] text-xs px-2 sm:px-3">
+              <FileDown className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
+              <span className="hidden sm:inline">SVG</span>
             </Button>
-            <Button variant="outline" size="sm" onClick={handleDownloadPng}>
-              <Download className="w-4 h-4 mr-2" />
-              PNG
+            <Button variant="outline" size="sm" onClick={handleDownloadPng} className="touch-manipulation min-h-[36px] text-xs px-2 sm:px-3">
+              <Download className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
+              <span className="hidden sm:inline">PNG</span>
             </Button>
             {animationPreset !== "none" && (
               <Button 
@@ -1014,17 +1026,17 @@ export const ChartGenerator = () => {
                 size="sm" 
                 onClick={handleDownloadGif}
                 disabled={isExportingGif}
-                className="min-w-[80px]"
+                className="touch-manipulation min-h-[36px] min-w-[60px] sm:min-w-[80px] text-xs px-2 sm:px-3"
               >
                 {isExportingGif ? (
                   <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    {gifProgress}%
+                    <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin sm:mr-2" />
+                    <span className="text-xs">{gifProgress}%</span>
                   </>
                 ) : (
                   <>
-                    <Film className="w-4 h-4 mr-2" />
-                    GIF
+                    <Film className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">GIF</span>
                   </>
                 )}
               </Button>
@@ -1033,19 +1045,19 @@ export const ChartGenerator = () => {
         </div>
         <div
           ref={chartRef}
-          className={`p-6 border border-border ${useChamfer ? "" : "rounded-lg"}`}
+          className={`p-4 sm:p-6 border border-border ${useChamfer ? "" : "rounded-lg"} overflow-x-auto`}
           style={{ 
             background: getGradientValue(bgGradient),
             clipPath: useChamfer ? "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)" : undefined,
           }}
         >
           {title && (
-            <h3 className="font-ui text-lg mb-1" style={{ color: textColor }}>{title}</h3>
+            <h3 className="font-ui text-base sm:text-lg mb-1" style={{ color: textColor }}>{title}</h3>
           )}
           {description && (
-            <p className="font-data text-xs mb-4" style={{ color: axisColor }}>{description}</p>
+            <p className="font-data text-[10px] sm:text-xs mb-3 sm:mb-4" style={{ color: axisColor }}>{description}</p>
           )}
-          <div style={{ height: chartHeight }}>
+          <div style={{ height: Math.max(chartHeight, 200), minWidth: 280 }}>
             <ResponsiveContainer width="100%" height="100%">
               {renderChart()}
             </ResponsiveContainer>
@@ -1057,16 +1069,16 @@ export const ChartGenerator = () => {
       <Button
         onClick={handleGenerateCode}
         disabled={isLoading || !title.trim()}
-        className="w-full h-12 text-base font-ui"
+        className="w-full h-11 sm:h-12 text-sm sm:text-base font-ui touch-manipulation"
       >
         {isLoading ? (
           <>
-            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+            <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
             Generating Code...
           </>
         ) : (
           <>
-            <BarChart3 className="w-5 h-5 mr-2" />
+            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
             Generate Recharts Code
           </>
         )}
@@ -1076,14 +1088,14 @@ export const ChartGenerator = () => {
       {code && (
         <div className="pt-4 border-t border-border">
           <div className="flex items-center justify-between mb-3">
-            <label className="label-tech text-primary">Generated Code</label>
-            <Button variant="outline" size="sm" onClick={handleCopyCode}>
+            <label className="label-tech text-primary text-xs sm:text-sm">Generated Code</label>
+            <Button variant="outline" size="sm" onClick={handleCopyCode} className="touch-manipulation min-h-[36px]">
               <Copy className="w-4 h-4 mr-2" />
-              Copy Code
+              Copy
             </Button>
           </div>
-          <pre className="p-4 bg-muted/50 border border-border rounded-lg overflow-x-auto">
-            <code className="text-sm font-mono text-foreground">{code}</code>
+          <pre className="p-3 sm:p-4 bg-muted/50 border border-border rounded-lg overflow-x-auto">
+            <code className="text-xs sm:text-sm font-mono text-foreground">{code}</code>
           </pre>
         </div>
       )}
