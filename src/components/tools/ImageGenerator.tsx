@@ -214,14 +214,14 @@ export const ImageGenerator = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Auth Banner */}
       {!user && (
-        <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg">
-          <p className="text-sm text-foreground/80">
+        <div className="p-3 sm:p-4 bg-primary/10 border border-primary/20 rounded-lg">
+          <p className="text-xs sm:text-sm text-foreground/80">
             <button 
               onClick={() => navigate("/auth")} 
-              className="text-primary font-medium hover:underline"
+              className="text-primary font-medium hover:underline touch-manipulation"
             >
               Sign in
             </button>
@@ -232,18 +232,19 @@ export const ImageGenerator = () => {
 
       {/* History Toggle */}
       {user && (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <Button
             variant={showHistory ? "default" : "outline"}
             size="sm"
             onClick={() => setShowHistory(!showHistory)}
+            className="touch-manipulation min-h-[40px]"
           >
             <History className="w-4 h-4 mr-2" />
-            {showHistory ? "Hide History" : "Show History"}
+            {showHistory ? "Hide" : "History"}
           </Button>
           {showHistory && (
             <span className="text-xs text-muted-foreground">
-              {history.length} saved images
+              {history.length} saved
             </span>
           )}
         </div>
@@ -251,7 +252,7 @@ export const ImageGenerator = () => {
 
       {/* History Gallery */}
       {showHistory && user && (
-        <div className="border border-border rounded-lg p-4 bg-muted/20">
+        <div className="border border-border rounded-lg p-3 sm:p-4 bg-muted/20">
           {loadingHistory ? (
             <div className="flex justify-center py-8">
               <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
@@ -261,27 +262,28 @@ export const ImageGenerator = () => {
               No images yet. Generate your first image!
             </p>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
               {history.map((item) => (
                 <div 
                   key={item.id} 
-                  className="group relative border border-border rounded-lg overflow-hidden bg-background"
+                  className="relative border border-border rounded-lg overflow-hidden bg-background"
                 >
                   <img 
                     src={item.image_url} 
                     alt={item.prompt}
                     className="w-full aspect-square object-cover"
                   />
-                  <div className="absolute inset-0 bg-background/90 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
-                    <p className="text-xs text-foreground/80 text-center line-clamp-2 mb-1">
+                  {/* Always visible on mobile, hover on desktop */}
+                  <div className="absolute inset-0 bg-background/90 sm:opacity-0 sm:group-hover:opacity-100 flex flex-col items-center justify-center gap-1.5 sm:gap-2 p-2 opacity-100 sm:hover:opacity-100 transition-opacity">
+                    <p className="text-[10px] sm:text-xs text-foreground/80 text-center line-clamp-2">
                       {item.prompt}
                     </p>
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 flex-wrap justify-center">
                       <Button
                         variant="secondary"
                         size="sm"
                         onClick={() => useHistoryItem(item)}
-                        className="h-7 text-xs"
+                        className="h-8 text-xs touch-manipulation"
                       >
                         Reuse
                       </Button>
@@ -289,7 +291,7 @@ export const ImageGenerator = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => useAsReference(item.image_url)}
-                        className="h-7 text-xs"
+                        className="h-8 w-8 p-0 touch-manipulation"
                       >
                         <Plus className="w-3 h-3" />
                       </Button>
@@ -297,7 +299,7 @@ export const ImageGenerator = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => deleteFromHistory(item.id)}
-                        className="h-7 text-xs text-destructive hover:text-destructive"
+                        className="h-8 w-8 p-0 text-destructive hover:text-destructive touch-manipulation"
                       >
                         <Trash2 className="w-3 h-3" />
                       </Button>
@@ -310,11 +312,11 @@ export const ImageGenerator = () => {
         </div>
       )}
 
-      <div className="space-y-5">
+      <div className="space-y-4 sm:space-y-5">
         <div>
-          <label className="label-tech mb-2 block text-foreground/70">Aspect Ratio</label>
+          <label className="label-tech mb-2 block text-foreground/70 text-xs sm:text-sm">Aspect Ratio</label>
           <Select value={aspectRatio} onValueChange={setAspectRatio}>
-            <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+            <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 min-h-[44px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-popover border-border">
@@ -333,7 +335,7 @@ export const ImageGenerator = () => {
 
         {/* Multiple Reference Images */}
         <div>
-          <label className="label-tech mb-2 block text-foreground/70">
+          <label className="label-tech mb-2 block text-foreground/70 text-xs sm:text-sm">
             Reference Images ({referenceImages.length}/4)
           </label>
           <input
@@ -345,7 +347,7 @@ export const ImageGenerator = () => {
             className="hidden"
           />
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             {referenceImages.map((img, index) => (
               <div 
                 key={index} 
@@ -360,7 +362,7 @@ export const ImageGenerator = () => {
                   variant="destructive"
                   size="sm"
                   onClick={() => removeReferenceImage(index)}
-                  className="absolute top-1 right-1 h-6 w-6 p-0"
+                  className="absolute top-1 right-1 h-7 w-7 p-0 touch-manipulation"
                 >
                   <X className="w-3 h-3" />
                 </Button>
@@ -374,7 +376,7 @@ export const ImageGenerator = () => {
               <Button
                 variant="outline"
                 onClick={() => fileInputRef.current?.click()}
-                className="aspect-square h-auto border-dashed flex flex-col gap-1 hover:bg-muted/50"
+                className="aspect-square h-auto border-dashed flex flex-col gap-1 hover:bg-muted/50 touch-manipulation min-h-[80px]"
               >
                 <Upload className="w-5 h-5 text-muted-foreground" />
                 <span className="text-xs text-muted-foreground">Add</span>
@@ -382,7 +384,7 @@ export const ImageGenerator = () => {
             )}
           </div>
           
-          <p className="text-xs text-muted-foreground mt-2">
+          <p className="text-[10px] sm:text-xs text-muted-foreground mt-2">
             {referenceImages.length === 0 
               ? "Upload images to use as style references or to blend together"
               : referenceImages.length === 1
@@ -393,33 +395,33 @@ export const ImageGenerator = () => {
         </div>
 
         <div>
-          <label className="label-tech mb-2 block text-foreground/70">Prompt</label>
+          <label className="label-tech mb-2 block text-foreground/70 text-xs sm:text-sm">Prompt</label>
           <Textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder={referenceImages.length > 0 
               ? referenceImages.length === 1
-                ? "Describe how to transform this image... e.g., 'Apply Rhosonics brand colors and add ultrasonic wave patterns'"
-                : "Describe how to blend these images... e.g., 'Combine the composition of #1 with the color palette of #2'"
-              : "Describe the image you want... e.g., 'Industrial facility with ultrasonic measurement equipment, minimalist composition'"
+                ? "Describe how to transform this image..."
+                : "Describe how to blend these images..."
+              : "Describe the image you want..."
             }
-            className="min-h-[140px] bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20"
+            className="min-h-[120px] sm:min-h-[140px] bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20 text-sm"
           />
         </div>
 
         <Button
           onClick={handleGenerate}
           disabled={isLoading || !prompt.trim()}
-          className="w-full h-12 text-base font-ui"
+          className="w-full h-11 sm:h-12 text-sm sm:text-base font-ui touch-manipulation"
         >
           {isLoading ? (
             <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
               {referenceImages.length > 1 ? "Blending..." : referenceImages.length === 1 ? "Transforming..." : "Generating..."}
             </>
           ) : (
             <>
-              <ImageIcon className="w-5 h-5 mr-2" />
+              <ImageIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               {referenceImages.length > 1 ? "Blend Images" : referenceImages.length === 1 ? "Transform Image" : "Generate Brand Image"}
             </>
           )}
@@ -429,11 +431,12 @@ export const ImageGenerator = () => {
       {imageUrl && (
         <div className="space-y-3 pt-4 border-t border-border">
           <div className="flex items-center justify-between">
-            <label className="label-tech text-primary">Generated Image</label>
+            <label className="label-tech text-primary text-xs sm:text-sm">Generated Image</label>
             <Button 
               variant="outline" 
               size="sm" 
               onClick={handleDownload}
+              className="touch-manipulation min-h-[40px]"
             >
               <Download className="w-4 h-4 mr-2" />
               Download
