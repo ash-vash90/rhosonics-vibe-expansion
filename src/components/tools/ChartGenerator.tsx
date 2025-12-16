@@ -173,8 +173,14 @@ export const ChartGenerator = () => {
     if (!chartRef.current) return;
 
     try {
+      // Wait for fonts to be ready
+      await document.fonts.ready;
+      
       const canvas = await html2canvas(chartRef.current, {
         scale: 2,
+        backgroundColor: null,
+        useCORS: true,
+        logging: false,
       });
       
       const link = document.createElement("a");
@@ -193,7 +199,7 @@ export const ChartGenerator = () => {
 
   const axisStyle = {
     fontSize: 11,
-    fontFamily: "JetBrains Mono, monospace",
+    fontFamily: "'JetBrains Mono', monospace",
     fill: axisColor,
   };
 
@@ -206,13 +212,13 @@ export const ChartGenerator = () => {
     background: isLightBg ? "hsl(0, 0%, 100%)" : "hsl(226, 33%, 10%)",
     border: `1px solid ${gridColor}`,
     borderRadius: 8,
-    fontFamily: "JetBrains Mono, monospace",
+    fontFamily: "'JetBrains Mono', monospace",
     fontSize: 11,
     color: textColor,
   };
 
   const legendStyle = {
-    fontFamily: "Instrument Sans, sans-serif",
+    fontFamily: "'Instrument Sans', sans-serif",
     fontSize: 12,
     color: axisColor,
   };
@@ -336,7 +342,7 @@ export const ChartGenerator = () => {
         return (
           <RadarChart {...commonProps} cx="50%" cy="50%" outerRadius="80%">
             <PolarGrid stroke={gridColor} />
-            <PolarAngleAxis dataKey="name" tick={{ fontSize: 11, fontFamily: "JetBrains Mono", fill: axisColor }} />
+            <PolarAngleAxis dataKey="name" tick={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", fill: axisColor }} />
             <PolarRadiusAxis tick={axisStyle} />
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
