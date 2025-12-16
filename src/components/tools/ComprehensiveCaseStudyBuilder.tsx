@@ -17,6 +17,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { exportComprehensiveCaseStudyToPDF, exportComprehensiveCaseStudyToWord } from "@/lib/comprehensiveCaseStudyExport";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AISuggestionsSidebar } from "./AISuggestionsSidebar";
+import { AssetSuggestionsPanel } from "./AssetSuggestionsPanel";
 import {
   ComprehensiveCaseStudy,
   WIZARD_STEPS,
@@ -168,6 +169,7 @@ export const ComprehensiveCaseStudyBuilder = () => {
         full_content: generatedContent,
         is_draft: false,
         draft_step: 10,
+        suggested_assets: generatedContent.suggestedAssets || null,
       } as any);
 
       if (error) throw error;
@@ -1224,6 +1226,13 @@ export const ComprehensiveCaseStudyBuilder = () => {
             </Button>
           )}
         </div>
+
+        {/* AI Asset Suggestions */}
+        <AssetSuggestionsPanel
+          suggestedAssets={generatedContent.suggestedAssets}
+          customerName={generatedContent.executiveSnapshot.customerName}
+          application={generatedContent.executiveSnapshot.application}
+        />
       </div>
     );
   }
