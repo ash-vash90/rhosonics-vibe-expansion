@@ -1,9 +1,3 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
 interface ColorSwatchProps {
   name: string;
   hex: string;
@@ -16,7 +10,7 @@ interface ColorSwatchProps {
 }
 
 const ColorSwatch = ({ name, hex, usage, bgClass, textClass, description, doUse, dontUse }: ColorSwatchProps) => (
-  <div className="color-swatch flex flex-col md:flex-row gap-6 p-6 bg-card border border-border rounded-lg shadow-card items-start">
+  <div className="flex flex-col md:flex-row gap-6 p-6 bg-card border border-border rounded-lg shadow-card items-start">
     <div className={`swatch ${bgClass} ${textClass} border-none w-full md:w-48 shrink-0`}>
       <div>
         <span className="font-bold text-sm block">{name}</span>
@@ -40,108 +34,6 @@ const ColorSwatch = ({ name, hex, usage, bgClass, textClass, description, doUse,
 );
 
 export const ColorMatrix = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const slateScaleRef = useRef<HTMLDivElement>(null);
-  const gradientsRef = useRef<HTMLDivElement>(null);
-  const texturesRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Animate color swatches with staggered clip-path reveal
-      const swatches = sectionRef.current?.querySelectorAll('.color-swatch');
-      if (swatches) {
-        gsap.set(swatches, { 
-          clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
-          opacity: 1 
-        });
-        
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: "top 70%",
-          onEnter: () => {
-            gsap.to(swatches, {
-              clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-              duration: 0.8,
-              stagger: 0.12,
-              ease: "power3.inOut",
-            });
-          }
-        });
-      }
-
-      // Animate slate scale like piano keys
-      const slateShades = slateScaleRef.current?.querySelectorAll('.slate-shade');
-      if (slateShades) {
-        gsap.set(slateShades, { scaleY: 0, transformOrigin: "bottom center" });
-        
-        ScrollTrigger.create({
-          trigger: slateScaleRef.current,
-          start: "top 80%",
-          onEnter: () => {
-            gsap.to(slateShades, {
-              scaleY: 1,
-              duration: 0.5,
-              stagger: 0.05,
-              ease: "back.out(1.7)",
-            });
-          }
-        });
-      }
-
-      // Animate gradients with blur fade and scale
-      const gradientCards = gradientsRef.current?.querySelectorAll('.gradient-card');
-      if (gradientCards) {
-        gsap.set(gradientCards, { 
-          scale: 0.85, 
-          opacity: 0,
-          filter: "blur(10px)"
-        });
-        
-        ScrollTrigger.create({
-          trigger: gradientsRef.current,
-          start: "top 80%",
-          onEnter: () => {
-            gsap.to(gradientCards, {
-              scale: 1,
-              opacity: 1,
-              filter: "blur(0px)",
-              duration: 0.8,
-              stagger: 0.15,
-              ease: "power3.out",
-            });
-          }
-        });
-      }
-
-      // Animate texture cards with 3D flip
-      const textureCards = texturesRef.current?.querySelectorAll('.texture-card');
-      if (textureCards) {
-        gsap.set(textureCards, { 
-          rotateY: -90,
-          opacity: 0,
-          transformPerspective: 1000,
-          transformOrigin: "left center"
-        });
-        
-        ScrollTrigger.create({
-          trigger: texturesRef.current,
-          start: "top 80%",
-          onEnter: () => {
-            gsap.to(textureCards, {
-              rotateY: 0,
-              opacity: 1,
-              duration: 0.7,
-              stagger: 0.1,
-              ease: "power3.out",
-            });
-          }
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   const primaryColors: ColorSwatchProps[] = [
     {
       name: "Rhosonics Green",
@@ -232,7 +124,7 @@ export const ColorMatrix = () => {
   ];
 
   return (
-    <section id="colors" className="mb-32" ref={sectionRef}>
+    <section id="colors" className="mb-32">
       <h2 className="section-header">Color Matrix</h2>
 
       {/* Primary Colors */}
@@ -260,7 +152,7 @@ export const ColorMatrix = () => {
 
       {/* Slate Scale */}
       <h3 className="label-tech text-slate-500 mb-4">THE SLATE SCALE</h3>
-      <div ref={slateScaleRef} className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2">
         {[
           { name: "50", bg: "bg-slate-50", text: "text-slate-600" },
           { name: "100", bg: "bg-slate-100", text: "text-slate-600" },
@@ -273,29 +165,29 @@ export const ColorMatrix = () => {
           { name: "800", bg: "bg-slate-800", text: "text-slate-100" },
           { name: "900", bg: "bg-slate-900", text: "text-slate-100" },
         ].map((shade) => (
-          <div key={shade.name} className={`slate-shade swatch-sm ${shade.bg} ${shade.text}`}>
+          <div key={shade.name} className={`swatch-sm ${shade.bg} ${shade.text}`}>
             <span className="font-data text-xs font-bold">{shade.name}</span>
           </div>
         ))}
       </div>
 
       {/* Gradient Examples */}
-      <div className="mt-12" ref={gradientsRef}>
+      <div className="mt-12">
         <h3 className="label-tech text-slate-500 mb-4">BRAND GRADIENTS</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="gradient-card h-32 bg-brand-gradient rounded-lg flex items-end p-4">
+          <div className="h-32 bg-brand-gradient rounded-lg flex items-end p-4">
             <div>
               <span className="font-ui font-bold text-primary-foreground block">Primary Gradient</span>
               <code className="label-tech text-primary-foreground/70">135° | #73B82E → #33993c</code>
             </div>
           </div>
-          <div className="gradient-card h-32 bg-obsidian-gradient rounded-lg flex items-end p-4">
+          <div className="h-32 bg-obsidian-gradient rounded-lg flex items-end p-4">
             <div>
               <span className="font-ui font-bold text-slate-100 block">Obsidian Gradient</span>
               <code className="label-tech text-slate-400">135° | #1c2130 → #111522</code>
             </div>
           </div>
-          <div className="gradient-card h-32 rounded-lg flex items-end p-4 relative overflow-hidden" style={{ background: 'linear-gradient(145deg, hsl(45 35% 65%) 0%, hsl(45 30% 50%) 100%)' }}>
+          <div className="h-32 rounded-lg flex items-end p-4 relative overflow-hidden" style={{ background: 'linear-gradient(145deg, hsl(45 35% 65%) 0%, hsl(45 30% 50%) 100%)' }}>
             <div className="absolute inset-0 bg-terrain-contour opacity-50" aria-hidden="true" />
             <div className="relative">
               <span className="font-ui font-bold text-white block">Earth Gradient</span>
@@ -306,25 +198,25 @@ export const ColorMatrix = () => {
       </div>
 
       {/* Terrain Textures */}
-      <div className="mt-12" ref={texturesRef}>
+      <div className="mt-12">
         <h3 className="label-tech text-earth-ochre mb-4">TERRAIN TEXTURES</h3>
         <p className="text-muted-foreground text-sm mb-6">
           Subtle background patterns that reinforce the field aesthetic. Use sparingly on cards and sections related to mining, minerals, and outdoor operations.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="texture-card h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-contour flex flex-col justify-end p-4">
+          <div className="h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-contour flex flex-col justify-end p-4">
             <span className="font-ui font-medium text-earth-clay text-sm">Contour Lines</span>
             <span className="label-tech text-earth-ochre/70 text-xs">TOPOGRAPHIC</span>
           </div>
-          <div className="texture-card h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-strata flex flex-col justify-end p-4">
+          <div className="h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-strata flex flex-col justify-end p-4">
             <span className="font-ui font-medium text-earth-clay text-sm">Strata Layers</span>
             <span className="label-tech text-earth-ochre/70 text-xs">GEOLOGICAL</span>
           </div>
-          <div className="texture-card h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-grain flex flex-col justify-end p-4">
+          <div className="h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-grain flex flex-col justify-end p-4">
             <span className="font-ui font-medium text-earth-clay text-sm">Grain Particles</span>
             <span className="label-tech text-earth-ochre/70 text-xs">MINERAL</span>
           </div>
-          <div className="texture-card h-28 rounded-lg bg-terrain-ore flex flex-col justify-end p-4">
+          <div className="h-28 rounded-lg bg-terrain-ore flex flex-col justify-end p-4">
             <span className="font-ui font-medium text-earth-ochre-light text-sm">Ore Deposits</span>
             <span className="label-tech text-earth-ochre/70 text-xs">DARK FIELD</span>
           </div>
