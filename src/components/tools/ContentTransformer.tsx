@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Copy, Loader2, RefreshCw, Check, ArrowRight } from "lucide-react";
+import { Copy, Loader2, RefreshCw, Check, ArrowRight, Upload, FileText, X } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 type TransformMode = "full" | "terminology" | "tone";
 
@@ -14,13 +15,112 @@ interface Change {
   transformed: string;
 }
 
+interface UploadedFile {
+  name: string;
+  size: number;
+  text: string;
+}
+
 export const ContentTransformer = () => {
+  const { user } = useAuth();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState<TransformMode>("full");
   const [changes, setChanges] = useState<Change[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isParsing, setIsParsing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = [
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "text/plain",
+      "text/markdown",
+    ];
+    
+    const allowedExtensions = [".pdf", ".docx", ".txt", ".md"];
+    const fileName = file.name.toLowerCase();
+    const hasValidExtension = allowedExtensions.some(ext => fileName.endsWith(ext));
+
+    if (!allowedTypes.includes(file.type) && !hasValidExtension) {
+      toast.error("Please upload a PDF, DOCX, TXT, or MD file");
+      return;
+    }
+
+    if (file.size > 20 * 1024 * 1024) {
+      toast.error("File size must be under 20MB");
+      return;
+    }
+
+    // For text files, read directly
+    if (fileName.endsWith(".txt") || fileName.endsWith(".md")) {
+      const text = await file.text();
+      setUploadedFile({ name: file.name, size: file.size, text });
+      setInput(text);
+      toast.success(`Loaded ${file.name}`);
+      return;
+    }
+
+    // For PDF/DOCX, use the edge function
+    if (!user) {
+      toast.error("Please log in to upload documents");
+      return;
+    }
+
+    setIsParsing(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/parse-document`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to parse document");
+      }
+
+      const data = await response.json();
+      
+      setUploadedFile({ name: file.name, size: file.size, text: data.text });
+      setInput(data.text);
+      toast.success(`Parsed ${file.name}`);
+    } catch (error: any) {
+      console.error("Parse error:", error);
+      toast.error(error.message || "Failed to parse document");
+    } finally {
+      setIsParsing(false);
+    }
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setUploadedFile(null);
+    setInput("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const handleTransform = async () => {
     if (!input.trim()) {
@@ -64,6 +164,12 @@ export const ContentTransformer = () => {
     tone: "Keep content structure, adjust voice to be direct, technical, confident",
   };
 
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
   return (
     <div className="space-y-6">
       {/* Mode Selection */}
@@ -93,6 +199,55 @@ export const ContentTransformer = () => {
         </RadioGroup>
       </div>
 
+      {/* File Upload */}
+      <div>
+        <label className="label-tech mb-3 block text-foreground/70">Upload Document (Optional)</label>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".pdf,.docx,.txt,.md"
+          onChange={handleFileUpload}
+          className="hidden"
+        />
+        
+        {uploadedFile ? (
+          <div className="flex items-center gap-3 p-3 bg-muted/50 border border-border rounded-lg">
+            <FileText className="w-5 h-5 text-primary flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="font-ui text-sm text-foreground truncate">{uploadedFile.name}</p>
+              <p className="font-mono text-xs text-muted-foreground">
+                {formatFileSize(uploadedFile.size)} • {uploadedFile.text.length.toLocaleString()} characters
+              </p>
+            </div>
+            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleRemoveFile}>
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
+        ) : (
+          <Button
+            variant="outline"
+            className="w-full h-20 border-dashed"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isParsing}
+          >
+            {isParsing ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Parsing document...
+              </>
+            ) : (
+              <>
+                <Upload className="w-5 h-5 mr-2" />
+                <div className="text-left">
+                  <div className="font-ui text-sm">Upload PDF, DOCX, TXT, or MD</div>
+                  <div className="font-mono text-xs text-muted-foreground">Max 20MB</div>
+                </div>
+              </>
+            )}
+          </Button>
+        )}
+      </div>
+
       {/* Two-pane layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Input */}
@@ -101,7 +256,7 @@ export const ContentTransformer = () => {
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Paste your old content here... e.g., 'Our cutting-edge revolutionary product delivers amazing results instantly!'"
+            placeholder="Paste your old content here or upload a document above... e.g., 'Our cutting-edge revolutionary product delivers amazing results instantly!'"
             className="min-h-[200px] bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20 resize-none"
           />
         </div>
