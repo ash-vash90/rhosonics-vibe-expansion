@@ -24,11 +24,24 @@ interface ImageHistoryItem {
   created_at: string;
 }
 
-export const ImageGenerator = () => {
+interface ImageGeneratorProps {
+  initialPrompt?: string;
+  onPromptConsumed?: () => void;
+}
+
+export const ImageGenerator = ({ initialPrompt, onPromptConsumed }: ImageGeneratorProps) => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [prompt, setPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("1:1");
+
+  // Handle pre-filled prompt from other tools
+  useEffect(() => {
+    if (initialPrompt) {
+      setPrompt(initialPrompt);
+      onPromptConsumed?.();
+    }
+  }, [initialPrompt, onPromptConsumed]);
   const [imageUrl, setImageUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [referenceImages, setReferenceImages] = useState<string[]>([]);
