@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown, Film, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { buildChartExportSvg, svgToPngDataUrl } from "@/lib/chartExport";
+import html2canvas from "html2canvas";
 import GIF from "gif.js";
 import gifWorkerUrl from "gif.js/dist/gif.worker.js?url";
 import {
@@ -326,8 +327,7 @@ export const ChartGenerator = () => {
       return;
     }
 
-    const svgEl = getChartSvg();
-    if (!svgEl || !chartRef.current) {
+    if (!chartRef.current) {
       toast.error("Chart not found");
       return;
     }
@@ -336,9 +336,6 @@ export const ChartGenerator = () => {
     setGifProgress(0);
 
     try {
-      await document.fonts?.load?.("500 12px 'JetBrains Mono'");
-      await document.fonts?.ready;
-
       const rect = chartRef.current.getBoundingClientRect();
       const width = Math.round(rect.width);
       const height = Math.round(rect.height);
@@ -358,41 +355,30 @@ export const ChartGenerator = () => {
       // Reset animation
       replayAnimation();
 
-      // Capture frames over the animation duration
+      // Wait a moment for the animation to start
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Capture frames using html2canvas
       for (let i = 0; i <= frameCount; i++) {
-        await new Promise(resolve => setTimeout(resolve, i === 0 ? 50 : frameDelay));
+        if (i > 0) {
+          await new Promise(resolve => setTimeout(resolve, frameDelay));
+        }
 
-        const built = buildChartExportSvg(svgEl, {
-          backgroundGradient: getGradientValue(bgGradient),
-          padding: 0,
-          chamfer: useChamfer,
-          includeFontCss: true,
-        });
+        try {
+          const canvas = await html2canvas(chartRef.current, {
+            backgroundColor: null,
+            scale: 1,
+            logging: false,
+            useCORS: true,
+            allowTaint: true,
+            width,
+            height,
+          });
 
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) continue;
-
-        const img = new Image();
-        const blob = new Blob([built.svg], { type: "image/svg+xml;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-
-        await new Promise<void>((resolve) => {
-          img.onload = () => {
-            ctx.drawImage(img, 0, 0, width, height);
-            URL.revokeObjectURL(url);
-            resolve();
-          };
-          img.onerror = () => {
-            URL.revokeObjectURL(url);
-            resolve();
-          };
-          img.src = url;
-        });
-
-        gif.addFrame(canvas, { delay: i === frameCount ? 1500 : frameDelay, copy: true });
+          gif.addFrame(canvas, { delay: i === frameCount ? 1500 : frameDelay, copy: true });
+        } catch (frameError) {
+          console.warn("Frame capture error:", frameError);
+        }
         
         // Update progress for frame capture phase (0-50%)
         setGifProgress(Math.round((i / frameCount) * 50));
