@@ -9,6 +9,7 @@ import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown, Fi
 import { toast } from "sonner";
 import { buildChartExportSvg, svgToPngDataUrl } from "@/lib/chartExport";
 import GIF from "gif.js";
+import gifWorkerUrl from "gif.js/dist/gif.worker.js?url";
 import {
   ResponsiveContainer,
   BarChart,
@@ -347,7 +348,7 @@ export const ChartGenerator = () => {
         quality: 10,
         width,
         height,
-        workerScript: "https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js",
+        workerScript: gifWorkerUrl,
       });
 
       const totalDuration = currentAnimation.duration + (currentAnimation.staggerDelay * Math.max(dataPoints.length, 3));
