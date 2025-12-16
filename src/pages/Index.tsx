@@ -52,7 +52,12 @@ const Index = () => {
           <VoiceTone />
           <MotionDesign />
           <DosAndDonts />
+        </Suspense>
+        {/* TechComparison has its own Suspense for code-splitting recharts (largest bundle) */}
+        <Suspense fallback={<SectionLoader />}>
           <TechComparison />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
           <CaseStudies />
         </Suspense>
         
