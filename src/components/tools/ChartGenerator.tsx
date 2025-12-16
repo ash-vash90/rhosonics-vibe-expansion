@@ -33,6 +33,7 @@ import {
   ScatterChart,
   Scatter,
   ZAxis,
+  Label,
 } from "recharts";
 
 const CHART_TYPES = [
@@ -70,6 +71,21 @@ const BACKGROUND_GRADIENTS = [
   { value: "eco", label: "Eco Surface", gradient: "linear-gradient(180deg, hsl(125, 43%, 95%) 0%, hsl(125, 40%, 90%) 100%)" },
 ];
 
+const ASPECT_RATIOS = [
+  { value: "16:9", label: "16:9 (Wide)", height: 280 },
+  { value: "4:3", label: "4:3 (Standard)", height: 320 },
+  { value: "1:1", label: "1:1 (Square)", height: 400 },
+  { value: "3:4", label: "3:4 (Portrait)", height: 480 },
+  { value: "21:9", label: "21:9 (Ultrawide)", height: 220 },
+];
+
+const PNG_SCALES = [
+  { value: 1, label: "1x" },
+  { value: 2, label: "2x" },
+  { value: 3, label: "3x" },
+  { value: 4, label: "4x" },
+];
+
 interface DataPoint {
   name: string;
   value: number;
@@ -83,6 +99,9 @@ export const ChartGenerator = () => {
   const [chartType, setChartType] = useState("bar");
   const [xAxisLabel, setXAxisLabel] = useState("");
   const [yAxisLabel, setYAxisLabel] = useState("");
+  const [showAxisTitles, setShowAxisTitles] = useState(true);
+  const [aspectRatio, setAspectRatio] = useState("4:3");
+  const [pngScale, setPngScale] = useState(2);
   const [primaryColor, setPrimaryColor] = useState("primary");
   const [secondaryColor, setSecondaryColor] = useState("amber");
   const [tertiaryColor, setTertiaryColor] = useState("slate");
@@ -100,6 +119,7 @@ export const ChartGenerator = () => {
 
   const isMultiSeries = ["grouped-bar", "stacked-bar", "multi-line", "stacked-area", "composed", "radar"].includes(chartType);
   const isLightBg = ["metal-light", "field", "eco"].includes(bgGradient);
+  const chartHeight = ASPECT_RATIOS.find(r => r.value === aspectRatio)?.height || 320;
 
   useEffect(() => {
     // Warm-load Rhosonics data font so SVG text renders consistently.
@@ -236,7 +256,7 @@ export const ChartGenerator = () => {
         svg: built.svg,
         width: built.width,
         height: built.height,
-        scale: 2,
+        scale: pngScale,
       });
 
       const link = document.createElement("a");
@@ -279,10 +299,23 @@ export const ChartGenerator = () => {
     color: axisColor,
   };
 
+  const axisTitleStyle = {
+    fontSize: 11,
+    fontFamily: "'JetBrains Mono', monospace",
+    fill: axisColor,
+    fontWeight: 500,
+  };
+
   const renderChart = () => {
+    const hasAxisTitles = showAxisTitles && (xAxisLabel || yAxisLabel);
     const commonProps = {
       data: dataPoints,
-      margin: { top: 20, right: 30, left: 20, bottom: 20 },
+      margin: { 
+        top: 20, 
+        right: 30, 
+        left: hasAxisTitles && yAxisLabel ? 50 : 20, 
+        bottom: hasAxisTitles && xAxisLabel ? 40 : 20 
+      },
     };
 
     const color1 = getColorValue(primaryColor);
@@ -294,8 +327,12 @@ export const ChartGenerator = () => {
         return (
           <BarChart {...commonProps}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Value" />
           </BarChart>
@@ -304,13 +341,33 @@ export const ChartGenerator = () => {
         return (
           <BarChart {...commonProps} layout="vertical">
             <CartesianGrid {...gridProps} />
-            <XAxis type="number" tick={axisStyle} />
-            <YAxis dataKey="name" type="category" tick={axisStyle} width={80} />
+            <XAxis type="number" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis dataKey="name" type="category" tick={axisStyle} width={80}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Bar dataKey="value" fill={color1} radius={[0, 4, 4, 0]} name="Value" />
           </BarChart>
         );
       case "grouped-bar":
+        return (
+          <BarChart {...commonProps}>
+            <CartesianGrid {...gridProps} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
+            <Tooltip contentStyle={tooltipStyle} />
+            <Legend wrapperStyle={legendStyle} />
+            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Series 1" />
+            <Bar dataKey="value2" fill={color2} radius={[4, 4, 0, 0]} name="Series 2" />
+            <Bar dataKey="value3" fill={color3} radius={[4, 4, 0, 0]} name="Series 3" />
+          </BarChart>
+        );
         return (
           <BarChart {...commonProps}>
             <CartesianGrid {...gridProps} />
@@ -327,8 +384,12 @@ export const ChartGenerator = () => {
         return (
           <BarChart {...commonProps}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
             <Bar dataKey="value" stackId="a" fill={color1} name="Series 1" />
@@ -340,8 +401,12 @@ export const ChartGenerator = () => {
         return (
           <LineChart {...commonProps}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Line type="monotone" dataKey="value" stroke={color1} strokeWidth={2} dot={{ fill: color1, r: 4 }} name="Value" />
           </LineChart>
@@ -350,8 +415,12 @@ export const ChartGenerator = () => {
         return (
           <LineChart {...commonProps}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
             <Line type="monotone" dataKey="value" stroke={color1} strokeWidth={2} dot={{ fill: color1, r: 4 }} name="Series 1" />
@@ -363,8 +432,12 @@ export const ChartGenerator = () => {
         return (
           <AreaChart {...commonProps}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Area type="monotone" dataKey="value" fill={color1} fillOpacity={0.3} stroke={color1} strokeWidth={2} name="Value" />
           </AreaChart>
@@ -373,8 +446,12 @@ export const ChartGenerator = () => {
         return (
           <AreaChart {...commonProps}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
             <Area type="monotone" dataKey="value" stackId="1" fill={color1} fillOpacity={0.6} stroke={color1} strokeWidth={2} name="Series 1" />
@@ -383,6 +460,21 @@ export const ChartGenerator = () => {
           </AreaChart>
         );
       case "composed":
+        return (
+          <ComposedChart {...commonProps}>
+            <CartesianGrid {...gridProps} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
+            <Tooltip contentStyle={tooltipStyle} />
+            <Legend wrapperStyle={legendStyle} />
+            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Bar Series" />
+            <Line type="monotone" dataKey="value2" stroke={color2} strokeWidth={2} dot={{ fill: color2, r: 4 }} name="Line Series" />
+          </ComposedChart>
+        );
         return (
           <ComposedChart {...commonProps}>
             <CartesianGrid {...gridProps} />
@@ -429,8 +521,12 @@ export const ChartGenerator = () => {
         return (
           <ScatterChart {...commonProps}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="value" type="number" tick={axisStyle} name="X" />
-            <YAxis dataKey="value2" type="number" tick={axisStyle} name="Y" />
+            <XAxis dataKey="value" type="number" tick={axisStyle} name="X">
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis dataKey="value2" type="number" tick={axisStyle} name="Y">
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <ZAxis dataKey="value3" range={[60, 400]} name="Size" />
             <Tooltip contentStyle={tooltipStyle} cursor={{ strokeDasharray: "3 3" }} />
             <Scatter name="Data" data={dataPoints} fill={color1} />
@@ -440,8 +536,12 @@ export const ChartGenerator = () => {
         return (
           <BarChart {...commonProps}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
+            <XAxis dataKey="name" tick={axisStyle}>
+              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
+            </XAxis>
+            <YAxis tick={axisStyle}>
+              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
+            </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} />
           </BarChart>
@@ -498,6 +598,46 @@ export const ChartGenerator = () => {
             placeholder="e.g., kWh/year"
             className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
           />
+        </div>
+      </div>
+
+      {/* Axis & Layout Settings */}
+      <div className="p-4 bg-muted/30 rounded-lg border border-border">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="flex items-center justify-between md:col-span-1">
+            <label className="label-tech text-foreground/70">Show Axis Titles</label>
+            <Switch checked={showAxisTitles} onCheckedChange={setShowAxisTitles} />
+          </div>
+          <div>
+            <label className="label-tech mb-2 block text-foreground/70">Aspect Ratio</label>
+            <Select value={aspectRatio} onValueChange={setAspectRatio}>
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border-border">
+                {ASPECT_RATIOS.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value} className="text-foreground focus:bg-primary/20">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <label className="label-tech mb-2 block text-foreground/70">PNG Export Scale</label>
+            <Select value={String(pngScale)} onValueChange={(v) => setPngScale(Number(v))}>
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border-border">
+                {PNG_SCALES.map((opt) => (
+                  <SelectItem key={opt.value} value={String(opt.value)} className="text-foreground focus:bg-primary/20">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
@@ -721,7 +861,7 @@ export const ChartGenerator = () => {
           {description && (
             <p className="font-data text-xs mb-4" style={{ color: axisColor }}>{description}</p>
           )}
-          <div className="h-[320px]">
+          <div style={{ height: chartHeight }}>
             <ResponsiveContainer width="100%" height="100%">
               {renderChart()}
             </ResponsiveContainer>
