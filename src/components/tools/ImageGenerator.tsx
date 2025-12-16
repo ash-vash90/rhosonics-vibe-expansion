@@ -62,17 +62,17 @@ export const ImageGenerator = () => {
     <div className="space-y-6">
       <div className="space-y-5">
         <div>
-          <label className="label-tech mb-2 block text-slate-300">Aspect Ratio</label>
+          <label className="label-tech mb-2 block text-foreground/70">Aspect Ratio</label>
           <Select value={aspectRatio} onValueChange={setAspectRatio}>
-            <SelectTrigger className="bg-slate-900/60 border-slate-600 text-slate-200 focus:border-primary focus:ring-primary/20">
+            <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-slate-800 border-slate-600">
+            <SelectContent className="bg-popover border-border">
               {ASPECT_RATIOS.map((opt) => (
                 <SelectItem 
                   key={opt.value} 
                   value={opt.value}
-                  className="text-slate-200 focus:bg-primary/20 focus:text-slate-100"
+                  className="text-foreground focus:bg-primary/20"
                 >
                   {opt.label}
                 </SelectItem>
@@ -82,19 +82,19 @@ export const ImageGenerator = () => {
         </div>
 
         <div>
-          <label className="label-tech mb-2 block text-slate-300">Prompt</label>
+          <label className="label-tech mb-2 block text-foreground/70">Prompt</label>
           <Textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Describe the image you want... e.g., 'Industrial facility with ultrasonic measurement equipment, minimalist composition'"
-            className="min-h-[140px] bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 font-ui focus:border-primary focus:ring-primary/20"
+            className="min-h-[140px] bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20"
           />
         </div>
 
         <Button
           onClick={handleGenerate}
           disabled={isLoading || !prompt.trim()}
-          className="w-full h-12 text-base font-ui bg-primary hover:bg-primary/90 text-slate-950"
+          className="w-full h-12 text-base font-ui"
         >
           {isLoading ? (
             <>
@@ -111,20 +111,19 @@ export const ImageGenerator = () => {
       </div>
 
       {imageUrl && (
-        <div className="space-y-3 pt-4 border-t border-slate-700">
+        <div className="space-y-3 pt-4 border-t border-border">
           <div className="flex items-center justify-between">
             <label className="label-tech text-primary">Generated Image</label>
             <Button 
               variant="outline" 
               size="sm" 
               onClick={handleDownload}
-              className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
             >
               <Download className="w-4 h-4 mr-2" />
               Download
             </Button>
           </div>
-          <div className="border border-slate-600 rounded-lg overflow-hidden bg-slate-900">
+          <div className="border border-border rounded-lg overflow-hidden bg-muted/30">
             <img
               src={imageUrl}
               alt="Generated brand image"
