@@ -1,13 +1,13 @@
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette } from "lucide-react";
+import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown } from "lucide-react";
 import { toast } from "sonner";
-import html2canvas from "html2canvas";
+import { buildChartExportSvg, svgToPngDataUrl } from "@/lib/chartExport";
 import {
   ResponsiveContainer,
   BarChart,
@@ -88,6 +88,7 @@ export const ChartGenerator = () => {
   const [tertiaryColor, setTertiaryColor] = useState("slate");
   const [bgGradient, setBgGradient] = useState("obsidian");
   const [useChamfer, setUseChamfer] = useState(false);
+  const [exportPadding, setExportPadding] = useState(24);
   const [dataPoints, setDataPoints] = useState<DataPoint[]>([
     { name: "Item 1", value: 100, value2: 80, value3: 60 },
     { name: "Item 2", value: 80, value2: 90, value3: 70 },
@@ -99,6 +100,11 @@ export const ChartGenerator = () => {
 
   const isMultiSeries = ["grouped-bar", "stacked-bar", "multi-line", "stacked-area", "composed", "radar"].includes(chartType);
   const isLightBg = ["metal-light", "field", "eco"].includes(bgGradient);
+
+  useEffect(() => {
+    // Warm-load Rhosonics data font so SVG text renders consistently.
+    document.fonts?.load?.("500 12px 'JetBrains Mono'");
+  }, []);
 
   const getColorValue = (colorKey: string) => {
     return BRAND_COLORS.find(c => c.value === colorKey)?.color || BRAND_COLORS[0].color;
@@ -169,26 +175,76 @@ export const ChartGenerator = () => {
     toast.success("Code copied to clipboard");
   };
 
-  const handleDownloadPng = async () => {
-    if (!chartRef.current) return;
+  const getChartSvg = () => {
+    const root = chartRef.current;
+    if (!root) return null;
+    return (root.querySelector("svg.recharts-surface") || root.querySelector("svg")) as SVGSVGElement | null;
+  };
+
+  const handleDownloadSvg = async () => {
+    const svgEl = getChartSvg();
+    if (!svgEl) {
+      toast.error("Chart SVG not found");
+      return;
+    }
 
     try {
-      // Wait for fonts to be ready
-      await document.fonts.ready;
-      
-      const canvas = await html2canvas(chartRef.current, {
-        scale: 2,
-        backgroundColor: null,
-        useCORS: true,
-        logging: false,
+      await document.fonts?.load?.("500 12px 'JetBrains Mono'");
+      await document.fonts?.ready;
+
+      const { svg } = buildChartExportSvg(svgEl, {
+        backgroundGradient: getGradientValue(bgGradient),
+        padding: exportPadding,
+        chamfer: useChamfer,
+        includeFontCss: true,
       });
-      
+
+      const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.download = `${title.toLowerCase().replace(/\s+/g, "-")}-chart.svg`;
+      link.href = url;
+      link.click();
+
+      URL.revokeObjectURL(url);
+      toast.success("Chart downloaded as SVG");
+    } catch {
+      toast.error("Failed to download SVG");
+    }
+  };
+
+  const handleDownloadPng = async () => {
+    const svgEl = getChartSvg();
+    if (!svgEl) {
+      toast.error("Chart SVG not found");
+      return;
+    }
+
+    try {
+      await document.fonts?.load?.("500 12px 'JetBrains Mono'");
+      await document.fonts?.ready;
+
+      const built = buildChartExportSvg(svgEl, {
+        backgroundGradient: getGradientValue(bgGradient),
+        padding: exportPadding,
+        chamfer: useChamfer,
+        includeFontCss: true,
+      });
+
+      const dataUrl = await svgToPngDataUrl({
+        svg: built.svg,
+        width: built.width,
+        height: built.height,
+        scale: 2,
+      });
+
       const link = document.createElement("a");
       link.download = `${title.toLowerCase().replace(/\s+/g, "-")}-chart.png`;
-      link.href = canvas.toDataURL("image/png");
+      link.href = dataUrl;
       link.click();
       toast.success("Chart downloaded as PNG");
-    } catch (error) {
+    } catch {
       toast.error("Failed to download chart");
     }
   };
@@ -453,7 +509,7 @@ export const ChartGenerator = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="text-xs font-mono text-muted-foreground mb-1 block">Primary</label>
+            <label className="text-xs font-data text-muted-foreground mb-1 block">Primary</label>
             <Select value={primaryColor} onValueChange={setPrimaryColor}>
               <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
                 <div className="flex items-center gap-2">
@@ -476,7 +532,7 @@ export const ChartGenerator = () => {
           {isMultiSeries && (
             <>
               <div>
-                <label className="text-xs font-mono text-muted-foreground mb-1 block">Secondary</label>
+                <label className="text-xs font-data text-muted-foreground mb-1 block">Secondary</label>
                 <Select value={secondaryColor} onValueChange={setSecondaryColor}>
                   <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
                     <div className="flex items-center gap-2">
@@ -497,7 +553,7 @@ export const ChartGenerator = () => {
                 </Select>
               </div>
               <div>
-                <label className="text-xs font-mono text-muted-foreground mb-1 block">Tertiary</label>
+                <label className="text-xs font-data text-muted-foreground mb-1 block">Tertiary</label>
                 <Select value={tertiaryColor} onValueChange={setTertiaryColor}>
                   <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
                     <div className="flex items-center gap-2">
@@ -524,7 +580,7 @@ export const ChartGenerator = () => {
 
       {/* Background & Style */}
       <div className="p-4 bg-muted/30 rounded-lg border border-border">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="label-tech mb-2 block text-foreground/70">Background Gradient</label>
             <Select value={bgGradient} onValueChange={setBgGradient}>
@@ -546,7 +602,20 @@ export const ChartGenerator = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex items-center justify-between">
+
+          <div>
+            <label className="label-tech mb-2 block text-foreground/70">Export Padding (px)</label>
+            <Input
+              type="number"
+              min={0}
+              max={80}
+              value={exportPadding}
+              onChange={(e) => setExportPadding(Number(e.target.value || 0))}
+              className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-data focus:border-primary focus:ring-primary/20"
+            />
+          </div>
+
+          <div className="flex items-center justify-between md:pt-7">
             <label className="label-tech text-foreground/70">Use Chamfer Corners</label>
             <Switch checked={useChamfer} onCheckedChange={setUseChamfer} />
           </div>
@@ -627,10 +696,16 @@ export const ChartGenerator = () => {
       <div className="pt-4 border-t border-border">
         <div className="flex items-center justify-between mb-3">
           <label className="label-tech text-primary">Live Preview</label>
-          <Button variant="outline" size="sm" onClick={handleDownloadPng}>
-            <Download className="w-4 h-4 mr-2" />
-            Download PNG
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={handleDownloadSvg}>
+              <FileDown className="w-4 h-4 mr-2" />
+              Download SVG
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleDownloadPng}>
+              <Download className="w-4 h-4 mr-2" />
+              Download PNG
+            </Button>
+          </div>
         </div>
         <div
           ref={chartRef}
@@ -644,7 +719,7 @@ export const ChartGenerator = () => {
             <h3 className="font-ui text-lg mb-1" style={{ color: textColor }}>{title}</h3>
           )}
           {description && (
-            <p className="font-mono text-xs mb-4" style={{ color: axisColor }}>{description}</p>
+            <p className="font-data text-xs mb-4" style={{ color: axisColor }}>{description}</p>
           )}
           <div className="h-[320px]">
             <ResponsiveContainer width="100%" height="100%">
