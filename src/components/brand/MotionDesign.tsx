@@ -1,23 +1,68 @@
-import { useState } from "react";
-import { RhosonicsLogo } from "../RhosonicsLogo";
+import { useRef, useEffect } from "react";
+import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const MotionDesign = () => {
-  const [playStates, setPlayStates] = useState({
-    boot: false,
-    fade: false,
-    reveal: false,
-    pulse: false,
-  });
+  const logoRef = useRef<AnimatedLogoRef>(null);
+  const textRevealRef = useRef<HTMLSpanElement>(null);
+  const fadeRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const principlesRef = useRef<HTMLDivElement>(null);
 
-  const triggerAnimation = (key: keyof typeof playStates) => {
-    setPlayStates(prev => ({ ...prev, [key]: true }));
-    setTimeout(() => {
-      setPlayStates(prev => ({ ...prev, [key]: false }));
-    }, 1500);
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Stagger principles cards on scroll
+      const cards = principlesRef.current?.querySelectorAll('.principle-card');
+      if (cards) {
+        gsap.fromTo(cards,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: principlesRef.current,
+              start: "top 80%",
+            }
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const playBootAnimation = () => {
+    logoRef.current?.play();
+  };
+
+  const playTextReveal = () => {
+    const el = textRevealRef.current;
+    if (!el) return;
+    
+    gsap.fromTo(el,
+      { opacity: 0, filter: "blur(8px)", y: 10 },
+      { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.8, ease: "power3.out" }
+    );
+  };
+
+  const playFadeInUp = () => {
+    const el = fadeRef.current;
+    if (!el) return;
+    
+    gsap.fromTo(el,
+      { opacity: 0, y: 30, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }
+    );
   };
 
   return (
-    <section id="motion" className="mb-32">
+    <section ref={sectionRef} id="motion" className="mb-32">
       <h2 className="section-header">Motion Design</h2>
       <p className="text-muted-foreground mb-8">
         Motion in Rhosonics interfaces is purposeful and restrained. Animations should feel 
@@ -25,8 +70,8 @@ export const MotionDesign = () => {
       </p>
 
       {/* Motion Principles */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="card-base p-6">
+      <div ref={principlesRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="principle-card card-base p-6">
           <div className="text-4xl font-data text-primary mb-4">200ms</div>
           <h3 className="font-ui font-bold text-lg mb-2">Quick Feedback</h3>
           <p className="text-sm text-muted-foreground">
@@ -34,7 +79,7 @@ export const MotionDesign = () => {
           </p>
         </div>
 
-        <div className="card-base p-6">
+        <div className="principle-card card-base p-6">
           <div className="text-4xl font-data text-primary mb-4">300ms</div>
           <h3 className="font-ui font-bold text-lg mb-2">Standard Transitions</h3>
           <p className="text-sm text-muted-foreground">
@@ -42,7 +87,7 @@ export const MotionDesign = () => {
           </p>
         </div>
 
-        <div className="card-base p-6">
+        <div className="principle-card card-base p-6">
           <div className="text-4xl font-data text-primary mb-4">500ms</div>
           <h3 className="font-ui font-bold text-lg mb-2">Emphasis</h3>
           <p className="text-sm text-muted-foreground">
@@ -62,22 +107,19 @@ export const MotionDesign = () => {
               <p className="text-sm text-muted-foreground">Logo arc reveal animation</p>
             </div>
             <button 
-              onClick={() => triggerAnimation('boot')}
+              onClick={playBootAnimation}
               className="label-tech text-primary hover:underline"
             >
               [PLAY]
             </button>
           </div>
           <div className="h-32 bg-slate-50 rounded-lg flex items-center justify-center">
-            <div 
-              key={playStates.boot ? 'playing' : 'idle'} 
-              className="w-16 h-16"
-            >
-              <RhosonicsLogo variant="gradient" animated={playStates.boot} />
+            <div className="w-16 h-16">
+              <AnimatedLogo ref={logoRef} variant="gradient" />
             </div>
           </div>
           <div className="mt-4 font-data text-xs text-muted-foreground">
-            ease-out | 500ms | stagger 100ms per arc
+            elastic.out | 700ms | stagger 150ms per arc
           </div>
         </div>
 
@@ -89,7 +131,7 @@ export const MotionDesign = () => {
               <p className="text-sm text-muted-foreground">Blur to clear fade-in</p>
             </div>
             <button 
-              onClick={() => triggerAnimation('reveal')}
+              onClick={playTextReveal}
               className="label-tech text-primary hover:underline"
             >
               [PLAY]
@@ -97,14 +139,14 @@ export const MotionDesign = () => {
           </div>
           <div className="h-32 bg-slate-50 rounded-lg flex items-center justify-center">
             <span 
-              key={playStates.reveal ? 'playing' : 'idle'}
-              className={`font-logo text-3xl text-foreground ${playStates.reveal ? 'animate-text-reveal opacity-0' : ''}`}
+              ref={textRevealRef}
+              className="font-logo text-3xl text-foreground"
             >
               Rhosonics
             </span>
           </div>
           <div className="mt-4 font-data text-xs text-muted-foreground">
-            ease-out | 800ms | blur(4px) to blur(0)
+            power3.out | 800ms | blur(8px) to blur(0)
           </div>
         </div>
 
@@ -116,7 +158,7 @@ export const MotionDesign = () => {
               <p className="text-sm text-muted-foreground">Content entrance animation</p>
             </div>
             <button 
-              onClick={() => triggerAnimation('fade')}
+              onClick={playFadeInUp}
               className="label-tech text-primary hover:underline"
             >
               [PLAY]
@@ -124,14 +166,14 @@ export const MotionDesign = () => {
           </div>
           <div className="h-32 bg-slate-50 rounded-lg flex items-center justify-center overflow-hidden">
             <div 
-              key={playStates.fade ? 'playing' : 'idle'}
-              className={`px-6 py-3 bg-primary text-primary-foreground rounded-md ${playStates.fade ? 'animate-fade-in-up opacity-0' : ''}`}
+              ref={fadeRef}
+              className="px-6 py-3 bg-primary text-primary-foreground rounded-md"
             >
               New Content
             </div>
           </div>
           <div className="mt-4 font-data text-xs text-muted-foreground">
-            ease-out | 600ms | translateY(20px) to translateY(0)
+            back.out | 600ms | translateY(30px) to translateY(0)
           </div>
         </div>
 
