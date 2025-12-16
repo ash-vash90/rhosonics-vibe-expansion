@@ -405,11 +405,11 @@
   /* Navigation Link */
   .nav-link {
     @apply block text-sm transition-all duration-200 relative pl-0;
-    color: hsl(var(--slate-400));
+    color: hsl(var(--slate-300));
   }
 
   .nav-link:hover {
-    color: hsl(var(--slate-100));
+    color: hsl(var(--slate-50));
     padding-left: 0.5rem;
   }
 

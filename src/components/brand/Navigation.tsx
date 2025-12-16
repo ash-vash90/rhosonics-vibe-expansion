@@ -104,9 +104,9 @@ export const Navigation = () => {
       <div className={`p-6 space-y-6 overflow-y-auto ${isOpen ? 'block' : 'hidden lg:block'}`}>
         {navSections.map((section) => (
           <div key={section.id}>
-            <div className="label-tech mb-3 text-slate-500">
+            <div className="label-tech mb-3 text-slate-400">
               <span className="text-primary">{section.id}</span>
-              <span className="mx-2 text-slate-700">/</span>
+              <span className="mx-2 text-slate-600">/</span>
               {section.label}
             </div>
             {section.items.map((item) => (
