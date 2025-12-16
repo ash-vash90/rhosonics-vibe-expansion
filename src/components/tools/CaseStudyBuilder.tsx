@@ -1,0 +1,333 @@
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Copy, Loader2, FileText, Check, ChevronRight, ChevronLeft } from "lucide-react";
+import { toast } from "sonner";
+
+const INDUSTRIES = [
+  { value: "mining", label: "Mining" },
+  { value: "dredging", label: "Dredging" },
+  { value: "wastewater", label: "Wastewater" },
+  { value: "semiconductor", label: "Semiconductor" },
+  { value: "food_beverage", label: "Food & Beverage" },
+  { value: "chemical", label: "Chemical Processing" },
+  { value: "brewing", label: "Brewing" },
+  { value: "paper_pulp", label: "Paper & Pulp" },
+];
+
+interface Metric {
+  label: string;
+  value: string;
+}
+
+interface CaseStudy {
+  title: string;
+  description: string;
+  industry: string;
+  stat: string;
+  statLabel: string;
+  metrics: Metric[];
+}
+
+export const CaseStudyBuilder = () => {
+  const [step, setStep] = useState(1);
+  const [industry, setIndustry] = useState("");
+  const [primaryStat, setPrimaryStat] = useState("");
+  const [primaryLabel, setPrimaryLabel] = useState("");
+  const [metrics, setMetrics] = useState<Metric[]>([
+    { label: "", value: "" },
+    { label: "", value: "" },
+    { label: "", value: "" },
+  ]);
+  const [context, setContext] = useState("");
+  const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleGenerate = async () => {
+    setIsLoading(true);
+    setCaseStudy(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-case-study", {
+        body: {
+          industry,
+          primaryStat,
+          primaryLabel,
+          metrics: metrics.filter(m => m.label && m.value),
+          context,
+        },
+      });
+
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setCaseStudy(data.caseStudy);
+      toast.success("Case study generated successfully");
+    } catch (error: any) {
+      console.error("Generation error:", error);
+      toast.error(error.message || "Failed to generate case study");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateMetric = (index: number, field: "label" | "value", value: string) => {
+    const updated = [...metrics];
+    updated[index][field] = value;
+    setMetrics(updated);
+  };
+
+  const handleCopy = () => {
+    if (!caseStudy) return;
+    const markdown = `# ${caseStudy.title}
+
+**Industry:** ${caseStudy.industry}
+
+## Key Result
+**${caseStudy.stat}** ${caseStudy.statLabel}
+
+## Description
+${caseStudy.description}
+
+## Metrics
+${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
+    
+    navigator.clipboard.writeText(markdown);
+    setCopied(true);
+    toast.success("Copied as Markdown");
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const canProceed = () => {
+    switch (step) {
+      case 1: return !!industry;
+      case 2: return !!primaryStat && !!primaryLabel;
+      case 3: return metrics.some(m => m.label && m.value);
+      case 4: return !!context.trim();
+      default: return false;
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Progress Steps */}
+      <div className="flex items-center justify-between mb-8">
+        {[1, 2, 3, 4].map((s) => (
+          <div key={s} className="flex items-center">
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-sm transition-all ${
+                step === s
+                  ? "bg-primary text-primary-foreground"
+                  : step > s
+                  ? "bg-primary/20 text-primary"
+                  : "bg-muted text-muted-foreground"
+              }`}
+            >
+              {s}
+            </div>
+            {s < 4 && (
+              <div className={`w-12 sm:w-20 h-0.5 mx-2 transition-all ${
+                step > s ? "bg-primary" : "bg-border"
+              }`} />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Step Content */}
+      <div className="min-h-[200px]">
+        {step === 1 && (
+          <div className="space-y-4">
+            <label className="label-tech text-foreground/70">Select Industry</label>
+            <Select value={industry} onValueChange={setIndustry}>
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary">
+                <SelectValue placeholder="Choose an industry..." />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border-border">
+                {INDUSTRIES.map((ind) => (
+                  <SelectItem key={ind.value} value={ind.value} className="text-foreground focus:bg-primary/20">
+                    {ind.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="font-mono text-xs text-muted-foreground">
+              The industry context helps generate relevant technical terminology and applications.
+            </p>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div className="space-y-4">
+            <label className="label-tech text-foreground/70">Primary Metric</label>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Input
+                  value={primaryStat}
+                  onChange={(e) => setPrimaryStat(e.target.value)}
+                  placeholder="e.g., 42%"
+                  className="bg-muted/50 border-border text-foreground text-2xl font-bold text-center h-16"
+                />
+                <span className="font-mono text-xs text-muted-foreground mt-1 block text-center">Value</span>
+              </div>
+              <div>
+                <Input
+                  value={primaryLabel}
+                  onChange={(e) => setPrimaryLabel(e.target.value)}
+                  placeholder="e.g., Efficiency increase"
+                  className="bg-muted/50 border-border text-foreground h-16"
+                />
+                <span className="font-mono text-xs text-muted-foreground mt-1 block text-center">Label</span>
+              </div>
+            </div>
+            <p className="font-mono text-xs text-muted-foreground">
+              This will be the hero statistic featured prominently in the case study.
+            </p>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="space-y-4">
+            <label className="label-tech text-foreground/70">Supporting Metrics</label>
+            {metrics.map((metric, idx) => (
+              <div key={idx} className="grid grid-cols-2 gap-3">
+                <Input
+                  value={metric.label}
+                  onChange={(e) => updateMetric(idx, "label", e.target.value)}
+                  placeholder={`Label ${idx + 1} (e.g., Accuracy)`}
+                  className="bg-muted/50 border-border text-foreground"
+                />
+                <Input
+                  value={metric.value}
+                  onChange={(e) => updateMetric(idx, "value", e.target.value)}
+                  placeholder={`Value (e.g., ±0.5%)`}
+                  className="bg-muted/50 border-border text-foreground"
+                />
+              </div>
+            ))}
+            <p className="font-mono text-xs text-muted-foreground">
+              Add 1-3 supporting metrics to provide additional context.
+            </p>
+          </div>
+        )}
+
+        {step === 4 && (
+          <div className="space-y-4">
+            <label className="label-tech text-foreground/70">Project Context</label>
+            <Textarea
+              value={context}
+              onChange={(e) => setContext(e.target.value)}
+              placeholder="Brief notes about the project, challenge, or application...&#10;&#10;e.g., Large-scale copper mine in Chile, struggling with water recovery in thickener operations. High variability in ore grade causing inconsistent underflow density."
+              className="min-h-[160px] bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary resize-none"
+            />
+            <p className="font-mono text-xs text-muted-foreground">
+              AI will expand this into a full case study narrative.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Navigation */}
+      <div className="flex items-center justify-between pt-4 border-t border-border">
+        <Button
+          variant="outline"
+          onClick={() => setStep(step - 1)}
+          disabled={step === 1}
+        >
+          <ChevronLeft className="w-4 h-4 mr-2" />
+          Back
+        </Button>
+        
+        {step < 4 ? (
+          <Button onClick={() => setStep(step + 1)} disabled={!canProceed()}>
+            Next
+            <ChevronRight className="w-4 h-4 ml-2" />
+          </Button>
+        ) : (
+          <Button onClick={handleGenerate} disabled={isLoading || !canProceed()}>
+            {isLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <FileText className="w-5 h-5 mr-2" />
+                Generate Case Study
+              </>
+            )}
+          </Button>
+        )}
+      </div>
+
+      {/* Generated Case Study Preview */}
+      {caseStudy && (
+        <div className="pt-6 border-t border-border">
+          <div className="flex items-center justify-between mb-4">
+            <label className="label-tech text-primary">Generated Case Study</label>
+            <Button variant="outline" size="sm" onClick={handleCopy}>
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4 mr-2 text-primary" />
+                  Copied
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy Markdown
+                </>
+              )}
+            </Button>
+          </div>
+          
+          {/* Case Study Card Preview */}
+          <div className="card-gradient chamfer-lg overflow-hidden">
+            <div className="absolute inset-0 opacity-20 bg-wave-pattern" />
+            <div className="relative p-8">
+              <div className="flex items-center justify-between mb-6">
+                <span className="font-data text-xs uppercase tracking-wider text-slate-400">
+                  {INDUSTRIES.find(i => i.value === caseStudy.industry)?.label || caseStudy.industry}
+                </span>
+              </div>
+              
+              <div className="mb-6">
+                <div className="text-5xl font-bold font-ui tracking-tight mb-1 text-primary">
+                  {caseStudy.stat}
+                </div>
+                <div className="text-sm font-medium text-slate-300">
+                  {caseStudy.statLabel}
+                </div>
+              </div>
+              
+              <h3 className="text-xl font-semibold font-ui mb-3 text-slate-100">
+                {caseStudy.title}
+              </h3>
+              <p className="text-sm leading-relaxed mb-6 text-slate-300">
+                {caseStudy.description}
+              </p>
+              
+              <div className="grid grid-cols-3 gap-2 p-4 rounded-lg bg-slate-800/50">
+                {caseStudy.metrics.map((metric) => (
+                  <div key={metric.label} className="text-center">
+                    <div className="font-data text-xs uppercase tracking-wider mb-1 text-slate-500">
+                      {metric.label}
+                    </div>
+                    <div className="text-sm font-semibold font-ui text-slate-100">
+                      {metric.value}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CaseStudyBuilder;
