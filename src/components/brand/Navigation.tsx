@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown } from "lucide-react";
@@ -66,10 +66,56 @@ const navSections: NavSection[] = [
   },
 ];
 
+// Get all item IDs for scroll spy
+const allItemIds = navSections.flatMap(section => section.items.map(item => item.id));
+
+// Find which section contains a given item ID
+const getSectionForItem = (itemId: string): string | null => {
+  const section = navSections.find(s => s.items.some(item => item.id === itemId));
+  return section?.id || null;
+};
+
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(["01"]);
+  const [activeSection, setActiveSection] = useState<string | null>("intro");
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // Scroll spy effect
+  useEffect(() => {
+    const observerOptions: IntersectionObserverInit = {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px", // Trigger when section is in upper-middle of viewport
+      threshold: 0,
+    };
+
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          setActiveSection(id);
+          
+          // Auto-expand the section containing this item
+          const sectionId = getSectionForItem(id);
+          if (sectionId && !expandedSections.includes(sectionId)) {
+            setExpandedSections(prev => [...prev, sectionId]);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all sections
+    allItemIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [expandedSections]);
 
   // Close menu on click outside
   useEffect(() => {
@@ -92,13 +138,14 @@ export const Navigation = () => {
     };
   }, [isOpen]);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setActiveSection(id);
       setIsOpen(false);
     }
-  };
+  }, []);
 
   const toggleSection = (sectionId: string) => {
     setExpandedSections(prev => 
@@ -152,13 +199,19 @@ export const Navigation = () => {
 
         {/* Navigation Links - Collapsible sections */}
         <div className="p-4 sm:p-6 space-y-2 overflow-y-auto">
-          {navSections.map((section) => (
+          {navSections.map((section) => {
+            const sectionHasActive = section.items.some(item => item.id === activeSection);
+            return (
             <div key={section.id} className="border-b border-slate-800/50 last:border-b-0">
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between py-2.5 text-left hover:text-primary transition-colors group"
+                className={`w-full flex items-center justify-between py-2.5 text-left hover:text-primary transition-colors group ${
+                  sectionHasActive ? 'text-primary' : ''
+                }`}
               >
-                <div className="label-tech text-slate-400 group-hover:text-primary transition-colors">
+                <div className={`label-tech transition-colors ${
+                  sectionHasActive ? 'text-primary' : 'text-slate-400 group-hover:text-primary'
+                }`}>
                   <span className="text-primary">{section.id}</span>
                   <span className="mx-2 text-slate-600">/</span>
                   {section.label}
@@ -172,21 +225,31 @@ export const Navigation = () => {
               <div className={`overflow-hidden transition-all duration-200 ${
                 expandedSections.includes(section.id) ? "max-h-96 pb-2" : "max-h-0"
               }`}>
-                {section.items.map((item) => (
+                {section.items.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation ${
-                      item.highlight ? 'text-primary font-medium' : ''
+                    className={`nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors ${
+                      isActive 
+                        ? 'text-primary bg-primary/10 border-l-2 border-primary' 
+                        : item.highlight 
+                          ? 'text-primary/70 font-medium hover:text-primary' 
+                          : 'hover:text-primary'
                     }`}
                   >
                     <span>{item.label}</span>
-                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ChevronRight className={`w-3 h-3 transition-opacity ${
+                      isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`} />
                   </button>
-                ))}
+                  );
+                })}
               </div>
             </div>
-          ))}
+            );
+          })}
 
           {/* Version Badge */}
           <div className="pt-4">
