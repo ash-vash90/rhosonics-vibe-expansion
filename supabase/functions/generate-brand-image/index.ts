@@ -37,16 +37,41 @@ serve(async (req) => {
   }
 
   try {
-    const { prompt, aspectRatio = "1:1" } = await req.json();
+    const { prompt, aspectRatio = "1:1", referenceImage } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const enhancedPrompt = `${prompt}. Style: ${BRAND_STYLE_PROMPT}. Aspect ratio: ${aspectRatio}. Ultra high resolution.`;
+    const enhancedPrompt = referenceImage 
+      ? `${prompt}. Apply Rhosonics brand style: ${BRAND_STYLE_PROMPT}. Output aspect ratio: ${aspectRatio}. Ultra high resolution.`
+      : `${prompt}. Style: ${BRAND_STYLE_PROMPT}. Aspect ratio: ${aspectRatio}. Ultra high resolution.`;
 
     console.log("Generating brand image with prompt:", prompt.substring(0, 100));
+    console.log("Reference image provided:", !!referenceImage);
+
+    // Build the message content based on whether we have a reference image
+    let messageContent: any;
+    
+    if (referenceImage) {
+      // Image editing mode - include the reference image
+      messageContent = [
+        {
+          type: "text",
+          text: enhancedPrompt,
+        },
+        {
+          type: "image_url",
+          image_url: {
+            url: referenceImage,
+          },
+        },
+      ];
+    } else {
+      // Pure generation mode
+      messageContent = enhancedPrompt;
+    }
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -57,7 +82,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-2.5-flash-image-preview",
         messages: [
-          { role: "user", content: enhancedPrompt },
+          { role: "user", content: messageContent },
         ],
         modalities: ["image", "text"],
       }),

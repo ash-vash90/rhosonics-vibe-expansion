@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Download, Loader2, Image as ImageIcon } from "lucide-react";
+import { Download, Loader2, Image as ImageIcon, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 
 const ASPECT_RATIOS = [
@@ -18,6 +18,40 @@ export const ImageGenerator = () => {
   const [aspectRatio, setAspectRatio] = useState("1:1");
   const [imageUrl, setImageUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [referenceImage, setReferenceImage] = useState<string | null>(null);
+  const [referenceFileName, setReferenceFileName] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image must be less than 10MB");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64 = event.target?.result as string;
+      setReferenceImage(base64);
+      setReferenceFileName(file.name);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const clearReferenceImage = () => {
+    setReferenceImage(null);
+    setReferenceFileName("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const handleGenerate = async () => {
     if (!prompt.trim()) {
@@ -30,7 +64,11 @@ export const ImageGenerator = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-brand-image", {
-        body: { prompt, aspectRatio },
+        body: { 
+          prompt, 
+          aspectRatio,
+          referenceImage: referenceImage || undefined,
+        },
       });
 
       if (error) throw error;
@@ -81,12 +119,64 @@ export const ImageGenerator = () => {
           </Select>
         </div>
 
+        {/* Reference Image Upload */}
+        <div>
+          <label className="label-tech mb-2 block text-foreground/70">Reference Image (Optional)</label>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+          
+          {referenceImage ? (
+            <div className="relative border border-border rounded-lg overflow-hidden bg-muted/30">
+              <img 
+                src={referenceImage} 
+                alt="Reference" 
+                className="w-full h-40 object-contain"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm px-3 py-2 flex items-center justify-between">
+                <span className="text-xs font-data text-muted-foreground truncate max-w-[200px]">
+                  {referenceFileName}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearReferenceImage}
+                  className="h-7 w-7 p-0 text-muted-foreground hover:text-destructive"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+              className="w-full h-20 border-dashed flex flex-col gap-1"
+            >
+              <Upload className="w-5 h-5 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">
+                Click to upload a reference image
+              </span>
+            </Button>
+          )}
+          <p className="text-xs text-muted-foreground mt-2">
+            Upload an image to use as style reference or to edit/transform
+          </p>
+        </div>
+
         <div>
           <label className="label-tech mb-2 block text-foreground/70">Prompt</label>
           <Textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Describe the image you want... e.g., 'Industrial facility with ultrasonic measurement equipment, minimalist composition'"
+            placeholder={referenceImage 
+              ? "Describe how to transform this image... e.g., 'Apply Rhosonics brand colors and add ultrasonic wave patterns'"
+              : "Describe the image you want... e.g., 'Industrial facility with ultrasonic measurement equipment, minimalist composition'"
+            }
             className="min-h-[140px] bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20"
           />
         </div>
@@ -99,12 +189,12 @@ export const ImageGenerator = () => {
           {isLoading ? (
             <>
               <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              Generating...
+              {referenceImage ? "Transforming..." : "Generating..."}
             </>
           ) : (
             <>
               <ImageIcon className="w-5 h-5 mr-2" />
-              Generate Brand Image
+              {referenceImage ? "Transform Image" : "Generate Brand Image"}
             </>
           )}
         </Button>
