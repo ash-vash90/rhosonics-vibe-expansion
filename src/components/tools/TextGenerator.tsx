@@ -59,17 +59,17 @@ export const TextGenerator = () => {
     <div className="space-y-6">
       <div className="space-y-5">
         <div>
-          <label className="label-tech mb-2 block text-slate-300">Context</label>
+          <label className="label-tech mb-2 block text-foreground/70">Context</label>
           <Select value={context} onValueChange={setContext}>
-            <SelectTrigger className="bg-slate-900/60 border-slate-600 text-slate-200 focus:border-primary focus:ring-primary/20">
+            <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-slate-800 border-slate-600">
+            <SelectContent className="bg-popover border-border">
               {CONTEXT_OPTIONS.map((opt) => (
                 <SelectItem 
                   key={opt.value} 
                   value={opt.value}
-                  className="text-slate-200 focus:bg-primary/20 focus:text-slate-100"
+                  className="text-foreground focus:bg-primary/20"
                 >
                   {opt.label}
                 </SelectItem>
@@ -79,19 +79,19 @@ export const TextGenerator = () => {
         </div>
 
         <div>
-          <label className="label-tech mb-2 block text-slate-300">Prompt</label>
+          <label className="label-tech mb-2 block text-foreground/70">Prompt</label>
           <Textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Describe what you want to write... e.g., 'Write a product description for the SDM ECO inline density meter'"
-            className="min-h-[140px] bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 font-ui focus:border-primary focus:ring-primary/20"
+            className="min-h-[140px] bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20"
           />
         </div>
 
         <Button
           onClick={handleGenerate}
           disabled={isLoading || !prompt.trim()}
-          className="w-full h-12 text-base font-ui bg-primary hover:bg-primary/90 text-slate-950"
+          className="w-full h-12 text-base font-ui"
         >
           {isLoading ? (
             <>
@@ -108,14 +108,13 @@ export const TextGenerator = () => {
       </div>
 
       {output && (
-        <div className="space-y-3 pt-4 border-t border-slate-700">
+        <div className="space-y-3 pt-4 border-t border-border">
           <div className="flex items-center justify-between">
             <label className="label-tech text-primary">Output</label>
             <Button 
               variant="outline" 
               size="sm" 
               onClick={handleCopy}
-              className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
             >
               {copied ? (
                 <>
@@ -130,8 +129,8 @@ export const TextGenerator = () => {
               )}
             </Button>
           </div>
-          <div className="p-5 bg-slate-900/80 border border-slate-600 rounded-lg">
-            <p className="text-slate-100 font-ui leading-relaxed whitespace-pre-wrap">{output}</p>
+          <div className="p-5 bg-muted/50 border border-border rounded-lg">
+            <p className="text-foreground font-ui leading-relaxed whitespace-pre-wrap">{output}</p>
           </div>
         </div>
       )}

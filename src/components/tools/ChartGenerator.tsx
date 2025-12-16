@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, Download, Loader2, BarChart3, Plus, Trash2 } from "lucide-react";
+import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette } from "lucide-react";
 import { toast } from "sonner";
 import html2canvas from "html2canvas";
 import {
@@ -38,12 +38,25 @@ const CHART_TYPES = [
   { value: "pie", label: "Pie Chart" },
 ];
 
-const BRAND_COLORS = [
-  "hsl(142, 71%, 32%)",
-  "hsl(45, 70%, 48%)",
-  "hsl(215, 20%, 45%)",
-  "hsl(142, 71%, 25%)",
-  "hsl(45, 40%, 35%)",
+const PRESET_COLORS = [
+  { value: "#22c55e", label: "Brand Green" },
+  { value: "#c9a227", label: "Earth Amber" },
+  { value: "#64748b", label: "Slate" },
+  { value: "#1d4ed8", label: "Blue" },
+  { value: "#dc2626", label: "Red" },
+  { value: "#9333ea", label: "Purple" },
+  { value: "#f97316", label: "Orange" },
+  { value: "#06b6d4", label: "Cyan" },
+];
+
+const BACKGROUND_PRESETS = [
+  { value: "#0a0f14", label: "Obsidian (Dark)" },
+  { value: "#111827", label: "Slate Dark" },
+  { value: "#1f2937", label: "Gray Dark" },
+  { value: "#ffffff", label: "White" },
+  { value: "#f8fafc", label: "Slate Light" },
+  { value: "#f3f4f6", label: "Gray Light" },
+  { value: "transparent", label: "Transparent" },
 ];
 
 interface DataPoint {
@@ -57,6 +70,8 @@ export const ChartGenerator = () => {
   const [chartType, setChartType] = useState("bar");
   const [xAxisLabel, setXAxisLabel] = useState("");
   const [yAxisLabel, setYAxisLabel] = useState("");
+  const [lineColor, setLineColor] = useState("#22c55e");
+  const [bgColor, setBgColor] = useState("#0a0f14");
   const [dataPoints, setDataPoints] = useState<DataPoint[]>([
     { name: "Item 1", value: 100 },
     { name: "Item 2", value: 80 },
@@ -98,6 +113,8 @@ export const ChartGenerator = () => {
             xAxisLabel,
             yAxisLabel,
             data: dataPoints,
+            lineColor,
+            bgColor,
           },
         },
       });
@@ -125,7 +142,7 @@ export const ChartGenerator = () => {
 
     try {
       const canvas = await html2canvas(chartRef.current, {
-        backgroundColor: "#0a0f14",
+        backgroundColor: bgColor === "transparent" ? null : bgColor,
         scale: 2,
       });
       
@@ -139,6 +156,12 @@ export const ChartGenerator = () => {
     }
   };
 
+  // Determine if we need light or dark text based on background
+  const isLightBg = bgColor === "#ffffff" || bgColor === "#f8fafc" || bgColor === "#f3f4f6";
+  const textColor = isLightBg ? "#1f2937" : "#f1f5f9";
+  const gridColor = isLightBg ? "#e5e7eb" : "hsl(215, 19%, 25%)";
+  const axisColor = isLightBg ? "#6b7280" : "hsl(215, 19%, 45%)";
+
   const renderChart = () => {
     const commonProps = {
       data: dataPoints,
@@ -148,12 +171,20 @@ export const ChartGenerator = () => {
     const axisStyle = {
       fontSize: 11,
       fontFamily: "JetBrains Mono, monospace",
-      fill: "hsl(215, 19%, 45%)",
+      fill: axisColor,
     };
 
     const gridProps = {
-      stroke: "hsl(215, 19%, 25%)",
+      stroke: gridColor,
       strokeDasharray: "3 3",
+    };
+
+    const tooltipStyle = {
+      background: isLightBg ? "#ffffff" : "hsl(213, 32%, 8%)",
+      border: `1px solid ${gridColor}`,
+      borderRadius: 8,
+      fontFamily: "JetBrains Mono",
+      color: textColor,
     };
 
     switch (chartType) {
@@ -163,8 +194,8 @@ export const ChartGenerator = () => {
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle} label={xAxisLabel ? { value: xAxisLabel, position: "bottom", style: axisStyle } : undefined} />
             <YAxis tick={axisStyle} label={yAxisLabel ? { value: yAxisLabel, angle: -90, position: "left", style: axisStyle } : undefined} />
-            <Tooltip contentStyle={{ background: "hsl(213, 32%, 8%)", border: "1px solid hsl(215, 19%, 25%)", borderRadius: 8, fontFamily: "JetBrains Mono" }} />
-            <Bar dataKey="value" fill={BRAND_COLORS[0]} radius={[4, 4, 0, 0]} />
+            <Tooltip contentStyle={tooltipStyle} />
+            <Bar dataKey="value" fill={lineColor} radius={[4, 4, 0, 0]} />
           </BarChart>
         );
       case "horizontal-bar":
@@ -173,8 +204,8 @@ export const ChartGenerator = () => {
             <CartesianGrid {...gridProps} />
             <XAxis type="number" tick={axisStyle} />
             <YAxis dataKey="name" type="category" tick={axisStyle} width={100} />
-            <Tooltip contentStyle={{ background: "hsl(213, 32%, 8%)", border: "1px solid hsl(215, 19%, 25%)", borderRadius: 8, fontFamily: "JetBrains Mono" }} />
-            <Bar dataKey="value" fill={BRAND_COLORS[0]} radius={[0, 4, 4, 0]} />
+            <Tooltip contentStyle={tooltipStyle} />
+            <Bar dataKey="value" fill={lineColor} radius={[0, 4, 4, 0]} />
           </BarChart>
         );
       case "line":
@@ -183,8 +214,8 @@ export const ChartGenerator = () => {
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle} />
             <YAxis tick={axisStyle} />
-            <Tooltip contentStyle={{ background: "hsl(213, 32%, 8%)", border: "1px solid hsl(215, 19%, 25%)", borderRadius: 8, fontFamily: "JetBrains Mono" }} />
-            <Line type="monotone" dataKey="value" stroke={BRAND_COLORS[0]} strokeWidth={2} dot={{ fill: BRAND_COLORS[0], r: 4 }} />
+            <Tooltip contentStyle={tooltipStyle} />
+            <Line type="monotone" dataKey="value" stroke={lineColor} strokeWidth={2} dot={{ fill: lineColor, r: 4 }} />
           </LineChart>
         );
       case "area":
@@ -193,17 +224,17 @@ export const ChartGenerator = () => {
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle} />
             <YAxis tick={axisStyle} />
-            <Tooltip contentStyle={{ background: "hsl(213, 32%, 8%)", border: "1px solid hsl(215, 19%, 25%)", borderRadius: 8, fontFamily: "JetBrains Mono" }} />
-            <Area type="monotone" dataKey="value" fill={BRAND_COLORS[0]} fillOpacity={0.3} stroke={BRAND_COLORS[0]} strokeWidth={2} />
+            <Tooltip contentStyle={tooltipStyle} />
+            <Area type="monotone" dataKey="value" fill={lineColor} fillOpacity={0.3} stroke={lineColor} strokeWidth={2} />
           </AreaChart>
         );
       case "radar":
         return (
           <RadarChart {...commonProps} cx="50%" cy="50%" outerRadius="80%">
-            <PolarGrid stroke="hsl(215, 19%, 25%)" />
-            <PolarAngleAxis dataKey="name" tick={{ fontSize: 11, fontFamily: "JetBrains Mono", fill: "hsl(215, 19%, 45%)" }} />
+            <PolarGrid stroke={gridColor} />
+            <PolarAngleAxis dataKey="name" tick={{ fontSize: 11, fontFamily: "JetBrains Mono", fill: axisColor }} />
             <PolarRadiusAxis tick={axisStyle} />
-            <Radar dataKey="value" stroke={BRAND_COLORS[0]} fill={BRAND_COLORS[0]} fillOpacity={0.3} />
+            <Radar dataKey="value" stroke={lineColor} fill={lineColor} fillOpacity={0.3} />
           </RadarChart>
         );
       case "pie":
@@ -216,13 +247,13 @@ export const ChartGenerator = () => {
               outerRadius={120}
               dataKey="value"
               label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-              labelLine={{ stroke: "hsl(215, 19%, 45%)" }}
+              labelLine={{ stroke: axisColor }}
             >
               {dataPoints.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={BRAND_COLORS[index % BRAND_COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={index === 0 ? lineColor : PRESET_COLORS[index % PRESET_COLORS.length].value} />
               ))}
             </Pie>
-            <Tooltip contentStyle={{ background: "hsl(213, 32%, 8%)", border: "1px solid hsl(215, 19%, 25%)", borderRadius: 8, fontFamily: "JetBrains Mono" }} />
+            <Tooltip contentStyle={tooltipStyle} />
           </PieChart>
         );
       default:
@@ -231,8 +262,8 @@ export const ChartGenerator = () => {
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle} />
             <YAxis tick={axisStyle} />
-            <Tooltip contentStyle={{ background: "hsl(213, 32%, 8%)", border: "1px solid hsl(215, 19%, 25%)", borderRadius: 8, fontFamily: "JetBrains Mono" }} />
-            <Bar dataKey="value" fill={BRAND_COLORS[0]} radius={[4, 4, 0, 0]} />
+            <Tooltip contentStyle={tooltipStyle} />
+            <Bar dataKey="value" fill={lineColor} radius={[4, 4, 0, 0]} />
           </BarChart>
         );
     }
@@ -243,26 +274,26 @@ export const ChartGenerator = () => {
       {/* Configuration */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="label-tech mb-2 block text-slate-300">Chart Title *</label>
+          <label className="label-tech mb-2 block text-foreground/70">Chart Title *</label>
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g., Energy Consumption Comparison"
-            className="bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
+            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
           />
         </div>
         <div>
-          <label className="label-tech mb-2 block text-slate-300">Chart Type</label>
+          <label className="label-tech mb-2 block text-foreground/70">Chart Type</label>
           <Select value={chartType} onValueChange={setChartType}>
-            <SelectTrigger className="bg-slate-900/60 border-slate-600 text-slate-200 focus:border-primary focus:ring-primary/20">
+            <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-slate-800 border-slate-600">
+            <SelectContent className="bg-popover border-border">
               {CHART_TYPES.map((opt) => (
                 <SelectItem 
                   key={opt.value} 
                   value={opt.value}
-                  className="text-slate-200 focus:bg-primary/20 focus:text-slate-100"
+                  className="text-foreground focus:bg-primary/20"
                 >
                   {opt.label}
                 </SelectItem>
@@ -271,43 +302,120 @@ export const ChartGenerator = () => {
           </Select>
         </div>
         <div>
-          <label className="label-tech mb-2 block text-slate-300">X-Axis Label</label>
+          <label className="label-tech mb-2 block text-foreground/70">X-Axis Label</label>
           <Input
             value={xAxisLabel}
             onChange={(e) => setXAxisLabel(e.target.value)}
             placeholder="e.g., Technology"
-            className="bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
+            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
           />
         </div>
         <div>
-          <label className="label-tech mb-2 block text-slate-300">Y-Axis Label</label>
+          <label className="label-tech mb-2 block text-foreground/70">Y-Axis Label</label>
           <Input
             value={yAxisLabel}
             onChange={(e) => setYAxisLabel(e.target.value)}
             placeholder="e.g., kWh/year"
-            className="bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
+            className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
           />
         </div>
-        <div className="md:col-span-2">
-          <label className="label-tech mb-2 block text-slate-300">Description (optional)</label>
-          <Textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Brief description of what this chart shows"
-            className="bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 font-ui focus:border-primary focus:ring-primary/20"
-          />
+      </div>
+
+      {/* Color Options */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-muted/30 rounded-lg border border-border">
+        <div>
+          <label className="label-tech mb-2 flex items-center gap-2 text-foreground/70">
+            <Palette className="w-4 h-4" />
+            Line / Bar Color
+          </label>
+          <div className="flex gap-2">
+            <Select value={lineColor} onValueChange={setLineColor}>
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 flex-1">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 rounded" style={{ backgroundColor: lineColor }} />
+                  <SelectValue />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="bg-popover border-border">
+                {PRESET_COLORS.map((opt) => (
+                  <SelectItem 
+                    key={opt.value} 
+                    value={opt.value}
+                    className="text-foreground focus:bg-primary/20"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 rounded" style={{ backgroundColor: opt.value }} />
+                      {opt.label}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Input
+              type="color"
+              value={lineColor}
+              onChange={(e) => setLineColor(e.target.value)}
+              className="w-12 h-10 p-1 cursor-pointer border-border"
+            />
+          </div>
         </div>
+        <div>
+          <label className="label-tech mb-2 flex items-center gap-2 text-foreground/70">
+            <Palette className="w-4 h-4" />
+            Background Color
+          </label>
+          <div className="flex gap-2">
+            <Select value={bgColor} onValueChange={setBgColor}>
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20 flex-1">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 rounded border border-border" style={{ backgroundColor: bgColor === "transparent" ? "transparent" : bgColor }} />
+                  <SelectValue />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="bg-popover border-border">
+                {BACKGROUND_PRESETS.map((opt) => (
+                  <SelectItem 
+                    key={opt.value} 
+                    value={opt.value}
+                    className="text-foreground focus:bg-primary/20"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 rounded border border-border" style={{ backgroundColor: opt.value === "transparent" ? "transparent" : opt.value }} />
+                      {opt.label}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Input
+              type="color"
+              value={bgColor === "transparent" ? "#ffffff" : bgColor}
+              onChange={(e) => setBgColor(e.target.value)}
+              className="w-12 h-10 p-1 cursor-pointer border-border"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Description */}
+      <div>
+        <label className="label-tech mb-2 block text-foreground/70">Description (optional)</label>
+        <Textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Brief description of what this chart shows"
+          className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary focus:ring-primary/20"
+        />
       </div>
 
       {/* Data Points */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <label className="label-tech text-slate-300">Data Points</label>
+          <label className="label-tech text-foreground/70">Data Points</label>
           <Button 
             variant="outline" 
             size="sm" 
             onClick={addDataPoint}
-            className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
           >
             <Plus className="w-4 h-4 mr-1" />
             Add
@@ -320,21 +428,21 @@ export const ChartGenerator = () => {
                 value={point.name}
                 onChange={(e) => updateDataPoint(index, "name", e.target.value)}
                 placeholder="Label"
-                className="flex-1 bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
+                className="flex-1 bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
               />
               <Input
                 type="number"
                 value={point.value}
                 onChange={(e) => updateDataPoint(index, "value", e.target.value)}
                 placeholder="Value"
-                className="w-24 bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
+                className="w-24 bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20"
               />
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => removeDataPoint(index)}
                 disabled={dataPoints.length <= 1}
-                className="text-slate-400 hover:text-red-400 hover:bg-red-400/10"
+                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
               >
                 <Trash2 className="w-4 h-4" />
               </Button>
@@ -344,14 +452,13 @@ export const ChartGenerator = () => {
       </div>
 
       {/* Live Preview */}
-      <div className="pt-4 border-t border-slate-700">
+      <div className="pt-4 border-t border-border">
         <div className="flex items-center justify-between mb-3">
           <label className="label-tech text-primary">Live Preview</label>
           <Button 
             variant="outline" 
             size="sm" 
             onClick={handleDownloadPng}
-            className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
           >
             <Download className="w-4 h-4 mr-2" />
             Download PNG
@@ -359,13 +466,14 @@ export const ChartGenerator = () => {
         </div>
         <div
           ref={chartRef}
-          className="p-6 bg-slate-900/80 border border-slate-600 rounded-lg"
+          className="p-6 rounded-lg border border-border"
+          style={{ backgroundColor: bgColor === "transparent" ? "transparent" : bgColor }}
         >
           {title && (
-            <h3 className="font-ui text-lg text-slate-50 mb-1">{title}</h3>
+            <h3 className="font-ui text-lg mb-1" style={{ color: textColor }}>{title}</h3>
           )}
           {description && (
-            <p className="font-mono text-xs text-slate-400 mb-4">{description}</p>
+            <p className="font-mono text-xs mb-4" style={{ color: axisColor }}>{description}</p>
           )}
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -379,7 +487,7 @@ export const ChartGenerator = () => {
       <Button
         onClick={handleGenerateCode}
         disabled={isLoading || !title.trim()}
-        className="w-full h-12 text-base font-ui bg-primary hover:bg-primary/90 text-slate-950"
+        className="w-full h-12 text-base font-ui"
       >
         {isLoading ? (
           <>
@@ -396,21 +504,20 @@ export const ChartGenerator = () => {
 
       {/* Code Output */}
       {code && (
-        <div className="pt-4 border-t border-slate-700">
+        <div className="pt-4 border-t border-border">
           <div className="flex items-center justify-between mb-3">
             <label className="label-tech text-primary">Generated Code</label>
             <Button 
               variant="outline" 
               size="sm" 
               onClick={handleCopyCode}
-              className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
             >
               <Copy className="w-4 h-4 mr-2" />
               Copy Code
             </Button>
           </div>
-          <pre className="p-4 bg-slate-900/80 border border-slate-600 rounded-lg overflow-x-auto">
-            <code className="text-sm font-mono text-slate-200">{code}</code>
+          <pre className="p-4 bg-muted/50 border border-border rounded-lg overflow-x-auto">
+            <code className="text-sm font-mono text-foreground">{code}</code>
           </pre>
         </div>
       )}
