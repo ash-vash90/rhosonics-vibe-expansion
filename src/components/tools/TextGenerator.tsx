@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, Loader2, Sparkles } from "lucide-react";
+import { Copy, Loader2, Sparkles, Check } from "lucide-react";
 import { toast } from "sonner";
 
 const CONTEXT_OPTIONS = [
@@ -19,6 +19,7 @@ export const TextGenerator = () => {
   const [context, setContext] = useState("product");
   const [output, setOutput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleGenerate = async () => {
     if (!prompt.trim()) {
@@ -49,21 +50,27 @@ export const TextGenerator = () => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(output);
+    setCopied(true);
     toast.success("Copied to clipboard");
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <div className="space-y-6">
-      <div className="space-y-4">
+      <div className="space-y-5">
         <div>
-          <label className="label-tech mb-2 block text-slate-400">Context</label>
+          <label className="label-tech mb-2 block text-slate-300">Context</label>
           <Select value={context} onValueChange={setContext}>
-            <SelectTrigger className="bg-slate-800/50 border-slate-700">
+            <SelectTrigger className="bg-slate-900/60 border-slate-600 text-slate-200 focus:border-primary focus:ring-primary/20">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-slate-800 border-slate-600">
               {CONTEXT_OPTIONS.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
+                <SelectItem 
+                  key={opt.value} 
+                  value={opt.value}
+                  className="text-slate-200 focus:bg-primary/20 focus:text-slate-100"
+                >
                   {opt.label}
                 </SelectItem>
               ))}
@@ -72,28 +79,28 @@ export const TextGenerator = () => {
         </div>
 
         <div>
-          <label className="label-tech mb-2 block text-slate-400">Prompt</label>
+          <label className="label-tech mb-2 block text-slate-300">Prompt</label>
           <Textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Describe what you want to write... e.g., 'Write a product description for the SDM ECO inline density meter'"
-            className="min-h-[120px] bg-slate-800/50 border-slate-700 font-ui"
+            className="min-h-[140px] bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 font-ui focus:border-primary focus:ring-primary/20"
           />
         </div>
 
         <Button
           onClick={handleGenerate}
           disabled={isLoading || !prompt.trim()}
-          className="w-full"
+          className="w-full h-12 text-base font-ui bg-primary hover:bg-primary/90 text-slate-950"
         >
           {isLoading ? (
             <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
               Generating...
             </>
           ) : (
             <>
-              <Sparkles className="w-4 h-4 mr-2" />
+              <Sparkles className="w-5 h-5 mr-2" />
               Generate Brand Text
             </>
           )}
@@ -101,16 +108,30 @@ export const TextGenerator = () => {
       </div>
 
       {output && (
-        <div className="space-y-3">
+        <div className="space-y-3 pt-4 border-t border-slate-700">
           <div className="flex items-center justify-between">
-            <label className="label-tech text-slate-400">Output</label>
-            <Button variant="ghost" size="sm" onClick={handleCopy}>
-              <Copy className="w-4 h-4 mr-2" />
-              Copy
+            <label className="label-tech text-primary">Output</label>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleCopy}
+              className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4 mr-2 text-primary" />
+                  Copied
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy
+                </>
+              )}
             </Button>
           </div>
-          <div className="p-4 bg-slate-800/50 border border-slate-700 rounded-lg">
-            <p className="text-slate-200 font-ui whitespace-pre-wrap">{output}</p>
+          <div className="p-5 bg-slate-900/80 border border-slate-600 rounded-lg">
+            <p className="text-slate-100 font-ui leading-relaxed whitespace-pre-wrap">{output}</p>
           </div>
         </div>
       )}
