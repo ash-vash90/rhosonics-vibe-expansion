@@ -70,6 +70,78 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_case_studies: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          industry: string
+          is_favorite: boolean | null
+          metrics: Json
+          stat: string
+          stat_label: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          industry: string
+          is_favorite?: boolean | null
+          metrics?: Json
+          stat: string
+          stat_label: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          industry?: string
+          is_favorite?: boolean | null
+          metrics?: Json
+          stat?: string
+          stat_label?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      saved_templates: {
+        Row: {
+          content: string
+          created_at: string
+          fields: Json
+          id: string
+          is_favorite: boolean | null
+          name: string
+          template_type: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          fields?: Json
+          id?: string
+          is_favorite?: boolean | null
+          name: string
+          template_type: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          fields?: Json
+          id?: string
+          is_favorite?: boolean | null
+          name?: string
+          template_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

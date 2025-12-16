@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, Loader2, FileText, Check, ChevronRight, ChevronLeft, Save, Star, Trash2, History } from "lucide-react";
+import { Copy, Loader2, FileText, Check, ChevronRight, ChevronLeft, Save, Star, Trash2, History, Download } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { exportCaseStudyToPDF, exportCaseStudyToWord } from "@/lib/documentExport";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const INDUSTRIES = [
   { value: "mining", label: "Mining" },
@@ -476,6 +478,22 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
                   Save
                 </Button>
               )}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => exportCaseStudyToPDF(caseStudy)}>
+                    Download PDF
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => exportCaseStudyToWord(caseStudy)}>
+                    Download Word
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Button variant="outline" size="sm" onClick={handleCopy}>
                 {copied ? (
                   <>

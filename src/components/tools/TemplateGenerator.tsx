@@ -3,9 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Copy, Loader2, FileStack, Check, FileText, Mail, MessageSquare, Linkedin, Megaphone, ClipboardList, Save, Star, Trash2, History } from "lucide-react";
+import { Copy, Loader2, FileStack, Check, FileText, Mail, MessageSquare, Linkedin, Megaphone, ClipboardList, Save, Star, Trash2, History, Download } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { exportTemplateToPDF, exportTemplateToWord } from "@/lib/documentExport";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const TEMPLATE_TYPES = [
   { value: "datasheet", label: "Product Datasheet", icon: FileText, description: "Technical specs document" },
@@ -414,6 +416,22 @@ export const TemplateGenerator = () => {
                   Save
                 </Button>
               )}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => exportTemplateToPDF({ templateType, content: output })}>
+                    Download PDF
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => exportTemplateToWord({ templateType, content: output })}>
+                    Download Word
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Button variant="outline" size="sm" onClick={handleCopy}>
                 {copied ? (
                   <>
