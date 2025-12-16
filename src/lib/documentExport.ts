@@ -2,6 +2,15 @@ import { jsPDF } from "jspdf";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } from "docx";
 import { saveAs } from "file-saver";
 
+// Rhosonics Brand Colors
+const BRAND = {
+  green: { r: 51, g: 153, b: 60 },      // #33993c
+  lime: { r: 115, g: 184, b: 46 },       // #73B82E
+  obsidian: { r: 17, g: 21, b: 34 },     // #111522
+  gray: { r: 100, g: 100, b: 100 },
+  lightGray: { r: 240, g: 240, b: 240 },
+};
+
 interface CaseStudyData {
   title: string;
   description: string;
@@ -16,70 +25,141 @@ interface TemplateData {
   content: string;
 }
 
+// Draw branded header
+const drawBrandedHeader = (doc: jsPDF) => {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  
+  // Header background bar
+  doc.setFillColor(BRAND.obsidian.r, BRAND.obsidian.g, BRAND.obsidian.b);
+  doc.rect(0, 0, pageWidth, 28, "F");
+  
+  // Accent line
+  doc.setFillColor(BRAND.green.r, BRAND.green.g, BRAND.green.b);
+  doc.rect(0, 28, pageWidth, 3, "F");
+  
+  // Logo text (RHOSONICS)
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.text("RHOSONICS", 20, 18);
+  
+  // Tagline
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(BRAND.lime.r, BRAND.lime.g, BRAND.lime.b);
+  doc.text("ULTRASONIC MEASUREMENT SOLUTIONS", 78, 18);
+};
+
+// Draw branded footer
+const drawBrandedFooter = (doc: jsPDF, pageNum: number = 1) => {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  
+  // Footer line
+  doc.setDrawColor(BRAND.green.r, BRAND.green.g, BRAND.green.b);
+  doc.setLineWidth(0.5);
+  doc.line(20, pageHeight - 20, pageWidth - 20, pageHeight - 20);
+  
+  // Footer text
+  doc.setFontSize(8);
+  doc.setTextColor(BRAND.gray.r, BRAND.gray.g, BRAND.gray.b);
+  doc.text("www.rhosonics.com", 20, pageHeight - 12);
+  doc.text(`Page ${pageNum}`, pageWidth / 2, pageHeight - 12, { align: "center" });
+  doc.text(new Date().toLocaleDateString(), pageWidth - 20, pageHeight - 12, { align: "right" });
+};
+
 // PDF Export for Case Study
 export const exportCaseStudyToPDF = (caseStudy: CaseStudyData) => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 20;
   const contentWidth = pageWidth - margin * 2;
-  let y = 20;
+  
+  // Draw branded header
+  drawBrandedHeader(doc);
+  
+  let y = 45;
+
+  // Document type label
+  doc.setFillColor(BRAND.green.r, BRAND.green.g, BRAND.green.b);
+  doc.roundedRect(margin, y, 45, 8, 2, 2, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("CASE STUDY", margin + 4, y + 5.5);
+  y += 18;
 
   // Title
-  doc.setFontSize(20);
+  doc.setTextColor(BRAND.obsidian.r, BRAND.obsidian.g, BRAND.obsidian.b);
+  doc.setFontSize(22);
   doc.setFont("helvetica", "bold");
   const titleLines = doc.splitTextToSize(caseStudy.title, contentWidth);
   doc.text(titleLines, margin, y);
-  y += titleLines.length * 10 + 10;
+  y += titleLines.length * 10 + 8;
 
   // Industry Tag
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(100);
+  doc.setTextColor(BRAND.gray.r, BRAND.gray.g, BRAND.gray.b);
   doc.text(`INDUSTRY: ${caseStudy.industry.toUpperCase()}`, margin, y);
   y += 15;
 
-  // Primary Stat
-  doc.setTextColor(34, 139, 34); // Green color
-  doc.setFontSize(36);
-  doc.setFont("helvetica", "bold");
-  doc.text(caseStudy.stat, margin, y);
-  y += 12;
+  // Primary Stat Box
+  doc.setFillColor(BRAND.lightGray.r, BRAND.lightGray.g, BRAND.lightGray.b);
+  doc.roundedRect(margin, y, contentWidth, 35, 3, 3, "F");
   
+  // Stat value
+  doc.setTextColor(BRAND.green.r, BRAND.green.g, BRAND.green.b);
+  doc.setFontSize(32);
+  doc.setFont("helvetica", "bold");
+  doc.text(caseStudy.stat, margin + 10, y + 22);
+  
+  // Stat label
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(0);
-  doc.text(caseStudy.statLabel, margin, y);
-  y += 20;
+  doc.setTextColor(BRAND.obsidian.r, BRAND.obsidian.g, BRAND.obsidian.b);
+  const statLabelX = margin + 10 + doc.getTextWidth(caseStudy.stat) + 10;
+  doc.text(caseStudy.statLabel, statLabelX, y + 22);
+  y += 50;
 
   // Description
+  doc.setTextColor(BRAND.obsidian.r, BRAND.obsidian.g, BRAND.obsidian.b);
   doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
   const descLines = doc.splitTextToSize(caseStudy.description, contentWidth);
   doc.text(descLines, margin, y);
-  y += descLines.length * 6 + 15;
+  y += descLines.length * 6 + 20;
 
-  // Metrics
+  // Metrics Section
   if (caseStudy.metrics.length > 0) {
+    // Section header with accent
+    doc.setFillColor(BRAND.lime.r, BRAND.lime.g, BRAND.lime.b);
+    doc.rect(margin, y, 3, 14, "F");
+    
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
-    doc.text("Key Metrics", margin, y);
-    y += 10;
+    doc.setTextColor(BRAND.obsidian.r, BRAND.obsidian.g, BRAND.obsidian.b);
+    doc.text("KEY METRICS", margin + 8, y + 10);
+    y += 22;
 
+    // Metrics grid
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
     caseStudy.metrics.forEach((metric) => {
-      doc.text(`• ${metric.label}: ${metric.value}`, margin + 5, y);
-      y += 7;
+      doc.setTextColor(BRAND.green.r, BRAND.green.g, BRAND.green.b);
+      doc.setFont("helvetica", "bold");
+      doc.text(`${metric.value}`, margin + 5, y);
+      doc.setTextColor(BRAND.obsidian.r, BRAND.obsidian.g, BRAND.obsidian.b);
+      doc.setFont("helvetica", "normal");
+      doc.text(` — ${metric.label}`, margin + 5 + doc.getTextWidth(metric.value + " "), y);
+      y += 10;
     });
   }
 
-  // Footer
-  y = doc.internal.pageSize.getHeight() - 15;
-  doc.setFontSize(8);
-  doc.setTextColor(150);
-  doc.text("Generated by Rhosonics Brand Tools", margin, y);
-  doc.text(new Date().toLocaleDateString(), pageWidth - margin - 30, y);
+  // Draw branded footer
+  drawBrandedFooter(doc);
 
-  doc.save(`case-study-${caseStudy.industry}.pdf`);
+  doc.save(`rhosonics-case-study-${caseStudy.industry}.pdf`);
 };
 
 // Word Export for Case Study
@@ -191,36 +271,59 @@ export const exportTemplateToPDF = (data: TemplateData) => {
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 20;
   const contentWidth = pageWidth - margin * 2;
-  let y = 20;
+  
+  // Draw branded header
+  drawBrandedHeader(doc);
+  
+  let y = 45;
+
+  // Document type label
+  doc.setFillColor(BRAND.lime.r, BRAND.lime.g, BRAND.lime.b);
+  const labelText = formatTemplateType(data.templateType).toUpperCase();
+  const labelWidth = doc.getTextWidth(labelText) * 0.35 + 12;
+  doc.roundedRect(margin, y, Math.max(labelWidth, 50), 8, 2, 2, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text(labelText, margin + 4, y + 5.5);
+  y += 20;
 
   // Title
-  doc.setFontSize(16);
+  doc.setTextColor(BRAND.obsidian.r, BRAND.obsidian.g, BRAND.obsidian.b);
+  doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.text(formatTemplateType(data.templateType), margin, y);
   y += 15;
 
+  // Divider line
+  doc.setDrawColor(BRAND.green.r, BRAND.green.g, BRAND.green.b);
+  doc.setLineWidth(0.5);
+  doc.line(margin, y, margin + 40, y);
+  y += 12;
+
   // Content
-  doc.setFontSize(11);
+  doc.setTextColor(BRAND.obsidian.r, BRAND.obsidian.g, BRAND.obsidian.b);
+  doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   const lines = doc.splitTextToSize(data.content, contentWidth);
   
+  let pageNum = 1;
   lines.forEach((line: string) => {
-    if (y > doc.internal.pageSize.getHeight() - 20) {
+    if (y > doc.internal.pageSize.getHeight() - 30) {
+      drawBrandedFooter(doc, pageNum);
       doc.addPage();
-      y = 20;
+      pageNum++;
+      drawBrandedHeader(doc);
+      y = 45;
     }
     doc.text(line, margin, y);
     y += 6;
   });
 
-  // Footer
-  y = doc.internal.pageSize.getHeight() - 15;
-  doc.setFontSize(8);
-  doc.setTextColor(150);
-  doc.text("Generated by Rhosonics Brand Tools", margin, y);
-  doc.text(new Date().toLocaleDateString(), pageWidth - margin - 30, y);
+  // Draw branded footer
+  drawBrandedFooter(doc, pageNum);
 
-  doc.save(`${data.templateType}-template.pdf`);
+  doc.save(`rhosonics-${data.templateType}-template.pdf`);
 };
 
 // Word Export for Template
