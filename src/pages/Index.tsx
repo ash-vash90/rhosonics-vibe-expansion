@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Navigation } from "@/components/brand/Navigation";
 import { BrandEthos } from "@/components/brand/BrandEthos";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
+import { LazySection } from "@/components/LazySection";
 import { Zap } from "lucide-react";
 
 // Lazy load heavier components for better initial load performance
@@ -53,10 +54,12 @@ const Index = () => {
           <MotionDesign />
           <DosAndDonts />
         </Suspense>
-        {/* TechComparison has its own Suspense for code-splitting recharts (largest bundle) */}
-        <Suspense fallback={<SectionLoader />}>
-          <TechComparison />
-        </Suspense>
+        {/* TechComparison loads only when in viewport to reduce unused JS */}
+        <LazySection fallback={<SectionLoader />} rootMargin="400px">
+          <Suspense fallback={<SectionLoader />}>
+            <TechComparison />
+          </Suspense>
+        </LazySection>
         <Suspense fallback={<SectionLoader />}>
           <CaseStudies />
         </Suspense>
