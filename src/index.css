@@ -241,14 +241,6 @@
     border-radius: 0;
   }
 
-  .card-gradient::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at top right, hsl(var(--rho-green) / 0.15) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
   /* Slate card - medium grey industrial look */
   .card-slate {
     @apply overflow-hidden relative transition-all duration-200;
