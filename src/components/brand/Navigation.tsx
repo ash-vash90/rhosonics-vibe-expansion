@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { RhosonicsLogo } from "../RhosonicsLogo";
-import { Menu, X, Zap, ChevronRight } from "lucide-react";
+import { Menu, X, Zap, ChevronRight, Sparkles } from "lucide-react";
 
 interface NavSection {
   id: string;
@@ -124,8 +125,22 @@ export const Navigation = () => {
           </div>
         ))}
 
-        {/* Version Badge */}
+        {/* AI Tools Link */}
         <div className="pt-6 border-t border-slate-800">
+          <Link
+            to="/tools"
+            className="flex items-center gap-3 px-3 py-3 bg-primary/10 border border-primary/30 rounded-md hover:bg-primary/20 transition-colors group"
+          >
+            <Sparkles className="w-4 h-4 text-primary" />
+            <div>
+              <span className="label-tech-sm text-primary/70 block">AI TOOLS</span>
+              <span className="text-sm text-slate-200 font-medium group-hover:text-primary transition-colors">Generate Assets</span>
+            </div>
+          </Link>
+        </div>
+
+        {/* Version Badge */}
+        <div className="pt-4">
           <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 rounded-md">
             <Zap className="w-4 h-4 text-primary" />
             <div>
