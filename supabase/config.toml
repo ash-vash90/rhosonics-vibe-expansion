@@ -1,0 +1,10 @@
+project_id = "albeqixkyjdxinxbiuww"
+
+[functions.generate-brand-text]
+verify_jwt = false
+
+[functions.generate-brand-image]
+verify_jwt = false
+
+[functions.generate-brand-chart]
+verify_jwt = false
