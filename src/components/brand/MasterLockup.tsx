@@ -1,16 +1,55 @@
-import { useState, useCallback } from "react";
+import { useRef, useEffect, useCallback } from "react";
+import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { RotateCcw, Scan, Layers } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const MasterLockup = () => {
-  const [key, setKey] = useState(0);
+  const logoRef = useRef<AnimatedLogoRef>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   const replayAnimation = useCallback(() => {
-    setKey(prev => prev + 1);
+    logoRef.current?.play();
+    
+    // Animate title
+    if (titleRef.current) {
+      gsap.fromTo(titleRef.current, 
+        { opacity: 0, x: -30, filter: "blur(8px)" },
+        { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.8, delay: 0.5, ease: "power3.out" }
+      );
+    }
   }, []);
 
+  useEffect(() => {
+    // Initial animation on mount
+    const timer = setTimeout(() => {
+      replayAnimation();
+    }, 200);
+
+    // Parallax effect on hero card
+    if (heroRef.current) {
+      gsap.to(heroRef.current.querySelector('.bg-wave-subtle'), {
+        yPercent: -20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+    }
+
+    return () => clearTimeout(timer);
+  }, [replayAnimation]);
+
   return (
-    <section id="lockup" className="mb-24">
+    <section ref={sectionRef} id="lockup" className="mb-24">
       <div className="border-t-2 border-slate-200 pt-16 mb-8" />
       <div className="flex items-center gap-3 mb-2">
         <Scan className="w-5 h-5 text-primary" />
@@ -19,26 +58,23 @@ export const MasterLockup = () => {
       <h2 className="section-header">Master Lockup</h2>
 
       {/* Main lockup display - hero gradient card with chamfer */}
-      <div className="card-gradient chamfer-lg flex flex-col items-center justify-center py-16 sm:py-24 md:py-32 relative overflow-hidden">
+      <div ref={heroRef} className="card-gradient chamfer-lg flex flex-col items-center justify-center py-16 sm:py-24 md:py-32 relative overflow-hidden">
         {/* Wave pattern background */}
         <div className="absolute inset-0 bg-wave-subtle opacity-40 pointer-events-none" aria-hidden="true" />
         
         {/* Main Lockup */}
-        <div key={key} className="flex items-center gap-4 relative z-10 px-4">
+        <div className="flex items-center gap-4 relative z-10 px-4">
           <div 
-            className="flex-shrink-0" 
+            className="flex-shrink-0 magnetic-hover" 
             style={{ width: 'clamp(3.5rem, 10vw, 6rem)', height: 'clamp(3.5rem, 10vw, 6rem)' }}
             aria-hidden="true"
           >
-            <RhosonicsLogo variant="gradient" animated />
+            <AnimatedLogo ref={logoRef} variant="gradient" autoPlay />
           </div>
           <h1 
-            className="font-logo text-slate-100 tracking-tight leading-none opacity-0 animate-text-reveal"
-            style={{ 
-              fontSize: 'clamp(2rem, 6vw, 4.5rem)',
-              animationDelay: '0.4s',
-              animationFillMode: 'forwards'
-            }}
+            ref={titleRef}
+            className="font-logo text-slate-100 tracking-tight leading-none opacity-0"
+            style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
           >
             Rhosonics
           </h1>
