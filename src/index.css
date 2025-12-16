@@ -7,32 +7,32 @@
 @layer base {
   :root {
     /* Rhosonics Brand Colors */
-    --rho-green: 138 53% 40%;
-    --rho-green-accent: 88 61% 45%;
+    --rho-green: 138 53% 32%;
+    --rho-green-accent: 88 61% 38%;
     --rho-green-glow: 88 70% 55%;
     --rho-obsidian: 225 33% 10%;
     --rho-obsidian-light: 225 25% 15%;
     
     /* Earth Tones - Field Aesthetic */
-    --earth-ochre: 45 30% 50%;
-    --earth-ochre-light: 45 35% 65%;
+    --earth-ochre: 45 40% 40%;
+    --earth-ochre-light: 45 35% 55%;
     --earth-ochre-dark: 42 35% 35%;
     --earth-sand: 40 30% 85%;
-    --earth-clay: 30 25% 45%;
-    --earth-amber: 45 70% 48%; /* First brew amber - warm gold */
+    --earth-clay: 30 25% 40%;
+    --earth-amber: 45 70% 40%; /* First brew amber - warm gold */
     
     /* Eco Tints */
     --eco-surface: 126 43% 95%;
     --eco-border: 126 50% 90%;
     
-    /* Slate Scale */
+    /* Slate Scale - WCAG AA compliant */
     --slate-50: 210 40% 98%;
     --slate-100: 210 40% 96%;
     --slate-200: 214 32% 91%;
     --slate-300: 213 27% 84%;
-    --slate-400: 215 20% 65%;
-    --slate-500: 215 16% 47%;
-    --slate-600: 215 19% 35%;
+    --slate-400: 215 20% 45%;
+    --slate-500: 215 19% 38%;
+    --slate-600: 215 19% 32%;
     --slate-700: 215 25% 27%;
     --slate-800: 217 33% 17%;
     --slate-900: 222 47% 11%;
