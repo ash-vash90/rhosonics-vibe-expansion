@@ -37,16 +37,67 @@ You are creating a comprehensive, 10-section case study following Rhosonics' str
 9. **Why This Worked** - Transferable insight for future customers
 10. **What's Next** - Future intent and call to action
 
+## VISUAL ASSET RECOMMENDATIONS (CRITICAL)
+You MUST generate detailed asset recommendations based on the case study content:
+
+### Imagery Style Selection
+Choose ONE based on the application context:
+- "field": Mining, dredging, outdoor installations, harsh conditions, rugged equipment
+- "lab": Semiconductor, food/beverage, pharmaceutical, clean environments, precision focus
+- "mixed": Wastewater, chemical processing, combination of controlled and industrial settings
+
+### Imagery Prompts (Generate 3 specific prompts)
+Create detailed AI image generation prompts that match Rhosonics brand guidelines:
+- Industrial photography style, authentic field conditions
+- Include specific equipment (SDM ECO sensor, pipe installations, control panels)
+- Reference the actual application environment (thickener, centrifuge, processing tank, etc.)
+- Professional lighting, earth tones (ochre, amber) or steel/metal tones depending on style
+- Format: "Industrial photograph of [specific scene], showing [equipment], [lighting/atmosphere], Rhosonics brand style, professional documentation photography"
+
+### Graph Recommendations (Generate 2-3 chart suggestions)
+Recommend data visualizations that would strengthen the case study:
+- comparison_bar: For comparing SDM ECO vs previous method (nuclear, Coriolis, manual)
+- timeline: For showing measurement stability over commissioning period
+- before_after: For showing process improvements (uptime, sampling frequency, etc.)
+- accuracy_scatter: For showing correlation between SDM ECO and reference measurements
+
+For each graph, specify:
+- type: One of the above
+- description: What the chart would show and why it's compelling
+- dataPoints: Suggested data points or labels based on case study content
+
+### Icon Recommendations
+Suggest 3-5 relevant icons for visual hierarchy:
+- Process-related: pipeline, flow, temperature, pressure
+- Outcome-related: checkmark, trending-up, shield, clock
+- Industry-related: factory, beaker, hard-hat, gauge
+
 ## OUTPUT FORMAT
-Return a JSON object with the full comprehensive case study structure. Expand brief user inputs into professional, detailed content while preserving technical accuracy.
+Return a JSON object with the full comprehensive case study structure INCLUDING suggestedAssets:
+{
+  "executiveSnapshot": {...},
+  "processContext": {...},
+  "realProblem": {...},
+  "successCriteria": {...},
+  "solutionArchitecture": {...},
+  "commissioning": {...},
+  "technicalResults": {...},
+  "businessImpact": {...},
+  "customerVoice": {...},
+  "whyThisWorked": {...},
+  "whatsNext": {...},
+  "suggestedAssets": {
+    "imageryStyle": "field" | "lab" | "mixed",
+    "imageryPrompts": ["prompt1", "prompt2", "prompt3"],
+    "recommendedGraphs": [
+      {"type": "comparison_bar", "description": "...", "dataPoints": "..."},
+      ...
+    ],
+    "iconRecommendations": ["icon1", "icon2", ...]
+  }
+}
 
-For any field the user left empty, generate appropriate content based on context. For narrative sections, write 2-4 sentences minimum.
-
-Also include suggested assets:
-- imageryStyle: "field" (harsh industrial), "lab" (clean precision), or "mixed"
-- imageryPrompts: 2-3 prompts for AI image generation matching brand guidelines
-- recommendedGraphs: suggested data visualizations
-- iconRecommendations: relevant icons from brand library`;
+For any field the user left empty, generate appropriate content based on context. For narrative sections, write 2-4 sentences minimum.`;
 
 // Simple case study generation (legacy support)
 const SIMPLE_PROMPT = `You are a technical content writer for Rhosonics, an industrial technology company specializing in ultrasonic density measurement (SDM ECO technology).
