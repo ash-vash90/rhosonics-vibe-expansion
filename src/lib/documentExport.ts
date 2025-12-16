@@ -11,6 +11,19 @@ const BRAND = {
   lightGray: { r: 240, g: 240, b: 240 },
 };
 
+// White logo version for dark backgrounds in PDF header
+const LOGO_SVG_WHITE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <path d="M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z" fill="#ffffff"/>
+  <path d="M 80 34 L 80 21 A 59 59 0 0 0 21 80 L 34 80 A 46 46 0 0 1 80 34 Z" fill="#ffffff"/>
+  <path d="M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z" fill="#ffffff"/>
+</svg>`;
+
+// Convert SVG to data URL for PDF embedding
+const svgToDataUrl = (svg: string): string => {
+  const encoded = btoa(unescape(encodeURIComponent(svg)));
+  return `data:image/svg+xml;base64,${encoded}`;
+};
+
 interface CaseStudyData {
   title: string;
   description: string;
@@ -25,7 +38,7 @@ interface TemplateData {
   content: string;
 }
 
-// Draw branded header
+// Draw branded header with logo
 const drawBrandedHeader = (doc: jsPDF) => {
   const pageWidth = doc.internal.pageSize.getWidth();
   
@@ -37,17 +50,26 @@ const drawBrandedHeader = (doc: jsPDF) => {
   doc.setFillColor(BRAND.green.r, BRAND.green.g, BRAND.green.b);
   doc.rect(0, 28, pageWidth, 3, "F");
   
-  // Logo text (RHOSONICS)
+  // Add logo image (white version for dark header)
+  try {
+    const logoDataUrl = svgToDataUrl(LOGO_SVG_WHITE);
+    doc.addImage(logoDataUrl, "SVG", 15, 4, 20, 20);
+  } catch (e) {
+    // Fallback if SVG embedding fails
+    console.warn("Logo embedding failed", e);
+  }
+  
+  // Logo text (RHOSONICS) - positioned after logo
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
-  doc.text("RHOSONICS", 20, 18);
+  doc.text("RHOSONICS", 40, 16);
   
   // Tagline
   doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(BRAND.lime.r, BRAND.lime.g, BRAND.lime.b);
-  doc.text("ULTRASONIC MEASUREMENT SOLUTIONS", 78, 18);
+  doc.text("ULTRASONIC MEASUREMENT SOLUTIONS", 40, 23);
 };
 
 // Draw branded footer
