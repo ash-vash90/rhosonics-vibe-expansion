@@ -145,6 +145,7 @@ export const ChartGenerator = () => {
   const [animationPreset, setAnimationPreset] = useState("smooth");
   const [animationKey, setAnimationKey] = useState(0);
   const [isExportingGif, setIsExportingGif] = useState(false);
+  const [gifProgress, setGifProgress] = useState(0);
   const [primaryColor, setPrimaryColor] = useState("primary");
   const [secondaryColor, setSecondaryColor] = useState("amber");
   const [tertiaryColor, setTertiaryColor] = useState("slate");
@@ -331,7 +332,7 @@ export const ChartGenerator = () => {
     }
 
     setIsExportingGif(true);
-    toast.info("Recording animation...");
+    setGifProgress(0);
 
     try {
       await document.fonts?.load?.("500 12px 'JetBrains Mono'");
@@ -346,7 +347,7 @@ export const ChartGenerator = () => {
         quality: 10,
         width,
         height,
-        workerScript: "/gif.worker.js",
+        workerScript: "https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js",
       });
 
       const totalDuration = currentAnimation.duration + (currentAnimation.staggerDelay * Math.max(dataPoints.length, 3));
@@ -391,7 +392,15 @@ export const ChartGenerator = () => {
         });
 
         gif.addFrame(canvas, { delay: i === frameCount ? 1500 : frameDelay, copy: true });
+        
+        // Update progress for frame capture phase (0-50%)
+        setGifProgress(Math.round((i / frameCount) * 50));
       }
+
+      gif.on("progress", (p: number) => {
+        // Encoding phase (50-100%)
+        setGifProgress(50 + Math.round(p * 50));
+      });
 
       gif.on("finished", (blob: Blob) => {
         const url = URL.createObjectURL(blob);
@@ -401,6 +410,7 @@ export const ChartGenerator = () => {
         link.click();
         URL.revokeObjectURL(url);
         setIsExportingGif(false);
+        setGifProgress(0);
         toast.success("GIF exported successfully");
       });
 
@@ -408,6 +418,7 @@ export const ChartGenerator = () => {
     } catch (error) {
       console.error("GIF export error:", error);
       setIsExportingGif(false);
+      setGifProgress(0);
       toast.error("Failed to export GIF");
     }
   };
@@ -1002,13 +1013,19 @@ export const ChartGenerator = () => {
                 size="sm" 
                 onClick={handleDownloadGif}
                 disabled={isExportingGif}
+                className="min-w-[80px]"
               >
                 {isExportingGif ? (
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    {gifProgress}%
+                  </>
                 ) : (
-                  <Film className="w-4 h-4 mr-2" />
+                  <>
+                    <Film className="w-4 h-4 mr-2" />
+                    GIF
+                  </>
                 )}
-                GIF
               </Button>
             )}
           </div>
