@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { TextGenerator } from "@/components/tools/TextGenerator";
 import { ImageGenerator } from "@/components/tools/ImageGenerator";
 import { ChartGenerator } from "@/components/tools/ChartGenerator";
-import { Type, Image, BarChart3, ArrowLeft, Sparkles, Sun, Moon } from "lucide-react";
+import { ContentTransformer } from "@/components/tools/ContentTransformer";
+import { CaseStudyBuilder } from "@/components/tools/CaseStudyBuilder";
+import { TemplateGenerator } from "@/components/tools/TemplateGenerator";
+import { Type, Image, BarChart3, ArrowLeft, Sparkles, Sun, Moon, RefreshCw, FileText, FileStack } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
 
 const Tools = () => {
   const [activeTab, setActiveTab] = useState("text");
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    // Check initial theme
     const root = document.documentElement;
     if (isDark) {
       root.classList.add("dark");
@@ -25,6 +26,42 @@ const Tools = () => {
 
   const toggleTheme = () => {
     setIsDark(!isDark);
+  };
+
+  const tabs = [
+    { value: "text", label: "Text", icon: Type },
+    { value: "image", label: "Image", icon: Image },
+    { value: "chart", label: "Chart", icon: BarChart3 },
+    { value: "transform", label: "Transform", icon: RefreshCw },
+    { value: "casestudy", label: "Case Study", icon: FileText },
+    { value: "templates", label: "Templates", icon: FileStack },
+  ];
+
+  const tabDescriptions: Record<string, { title: string; description: string }> = {
+    text: {
+      title: "Text Generator",
+      description: "Generate copy that follows our brand voice: Direct, Technical, Confident, Practical.",
+    },
+    image: {
+      title: "Image Generator",
+      description: "Create visuals using our brand colors, material aesthetic, and industrial style.",
+    },
+    chart: {
+      title: "Chart Generator",
+      description: "Build data visualizations with exact brand styling. Export as code or PNG.",
+    },
+    transform: {
+      title: "Content Transformer",
+      description: "Transform existing content to match Rhosonics brand voice and terminology.",
+    },
+    casestudy: {
+      title: "Case Study Builder",
+      description: "Generate complete case studies from key metrics and project context.",
+    },
+    templates: {
+      title: "Template Generator",
+      description: "Create brand-compliant documents, emails, and marketing materials.",
+    },
   };
 
   return (
@@ -71,65 +108,46 @@ const Tools = () => {
           </div>
           <h1 className="font-ui text-2xl sm:text-4xl text-foreground mb-2 sm:mb-3">AI Tools</h1>
           <p className="font-ui text-sm sm:text-lg text-muted-foreground">
-            Generate on-brand text, images, and charts using AI trained on our design system.
+            Generate, transform, and create brand-compliant content using AI trained on our design system.
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
-          <TabsList className="bg-muted border border-border p-1 sm:p-1.5 w-full grid grid-cols-3 rounded-lg h-auto">
-            <TabsTrigger
-              value="text"
-              className="rounded-md font-ui text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:font-medium transition-all min-h-[44px] text-xs sm:text-sm touch-manipulation"
-            >
-              <Type className="w-4 h-4 sm:mr-2" />
-              <span className="hidden sm:inline">Text</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="image"
-              className="rounded-md font-ui text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:font-medium transition-all min-h-[44px] text-xs sm:text-sm touch-manipulation"
-            >
-              <Image className="w-4 h-4 sm:mr-2" />
-              <span className="hidden sm:inline">Image</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="chart"
-              className="rounded-md font-ui text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:font-medium transition-all min-h-[44px] text-xs sm:text-sm touch-manipulation"
-            >
-              <BarChart3 className="w-4 h-4 sm:mr-2" />
-              <span className="hidden sm:inline">Chart</span>
-            </TabsTrigger>
+          <TabsList className="bg-muted border border-border p-1 sm:p-1.5 w-full grid grid-cols-6 rounded-lg h-auto overflow-x-auto">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <TabsTrigger
+                  key={tab.value}
+                  value={tab.value}
+                  className="rounded-md font-ui text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:font-medium transition-all min-h-[44px] text-xs sm:text-sm touch-manipulation px-1 sm:px-3"
+                >
+                  <Icon className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
 
           <div className="bg-card border border-border rounded-xl p-4 sm:p-6 md:p-8">
-            <TabsContent value="text" className="mt-0">
-              <div className="mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-border">
-                <h2 className="font-ui text-xl sm:text-2xl text-foreground mb-1 sm:mb-2">Text Generator</h2>
-                <p className="font-mono text-xs sm:text-sm text-muted-foreground">
-                  Generate copy that follows our brand voice: Direct, Technical, Confident, Practical.
-                </p>
-              </div>
-              <TextGenerator />
-            </TabsContent>
-
-            <TabsContent value="image" className="mt-0">
-              <div className="mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-border">
-                <h2 className="font-ui text-xl sm:text-2xl text-foreground mb-1 sm:mb-2">Image Generator</h2>
-                <p className="font-mono text-xs sm:text-sm text-muted-foreground">
-                  Create visuals using our brand colors, material aesthetic, and industrial style.
-                </p>
-              </div>
-              <ImageGenerator />
-            </TabsContent>
-
-            <TabsContent value="chart" className="mt-0">
-              <div className="mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-border">
-                <h2 className="font-ui text-xl sm:text-2xl text-foreground mb-1 sm:mb-2">Chart Generator</h2>
-                <p className="font-mono text-xs sm:text-sm text-muted-foreground">
-                  Build data visualizations with exact brand styling. Export as code or PNG.
-                </p>
-              </div>
-              <ChartGenerator />
-            </TabsContent>
+            {tabs.map((tab) => (
+              <TabsContent key={tab.value} value={tab.value} className="mt-0">
+                <div className="mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-border">
+                  <h2 className="font-ui text-xl sm:text-2xl text-foreground mb-1 sm:mb-2">
+                    {tabDescriptions[tab.value].title}
+                  </h2>
+                  <p className="font-mono text-xs sm:text-sm text-muted-foreground">
+                    {tabDescriptions[tab.value].description}
+                  </p>
+                </div>
+                {tab.value === "text" && <TextGenerator />}
+                {tab.value === "image" && <ImageGenerator />}
+                {tab.value === "chart" && <ChartGenerator />}
+                {tab.value === "transform" && <ContentTransformer />}
+                {tab.value === "casestudy" && <CaseStudyBuilder />}
+                {tab.value === "templates" && <TemplateGenerator />}
+              </TabsContent>
+            ))}
           </div>
         </Tabs>
       </main>
