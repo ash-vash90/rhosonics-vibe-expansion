@@ -44,7 +44,11 @@ const STEP_ICONS = [
   Building2, MapPin, AlertCircle, Target, Settings, Beaker, Trophy, Quote, Lightbulb, ArrowRight
 ];
 
-export const ComprehensiveCaseStudyBuilder = () => {
+interface ComprehensiveCaseStudyBuilderProps {
+  onOpenImageGenerator?: (prompt: string) => void;
+}
+
+export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: ComprehensiveCaseStudyBuilderProps) => {
   const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [caseStudy, setCaseStudy] = useState<ComprehensiveCaseStudy>(EMPTY_CASE_STUDY);
@@ -1232,6 +1236,7 @@ export const ComprehensiveCaseStudyBuilder = () => {
           suggestedAssets={generatedContent.suggestedAssets}
           customerName={generatedContent.executiveSnapshot.customerName}
           application={generatedContent.executiveSnapshot.application}
+          onOpenImageGenerator={onOpenImageGenerator}
         />
       </div>
     );

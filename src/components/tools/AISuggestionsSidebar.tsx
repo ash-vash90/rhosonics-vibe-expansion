@@ -171,10 +171,10 @@ export const AISuggestionsSidebar = ({
         <div className="p-4 space-y-4">
           {/* Current Step Context */}
           <div className="pb-3 border-b border-border">
-            <p className="font-mono text-xs text-muted-foreground">
+            <p className="label-tech text-muted-foreground">
               Step {currentStep}: {stepInfo?.title}
             </p>
-            <p className="font-mono text-xs text-primary mt-1">
+            <p className="font-ui text-xs text-primary mt-1">
               {stepInfo?.description}
             </p>
           </div>
@@ -182,13 +182,13 @@ export const AISuggestionsSidebar = ({
           {/* Terminology Warnings */}
           {terminologyWarnings.length > 0 && (
             <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-              <p className="font-mono text-xs font-semibold text-destructive mb-2 flex items-center gap-1">
+              <p className="label-tech font-semibold text-destructive mb-2 flex items-center gap-1">
                 <span className="w-2 h-2 bg-destructive rounded-full animate-pulse" />
                 Terminology Check
               </p>
               <ul className="space-y-1">
                 {terminologyWarnings.map((warning, idx) => (
-                  <li key={idx} className="font-mono text-xs text-destructive/80">
+                  <li key={idx} className="font-ui text-xs text-destructive/80">
                     • {warning}
                   </li>
                 ))}
@@ -201,13 +201,13 @@ export const AISuggestionsSidebar = ({
             <div className="space-y-2">
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-3 h-3 text-primary" />
-                <p className="font-mono text-xs font-semibold text-foreground">AI Suggestions</p>
+                <p className="label-tech font-semibold text-foreground">AI Suggestions</p>
               </div>
               <ul className="space-y-2">
                 {aiSuggestions.map((suggestion, idx) => (
                   <li 
                     key={idx} 
-                    className="p-2 bg-primary/5 border border-primary/10 rounded text-xs text-foreground/80 font-mono cursor-pointer hover:bg-primary/10 transition-colors"
+                    className="p-2 bg-primary/5 border border-primary/10 rounded text-xs text-foreground/80 font-ui cursor-pointer hover:bg-primary/10 transition-colors"
                     onClick={() => onApplySuggestion?.(suggestion, "")}
                   >
                     {suggestion}
@@ -219,10 +219,10 @@ export const AISuggestionsSidebar = ({
 
           {/* Static Tips */}
           <div className="space-y-2">
-            <p className="font-mono text-xs font-semibold text-foreground/70">Writing Tips</p>
+            <p className="label-tech font-semibold text-foreground/70">Writing Tips</p>
             <ul className="space-y-1.5">
               {staticTips.map((tip, idx) => (
-                <li key={idx} className="font-mono text-xs text-muted-foreground flex items-start gap-2">
+                <li key={idx} className="font-ui text-xs text-muted-foreground flex items-start gap-2">
                   <span className="text-primary mt-0.5">•</span>
                   <span>{tip}</span>
                 </li>
@@ -233,8 +233,8 @@ export const AISuggestionsSidebar = ({
           {/* Progress Indicator */}
           <div className="pt-3 border-t border-border">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-mono text-xs text-muted-foreground">Progress</span>
-              <span className="font-mono text-xs text-primary">{currentStep}/10</span>
+              <span className="label-tech text-muted-foreground">Progress</span>
+              <span className="font-data text-xs text-primary">{currentStep}/10</span>
             </div>
             <div className="h-1.5 bg-muted rounded-full overflow-hidden">
               <div 

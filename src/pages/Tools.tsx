@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { TextGenerator } from "@/components/tools/TextGenerator";
@@ -14,6 +14,12 @@ import { Button } from "@/components/ui/button";
 const Tools = () => {
   const [activeTab, setActiveTab] = useState("text");
   const [isDark, setIsDark] = useState(true);
+  const [prefilledImagePrompt, setPrefilledImagePrompt] = useState("");
+
+  const handleOpenImageGenerator = useCallback((prompt: string) => {
+    setPrefilledImagePrompt(prompt);
+    setActiveTab("image");
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -141,10 +147,19 @@ const Tools = () => {
                   </p>
                 </div>
                 {tab.value === "text" && <TextGenerator />}
-                {tab.value === "image" && <ImageGenerator />}
+                {tab.value === "image" && (
+                  <ImageGenerator 
+                    initialPrompt={prefilledImagePrompt} 
+                    onPromptConsumed={() => setPrefilledImagePrompt("")}
+                  />
+                )}
                 {tab.value === "chart" && <ChartGenerator />}
                 {tab.value === "transform" && <ContentTransformer />}
-                {tab.value === "casestudy" && <ComprehensiveCaseStudyBuilder />}
+                {tab.value === "casestudy" && (
+                  <ComprehensiveCaseStudyBuilder 
+                    onOpenImageGenerator={handleOpenImageGenerator}
+                  />
+                )}
                 {tab.value === "templates" && <TemplateGenerator />}
               </TabsContent>
             ))}
