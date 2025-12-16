@@ -5,7 +5,51 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const CASE_STUDY_PROMPT = `You are a technical content writer for Rhosonics, an industrial technology company specializing in ultrasonic density measurement (SDM ECO technology).
+// Comprehensive case study generation prompt following the 10-section structure
+const COMPREHENSIVE_PROMPT = `You are a technical content writer for Rhosonics, an industrial technology company specializing in ultrasonic density measurement (SDM ECO technology).
+
+You are creating a comprehensive, 10-section case study following Rhosonics' strict format. Generate professional, detailed content for each section based on the provided inputs.
+
+## BRAND VOICE
+- Direct and technical, not salesy
+- Focus on measurable outcomes and proof
+- Use industry-specific terminology confidently
+- Be practical and credible, not promotional
+
+## TERMINOLOGY RULES (MANDATORY)
+- Use "precision" NOT "accuracy"
+- Use "measurement" NOT "monitoring"
+- Use "deploy" NOT "install"
+- Use "optimize" NOT "improve"
+- Use "real-time" NOT "live"
+- Use "S.G." or "kg/L" for density units
+
+## 10-SECTION STRUCTURE
+
+1. **Executive Snapshot** - The "Why should I care?" (5-7 bullets for managers/execs)
+2. **Process Context** - What's actually happening (for engineers)
+3. **The Real Problem** - Frame in business/operational terms, not just "needed accuracy"
+4. **Success Criteria** - How the customer judged success (CRITICAL - often missing)
+5. **Solution Architecture** - Technical details of implementation
+6. **Commissioning & Validation** - Proof, not claims (this is where credibility lives)
+7. **Results** - Split into Technical Results AND Operational/Business Impact
+8. **Customer Voice** - Mandatory quote
+9. **Why This Worked** - Transferable insight for future customers
+10. **What's Next** - Future intent and call to action
+
+## OUTPUT FORMAT
+Return a JSON object with the full comprehensive case study structure. Expand brief user inputs into professional, detailed content while preserving technical accuracy.
+
+For any field the user left empty, generate appropriate content based on context. For narrative sections, write 2-4 sentences minimum.
+
+Also include suggested assets:
+- imageryStyle: "field" (harsh industrial), "lab" (clean precision), or "mixed"
+- imageryPrompts: 2-3 prompts for AI image generation matching brand guidelines
+- recommendedGraphs: suggested data visualizations
+- iconRecommendations: relevant icons from brand library`;
+
+// Simple case study generation (legacy support)
+const SIMPLE_PROMPT = `You are a technical content writer for Rhosonics, an industrial technology company specializing in ultrasonic density measurement (SDM ECO technology).
 
 Generate a case study based on the provided inputs. Follow these guidelines:
 
@@ -47,14 +91,42 @@ serve(async (req) => {
   }
 
   try {
-    const { industry, primaryStat, primaryLabel, metrics, context } = await req.json();
+    const body = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const userPrompt = `Generate a case study with these inputs:
+    // Check if this is a comprehensive or simple request
+    const isComprehensive = body.mode === "comprehensive";
+    
+    let userPrompt: string;
+    let systemPrompt: string;
+    
+    if (isComprehensive) {
+      const { caseStudyData } = body;
+      systemPrompt = COMPREHENSIVE_PROMPT;
+      userPrompt = `Generate a comprehensive 10-section case study with these inputs:
+
+## PROVIDED DATA
+${JSON.stringify(caseStudyData, null, 2)}
+
+## INSTRUCTIONS
+1. Expand all brief inputs into professional, detailed content
+2. For empty fields, generate appropriate content based on context
+3. Maintain technical credibility throughout
+4. Focus on the "Real Problem" being business/operational, not just technical
+5. Make "Success Criteria" explicit and measurable
+6. Ensure "Customer Voice" quote feels authentic
+7. "Why This Worked" should provide transferable insights
+
+Return the complete case study as a JSON object matching the ComprehensiveCaseStudy TypeScript interface.`;
+    } else {
+      // Legacy simple mode
+      const { industry, primaryStat, primaryLabel, metrics, context } = body;
+      systemPrompt = SIMPLE_PROMPT;
+      userPrompt = `Generate a case study with these inputs:
 
 INDUSTRY: ${industry}
 PRIMARY METRIC: ${primaryStat} - ${primaryLabel}
@@ -62,8 +134,9 @@ SUPPORTING METRICS: ${metrics.map((m: any) => `${m.label}: ${m.value}`).join(", 
 CONTEXT: ${context}
 
 Generate a compelling, technical case study that showcases the value of SDM ECO density measurement technology in this ${industry} application.`;
+    }
 
-    console.log("Generating case study for industry:", industry);
+    console.log("Generating case study, mode:", isComprehensive ? "comprehensive" : "simple");
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -74,7 +147,7 @@ Generate a compelling, technical case study that showcases the value of SDM ECO 
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
         messages: [
-          { role: "system", content: CASE_STUDY_PROMPT },
+          { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
         response_format: { type: "json_object" },
@@ -108,10 +181,11 @@ Generate a compelling, technical case study that showcases the value of SDM ECO 
     try {
       caseStudy = JSON.parse(resultText);
     } catch {
+      console.error("Failed to parse AI response:", resultText);
       throw new Error("Failed to parse case study response");
     }
 
-    console.log("Case study generated successfully:", caseStudy.title);
+    console.log("Case study generated successfully");
 
     return new Response(JSON.stringify({ caseStudy }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
