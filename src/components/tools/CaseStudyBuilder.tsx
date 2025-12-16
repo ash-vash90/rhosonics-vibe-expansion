@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, Loader2, FileText, Check, ChevronRight, ChevronLeft } from "lucide-react";
+import { Copy, Loader2, FileText, Check, ChevronRight, ChevronLeft, Save, Star, Trash2, History } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 const INDUSTRIES = [
   { value: "mining", label: "Mining" },
@@ -32,7 +33,14 @@ interface CaseStudy {
   metrics: Metric[];
 }
 
+interface SavedCaseStudy extends CaseStudy {
+  id: string;
+  is_favorite: boolean;
+  created_at: string;
+}
+
 export const CaseStudyBuilder = () => {
+  const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [industry, setIndustry] = useState("");
   const [primaryStat, setPrimaryStat] = useState("");
@@ -45,7 +53,46 @@ export const CaseStudyBuilder = () => {
   const [context, setContext] = useState("");
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [savedCaseStudies, setSavedCaseStudies] = useState<SavedCaseStudy[]>([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
+
+  const fetchSavedCaseStudies = useCallback(async () => {
+    if (!user) return;
+    setLoadingHistory(true);
+    try {
+      const { data, error } = await supabase
+        .from("saved_case_studies" as any)
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+      
+      if (error) throw error;
+      setSavedCaseStudies((data || []).map((d: any) => ({
+        id: d.id,
+        title: d.title,
+        description: d.description,
+        industry: d.industry,
+        stat: d.stat,
+        statLabel: d.stat_label,
+        metrics: d.metrics as Metric[],
+        is_favorite: d.is_favorite,
+        created_at: d.created_at,
+      })));
+    } catch (error) {
+      console.error("Error fetching case studies:", error);
+    } finally {
+      setLoadingHistory(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (showHistory && user) {
+      fetchSavedCaseStudies();
+    }
+  }, [showHistory, user, fetchSavedCaseStudies]);
 
   const handleGenerate = async () => {
     setIsLoading(true);
@@ -73,6 +120,78 @@ export const CaseStudyBuilder = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSave = async () => {
+    if (!caseStudy || !user) {
+      toast.error("Please log in to save case studies");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const { error } = await supabase.from("saved_case_studies" as any).insert({
+        user_id: user.id,
+        title: caseStudy.title,
+        description: caseStudy.description,
+        industry: caseStudy.industry,
+        stat: caseStudy.stat,
+        stat_label: caseStudy.statLabel,
+        metrics: caseStudy.metrics,
+      } as any);
+
+      if (error) throw error;
+      toast.success("Case study saved");
+      fetchSavedCaseStudies();
+    } catch (error: any) {
+      console.error("Save error:", error);
+      toast.error(error.message || "Failed to save case study");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleToggleFavorite = async (id: string, currentFavorite: boolean) => {
+    try {
+      const { error } = await supabase
+        .from("saved_case_studies" as any)
+        .update({ is_favorite: !currentFavorite } as any)
+        .eq("id", id);
+
+      if (error) throw error;
+      setSavedCaseStudies(prev =>
+        prev.map(cs => cs.id === id ? { ...cs, is_favorite: !currentFavorite } : cs)
+      );
+    } catch (error) {
+      console.error("Error updating favorite:", error);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from("saved_case_studies" as any)
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+      setSavedCaseStudies(prev => prev.filter(cs => cs.id !== id));
+      toast.success("Case study deleted");
+    } catch (error) {
+      console.error("Error deleting:", error);
+    }
+  };
+
+  const handleLoadCaseStudy = (saved: SavedCaseStudy) => {
+    setCaseStudy({
+      title: saved.title,
+      description: saved.description,
+      industry: saved.industry,
+      stat: saved.stat,
+      statLabel: saved.statLabel,
+      metrics: saved.metrics,
+    });
+    setShowHistory(false);
   };
 
   const updateMetric = (index: number, field: "label" | "value", value: string) => {
@@ -112,8 +231,85 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
     }
   };
 
+  // History Panel
+  if (showHistory) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h3 className="font-ui text-lg text-foreground">Saved Case Studies</h3>
+          <Button variant="outline" size="sm" onClick={() => setShowHistory(false)}>
+            Back to Builder
+          </Button>
+        </div>
+
+        {loadingHistory ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+          </div>
+        ) : savedCaseStudies.length === 0 ? (
+          <div className="text-center py-12 text-muted-foreground">
+            <History className="w-12 h-12 mx-auto mb-3 opacity-50" />
+            <p className="font-ui">No saved case studies yet</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {savedCaseStudies.map((saved) => (
+              <div
+                key={saved.id}
+                className="p-4 border border-border rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 cursor-pointer" onClick={() => handleLoadCaseStudy(saved)}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-data text-xs text-primary uppercase">
+                        {INDUSTRIES.find(i => i.value === saved.industry)?.label}
+                      </span>
+                      <span className="text-2xl font-bold text-foreground">{saved.stat}</span>
+                    </div>
+                    <h4 className="font-ui text-sm font-medium text-foreground">{saved.title}</h4>
+                    <p className="font-mono text-xs text-muted-foreground mt-1 line-clamp-2">
+                      {saved.description}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={() => handleToggleFavorite(saved.id, saved.is_favorite)}
+                    >
+                      <Star className={`w-4 h-4 ${saved.is_favorite ? "fill-primary text-primary" : "text-muted-foreground"}`} />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-destructive hover:text-destructive"
+                      onClick={() => handleDelete(saved.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
+      {/* History Button */}
+      {user && (
+        <div className="flex justify-end">
+          <Button variant="outline" size="sm" onClick={() => setShowHistory(true)}>
+            <History className="w-4 h-4 mr-2" />
+            Saved ({savedCaseStudies.length})
+          </Button>
+        </div>
+      )}
+
       {/* Progress Steps */}
       <div className="flex items-center justify-between mb-8">
         {[1, 2, 3, 4].map((s) => (
@@ -267,21 +463,33 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
       {/* Generated Case Study Preview */}
       {caseStudy && (
         <div className="pt-6 border-t border-border">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4 gap-2 flex-wrap">
             <label className="label-tech text-primary">Generated Case Study</label>
-            <Button variant="outline" size="sm" onClick={handleCopy}>
-              {copied ? (
-                <>
-                  <Check className="w-4 h-4 mr-2 text-primary" />
-                  Copied
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy Markdown
-                </>
+            <div className="flex items-center gap-2">
+              {user && (
+                <Button variant="outline" size="sm" onClick={handleSave} disabled={isSaving}>
+                  {isSaving ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4 mr-2" />
+                  )}
+                  Save
+                </Button>
               )}
-            </Button>
+              <Button variant="outline" size="sm" onClick={handleCopy}>
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4 mr-2 text-primary" />
+                    Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4 mr-2" />
+                    Copy Markdown
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
           
           {/* Case Study Card Preview */}
