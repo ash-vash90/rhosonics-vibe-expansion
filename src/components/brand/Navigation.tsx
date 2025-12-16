@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { RhosonicsLogo } from "../RhosonicsLogo";
-import { Menu, X, Zap, ChevronRight, Sparkles } from "lucide-react";
+import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown } from "lucide-react";
 
 interface NavSection {
   id: string;
@@ -68,6 +68,7 @@ const navSections: NavSection[] = [
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<string[]>(["01"]);
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Close menu on click outside
@@ -99,28 +100,36 @@ export const Navigation = () => {
     }
   };
 
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections(prev => 
+      prev.includes(sectionId) 
+        ? prev.filter(id => id !== sectionId)
+        : [...prev, sectionId]
+    );
+  };
+
   return (
     <>
-      {/* Mobile Overlay */}
+      {/* Mobile/Tablet Overlay */}
       <div 
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 xl:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Navigation */}
+      {/* Navigation Sidebar - Desktop only */}
       <nav 
         ref={menuRef}
         className={`
-          fixed lg:sticky top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100 
+          fixed xl:sticky top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100 
           z-50 flex-shrink-0 overflow-y-auto
           transform transition-transform duration-300 ease-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+          ${isOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}
         `}
       >
         {/* Green accent bar */}
-        <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-primary hidden lg:block" />
+        <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-primary hidden xl:block" />
         
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
@@ -134,54 +143,53 @@ export const Navigation = () => {
             <span className="font-logo text-lg tracking-tight">Rhosonics</span>
           </button>
           <button
-            className="lg:hidden text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors touch-manipulation"
+            className="xl:hidden text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors touch-manipulation"
             onClick={() => setIsOpen(false)}
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Navigation Links */}
-        <div className="p-4 sm:p-6 space-y-5 overflow-y-auto">
+        {/* Navigation Links - Collapsible sections */}
+        <div className="p-4 sm:p-6 space-y-2 overflow-y-auto">
           {navSections.map((section) => (
-            <div key={section.id}>
-              <div className="label-tech mb-2 text-slate-400">
-                <span className="text-primary">{section.id}</span>
-                <span className="mx-2 text-slate-600">/</span>
-                {section.label}
+            <div key={section.id} className="border-b border-slate-800/50 last:border-b-0">
+              <button
+                onClick={() => toggleSection(section.id)}
+                className="w-full flex items-center justify-between py-2.5 text-left hover:text-primary transition-colors group"
+              >
+                <div className="label-tech text-slate-400 group-hover:text-primary transition-colors">
+                  <span className="text-primary">{section.id}</span>
+                  <span className="mx-2 text-slate-600">/</span>
+                  {section.label}
+                </div>
+                <ChevronDown 
+                  className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
+                    expandedSections.includes(section.id) ? "rotate-180" : ""
+                  }`} 
+                />
+              </button>
+              <div className={`overflow-hidden transition-all duration-200 ${
+                expandedSections.includes(section.id) ? "max-h-96 pb-2" : "max-h-0"
+              }`}>
+                {section.items.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation ${
+                      item.highlight ? 'text-primary font-medium' : ''
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
+                ))}
               </div>
-              {section.items.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`nav-link mb-1.5 text-left w-full flex items-center justify-between group min-h-[44px] touch-manipulation ${
-                    item.highlight ? 'text-primary font-medium' : ''
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </button>
-              ))}
             </div>
           ))}
 
-          {/* AI Tools Link */}
-          <div className="pt-4 border-t border-slate-800">
-            <Link
-              to="/tools"
-              className="flex items-center gap-3 px-3 py-3 bg-primary/10 border border-primary/30 rounded-md hover:bg-primary/20 transition-colors group touch-manipulation"
-              onClick={() => setIsOpen(false)}
-            >
-              <Sparkles className="w-4 h-4 text-primary" />
-              <div>
-                <span className="label-tech-sm text-primary/70 block">AI TOOLS</span>
-                <span className="text-sm text-slate-200 font-medium group-hover:text-primary transition-colors">Generate Assets</span>
-              </div>
-            </Link>
-          </div>
-
           {/* Version Badge */}
-          <div className="pt-3">
+          <div className="pt-4">
             <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 rounded-md">
               <Zap className="w-4 h-4 text-primary" />
               <div>
@@ -193,8 +201,8 @@ export const Navigation = () => {
         </div>
       </nav>
 
-      {/* Mobile Header Bar */}
-      <div className="fixed top-0 left-0 right-0 h-14 bg-rho-obsidian/95 backdrop-blur-sm border-b border-slate-800/80 flex items-center justify-between px-4 z-30 lg:hidden">
+      {/* Top Header Bar - Mobile & Tablet */}
+      <div className="fixed top-0 left-0 right-0 h-14 bg-rho-obsidian/95 backdrop-blur-sm border-b border-slate-800/80 flex items-center justify-between px-4 z-30 xl:hidden">
         <button 
           onClick={() => scrollToSection('intro')}
           className="flex items-center gap-2 touch-manipulation"
@@ -207,9 +215,10 @@ export const Navigation = () => {
         <div className="flex items-center gap-2">
           <Link
             to="/tools"
-            className="p-2 text-primary hover:bg-primary/10 rounded-md transition-colors touch-manipulation"
+            className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-md text-primary hover:bg-primary/20 transition-colors touch-manipulation"
           >
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-4 h-4" />
+            <span className="text-sm font-medium hidden sm:inline">AI Tools</span>
           </Link>
           <button
             className="p-2 text-slate-400 hover:text-primary transition-colors touch-manipulation"
@@ -220,8 +229,18 @@ export const Navigation = () => {
         </div>
       </div>
 
-      {/* Spacer for mobile header */}
-      <div className="h-14 lg:hidden" />
+      {/* Floating AI Tools Button - Desktop */}
+      <Link
+        to="/tools"
+        className="hidden xl:flex fixed bottom-6 right-6 items-center gap-3 px-5 py-3 bg-gradient-to-r from-primary to-rho-lime text-rho-obsidian font-semibold rounded-full shadow-lg hover:shadow-primary/30 hover:scale-105 transition-all z-40 group"
+      >
+        <Sparkles className="w-5 h-5" />
+        <span>AI Tools</span>
+        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      </Link>
+
+      {/* Spacer for mobile/tablet header */}
+      <div className="h-14 xl:hidden" />
     </>
   );
 };
