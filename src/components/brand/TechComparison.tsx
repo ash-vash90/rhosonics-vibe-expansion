@@ -47,62 +47,69 @@ export const TechComparison = () => {
   const finalBarValues = [15, 85, 45, 25];
 
   useEffect(() => {
-    // Bar chart animation - animate the actual bar values
-    ScrollTrigger.create({
-      trigger: barChartRef.current,
-      start: "top 75%",
-      onEnter: () => {
-        if (hasAnimatedBars.current) return;
-        hasAnimatedBars.current = true;
+    // Defer ScrollTrigger initialization to reduce forced reflows during initial paint
+    const initScrollTriggers = () => {
+      // Bar chart animation - animate the actual bar values
+      ScrollTrigger.create({
+        trigger: barChartRef.current,
+        start: "top 75%",
+        onEnter: () => {
+          if (hasAnimatedBars.current) return;
+          hasAnimatedBars.current = true;
 
-        // Animate each bar's value from 0 to final
-        finalBarValues.forEach((finalValue, index) => {
-          const obj = { value: 0 };
+          // Animate each bar's value from 0 to final
+          finalBarValues.forEach((finalValue, index) => {
+            const obj = { value: 0 };
+            gsap.to(obj, {
+              value: finalValue,
+              duration: 1.2,
+              delay: index * 0.15,
+              ease: "power3.out",
+              onUpdate: () => {
+                setAnimatedBarData(prev => {
+                  const newData = [...prev];
+                  newData[index] = { ...newData[index], value: Math.round(obj.value) };
+                  return newData;
+                });
+              }
+            });
+          });
+        }
+      });
+
+      // Radar chart animation - animate values from center outward
+      ScrollTrigger.create({
+        trigger: radarChartRef.current,
+        start: "top 75%",
+        onEnter: () => {
+          if (hasAnimatedRadar.current) return;
+          hasAnimatedRadar.current = true;
+
+          const obj = { progress: 0 };
           gsap.to(obj, {
-            value: finalValue,
-            duration: 1.2,
-            delay: index * 0.15,
-            ease: "power3.out",
+            progress: 1,
+            duration: 1.5,
+            ease: "power2.out",
             onUpdate: () => {
-              setAnimatedBarData(prev => {
-                const newData = [...prev];
-                newData[index] = { ...newData[index], value: Math.round(obj.value) };
-                return newData;
-              });
+              setAnimatedRadarData(
+                radarData.map(d => ({
+                  ...d,
+                  sdm: Math.round(d.sdm * obj.progress),
+                  nuclear: Math.round(d.nuclear * obj.progress),
+                  coriolis: Math.round(d.coriolis * obj.progress),
+                }))
+              );
             }
           });
-        });
-      }
-    });
+        }
+      });
+    };
 
-    // Radar chart animation - animate values from center outward
-    ScrollTrigger.create({
-      trigger: radarChartRef.current,
-      start: "top 75%",
-      onEnter: () => {
-        if (hasAnimatedRadar.current) return;
-        hasAnimatedRadar.current = true;
-
-        const obj = { progress: 0 };
-        gsap.to(obj, {
-          progress: 1,
-          duration: 1.5,
-          ease: "power2.out",
-          onUpdate: () => {
-            setAnimatedRadarData(
-              radarData.map(d => ({
-                ...d,
-                sdm: Math.round(d.sdm * obj.progress),
-                nuclear: Math.round(d.nuclear * obj.progress),
-                coriolis: Math.round(d.coriolis * obj.progress),
-              }))
-            );
-          }
-        });
-      }
-    });
+    // Defer ScrollTrigger initialization to reduce forced reflows
+    const timeoutId = setTimeout(initScrollTriggers, 100);
 
     return () => {
+      clearTimeout(timeoutId);
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
