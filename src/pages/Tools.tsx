@@ -142,7 +142,7 @@ const Tools = () => {
                   <h2 className="font-ui text-xl sm:text-2xl text-foreground mb-1 sm:mb-2">
                     {tabDescriptions[tab.value].title}
                   </h2>
-                  <p className="font-mono text-xs sm:text-sm text-muted-foreground">
+                  <p className="font-ui text-xs sm:text-sm text-muted-foreground">
                     {tabDescriptions[tab.value].description}
                   </p>
                 </div>

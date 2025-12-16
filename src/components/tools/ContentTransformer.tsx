@@ -190,7 +190,7 @@ export const ContentTransformer = () => {
                 <span className="font-ui text-sm font-medium text-foreground capitalize">
                   {m === "full" ? "Full Rewrite" : m === "terminology" ? "Terminology Only" : "Tone Adjustment"}
                 </span>
-                <span className="font-mono text-xs text-muted-foreground mt-1">
+                <span className="font-ui text-xs text-muted-foreground mt-1">
                   {modeDescriptions[m]}
                 </span>
               </Label>
@@ -215,7 +215,7 @@ export const ContentTransformer = () => {
             <FileText className="w-5 h-5 text-primary flex-shrink-0" />
             <div className="flex-1 min-w-0">
               <p className="font-ui text-sm text-foreground truncate">{uploadedFile.name}</p>
-              <p className="font-mono text-xs text-muted-foreground">
+              <p className="font-ui text-xs text-muted-foreground">
                 {formatFileSize(uploadedFile.size)} • {uploadedFile.text.length.toLocaleString()} characters
               </p>
             </div>
@@ -240,7 +240,7 @@ export const ContentTransformer = () => {
                 <Upload className="w-5 h-5 mr-2" />
                 <div className="text-left">
                   <div className="font-ui text-sm">Upload PDF, DOCX, TXT, or MD</div>
-                  <div className="font-mono text-xs text-muted-foreground">Max 20MB</div>
+                  <div className="label-tech text-muted-foreground">Max 20MB</div>
                 </div>
               </>
             )}
@@ -285,7 +285,7 @@ export const ContentTransformer = () => {
             {output ? (
               <p className="text-foreground font-ui leading-relaxed whitespace-pre-wrap">{output}</p>
             ) : (
-              <p className="text-muted-foreground font-mono text-sm italic">
+              <p className="text-muted-foreground font-ui text-sm italic">
                 Transformed content will appear here...
               </p>
             )}
@@ -319,9 +319,9 @@ export const ContentTransformer = () => {
           <div className="space-y-2 max-h-[200px] overflow-y-auto">
             {changes.map((change, idx) => (
               <div key={idx} className="flex items-center gap-2 text-sm p-2 bg-muted/30 rounded-lg">
-                <span className="text-destructive line-through font-mono">{change.original}</span>
+                <span className="text-destructive line-through font-data">{change.original}</span>
                 <ArrowRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                <span className="text-primary font-mono">{change.transformed}</span>
+                <span className="text-primary font-data">{change.transformed}</span>
               </div>
             ))}
           </div>

@@ -269,7 +269,7 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
                       <span className="text-2xl font-bold text-foreground">{saved.stat}</span>
                     </div>
                     <h4 className="font-ui text-sm font-medium text-foreground">{saved.title}</h4>
-                    <p className="font-mono text-xs text-muted-foreground mt-1 line-clamp-2">
+                    <p className="font-ui text-xs text-muted-foreground mt-1 line-clamp-2">
                       {saved.description}
                     </p>
                   </div>
@@ -317,7 +317,7 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
         {[1, 2, 3, 4].map((s) => (
           <div key={s} className="flex items-center">
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-sm transition-all ${
+              className={`w-8 h-8 rounded-full flex items-center justify-center font-data text-sm transition-all ${
                 step === s
                   ? "bg-primary text-primary-foreground"
                   : step > s
@@ -353,7 +353,7 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
                 ))}
               </SelectContent>
             </Select>
-            <p className="font-mono text-xs text-muted-foreground">
+            <p className="font-ui text-xs text-muted-foreground">
               The industry context helps generate relevant technical terminology and applications.
             </p>
           </div>
@@ -370,7 +370,7 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
                   placeholder="e.g., 42%"
                   className="bg-muted/50 border-border text-foreground text-2xl font-bold text-center h-16"
                 />
-                <span className="font-mono text-xs text-muted-foreground mt-1 block text-center">Value</span>
+                <span className="label-tech text-muted-foreground mt-1 block text-center">Value</span>
               </div>
               <div>
                 <Input
@@ -379,10 +379,10 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
                   placeholder="e.g., Efficiency increase"
                   className="bg-muted/50 border-border text-foreground h-16"
                 />
-                <span className="font-mono text-xs text-muted-foreground mt-1 block text-center">Label</span>
+                <span className="label-tech text-muted-foreground mt-1 block text-center">Label</span>
               </div>
             </div>
-            <p className="font-mono text-xs text-muted-foreground">
+            <p className="font-ui text-xs text-muted-foreground">
               This will be the hero statistic featured prominently in the case study.
             </p>
           </div>
@@ -407,7 +407,7 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
                 />
               </div>
             ))}
-            <p className="font-mono text-xs text-muted-foreground">
+            <p className="font-ui text-xs text-muted-foreground">
               Add 1-3 supporting metrics to provide additional context.
             </p>
           </div>
@@ -422,7 +422,7 @@ ${caseStudy.metrics.map(m => `- **${m.label}:** ${m.value}`).join("\n")}`;
               placeholder="Brief notes about the project, challenge, or application...&#10;&#10;e.g., Large-scale copper mine in Chile, struggling with water recovery in thickener operations. High variability in ore grade causing inconsistent underflow density."
               className="min-h-[160px] bg-muted/50 border-border text-foreground placeholder:text-muted-foreground font-ui focus:border-primary resize-none"
             />
-            <p className="font-mono text-xs text-muted-foreground">
+            <p className="font-ui text-xs text-muted-foreground">
               AI will expand this into a full case study narrative.
             </p>
           </div>

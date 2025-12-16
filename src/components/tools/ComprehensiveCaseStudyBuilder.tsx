@@ -439,7 +439,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
         return (
           <div className="space-y-6">
             <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-              <p className="font-mono text-xs text-muted-foreground">
+              <p className="font-ui text-xs text-muted-foreground">
                 <Lightbulb className="w-4 h-4 inline mr-2 text-primary" />
                 Rule: If you remove this section, the reader should lose understanding — not just details.
               </p>
@@ -478,7 +478,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
         return (
           <div className="space-y-6">
             <div className="p-4 bg-destructive/5 border border-destructive/20 rounded-lg">
-              <p className="font-mono text-xs text-muted-foreground">
+              <p className="font-ui text-xs text-muted-foreground">
                 <AlertCircle className="w-4 h-4 inline mr-2 text-destructive" />
                 Avoid: "Needed accurate measurement"<br />
                 Prefer: "Operators lacked confidence in density readings, leading to conservative setpoints and reduced throughput."
@@ -541,7 +541,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
         return (
           <div className="space-y-6">
             <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-              <p className="font-mono text-xs text-muted-foreground">
+              <p className="font-ui text-xs text-muted-foreground">
                 <Target className="w-4 h-4 inline mr-2 text-primary" />
                 This is critical and often missing. Explicitly state what "success" meant to the customer.
               </p>
@@ -700,7 +700,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
         return (
           <div className="space-y-6">
             <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-              <p className="font-mono text-xs text-muted-foreground">
+              <p className="font-ui text-xs text-muted-foreground">
                 <Beaker className="w-4 h-4 inline mr-2 text-primary" />
                 This is where your credibility lives. Explain how confidence was built.
               </p>
@@ -821,7 +821,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
                 Operational & Business Impact
               </h4>
               <div className="p-4 bg-lime-500/5 border border-lime-500/20 rounded-lg">
-                <p className="font-mono text-xs text-muted-foreground">
+                <p className="font-ui text-xs text-muted-foreground">
                   This is the upgrade your current case studies lack. If you cannot quantify, say what changed in daily operation.
                 </p>
               </div>
@@ -851,7 +851,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
         return (
           <div className="space-y-6">
             <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-              <p className="font-mono text-xs text-muted-foreground">
+              <p className="font-ui text-xs text-muted-foreground">
                 <Quote className="w-4 h-4 inline mr-2 text-primary" />
                 Mandatory. Best sources: Process engineer, Maintenance lead, Operations manager
               </p>
@@ -866,8 +866,8 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
               />
             </div>
             <div className="p-3 bg-muted/30 rounded-lg">
-              <p className="font-mono text-xs text-muted-foreground mb-2">Quote prompts to ask customers:</p>
-              <ul className="font-mono text-xs text-muted-foreground space-y-1 list-disc list-inside">
+              <p className="font-ui text-xs text-muted-foreground mb-2">Quote prompts to ask customers:</p>
+              <ul className="font-ui text-xs text-muted-foreground space-y-1 list-disc list-inside">
                 <li>"What was different after installation?"</li>
                 <li>"What would you miss if it was removed?"</li>
                 <li>"Would you specify it again?"</li>
@@ -909,7 +909,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
         return (
           <div className="space-y-6">
             <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-              <p className="font-mono text-xs text-muted-foreground">
+              <p className="font-ui text-xs text-muted-foreground">
                 <Lightbulb className="w-4 h-4 inline mr-2 text-primary" />
                 This turns the case study into a buyer education tool, not just a trophy.
               </p>
@@ -1052,7 +1052,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
                       {!saved.is_draft && <Badge variant="default" className="text-xs">Complete</Badge>}
                     </div>
                     <h4 className="font-ui text-sm font-medium text-foreground">{saved.title}</h4>
-                    <p className="font-mono text-xs text-muted-foreground mt-1">
+                    <p className="font-ui text-xs text-muted-foreground mt-1">
                       {new Date(saved.created_at).toLocaleDateString()}
                     </p>
                   </div>
@@ -1307,7 +1307,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
             <h3 className="font-ui text-lg font-semibold text-foreground">
               {WIZARD_STEPS[step - 1].title}
             </h3>
-            <p className="font-mono text-sm text-muted-foreground">
+            <p className="font-ui text-sm text-muted-foreground">
               {WIZARD_STEPS[step - 1].description}
             </p>
           </div>
