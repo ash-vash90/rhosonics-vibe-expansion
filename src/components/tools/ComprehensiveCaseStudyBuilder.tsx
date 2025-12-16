@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { exportComprehensiveCaseStudyToPDF, exportComprehensiveCaseStudyToWord } from "@/lib/comprehensiveCaseStudyExport";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { AISuggestionsSidebar } from "./AISuggestionsSidebar";
 import {
   ComprehensiveCaseStudy,
   WIZARD_STEPS,
@@ -1283,52 +1284,76 @@ export const ComprehensiveCaseStudyBuilder = () => {
         </div>
       </div>
 
-      {/* Step Title */}
-      <div className="border-b border-border pb-4">
-        <h3 className="font-ui text-lg font-semibold text-foreground">
-          {WIZARD_STEPS[step - 1].title}
-        </h3>
-        <p className="font-mono text-sm text-muted-foreground">
-          {WIZARD_STEPS[step - 1].description}
-        </p>
-      </div>
+      {/* Main content with sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Step Content */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Step Title */}
+          <div className="border-b border-border pb-4">
+            <h3 className="font-ui text-lg font-semibold text-foreground">
+              {WIZARD_STEPS[step - 1].title}
+            </h3>
+            <p className="font-mono text-sm text-muted-foreground">
+              {WIZARD_STEPS[step - 1].description}
+            </p>
+          </div>
 
-      {/* Step Content */}
-      <div className="min-h-[300px]">
-        {renderStepContent()}
-      </div>
+          {/* Step Form */}
+          <div className="min-h-[300px]">
+            {renderStepContent()}
+          </div>
 
-      {/* Navigation */}
-      <div className="flex items-center justify-between pt-4 border-t border-border">
-        <Button
-          variant="outline"
-          onClick={() => setStep(step - 1)}
-          disabled={step === 1}
-        >
-          <ChevronLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
-        
-        {step < 10 ? (
-          <Button onClick={() => setStep(step + 1)} disabled={!canProceed()}>
-            Next
-            <ChevronRight className="w-4 h-4 ml-2" />
-          </Button>
-        ) : (
-          <Button onClick={handleGenerate} disabled={isLoading || !canProceed()}>
-            {isLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Generating...
-              </>
+          {/* Navigation */}
+          <div className="flex items-center justify-between pt-4 border-t border-border">
+            <Button
+              variant="outline"
+              onClick={() => setStep(step - 1)}
+              disabled={step === 1}
+            >
+              <ChevronLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            
+            {step < 10 ? (
+              <Button onClick={() => setStep(step + 1)} disabled={!canProceed()}>
+                Next
+                <ChevronRight className="w-4 h-4 ml-2" />
+              </Button>
             ) : (
-              <>
-                <FileText className="w-5 h-5 mr-2" />
-                Generate Case Study
-              </>
+              <Button onClick={handleGenerate} disabled={isLoading || !canProceed()}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <FileText className="w-5 h-5 mr-2" />
+                    Generate Case Study
+                  </>
+                )}
+              </Button>
             )}
-          </Button>
-        )}
+          </div>
+        </div>
+
+        {/* AI Suggestions Sidebar */}
+        <div className="hidden lg:block">
+          <div className="sticky top-24">
+            <AISuggestionsSidebar 
+              currentStep={step}
+              caseStudyData={caseStudy}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile AI Guidance - Collapsible at bottom */}
+      <div className="lg:hidden">
+        <AISuggestionsSidebar 
+          currentStep={step}
+          caseStudyData={caseStudy}
+        />
       </div>
     </div>
   );
