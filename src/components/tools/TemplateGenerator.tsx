@@ -277,7 +277,7 @@ export const TemplateGenerator = () => {
                         </span>
                       </div>
                       <h4 className="font-ui text-sm font-medium text-foreground">{saved.name}</h4>
-                      <p className="font-mono text-xs text-muted-foreground mt-1 line-clamp-2">
+                      <p className="font-ui text-xs text-muted-foreground mt-1 line-clamp-2">
                         {saved.content.substring(0, 150)}...
                       </p>
                     </div>
@@ -343,7 +343,7 @@ export const TemplateGenerator = () => {
                 <div className="font-ui text-sm font-medium text-foreground">
                   {template.label}
                 </div>
-                <div className="font-mono text-xs text-muted-foreground mt-0.5">
+                <div className="font-ui text-xs text-muted-foreground mt-0.5">
                   {template.description}
                 </div>
               </button>
@@ -358,7 +358,7 @@ export const TemplateGenerator = () => {
           <label className="label-tech text-foreground/70">Template Details</label>
           {currentFields.map((field, idx) => (
             <div key={idx}>
-              <label className="font-mono text-xs text-muted-foreground mb-1.5 block">
+              <label className="label-tech text-muted-foreground mb-1.5 block">
                 {field.label}
               </label>
               {field.type === "textarea" ? (
