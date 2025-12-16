@@ -37,36 +37,46 @@ serve(async (req) => {
   }
 
   try {
-    const { prompt, aspectRatio = "1:1", referenceImage } = await req.json();
+    const { prompt, aspectRatio = "1:1", referenceImages } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const enhancedPrompt = referenceImage 
-      ? `${prompt}. Apply Rhosonics brand style: ${BRAND_STYLE_PROMPT}. Output aspect ratio: ${aspectRatio}. Ultra high resolution.`
-      : `${prompt}. Style: ${BRAND_STYLE_PROMPT}. Aspect ratio: ${aspectRatio}. Ultra high resolution.`;
+    const hasReferences = referenceImages && Array.isArray(referenceImages) && referenceImages.length > 0;
+    const numReferences = hasReferences ? referenceImages.length : 0;
+
+    let enhancedPrompt: string;
+    if (numReferences > 1) {
+      enhancedPrompt = `${prompt}. Blend and merge the ${numReferences} provided reference images together following this instruction. Apply Rhosonics brand style: ${BRAND_STYLE_PROMPT}. Output aspect ratio: ${aspectRatio}. Ultra high resolution.`;
+    } else if (numReferences === 1) {
+      enhancedPrompt = `${prompt}. Use the provided reference image as a style guide or base for transformation. Apply Rhosonics brand style: ${BRAND_STYLE_PROMPT}. Output aspect ratio: ${aspectRatio}. Ultra high resolution.`;
+    } else {
+      enhancedPrompt = `${prompt}. Style: ${BRAND_STYLE_PROMPT}. Aspect ratio: ${aspectRatio}. Ultra high resolution.`;
+    }
 
     console.log("Generating brand image with prompt:", prompt.substring(0, 100));
-    console.log("Reference image provided:", !!referenceImage);
+    console.log("Number of reference images:", numReferences);
 
-    // Build the message content based on whether we have a reference image
+    // Build the message content based on whether we have reference images
     let messageContent: any;
     
-    if (referenceImage) {
-      // Image editing mode - include the reference image
+    if (hasReferences) {
+      // Multi-image mode - include all reference images
+      const imageContents = referenceImages.map((img: string, index: number) => ({
+        type: "image_url",
+        image_url: {
+          url: img,
+        },
+      }));
+      
       messageContent = [
         {
           type: "text",
           text: enhancedPrompt,
         },
-        {
-          type: "image_url",
-          image_url: {
-            url: referenceImage,
-          },
-        },
+        ...imageContents,
       ];
     } else {
       // Pure generation mode
