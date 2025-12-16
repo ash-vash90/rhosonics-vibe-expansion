@@ -1,10 +1,93 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export const TypographyScale = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
+  const typeScaleRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate table rows with typing effect simulation
+      const tableRows = tableRef.current?.querySelectorAll('tbody tr');
+      if (tableRows) {
+        gsap.set(tableRows, { opacity: 0, x: -30 });
+        
+        ScrollTrigger.create({
+          trigger: tableRef.current,
+          start: "top 75%",
+          onEnter: () => {
+            gsap.to(tableRows, {
+              opacity: 1,
+              x: 0,
+              duration: 0.6,
+              stagger: 0.08,
+              ease: "power3.out",
+            });
+          }
+        });
+      }
+
+      // Animate type scale items - larger sizes first (elastic slide)
+      const scaleItems = typeScaleRef.current?.querySelectorAll('.type-scale-item');
+      if (scaleItems) {
+        gsap.set(scaleItems, { opacity: 0, x: 60 });
+        
+        ScrollTrigger.create({
+          trigger: typeScaleRef.current,
+          start: "top 80%",
+          onEnter: () => {
+            gsap.to(scaleItems, {
+              opacity: 1,
+              x: 0,
+              duration: 0.7,
+              stagger: 0.06,
+              ease: "back.out(1.2)",
+            });
+          }
+        });
+      }
+
+      // Animate spec cards with 3D tilt
+      const specCards = cardsRef.current?.querySelectorAll('.spec-card');
+      if (specCards) {
+        gsap.set(specCards, { 
+          opacity: 0, 
+          rotateX: 15,
+          y: 40,
+          transformPerspective: 1000 
+        });
+        
+        ScrollTrigger.create({
+          trigger: cardsRef.current,
+          start: "top 85%",
+          onEnter: () => {
+            gsap.to(specCards, {
+              opacity: 1,
+              rotateX: 0,
+              y: 0,
+              duration: 0.8,
+              stagger: 0.15,
+              ease: "power3.out",
+            });
+          }
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="typography" className="mb-32">
+    <section id="typography" className="mb-32" ref={sectionRef}>
       <h2 className="section-header">Typography Scale</h2>
 
       {/* Font Families Table */}
-      <div className="card-base p-0 overflow-hidden mb-12">
+      <div ref={tableRef} className="card-base p-0 overflow-hidden mb-12">
         <table className="w-full text-left">
           <thead className="bg-slate-50 border-b border-border">
             <tr>
@@ -78,7 +161,7 @@ export const TypographyScale = () => {
 
       {/* Type Scale */}
       <h3 className="label-tech text-slate-500 mb-4">TYPE SCALE</h3>
-      <div className="space-y-6">
+      <div ref={typeScaleRef} className="space-y-6">
         {[
           { size: "5xl", px: "48px", example: "Display Hero" },
           { size: "4xl", px: "36px", example: "Section Title" },
@@ -90,7 +173,7 @@ export const TypographyScale = () => {
           { size: "sm", px: "14px", example: "Caption" },
           { size: "xs", px: "12px", example: "Labels" },
         ].map((item) => (
-          <div key={item.size} className="flex items-baseline gap-6 pb-4 border-b border-slate-100">
+          <div key={item.size} className="type-scale-item flex items-baseline gap-6 pb-4 border-b border-slate-100">
             <div className="w-16 label-tech text-slate-400">{item.px}</div>
             <div className={`font-ui font-medium text-${item.size} text-foreground flex-1`}>
               {item.example}
@@ -101,8 +184,8 @@ export const TypographyScale = () => {
       </div>
 
       {/* Line Height & Letter Spacing */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-        <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
+      <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+        <div className="spec-card p-6 bg-slate-50 rounded-lg border border-slate-200">
           <h4 className="label-tech text-slate-500 mb-4">LINE HEIGHT</h4>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
@@ -119,7 +202,7 @@ export const TypographyScale = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
+        <div className="spec-card p-6 bg-slate-50 rounded-lg border border-slate-200">
           <h4 className="label-tech text-slate-500 mb-4">LETTER SPACING</h4>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
