@@ -243,23 +243,27 @@ export const ChartGenerator = () => {
       {/* Configuration */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="label-tech mb-2 block text-slate-400">Chart Title *</label>
+          <label className="label-tech mb-2 block text-slate-300">Chart Title *</label>
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g., Energy Consumption Comparison"
-            className="bg-slate-800/50 border-slate-700"
+            className="bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
           />
         </div>
         <div>
-          <label className="label-tech mb-2 block text-slate-400">Chart Type</label>
+          <label className="label-tech mb-2 block text-slate-300">Chart Type</label>
           <Select value={chartType} onValueChange={setChartType}>
-            <SelectTrigger className="bg-slate-800/50 border-slate-700">
+            <SelectTrigger className="bg-slate-900/60 border-slate-600 text-slate-200 focus:border-primary focus:ring-primary/20">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-slate-800 border-slate-600">
               {CHART_TYPES.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
+                <SelectItem 
+                  key={opt.value} 
+                  value={opt.value}
+                  className="text-slate-200 focus:bg-primary/20 focus:text-slate-100"
+                >
                   {opt.label}
                 </SelectItem>
               ))}
@@ -267,30 +271,30 @@ export const ChartGenerator = () => {
           </Select>
         </div>
         <div>
-          <label className="label-tech mb-2 block text-slate-400">X-Axis Label</label>
+          <label className="label-tech mb-2 block text-slate-300">X-Axis Label</label>
           <Input
             value={xAxisLabel}
             onChange={(e) => setXAxisLabel(e.target.value)}
             placeholder="e.g., Technology"
-            className="bg-slate-800/50 border-slate-700"
+            className="bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
           />
         </div>
         <div>
-          <label className="label-tech mb-2 block text-slate-400">Y-Axis Label</label>
+          <label className="label-tech mb-2 block text-slate-300">Y-Axis Label</label>
           <Input
             value={yAxisLabel}
             onChange={(e) => setYAxisLabel(e.target.value)}
             placeholder="e.g., kWh/year"
-            className="bg-slate-800/50 border-slate-700"
+            className="bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
           />
         </div>
         <div className="md:col-span-2">
-          <label className="label-tech mb-2 block text-slate-400">Description (optional)</label>
+          <label className="label-tech mb-2 block text-slate-300">Description (optional)</label>
           <Textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Brief description of what this chart shows"
-            className="bg-slate-800/50 border-slate-700 font-ui"
+            className="bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 font-ui focus:border-primary focus:ring-primary/20"
           />
         </div>
       </div>
@@ -298,8 +302,13 @@ export const ChartGenerator = () => {
       {/* Data Points */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <label className="label-tech text-slate-400">Data Points</label>
-          <Button variant="outline" size="sm" onClick={addDataPoint}>
+          <label className="label-tech text-slate-300">Data Points</label>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={addDataPoint}
+            className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
+          >
             <Plus className="w-4 h-4 mr-1" />
             Add
           </Button>
@@ -311,22 +320,23 @@ export const ChartGenerator = () => {
                 value={point.name}
                 onChange={(e) => updateDataPoint(index, "name", e.target.value)}
                 placeholder="Label"
-                className="flex-1 bg-slate-800/50 border-slate-700"
+                className="flex-1 bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
               />
               <Input
                 type="number"
                 value={point.value}
                 onChange={(e) => updateDataPoint(index, "value", e.target.value)}
                 placeholder="Value"
-                className="w-24 bg-slate-800/50 border-slate-700"
+                className="w-24 bg-slate-900/60 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-primary focus:ring-primary/20"
               />
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => removeDataPoint(index)}
                 disabled={dataPoints.length <= 1}
+                className="text-slate-400 hover:text-red-400 hover:bg-red-400/10"
               >
-                <Trash2 className="w-4 h-4 text-slate-500" />
+                <Trash2 className="w-4 h-4" />
               </Button>
             </div>
           ))}
@@ -334,23 +344,28 @@ export const ChartGenerator = () => {
       </div>
 
       {/* Live Preview */}
-      <div>
+      <div className="pt-4 border-t border-slate-700">
         <div className="flex items-center justify-between mb-3">
-          <label className="label-tech text-slate-400">Live Preview</label>
-          <Button variant="ghost" size="sm" onClick={handleDownloadPng}>
+          <label className="label-tech text-primary">Live Preview</label>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleDownloadPng}
+            className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
+          >
             <Download className="w-4 h-4 mr-2" />
             Download PNG
           </Button>
         </div>
         <div
           ref={chartRef}
-          className="p-6 bg-rho-obsidian border border-slate-700 rounded-lg"
+          className="p-6 bg-slate-900/80 border border-slate-600 rounded-lg"
         >
           {title && (
-            <h3 className="font-ui text-lg text-slate-100 mb-1">{title}</h3>
+            <h3 className="font-ui text-lg text-slate-50 mb-1">{title}</h3>
           )}
           {description && (
-            <p className="font-mono text-xs text-slate-500 mb-4">{description}</p>
+            <p className="font-mono text-xs text-slate-400 mb-4">{description}</p>
           )}
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -364,16 +379,16 @@ export const ChartGenerator = () => {
       <Button
         onClick={handleGenerateCode}
         disabled={isLoading || !title.trim()}
-        className="w-full"
+        className="w-full h-12 text-base font-ui bg-primary hover:bg-primary/90 text-slate-950"
       >
         {isLoading ? (
           <>
-            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
             Generating Code...
           </>
         ) : (
           <>
-            <BarChart3 className="w-4 h-4 mr-2" />
+            <BarChart3 className="w-5 h-5 mr-2" />
             Generate Recharts Code
           </>
         )}
@@ -381,16 +396,21 @@ export const ChartGenerator = () => {
 
       {/* Code Output */}
       {code && (
-        <div>
+        <div className="pt-4 border-t border-slate-700">
           <div className="flex items-center justify-between mb-3">
-            <label className="label-tech text-slate-400">Generated Code</label>
-            <Button variant="ghost" size="sm" onClick={handleCopyCode}>
+            <label className="label-tech text-primary">Generated Code</label>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleCopyCode}
+              className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-slate-100"
+            >
               <Copy className="w-4 h-4 mr-2" />
               Copy Code
             </Button>
           </div>
-          <pre className="p-4 bg-slate-900 border border-slate-700 rounded-lg overflow-x-auto">
-            <code className="text-sm font-mono text-slate-300">{code}</code>
+          <pre className="p-4 bg-slate-900/80 border border-slate-600 rounded-lg overflow-x-auto">
+            <code className="text-sm font-mono text-slate-200">{code}</code>
           </pre>
         </div>
       )}
