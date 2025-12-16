@@ -5,7 +5,7 @@ import { TextGenerator } from "@/components/tools/TextGenerator";
 import { ImageGenerator } from "@/components/tools/ImageGenerator";
 import { ChartGenerator } from "@/components/tools/ChartGenerator";
 import { ContentTransformer } from "@/components/tools/ContentTransformer";
-import { CaseStudyBuilder } from "@/components/tools/CaseStudyBuilder";
+import { ComprehensiveCaseStudyBuilder } from "@/components/tools/ComprehensiveCaseStudyBuilder";
 import { TemplateGenerator } from "@/components/tools/TemplateGenerator";
 import { Type, Image, BarChart3, ArrowLeft, Sparkles, Sun, Moon, RefreshCw, FileText, FileStack } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -56,7 +56,7 @@ const Tools = () => {
     },
     casestudy: {
       title: "Case Study Builder",
-      description: "Generate complete case studies from key metrics and project context.",
+      description: "Create comprehensive 10-section case studies with AI guidance and branded exports.",
     },
     templates: {
       title: "Template Generator",
@@ -144,7 +144,7 @@ const Tools = () => {
                 {tab.value === "image" && <ImageGenerator />}
                 {tab.value === "chart" && <ChartGenerator />}
                 {tab.value === "transform" && <ContentTransformer />}
-                {tab.value === "casestudy" && <CaseStudyBuilder />}
+                {tab.value === "casestudy" && <ComprehensiveCaseStudyBuilder />}
                 {tab.value === "templates" && <TemplateGenerator />}
               </TabsContent>
             ))}

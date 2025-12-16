@@ -74,36 +74,48 @@ export type Database = {
         Row: {
           created_at: string
           description: string
+          draft_step: number | null
+          full_content: Json | null
           id: string
           industry: string
+          is_draft: boolean | null
           is_favorite: boolean | null
           metrics: Json
           stat: string
           stat_label: string
+          suggested_assets: Json | null
           title: string
           user_id: string
         }
         Insert: {
           created_at?: string
           description: string
+          draft_step?: number | null
+          full_content?: Json | null
           id?: string
           industry: string
+          is_draft?: boolean | null
           is_favorite?: boolean | null
           metrics?: Json
           stat: string
           stat_label: string
+          suggested_assets?: Json | null
           title: string
           user_id: string
         }
         Update: {
           created_at?: string
           description?: string
+          draft_step?: number | null
+          full_content?: Json | null
           id?: string
           industry?: string
+          is_draft?: boolean | null
           is_favorite?: boolean | null
           metrics?: Json
           stat?: string
           stat_label?: string
+          suggested_assets?: Json | null
           title?: string
           user_id?: string
         }
