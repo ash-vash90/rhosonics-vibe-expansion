@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown } from "lucide-react";
+import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown, Film, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { buildChartExportSvg, svgToPngDataUrl } from "@/lib/chartExport";
+import GIF from "gif.js";
 import {
   ResponsiveContainer,
   BarChart,
@@ -86,6 +87,45 @@ const PNG_SCALES = [
   { value: 4, label: "4x" },
 ];
 
+// Smart animation presets - curated to prevent ugly charts
+const ANIMATION_PRESETS = [
+  { 
+    value: "none", 
+    label: "None",
+    duration: 0,
+    easing: "linear",
+    staggerDelay: 0,
+  },
+  { 
+    value: "smooth", 
+    label: "Smooth Rise",
+    duration: 800,
+    easing: "ease-out",
+    staggerDelay: 100,
+  },
+  { 
+    value: "bouncy", 
+    label: "Bouncy",
+    duration: 1200,
+    easing: "ease-in-out",
+    staggerDelay: 150,
+  },
+  { 
+    value: "cascade", 
+    label: "Cascade",
+    duration: 600,
+    easing: "ease-out",
+    staggerDelay: 200,
+  },
+  { 
+    value: "dramatic", 
+    label: "Dramatic",
+    duration: 1500,
+    easing: "ease-in-out",
+    staggerDelay: 250,
+  },
+];
+
 interface DataPoint {
   name: string;
   value: number;
@@ -102,6 +142,9 @@ export const ChartGenerator = () => {
   const [showAxisTitles, setShowAxisTitles] = useState(true);
   const [aspectRatio, setAspectRatio] = useState("4:3");
   const [pngScale, setPngScale] = useState(2);
+  const [animationPreset, setAnimationPreset] = useState("smooth");
+  const [animationKey, setAnimationKey] = useState(0);
+  const [isExportingGif, setIsExportingGif] = useState(false);
   const [primaryColor, setPrimaryColor] = useState("primary");
   const [secondaryColor, setSecondaryColor] = useState("amber");
   const [tertiaryColor, setTertiaryColor] = useState("slate");
@@ -120,11 +163,17 @@ export const ChartGenerator = () => {
   const isMultiSeries = ["grouped-bar", "stacked-bar", "multi-line", "stacked-area", "composed", "radar"].includes(chartType);
   const isLightBg = ["metal-light", "field", "eco"].includes(bgGradient);
   const chartHeight = ASPECT_RATIOS.find(r => r.value === aspectRatio)?.height || 320;
+  const currentAnimation = ANIMATION_PRESETS.find(a => a.value === animationPreset) || ANIMATION_PRESETS[0];
 
   useEffect(() => {
     // Warm-load Rhosonics data font so SVG text renders consistently.
     document.fonts?.load?.("500 12px 'JetBrains Mono'");
   }, []);
+
+  const replayAnimation = useCallback(() => {
+    setAnimationKey(k => k + 1);
+  }, []);
+
 
   const getColorValue = (colorKey: string) => {
     return BRAND_COLORS.find(c => c.value === colorKey)?.color || BRAND_COLORS[0].color;
@@ -269,6 +318,100 @@ export const ChartGenerator = () => {
     }
   };
 
+  const handleDownloadGif = async () => {
+    if (animationPreset === "none") {
+      toast.error("Select an animation preset first");
+      return;
+    }
+
+    const svgEl = getChartSvg();
+    if (!svgEl || !chartRef.current) {
+      toast.error("Chart not found");
+      return;
+    }
+
+    setIsExportingGif(true);
+    toast.info("Recording animation...");
+
+    try {
+      await document.fonts?.load?.("500 12px 'JetBrains Mono'");
+      await document.fonts?.ready;
+
+      const rect = chartRef.current.getBoundingClientRect();
+      const width = Math.round(rect.width);
+      const height = Math.round(rect.height);
+
+      const gif = new GIF({
+        workers: 2,
+        quality: 10,
+        width,
+        height,
+        workerScript: "/gif.worker.js",
+      });
+
+      const totalDuration = currentAnimation.duration + (currentAnimation.staggerDelay * Math.max(dataPoints.length, 3));
+      const frameCount = Math.min(30, Math.ceil(totalDuration / 50));
+      const frameDelay = Math.ceil(totalDuration / frameCount);
+
+      // Reset animation
+      replayAnimation();
+
+      // Capture frames over the animation duration
+      for (let i = 0; i <= frameCount; i++) {
+        await new Promise(resolve => setTimeout(resolve, i === 0 ? 50 : frameDelay));
+
+        const built = buildChartExportSvg(svgEl, {
+          backgroundGradient: getGradientValue(bgGradient),
+          padding: 0,
+          chamfer: useChamfer,
+          includeFontCss: true,
+        });
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) continue;
+
+        const img = new Image();
+        const blob = new Blob([built.svg], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+
+        await new Promise<void>((resolve) => {
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, width, height);
+            URL.revokeObjectURL(url);
+            resolve();
+          };
+          img.onerror = () => {
+            URL.revokeObjectURL(url);
+            resolve();
+          };
+          img.src = url;
+        });
+
+        gif.addFrame(canvas, { delay: i === frameCount ? 1500 : frameDelay, copy: true });
+      }
+
+      gif.on("finished", (blob: Blob) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.download = `${title.toLowerCase().replace(/\s+/g, "-")}-chart.gif`;
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+        setIsExportingGif(false);
+        toast.success("GIF exported successfully");
+      });
+
+      gif.render();
+    } catch (error) {
+      console.error("GIF export error:", error);
+      setIsExportingGif(false);
+      toast.error("Failed to export GIF");
+    }
+  };
+
   const textColor = isLightBg ? "hsl(226, 33%, 10%)" : "hsl(210, 40%, 96%)";
   const gridColor = isLightBg ? "hsl(214, 32%, 85%)" : "hsl(215, 19%, 25%)";
   const axisColor = isLightBg ? "hsl(215, 19%, 35%)" : "hsl(215, 19%, 55%)";
@@ -322,10 +465,18 @@ export const ChartGenerator = () => {
     const color2 = getColorValue(secondaryColor);
     const color3 = getColorValue(tertiaryColor);
 
+    // Animation props for elements
+    const getAnimProps = (seriesIndex: number = 0) => ({
+      isAnimationActive: animationPreset !== "none",
+      animationBegin: currentAnimation.staggerDelay * seriesIndex,
+      animationDuration: currentAnimation.duration,
+      animationEasing: currentAnimation.easing as "ease" | "ease-in" | "ease-out" | "ease-in-out" | "linear",
+    });
+
     switch (chartType) {
       case "bar":
         return (
-          <BarChart {...commonProps}>
+          <BarChart {...commonProps} key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -334,12 +485,12 @@ export const ChartGenerator = () => {
               {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Value" />
+            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Value" {...getAnimProps(0)} />
           </BarChart>
         );
       case "horizontal-bar":
         return (
-          <BarChart {...commonProps} layout="vertical">
+          <BarChart {...commonProps} layout="vertical" key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis type="number" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -348,12 +499,12 @@ export const ChartGenerator = () => {
               {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="value" fill={color1} radius={[0, 4, 4, 0]} name="Value" />
+            <Bar dataKey="value" fill={color1} radius={[0, 4, 4, 0]} name="Value" {...getAnimProps(0)} />
           </BarChart>
         );
       case "grouped-bar":
         return (
-          <BarChart {...commonProps}>
+          <BarChart {...commonProps} key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -363,26 +514,14 @@ export const ChartGenerator = () => {
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Series 1" />
-            <Bar dataKey="value2" fill={color2} radius={[4, 4, 0, 0]} name="Series 2" />
-            <Bar dataKey="value3" fill={color3} radius={[4, 4, 0, 0]} name="Series 3" />
-          </BarChart>
-        );
-        return (
-          <BarChart {...commonProps}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Legend wrapperStyle={legendStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Series 1" />
-            <Bar dataKey="value2" fill={color2} radius={[4, 4, 0, 0]} name="Series 2" />
-            <Bar dataKey="value3" fill={color3} radius={[4, 4, 0, 0]} name="Series 3" />
+            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Series 1" {...getAnimProps(0)} />
+            <Bar dataKey="value2" fill={color2} radius={[4, 4, 0, 0]} name="Series 2" {...getAnimProps(1)} />
+            <Bar dataKey="value3" fill={color3} radius={[4, 4, 0, 0]} name="Series 3" {...getAnimProps(2)} />
           </BarChart>
         );
       case "stacked-bar":
         return (
-          <BarChart {...commonProps}>
+          <BarChart {...commonProps} key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -392,14 +531,14 @@ export const ChartGenerator = () => {
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
-            <Bar dataKey="value" stackId="a" fill={color1} name="Series 1" />
-            <Bar dataKey="value2" stackId="a" fill={color2} name="Series 2" />
-            <Bar dataKey="value3" stackId="a" fill={color3} radius={[4, 4, 0, 0]} name="Series 3" />
+            <Bar dataKey="value" stackId="a" fill={color1} name="Series 1" {...getAnimProps(0)} />
+            <Bar dataKey="value2" stackId="a" fill={color2} name="Series 2" {...getAnimProps(1)} />
+            <Bar dataKey="value3" stackId="a" fill={color3} radius={[4, 4, 0, 0]} name="Series 3" {...getAnimProps(2)} />
           </BarChart>
         );
       case "line":
         return (
-          <LineChart {...commonProps}>
+          <LineChart {...commonProps} key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -408,12 +547,12 @@ export const ChartGenerator = () => {
               {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
-            <Line type="monotone" dataKey="value" stroke={color1} strokeWidth={2} dot={{ fill: color1, r: 4 }} name="Value" />
+            <Line type="monotone" dataKey="value" stroke={color1} strokeWidth={2} dot={{ fill: color1, r: 4 }} name="Value" {...getAnimProps(0)} />
           </LineChart>
         );
       case "multi-line":
         return (
-          <LineChart {...commonProps}>
+          <LineChart {...commonProps} key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -423,14 +562,14 @@ export const ChartGenerator = () => {
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
-            <Line type="monotone" dataKey="value" stroke={color1} strokeWidth={2} dot={{ fill: color1, r: 4 }} name="Series 1" />
-            <Line type="monotone" dataKey="value2" stroke={color2} strokeWidth={2} dot={{ fill: color2, r: 4 }} name="Series 2" />
-            <Line type="monotone" dataKey="value3" stroke={color3} strokeWidth={2} dot={{ fill: color3, r: 4 }} name="Series 3" />
+            <Line type="monotone" dataKey="value" stroke={color1} strokeWidth={2} dot={{ fill: color1, r: 4 }} name="Series 1" {...getAnimProps(0)} />
+            <Line type="monotone" dataKey="value2" stroke={color2} strokeWidth={2} dot={{ fill: color2, r: 4 }} name="Series 2" {...getAnimProps(1)} />
+            <Line type="monotone" dataKey="value3" stroke={color3} strokeWidth={2} dot={{ fill: color3, r: 4 }} name="Series 3" {...getAnimProps(2)} />
           </LineChart>
         );
       case "area":
         return (
-          <AreaChart {...commonProps}>
+          <AreaChart {...commonProps} key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -439,12 +578,12 @@ export const ChartGenerator = () => {
               {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
-            <Area type="monotone" dataKey="value" fill={color1} fillOpacity={0.3} stroke={color1} strokeWidth={2} name="Value" />
+            <Area type="monotone" dataKey="value" fill={color1} fillOpacity={0.3} stroke={color1} strokeWidth={2} name="Value" {...getAnimProps(0)} />
           </AreaChart>
         );
       case "stacked-area":
         return (
-          <AreaChart {...commonProps}>
+          <AreaChart {...commonProps} key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -454,14 +593,14 @@ export const ChartGenerator = () => {
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
-            <Area type="monotone" dataKey="value" stackId="1" fill={color1} fillOpacity={0.6} stroke={color1} strokeWidth={2} name="Series 1" />
-            <Area type="monotone" dataKey="value2" stackId="1" fill={color2} fillOpacity={0.6} stroke={color2} strokeWidth={2} name="Series 2" />
-            <Area type="monotone" dataKey="value3" stackId="1" fill={color3} fillOpacity={0.6} stroke={color3} strokeWidth={2} name="Series 3" />
+            <Area type="monotone" dataKey="value" stackId="1" fill={color1} fillOpacity={0.6} stroke={color1} strokeWidth={2} name="Series 1" {...getAnimProps(0)} />
+            <Area type="monotone" dataKey="value2" stackId="1" fill={color2} fillOpacity={0.6} stroke={color2} strokeWidth={2} name="Series 2" {...getAnimProps(1)} />
+            <Area type="monotone" dataKey="value3" stackId="1" fill={color3} fillOpacity={0.6} stroke={color3} strokeWidth={2} name="Series 3" {...getAnimProps(2)} />
           </AreaChart>
         );
       case "composed":
         return (
-          <ComposedChart {...commonProps}>
+          <ComposedChart {...commonProps} key={animationKey}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="name" tick={axisStyle}>
               {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
@@ -471,19 +610,8 @@ export const ChartGenerator = () => {
             </YAxis>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={legendStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Bar Series" />
-            <Line type="monotone" dataKey="value2" stroke={color2} strokeWidth={2} dot={{ fill: color2, r: 4 }} name="Line Series" />
-          </ComposedChart>
-        );
-        return (
-          <ComposedChart {...commonProps}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle} />
-            <YAxis tick={axisStyle} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Legend wrapperStyle={legendStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Bar Series" />
-            <Line type="monotone" dataKey="value2" stroke={color2} strokeWidth={2} dot={{ fill: color2, r: 4 }} name="Line Series" />
+            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Bar Series" {...getAnimProps(0)} />
+            <Line type="monotone" dataKey="value2" stroke={color2} strokeWidth={2} dot={{ fill: color2, r: 4 }} name="Line Series" {...getAnimProps(1)} />
           </ComposedChart>
         );
       case "radar":
@@ -616,6 +744,21 @@ export const ChartGenerator = () => {
               </SelectTrigger>
               <SelectContent className="bg-popover border-border">
                 {ASPECT_RATIOS.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value} className="text-foreground focus:bg-primary/20">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <label className="label-tech mb-2 block text-foreground/70">Animation</label>
+            <Select value={animationPreset} onValueChange={setAnimationPreset}>
+              <SelectTrigger className="bg-muted/50 border-border text-foreground focus:border-primary focus:ring-primary/20">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border-border">
+                {ANIMATION_PRESETS.map((opt) => (
                   <SelectItem key={opt.value} value={opt.value} className="text-foreground focus:bg-primary/20">
                     {opt.label}
                   </SelectItem>
@@ -835,16 +978,39 @@ export const ChartGenerator = () => {
       {/* Live Preview */}
       <div className="pt-4 border-t border-border">
         <div className="flex items-center justify-between mb-3">
-          <label className="label-tech text-primary">Live Preview</label>
+          <div className="flex items-center gap-2">
+            <label className="label-tech text-primary">Live Preview</label>
+            {animationPreset !== "none" && (
+              <Button variant="ghost" size="sm" onClick={replayAnimation} className="h-7 px-2">
+                <RotateCcw className="w-3 h-3 mr-1" />
+                Replay
+              </Button>
+            )}
+          </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={handleDownloadSvg}>
               <FileDown className="w-4 h-4 mr-2" />
-              Download SVG
+              SVG
             </Button>
             <Button variant="outline" size="sm" onClick={handleDownloadPng}>
               <Download className="w-4 h-4 mr-2" />
-              Download PNG
+              PNG
             </Button>
+            {animationPreset !== "none" && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleDownloadGif}
+                disabled={isExportingGif}
+              >
+                {isExportingGif ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Film className="w-4 h-4 mr-2" />
+                )}
+                GIF
+              </Button>
+            )}
           </div>
         </div>
         <div
