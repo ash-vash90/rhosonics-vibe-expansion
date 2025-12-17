@@ -9,6 +9,61 @@ const CHART_STYLE_PROMPT = `You are generating Billboard.js configuration code f
 
 IMPORTANT: Generate vanilla JavaScript code that can be copy-pasted into ANY website (WordPress, static HTML, etc.)
 
+CRITICAL REQUIREMENTS FOR LAZY LOADING:
+
+1. The code MUST check if Billboard.js is already loaded before loading CDN scripts
+2. The code MUST use Intersection Observer to lazy load the chart only when visible
+3. Use this exact pattern for script loading check and lazy initialization:
+
+\`\`\`javascript
+(function() {
+  var container = document.getElementById('rhosonics-chart');
+  
+  function initChart() {
+    // Chart initialization code goes here with bb.generate()
+  }
+  
+  function loadBillboard(callback) {
+    // Check if already loaded
+    if (typeof bb !== 'undefined') {
+      callback();
+      return;
+    }
+    
+    // Load D3 first, then Billboard
+    var d3Script = document.createElement('script');
+    d3Script.src = 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js';
+    d3Script.onload = function() {
+      var bbScript = document.createElement('script');
+      bbScript.src = 'https://cdn.jsdelivr.net/npm/billboard.js@3/dist/billboard.min.js';
+      bbScript.onload = callback;
+      document.head.appendChild(bbScript);
+      
+      // Also load CSS if not present
+      if (!document.querySelector('link[href*="billboard"]')) {
+        var css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = 'https://cdn.jsdelivr.net/npm/billboard.js@3/dist/billboard.min.css';
+        document.head.appendChild(css);
+      }
+    };
+    document.head.appendChild(d3Script);
+  }
+  
+  // Intersection Observer for lazy loading
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        observer.disconnect();
+        loadBillboard(initChart);
+      }
+    });
+  }, { rootMargin: '200px' });
+  
+  observer.observe(container);
+})();
+\`\`\`
+
 EXACT STYLING REQUIREMENTS:
 
 COLORS (use the provided colors from the request):
@@ -32,11 +87,11 @@ BAR CHARTS:
 - Use bar.radius: { ratio: 0.15 }
 
 Generate COMPLETE, SELF-CONTAINED code that includes:
-1. CDN script tags for billboard.js and d3
-2. CSS for Rhosonics brand styling
-3. HTML container element
-4. JavaScript to generate the chart using bb.generate()
+1. CSS for Rhosonics brand styling (fonts, tooltip styling)
+2. HTML container element with id "rhosonics-chart"
+3. The JavaScript IIFE pattern shown above with the chart config inside initChart()
 
+DO NOT include separate CDN script tags in <head> - the lazy loader handles this.
 The code should work when copy-pasted into any HTML page. Use the exact color values provided in the request.`;
 
 serve(async (req) => {
