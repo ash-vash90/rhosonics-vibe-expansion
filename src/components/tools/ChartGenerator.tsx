@@ -110,6 +110,7 @@ export const ChartGenerator = () => {
   const [bgGradient, setBgGradient] = useState("obsidian");
   const [useChamfer, setUseChamfer] = useState(false);
   const [exportPadding, setExportPadding] = useState(24);
+  const [pageHasBillboard, setPageHasBillboard] = useState(false);
   const [dataPoints, setDataPoints] = useState<DataPoint[]>([
     { name: "Item 1", value: 100, value2: 80, value3: 60 },
     { name: "Item 2", value: 80, value2: 90, value3: 70 },
@@ -188,6 +189,7 @@ export const ChartGenerator = () => {
             },
             background: getGradientValue(bgGradient),
             useChamfer,
+            pageHasBillboard,
           },
         },
       });
@@ -745,7 +747,21 @@ export const ChartGenerator = () => {
       </div>
 
       {/* Generate Code */}
-      <div className="space-y-2">
+      <div className="space-y-3">
+        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg border border-border">
+          <div>
+            <label className="text-sm font-ui text-foreground">Page already has Billboard.js</label>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {pageHasBillboard 
+                ? "Will generate minimal chart code only" 
+                : "Will include lazy-loading script loader"}
+            </p>
+          </div>
+          <Switch 
+            checked={pageHasBillboard} 
+            onCheckedChange={setPageHasBillboard}
+          />
+        </div>
         <Button
           onClick={handleGenerateCode}
           disabled={isLoading || !title.trim()}

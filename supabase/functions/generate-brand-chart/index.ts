@@ -9,60 +9,9 @@ const CHART_STYLE_PROMPT = `You are generating Billboard.js configuration code f
 
 IMPORTANT: Generate vanilla JavaScript code that can be copy-pasted into ANY website (WordPress, static HTML, etc.)
 
-CRITICAL REQUIREMENTS FOR LAZY LOADING:
-
-1. The code MUST check if Billboard.js is already loaded before loading CDN scripts
-2. The code MUST use Intersection Observer to lazy load the chart only when visible
-3. Use this exact pattern for script loading check and lazy initialization:
-
-\`\`\`javascript
-(function() {
-  var container = document.getElementById('rhosonics-chart');
-  
-  function initChart() {
-    // Chart initialization code goes here with bb.generate()
-  }
-  
-  function loadBillboard(callback) {
-    // Check if already loaded
-    if (typeof bb !== 'undefined') {
-      callback();
-      return;
-    }
-    
-    // Load D3 first, then Billboard
-    var d3Script = document.createElement('script');
-    d3Script.src = 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js';
-    d3Script.onload = function() {
-      var bbScript = document.createElement('script');
-      bbScript.src = 'https://cdn.jsdelivr.net/npm/billboard.js@3/dist/billboard.min.js';
-      bbScript.onload = callback;
-      document.head.appendChild(bbScript);
-      
-      // Also load CSS if not present
-      if (!document.querySelector('link[href*="billboard"]')) {
-        var css = document.createElement('link');
-        css.rel = 'stylesheet';
-        css.href = 'https://cdn.jsdelivr.net/npm/billboard.js@3/dist/billboard.min.css';
-        document.head.appendChild(css);
-      }
-    };
-    document.head.appendChild(d3Script);
-  }
-  
-  // Intersection Observer for lazy loading
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        observer.disconnect();
-        loadBillboard(initChart);
-      }
-    });
-  }, { rootMargin: '200px' });
-  
-  observer.observe(container);
-})();
-\`\`\`
+You will receive a "pageHasBillboard" flag:
+- If TRUE: Generate ONLY the chart initialization code (bb.generate call wrapped in a simple IIFE)
+- If FALSE: Generate full code with lazy-loading via Intersection Observer
 
 EXACT STYLING REQUIREMENTS:
 
@@ -86,13 +35,97 @@ TOOLTIP:
 BAR CHARTS:
 - Use bar.radius: { ratio: 0.15 }
 
-Generate COMPLETE, SELF-CONTAINED code that includes:
-1. CSS for Rhosonics brand styling (fonts, tooltip styling)
-2. HTML container element with id "rhosonics-chart"
-3. The JavaScript IIFE pattern shown above with the chart config inside initChart()
+---
 
-DO NOT include separate CDN script tags in <head> - the lazy loader handles this.
-The code should work when copy-pasted into any HTML page. Use the exact color values provided in the request.`;
+IF pageHasBillboard is TRUE, generate MINIMAL code like this:
+\`\`\`javascript
+(function() {
+  bb.generate({
+    bindto: '#rhosonics-chart',
+    // ... chart config
+  });
+})();
+\`\`\`
+
+---
+
+IF pageHasBillboard is FALSE, generate FULL code with lazy loading:
+\`\`\`html
+<style>
+  /* Rhosonics brand fonts and tooltip styling */
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  
+  #rhosonics-chart .bb-axis text { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  #rhosonics-chart .bb-legend text { font-family: 'Instrument Sans', sans-serif; font-size: 12px; }
+  #rhosonics-chart .bb-tooltip { font-family: 'JetBrains Mono', monospace; border-radius: 8px; }
+</style>
+
+<div id="rhosonics-chart"></div>
+
+<script>
+(function() {
+  var container = document.getElementById('rhosonics-chart');
+  
+  function initChart() {
+    bb.generate({
+      bindto: '#rhosonics-chart',
+      // ... chart config with all data inline
+    });
+  }
+  
+  function loadBillboard(callback) {
+    if (typeof bb !== 'undefined') {
+      callback();
+      return;
+    }
+    
+    var d3Script = document.createElement('script');
+    d3Script.src = 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js';
+    d3Script.onload = function() {
+      var bbScript = document.createElement('script');
+      bbScript.src = 'https://cdn.jsdelivr.net/npm/billboard.js@3/dist/billboard.min.js';
+      bbScript.onload = callback;
+      document.head.appendChild(bbScript);
+      
+      if (!document.querySelector('link[href*="billboard"]')) {
+        var css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = 'https://cdn.jsdelivr.net/npm/billboard.js@3/dist/billboard.min.css';
+        document.head.appendChild(css);
+      }
+    };
+    document.head.appendChild(d3Script);
+  }
+  
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        observer.disconnect();
+        loadBillboard(initChart);
+      }
+    });
+  }, { rootMargin: '200px' });
+  
+  observer.observe(container);
+})();
+</script>
+\`\`\`
+
+Chart type mapping:
+- bar → type: bar()
+- horizontal-bar → type: bar() with axis.rotated: true
+- grouped-bar → type: bar() with multiple columns
+- stacked-bar → type: bar() with data.groups
+- line → type: line()
+- multi-line → type: line() with multiple columns
+- area → type: area()
+- stacked-area → type: area() with data.groups
+- composed → type: bar() with types: { "Series 2": line() }
+- radar → type: radar()
+- pie → type: pie()
+- scatter → type: scatter()
+
+The output should be ready to copy-paste. Use the exact color values provided in the request.`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -115,9 +148,12 @@ serve(async (req) => {
       yAxisLabel,
       data,
       colors,
+      pageHasBillboard,
     } = chartConfig;
 
     const userPrompt = `Generate Billboard.js code for a ${chartType} chart with these specifications:
+
+pageHasBillboard: ${pageHasBillboard ? "TRUE" : "FALSE"}
 
 TITLE: ${title}
 ${description ? `DESCRIPTION: ${description}` : ""}
@@ -132,12 +168,9 @@ COLORS:
 DATA:
 ${JSON.stringify(data, null, 2)}
 
-Generate a complete, standalone HTML snippet that includes:
-1. CDN links for billboard.js (https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js) and d3 (https://cdn.jsdelivr.net/npm/d3/dist/d3.min.js)
-2. Billboard.js CSS (https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css)
-3. Custom CSS for Rhosonics typography (JetBrains Mono for data, Instrument Sans for UI)
-4. A container div with id "rhosonics-chart"
-5. The bb.generate() configuration with the data inline
+${pageHasBillboard 
+  ? "Generate ONLY the minimal chart code (bb.generate wrapped in IIFE) since the page already has Billboard.js loaded."
+  : "Generate the FULL code with lazy-loading Intersection Observer pattern since the page does NOT have Billboard.js."}
 
 Chart type mapping:
 - bar → type: bar()
@@ -153,7 +186,7 @@ Chart type mapping:
 - pie → type: pie()
 - scatter → type: scatter()
 
-The output should be ready to copy-paste into WordPress or any HTML page.`;
+The output should be ready to copy-paste.`;
 
     console.log("Generating Billboard.js code for:", title);
 
