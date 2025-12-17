@@ -1,7 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigation } from "@/components/brand/Navigation";
 import { BrandEthos } from "@/components/brand/BrandEthos";
-import { StatsShowcase } from "@/components/brand/StatsShowcase";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
 import { Zap } from "lucide-react";
@@ -36,24 +35,12 @@ const Index = () => {
     <div className="flex flex-col lg:flex-row min-h-screen bg-background">
       <Navigation />
       
-      <main className="flex-1 px-4 py-6 sm:px-6 sm:py-8 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1200px] mx-auto w-full overflow-x-hidden">
+      <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1400px] mx-auto w-full">
         <BrandEthos />
-        <StatsShowcase />
         <Suspense fallback={<SectionLoader />}>
-          {/* Gradient accent bar */}
-          <div className="h-1 w-full bg-gradient-to-r from-primary via-rho-lime to-primary rounded-full my-8 opacity-60" />
-          
           <MasterLockup />
-          
-          {/* Ochre accent bar */}
-          <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-earth-ochre to-transparent my-12 opacity-50" />
-          
           <OriginStory />
           <MissionVision />
-          
-          {/* Earth amber accent bar */}
-          <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-earth-amber to-transparent my-12 opacity-40" />
-          
           <ColorMatrix />
           <TypographyScale />
           <SpacingSystem />
