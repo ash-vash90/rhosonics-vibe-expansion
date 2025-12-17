@@ -45,26 +45,77 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<any>(null);
 
-  const textColor = isLightBg ? "hsl(226, 33%, 10%)" : "hsl(210, 40%, 96%)";
   const gridColor = isLightBg ? "hsl(214, 32%, 85%)" : "hsl(215, 19%, 25%)";
   const axisColor = isLightBg ? "hsl(215, 19%, 35%)" : "hsl(215, 19%, 55%)";
+  const tooltipBg = isLightBg ? "hsl(0, 0%, 100%)" : "hsl(226, 33%, 10%)";
+  const tooltipBorder = isLightBg ? "hsl(214, 32%, 85%)" : "hsl(215, 19%, 25%)";
+  const tooltipText = isLightBg ? "hsl(226, 33%, 10%)" : "hsl(210, 40%, 96%)";
 
   const isMultiSeries = ["grouped-bar", "stacked-bar", "multi-line", "stacked-area", "composed", "radar"].includes(chartType);
 
-  const buildConfig = useCallback(() => {
-    const categories = data.map(d => d.name);
-    const values = data.map(d => d.value);
-    const values2 = data.map(d => d.value2 ?? 0);
-    const values3 = data.map(d => d.value3 ?? 0);
+  const buildColumns = useCallback((multiplier: number = 1) => {
+    const values = data.map(d => Math.round(d.value * multiplier));
+    const values2 = data.map(d => Math.round((d.value2 ?? 0) * multiplier));
+    const values3 = data.map(d => Math.round((d.value3 ?? 0) * multiplier));
 
-    // Build columns based on chart type
     const columns: (string | number)[][] = [["Series 1", ...values]];
     if (isMultiSeries) {
       columns.push(["Series 2", ...values2]);
       columns.push(["Series 3", ...values3]);
     }
+    return columns;
+  }, [data, isMultiSeries]);
 
-    // Determine chart type configuration
+  const applyBrandStyles = useCallback(() => {
+    if (!containerRef.current) return;
+
+    const svg = containerRef.current.querySelector("svg");
+    if (!svg) return;
+
+    svg.querySelectorAll(".bb-axis text, .bb-axis-x text, .bb-axis-y text").forEach((el) => {
+      (el as SVGTextElement).style.fontFamily = "'JetBrains Mono', monospace";
+      (el as SVGTextElement).style.fontSize = "11px";
+      (el as SVGTextElement).style.fill = axisColor;
+    });
+
+    svg.querySelectorAll(".bb-axis-x-label, .bb-axis-y-label").forEach((el) => {
+      (el as SVGTextElement).style.fontFamily = "'JetBrains Mono', monospace";
+      (el as SVGTextElement).style.fontSize = "11px";
+      (el as SVGTextElement).style.fill = axisColor;
+      (el as SVGTextElement).style.fontWeight = "500";
+    });
+
+    svg.querySelectorAll(".bb-legend-item text").forEach((el) => {
+      (el as SVGTextElement).style.fontFamily = "'Instrument Sans', sans-serif";
+      (el as SVGTextElement).style.fontSize = "12px";
+      (el as SVGTextElement).style.fill = axisColor;
+    });
+
+    svg.querySelectorAll(".bb-grid line").forEach((el) => {
+      (el as SVGLineElement).style.stroke = gridColor;
+      (el as SVGLineElement).style.strokeDasharray = "3 3";
+    });
+
+    svg.querySelectorAll(".bb-axis path.domain").forEach((el) => {
+      (el as SVGPathElement).style.stroke = axisColor;
+    });
+
+    svg.querySelectorAll(".bb-levels polygon, .bb-levels line").forEach((el) => {
+      (el as SVGElement).style.stroke = gridColor;
+    });
+
+    svg.querySelectorAll(".bb-axis-radar text").forEach((el) => {
+      (el as SVGTextElement).style.fontFamily = "'JetBrains Mono', monospace";
+      (el as SVGTextElement).style.fontSize = "11px";
+      (el as SVGTextElement).style.fill = axisColor;
+    });
+  }, [axisColor, gridColor]);
+
+  const buildConfig = useCallback((animate: boolean = true) => {
+    const categories = data.map(d => d.name);
+    const columns = buildColumns(animate ? 0 : 1);
+    const maxValue = Math.max(...data.map(d => d.value), ...data.map(d => d.value2 ?? 0), ...data.map(d => d.value3 ?? 0));
+
     let typeConfig: any = {};
     let dataConfig: any = {
       columns,
@@ -110,7 +161,7 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
         break;
       case "pie":
         typeConfig = { type: pie() };
-        dataConfig.columns = data.map(d => [d.name, d.value]);
+        dataConfig.columns = data.map(d => [d.name, animate ? 0 : d.value]);
         dataConfig.colors = {};
         const pieColors = [colors.primary, colors.secondary, colors.tertiary, "hsl(90, 60%, 45%)", "hsl(45, 40%, 38%)", "hsl(125, 50%, 25%)"];
         data.forEach((d, i) => {
@@ -120,8 +171,8 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
       case "scatter":
         typeConfig = { type: scatter() };
         dataConfig.columns = [
-          ["x", ...data.map(d => d.value)],
-          ["y", ...data.map(d => d.value2 ?? 0)],
+          ["x", ...data.map(d => animate ? 0 : d.value)],
+          ["y", ...data.map(d => animate ? 0 : (d.value2 ?? 0))],
         ];
         dataConfig.xs = { y: "x" };
         dataConfig.colors = { y: colors.primary };
@@ -141,22 +192,12 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
         x: {
           type: "category",
           categories,
-          tick: {
-            outer: false,
-          },
-          label: showAxisTitles && xAxisLabel ? {
-            text: xAxisLabel,
-            position: "outer-center",
-          } : undefined,
+          tick: { outer: false },
+          label: showAxisTitles && xAxisLabel ? { text: xAxisLabel, position: "outer-center" } : undefined,
         },
         y: {
-          tick: {
-            outer: false,
-          },
-          label: showAxisTitles && yAxisLabel ? {
-            text: yAxisLabel,
-            position: "outer-middle",
-          } : undefined,
+          tick: { outer: false },
+          label: showAxisTitles && yAxisLabel ? { text: yAxisLabel, position: "outer-middle" } : undefined,
         },
       },
       grid: {
@@ -168,6 +209,22 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
       },
       tooltip: {
         grouped: true,
+        contents: function(d: any[], _defaultTitleFormat: any, _defaultValueFormat: any, color: any) {
+          let html = `<div style="background:${tooltipBg};border:1px solid ${tooltipBorder};border-radius:8px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:${tooltipText};box-shadow:0 4px 12px rgba(0,0,0,0.2);">`;
+          if (d[0] && d[0].x !== undefined) {
+            html += `<div style="font-weight:600;margin-bottom:4px;border-bottom:1px solid ${tooltipBorder};padding-bottom:4px;">${categories[d[0].x] || d[0].x}</div>`;
+          }
+          d.forEach((item: any) => {
+            if (item && item.value !== undefined) {
+              html += `<div style="display:flex;align-items:center;gap:6px;margin-top:2px;">
+                <span style="width:8px;height:8px;border-radius:50%;background:${color(item)};"></span>
+                <span>${item.id}: ${item.value}</span>
+              </div>`;
+            }
+          });
+          html += '</div>';
+          return html;
+        },
       },
       transition: {
         duration: animationDuration,
@@ -181,7 +238,7 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
       },
       radar: {
         axis: {
-          max: Math.max(...values, ...values2, ...values3) * 1.2,
+          max: maxValue * 1.2,
         },
         level: {
           depth: 4,
@@ -203,82 +260,55 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
         left: showAxisTitles && yAxisLabel ? 60 : 40,
       },
       onrendered: function() {
-        // Apply custom styles after render
         applyBrandStyles();
       },
     };
 
-    // Remove axis config for pie and radar
     if (chartType === "pie") {
       delete config.axis;
     }
 
     return config;
-  }, [chartType, data, colors, xAxisLabel, yAxisLabel, showAxisTitles, isMultiSeries, animationDuration, height]);
+  }, [chartType, data, colors, xAxisLabel, yAxisLabel, showAxisTitles, isMultiSeries, animationDuration, height, buildColumns, tooltipBg, tooltipBorder, tooltipText, applyBrandStyles]);
 
-  const applyBrandStyles = useCallback(() => {
-    if (!containerRef.current) return;
+  const animateToFinalValues = useCallback(() => {
+    if (!chartRef.current) return;
 
-    const svg = containerRef.current.querySelector("svg");
-    if (!svg) return;
-
-    // Style axis ticks and labels
-    svg.querySelectorAll(".bb-axis text, .bb-axis-x text, .bb-axis-y text").forEach((el) => {
-      (el as SVGTextElement).style.fontFamily = "'JetBrains Mono', monospace";
-      (el as SVGTextElement).style.fontSize = "11px";
-      (el as SVGTextElement).style.fill = axisColor;
-    });
-
-    // Style axis label text (x and y axis titles)
-    svg.querySelectorAll(".bb-axis-x-label, .bb-axis-y-label").forEach((el) => {
-      (el as SVGTextElement).style.fontFamily = "'JetBrains Mono', monospace";
-      (el as SVGTextElement).style.fontSize = "11px";
-      (el as SVGTextElement).style.fill = axisColor;
-      (el as SVGTextElement).style.fontWeight = "500";
-    });
-
-    // Style legend
-    svg.querySelectorAll(".bb-legend-item text").forEach((el) => {
-      (el as SVGTextElement).style.fontFamily = "'Instrument Sans', sans-serif";
-      (el as SVGTextElement).style.fontSize = "12px";
-      (el as SVGTextElement).style.fill = axisColor;
-    });
-
-    // Style grid lines
-    svg.querySelectorAll(".bb-grid line").forEach((el) => {
-      (el as SVGLineElement).style.stroke = gridColor;
-      (el as SVGLineElement).style.strokeDasharray = "3 3";
-    });
-
-    // Style axis lines
-    svg.querySelectorAll(".bb-axis path.domain").forEach((el) => {
-      (el as SVGPathElement).style.stroke = axisColor;
-    });
-
-    // Style radar polygon grid
-    svg.querySelectorAll(".bb-levels polygon, .bb-levels line").forEach((el) => {
-      (el as SVGElement).style.stroke = gridColor;
-    });
-
-    // Style radar axis text
-    svg.querySelectorAll(".bb-axis-radar text").forEach((el) => {
-      (el as SVGTextElement).style.fontFamily = "'JetBrains Mono', monospace";
-      (el as SVGTextElement).style.fontSize = "11px";
-      (el as SVGTextElement).style.fill = axisColor;
-    });
-  }, [axisColor, gridColor, textColor]);
+    if (chartType === "pie") {
+      chartRef.current.load({
+        columns: data.map(d => [d.name, d.value]),
+      });
+    } else if (chartType === "scatter") {
+      chartRef.current.load({
+        columns: [
+          ["x", ...data.map(d => d.value)],
+          ["y", ...data.map(d => d.value2 ?? 0)],
+        ],
+      });
+    } else {
+      chartRef.current.load({
+        columns: buildColumns(1),
+      });
+    }
+  }, [buildColumns, chartType, data]);
 
   const initChart = useCallback(() => {
     if (!containerRef.current) return;
 
-    // Destroy existing chart
     if (chartRef.current) {
       chartRef.current.destroy();
     }
 
-    const config = buildConfig();
+    const shouldAnimate = animationDuration > 0;
+    const config = buildConfig(shouldAnimate);
     chartRef.current = bb.generate(config);
-  }, [buildConfig]);
+
+    if (shouldAnimate) {
+      setTimeout(() => {
+        animateToFinalValues();
+      }, 50);
+    }
+  }, [buildConfig, animationDuration, animateToFinalValues]);
 
   useEffect(() => {
     initChart();
@@ -291,7 +321,6 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
     };
   }, [initChart]);
 
-  // Re-apply styles when theme changes
   useEffect(() => {
     applyBrandStyles();
   }, [isLightBg, applyBrandStyles]);
@@ -314,17 +343,29 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
   }, []);
 
   const replay = useCallback(() => {
-    if (chartRef.current) {
-      const config = buildConfig();
+    if (!chartRef.current || animationDuration === 0) return;
+
+    if (chartType === "pie") {
       chartRef.current.load({
-        columns: config.data.columns,
-        colors: config.data.colors,
-        groups: config.data.groups,
-        types: config.data.types,
-        xs: config.data.xs,
+        columns: data.map(d => [d.name, 0]),
+      });
+    } else if (chartType === "scatter") {
+      chartRef.current.load({
+        columns: [
+          ["x", ...data.map(() => 0)],
+          ["y", ...data.map(() => 0)],
+        ],
+      });
+    } else {
+      chartRef.current.load({
+        columns: buildColumns(0),
       });
     }
-  }, [buildConfig]);
+
+    setTimeout(() => {
+      animateToFinalValues();
+    }, 100);
+  }, [buildColumns, chartType, data, animationDuration, animateToFinalValues]);
 
   useImperativeHandle(ref, () => ({
     getChart: () => chartRef.current,
@@ -335,7 +376,7 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
   return (
     <div 
       ref={containerRef} 
-      className="bb-chart-container w-full"
+      className={`bb-chart-container w-full ${isLightBg ? 'bb-theme-light' : 'bb-theme-dark'}`}
       style={{ minHeight: height }}
     />
   );
