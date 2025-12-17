@@ -5,6 +5,9 @@ export const LogoAssets = () => {
   return (
     <section id="assets" className="mb-32">
       <h2 className="section-header">Logo Assets</h2>
+      <p className="text-muted-foreground mb-8">
+        Everything you need to represent the brand. Please represent it correctly.
+      </p>
 
       {/* Logo Contexts */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-12">

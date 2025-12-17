@@ -47,8 +47,8 @@ export const BrandEthos = () => {
             </div>
             <h3 className="text-2xl font-semibold text-slate-100 mb-3 font-ui">Senior Engineer</h3>
             <p className="text-slate-300 leading-relaxed text-lg">
-              Direct, knowledgeable, data-driven. We avoid marketing fluff 
-              in favor of technical specifications and proven ROI.
+              Direct. Knowledgeable. Skeptical of marketing claims. 
+              They skip to the specifications.
             </p>
           </div>
         </article>
@@ -79,19 +79,19 @@ export const BrandEthos = () => {
             {
               num: "01",
               title: "Garage Spirit",
-              desc: "Innovation born from curiosity, not committees. We keep that startup hunger.",
+              desc: "Innovation born from curiosity, not committees.",
               icon: <Sparkles className="w-5 h-5" aria-hidden="true" />
             },
             {
               num: "02", 
               title: "Built to Last",
-              desc: "Industrial-grade engineering for the harshest environments.",
+              desc: "Designed for environments that break lesser equipment.",
               icon: <Radar className="w-5 h-5" aria-hidden="true" />
             },
             {
               num: "03",
               title: "Legacy Forward",
-              desc: "Honoring our roots while measuring the future.",
+              desc: "Forty years of measurement. Still learning.",
               icon: <Leaf className="w-5 h-5" aria-hidden="true" />
             }
           ].map((item) => (

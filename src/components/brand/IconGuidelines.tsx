@@ -19,8 +19,7 @@ export const IconGuidelines = () => {
     <section id="icons" className="mb-32">
       <h2 className="section-header">Icon Guidelines</h2>
       <p className="text-muted-foreground mb-8">
-        Icons should be clear, functional, and consistent with our industrial-precision aesthetic. 
-        We use Lucide icons as our primary icon library.
+        Icons should be clear and functional. If you have to explain what an icon means, choose a different icon. We use Lucide.
       </p>
 
       {/* Icon Sizes */}

@@ -6,6 +6,9 @@ export const InterfaceKit = () => {
   return (
     <section id="components" className="mb-32">
       <h2 className="section-header">Interface Kit</h2>
+      <p className="text-muted-foreground mb-8">
+        The building blocks. Buttons, cards, inputs—the components that make interfaces work. Nothing decorative.
+      </p>
 
       {/* Buttons */}
       <h3 className="label-tech text-slate-500 mb-4">BUTTONS</h3>

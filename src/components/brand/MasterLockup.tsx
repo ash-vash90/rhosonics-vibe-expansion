@@ -56,6 +56,9 @@ export const MasterLockup = () => {
         <span className="label-tech text-primary">02 / IDENTITY</span>
       </div>
       <h2 className="section-header">Master Lockup</h2>
+      <p className="text-muted-foreground mb-8 max-w-2xl">
+        The logo. Used correctly, it represents 40 years of precision engineering. Used incorrectly, it represents a conversation with the brand team.
+      </p>
 
       {/* Main lockup display - hero gradient card with chamfer */}
       <div ref={heroRef} className="card-gradient chamfer-lg flex flex-col items-center justify-center py-16 sm:py-24 md:py-32 relative overflow-hidden">

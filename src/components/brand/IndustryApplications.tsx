@@ -5,8 +5,7 @@ export const IndustryApplications = () => {
     <section id="industries" className="mb-32">
       <h2 className="section-header">Industry Applications</h2>
       <p className="text-muted-foreground mb-8">
-        Each industry vertical has a distinct visual treatment while maintaining brand consistency. 
-        Pattern backgrounds communicate the industry context at a glance.
+        Each industry gets its own visual treatment. Minerals look different from semiconductors. The sensors don't care—they measure both.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

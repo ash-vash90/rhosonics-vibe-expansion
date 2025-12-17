@@ -318,7 +318,7 @@ export const TechComparison = () => {
       </div>
       <h2 className="section-header">SDM ECO vs Competition</h2>
       <p className="text-slate-500 text-lg max-w-2xl mb-12">
-        How our Sonic Density Measurement technology compares to nuclear, Coriolis, and traditional ultrasonic solutions.
+        Numbers. Our technology compared to nuclear, Coriolis, and traditional ultrasonic solutions. The data speaks for itself.
       </p>
 
       {/* Highlight Stats */}
