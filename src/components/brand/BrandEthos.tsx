@@ -52,7 +52,7 @@ export const BrandEthos = () => {
           <h1 
             id="brand-ethos-title" 
             ref={headlineRef}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-ui font-bold text-foreground tracking-tight leading-[1.1] mb-4 sm:mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-ui font-bold tracking-tight leading-[1.1] mb-4 sm:mb-6 bg-gradient-to-r from-primary via-rho-lime to-primary bg-clip-text text-transparent"
           >
             Precision. Resilience. Intelligence.
           </h1>
@@ -140,15 +140,15 @@ export const BrandEthos = () => {
           ].map((item) => (
             <article 
               key={item.num}
-              className="group"
+              className="group pl-4 border-l-2 border-transparent hover:border-earth-ochre transition-all"
               role="listitem"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="font-data text-sm text-slate-400 group-hover:text-primary transition-colors">
+                <span className="font-data text-sm text-slate-400 group-hover:text-earth-ochre transition-colors">
                   {item.num}
                 </span>
-                <div className="h-px flex-1 bg-slate-200 group-hover:bg-primary/30 transition-colors" />
-                <div className="w-8 h-8 bg-slate-100 flex items-center justify-center rounded text-slate-500 group-hover:bg-primary group-hover:text-white transition-all">
+                <div className="h-px flex-1 bg-gradient-to-r from-earth-ochre/50 to-slate-200 group-hover:from-earth-ochre group-hover:to-slate-300 transition-colors" />
+                <div className="w-8 h-8 bg-slate-100 flex items-center justify-center rounded text-slate-500 group-hover:bg-earth-ochre group-hover:text-white transition-all">
                   {item.icon}
                 </div>
               </div>
