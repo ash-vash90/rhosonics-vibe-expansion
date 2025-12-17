@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { RhosonicsLogo } from "../RhosonicsLogo";
-import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown } from "lucide-react";
+import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown, Download, FileText } from "lucide-react";
+import { exportDesignSystemPDF } from "@/lib/designSystemExport";
 
 interface NavSection {
   id: string;
   label: string;
+  bridge?: string;
   items: { id: string; label: string; highlight?: boolean }[];
 }
 
@@ -13,6 +15,7 @@ const navSections: NavSection[] = [
   {
     id: "01",
     label: "FOUNDATION",
+    bridge: "The visual toolkit.",
     items: [
       { id: "intro", label: "Brand Ethos" },
       { id: "origin", label: "Our Story", highlight: true },
@@ -23,6 +26,7 @@ const navSections: NavSection[] = [
   {
     id: "02",
     label: "SYSTEM",
+    bridge: "What you download.",
     items: [
       { id: "colors", label: "Color Matrix" },
       { id: "typography", label: "Typography Scale" },
@@ -32,10 +36,12 @@ const navSections: NavSection[] = [
   {
     id: "03",
     label: "ASSETS",
+    bridge: "How not to misuse them.",
     items: [
       { id: "assets", label: "Logo System" },
       { id: "icons", label: "Icon Guidelines" },
       { id: "components", label: "Interface Kit" },
+      { id: "downloads", label: "Downloads", highlight: true },
     ],
   },
   {
@@ -250,6 +256,35 @@ export const Navigation = () => {
             </div>
             );
           })}
+
+          {/* Export Actions */}
+          <div className="pt-4 space-y-2">
+            <button
+              onClick={() => exportDesignSystemPDF()}
+              className="w-full flex items-center gap-3 px-3 py-2.5 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
+            >
+              <FileText className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
+              <div className="text-left">
+                <span className="text-sm text-slate-300 font-medium block">Export PDF</span>
+                <span className="label-tech-sm text-slate-500">Full design system</span>
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                const downloadsSection = document.getElementById('downloads');
+                if (downloadsSection) {
+                  downloadsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="w-full flex items-center gap-3 px-3 py-2.5 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
+            >
+              <Download className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
+              <div className="text-left">
+                <span className="text-sm text-slate-300 font-medium block">Download Assets</span>
+                <span className="label-tech-sm text-slate-500">Logos, colors, fonts</span>
+              </div>
+            </button>
+          </div>
 
           {/* Version Badge */}
           <div className="pt-4">

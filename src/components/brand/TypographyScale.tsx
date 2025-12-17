@@ -2,6 +2,9 @@ export const TypographyScale = () => {
   return (
     <section id="typography" className="mb-32">
       <h2 className="section-header">Typography Scale</h2>
+      <p className="text-muted-foreground mb-8">
+        We speak to engineers. JetBrains Mono for data. Instrument Sans for everything else. Unbounded for the logo only.
+      </p>
 
       {/* Font Families Table */}
       <div className="card-base p-0 overflow-hidden mb-12">

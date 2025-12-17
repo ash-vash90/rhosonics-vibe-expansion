@@ -36,8 +36,7 @@ export const DosAndDonts = () => {
     <section id="dos-donts" className="mb-32">
       <h2 className="section-header">Do's & Don'ts</h2>
       <p className="text-muted-foreground mb-8">
-        These guidelines ensure brand consistency across all touchpoints. When in doubt, 
-        choose clarity and precision over decoration.
+        Mistakes we've witnessed. Guardrails we've installed.
       </p>
 
       {/* Logo Usage */}

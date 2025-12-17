@@ -9,6 +9,9 @@ export const EcoComponents = () => {
           ECO_PACK
         </span>
       </h2>
+      <p className="text-muted-foreground mb-8">
+        Every 0.1% accuracy improvement is waste prevented. We track this because customers asked.
+      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {/* Resource Recovery Card */}

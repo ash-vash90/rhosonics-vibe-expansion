@@ -126,6 +126,9 @@ export const ColorMatrix = () => {
   return (
     <section id="colors" className="mb-32">
       <h2 className="section-header">Color Matrix</h2>
+      <p className="text-muted-foreground mb-8">
+        Our palette comes from the places we work: control room panels, active measurement indicators, field sites. Forty years of deployment informed these choices. Mood boards were not involved.
+      </p>
 
       {/* Primary Colors */}
       <div className="flex flex-col gap-6 mb-12">

@@ -16,8 +16,7 @@ export const SpacingSystem = () => {
     <section id="spacing" className="mb-32">
       <h2 className="section-header">Spacing System</h2>
       <p className="text-muted-foreground mb-8">
-        Our spacing system uses a 4px base unit. All measurements are multiples of this base to maintain 
-        visual rhythm and consistency across interfaces.
+        4px increments. Consistency over creativity.
       </p>
 
       {/* Spacing Scale Visual */}
