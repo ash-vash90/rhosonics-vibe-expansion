@@ -8,14 +8,15 @@ interface StatItemProps {
   sublabel?: string;
   icon: React.ReactNode;
   decimals?: boolean;
+  iconBg?: string;
 }
 
-const StatItem = ({ value, suffix, label, sublabel, icon, decimals = false }: StatItemProps) => {
+const StatItem = ({ value, suffix, label, sublabel, icon, decimals = false, iconBg = "bg-primary/20" }: StatItemProps) => {
   const countRef = useCountUp(value, suffix, 2);
   
   return (
     <div className="flex flex-col items-center text-center group">
-      <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/30 transition-colors">
+      <div className={`w-12 h-12 ${iconBg} rounded-lg flex items-center justify-center mb-4 group-hover:opacity-80 transition-opacity`}>
         {icon}
       </div>
       <span 
@@ -48,20 +49,23 @@ export const StatsShowcase = () => {
             label="Years of Innovation"
             sublabel="EST. 1984"
             icon={<Zap className="w-6 h-6 text-primary" />}
+            iconBg="bg-primary/20"
           />
           <StatItem 
             value={50}
             suffix="+"
             label="Countries Served"
             sublabel="WORLDWIDE"
-            icon={<Globe className="w-6 h-6 text-primary" />}
+            icon={<Globe className="w-6 h-6 text-earth-ochre" />}
+            iconBg="bg-earth-ochre/20"
           />
           <StatItem 
             value={0.1}
             suffix="%"
             label="Measurement Accuracy"
             sublabel="PRECISION"
-            icon={<Target className="w-6 h-6 text-primary" />}
+            icon={<Target className="w-6 h-6 text-earth-amber" />}
+            iconBg="bg-earth-amber/20"
             decimals
           />
           <StatItem 
@@ -69,7 +73,8 @@ export const StatsShowcase = () => {
             suffix="/7"
             label="Operational Reliability"
             sublabel="CONTINUOUS"
-            icon={<Clock className="w-6 h-6 text-primary" />}
+            icon={<Clock className="w-6 h-6 text-rho-lime" />}
+            iconBg="bg-rho-lime/20"
           />
         </div>
         

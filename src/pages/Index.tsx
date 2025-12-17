@@ -40,9 +40,13 @@ const Index = () => {
         <BrandEthos />
         <StatsShowcase />
         <Suspense fallback={<SectionLoader />}>
-          <MasterLockup />
+          <div className="bg-eco-surface/30 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 2xl:-mx-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-8">
+            <MasterLockup />
+          </div>
           <OriginStory />
-          <MissionVision />
+          <div className="bg-earth-sand/20 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 2xl:-mx-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-8">
+            <MissionVision />
+          </div>
           <ColorMatrix />
           <TypographyScale />
           <SpacingSystem />
