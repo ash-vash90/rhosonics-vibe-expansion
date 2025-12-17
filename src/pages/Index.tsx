@@ -2,7 +2,6 @@ import { Suspense, lazy } from "react";
 import { Navigation } from "@/components/brand/Navigation";
 import { BrandEthos } from "@/components/brand/BrandEthos";
 import { StatsShowcase } from "@/components/brand/StatsShowcase";
-import { MarqueeTicker } from "@/components/brand/MarqueeTicker";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
 import { Zap } from "lucide-react";
@@ -37,10 +36,9 @@ const Index = () => {
     <div className="flex flex-col lg:flex-row min-h-screen bg-background">
       <Navigation />
       
-      <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1400px] mx-auto w-full">
+      <main className="flex-1 px-4 py-6 sm:px-6 sm:py-8 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1200px] mx-auto w-full overflow-x-hidden">
         <BrandEthos />
         <StatsShowcase />
-        <MarqueeTicker className="my-8 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 2xl:-mx-20" />
         <Suspense fallback={<SectionLoader />}>
           <MasterLockup />
           <OriginStory />
