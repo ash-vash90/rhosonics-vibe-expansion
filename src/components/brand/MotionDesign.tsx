@@ -65,8 +65,7 @@ export const MotionDesign = () => {
     <section ref={sectionRef} id="motion" className="mb-32">
       <h2 className="section-header">Motion Design</h2>
       <p className="text-muted-foreground mb-8">
-        Motion in Rhosonics interfaces is purposeful and restrained. Animations should feel 
-        precise and mechanical—mirroring the precision of our measurement technology.
+        If it moves, there should be a reason. Our signature animation mirrors ultrasonic wave propagation—the technology we actually sell.
       </p>
 
       {/* Motion Principles */}

@@ -28,8 +28,7 @@ export const VoiceTone = () => {
     <section id="voice" className="mb-32">
       <h2 className="section-header">Voice & Tone</h2>
       <p className="text-muted-foreground mb-8">
-        Rhosonics communicates as a trusted technical partner—direct, knowledgeable, and 
-        focused on measurable outcomes. We avoid marketing hyperbole and speak in specifics.
+        Our reader skips to the specification table. We put it first.
       </p>
 
       {/* Voice Pillars */}

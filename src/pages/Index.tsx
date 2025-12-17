@@ -15,6 +15,7 @@ const SpacingSystem = lazy(() => import("@/components/brand/SpacingSystem"));
 const LogoAssets = lazy(() => import("@/components/brand/LogoAssets"));
 const IconGuidelines = lazy(() => import("@/components/brand/IconGuidelines"));
 const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
+const DownloadableAssets = lazy(() => import("@/components/brand/DownloadableAssets"));
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
 const IndustryApplications = lazy(() => import("@/components/brand/IndustryApplications"));
 const ImageryGuidelines = lazy(() => import("@/components/brand/ImageryGuidelines"));
@@ -47,6 +48,7 @@ const Index = () => {
           <LogoAssets />
           <IconGuidelines />
           <InterfaceKit />
+          <DownloadableAssets />
           <EcoComponents />
           <IndustryApplications />
           <ImageryGuidelines />
