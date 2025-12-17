@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown, Film, RotateCcw } from "lucide-react";
+import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown, Film, RotateCcw, Search, CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import html2canvas from "html2canvas";
 import GIF from "gif.js";
@@ -91,6 +91,13 @@ const ANIMATION_PRESETS = [
   },
 ];
 
+interface DependencyResults {
+  hasBillboard: boolean;
+  hasD3: boolean;
+  hasInstrumentSans: boolean;
+  hasJetBrainsMono: boolean;
+}
+
 export const ChartGenerator = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -110,7 +117,12 @@ export const ChartGenerator = () => {
   const [bgGradient, setBgGradient] = useState("obsidian");
   const [useChamfer, setUseChamfer] = useState(false);
   const [exportPadding, setExportPadding] = useState(24);
-  const [pageHasBillboard, setPageHasBillboard] = useState(false);
+  
+  // Page dependency detection state
+  const [targetPageUrl, setTargetPageUrl] = useState("");
+  const [isCheckingPage, setIsCheckingPage] = useState(false);
+  const [detectionResults, setDetectionResults] = useState<DependencyResults | null>(null);
+  
   const [dataPoints, setDataPoints] = useState<DataPoint[]>([
     { name: "Item 1", value: 100, value2: 80, value3: 60 },
     { name: "Item 2", value: 80, value2: 90, value3: 70 },
@@ -164,6 +176,33 @@ export const ChartGenerator = () => {
     setDataPoints(updated);
   };
 
+  const handleCheckPage = async () => {
+    if (!targetPageUrl.trim()) {
+      toast.error("Please enter a URL");
+      return;
+    }
+
+    setIsCheckingPage(true);
+    setDetectionResults(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("check-page-dependencies", {
+        body: { url: targetPageUrl },
+      });
+
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+
+      setDetectionResults(data);
+      toast.success("Page analyzed");
+    } catch (error: any) {
+      console.error("Page check error:", error);
+      toast.error(error.message || "Failed to analyze page");
+    } finally {
+      setIsCheckingPage(false);
+    }
+  };
+
   const handleGenerateCode = async () => {
     if (!title.trim()) {
       toast.error("Please enter a chart title");
@@ -189,7 +228,12 @@ export const ChartGenerator = () => {
             },
             background: getGradientValue(bgGradient),
             useChamfer,
-            pageHasBillboard,
+            dependencies: detectionResults || {
+              hasBillboard: false,
+              hasD3: false,
+              hasInstrumentSans: false,
+              hasJetBrainsMono: false,
+            },
           },
         },
       });
@@ -746,22 +790,81 @@ export const ChartGenerator = () => {
         </div>
       </div>
 
-      {/* Generate Code */}
+      {/* Page Dependency Detection */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg border border-border">
+        <div className="p-3 sm:p-4 bg-muted/30 rounded-lg border border-border space-y-3">
           <div>
-            <label className="text-sm font-ui text-foreground">Page already has Billboard.js</label>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {pageHasBillboard 
-                ? "Will generate minimal chart code only" 
-                : "Will include lazy-loading script loader"}
+            <label className="text-sm font-ui text-foreground block mb-2">Target Page URL (optional)</label>
+            <div className="flex gap-2">
+              <Input
+                value={targetPageUrl}
+                onChange={(e) => setTargetPageUrl(e.target.value)}
+                placeholder="https://example.com/page-where-chart-goes"
+                className="bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-h-[44px] flex-1"
+              />
+              <Button
+                onClick={handleCheckPage}
+                disabled={isCheckingPage || !targetPageUrl.trim()}
+                variant="outline"
+                className="min-h-[44px] px-4"
+              >
+                {isCheckingPage ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Search className="w-4 h-4" />
+                )}
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1.5">
+              Check what dependencies exist on your target page to generate minimal code
             </p>
           </div>
-          <Switch 
-            checked={pageHasBillboard} 
-            onCheckedChange={setPageHasBillboard}
-          />
+          
+          {/* Detection Results */}
+          {detectionResults && (
+            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border/50">
+              <div className="flex items-center gap-2">
+                {detectionResults.hasBillboard ? (
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                ) : (
+                  <XCircle className="w-4 h-4 text-muted-foreground" />
+                )}
+                <span className="text-xs text-foreground">Billboard.js</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {detectionResults.hasD3 ? (
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                ) : (
+                  <XCircle className="w-4 h-4 text-muted-foreground" />
+                )}
+                <span className="text-xs text-foreground">D3.js</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {detectionResults.hasInstrumentSans ? (
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                ) : (
+                  <XCircle className="w-4 h-4 text-muted-foreground" />
+                )}
+                <span className="text-xs text-foreground">Instrument Sans</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {detectionResults.hasJetBrainsMono ? (
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                ) : (
+                  <XCircle className="w-4 h-4 text-muted-foreground" />
+                )}
+                <span className="text-xs text-foreground">JetBrains Mono</span>
+              </div>
+            </div>
+          )}
+          
+          {!detectionResults && !targetPageUrl.trim() && (
+            <p className="text-xs text-muted-foreground italic">
+              Skip URL check to generate full code with all dependencies
+            </p>
+          )}
         </div>
+        
         <Button
           onClick={handleGenerateCode}
           disabled={isLoading || !title.trim()}
