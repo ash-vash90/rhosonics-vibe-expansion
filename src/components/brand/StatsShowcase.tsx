@@ -48,24 +48,24 @@ export const StatsShowcase = () => {
             suffix="+"
             label="Years of Innovation"
             sublabel="EST. 1984"
-            icon={<Zap className="w-6 h-6 text-primary" />}
-            iconBg="bg-primary/20"
+            icon={<Zap className="w-6 h-6 text-earth-amber" />}
+            iconBg="bg-earth-amber/20"
           />
           <StatItem 
             value={50}
             suffix="+"
             label="Countries Served"
             sublabel="WORLDWIDE"
-            icon={<Globe className="w-6 h-6 text-earth-ochre" />}
-            iconBg="bg-earth-ochre/20"
+            icon={<Globe className="w-6 h-6 text-primary" />}
+            iconBg="bg-primary/20"
           />
           <StatItem 
             value={0.1}
             suffix="%"
             label="Measurement Accuracy"
             sublabel="PRECISION"
-            icon={<Target className="w-6 h-6 text-earth-amber" />}
-            iconBg="bg-earth-amber/20"
+            icon={<Target className="w-6 h-6 text-slate-300" />}
+            iconBg="bg-slate-700"
             decimals
           />
           <StatItem 
@@ -73,8 +73,8 @@ export const StatsShowcase = () => {
             suffix="/7"
             label="Operational Reliability"
             sublabel="CONTINUOUS"
-            icon={<Clock className="w-6 h-6 text-rho-lime" />}
-            iconBg="bg-rho-lime/20"
+            icon={<Clock className="w-6 h-6 text-earth-ochre" />}
+            iconBg="bg-earth-ochre/20"
           />
         </div>
         
