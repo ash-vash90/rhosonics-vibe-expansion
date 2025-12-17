@@ -40,13 +40,20 @@ const Index = () => {
         <BrandEthos />
         <StatsShowcase />
         <Suspense fallback={<SectionLoader />}>
-          <div className="bg-eco-surface/30 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 2xl:-mx-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-8">
-            <MasterLockup />
-          </div>
+          {/* Gradient accent bar */}
+          <div className="h-1 w-full bg-gradient-to-r from-primary via-rho-lime to-primary rounded-full my-8 opacity-60" />
+          
+          <MasterLockup />
+          
+          {/* Ochre accent bar */}
+          <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-earth-ochre to-transparent my-12 opacity-50" />
+          
           <OriginStory />
-          <div className="bg-earth-sand/20 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 2xl:-mx-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-8">
-            <MissionVision />
-          </div>
+          <MissionVision />
+          
+          {/* Earth amber accent bar */}
+          <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-earth-amber to-transparent my-12 opacity-40" />
+          
           <ColorMatrix />
           <TypographyScale />
           <SpacingSystem />

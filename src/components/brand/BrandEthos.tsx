@@ -115,47 +115,56 @@ export const BrandEthos = () => {
         </article>
       </div>
 
-      {/* Core Values - Open layout without cards */}
+      {/* Core Values - Open layout with earth accent on Garage Spirit */}
       <div className="border-t border-slate-200 pt-8 sm:pt-10 mt-8" role="list" aria-label="Core values">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
-          {[
-            {
-              num: "01",
-              title: "Garage Spirit",
-              desc: "Innovation born from curiosity, not committees. We keep that startup hunger.",
-              icon: <Sparkles className="w-5 h-5" aria-hidden="true" />
-            },
-            {
-              num: "02", 
-              title: "Built to Last",
-              desc: "Industrial-grade engineering for the harshest environments.",
-              icon: <Radar className="w-5 h-5" aria-hidden="true" />
-            },
-            {
-              num: "03",
-              title: "Legacy Forward",
-              desc: "Honoring our roots while measuring the future.",
-              icon: <Leaf className="w-5 h-5" aria-hidden="true" />
-            }
-          ].map((item) => (
-            <article 
-              key={item.num}
-              className="group pl-4 border-l-2 border-transparent hover:border-earth-ochre transition-all"
-              role="listitem"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="font-data text-sm text-slate-400 group-hover:text-earth-ochre transition-colors">
-                  {item.num}
-                </span>
-                <div className="h-px flex-1 bg-gradient-to-r from-earth-ochre/50 to-slate-200 group-hover:from-earth-ochre group-hover:to-slate-300 transition-colors" />
-                <div className="w-8 h-8 bg-slate-100 flex items-center justify-center rounded text-slate-500 group-hover:bg-earth-ochre group-hover:text-white transition-all">
-                  {item.icon}
-                </div>
+          {/* Garage Spirit - Special earth card treatment */}
+          <article 
+            className="group card-earth p-5 sm:p-6"
+            role="listitem"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <span className="font-data text-sm text-earth-ochre">01</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-earth-ochre to-earth-sand" />
+              <div className="w-8 h-8 bg-earth-amber/30 flex items-center justify-center rounded text-earth-ochre">
+                <Sparkles className="w-5 h-5" aria-hidden="true" />
               </div>
-              <h4 className="font-ui font-bold text-lg sm:text-xl mb-2 text-foreground">{item.title}</h4>
-              <p className="text-slate-500 leading-relaxed text-sm sm:text-base">{item.desc}</p>
-            </article>
-          ))}
+            </div>
+            <h4 className="font-ui font-bold text-lg sm:text-xl mb-2 text-foreground">Garage Spirit</h4>
+            <p className="text-slate-600 leading-relaxed text-sm sm:text-base">Innovation born from curiosity, not committees. We keep that startup hunger.</p>
+          </article>
+
+          {/* Built to Last */}
+          <article 
+            className="group pl-4 border-l-2 border-transparent hover:border-primary transition-all"
+            role="listitem"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <span className="font-data text-sm text-slate-400 group-hover:text-primary transition-colors">02</span>
+              <div className="h-px flex-1 bg-slate-200 group-hover:bg-primary/30 transition-colors" />
+              <div className="w-8 h-8 bg-slate-100 flex items-center justify-center rounded text-slate-500 group-hover:bg-primary group-hover:text-white transition-all">
+                <Radar className="w-5 h-5" aria-hidden="true" />
+              </div>
+            </div>
+            <h4 className="font-ui font-bold text-lg sm:text-xl mb-2 text-foreground">Built to Last</h4>
+            <p className="text-slate-500 leading-relaxed text-sm sm:text-base">Industrial-grade engineering for the harshest environments.</p>
+          </article>
+
+          {/* Legacy Forward */}
+          <article 
+            className="group pl-4 border-l-2 border-transparent hover:border-rho-lime transition-all"
+            role="listitem"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <span className="font-data text-sm text-slate-400 group-hover:text-rho-lime transition-colors">03</span>
+              <div className="h-px flex-1 bg-slate-200 group-hover:bg-rho-lime/30 transition-colors" />
+              <div className="w-8 h-8 bg-eco-surface flex items-center justify-center rounded text-primary group-hover:bg-rho-lime group-hover:text-white transition-all">
+                <Leaf className="w-5 h-5" aria-hidden="true" />
+              </div>
+            </div>
+            <h4 className="font-ui font-bold text-lg sm:text-xl mb-2 text-foreground">Legacy Forward</h4>
+            <p className="text-slate-500 leading-relaxed text-sm sm:text-base">Honoring our roots while measuring the future.</p>
+          </article>
         </div>
       </div>
     </section>
