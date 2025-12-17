@@ -9,6 +9,9 @@ verify_jwt = false
 [functions.generate-brand-chart]
 verify_jwt = false
 
+[functions.check-page-dependencies]
+verify_jwt = false
+
 [functions.transform-content]
 verify_jwt = false
 

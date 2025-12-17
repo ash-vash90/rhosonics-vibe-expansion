@@ -9,9 +9,13 @@ const CHART_STYLE_PROMPT = `You are generating Billboard.js configuration code f
 
 IMPORTANT: Generate vanilla JavaScript code that can be copy-pasted into ANY website (WordPress, static HTML, etc.)
 
-You will receive a "pageHasBillboard" flag:
-- If TRUE: Generate ONLY the chart initialization code (bb.generate call wrapped in a simple IIFE)
-- If FALSE: Generate full code with lazy-loading via Intersection Observer
+You will receive dependency detection results indicating what the target page already has:
+- hasBillboard: whether Billboard.js is already loaded
+- hasD3: whether D3.js is already loaded  
+- hasInstrumentSans: whether Instrument Sans font is available
+- hasJetBrainsMono: whether JetBrains Mono font is available
+
+Generate code that ONLY includes what's missing. Be smart about this.
 
 EXACT STYLING REQUIREMENTS:
 
@@ -20,7 +24,7 @@ COLORS (use the provided colors from the request):
 - Secondary color for second series (if multi-series)
 - Tertiary color for third series (if multi-series)
 
-TYPOGRAPHY (CSS must be included):
+TYPOGRAPHY (only include if fonts are missing):
 - Axis ticks and labels: font-family: 'JetBrains Mono', monospace; font-size: 11px
 - Legend: font-family: 'Instrument Sans', sans-serif; font-size: 12px
 - Tooltip: font-family: 'JetBrains Mono', monospace
@@ -37,7 +41,31 @@ BAR CHARTS:
 
 ---
 
-IF pageHasBillboard is TRUE, generate MINIMAL code like this:
+CODE GENERATION RULES based on dependencies:
+
+1. If hasBillboard is TRUE and hasD3 is TRUE:
+   - Generate ONLY the bb.generate() call wrapped in a simple IIFE
+   - No script loading needed
+
+2. If hasBillboard is FALSE or hasD3 is FALSE:
+   - Include the lazy-loading Intersection Observer pattern
+   - Load D3 first, then Billboard.js
+   - Include billboard.min.css
+
+3. If hasInstrumentSans is FALSE or hasJetBrainsMono is FALSE:
+   - Include Google Fonts @import for ONLY the missing fonts
+   - If both missing: @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+   - If only Instrument Sans missing: @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap');
+   - If only JetBrains Mono missing: @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+4. If both fonts ARE present:
+   - Skip the @import entirely
+
+ALWAYS include the CSS styling for the chart container (#rhosonics-chart selectors).
+
+---
+
+MINIMAL CODE (when hasBillboard=true AND hasD3=true):
 \`\`\`javascript
 (function() {
   bb.generate({
@@ -49,11 +77,11 @@ IF pageHasBillboard is TRUE, generate MINIMAL code like this:
 
 ---
 
-IF pageHasBillboard is FALSE, generate FULL code with lazy loading:
+FULL CODE with lazy loading (when hasBillboard=false OR hasD3=false):
 \`\`\`html
 <style>
-  /* Rhosonics brand fonts and tooltip styling */
-  @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  /* Only include @import if fonts are missing */
+  @import url('...');
   
   #rhosonics-chart .bb-axis text { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
   #rhosonics-chart .bb-legend text { font-family: 'Instrument Sans', sans-serif; font-size: 12px; }
@@ -148,12 +176,24 @@ serve(async (req) => {
       yAxisLabel,
       data,
       colors,
-      pageHasBillboard,
+      dependencies,
     } = chartConfig;
+
+    // Default to assuming nothing is present if no detection was done
+    const deps = dependencies || {
+      hasBillboard: false,
+      hasD3: false,
+      hasInstrumentSans: false,
+      hasJetBrainsMono: false,
+    };
 
     const userPrompt = `Generate Billboard.js code for a ${chartType} chart with these specifications:
 
-pageHasBillboard: ${pageHasBillboard ? "TRUE" : "FALSE"}
+DEPENDENCY DETECTION RESULTS:
+- hasBillboard: ${deps.hasBillboard ? "TRUE (page has Billboard.js)" : "FALSE (page does NOT have Billboard.js)"}
+- hasD3: ${deps.hasD3 ? "TRUE (page has D3.js)" : "FALSE (page does NOT have D3.js)"}
+- hasInstrumentSans: ${deps.hasInstrumentSans ? "TRUE (font available)" : "FALSE (font NOT available - include @import)"}
+- hasJetBrainsMono: ${deps.hasJetBrainsMono ? "TRUE (font available)" : "FALSE (font NOT available - include @import)"}
 
 TITLE: ${title}
 ${description ? `DESCRIPTION: ${description}` : ""}
@@ -168,9 +208,13 @@ COLORS:
 DATA:
 ${JSON.stringify(data, null, 2)}
 
-${pageHasBillboard 
-  ? "Generate ONLY the minimal chart code (bb.generate wrapped in IIFE) since the page already has Billboard.js loaded."
-  : "Generate the FULL code with lazy-loading Intersection Observer pattern since the page does NOT have Billboard.js."}
+Based on the dependency detection:
+${deps.hasBillboard && deps.hasD3 
+  ? "- Generate ONLY the minimal chart code (bb.generate wrapped in IIFE) since Billboard.js and D3 are present."
+  : "- Generate the FULL code with lazy-loading Intersection Observer pattern since Billboard.js/D3 need to be loaded."}
+${!deps.hasInstrumentSans || !deps.hasJetBrainsMono 
+  ? `- Include Google Fonts @import for: ${[!deps.hasInstrumentSans && "Instrument Sans", !deps.hasJetBrainsMono && "JetBrains Mono"].filter(Boolean).join(" and ")}`
+  : "- Skip Google Fonts @import since both fonts are already available."}
 
 Chart type mapping:
 - bar → type: bar()
@@ -188,7 +232,7 @@ Chart type mapping:
 
 The output should be ready to copy-paste.`;
 
-    console.log("Generating Billboard.js code for:", title);
+    console.log("Generating Billboard.js code for:", title, "Dependencies:", deps);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -229,7 +273,7 @@ The output should be ready to copy-paste.`;
     let code = responseData.choices?.[0]?.message?.content || "";
     
     // Clean up the code - remove markdown code blocks if present
-    code = code.replace(/```html?\n?/g, "").replace(/```\n?/g, "").trim();
+    code = code.replace(/```html?\n?/g, "").replace(/```javascript?\n?/g, "").replace(/```\n?/g, "").trim();
 
     console.log("Generated Billboard.js code successfully");
 
