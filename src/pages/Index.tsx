@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Navigation } from "@/components/brand/Navigation";
 import { BrandEthos } from "@/components/brand/BrandEthos";
+import { SectionBridge } from "@/components/brand/SectionBridge";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
 import { Zap } from "lucide-react";
@@ -37,26 +38,41 @@ const Index = () => {
       <Navigation />
       
       <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1400px] mx-auto w-full">
+        {/* 01 / FOUNDATION */}
         <BrandEthos />
         <Suspense fallback={<SectionLoader />}>
           <MasterLockup />
           <OriginStory />
           <MissionVision />
+          
+          {/* 02 / SYSTEM */}
+          <SectionBridge number="02" label="SYSTEM" bridge="The visual toolkit." />
           <ColorMatrix />
           <TypographyScale />
           <SpacingSystem />
+          
+          {/* 03 / ASSETS */}
+          <SectionBridge number="03" label="ASSETS" bridge="What you download." />
           <LogoAssets />
           <IconGuidelines />
           <InterfaceKit />
           <DownloadableAssets />
+          
+          {/* 04 / SUSTAINABILITY */}
+          <SectionBridge number="04" label="SUSTAINABILITY" bridge="The mission, applied." />
           <EcoComponents />
           <IndustryApplications />
           <ImageryGuidelines />
+          
+          {/* 05 / PRINCIPLES */}
+          <SectionBridge number="05" label="PRINCIPLES" bridge="How not to misuse them." />
           <VoiceTone />
           <MotionDesign />
           <DosAndDonts />
         </Suspense>
-        {/* TechComparison loads only when in viewport to reduce unused JS */}
+        
+        {/* 06 / ANALYSIS */}
+        <SectionBridge number="06" label="ANALYSIS" bridge="Proof." />
         <LazySection fallback={<SectionLoader />} rootMargin="400px">
           <Suspense fallback={<SectionLoader />}>
             <TechComparison />
