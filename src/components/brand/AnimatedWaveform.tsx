@@ -51,7 +51,7 @@ export const AnimatedWaveform = ({ className = "" }: AnimatedWaveformProps) => {
         </linearGradient>
         <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="hsl(90, 60%, 45%)" stopOpacity="0" />
-          <stop offset="50%" stopColor="hsl(90, 60%, 45%)" stopOpacity="0.2" />
+          <stop offset="50%" stopColor="hsl(90, 60%, 45%)" stopOpacity="0.25" />
           <stop offset="100%" stopColor="hsl(90, 60%, 45%)" stopOpacity="0" />
         </linearGradient>
         <linearGradient id="waveGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -59,6 +59,7 @@ export const AnimatedWaveform = ({ className = "" }: AnimatedWaveformProps) => {
           <stop offset="50%" stopColor="hsl(125, 50%, 40%)" stopOpacity="0.15" />
           <stop offset="100%" stopColor="hsl(125, 50%, 40%)" stopOpacity="0" />
         </linearGradient>
+        {/* Standard glow filter */}
         <filter id="waveGlow">
           <feGaussianBlur stdDeviation="3" result="blur" />
           <feMerge>
@@ -66,6 +67,22 @@ export const AnimatedWaveform = ({ className = "" }: AnimatedWaveformProps) => {
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+        {/* Lime glow filter for peaks */}
+        <filter id="limeGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="8" result="blur" />
+          <feFlood floodColor="hsl(90, 60%, 45%)" floodOpacity="0.6" result="color" />
+          <feComposite in="color" in2="blur" operator="in" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        {/* Radial gradient for peak glow spots */}
+        <radialGradient id="peakGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="hsl(90, 60%, 55%)" stopOpacity="0.8" />
+          <stop offset="60%" stopColor="hsl(90, 60%, 45%)" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="hsl(90, 60%, 45%)" stopOpacity="0" />
+        </radialGradient>
       </defs>
       
       {/* Wave 1 - Primary */}
@@ -79,15 +96,16 @@ export const AnimatedWaveform = ({ className = "" }: AnimatedWaveformProps) => {
         filter="url(#waveGlow)"
       />
       
-      {/* Wave 2 - Offset */}
+      {/* Wave 2 - Offset with lime glow */}
       <path
         ref={wave2Ref}
         d="M-100,320 Q100,270 250,320 T550,320 T850,320 T1150,320 T1450,320 T1750,320"
         fill="none"
         stroke="url(#waveGradient2)"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeDasharray="15 8"
-        opacity="0.8"
+        filter="url(#limeGlow)"
+        opacity="0.9"
       />
       
       {/* Wave 3 - Background */}
@@ -100,6 +118,17 @@ export const AnimatedWaveform = ({ className = "" }: AnimatedWaveformProps) => {
         strokeDasharray="10 5"
         opacity="0.6"
       />
+      
+      {/* Lime glow spots at wave peaks */}
+      <circle cx="300" cy="250" r="20" fill="url(#peakGlow)" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="600" cy="270" r="15" fill="url(#peakGlow)" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2.5s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="900" cy="250" r="18" fill="url(#peakGlow)" opacity="0.35">
+        <animate attributeName="opacity" values="0.25;0.5;0.25" dur="3.5s" repeatCount="indefinite" />
+      </circle>
     </svg>
   );
 };
