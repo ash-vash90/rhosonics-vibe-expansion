@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown } from "lucide-react";
+import { useMagneticHover } from "@/hooks/useGsapAnimations";
 
 interface NavSection {
   id: string;
@@ -80,6 +81,8 @@ export const Navigation = () => {
   const [expandedSections, setExpandedSections] = useState<string[]>(["01"]);
   const [activeSection, setActiveSection] = useState<string | null>("intro");
   const menuRef = useRef<HTMLDivElement>(null);
+  const sidebarLogoRef = useMagneticHover();
+  const aiToolsButtonRef = useMagneticHover();
 
   // Scroll spy effect
   useEffect(() => {
@@ -180,15 +183,17 @@ export const Navigation = () => {
         
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
-          <button 
-            onClick={() => scrollToSection('intro')}
-            className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
-          >
-            <div className="w-7 h-7">
-              <RhosonicsLogo variant="gradient" />
-            </div>
-            <span className="font-logo text-lg tracking-tight">Rhosonics</span>
-          </button>
+          <div ref={sidebarLogoRef}>
+            <button 
+              onClick={() => scrollToSection('intro')}
+              className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+            >
+              <div className="w-7 h-7">
+                <RhosonicsLogo variant="gradient" />
+              </div>
+              <span className="font-logo text-lg tracking-tight">Rhosonics</span>
+            </button>
+          </div>
           <button
             className="xl:hidden text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors touch-manipulation"
             onClick={() => setIsOpen(false)}
@@ -293,14 +298,16 @@ export const Navigation = () => {
       </div>
 
       {/* Floating AI Tools Button - Desktop */}
-      <Link
-        to="/tools"
-        className="hidden xl:flex fixed bottom-6 right-6 items-center gap-3 px-5 py-3 bg-gradient-to-r from-primary to-rho-lime text-rho-obsidian font-semibold rounded-full shadow-lg hover:shadow-primary/30 hover:scale-105 transition-all z-40 group"
-      >
-        <Sparkles className="w-5 h-5" />
-        <span>AI Tools</span>
-        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-      </Link>
+      <div ref={aiToolsButtonRef} className="hidden xl:block fixed bottom-6 right-6 z-40">
+        <Link
+          to="/tools"
+          className="flex items-center gap-3 px-5 py-3 bg-gradient-to-r from-primary to-rho-lime text-rho-obsidian font-semibold rounded-full shadow-lg hover:shadow-primary/30 hover:scale-105 transition-all group"
+        >
+          <Sparkles className="w-5 h-5" />
+          <span>AI Tools</span>
+          <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </Link>
+      </div>
 
       {/* Spacer for mobile/tablet header */}
       <div className="h-14 xl:hidden" />

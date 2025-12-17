@@ -4,6 +4,7 @@ import { RhosonicsLogo } from "../RhosonicsLogo";
 import { RotateCcw, Scan, Layers } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useMagneticHover } from "@/hooks/useGsapAnimations";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,6 +13,8 @@ export const MasterLockup = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const logoContainerRef = useMagneticHover();
+  const replayButtonRef = useMagneticHover();
 
   const replayAnimation = useCallback(() => {
     logoRef.current?.play();
@@ -65,7 +68,8 @@ export const MasterLockup = () => {
         {/* Main Lockup */}
         <div className="flex items-center gap-4 relative z-10 px-4">
           <div 
-            className="flex-shrink-0 magnetic-hover" 
+            ref={logoContainerRef}
+            className="flex-shrink-0" 
             style={{ width: 'clamp(3.5rem, 10vw, 6rem)', height: 'clamp(3.5rem, 10vw, 6rem)' }}
             aria-hidden="true"
           >
@@ -81,14 +85,16 @@ export const MasterLockup = () => {
         </div>
 
         {/* Replay Button */}
-        <button 
-          onClick={replayAnimation}
-          className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 label-ui text-slate-400 hover:text-primary transition-colors px-3 py-2 bg-slate-800/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-slate-900"
-          aria-label="Replay logo animation"
-        >
-          <RotateCcw className="w-4 h-4" aria-hidden="true" />
-          <span className="hidden sm:inline">REPLAY</span>
-        </button>
+        <div ref={replayButtonRef} className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6">
+          <button 
+            onClick={replayAnimation}
+            className="flex items-center gap-2 label-ui text-slate-400 hover:text-primary transition-colors px-3 py-2 bg-slate-800/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-slate-900"
+            aria-label="Replay logo animation"
+          >
+            <RotateCcw className="w-4 h-4" aria-hidden="true" />
+            <span className="hidden sm:inline">REPLAY</span>
+          </button>
+        </div>
 
         {/* Spec label */}
         <div className="absolute top-4 left-4 sm:top-6 sm:left-6 label-tech text-slate-500" aria-hidden="true">

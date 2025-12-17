@@ -1,23 +1,33 @@
 import { Radar, Target, Leaf, Sparkles } from "lucide-react";
+import { AnimatedWaveform } from "./AnimatedWaveform";
+import { useSplitTextReveal, useMagneticHover } from "@/hooks/useGsapAnimations";
 
 export const BrandEthos = () => {
+  const headlineRef = useSplitTextReveal();
+  const badgeRef = useMagneticHover();
+
   return (
     <section id="intro" className="mb-24" aria-labelledby="brand-ethos-title">
-      {/* Bold Hero with wave background */}
+      {/* Bold Hero with animated wave background */}
       <div className="mb-16 relative">
-        <div className="absolute inset-0 bg-wave-hero opacity-50 pointer-events-none" aria-hidden="true" />
+        {/* Animated waveform background */}
+        <AnimatedWaveform className="opacity-40 pointer-events-none" />
+        
         <div className="relative">
-          <div className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-slate-100 border border-slate-200 rounded-md">
+          <div 
+            ref={badgeRef}
+            className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-slate-100 border border-slate-200 rounded-md cursor-pointer"
+          >
             <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
             <span className="font-data text-xs uppercase tracking-wider text-slate-600">DESIGN SYSTEM V.FINAL</span>
           </div>
           
-          <h1 id="brand-ethos-title" className="section-header-bold mb-6">
-            Precision.
-            <br />
-            <span className="gradient-text">Resilience.</span>
-            <br />
-            Intelligence.
+          <h1 
+            id="brand-ethos-title" 
+            ref={headlineRef}
+            className="section-header-bold mb-6"
+          >
+            Precision. Resilience. Intelligence.
           </h1>
 
           <p className="text-lg md:text-xl text-slate-500 max-w-xl leading-relaxed font-medium">
