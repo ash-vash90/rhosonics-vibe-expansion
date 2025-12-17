@@ -129,17 +129,17 @@ export const OriginStory = () => {
           {/* Story narrative */}
           <div className="max-w-3xl">
             <p className="text-xl md:text-2xl font-ui text-slate-100 leading-relaxed mb-6">
-              It started with a simple question in a Dutch garage: 
-              <span className="text-earth-ochre font-semibold"> how do you measure the density of beer?</span>
+              It started with a question in a Dutch garage: 
+              <span className="text-earth-ochre font-semibold"> how do you measure beer density?</span>
             </p>
             <p className="text-lg text-slate-400 leading-relaxed mb-8">
-              A local brewer needed precision. Our founder had curiosity and a workbench. 
-              What began as a single ultrasonic measurement device became the foundation 
-              for an entirely new approach to industrial process control.
+              The local brewer needed to know. Our founder happened to have a workbench. 
+              What began as a single measurement device became an entirely new approach 
+              to industrial process control.
             </p>
             <p className="text-lg text-slate-400 leading-relaxed">
-              Four decades later, that same garage spirit—the belief that better measurement 
-              leads to a better world—drives every sensor we build.
+              Four decades later, that same curiosity—the belief that better measurement 
+              leads to better outcomes—drives every sensor we build.
             </p>
           </div>
 

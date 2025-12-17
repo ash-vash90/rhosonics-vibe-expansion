@@ -3,8 +3,7 @@ export const ImageryGuidelines = () => {
     <section id="imagery" className="mb-32">
       <h2 className="section-header">Imagery Guidelines</h2>
       <p className="text-muted-foreground mb-8">
-        Our visual language balances authentic industrial photography with clean technical illustrations. 
-        This duality represents the "Lab in the Field" concept.
+        Two types of imagery: real industrial environments (with visible wear) and clean technical renders. Stock photos of people pointing at screens are not welcome.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">

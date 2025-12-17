@@ -16,12 +16,12 @@ export const MissionVision = () => {
               <div className="label-tech text-primary">OUR MISSION</div>
             </div>
             <h3 className="font-ui font-bold text-2xl text-foreground mb-4">
-              Empowering Industry Through Precision Measurement
+              Measure What Matters
             </h3>
             <p className="text-muted-foreground leading-relaxed">
-              We develop and manufacture ultrasonic measurement systems that enable industries 
-              to optimize processes, reduce waste, and operate sustainably. Our technology 
-              transforms raw data into actionable intelligence.
+              We build ultrasonic measurement systems. Industries use them to optimize processes, 
+              reduce waste, and operate sustainably. The sensors do the measuring. 
+              The data does the rest.
             </p>
           </div>
         </div>
@@ -36,12 +36,12 @@ export const MissionVision = () => {
               <div className="label-tech text-primary">OUR VISION</div>
             </div>
             <h3 className="font-ui font-bold text-2xl text-slate-100 mb-4">
-              A World Where Every Process Is Optimized
+              Every Process Optimized
             </h3>
             <p className="text-slate-400 leading-relaxed">
-              We envision industrial processes that waste nothing—where precision measurement 
-              is the foundation of sustainability. From mining to semiconductors, we're building 
-              the measurement infrastructure of the future.
+              Industrial processes that waste nothing. Precision measurement as the foundation 
+              of sustainability. From mining to semiconductors—measurement infrastructure 
+              for what comes next.
             </p>
           </div>
         </div>

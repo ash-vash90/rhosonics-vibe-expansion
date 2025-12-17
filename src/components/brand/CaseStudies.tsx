@@ -55,7 +55,7 @@ export const CaseStudies = () => {
       </div>
       <h2 className="section-header">Case Studies</h2>
       <p className="text-slate-500 text-lg max-w-2xl mb-12">
-        Real-world applications demonstrating measurable impact across industries.
+        Real applications. Measurable results. No hypotheticals.
       </p>
 
       {/* Case Study Cards */}
