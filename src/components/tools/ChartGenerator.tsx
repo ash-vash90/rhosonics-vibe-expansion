@@ -745,23 +745,28 @@ export const ChartGenerator = () => {
       </div>
 
       {/* Generate Code */}
-      <Button
-        onClick={handleGenerateCode}
-        disabled={isLoading || !title.trim()}
-        className="w-full h-11 sm:h-12 text-sm sm:text-base font-ui touch-manipulation"
-      >
-        {isLoading ? (
-          <>
-            <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
-            Generating Code...
-          </>
-        ) : (
-          <>
-            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-            Generate Billboard.js Code
-          </>
+      <div className="space-y-2">
+        <Button
+          onClick={handleGenerateCode}
+          disabled={isLoading || !title.trim()}
+          className="w-full h-11 sm:h-12 text-sm sm:text-base font-ui touch-manipulation"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
+              Generating Code...
+            </>
+          ) : (
+            <>
+              <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              Generate Billboard.js Code
+            </>
+          )}
+        </Button>
+        {!title.trim() && (
+          <p className="text-xs text-muted-foreground text-center">Enter a chart title above to enable code generation</p>
         )}
-      </Button>
+      </div>
 
       {/* Code Output */}
       {code && (
