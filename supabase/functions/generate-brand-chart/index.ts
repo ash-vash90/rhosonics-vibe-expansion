@@ -5,45 +5,39 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const CHART_STYLE_PROMPT = `You are generating Recharts JSX code for Rhosonics brand charts.
+const CHART_STYLE_PROMPT = `You are generating Billboard.js configuration code for Rhosonics brand charts.
+
+IMPORTANT: Generate vanilla JavaScript code that can be copy-pasted into ANY website (WordPress, static HTML, etc.)
 
 EXACT STYLING REQUIREMENTS:
 
-COLORS (use these chart color variables):
-- chart-1: hsl(142 71% 32%) - Primary green
-- chart-2: hsl(45 70% 48%) - Earth amber
-- chart-3: hsl(215 20% 45%) - Slate
-- chart-4: hsl(142 71% 25%) - Dark green
-- chart-5: hsl(45 40% 35%) - Muted ochre
+COLORS (use the provided colors from the request):
+- Primary color for main data series
+- Secondary color for second series (if multi-series)
+- Tertiary color for third series (if multi-series)
 
-TYPOGRAPHY:
-- All axis labels: font-family: 'JetBrains Mono', monospace
-- Font size for labels: 11px
-- Font size for axis: 12px
-- Color: hsl(215, 19%, 45%) - slate-500
+TYPOGRAPHY (CSS must be included):
+- Axis ticks and labels: font-family: 'JetBrains Mono', monospace; font-size: 11px
+- Legend: font-family: 'Instrument Sans', sans-serif; font-size: 12px
+- Tooltip: font-family: 'JetBrains Mono', monospace
 
 GRID & AXES:
-- Grid stroke: hsl(215, 19%, 25%) - slate-700
-- Grid strokeDasharray: "3 3"
-- Axis line stroke: hsl(215, 19%, 35%) - slate-600
+- Grid lines: stroke-dasharray: "3 3"
 
 TOOLTIP:
-- Background: hsl(213, 32%, 8%) - obsidian
-- Border: 1px solid hsl(215, 19%, 25%)
 - Border radius: 8px
 - Font: JetBrains Mono
 
 BAR CHARTS:
-- Border radius: 4px on top corners
-- Bar gap: 4
+- Use bar.radius: { ratio: 0.15 }
 
-RADAR CHARTS:
-- polarGrid stroke: hsl(215, 19%, 25%)
-- polarAngleAxis tick font: JetBrains Mono, 11px
+Generate COMPLETE, SELF-CONTAINED code that includes:
+1. CDN script tags for billboard.js and d3
+2. CSS for Rhosonics brand styling
+3. HTML container element
+4. JavaScript to generate the chart using bb.generate()
 
-Generate ONLY valid JSX code that can be directly rendered. Include all necessary imports from 'recharts'.
-The code should be a complete, self-contained component.
-Use the exact color values provided, not CSS variables.`;
+The code should work when copy-pasted into any HTML page. Use the exact color values provided in the request.`;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -65,23 +59,48 @@ serve(async (req) => {
       xAxisLabel,
       yAxisLabel,
       data,
+      colors,
     } = chartConfig;
 
-    const userPrompt = `Generate a ${chartType} chart with these specifications:
+    const userPrompt = `Generate Billboard.js code for a ${chartType} chart with these specifications:
 
 TITLE: ${title}
 ${description ? `DESCRIPTION: ${description}` : ""}
 X-AXIS LABEL: ${xAxisLabel || "Category"}
 Y-AXIS LABEL: ${yAxisLabel || "Value"}
 
+COLORS:
+- Primary: ${colors?.primary || "hsl(125, 50%, 40%)"}
+- Secondary: ${colors?.secondary || "hsl(45, 70%, 48%)"}
+- Tertiary: ${colors?.tertiary || "hsl(215, 20%, 45%)"}
+
 DATA:
 ${JSON.stringify(data, null, 2)}
 
-Return ONLY the JSX code wrapped in a React component called BrandChart. Include the data array inline.
-The component should use ResponsiveContainer with 100% width and 400px height.
-Export the component as default.`;
+Generate a complete, standalone HTML snippet that includes:
+1. CDN links for billboard.js (https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js) and d3 (https://cdn.jsdelivr.net/npm/d3/dist/d3.min.js)
+2. Billboard.js CSS (https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css)
+3. Custom CSS for Rhosonics typography (JetBrains Mono for data, Instrument Sans for UI)
+4. A container div with id "rhosonics-chart"
+5. The bb.generate() configuration with the data inline
 
-    console.log("Generating chart code for:", title);
+Chart type mapping:
+- bar → type: bar()
+- horizontal-bar → type: bar() with axis.rotated: true
+- grouped-bar → type: bar() with multiple columns
+- stacked-bar → type: bar() with data.groups
+- line → type: line()
+- multi-line → type: line() with multiple columns
+- area → type: area()
+- stacked-area → type: area() with data.groups
+- composed → type: bar() with types: { "Series 2": line() }
+- radar → type: radar()
+- pie → type: pie()
+- scatter → type: scatter()
+
+The output should be ready to copy-paste into WordPress or any HTML page.`;
+
+    console.log("Generating Billboard.js code for:", title);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -122,9 +141,9 @@ Export the component as default.`;
     let code = responseData.choices?.[0]?.message?.content || "";
     
     // Clean up the code - remove markdown code blocks if present
-    code = code.replace(/```jsx?\n?/g, "").replace(/```\n?/g, "").trim();
+    code = code.replace(/```html?\n?/g, "").replace(/```\n?/g, "").trim();
 
-    console.log("Generated chart code successfully");
+    console.log("Generated Billboard.js code successfully");
 
     return new Response(JSON.stringify({ code }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

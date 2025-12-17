@@ -7,37 +7,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown, Film, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
-import { buildChartExportSvg, svgToPngDataUrl } from "@/lib/chartExport";
 import html2canvas from "html2canvas";
 import GIF from "gif.js";
 import gifWorkerUrl from "gif.js/dist/gif.worker.js?url";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-  LineChart,
-  Line,
-  AreaChart,
-  Area,
-  PieChart,
-  Pie,
-  Cell,
-  ComposedChart,
-  ScatterChart,
-  Scatter,
-  ZAxis,
-  Label,
-} from "recharts";
+import { BrandChart, BrandChartRef, DataPoint } from "./BrandChart";
 
 const CHART_TYPES = [
   { value: "bar", label: "Bar Chart" },
@@ -95,45 +68,28 @@ const ANIMATION_PRESETS = [
     value: "none", 
     label: "None",
     duration: 0,
-    easing: "linear",
-    staggerDelay: 0,
   },
   { 
     value: "smooth", 
     label: "Smooth Rise",
     duration: 800,
-    easing: "ease-out",
-    staggerDelay: 100,
   },
   { 
     value: "bouncy", 
     label: "Bouncy",
     duration: 1200,
-    easing: "ease-in-out",
-    staggerDelay: 150,
   },
   { 
     value: "cascade", 
     label: "Cascade",
     duration: 600,
-    easing: "ease-out",
-    staggerDelay: 200,
   },
   { 
     value: "dramatic", 
     label: "Dramatic",
     duration: 1500,
-    easing: "ease-in-out",
-    staggerDelay: 250,
   },
 ];
-
-interface DataPoint {
-  name: string;
-  value: number;
-  value2?: number;
-  value3?: number;
-}
 
 export const ChartGenerator = () => {
   const [title, setTitle] = useState("");
@@ -161,22 +117,29 @@ export const ChartGenerator = () => {
   ]);
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const chartRef = useRef<HTMLDivElement>(null);
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const brandChartRef = useRef<BrandChartRef>(null);
 
   const isMultiSeries = ["grouped-bar", "stacked-bar", "multi-line", "stacked-area", "composed", "radar"].includes(chartType);
   const isLightBg = ["metal-light", "field", "eco"].includes(bgGradient);
   const chartHeight = ASPECT_RATIOS.find(r => r.value === aspectRatio)?.height || 320;
   const currentAnimation = ANIMATION_PRESETS.find(a => a.value === animationPreset) || ANIMATION_PRESETS[0];
 
+  const textColor = isLightBg ? "hsl(226, 33%, 10%)" : "hsl(210, 40%, 96%)";
+  const axisColor = isLightBg ? "hsl(215, 19%, 35%)" : "hsl(215, 19%, 55%)";
+
   useEffect(() => {
-    // Warm-load Rhosonics data font so SVG text renders consistently.
+    // Warm-load Rhosonics data font
     document.fonts?.load?.("500 12px 'JetBrains Mono'");
   }, []);
 
   const replayAnimation = useCallback(() => {
     setAnimationKey(k => k + 1);
+    // Trigger chart replay
+    setTimeout(() => {
+      brandChartRef.current?.replay();
+    }, 50);
   }, []);
-
 
   const getColorValue = (colorKey: string) => {
     return BRAND_COLORS.find(c => c.value === colorKey)?.color || BRAND_COLORS[0].color;
@@ -247,49 +210,36 @@ export const ChartGenerator = () => {
     toast.success("Code copied to clipboard");
   };
 
-  const getChartSvg = () => {
-    const root = chartRef.current;
-    if (!root) return null;
-    return (root.querySelector("svg.recharts-surface") || root.querySelector("svg")) as SVGSVGElement | null;
-  };
-
   const handleDownloadSvg = async () => {
-    const svgEl = getChartSvg();
-    if (!svgEl) {
-      toast.error("Chart SVG not found");
+    if (!brandChartRef.current) {
+      toast.error("Chart not ready");
       return;
     }
 
     try {
-      await document.fonts?.load?.("500 12px 'JetBrains Mono'");
-      await document.fonts?.ready;
-
-      const { svg } = buildChartExportSvg(svgEl, {
-        backgroundGradient: getGradientValue(bgGradient),
-        padding: exportPadding,
-        chamfer: useChamfer,
-        includeFontCss: true,
-      });
-
-      const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+      const dataUrl = await brandChartRef.current.export("image/svg+xml");
+      
+      // Convert data URL to blob and download
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
       const url = URL.createObjectURL(blob);
 
       const link = document.createElement("a");
-      link.download = `${title.toLowerCase().replace(/\s+/g, "-")}-chart.svg`;
+      link.download = `${title.toLowerCase().replace(/\s+/g, "-") || "chart"}-chart.svg`;
       link.href = url;
       link.click();
 
       URL.revokeObjectURL(url);
       toast.success("Chart downloaded as SVG");
-    } catch {
+    } catch (err) {
+      console.error("SVG export error:", err);
       toast.error("Failed to download SVG");
     }
   };
 
   const handleDownloadPng = async () => {
-    const svgEl = getChartSvg();
-    if (!svgEl) {
-      toast.error("Chart SVG not found");
+    if (!chartContainerRef.current) {
+      toast.error("Chart not ready");
       return;
     }
 
@@ -297,26 +247,21 @@ export const ChartGenerator = () => {
       await document.fonts?.load?.("500 12px 'JetBrains Mono'");
       await document.fonts?.ready;
 
-      const built = buildChartExportSvg(svgEl, {
-        backgroundGradient: getGradientValue(bgGradient),
-        padding: exportPadding,
-        chamfer: useChamfer,
-        includeFontCss: true,
-      });
-
-      const dataUrl = await svgToPngDataUrl({
-        svg: built.svg,
-        width: built.width,
-        height: built.height,
+      const canvas = await html2canvas(chartContainerRef.current, {
+        backgroundColor: null,
         scale: pngScale,
+        logging: false,
+        useCORS: true,
       });
 
+      const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
-      link.download = `${title.toLowerCase().replace(/\s+/g, "-")}-chart.png`;
+      link.download = `${title.toLowerCase().replace(/\s+/g, "-") || "chart"}-chart.png`;
       link.href = dataUrl;
       link.click();
       toast.success("Chart downloaded as PNG");
-    } catch {
+    } catch (err) {
+      console.error("PNG export error:", err);
       toast.error("Failed to download chart");
     }
   };
@@ -327,7 +272,7 @@ export const ChartGenerator = () => {
       return;
     }
 
-    if (!chartRef.current) {
+    if (!chartContainerRef.current) {
       toast.error("Chart not found");
       return;
     }
@@ -336,7 +281,7 @@ export const ChartGenerator = () => {
     setGifProgress(0);
 
     try {
-      const rect = chartRef.current.getBoundingClientRect();
+      const rect = chartContainerRef.current.getBoundingClientRect();
       const width = Math.round(rect.width);
       const height = Math.round(rect.height);
 
@@ -348,7 +293,7 @@ export const ChartGenerator = () => {
         workerScript: gifWorkerUrl,
       });
 
-      const totalDuration = currentAnimation.duration + (currentAnimation.staggerDelay * Math.max(dataPoints.length, 3));
+      const totalDuration = currentAnimation.duration + 300;
       const frameCount = Math.min(30, Math.ceil(totalDuration / 50));
       const frameDelay = Math.ceil(totalDuration / frameCount);
 
@@ -365,7 +310,7 @@ export const ChartGenerator = () => {
         }
 
         try {
-          const canvas = await html2canvas(chartRef.current, {
+          const canvas = await html2canvas(chartContainerRef.current, {
             backgroundColor: null,
             scale: 1,
             logging: false,
@@ -392,7 +337,7 @@ export const ChartGenerator = () => {
       gif.on("finished", (blob: Blob) => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
-        link.download = `${title.toLowerCase().replace(/\s+/g, "-")}-chart.gif`;
+        link.download = `${title.toLowerCase().replace(/\s+/g, "-") || "chart"}-chart.gif`;
         link.href = url;
         link.click();
         URL.revokeObjectURL(url);
@@ -407,271 +352,6 @@ export const ChartGenerator = () => {
       setIsExportingGif(false);
       setGifProgress(0);
       toast.error("Failed to export GIF");
-    }
-  };
-
-  const textColor = isLightBg ? "hsl(226, 33%, 10%)" : "hsl(210, 40%, 96%)";
-  const gridColor = isLightBg ? "hsl(214, 32%, 85%)" : "hsl(215, 19%, 25%)";
-  const axisColor = isLightBg ? "hsl(215, 19%, 35%)" : "hsl(215, 19%, 55%)";
-
-  const axisStyle = {
-    fontSize: 11,
-    fontFamily: "'JetBrains Mono', monospace",
-    fill: axisColor,
-  };
-
-  const gridProps = {
-    stroke: gridColor,
-    strokeDasharray: "3 3",
-  };
-
-  const tooltipStyle = {
-    background: isLightBg ? "hsl(0, 0%, 100%)" : "hsl(226, 33%, 10%)",
-    border: `1px solid ${gridColor}`,
-    borderRadius: 8,
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: 11,
-    color: textColor,
-  };
-
-  const legendStyle = {
-    fontFamily: "'Instrument Sans', sans-serif",
-    fontSize: 12,
-    color: axisColor,
-  };
-
-  const axisTitleStyle = {
-    fontSize: 11,
-    fontFamily: "'JetBrains Mono', monospace",
-    fill: axisColor,
-    fontWeight: 500,
-  };
-
-  const renderChart = () => {
-    const hasAxisTitles = showAxisTitles && (xAxisLabel || yAxisLabel);
-    const commonProps = {
-      data: dataPoints,
-      margin: { 
-        top: 20, 
-        right: 30, 
-        left: hasAxisTitles && yAxisLabel ? 50 : 20, 
-        bottom: hasAxisTitles && xAxisLabel ? 40 : 20 
-      },
-    };
-
-    const color1 = getColorValue(primaryColor);
-    const color2 = getColorValue(secondaryColor);
-    const color3 = getColorValue(tertiaryColor);
-
-    // Animation props for elements
-    const getAnimProps = (seriesIndex: number = 0) => ({
-      isAnimationActive: animationPreset !== "none",
-      animationBegin: currentAnimation.staggerDelay * seriesIndex,
-      animationDuration: currentAnimation.duration,
-      animationEasing: currentAnimation.easing as "ease" | "ease-in" | "ease-out" | "ease-in-out" | "linear",
-    });
-
-    switch (chartType) {
-      case "bar":
-        return (
-          <BarChart {...commonProps} key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Value" {...getAnimProps(0)} />
-          </BarChart>
-        );
-      case "horizontal-bar":
-        return (
-          <BarChart {...commonProps} layout="vertical" key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis type="number" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis dataKey="name" type="category" tick={axisStyle} width={80}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="value" fill={color1} radius={[0, 4, 4, 0]} name="Value" {...getAnimProps(0)} />
-          </BarChart>
-        );
-      case "grouped-bar":
-        return (
-          <BarChart {...commonProps} key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Legend wrapperStyle={legendStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Series 1" {...getAnimProps(0)} />
-            <Bar dataKey="value2" fill={color2} radius={[4, 4, 0, 0]} name="Series 2" {...getAnimProps(1)} />
-            <Bar dataKey="value3" fill={color3} radius={[4, 4, 0, 0]} name="Series 3" {...getAnimProps(2)} />
-          </BarChart>
-        );
-      case "stacked-bar":
-        return (
-          <BarChart {...commonProps} key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Legend wrapperStyle={legendStyle} />
-            <Bar dataKey="value" stackId="a" fill={color1} name="Series 1" {...getAnimProps(0)} />
-            <Bar dataKey="value2" stackId="a" fill={color2} name="Series 2" {...getAnimProps(1)} />
-            <Bar dataKey="value3" stackId="a" fill={color3} radius={[4, 4, 0, 0]} name="Series 3" {...getAnimProps(2)} />
-          </BarChart>
-        );
-      case "line":
-        return (
-          <LineChart {...commonProps} key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Line type="monotone" dataKey="value" stroke={color1} strokeWidth={2} dot={{ fill: color1, r: 4 }} name="Value" {...getAnimProps(0)} />
-          </LineChart>
-        );
-      case "multi-line":
-        return (
-          <LineChart {...commonProps} key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Legend wrapperStyle={legendStyle} />
-            <Line type="monotone" dataKey="value" stroke={color1} strokeWidth={2} dot={{ fill: color1, r: 4 }} name="Series 1" {...getAnimProps(0)} />
-            <Line type="monotone" dataKey="value2" stroke={color2} strokeWidth={2} dot={{ fill: color2, r: 4 }} name="Series 2" {...getAnimProps(1)} />
-            <Line type="monotone" dataKey="value3" stroke={color3} strokeWidth={2} dot={{ fill: color3, r: 4 }} name="Series 3" {...getAnimProps(2)} />
-          </LineChart>
-        );
-      case "area":
-        return (
-          <AreaChart {...commonProps} key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Area type="monotone" dataKey="value" fill={color1} fillOpacity={0.3} stroke={color1} strokeWidth={2} name="Value" {...getAnimProps(0)} />
-          </AreaChart>
-        );
-      case "stacked-area":
-        return (
-          <AreaChart {...commonProps} key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Legend wrapperStyle={legendStyle} />
-            <Area type="monotone" dataKey="value" stackId="1" fill={color1} fillOpacity={0.6} stroke={color1} strokeWidth={2} name="Series 1" {...getAnimProps(0)} />
-            <Area type="monotone" dataKey="value2" stackId="1" fill={color2} fillOpacity={0.6} stroke={color2} strokeWidth={2} name="Series 2" {...getAnimProps(1)} />
-            <Area type="monotone" dataKey="value3" stackId="1" fill={color3} fillOpacity={0.6} stroke={color3} strokeWidth={2} name="Series 3" {...getAnimProps(2)} />
-          </AreaChart>
-        );
-      case "composed":
-        return (
-          <ComposedChart {...commonProps} key={animationKey}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Legend wrapperStyle={legendStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} name="Bar Series" {...getAnimProps(0)} />
-            <Line type="monotone" dataKey="value2" stroke={color2} strokeWidth={2} dot={{ fill: color2, r: 4 }} name="Line Series" {...getAnimProps(1)} />
-          </ComposedChart>
-        );
-      case "radar":
-        return (
-          <RadarChart {...commonProps} cx="50%" cy="50%" outerRadius="80%">
-            <PolarGrid stroke={gridColor} />
-            <PolarAngleAxis dataKey="name" tick={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", fill: axisColor }} />
-            <PolarRadiusAxis tick={axisStyle} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Legend wrapperStyle={legendStyle} />
-            <Radar dataKey="value" stroke={color1} fill={color1} fillOpacity={0.3} name="Series 1" />
-            <Radar dataKey="value2" stroke={color2} fill={color2} fillOpacity={0.3} name="Series 2" />
-          </RadarChart>
-        );
-      case "pie":
-        return (
-          <PieChart>
-            <Pie
-              data={dataPoints}
-              cx="50%"
-              cy="50%"
-              outerRadius={120}
-              dataKey="value"
-              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-              labelLine={{ stroke: axisColor }}
-            >
-              {dataPoints.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={[color1, color2, color3, getColorValue("lime"), getColorValue("ochre"), getColorValue("dark-green")][index % 6]} />
-              ))}
-            </Pie>
-            <Tooltip contentStyle={tooltipStyle} />
-          </PieChart>
-        );
-      case "scatter":
-        return (
-          <ScatterChart {...commonProps}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="value" type="number" tick={axisStyle} name="X">
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis dataKey="value2" type="number" tick={axisStyle} name="Y">
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <ZAxis dataKey="value3" range={[60, 400]} name="Size" />
-            <Tooltip contentStyle={tooltipStyle} cursor={{ strokeDasharray: "3 3" }} />
-            <Scatter name="Data" data={dataPoints} fill={color1} />
-          </ScatterChart>
-        );
-      default:
-        return (
-          <BarChart {...commonProps}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="name" tick={axisStyle}>
-              {showAxisTitles && xAxisLabel && <Label value={xAxisLabel} position="bottom" offset={20} style={axisTitleStyle} />}
-            </XAxis>
-            <YAxis tick={axisStyle}>
-              {showAxisTitles && yAxisLabel && <Label value={yAxisLabel} angle={-90} position="insideLeft" offset={-10} style={axisTitleStyle} />}
-            </YAxis>
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="value" fill={color1} radius={[4, 4, 0, 0]} />
-          </BarChart>
-        );
     }
   };
 
@@ -1030,11 +710,12 @@ export const ChartGenerator = () => {
           </div>
         </div>
         <div
-          ref={chartRef}
-          className={`p-4 sm:p-6 border border-border ${useChamfer ? "" : "rounded-lg"} overflow-x-auto`}
+          ref={chartContainerRef}
+          className={`border border-border ${useChamfer ? "" : "rounded-lg"} overflow-hidden`}
           style={{ 
             background: getGradientValue(bgGradient),
             clipPath: useChamfer ? "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)" : undefined,
+            padding: `${exportPadding}px`,
           }}
         >
           {title && (
@@ -1043,11 +724,23 @@ export const ChartGenerator = () => {
           {description && (
             <p className="font-data text-[10px] sm:text-xs mb-3 sm:mb-4" style={{ color: axisColor }}>{description}</p>
           )}
-          <div style={{ height: Math.max(chartHeight, 200), minWidth: 280 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              {renderChart()}
-            </ResponsiveContainer>
-          </div>
+          <BrandChart
+            key={animationKey}
+            ref={brandChartRef}
+            chartType={chartType}
+            data={dataPoints}
+            colors={{
+              primary: getColorValue(primaryColor),
+              secondary: getColorValue(secondaryColor),
+              tertiary: getColorValue(tertiaryColor),
+            }}
+            xAxisLabel={xAxisLabel}
+            yAxisLabel={yAxisLabel}
+            showAxisTitles={showAxisTitles}
+            isLightBg={isLightBg}
+            animationDuration={currentAnimation.duration}
+            height={chartHeight}
+          />
         </div>
       </div>
 
@@ -1065,7 +758,7 @@ export const ChartGenerator = () => {
         ) : (
           <>
             <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-            Generate Recharts Code
+            Generate Billboard.js Code
           </>
         )}
       </Button>

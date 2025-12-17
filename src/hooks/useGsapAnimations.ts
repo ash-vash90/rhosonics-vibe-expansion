@@ -191,9 +191,9 @@ export const useChartReveal = () => {
     if (!element) return;
 
     const ctx = gsap.context(() => {
-      // Find bar chart elements
-      const bars = element.querySelectorAll('.recharts-bar-rectangle');
-      const radarPaths = element.querySelectorAll('.recharts-radar-polygon');
+      // Find bar chart elements (support both Recharts and Billboard.js)
+      const bars = element.querySelectorAll('.recharts-bar-rectangle, .bb-bar');
+      const radarPaths = element.querySelectorAll('.recharts-radar-polygon, .bb-radar-chart path');
       
       if (bars.length > 0) {
         gsap.set(bars, { scaleX: 0, transformOrigin: "left center" });

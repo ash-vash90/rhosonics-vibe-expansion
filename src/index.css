@@ -161,16 +161,61 @@
     font-weight: 500;
   }
 
-  /* Force data font inside Recharts SVG (ticks, labels, legend) */
-  .recharts-wrapper svg text,
-  .recharts-wrapper svg tspan,
-  .recharts-surface text,
-  .recharts-surface tspan,
-  .recharts-cartesian-axis-tick-value,
-  .recharts-legend-item-text,
-  .recharts-label {
+  /* Billboard.js Chart Styling */
+  .bb-chart-container {
+    font-family: 'Instrument Sans', sans-serif;
+  }
+
+  .bb svg {
+    overflow: visible;
+  }
+
+  .bb-axis text,
+  .bb-axis-x text,
+  .bb-axis-y text {
     font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
     font-weight: 500 !important;
+  }
+
+  .bb-axis-x-label,
+  .bb-axis-y-label {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+  }
+
+  .bb-legend-item text {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 12px !important;
+  }
+
+  .bb-tooltip {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    border-radius: 8px !important;
+    border: 1px solid hsl(215, 19%, 25%) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .bb-tooltip-container {
+    z-index: 100;
+  }
+
+  .bb-grid line {
+    stroke-dasharray: 3 3;
+  }
+
+  .bb-bar {
+    shape-rendering: crispEdges;
+  }
+
+  .bb-area {
+    opacity: 0.4;
+  }
+
+  .bb-radar-chart .bb-levels polygon {
+    stroke-dasharray: 3 3;
   }
 
   /* Selection highlight */
