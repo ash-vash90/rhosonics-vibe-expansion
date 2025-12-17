@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, RadarChart, PolarGrid, PolarAngleAxis, Radar, Legend } from "recharts";
 import { Zap, Droplets, Gauge, Leaf, Clock, DollarSign } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import bb, { bar, radar } from "billboard.js";
+import "billboard.js/dist/billboard.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,7 +21,7 @@ const highlights = [
   { icon: <DollarSign className="w-5 h-5" />, label: "TCO", value: "65%", desc: "lower vs nuclear" },
 ];
 
-const radarData = [
+const radarDataFinal = [
   { metric: "Energy Efficiency", sdm: 95, nuclear: 20, coriolis: 60 },
   { metric: "Accuracy", sdm: 98, nuclear: 95, coriolis: 92 },
   { metric: "Low Maintenance", sdm: 95, nuclear: 40, coriolis: 60 },
@@ -32,24 +33,235 @@ const radarData = [
 export const TechComparison = () => {
   const barChartRef = useRef<HTMLDivElement>(null);
   const radarChartRef = useRef<HTMLDivElement>(null);
-  const [animatedBarData, setAnimatedBarData] = useState([
-    { name: "SDM ECO", value: 0, fill: "hsl(var(--rho-green))" },
-    { name: "Nuclear", value: 0, fill: "hsl(var(--slate-500))" },
-    { name: "Coriolis", value: 0, fill: "hsl(var(--slate-400))" },
-    { name: "Ultrasonic", value: 0, fill: "hsl(var(--slate-300))" },
-  ]);
-  const [animatedRadarData, setAnimatedRadarData] = useState(
-    radarData.map(d => ({ ...d, sdm: 0, nuclear: 0, coriolis: 0 }))
-  );
+  const barChartInstance = useRef<any>(null);
+  const radarChartInstance = useRef<any>(null);
+  const [barAnimProgress, setBarAnimProgress] = useState(0);
+  const [radarAnimProgress, setRadarAnimProgress] = useState(0);
   const hasAnimatedBars = useRef(false);
   const hasAnimatedRadar = useRef(false);
 
   const finalBarValues = [15, 85, 45, 25];
+  const barCategories = ["SDM ECO", "Nuclear", "Coriolis", "Ultrasonic"];
+  const barColors: Record<string, string> = {
+    "SDM ECO": "hsl(125, 50%, 40%)",
+    "Nuclear": "hsl(215, 19%, 35%)",
+    "Coriolis": "hsl(215, 20%, 45%)",
+    "Ultrasonic": "hsl(213, 27%, 70%)",
+  };
 
+  // Initialize bar chart
   useEffect(() => {
-    // Defer ScrollTrigger initialization to reduce forced reflows during initial paint
+    if (!barChartRef.current || barChartInstance.current) return;
+
+    const currentValues = finalBarValues.map(v => Math.round(v * barAnimProgress));
+
+    barChartInstance.current = bb.generate({
+      bindto: barChartRef.current,
+      data: {
+        type: bar(),
+        columns: [["Energy", ...currentValues]],
+        colors: {
+          Energy: "hsl(125, 50%, 40%)",
+        },
+        color: function(_color: string, d: any) {
+          if (d.index !== undefined) {
+            return barColors[barCategories[d.index]] || _color;
+          }
+          return _color;
+        },
+      },
+      axis: {
+        rotated: true,
+        x: {
+          type: "category",
+          categories: barCategories,
+          tick: {
+            outer: false,
+          },
+        },
+        y: {
+          max: 100,
+          tick: {
+            outer: false,
+          },
+        },
+      },
+      grid: {
+        y: { show: true },
+      },
+      legend: {
+        show: false,
+      },
+      bar: {
+        radius: { ratio: 0.15 },
+        width: { ratio: 0.6 },
+      },
+      transition: {
+        duration: 0,
+      },
+      size: {
+        height: 256,
+      },
+      padding: {
+        top: 10,
+        right: 20,
+        bottom: 10,
+        left: 80,
+      },
+      onrendered: function() {
+        applyBarChartStyles();
+      },
+    });
+
+    return () => {
+      if (barChartInstance.current) {
+        barChartInstance.current.destroy();
+        barChartInstance.current = null;
+      }
+    };
+  }, []);
+
+  // Update bar chart when animation progress changes
+  useEffect(() => {
+    if (!barChartInstance.current) return;
+    const currentValues = finalBarValues.map(v => Math.round(v * barAnimProgress));
+    barChartInstance.current.load({
+      columns: [["Energy", ...currentValues]],
+    });
+  }, [barAnimProgress]);
+
+  // Initialize radar chart
+  useEffect(() => {
+    if (!radarChartRef.current || radarChartInstance.current) return;
+
+    const sdmValues = radarDataFinal.map(d => Math.round(d.sdm * radarAnimProgress));
+    const nuclearValues = radarDataFinal.map(d => Math.round(d.nuclear * radarAnimProgress));
+    const coriolisValues = radarDataFinal.map(d => Math.round(d.coriolis * radarAnimProgress));
+
+    radarChartInstance.current = bb.generate({
+      bindto: radarChartRef.current,
+      data: {
+        type: radar(),
+        columns: [
+          ["SDM ECO", ...sdmValues],
+          ["Nuclear", ...nuclearValues],
+          ["Coriolis", ...coriolisValues],
+        ],
+        colors: {
+          "SDM ECO": "hsl(125, 50%, 40%)",
+          "Nuclear": "hsl(215, 20%, 45%)",
+          "Coriolis": "hsl(213, 27%, 70%)",
+        },
+      },
+      radar: {
+        axis: {
+          max: 100,
+          text: {
+            show: true,
+          },
+        },
+        level: {
+          depth: 4,
+        },
+        direction: {
+          clockwise: true,
+        },
+      },
+      legend: {
+        show: true,
+      },
+      transition: {
+        duration: 0,
+      },
+      size: {
+        height: 256,
+      },
+      padding: {
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10,
+      },
+      onrendered: function() {
+        applyRadarChartStyles();
+      },
+    });
+
+    return () => {
+      if (radarChartInstance.current) {
+        radarChartInstance.current.destroy();
+        radarChartInstance.current = null;
+      }
+    };
+  }, []);
+
+  // Update radar chart when animation progress changes
+  useEffect(() => {
+    if (!radarChartInstance.current) return;
+    const sdmValues = radarDataFinal.map(d => Math.round(d.sdm * radarAnimProgress));
+    const nuclearValues = radarDataFinal.map(d => Math.round(d.nuclear * radarAnimProgress));
+    const coriolisValues = radarDataFinal.map(d => Math.round(d.coriolis * radarAnimProgress));
+    
+    radarChartInstance.current.load({
+      columns: [
+        ["SDM ECO", ...sdmValues],
+        ["Nuclear", ...nuclearValues],
+        ["Coriolis", ...coriolisValues],
+      ],
+    });
+  }, [radarAnimProgress]);
+
+  const applyBarChartStyles = () => {
+    if (!barChartRef.current) return;
+    const svg = barChartRef.current.querySelector("svg");
+    if (!svg) return;
+
+    svg.querySelectorAll(".bb-axis text, .bb-axis-x text, .bb-axis-y text").forEach((el) => {
+      (el as SVGTextElement).style.fontFamily = "'JetBrains Mono', monospace";
+      (el as SVGTextElement).style.fontSize = "12px";
+      (el as SVGTextElement).style.fill = "hsl(215, 19%, 55%)";
+    });
+
+    svg.querySelectorAll(".bb-axis-x text").forEach((el) => {
+      (el as SVGTextElement).style.fontFamily = "'Instrument Sans', sans-serif";
+      (el as SVGTextElement).style.fontSize = "13px";
+      (el as SVGTextElement).style.fill = "hsl(210, 40%, 90%)";
+    });
+
+    svg.querySelectorAll(".bb-grid line").forEach((el) => {
+      (el as SVGLineElement).style.stroke = "hsl(215, 19%, 30%)";
+      (el as SVGLineElement).style.strokeDasharray = "3 3";
+    });
+
+    svg.querySelectorAll(".bb-axis path.domain").forEach((el) => {
+      (el as SVGPathElement).style.stroke = "hsl(215, 19%, 40%)";
+    });
+  };
+
+  const applyRadarChartStyles = () => {
+    if (!radarChartRef.current) return;
+    const svg = radarChartRef.current.querySelector("svg");
+    if (!svg) return;
+
+    svg.querySelectorAll(".bb-axis text, .bb-text").forEach((el) => {
+      (el as SVGTextElement).style.fontFamily = "'JetBrains Mono', monospace";
+      (el as SVGTextElement).style.fontSize = "11px";
+      (el as SVGTextElement).style.fill = "hsl(215, 19%, 35%)";
+    });
+
+    svg.querySelectorAll(".bb-legend-item text").forEach((el) => {
+      (el as SVGTextElement).style.fontFamily = "'Instrument Sans', sans-serif";
+      (el as SVGTextElement).style.fontSize = "12px";
+    });
+
+    svg.querySelectorAll(".bb-levels polygon, .bb-levels line").forEach((el) => {
+      (el as SVGElement).style.stroke = "hsl(213, 27%, 84%)";
+    });
+  };
+
+  // Scroll trigger animations
+  useEffect(() => {
     const initScrollTriggers = () => {
-      // Bar chart animation - animate the actual bar values
       ScrollTrigger.create({
         trigger: barChartRef.current,
         start: "top 75%",
@@ -57,27 +269,18 @@ export const TechComparison = () => {
           if (hasAnimatedBars.current) return;
           hasAnimatedBars.current = true;
 
-          // Animate each bar's value from 0 to final
-          finalBarValues.forEach((finalValue, index) => {
-            const obj = { value: 0 };
-            gsap.to(obj, {
-              value: finalValue,
-              duration: 1.2,
-              delay: index * 0.15,
-              ease: "power3.out",
-              onUpdate: () => {
-                setAnimatedBarData(prev => {
-                  const newData = [...prev];
-                  newData[index] = { ...newData[index], value: Math.round(obj.value) };
-                  return newData;
-                });
-              }
-            });
+          const obj = { progress: 0 };
+          gsap.to(obj, {
+            progress: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            onUpdate: () => {
+              setBarAnimProgress(obj.progress);
+            },
           });
-        }
+        },
       });
 
-      // Radar chart animation - animate values from center outward
       ScrollTrigger.create({
         trigger: radarChartRef.current,
         start: "top 75%",
@@ -91,21 +294,13 @@ export const TechComparison = () => {
             duration: 1.5,
             ease: "power2.out",
             onUpdate: () => {
-              setAnimatedRadarData(
-                radarData.map(d => ({
-                  ...d,
-                  sdm: Math.round(d.sdm * obj.progress),
-                  nuclear: Math.round(d.nuclear * obj.progress),
-                  coriolis: Math.round(d.coriolis * obj.progress),
-                }))
-              );
-            }
+              setRadarAnimProgress(obj.progress);
+            },
           });
-        }
+        },
       });
     };
 
-    // Defer ScrollTrigger initialization to reduce forced reflows
     const timeoutId = setTimeout(initScrollTriggers, 100);
 
     return () => {
@@ -143,46 +338,33 @@ export const TechComparison = () => {
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-8">
         {/* Energy Consumption Bar Chart */}
-        <div ref={barChartRef} className="card-gradient chamfer-lg p-6 sm:p-8">
+        <div className="card-gradient chamfer-lg p-6 sm:p-8">
           <div className="flex items-center gap-3 mb-6">
             <Droplets className="w-5 h-5 text-primary" aria-hidden="true" />
             <span className="font-data text-xs uppercase tracking-wider text-slate-400">ENERGY CONSUMPTION</span>
           </div>
           <p className="text-slate-300 mb-6">Watts per measurement cycle</p>
-          <div className="h-64" role="img" aria-label="Bar chart comparing energy consumption across technologies">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={animatedBarData} layout="vertical">
-                <XAxis type="number" domain={[0, 100]} tick={{ fill: 'hsl(var(--slate-400))', fontSize: 12 }} axisLine={{ stroke: 'hsl(var(--slate-600))' }} />
-                <YAxis type="category" dataKey="name" tick={{ fill: 'hsl(var(--slate-300))', fontSize: 13, fontFamily: 'Instrument Sans' }} axisLine={false} tickLine={false} width={80} />
-                <Bar dataKey="value" radius={[0, 4, 4, 0]} animationDuration={0}>
-                  {animatedBarData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <div 
+            ref={barChartRef} 
+            className="h-64 bb-chart-dark" 
+            role="img" 
+            aria-label="Bar chart comparing energy consumption across technologies"
+          />
         </div>
 
         {/* Radar Comparison */}
-        <div ref={radarChartRef} className="card-metal p-6 sm:p-8">
+        <div className="card-metal p-6 sm:p-8">
           <div className="flex items-center gap-3 mb-6">
             <Gauge className="w-5 h-5 text-primary" aria-hidden="true" />
             <span className="font-data text-xs uppercase tracking-wider text-slate-500">MULTI-FACTOR ANALYSIS</span>
           </div>
           <p className="text-slate-600 mb-6">Performance across key metrics</p>
-          <div className="h-64" role="img" aria-label="Radar chart showing multi-factor performance comparison">
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={animatedRadarData}>
-                <PolarGrid stroke="hsl(var(--slate-300))" />
-                <PolarAngleAxis dataKey="metric" tick={{ fill: 'hsl(var(--slate-600))', fontSize: 11 }} />
-                <Radar name="SDM ECO" dataKey="sdm" stroke="hsl(var(--rho-green))" fill="hsl(var(--rho-green))" fillOpacity={0.3} strokeWidth={2} isAnimationActive={false} />
-                <Radar name="Nuclear" dataKey="nuclear" stroke="hsl(var(--slate-400))" fill="hsl(var(--slate-400))" fillOpacity={0.1} strokeWidth={1} isAnimationActive={false} />
-                <Radar name="Coriolis" dataKey="coriolis" stroke="hsl(var(--slate-300))" fill="hsl(var(--slate-300))" fillOpacity={0.1} strokeWidth={1} isAnimationActive={false} />
-                <Legend wrapperStyle={{ fontSize: 12, fontFamily: 'Instrument Sans' }} />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
+          <div 
+            ref={radarChartRef} 
+            className="h-64 bb-chart-light" 
+            role="img" 
+            aria-label="Radar chart showing multi-factor performance comparison"
+          />
         </div>
       </div>
 
