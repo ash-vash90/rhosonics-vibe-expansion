@@ -26,6 +26,7 @@ const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
 const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
 const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
+const ProductSpecs = lazy(() => import("@/components/brand/ProductSpecs"));
 
 const SectionLoader = () => (
   <div className="py-16 flex justify-center">
@@ -64,6 +65,7 @@ const Index = () => {
           <LogoAssets />
           <IconGuidelines />
           <InterfaceKit />
+          <ProductSpecs />
           <DownloadableAssets />
           
           {/* 04 / SUSTAINABILITY */}
