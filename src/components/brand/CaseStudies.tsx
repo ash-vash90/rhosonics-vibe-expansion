@@ -1,8 +1,20 @@
-import { BarChart2, TrendingUp, Droplets, Gauge, ArrowRight } from "lucide-react";
+import { BarChart2, TrendingUp, Droplets, Gauge, ArrowRight, LucideIcon } from "lucide-react";
 import { AnalogGauge } from "./AnalogGauge";
 import { SchematicLines } from "./SchematicLines";
 
-const caseStudies = [
+interface CaseStudy {
+  id: string;
+  industry: string;
+  title: string;
+  stat: string;
+  statLabel: string;
+  statValue: number;
+  description: string;
+  metrics: { label: string; value: string }[];
+  iconName: "droplets" | "gauge" | "trending-up";
+}
+
+const caseStudiesData: CaseStudy[] = [
   {
     id: "dredging",
     industry: "Dredging",
@@ -16,7 +28,7 @@ const caseStudies = [
       { label: "Uptime", value: "99.8%" },
       { label: "ROI Period", value: "8 mo" },
     ],
-    icon: <Droplets className="w-6 h-6" />,
+    iconName: "droplets",
   },
   {
     id: "mining",
@@ -31,7 +43,7 @@ const caseStudies = [
       { label: "Temp Range", value: "-10 to 65°C" },
       { label: "Maintenance", value: "< 4h/yr" },
     ],
-    icon: <Gauge className="w-6 h-6" />,
+    iconName: "gauge",
   },
   {
     id: "wastewater",
@@ -46,9 +58,20 @@ const caseStudies = [
       { label: "Energy", value: "-15%" },
       { label: "Compliance", value: "100%" },
     ],
-    icon: <TrendingUp className="w-6 h-6" />,
+    iconName: "trending-up",
   },
 ];
+
+const iconMap: Record<CaseStudy["iconName"], LucideIcon> = {
+  "droplets": Droplets,
+  "gauge": Gauge,
+  "trending-up": TrendingUp,
+};
+
+const getIcon = (iconName: CaseStudy["iconName"]) => {
+  const Icon = iconMap[iconName];
+  return <Icon className="w-6 h-6" />;
+};
 
 export const CaseStudies = () => {
   return (
@@ -68,7 +91,7 @@ export const CaseStudies = () => {
       
       {/* Gauge showcase */}
       <div className="flex justify-center gap-8 mb-12 flex-wrap">
-        {caseStudies.map((study) => (
+        {caseStudiesData.map((study) => (
           <AnalogGauge
             key={study.id}
             value={study.statValue}
@@ -82,7 +105,7 @@ export const CaseStudies = () => {
 
       {/* Case Study Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {caseStudies.map((study, idx) => (
+        {caseStudiesData.map((study, idx) => (
           <article 
             key={study.id}
             className={`group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
@@ -109,7 +132,7 @@ export const CaseStudies = () => {
                       ? 'bg-earth-ochre/20 text-earth-ochre-dark group-hover:bg-earth-ochre group-hover:text-white'
                       : 'bg-slate-200 text-slate-600 group-hover:bg-primary group-hover:text-white'
                 }`}>
-                  {study.icon}
+                  {getIcon(study.iconName)}
                 </div>
               </div>
 
