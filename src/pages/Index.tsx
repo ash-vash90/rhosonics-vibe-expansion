@@ -5,6 +5,7 @@ import { SectionBridge } from "@/components/brand/SectionBridge";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
 import { Zap } from "lucide-react";
+import { TrustedBy } from "@/components/brand/TrustedBy";
 
 // Lazy load heavier components for better initial load performance
 const MasterLockup = lazy(() => import("@/components/brand/MasterLockup"));
@@ -40,6 +41,13 @@ const Index = () => {
       <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1400px] mx-auto w-full">
         {/* 01 / FOUNDATION */}
         <BrandEthos />
+        
+        {/* TrustedBy logo section */}
+        <TrustedBy className="mb-16" />
+        
+        {/* Diagonal section divider */}
+        <div className="section-divider-angle" />
+        
         <Suspense fallback={<SectionLoader />}>
           <MasterLockup />
           <OriginStory />
