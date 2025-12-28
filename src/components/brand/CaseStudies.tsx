@@ -1,4 +1,6 @@
 import { BarChart2, TrendingUp, Droplets, Gauge, ArrowRight } from "lucide-react";
+import { AnalogGauge } from "./AnalogGauge";
+import { SchematicLines } from "./SchematicLines";
 
 const caseStudies = [
   {
@@ -7,6 +9,7 @@ const caseStudies = [
     title: "North Sea Sediment Monitoring",
     stat: "42%",
     statLabel: "Efficiency increase",
+    statValue: 42,
     description: "Real-time slurry density monitoring enabled precise dredging operations, reducing fuel consumption and environmental impact.",
     metrics: [
       { label: "Accuracy", value: "±0.5%" },
@@ -21,6 +24,7 @@ const caseStudies = [
     title: "Copper Tailings Optimization",
     stat: "31%",
     statLabel: "Water savings",
+    statValue: 31,
     description: "Continuous density measurement in thickener underflow improved water recovery and reduced tailings dam footprint.",
     metrics: [
       { label: "Flow Rate", value: "850 m³/h" },
@@ -35,6 +39,7 @@ const caseStudies = [
     title: "Municipal Sludge Processing",
     stat: "28%",
     statLabel: "Cost reduction",
+    statValue: 28,
     description: "Automated density-based dosing control optimized polymer usage and dewatering performance in centrifuge systems.",
     metrics: [
       { label: "Throughput", value: "120 t/day" },
@@ -47,16 +52,33 @@ const caseStudies = [
 
 export const CaseStudies = () => {
   return (
-    <section id="cases" className="mb-24">
+    <section id="cases" className="mb-24 relative">
+      {/* Schematic decoration */}
+      <SchematicLines variant="section" className="top-8 left-0 right-0 opacity-40" />
+      
       <div className="border-t-2 border-slate-200 pt-16 mb-8" />
       <div className="flex items-center gap-3 mb-2">
         <BarChart2 className="w-5 h-5 text-primary" aria-hidden="true" />
         <span className="font-data text-xs uppercase tracking-wider text-primary">ANALYSIS</span>
       </div>
-      <h2 className="section-header">Case Studies</h2>
+      <h2 className="section-header text-glitch">Case Studies</h2>
       <p className="text-slate-500 text-lg max-w-2xl mb-12">
         Real applications. Measurable results. No hypotheticals.
       </p>
+      
+      {/* Gauge showcase */}
+      <div className="flex justify-center gap-8 mb-12 flex-wrap">
+        {caseStudies.map((study) => (
+          <AnalogGauge
+            key={study.id}
+            value={study.statValue}
+            max={50}
+            label={study.industry}
+            unit="%"
+            size="sm"
+          />
+        ))}
+      </div>
 
       {/* Case Study Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
