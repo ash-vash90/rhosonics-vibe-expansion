@@ -1,16 +1,11 @@
 import { Radar, Target, Leaf, Sparkles } from "lucide-react";
-import { SchematicLines } from "./SchematicLines";
 
 export const BrandEthos = () => {
   return (
     <section id="intro" className="mb-24" aria-labelledby="brand-ethos-title">
-      {/* Bold Hero with wave background and schematic lines */}
+      {/* Bold Hero with wave background */}
       <div className="mb-16 relative">
         <div className="absolute inset-0 bg-wave-hero opacity-50 pointer-events-none" aria-hidden="true" />
-        <SchematicLines variant="hero" className="opacity-60" />
-        <SchematicLines variant="corner" className="top-0 right-0 rotate-90" />
-        <SchematicLines variant="corner" className="bottom-0 left-0 -rotate-90" />
-        
         <div className="relative">
           <div className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-slate-100 border border-slate-200 rounded-md">
             <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
@@ -18,11 +13,11 @@ export const BrandEthos = () => {
           </div>
           
           <h1 id="brand-ethos-title" className="section-header-bold mb-6">
-            <span className="gradient-word text-glitch">Precision.</span>
+            Precision.
             <br />
             <span className="gradient-text">Resilience.</span>
             <br />
-            <span className="text-glitch">Intelligence.</span>
+            Intelligence.
           </h1>
 
           <p className="text-lg md:text-xl text-slate-500 max-w-xl leading-relaxed font-medium">

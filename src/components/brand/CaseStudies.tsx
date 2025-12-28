@@ -1,34 +1,19 @@
-import { BarChart2, TrendingUp, Droplets, Gauge, ArrowRight, LucideIcon } from "lucide-react";
-import { AnalogGauge } from "./AnalogGauge";
-import { SchematicLines } from "./SchematicLines";
+import { BarChart2, TrendingUp, Droplets, Gauge, ArrowRight } from "lucide-react";
 
-interface CaseStudy {
-  id: string;
-  industry: string;
-  title: string;
-  stat: string;
-  statLabel: string;
-  statValue: number;
-  description: string;
-  metrics: { label: string; value: string }[];
-  iconName: "droplets" | "gauge" | "trending-up";
-}
-
-const caseStudiesData: CaseStudy[] = [
+const caseStudies = [
   {
     id: "dredging",
     industry: "Dredging",
     title: "North Sea Sediment Monitoring",
     stat: "42%",
     statLabel: "Efficiency increase",
-    statValue: 42,
     description: "Real-time slurry density monitoring enabled precise dredging operations, reducing fuel consumption and environmental impact.",
     metrics: [
       { label: "Accuracy", value: "±0.5%" },
       { label: "Uptime", value: "99.8%" },
       { label: "ROI Period", value: "8 mo" },
     ],
-    iconName: "droplets",
+    icon: <Droplets className="w-6 h-6" />,
   },
   {
     id: "mining",
@@ -36,14 +21,13 @@ const caseStudiesData: CaseStudy[] = [
     title: "Copper Tailings Optimization",
     stat: "31%",
     statLabel: "Water savings",
-    statValue: 31,
     description: "Continuous density measurement in thickener underflow improved water recovery and reduced tailings dam footprint.",
     metrics: [
       { label: "Flow Rate", value: "850 m³/h" },
       { label: "Temp Range", value: "-10 to 65°C" },
       { label: "Maintenance", value: "< 4h/yr" },
     ],
-    iconName: "gauge",
+    icon: <Gauge className="w-6 h-6" />,
   },
   {
     id: "wastewater",
@@ -51,61 +35,32 @@ const caseStudiesData: CaseStudy[] = [
     title: "Municipal Sludge Processing",
     stat: "28%",
     statLabel: "Cost reduction",
-    statValue: 28,
     description: "Automated density-based dosing control optimized polymer usage and dewatering performance in centrifuge systems.",
     metrics: [
       { label: "Throughput", value: "120 t/day" },
       { label: "Energy", value: "-15%" },
       { label: "Compliance", value: "100%" },
     ],
-    iconName: "trending-up",
+    icon: <TrendingUp className="w-6 h-6" />,
   },
 ];
 
-const iconMap: Record<CaseStudy["iconName"], LucideIcon> = {
-  "droplets": Droplets,
-  "gauge": Gauge,
-  "trending-up": TrendingUp,
-};
-
-const getIcon = (iconName: CaseStudy["iconName"]) => {
-  const Icon = iconMap[iconName];
-  return <Icon className="w-6 h-6" />;
-};
-
 export const CaseStudies = () => {
   return (
-    <section id="cases" className="mb-24 relative">
-      {/* Schematic decoration */}
-      <SchematicLines variant="section" className="top-8 left-0 right-0 opacity-40" />
-      
+    <section id="cases" className="mb-24">
       <div className="border-t-2 border-slate-200 pt-16 mb-8" />
       <div className="flex items-center gap-3 mb-2">
         <BarChart2 className="w-5 h-5 text-primary" aria-hidden="true" />
         <span className="font-data text-xs uppercase tracking-wider text-primary">ANALYSIS</span>
       </div>
-      <h2 className="section-header text-glitch">Case Studies</h2>
+      <h2 className="section-header">Case Studies</h2>
       <p className="text-slate-500 text-lg max-w-2xl mb-12">
         Real applications. Measurable results. No hypotheticals.
       </p>
-      
-      {/* Gauge showcase */}
-      <div className="flex justify-center gap-8 mb-12 flex-wrap">
-        {caseStudiesData.map((study) => (
-          <AnalogGauge
-            key={study.id}
-            value={study.statValue}
-            max={50}
-            label={study.industry}
-            unit="%"
-            size="sm"
-          />
-        ))}
-      </div>
 
       {/* Case Study Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {caseStudiesData.map((study, idx) => (
+        {caseStudies.map((study, idx) => (
           <article 
             key={study.id}
             className={`group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
@@ -132,7 +87,7 @@ export const CaseStudies = () => {
                       ? 'bg-earth-ochre/20 text-earth-ochre-dark group-hover:bg-earth-ochre group-hover:text-white'
                       : 'bg-slate-200 text-slate-600 group-hover:bg-primary group-hover:text-white'
                 }`}>
-                  {getIcon(study.iconName)}
+                  {study.icon}
                 </div>
               </div>
 
