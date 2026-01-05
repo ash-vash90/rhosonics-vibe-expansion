@@ -742,3 +742,136 @@
     width: 100%;
   }
 }
+
+/* Print Styles for A4 Case Study Documents */
+@media print {
+  /* Reset page margins and size */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  /* Hide non-printable elements */
+  header,
+  footer,
+  nav,
+  .no-print,
+  button,
+  [data-export-exclude] {
+    display: none !important;
+  }
+
+  /* Reset body styles */
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Container resets */
+  .min-h-screen,
+  .min-h-\[calc\(100vh-4rem\)\] {
+    min-height: auto !important;
+  }
+
+  /* A4 Document Pages */
+  article {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    height: 297mm !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    overflow: hidden !important;
+  }
+
+  /* Last page shouldn't break after */
+  article:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  /* Ensure backgrounds print */
+  .bg-rho-obsidian,
+  .bg-primary,
+  .bg-slate-50,
+  .bg-slate-100,
+  .bg-eco-surface,
+  .card-obsidian {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Preserve gradients */
+  .bg-gradient-to-t,
+  .bg-gradient-to-br {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Images should print at full quality */
+  img {
+    max-width: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Remove interactive chart container padding for print */
+  .bb-chart-container {
+    padding: 0 !important;
+  }
+
+  /* Ensure text doesn't break awkwardly */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  p, blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Document wrapper - remove gap for print */
+  .flex.flex-col.items-center.gap-8 {
+    gap: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Title bar should be hidden in print */
+  .bg-white.border-b.border-slate-200.py-4 {
+    display: none !important;
+  }
+
+  /* Ensure rounded corners don't clip content in print */
+  .rounded-lg,
+  .rounded-xl {
+    border-radius: 4px !important;
+  }
+
+  /* Ensure links show their URLs in print (optional) */
+  a[href^="http"]:after {
+    content: none !important; /* Remove if you want URLs to show */
+  }
+
+  /* Fix flex containers for print */
+  .flex-1 {
+    flex: 1 1 auto !important;
+  }
+
+  /* Ensure grid layouts work in print */
+  .grid {
+    display: grid !important;
+  }
+
+  /* Chart container sizing for print */
+  .h-\[280px\],
+  .h-\[320px\] {
+    height: 200px !important;
+  }
+}
