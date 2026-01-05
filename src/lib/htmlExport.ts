@@ -1,30 +1,154 @@
 /**
- * Export the current page as a single self-contained HTML file
- * with all CSS inlined and minimal JS for interactivity
+ * Export the current page as a truly static, self-contained HTML file
+ * with all styles inlined directly on elements - no CSS dependencies
  */
 
-export const exportAsHTML = async () => {
-  // Get the main content
+const ELEMENTS_TO_SKIP = ['SCRIPT', 'NOSCRIPT', 'STYLE', 'LINK'];
+
+const getInlineStyles = (element: Element): string => {
+  const computed = window.getComputedStyle(element);
+  const styles: string[] = [];
+  
+  // Get all relevant computed style properties
+  const props = [
+    'display', 'position', 'top', 'right', 'bottom', 'left',
+    'width', 'height', 'min-width', 'min-height', 'max-width', 'max-height',
+    'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+    'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+    'border', 'border-width', 'border-style', 'border-color', 'border-radius',
+    'background', 'background-color', 'background-image', 'background-size', 'background-position',
+    'color', 'font-family', 'font-size', 'font-weight', 'font-style',
+    'line-height', 'letter-spacing', 'text-align', 'text-decoration', 'text-transform',
+    'flex', 'flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-content',
+    'gap', 'row-gap', 'column-gap',
+    'grid-template-columns', 'grid-template-rows', 'grid-column', 'grid-row',
+    'overflow', 'overflow-x', 'overflow-y',
+    'opacity', 'visibility', 'z-index',
+    'box-shadow', 'box-sizing',
+    'white-space', 'word-break', 'word-wrap',
+    'list-style', 'list-style-type',
+    'cursor', 'pointer-events',
+    'vertical-align', 'float', 'clear',
+    'object-fit', 'object-position',
+    'aspect-ratio', 'fill', 'stroke', 'stroke-width'
+  ];
+  
+  for (const prop of props) {
+    const value = computed.getPropertyValue(prop);
+    if (value && value !== 'none' && value !== 'auto' && value !== 'normal' && value !== '0px') {
+      styles.push(`${prop}: ${value}`);
+    }
+  }
+  
+  return styles.join('; ');
+};
+
+const processElement = (original: Element, clone: Element): void => {
+  // Skip excluded elements
+  if (ELEMENTS_TO_SKIP.includes(original.tagName)) return;
+  
+  // Skip elements marked for export exclusion
+  if (original.hasAttribute('data-export-exclude')) {
+    clone.remove();
+    return;
+  }
+  
+  // Apply inline styles
+  const inlineStyles = getInlineStyles(original);
+  if (inlineStyles && clone instanceof HTMLElement) {
+    clone.setAttribute('style', inlineStyles);
+  }
+  
+  // Remove React/framework specific attributes
+  const attrsToRemove = ['class', 'className', 'data-radix-collection-item', 'data-state', 'data-orientation'];
+  attrsToRemove.forEach(attr => clone.removeAttribute(attr));
+  
+  // Process children
+  const originalChildren = Array.from(original.children);
+  const cloneChildren = Array.from(clone.children);
+  
+  for (let i = 0; i < originalChildren.length; i++) {
+    if (cloneChildren[i]) {
+      processElement(originalChildren[i], cloneChildren[i]);
+    }
+  }
+};
+
+const convertImagesToBase64 = async (container: HTMLElement): Promise<void> => {
+  const images = container.querySelectorAll('img');
+  
+  for (const img of images) {
+    const src = img.getAttribute('src');
+    if (!src || src.startsWith('data:')) continue;
+    
+    try {
+      // Try to convert to base64
+      const response = await fetch(src);
+      const blob = await response.blob();
+      const base64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+      img.setAttribute('src', base64);
+    } catch (e) {
+      // Keep original src if conversion fails
+      console.warn('Could not convert image:', src);
+    }
+  }
+};
+
+const processSVGs = (container: HTMLElement): void => {
+  const svgs = container.querySelectorAll('svg');
+  
+  svgs.forEach(svg => {
+    // Get computed styles and apply inline
+    const computed = window.getComputedStyle(svg);
+    const width = computed.width;
+    const height = computed.height;
+    
+    if (width !== 'auto') svg.setAttribute('width', width);
+    if (height !== 'auto') svg.setAttribute('height', height);
+    
+    // Process SVG children
+    svg.querySelectorAll('*').forEach(el => {
+      const elComputed = window.getComputedStyle(el);
+      const fill = elComputed.fill;
+      const stroke = elComputed.stroke;
+      
+      if (fill && fill !== 'none') el.setAttribute('fill', fill);
+      if (stroke && stroke !== 'none') el.setAttribute('stroke', stroke);
+    });
+  });
+};
+
+export const exportAsHTML = async (): Promise<string> => {
   const mainContent = document.querySelector('main');
   if (!mainContent) {
     throw new Error('Could not find main content');
   }
 
-  // Clone the content to avoid modifying the original
+  // Clone the content
   const clone = mainContent.cloneNode(true) as HTMLElement;
   
-  // Remove any interactive elements that won't work in static HTML
-  clone.querySelectorAll('button[data-export-exclude]').forEach(el => el.remove());
+  // Process all elements to inline styles
+  processElement(mainContent, clone);
   
-  // Get all stylesheets and inline them
-  const styles = await getAllStyles();
+  // Process SVGs
+  processSVGs(clone);
   
-  // Get custom fonts
-  const fontLinks = `
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
-  `;
+  // Convert images to base64
+  await convertImagesToBase64(clone);
+  
+  // Remove any remaining elements with export-exclude
+  clone.querySelectorAll('[data-export-exclude]').forEach(el => el.remove());
+  clone.querySelectorAll('button').forEach(btn => {
+    // Convert buttons to divs for static display
+    const div = document.createElement('div');
+    div.innerHTML = btn.innerHTML;
+    div.setAttribute('style', btn.getAttribute('style') || '');
+    btn.replaceWith(div);
+  });
 
   // Build the complete HTML document
   const html = `<!DOCTYPE html>
@@ -34,135 +158,31 @@ export const exportAsHTML = async () => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rhosonics Brand Guidelines</title>
   <meta name="description" content="Complete brand guidelines and design system for Rhosonics ultrasonic measurement solutions.">
-  ${fontLinks}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
   <style>
-    ${styles}
-    
-    /* Additional reset and base styles */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Instrument Sans', system-ui, sans-serif;
-      background-color: hsl(60, 9%, 98%);
-      color: hsl(180, 3%, 15%);
-      line-height: 1.6;
-    }
-    
-    main {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    
-    /* Ensure images are responsive */
-    img {
-      max-width: 100%;
-      height: auto;
-    }
+    /* Minimal base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; }
+    img { max-width: 100%; height: auto; }
     
     /* Print styles */
     @media print {
-      body {
-        background: white;
-      }
-      
-      main {
-        padding: 0;
-      }
-      
-      section {
-        page-break-inside: avoid;
-      }
+      body { background: white; }
+      section { page-break-inside: avoid; }
     }
   </style>
 </head>
 <body>
-  <main>
-    ${clone.innerHTML}
-  </main>
-  
-  <script>
-    // Minimal JS for accordion/collapsible functionality
-    document.querySelectorAll('[data-accordion-trigger]').forEach(trigger => {
-      trigger.addEventListener('click', () => {
-        const content = trigger.nextElementSibling;
-        if (content) {
-          content.style.display = content.style.display === 'none' ? 'block' : 'none';
-        }
-      });
-    });
-  </script>
+  ${clone.outerHTML}
 </body>
 </html>`;
 
   return html;
 };
 
-const getAllStyles = async (): Promise<string> => {
-  const styles: string[] = [];
-  
-  // Get inline styles from style tags
-  document.querySelectorAll('style').forEach(style => {
-    styles.push(style.textContent || '');
-  });
-  
-  // Get computed styles for common elements
-  const computedStyles = getComputedStylesCSS();
-  styles.push(computedStyles);
-  
-  // Try to fetch external stylesheets
-  const linkElements = document.querySelectorAll('link[rel="stylesheet"]');
-  for (const link of linkElements) {
-    const href = (link as HTMLLinkElement).href;
-    if (href && !href.includes('fonts.googleapis.com')) {
-      try {
-        const response = await fetch(href);
-        const css = await response.text();
-        styles.push(css);
-      } catch (e) {
-        console.warn('Could not fetch stylesheet:', href);
-      }
-    }
-  }
-  
-  return styles.join('\n\n');
-};
-
-const getComputedStylesCSS = (): string => {
-  // Extract CSS custom properties from :root
-  const root = document.documentElement;
-  const rootStyles = getComputedStyle(root);
-  
-  const cssVars: string[] = [];
-  
-  // Common CSS variables used in the design system
-  const varNames = [
-    '--background', '--foreground', '--card', '--card-foreground',
-    '--popover', '--popover-foreground', '--primary', '--primary-foreground',
-    '--secondary', '--secondary-foreground', '--muted', '--muted-foreground',
-    '--accent', '--accent-foreground', '--destructive', '--destructive-foreground',
-    '--border', '--input', '--ring', '--radius',
-    '--sidebar-background', '--sidebar-foreground', '--sidebar-primary',
-    '--sidebar-primary-foreground', '--sidebar-accent', '--sidebar-accent-foreground',
-    '--sidebar-border', '--sidebar-ring',
-    '--font-heading', '--font-body', '--font-mono'
-  ];
-  
-  varNames.forEach(name => {
-    const value = rootStyles.getPropertyValue(name).trim();
-    if (value) {
-      cssVars.push(`  ${name}: ${value};`);
-    }
-  });
-  
-  return `:root {\n${cssVars.join('\n')}\n}`;
-};
-
-export const downloadHTML = async () => {
+export const downloadHTML = async (): Promise<void> => {
   try {
     const html = await exportAsHTML();
     const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
