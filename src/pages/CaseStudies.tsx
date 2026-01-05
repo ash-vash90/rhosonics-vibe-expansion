@@ -7,6 +7,8 @@ import rioTintoInstallation from "@/assets/case-studies/rio-tinto-installation.j
 import rioTintoChart from "@/assets/case-studies/rio-tinto-chart.jpg";
 import flottwegFlush from "@/assets/case-studies/flottweg-flush-system.png";
 import flottwegInstallation from "@/assets/case-studies/flottweg-installation.jpg";
+import weirMineralsHmi from "@/assets/case-studies/weir-minerals-hmi.jpg";
+import weirMineralsChart from "@/assets/case-studies/weir-minerals-chart.jpg";
 
 interface CaseStudy {
   id: string;
@@ -102,6 +104,35 @@ const caseStudies: CaseStudy[] = [
     primaryStat: {
       value: "±0.01",
       label: "S.G. Accuracy"
+    }
+  },
+  {
+    id: "weir-minerals",
+    company: "Weir Minerals",
+    location: "Finland & Australia",
+    industry: "Rare Earth Elements",
+    product: "SDM ECO",
+    heroImage: weirMineralsHmi,
+    chartImage: weirMineralsChart,
+    tagline: "Triple technology comparison for critical REE mining",
+    challenge: "Weir Minerals was tasked with conducting pipe loop test work for the Sokli project in Finland, establishing a regional European source of Rare Earth Elements crucial for wind turbine production. They needed to validate density measurement methods across three competing technologies.",
+    solution: "Rhosonics was invited to test the SDM ECO sensor in the test loop alongside a Coriolis meter and nuclear density gauge. The non-nuclear SDM ECO was installed with a spool piece in a 3-6 inch pipe to handle high-density slurries up to 1900 g/l.",
+    results: [
+      "SDM ECO matched laboratory samples alongside Coriolis",
+      "Outperformed nuclear density gauge accuracy",
+      "Successfully handled 45-60 wt% solids",
+      "Selected for Phase 2 testing in Melbourne, Australia",
+      "Validated for high-density REE slurry applications"
+    ],
+    specs: [
+      { label: "Pipe Diameter", value: "DN80-DN150" },
+      { label: "Solids Content", value: "45-60 wt%" },
+      { label: "Density Range", value: "1450-1900 g/l" },
+      { label: "Temperature", value: "22°C - 26°C" }
+    ],
+    primaryStat: {
+      value: "3",
+      label: "Technologies Compared"
     }
   }
 ];
