@@ -1,21 +1,38 @@
 import { useState } from "react";
-import { FileCode, Download, Loader2 } from "lucide-react";
+import { FileCode, FileText, Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { downloadHTML } from "@/lib/htmlExport";
+import { exportAsPDF } from "@/lib/pdfExport";
 import { toast } from "sonner";
 
 const ExportSection = () => {
-  const [isExporting, setIsExporting] = useState(false);
+  const [isExportingHTML, setIsExportingHTML] = useState(false);
+  const [isExportingPDF, setIsExportingPDF] = useState(false);
+  const [pdfProgress, setPdfProgress] = useState(0);
 
-  const handleExport = async () => {
-    setIsExporting(true);
+  const handleExportHTML = async () => {
+    setIsExportingHTML(true);
     try {
       await downloadHTML();
-      toast.success("Brand guidelines exported successfully");
+      toast.success("HTML exported successfully");
     } catch (error) {
-      toast.error("Failed to export. Please try again.");
+      toast.error("Failed to export HTML. Please try again.");
     } finally {
-      setIsExporting(false);
+      setIsExportingHTML(false);
+    }
+  };
+
+  const handleExportPDF = async () => {
+    setIsExportingPDF(true);
+    setPdfProgress(0);
+    try {
+      await exportAsPDF((progress) => setPdfProgress(progress));
+      toast.success("PDF exported successfully");
+    } catch (error) {
+      toast.error("Failed to export PDF. Please try again.");
+    } finally {
+      setIsExportingPDF(false);
+      setPdfProgress(0);
     }
   };
 
@@ -34,40 +51,81 @@ const ExportSection = () => {
       </div>
       
       <p className="text-slate-600 mb-8 max-w-2xl">
-        Download the entire brand guidelines as a single HTML file. Works offline. 
-        No dependencies. Print it, email it, put it on a USB stick if that's your thing.
+        Download the entire brand guidelines. HTML works offline with no dependencies. 
+        PDF is paginated and print-ready. Choose your format.
       </p>
 
-      <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 max-w-md">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-lg bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
-            <FileCode className="w-6 h-6 text-slate-600" />
+      <div className="grid gap-4 max-w-2xl sm:grid-cols-2">
+        {/* HTML Export */}
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+          <div className="flex items-start gap-4">
+            <div className="w-11 h-11 rounded-lg bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
+              <FileCode className="w-5 h-5 text-slate-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-slate-900 mb-0.5 truncate">
+                HTML File
+              </h3>
+              <p className="text-sm text-slate-500 mb-3">
+                Self-contained, works offline
+              </p>
+              <Button 
+                onClick={handleExportHTML}
+                disabled={isExportingHTML || isExportingPDF}
+                size="sm"
+                className="gap-2"
+                data-export-exclude
+              >
+                {isExportingHTML ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4" />
+                    Download
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
-          <div className="flex-1">
-            <h3 className="font-medium text-slate-900 mb-1">
-              rhosonics-brand-guidelines.html
-            </h3>
-            <p className="text-sm text-slate-500 mb-4">
-              Self-contained HTML with embedded CSS and fonts
-            </p>
-            <Button 
-              onClick={handleExport}
-              disabled={isExporting}
-              className="gap-2"
-              data-export-exclude
-            >
-              {isExporting ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <Download className="w-4 h-4" />
-                  Download HTML
-                </>
-              )}
-            </Button>
+        </div>
+
+        {/* PDF Export */}
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+          <div className="flex items-start gap-4">
+            <div className="w-11 h-11 rounded-lg bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
+              <FileText className="w-5 h-5 text-slate-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-slate-900 mb-0.5 truncate">
+                PDF Document
+              </h3>
+              <p className="text-sm text-slate-500 mb-3">
+                Paginated, print-ready
+              </p>
+              <Button 
+                onClick={handleExportPDF}
+                disabled={isExportingHTML || isExportingPDF}
+                size="sm"
+                variant="outline"
+                className="gap-2"
+                data-export-exclude
+              >
+                {isExportingPDF ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    {pdfProgress > 0 ? `${pdfProgress}%` : 'Preparing...'}
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4" />
+                    Download
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </div>
