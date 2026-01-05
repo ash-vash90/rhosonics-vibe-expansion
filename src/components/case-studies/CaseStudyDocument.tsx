@@ -35,9 +35,9 @@ interface CaseStudyDocumentProps {
 
 export const CaseStudyDocument = ({ study }: CaseStudyDocumentProps) => {
   return (
-    <div className="flex flex-col items-center gap-8 py-8">
+    <div className="case-study-document flex flex-col items-center gap-8 py-8 px-4">
       {/* Page 1 - Cover & Introduction */}
-      <article className="bg-white shadow-2xl w-full max-w-[210mm] aspect-[1/1.414] relative overflow-hidden flex flex-col">
+      <article className="bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] relative overflow-hidden flex flex-col print:shadow-none print:max-w-none print:w-[210mm] print:h-[297mm]">
         {/* Header Bar */}
         <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -53,7 +53,7 @@ export const CaseStudyDocument = ({ study }: CaseStudyDocumentProps) => {
         </div>
 
         {/* Hero Image */}
-        <div className="relative h-[35%] overflow-hidden">
+        <div className="relative h-[280px] overflow-hidden flex-shrink-0">
           <img 
             src={study.heroImage} 
             alt={`${study.company} installation`}
@@ -146,7 +146,7 @@ export const CaseStudyDocument = ({ study }: CaseStudyDocumentProps) => {
       </article>
 
       {/* Page 2 - Results & Data */}
-      <article className="bg-white shadow-2xl w-full max-w-[210mm] aspect-[1/1.414] relative overflow-hidden flex flex-col">
+      <article className="bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] relative overflow-hidden flex flex-col print:shadow-none print:max-w-none print:w-[210mm] print:h-[297mm]">
         {/* Header Bar */}
         <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">

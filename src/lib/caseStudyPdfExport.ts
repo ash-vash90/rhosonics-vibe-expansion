@@ -14,13 +14,23 @@ export const exportCaseStudyAsPDF = async (
 ): Promise<void> => {
   const { companyName, onProgress } = options;
   
-  // Find all A4 article elements (the pages)
-  const pages = document.querySelectorAll('article');
+  // Find the document container with the A4 pages
+  const documentContainer = document.querySelector('.case-study-document');
+  const pages = documentContainer?.querySelectorAll('article') || document.querySelectorAll('article');
+  
   if (!pages.length) {
     throw new Error('Could not find case study pages');
   }
 
   onProgress?.(5);
+
+  // A4 dimensions in mm
+  const pdfWidth = 210;
+  const pdfHeight = 297;
+  
+  // A4 dimensions in pixels at 96 DPI (for consistent capture)
+  const a4WidthPx = 794; // 210mm at 96 DPI
+  const a4HeightPx = 1123; // 297mm at 96 DPI
 
   // Create PDF with A4 dimensions
   const pdf = new jsPDF({
@@ -29,52 +39,67 @@ export const exportCaseStudyAsPDF = async (
     format: 'a4',
   });
 
-  const pdfWidth = 210;
-  const pdfHeight = 297;
-
   try {
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i] as HTMLElement;
       
-      onProgress?.(10 + (i * 40));
+      onProgress?.(10 + Math.floor((i / pages.length) * 70));
 
-      // Capture the page as canvas
+      // Store original styles
+      const originalStyle = page.getAttribute('style') || '';
+      const originalClass = page.getAttribute('class') || '';
+      
+      // Force exact A4 dimensions for capture
+      page.style.width = `${a4WidthPx}px`;
+      page.style.height = `${a4HeightPx}px`;
+      page.style.maxWidth = `${a4WidthPx}px`;
+      page.style.aspectRatio = 'auto';
+      page.style.transform = 'none';
+      page.style.boxShadow = 'none';
+      
+      // Wait for any reflows
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Capture the page as canvas with high quality
       const canvas = await html2canvas(page, {
-        scale: 2, // Higher quality for print
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
-        width: page.offsetWidth,
-        height: page.offsetHeight,
+        width: a4WidthPx,
+        height: a4HeightPx,
+        windowWidth: a4WidthPx,
+        windowHeight: a4HeightPx,
+        onclone: (clonedDoc) => {
+          // Ensure fonts are loaded in cloned document
+          const clonedPage = clonedDoc.querySelector(`article:nth-of-type(${i + 1})`) as HTMLElement;
+          if (clonedPage) {
+            clonedPage.style.width = `${a4WidthPx}px`;
+            clonedPage.style.height = `${a4HeightPx}px`;
+            clonedPage.style.maxWidth = `${a4WidthPx}px`;
+            clonedPage.style.aspectRatio = 'auto';
+            clonedPage.style.overflow = 'hidden';
+          }
+        }
       });
 
-      onProgress?.(30 + (i * 40));
+      // Restore original styles
+      page.setAttribute('style', originalStyle);
+      page.setAttribute('class', originalClass);
 
       // Convert to image
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
-      
-      // Calculate dimensions to fit A4
-      const imgWidth = pdfWidth;
-      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+      const imgData = canvas.toDataURL('image/png', 1.0);
 
       // Add new page for pages after the first
       if (i > 0) {
         pdf.addPage();
       }
 
-      // Add image centered on page
-      const yOffset = (pdfHeight - imgHeight) / 2;
-      pdf.addImage(
-        imgData, 
-        'JPEG', 
-        0, 
-        yOffset > 0 ? yOffset : 0, 
-        imgWidth, 
-        imgHeight > pdfHeight ? pdfHeight : imgHeight
-      );
+      // Add image to fill the entire A4 page
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-      onProgress?.(50 + (i * 25));
+      onProgress?.(10 + Math.floor(((i + 1) / pages.length) * 80));
     }
 
     onProgress?.(95);
