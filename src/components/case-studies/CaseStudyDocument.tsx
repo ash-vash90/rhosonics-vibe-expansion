@@ -198,8 +198,21 @@ export const CaseStudyDocument = ({ study }: CaseStudyDocumentProps) => {
           {study.id === "weir-minerals" && (
             <div className="mb-8 flex-1">
               <h2 className="label-tech text-slate-500 mb-4">TECHNOLOGY COMPARISON</h2>
-              <div className="bg-rho-obsidian rounded-lg p-4 h-[280px]">
-                <TechnologyComparisonChart />
+
+              {/* PDF export uses static image for reliability */}
+              <div className="pdf-only hidden border border-slate-200 rounded-lg overflow-hidden">
+                <img
+                  src={study.chartImage}
+                  alt={`${study.company} technology comparison chart`}
+                  className="w-full object-contain max-h-64"
+                />
+              </div>
+
+              {/* Web view keeps interactive chart */}
+              <div className="no-pdf">
+                <div className="bg-rho-obsidian rounded-lg p-4 h-[280px] overflow-hidden">
+                  <TechnologyComparisonChart />
+                </div>
               </div>
             </div>
           )}
