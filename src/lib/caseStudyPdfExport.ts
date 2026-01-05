@@ -1,5 +1,6 @@
 /**
  * Export a case study as a PDF document
+ * High-quality raster approach with consistent font loading
  */
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -19,6 +20,16 @@ const A4_PX = {
   width: 794, // 210mm at 96 DPI
   height: 1123, // 297mm at 96 DPI
 } as const;
+
+// Higher scale for better text quality (3x gives ~300 DPI effective resolution)
+const CAPTURE_SCALE = 3;
+
+// Google Font URLs used by the app (must match index.html)
+const GOOGLE_FONT_URLS = [
+  "https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap",
+  "https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",
+  "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
+];
 
 const createOffscreenExportFrame = (options: {
   viewportWidthPx: number;
@@ -50,10 +61,24 @@ const createOffscreenExportFrame = (options: {
   frameDoc.write(`<!doctype html><html><head><meta charset="utf-8" /><base href="${document.baseURI}" /></head><body></body></html>`);
   frameDoc.close();
 
+  // Add Google Font links directly to ensure fonts load in the iframe context
+  GOOGLE_FONT_URLS.forEach((url) => {
+    const link = frameDoc.createElement("link");
+    link.rel = "stylesheet";
+    link.href = url;
+    frameDoc.head.appendChild(link);
+  });
+
   // Copy styles (Tailwind output + any component styles) into the iframe.
   document.head
     .querySelectorAll('style, link[rel="stylesheet"]')
-    .forEach((node) => frameDoc.head.appendChild(node.cloneNode(true)));
+    .forEach((node) => {
+      // Skip Google Font links we already added
+      if (node instanceof HTMLLinkElement && node.href.includes("fonts.googleapis.com")) {
+        return;
+      }
+      frameDoc.head.appendChild(node.cloneNode(true));
+    });
 
   // Ensure predictable baseline styling.
   frameDoc.documentElement.style.margin = "0";
@@ -62,16 +87,48 @@ const createOffscreenExportFrame = (options: {
   frameDoc.body.style.padding = "0";
   frameDoc.body.style.background = "#ffffff";
 
+  // Force consistent font rendering
+  frameDoc.body.style.textRendering = "geometricPrecision";
+  (frameDoc.body.style as unknown as Record<string, string>).webkitFontSmoothing = "antialiased";
+
   // Used by CSS toggles (e.g. show pdf-only / hide no-pdf).
   frameDoc.body.classList.add("pdf-exporting");
 
   return { iframe, frameDoc };
 };
 
-const waitForFrameAssets = async (frameDoc: Document) => {
-  // Ensure fonts are ready before capture (prevents subtle reflow)
+const waitForFontsToLoad = async (frameDoc: Document, timeoutMs = 5000): Promise<void> => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await (frameDoc as any).fonts?.ready?.catch?.(() => undefined);
+  const fonts = (frameDoc as any).fonts as FontFaceSet | undefined;
+  if (!fonts) return;
+
+  try {
+    // Wait for fonts.ready with a timeout
+    await Promise.race([
+      fonts.ready,
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Font loading timeout")), timeoutMs)
+      ),
+    ]);
+
+    // Explicitly load the fonts we need to ensure they're available
+    const fontFamilies = ["Unbounded", "Instrument Sans", "JetBrains Mono"];
+    const loadPromises = fontFamilies.flatMap((family) => [
+      fonts.load(`400 16px "${family}"`).catch(() => undefined),
+      fonts.load(`500 16px "${family}"`).catch(() => undefined),
+      fonts.load(`600 16px "${family}"`).catch(() => undefined),
+      fonts.load(`700 16px "${family}"`).catch(() => undefined),
+    ]);
+
+    await Promise.all(loadPromises);
+  } catch (e) {
+    console.warn("Font loading warning:", e);
+  }
+};
+
+const waitForFrameAssets = async (frameDoc: Document) => {
+  // Wait for fonts to fully load first
+  await waitForFontsToLoad(frameDoc);
 
   // Wait for all images to resolve (important when cloning into a new document)
   const images = Array.from(frameDoc.images);
@@ -87,8 +144,14 @@ const waitForFrameAssets = async (frameDoc: Document) => {
     )
   );
 
-  // Give the browser a tick to finalize layout.
-  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  // Give the browser multiple frames to finalize layout after font/image loading
+  await new Promise((resolve) =>
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => setTimeout(resolve, 50))
+      )
+    )
+  );
 };
 
 export const exportCaseStudyAsPDF = async (options: CaseStudyExportOptions): Promise<void> => {
@@ -145,17 +208,21 @@ export const exportCaseStudyAsPDF = async (options: CaseStudyExportOptions): Pro
       wrapper.appendChild(cloned);
     });
 
+    onProgress?.(15);
+
     await waitForFrameAssets(frameDoc);
+
+    onProgress?.(25);
 
     const pages = wrapper.querySelectorAll("article");
 
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i] as HTMLElement;
 
-      onProgress?.(10 + Math.floor((i / pages.length) * 70));
+      onProgress?.(30 + Math.floor((i / pages.length) * 55));
 
       const canvas = await html2canvas(page, {
-        scale: 2,
+        scale: CAPTURE_SCALE,
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
@@ -164,26 +231,25 @@ export const exportCaseStudyAsPDF = async (options: CaseStudyExportOptions): Pro
         height: A4_PX.height,
         windowWidth: A4_PX.width,
         windowHeight: A4_PX.height,
+        // Improve image quality
+        imageTimeout: 15000,
+        // Remove any scaling transforms that might affect rendering
+        onclone: (clonedDoc) => {
+          clonedDoc.body.style.transform = "none";
+          clonedDoc.body.style.transformOrigin = "top left";
+        },
       });
 
-      const imgData = canvas.toDataURL("image/png");
+      // Use higher quality JPEG for smaller file size while maintaining quality
+      // or PNG for best quality
+      const imgData = canvas.toDataURL("image/png", 1.0);
 
       if (i > 0) pdf.addPage();
 
-      // Fit image to A4 WITHOUT distortion (never stretch)
-      const imgAspect = canvas.width / canvas.height;
-      let renderW = A4_MM.width;
-      let renderH = renderW / imgAspect;
-      if (renderH > A4_MM.height) {
-        renderH = A4_MM.height;
-        renderW = renderH * imgAspect;
-      }
-      const x = (A4_MM.width - renderW) / 2;
-      const y = (A4_MM.height - renderH) / 2;
+      // Fit image to A4 at full page (since we captured at exact A4 ratio)
+      pdf.addImage(imgData, "PNG", 0, 0, A4_MM.width, A4_MM.height, undefined, "FAST");
 
-      pdf.addImage(imgData, "PNG", x, y, renderW, renderH, undefined, "FAST");
-
-      onProgress?.(10 + Math.floor(((i + 1) / pages.length) * 80));
+      onProgress?.(30 + Math.floor(((i + 1) / pages.length) * 60));
     }
 
     onProgress?.(95);
