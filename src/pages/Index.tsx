@@ -25,6 +25,7 @@ const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
 const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
 const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
+const ExportSection = lazy(() => import("@/components/brand/ExportSection"));
 
 const SectionLoader = () => (
   <div className="py-16 flex justify-center">
@@ -80,6 +81,12 @@ const Index = () => {
         </LazySection>
         <Suspense fallback={<SectionLoader />}>
           <CaseStudies />
+        </Suspense>
+        
+        {/* 07 / EXPORT */}
+        <SectionBridge number="07" label="EXPORT" bridge="Take it offline." />
+        <Suspense fallback={<SectionLoader />}>
+          <ExportSection />
         </Suspense>
         
         {/* Footer */}
