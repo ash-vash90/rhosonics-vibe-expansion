@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Loader2 } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
 import { CaseStudySelector } from "@/components/case-studies/CaseStudySelector";
 import { Button } from "@/components/ui/button";
+import { exportCaseStudyAsPDF } from "@/lib/caseStudyPdfExport";
+import { useToast } from "@/hooks/use-toast";
 
 // Import images
 import rioTintoInstallation from "@/assets/case-studies/rio-tinto-installation.jpg";
@@ -143,6 +145,9 @@ const caseStudies: CaseStudy[] = [
 
 const CaseStudies = () => {
   const [selectedStudyId, setSelectedStudyId] = useState<string | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState(0);
+  const { toast } = useToast();
   
   const selectedStudy = selectedStudyId 
     ? caseStudies.find(s => s.id === selectedStudyId) 
@@ -150,6 +155,35 @@ const CaseStudies = () => {
 
   const handleBack = () => {
     setSelectedStudyId(null);
+  };
+
+  const handleExportPDF = async () => {
+    if (!selectedStudy) return;
+    
+    setIsExporting(true);
+    setExportProgress(0);
+    
+    try {
+      await exportCaseStudyAsPDF({
+        companyName: selectedStudy.company,
+        onProgress: setExportProgress,
+      });
+      
+      toast({
+        title: "PDF Downloaded",
+        description: `${selectedStudy.company} case study has been saved.`,
+      });
+    } catch (error) {
+      console.error('Export failed:', error);
+      toast({
+        title: "Export Failed",
+        description: "There was an error generating the PDF. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExporting(false);
+      setExportProgress(0);
+    }
   };
 
   return (
@@ -186,10 +220,20 @@ const CaseStudies = () => {
                   variant="outline"
                   size="sm"
                   className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
-                  onClick={() => window.print()}
+                  onClick={handleExportPDF}
+                  disabled={isExporting}
                 >
-                  <Download className="w-4 h-4 mr-2" />
-                  <span className="hidden sm:inline">Download PDF</span>
+                  {isExporting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      <span className="hidden sm:inline">{exportProgress}%</span>
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-4 h-4 mr-2" />
+                      <span className="hidden sm:inline">Download PDF</span>
+                    </>
+                  )}
                 </Button>
               )}
               <Link 
