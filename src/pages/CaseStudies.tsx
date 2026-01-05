@@ -1,13 +1,20 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Loader2, Eye } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
 import { CaseStudySelector } from "@/components/case-studies/CaseStudySelector";
+import { CaseStudyPDFPreview } from "@/components/case-studies/CaseStudyPDFPreview";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { exportCaseStudyAsPDF } from "@/lib/caseStudyPdfExport";
 import { useToast } from "@/hooks/use-toast";
-
 // Import images
 import rioTintoInstallation from "@/assets/case-studies/rio-tinto-installation.jpg";
 import rioTintoChart from "@/assets/case-studies/rio-tinto-chart.jpg";
@@ -147,6 +154,7 @@ const CaseStudies = () => {
   const [selectedStudyId, setSelectedStudyId] = useState<string | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
+  const [showPreview, setShowPreview] = useState(false);
   const { toast } = useToast();
   
   const selectedStudy = selectedStudyId 
@@ -160,6 +168,7 @@ const CaseStudies = () => {
   const handleExportPDF = async () => {
     if (!selectedStudy) return;
     
+    setShowPreview(false);
     setIsExporting(true);
     setExportProgress(0);
     
@@ -216,25 +225,37 @@ const CaseStudies = () => {
             
             <nav className="flex items-center gap-4">
               {selectedStudy && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
-                  onClick={handleExportPDF}
-                  disabled={isExporting}
-                >
-                  {isExporting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      <span className="hidden sm:inline">{exportProgress}%</span>
-                    </>
-                  ) : (
-                    <>
-                      <Download className="w-4 h-4 mr-2" />
-                      <span className="hidden sm:inline">Download PDF</span>
-                    </>
-                  )}
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+                    onClick={() => setShowPreview(true)}
+                    disabled={isExporting}
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    <span className="hidden sm:inline">Preview</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+                    onClick={handleExportPDF}
+                    disabled={isExporting}
+                  >
+                    {isExporting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        <span className="hidden sm:inline">{exportProgress}%</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-4 h-4 mr-2" />
+                        <span className="hidden sm:inline">Download PDF</span>
+                      </>
+                    )}
+                  </Button>
+                </div>
               )}
               <Link 
                 to="/tools" 
@@ -287,6 +308,39 @@ const CaseStudies = () => {
 
           {/* A4 Document */}
           <CaseStudyDocument study={selectedStudy} />
+
+          {/* PDF Preview Dialog */}
+          <Dialog open={showPreview} onOpenChange={setShowPreview}>
+            <DialogContent className="sm:max-w-lg">
+              <DialogHeader>
+                <DialogTitle>PDF Preview — {selectedStudy.company}</DialogTitle>
+                <DialogDescription>
+                  Sample page layout for the exported document
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4">
+                <CaseStudyPDFPreview study={selectedStudy} />
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setShowPreview(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleExportPDF} className="gap-2" disabled={isExporting}>
+                  {isExporting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      {exportProgress}%
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-4 h-4" />
+                      Download PDF
+                    </>
+                  )}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       ) : (
         /* Selector View */
