@@ -288,7 +288,8 @@ export const exportCaseStudyAsPDF = async (options: CaseStudyExportOptions): Pro
 
     onProgress?.(15);
 
-    await waitForFrameAssets(frameDoc);
+    // Wrap asset loading with a hard timeout to prevent indefinite hangs
+    await withTimeout(waitForFrameAssets(frameDoc), 10000);
 
     onProgress?.(25);
 
