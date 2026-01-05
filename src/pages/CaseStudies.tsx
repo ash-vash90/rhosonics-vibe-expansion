@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, MapPin, Shield, Gauge, CheckCircle2, Quote, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
-import { TechnologyComparisonChart } from "@/components/charts/TechnologyComparisonChart";
+import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
+import { CaseStudySelector } from "@/components/case-studies/CaseStudySelector";
+import { Button } from "@/components/ui/button";
 
 // Import images
 import rioTintoInstallation from "@/assets/case-studies/rio-tinto-installation.jpg";
@@ -138,182 +141,57 @@ const caseStudies: CaseStudy[] = [
   }
 ];
 
-const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) => {
-  const isEven = index % 2 === 0;
-  
-  return (
-    <article className="relative">
-      {/* Section number */}
-      <div className="absolute -left-4 md:-left-8 top-0 label-tech text-slate-300">
-        {String(index + 1).padStart(2, '0')}
-      </div>
-      
-      {/* Hero Section */}
-      <div className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 ${isEven ? '' : 'lg:flex-row-reverse'}`}>
-        {/* Image */}
-        <div className={`relative group ${!isEven ? 'lg:order-2' : ''}`}>
-          <div className="relative overflow-hidden rounded-xl bg-slate-800">
-            <img 
-              src={study.heroImage} 
-              alt={`${study.company} installation`}
-              className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-rho-obsidian/80 via-transparent to-transparent" />
-            
-            {/* Location badge */}
-            <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-background/90 backdrop-blur-sm rounded-full">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">{study.location}</span>
-            </div>
-          </div>
-          
-          {/* Floating stat card */}
-          <div className="absolute -bottom-6 -right-4 md:-right-6 card-obsidian p-4 md:p-6">
-            <div className="text-3xl md:text-4xl font-bold text-primary font-data">
-              {study.primaryStat.value}
-            </div>
-            <div className="label-tech-sm text-slate-400 mt-1">
-              {study.primaryStat.label}
-            </div>
-          </div>
-        </div>
-        
-        {/* Content */}
-        <div className={`${!isEven ? 'lg:order-1' : ''}`}>
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="px-3 py-1 bg-primary/10 text-primary label-tech-sm rounded-full border border-primary/20">
-              {study.industry}
-            </span>
-            <span className="px-3 py-1 bg-slate-100 text-slate-600 label-tech-sm rounded-full">
-              {study.product}
-            </span>
-          </div>
-          
-          <h2 className="font-ui font-bold text-3xl md:text-4xl lg:text-5xl text-foreground mb-4 tracking-tight">
-            {study.company}
-          </h2>
-          
-          <p className="text-xl md:text-2xl text-primary font-medium mb-6">
-            {study.tagline}
-          </p>
-          
-          <p className="text-slate-600 text-lg leading-relaxed">
-            {study.challenge}
-          </p>
-        </div>
-      </div>
-      
-      {/* Details Grid */}
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        {/* Challenge & Solution */}
-        <div className="md:col-span-2 space-y-6">
-          {/* Solution Card */}
-          <div className="card-eco p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Shield className="w-5 h-5 text-primary" />
-              <h3 className="font-ui font-semibold text-lg text-foreground">The Solution</h3>
-            </div>
-            <p className="text-slate-600 leading-relaxed">
-              {study.solution}
-            </p>
-          </div>
-          
-          {/* Results */}
-          <div className="card-metal p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <CheckCircle2 className="w-5 h-5 text-primary" />
-              <h3 className="font-ui font-semibold text-lg text-foreground">Results</h3>
-            </div>
-            <ul className="space-y-3">
-              {study.results.map((result, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span className="text-slate-700">{result}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        
-        {/* Specs & Quote */}
-        <div className="space-y-6">
-          {/* Technical Specs */}
-          <div className="card-obsidian p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Gauge className="w-5 h-5 text-primary" />
-              <h3 className="font-ui font-semibold text-base text-slate-100">Specifications</h3>
-            </div>
-            <div className="space-y-3">
-              {study.specs.map((spec, i) => (
-                <div key={i} className="flex justify-between items-center py-2 border-b border-slate-700/50 last:border-0">
-                  <span className="label-tech-sm text-slate-400">{spec.label}</span>
-                  <span className="font-data text-sm text-slate-100">{spec.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Chart Image if available */}
-          {study.chartImage && (
-            <div className="overflow-hidden rounded-lg border border-slate-200">
-              <img 
-                src={study.chartImage} 
-                alt={`${study.company} data comparison`}
-                className="w-full object-cover"
-              />
-            </div>
-          )}
-        </div>
-      </div>
-      
-      {/* Quote Section */}
-      {study.quote && (
-        <div className="relative bg-gradient-to-br from-slate-50 to-eco-surface border-l-4 border-primary p-6 md:p-8 rounded-r-xl">
-          <Quote className="absolute top-4 right-4 w-8 h-8 text-primary/20" />
-          <blockquote className="text-lg md:text-xl text-slate-700 italic mb-4 max-w-3xl">
-            "{study.quote.text}"
-          </blockquote>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <span className="font-ui font-bold text-primary">
-                {study.quote.author.split(' ').map(n => n[0]).join('')}
-              </span>
-            </div>
-            <div>
-              <div className="font-ui font-semibold text-foreground">{study.quote.author}</div>
-              <div className="text-sm text-slate-500">{study.quote.role}</div>
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {/* Interactive Chart for Weir Minerals */}
-      {study.id === "weir-minerals" && (
-        <TechnologyComparisonChart />
-      )}
-    </article>
-  );
-};
-
 const CaseStudies = () => {
+  const [selectedStudyId, setSelectedStudyId] = useState<string | null>(null);
+  
+  const selectedStudy = selectedStudyId 
+    ? caseStudies.find(s => s.id === selectedStudyId) 
+    : null;
+
+  const handleBack = () => {
+    setSelectedStudyId(null);
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-slate-100">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-rho-obsidian border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-3 group">
-              <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
-              <div className="w-7 h-7">
-                <RhosonicsLogo variant="gradient" />
-              </div>
-              <span className="font-logo text-lg text-slate-100 tracking-tight hidden sm:inline">
-                Rhosonics
-              </span>
-            </Link>
+            {selectedStudy ? (
+              <button 
+                onClick={handleBack}
+                className="flex items-center gap-3 group"
+              >
+                <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-slate-300 group-hover:text-white transition-colors">
+                  Back to all case studies
+                </span>
+              </button>
+            ) : (
+              <Link to="/" className="flex items-center gap-3 group">
+                <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
+                <div className="w-7 h-7">
+                  <RhosonicsLogo variant="gradient" />
+                </div>
+                <span className="font-logo text-lg text-slate-100 tracking-tight hidden sm:inline">
+                  Rhosonics
+                </span>
+              </Link>
+            )}
             
             <nav className="flex items-center gap-4">
+              {selectedStudy && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+                  onClick={() => window.print()}
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  <span className="hidden sm:inline">Download PDF</span>
+                </Button>
+              )}
               <Link 
                 to="/tools" 
                 className="text-sm text-slate-400 hover:text-primary transition-colors"
@@ -334,114 +212,156 @@ const CaseStudies = () => {
         </div>
       </header>
       
-      {/* Hero Section */}
-      <section className="relative bg-rho-obsidian text-slate-100 overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333993c' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-          }} />
-        </div>
-        
-        {/* Gradient orb */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-          <div className="max-w-3xl">
-            <div className="label-tech text-primary mb-4">
-              <span className="text-slate-400">06</span>
-              <span className="mx-2">/</span>
-              ANALYSIS
-            </div>
-            
-            <h1 className="font-ui font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6">
-              Case Studies
-            </h1>
-            
-            <p className="text-xl text-slate-300 leading-relaxed max-w-2xl">
-              Real-world applications proving the SDM advantage. From alumina extraction to separation technology, 
-              our solutions deliver measurable results in the most demanding industrial environments.
-            </p>
-            
-            {/* Stats row */}
-            <div className="flex flex-wrap gap-8 mt-10 pt-8 border-t border-slate-700/50">
-              <div>
-                <div className="font-data text-3xl text-primary">40+</div>
-                <div className="label-tech-sm text-slate-400 mt-1">Years Experience</div>
-              </div>
-              <div>
-                <div className="font-data text-3xl text-primary">6</div>
-                <div className="label-tech-sm text-slate-400 mt-1">Continents</div>
-              </div>
-              <div>
-                <div className="font-data text-3xl text-primary">1000+</div>
-                <div className="label-tech-sm text-slate-400 mt-1">Installations</div>
+      {selectedStudy ? (
+        /* Document View */
+        <div className="bg-slate-200 min-h-[calc(100vh-4rem)]">
+          {/* Document Title Bar */}
+          <div className="bg-white border-b border-slate-200 py-4">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h1 className="font-ui font-bold text-xl text-foreground">
+                      {selectedStudy.company} Case Study
+                    </h1>
+                    <p className="text-sm text-slate-500">
+                      {selectedStudy.industry} • {selectedStudy.product}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="label-tech-sm text-slate-400">A4 FORMAT</span>
+                  <span className="label-tech-sm text-slate-400">•</span>
+                  <span className="label-tech-sm text-slate-400">2 PAGES</span>
+                </div>
               </div>
             </div>
           </div>
+
+          {/* A4 Document */}
+          <CaseStudyDocument study={selectedStudy} />
         </div>
-      </section>
-      
-      {/* Case Studies */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="space-y-24 md:space-y-32">
-          {caseStudies.map((study, index) => (
-            <CaseStudyCard key={study.id} study={study} index={index} />
-          ))}
-        </div>
-      </section>
-      
-      {/* CTA Section */}
-      <section className="bg-gradient-to-br from-primary to-rho-lime text-rho-obsidian">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div>
-              <h2 className="font-ui font-bold text-2xl md:text-3xl mb-2">
-                Ready to optimize your process?
-              </h2>
-              <p className="text-rho-obsidian/80 text-lg">
-                Contact our team to discuss your measurement challenges.
+      ) : (
+        /* Selector View */
+        <>
+          {/* Hero Section */}
+          <section className="relative bg-rho-obsidian text-slate-100 overflow-hidden">
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333993c' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+              }} />
+            </div>
+            
+            {/* Gradient orb */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+            
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+              <div className="max-w-3xl">
+                <div className="label-tech text-primary mb-4">
+                  <span className="text-slate-400">06</span>
+                  <span className="mx-2">/</span>
+                  ANALYSIS
+                </div>
+                
+                <h1 className="font-ui font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6">
+                  Case Studies
+                </h1>
+                
+                <p className="text-xl text-slate-300 leading-relaxed max-w-2xl">
+                  Real-world applications proving the SDM advantage. Select a case study below to view the full A4-formatted document.
+                </p>
+                
+                {/* Stats row */}
+                <div className="flex flex-wrap gap-8 mt-10 pt-8 border-t border-slate-700/50">
+                  <div>
+                    <div className="font-data text-3xl text-primary">40+</div>
+                    <div className="label-tech-sm text-slate-400 mt-1">Years Experience</div>
+                  </div>
+                  <div>
+                    <div className="font-data text-3xl text-primary">6</div>
+                    <div className="label-tech-sm text-slate-400 mt-1">Continents</div>
+                  </div>
+                  <div>
+                    <div className="font-data text-3xl text-primary">1000+</div>
+                    <div className="label-tech-sm text-slate-400 mt-1">Installations</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          {/* Case Study Selector */}
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="mb-8">
+              <h2 className="label-tech text-slate-500 mb-2">SELECT A CASE STUDY</h2>
+              <p className="text-slate-600">
+                Click on any case study to view the full document in A4 format
               </p>
             </div>
-            <div className="flex flex-wrap gap-4">
-              <a 
-                href="mailto:info@rhosonics.com"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-rho-obsidian text-slate-100 font-semibold rounded-lg hover:bg-rho-obsidian/90 transition-colors"
-              >
-                Contact Us
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <a 
-                href="https://rhosonics.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm text-rho-obsidian font-semibold rounded-lg hover:bg-white/30 transition-colors"
-              >
-                Learn More
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Footer */}
-      <footer className="bg-rho-obsidian text-slate-400 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6">
-                <RhosonicsLogo variant="gradient" />
+            
+            <CaseStudySelector 
+              caseStudies={caseStudies} 
+              onSelect={setSelectedStudyId} 
+            />
+          </section>
+          
+          {/* CTA Section */}
+          <section className="bg-gradient-to-br from-primary to-rho-lime text-rho-obsidian">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div>
+                  <h2 className="font-ui font-bold text-2xl md:text-3xl mb-2">
+                    Ready to optimize your process?
+                  </h2>
+                  <p className="text-rho-obsidian/80 text-lg">
+                    Contact our team to discuss your measurement challenges.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-4">
+                  <a 
+                    href="mailto:info@rhosonics.com"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-rho-obsidian text-slate-100 font-semibold rounded-lg hover:bg-rho-obsidian/90 transition-colors"
+                  >
+                    Contact Us
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href="https://rhosonics.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm text-rho-obsidian font-semibold rounded-lg hover:bg-white/30 transition-colors"
+                  >
+                    Learn More
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
-              <span className="font-logo text-slate-100">Rhosonics</span>
-              <span className="text-sm">Proven Process Insights</span>
             </div>
-            <div className="text-sm">
-              © {new Date().getFullYear()} Rhosonics. All rights reserved.
+          </section>
+          
+          {/* Footer */}
+          <footer className="bg-rho-obsidian text-slate-400 py-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6">
+                    <RhosonicsLogo variant="gradient" />
+                  </div>
+                  <span className="font-logo text-slate-100">Rhosonics</span>
+                  <span className="text-sm">Proven Process Insights</span>
+                </div>
+                <div className="text-sm">
+                  © {new Date().getFullYear()} Rhosonics. All rights reserved.
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </footer>
+          </footer>
+        </>
+      )}
     </div>
   );
 };
