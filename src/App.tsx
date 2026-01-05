@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const Index = lazy(() => import("./pages/Index"));
 const Tools = lazy(() => import("./pages/Tools"));
 const Auth = lazy(() => import("./pages/Auth"));
+const CaseStudies = lazy(() => import("./pages/CaseStudies"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageLoader = () => (
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/case-studies" element={<CaseStudies />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
