@@ -14,7 +14,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { exportCaseStudyAsPDF } from "@/lib/caseStudyPdfExport";
-import { exportCaseStudyAsVectorPDF } from "@/lib/caseStudyVectorPdfExport";
 import { useToast } from "@/hooks/use-toast";
 // Import images
 import rioTintoInstallation from "@/assets/case-studies/rio-tinto-installation.jpg";
@@ -166,7 +165,7 @@ const CaseStudies = () => {
     setSelectedStudyId(null);
   };
 
-  const handleExportPDF = async (useVector: boolean = false) => {
+  const handleExportPDF = async () => {
     if (!selectedStudy) return;
     
     setShowPreview(false);
@@ -174,17 +173,10 @@ const CaseStudies = () => {
     setExportProgress(0);
     
     try {
-      if (useVector) {
-        await exportCaseStudyAsVectorPDF({
-          study: selectedStudy,
-          onProgress: setExportProgress,
-        });
-      } else {
-        await exportCaseStudyAsPDF({
-          companyName: selectedStudy.company,
-          onProgress: setExportProgress,
-        });
-      }
+      await exportCaseStudyAsPDF({
+        companyName: selectedStudy.company,
+        onProgress: setExportProgress,
+      });
       
       toast({
         title: "PDF Downloaded",
@@ -248,7 +240,7 @@ const CaseStudies = () => {
                     variant="outline"
                     size="sm"
                     className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
-                    onClick={() => handleExportPDF(false)}
+                    onClick={() => handleExportPDF()}
                     disabled={isExporting}
                   >
                     {isExporting ? (
@@ -259,26 +251,7 @@ const CaseStudies = () => {
                     ) : (
                       <>
                         <Download className="w-4 h-4 mr-2" />
-                        <span className="hidden sm:inline">Raster PDF</span>
-                      </>
-                    )}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-primary text-primary hover:bg-primary/10"
-                    onClick={() => handleExportPDF(true)}
-                    disabled={isExporting}
-                  >
-                    {isExporting ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        <span className="hidden sm:inline">{exportProgress}%</span>
-                      </>
-                    ) : (
-                      <>
-                        <FileText className="w-4 h-4 mr-2" />
-                        <span className="hidden sm:inline">Vector PDF</span>
+                        <span className="hidden sm:inline">Download PDF</span>
                       </>
                     )}
                   </Button>
@@ -352,7 +325,7 @@ const CaseStudies = () => {
                 <Button variant="outline" onClick={() => setShowPreview(false)}>
                   Cancel
                 </Button>
-                <Button onClick={() => handleExportPDF(false)} className="gap-2" disabled={isExporting} variant="outline">
+                <Button onClick={() => handleExportPDF()} className="gap-2" disabled={isExporting}>
                   {isExporting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -361,20 +334,7 @@ const CaseStudies = () => {
                   ) : (
                     <>
                       <Download className="w-4 h-4" />
-                      Raster PDF
-                    </>
-                  )}
-                </Button>
-                <Button onClick={() => handleExportPDF(true)} className="gap-2" disabled={isExporting}>
-                  {isExporting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      {exportProgress}%
-                    </>
-                  ) : (
-                    <>
-                      <FileText className="w-4 h-4" />
-                      Vector PDF
+                      Download PDF
                     </>
                   )}
                 </Button>
