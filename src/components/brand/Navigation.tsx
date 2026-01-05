@@ -68,6 +68,7 @@ const navSections: NavSection[] = [
     items: [
       { id: "comparison", label: "Tech Comparison" },
       { id: "cases", label: "Case Studies", highlight: true },
+      { id: "case-studies-page", label: "Full Case Studies →", highlight: true },
     ],
   },
 ];
@@ -233,6 +234,21 @@ export const Navigation = () => {
               }`}>
                 {section.items.map((item) => {
                   const isActive = activeSection === item.id;
+                  
+                  // Special handling for case studies page link
+                  if (item.id === 'case-studies-page') {
+                    return (
+                      <Link
+                        key={item.id}
+                        to="/case-studies"
+                        className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
+                      >
+                        <span>{item.label}</span>
+                        <ChevronRight className="w-3 h-3 opacity-100" />
+                      </Link>
+                    );
+                  }
+                  
                   return (
                   <button
                     key={item.id}
