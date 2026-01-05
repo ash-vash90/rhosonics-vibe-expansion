@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, MapPin, Shield, Gauge, CheckCircle2, Quote, ExternalLink } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
+import { TechnologyComparisonChart } from "@/components/charts/TechnologyComparisonChart";
 
 // Import images
 import rioTintoInstallation from "@/assets/case-studies/rio-tinto-installation.jpg";
@@ -285,6 +286,11 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
             </div>
           </div>
         </div>
+      )}
+      
+      {/* Interactive Chart for Weir Minerals */}
+      {study.id === "weir-minerals" && (
+        <TechnologyComparisonChart />
       )}
     </article>
   );
