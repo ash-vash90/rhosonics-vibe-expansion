@@ -743,6 +743,15 @@
   }
 }
 
+/* PDF export (html2canvas) helpers */
+.pdf-exporting .pdf-only {
+  display: block !important;
+}
+
+.pdf-exporting .no-pdf {
+  display: none !important;
+}
+
 /* Print Styles for A4 Case Study Documents */
 @media print {
   /* Reset page margins and size */
