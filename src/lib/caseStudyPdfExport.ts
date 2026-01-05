@@ -10,10 +10,6 @@ interface CaseStudyExportOptions {
   onProgress?: (progress: number) => void;
 }
 
-const A4_MM = {
-  width: 210,
-  height: 297,
-} as const;
 
 // A4 dimensions in pixels at 96 DPI (for consistent capture)
 const A4_PX = {
@@ -30,6 +26,48 @@ const GOOGLE_FONT_URLS = [
   "https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",
   "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
 ];
+
+// Timeout helper that RESOLVES (not rejects) to avoid skipping font loads
+const withTimeout = <T,>(p: Promise<T>, ms: number): Promise<T | undefined> =>
+  Promise.race([
+    p,
+    new Promise<undefined>((res) => setTimeout(() => res(undefined), ms)),
+  ]);
+
+// Layout settle using iframe's rAF + micro delay for paint queue flush
+const settleLayout = async (frameDoc: Document): Promise<void> => {
+  const win = frameDoc.defaultView ?? window;
+  const raf = (cb: FrameRequestCallback) => win.requestAnimationFrame(cb);
+
+  // Force reflow
+  void frameDoc.body.offsetHeight;
+
+  // 2x rAF in iframe's rendering loop
+  await new Promise<void>((res) => raf(() => res()));
+  await new Promise<void>((res) => raf(() => res()));
+
+  // Micro delay to let paint queue flush
+  await new Promise<void>((res) => setTimeout(res, 0));
+};
+
+// Blank canvas detection via sampled pixel check
+function looksBlank(canvas: HTMLCanvasElement): boolean {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return true;
+
+  const w = Math.min(200, canvas.width);
+  const h = Math.min(200, canvas.height);
+  const data = ctx.getImageData(0, 0, w, h).data;
+
+  const step = 40; // sample every 10th pixel (4 bytes per pixel)
+  for (let i = 0; i < data.length; i += step) {
+    const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+    if (!(a === 255 && r === 255 && g === 255 && b === 255)) return false;
+  }
+  return true;
+}
+
+const BLEED = 2; // CSS px
 
 const createOffscreenExportFrame = (options: {
   viewportWidthPx: number;
@@ -98,81 +136,121 @@ const createOffscreenExportFrame = (options: {
 };
 
 const waitForFontsToLoad = async (frameDoc: Document, timeoutMs = 5000): Promise<void> => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const fonts = (frameDoc as any).fonts as FontFaceSet | undefined;
+  const fonts = frameDoc.fonts;
   if (!fonts) return;
 
-  try {
-    // Wait for fonts.ready with a timeout
-    await Promise.race([
-      fonts.ready,
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Font loading timeout")), timeoutMs)
-      ),
-    ]);
+  const fontsToLoad = [
+    '700 18px "Unbounded"',
+    '700 36px "Instrument Sans"',
+    '600 20px "Instrument Sans"',
+    '600 14px "Instrument Sans"',
+    '500 14px "Instrument Sans"',
+    '400 14px "Instrument Sans"',
+    '400 12px "Instrument Sans"',
+    '400 36px "JetBrains Mono"',
+    '400 12px "JetBrains Mono"',
+    '500 12px "JetBrains Mono"',
+  ];
 
-    // Explicitly load the fonts we need to ensure they're available
-    const fontFamilies = ["Unbounded", "Instrument Sans", "JetBrains Mono"];
-    const loadPromises = fontFamilies.flatMap((family) => [
-      fonts.load(`400 16px "${family}"`).catch(() => undefined),
-      fonts.load(`500 16px "${family}"`).catch(() => undefined),
-      fonts.load(`600 16px "${family}"`).catch(() => undefined),
-      fonts.load(`700 16px "${family}"`).catch(() => undefined),
-    ]);
+  await withTimeout(
+    Promise.all(fontsToLoad.map((f) => fonts.load(f).catch(() => undefined))),
+    timeoutMs
+  );
 
-    await Promise.all(loadPromises);
-  } catch (e) {
-    console.warn("Font loading warning:", e);
-  }
+  await withTimeout(fonts.ready, timeoutMs);
 };
 
-const waitForFrameAssets = async (frameDoc: Document) => {
-  // Wait for fonts to fully load first
+const waitForFrameAssets = async (frameDoc: Document): Promise<void> => {
   await waitForFontsToLoad(frameDoc);
+  await settleLayout(frameDoc);
 
-  // Wait for all images to resolve (important when cloning into a new document)
   const images = Array.from(frameDoc.images);
   await Promise.all(
-    images.map(
-      (img) =>
-        img.complete
-          ? Promise.resolve()
-          : new Promise<void>((resolve) => {
-              img.onload = () => resolve();
-              img.onerror = () => resolve();
-            })
-    )
+    images.map(async (img) => {
+      if (!img.complete) {
+        await new Promise<void>((resolve) => {
+          img.addEventListener("load", () => resolve(), { once: true });
+          img.addEventListener("error", () => resolve(), { once: true });
+        });
+      }
+      if (img.decode) await img.decode().catch(() => {});
+    })
   );
 
-  // Give the browser multiple frames to finalize layout after font/image loading
-  await new Promise((resolve) =>
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => setTimeout(resolve, 50))
-      )
-    )
-  );
+  await settleLayout(frameDoc);
 };
+
+async function capturePageWithFallback(
+  page: HTMLElement,
+  scale: number,
+  captureWidth: number,
+  captureHeight: number,
+  offsetX: number,
+  offsetY: number
+): Promise<HTMLCanvasElement> {
+  const baseOptions = {
+    scale,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+    logging: false,
+    width: captureWidth,
+    height: captureHeight,
+    x: offsetX,
+    y: offsetY,
+    windowWidth: A4_PX.width,
+    windowHeight: A4_PX.height,
+    imageTimeout: 15000,
+    onclone: (clonedDoc: Document) => {
+      clonedDoc.documentElement.classList.add("pdf-exporting");
+
+      clonedDoc.querySelectorAll("p, li, td, th, span").forEach((el) => {
+        const cs = clonedDoc.defaultView?.getComputedStyle(el);
+        if (!cs) return;
+
+        const ls = cs.letterSpacing;
+        if (ls !== "normal") {
+          const px = parseFloat(ls);
+          if (!Number.isNaN(px) && Math.abs(px - Math.round(px)) > 1e-3) {
+            (el as HTMLElement).style.letterSpacing = "0px";
+          }
+        }
+      });
+    },
+  } satisfies Parameters<typeof html2canvas>[1];
+
+  try {
+    const canvas = await html2canvas(page, {
+      ...baseOptions,
+      foreignObjectRendering: true,
+      allowTaint: false,
+    });
+
+    if (looksBlank(canvas)) throw new Error("Blank canvas fallback");
+
+    return canvas;
+  } catch {
+    return await html2canvas(page, {
+      ...baseOptions,
+      foreignObjectRendering: false,
+      allowTaint: true,
+    });
+  }
+}
 
 export const exportCaseStudyAsPDF = async (options: CaseStudyExportOptions): Promise<void> => {
   const { companyName, onProgress } = options;
 
   // Find the document container with the A4 pages
   const sourceContainer = document.querySelector(".case-study-document");
-  const sourcePages = sourceContainer?.querySelectorAll("article") ?? document.querySelectorAll(".case-study-document article");
+  const sourcePages =
+    sourceContainer?.querySelectorAll("article") ??
+    document.querySelectorAll(".case-study-document article");
 
   if (!sourcePages.length) {
     throw new Error("Could not find case study pages");
   }
 
   onProgress?.(5);
-
-  // Create PDF with A4 dimensions
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: "a4",
-  });
 
   // Render/capture from an offscreen A4 viewport so layout never depends on the user's viewport.
   const { iframe, frameDoc } = createOffscreenExportFrame({
@@ -215,44 +293,77 @@ export const exportCaseStudyAsPDF = async (options: CaseStudyExportOptions): Pro
     onProgress?.(25);
 
     const pages = wrapper.querySelectorAll("article");
+    let pdf: jsPDF | null = null;
 
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i] as HTMLElement;
 
       onProgress?.(30 + Math.floor((i / pages.length) * 55));
 
-      const canvas = await html2canvas(page, {
-        scale: CAPTURE_SCALE,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: "#ffffff",
-        logging: false,
-        width: A4_PX.width,
-        height: A4_PX.height,
-        windowWidth: A4_PX.width,
-        windowHeight: A4_PX.height,
-        // Improve image quality
-        imageTimeout: 15000,
-        // Remove any scaling transforms that might affect rendering
-        onclone: (clonedDoc) => {
-          clonedDoc.body.style.transform = "none";
-          clonedDoc.body.style.transformOrigin = "top left";
-        },
-      });
+      // Capture with bleed margin for edge clipping prevention
+      const rawCanvas = await capturePageWithFallback(
+        page,
+        CAPTURE_SCALE,
+        A4_PX.width + BLEED * 2,
+        A4_PX.height + BLEED * 2,
+        -BLEED,
+        -BLEED
+      );
 
-      // Use higher quality JPEG for smaller file size while maintaining quality
-      // or PNG for best quality
-      const imgData = canvas.toDataURL("image/png", 1.0);
+      // Crop the bleed margin back out
+      const bleedPx = BLEED * CAPTURE_SCALE;
+      const cropped = document.createElement("canvas");
+      cropped.width = rawCanvas.width - bleedPx * 2;
+      cropped.height = rawCanvas.height - bleedPx * 2;
 
-      if (i > 0) pdf.addPage();
+      const ctx = cropped.getContext("2d");
+      if (!ctx) throw new Error("Could not get canvas context");
 
-      // Fit image to A4 at full page (since we captured at exact A4 ratio)
-      pdf.addImage(imgData, "PNG", 0, 0, A4_MM.width, A4_MM.height, undefined, "FAST");
+      ctx.drawImage(
+        rawCanvas,
+        bleedPx,
+        bleedPx,
+        cropped.width,
+        cropped.height,
+        0,
+        0,
+        cropped.width,
+        cropped.height
+      );
+
+      // Free memory from raw canvas
+      rawCanvas.width = 0;
+      rawCanvas.height = 0;
+
+      const w = cropped.width;
+      const h = cropped.height;
+
+      if (i === 0) {
+        // Create PDF with exact canvas pixel dimensions (1:1 embedding, no resampling)
+        pdf = new jsPDF({
+          unit: "px",
+          format: [w, h],
+          orientation: "portrait",
+          hotfixes: ["px_scaling"],
+        });
+      } else {
+        pdf!.addPage([w, h], "portrait");
+      }
+
+      // Use dataURL for compatibility, no "FAST" compression
+      const imgData = cropped.toDataURL("image/png", 1.0);
+      pdf!.addImage(imgData, "PNG", 0, 0, w, h);
+
+      // Free memory
+      cropped.width = 0;
+      cropped.height = 0;
 
       onProgress?.(30 + Math.floor(((i + 1) / pages.length) * 60));
     }
 
     onProgress?.(95);
+
+    if (!pdf) throw new Error("No pages found to export");
 
     const filename = `Rhosonics_Case_Study_${companyName.replace(/\s+/g, "_")}.pdf`;
     pdf.save(filename);
