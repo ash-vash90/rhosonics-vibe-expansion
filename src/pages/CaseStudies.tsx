@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Loader2, Eye } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Eye } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
 import { CaseStudySelector } from "@/components/case-studies/CaseStudySelector";
@@ -13,7 +13,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { exportCaseStudyAsPDF } from "@/lib/caseStudyPdfExport";
 import { useToast } from "@/hooks/use-toast";
 // Import images
 import rioTintoInstallation from "@/assets/case-studies/rio-tinto-installation.jpg";
@@ -152,8 +151,6 @@ const caseStudies: CaseStudy[] = [
 
 const CaseStudies = () => {
   const [selectedStudyId, setSelectedStudyId] = useState<string | null>(null);
-  const [isExporting, setIsExporting] = useState(false);
-  const [exportProgress, setExportProgress] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
   const { toast } = useToast();
   
@@ -165,34 +162,29 @@ const CaseStudies = () => {
     setSelectedStudyId(null);
   };
 
-  const handleExportPDF = async () => {
+  // Prefetch print route chunk on hover/focus
+  const handlePrefetchPrint = () => {
+    import("@/pages/CaseStudyPrint");
+  };
+
+  // Popup-blocker safe download handler
+  const handleDownloadPDF = () => {
     if (!selectedStudy) return;
-    
-    setShowPreview(false);
-    setIsExporting(true);
-    setExportProgress(0);
-    
-    try {
-      await exportCaseStudyAsPDF({
-        companyName: selectedStudy.company,
-        onProgress: setExportProgress,
-      });
-      
+
+    // Synchronous open to avoid popup blockers
+    const w = window.open("about:blank", "_blank", "noopener,noreferrer");
+
+    if (!w) {
       toast({
-        title: "PDF Downloaded",
-        description: `${selectedStudy.company} case study has been saved.`,
-      });
-    } catch (error) {
-      console.error('Export failed:', error);
-      toast({
-        title: "Export Failed",
-        description: "There was an error generating the PDF. Please try again.",
+        title: "Popup Blocked",
+        description: "Please allow popups to download the PDF.",
         variant: "destructive",
       });
-    } finally {
-      setIsExporting(false);
-      setExportProgress(0);
+      return;
     }
+
+    // Immediately set location (no async before this)
+    w.location.href = `/case-studies/${selectedStudy.id}/print?autoprint=1`;
   };
 
   return (
@@ -231,7 +223,6 @@ const CaseStudies = () => {
                     size="sm"
                     className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
                     onClick={() => setShowPreview(true)}
-                    disabled={isExporting}
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     <span className="hidden sm:inline">Preview</span>
@@ -240,20 +231,12 @@ const CaseStudies = () => {
                     variant="outline"
                     size="sm"
                     className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
-                    onClick={() => handleExportPDF()}
-                    disabled={isExporting}
+                    onClick={handleDownloadPDF}
+                    onMouseEnter={handlePrefetchPrint}
+                    onFocus={handlePrefetchPrint}
                   >
-                    {isExporting ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        <span className="hidden sm:inline">{exportProgress}%</span>
-                      </>
-                    ) : (
-                      <>
-                        <Download className="w-4 h-4 mr-2" />
-                        <span className="hidden sm:inline">Download PDF</span>
-                      </>
-                    )}
+                    <Download className="w-4 h-4 mr-2" />
+                    <span className="hidden sm:inline">Download PDF</span>
                   </Button>
                 </div>
               )}
@@ -325,18 +308,9 @@ const CaseStudies = () => {
                 <Button variant="outline" onClick={() => setShowPreview(false)}>
                   Cancel
                 </Button>
-                <Button onClick={() => handleExportPDF()} className="gap-2" disabled={isExporting}>
-                  {isExporting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      {exportProgress}%
-                    </>
-                  ) : (
-                    <>
-                      <Download className="w-4 h-4" />
-                      Download PDF
-                    </>
-                  )}
+                <Button onClick={handleDownloadPDF} className="gap-2">
+                  <Download className="w-4 h-4" />
+                  Download PDF
                 </Button>
               </div>
             </DialogContent>

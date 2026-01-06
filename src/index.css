@@ -752,30 +752,53 @@
   display: none !important;
 }
 
+/* ================================
+   PRINT ROUTE SPECIFIC STYLES
+   ================================ */
+
+/* Print route body class */
+body.print-mode {
+  background: white !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 /* Print Styles for A4 Case Study Documents */
 @media print {
-  /* Reset page margins and size */
+  /* Fix #2: Critical @page rule and margin control for consistent A4 */
   @page {
     size: A4 portrait;
     margin: 0;
   }
 
-  /* Hide non-printable elements */
-  header,
-  footer,
-  nav,
+  html, body {
+    width: 210mm !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  /* Kill all animations/transitions */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Hide non-print elements - scoped, not global button selector */
+  .print-toolbar,
+  .print-tip-banner,
   .no-print,
-  button,
+  nav,
+  header:not(.print-header),
+  footer:not(.print-footer),
   [data-export-exclude] {
     display: none !important;
   }
 
-  /* Reset body styles */
-  body {
-    background: white !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
+  /* Hide buttons ONLY inside the case study document (scoped) */
+  .case-study-document button {
+    display: none !important;
   }
 
   /* Container resets */
@@ -784,12 +807,31 @@
     min-height: auto !important;
   }
 
-  /* A4 Document Pages */
-  article {
+  /* Print page articles - explicit class for targeting */
+  article.print-page {
+    width: 210mm !important;
+    height: 297mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  article.print-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  /* Fallback for non-print-page articles */
+  article:not(.print-page) {
     width: 210mm !important;
     max-width: 210mm !important;
     height: 297mm !important;
-    aspect-ratio: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
@@ -799,10 +841,30 @@
     overflow: hidden !important;
   }
 
-  /* Last page shouldn't break after */
-  article:last-child {
+  article:not(.print-page):last-child {
     page-break-after: auto !important;
     break-after: auto !important;
+  }
+
+  /* Document wrapper - no gaps */
+  .case-study-document {
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* SCOPED print-color-adjust for efficiency */
+  .case-study-document,
+  .case-study-document * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Typography stabilization */
+  .case-study-document * {
+    font-kerning: normal !important;
+    text-rendering: geometricPrecision !important;
   }
 
   /* Ensure backgrounds print */
@@ -830,42 +892,29 @@
     print-color-adjust: exact !important;
   }
 
-  /* Remove interactive chart container padding for print */
-  .bb-chart-container {
-    padding: 0 !important;
+  /* Show static chart, hide interactive in print */
+  .case-study-document .pdf-only {
+    display: block !important;
   }
 
-  /* Ensure text doesn't break awkwardly */
-  h1, h2, h3, h4, h5, h6 {
-    page-break-after: avoid !important;
-    break-after: avoid !important;
+  .case-study-document .no-pdf {
+    display: none !important;
   }
 
-  p, blockquote {
+  /* Prevent orphans/widows */
+  .case-study-document p,
+  .case-study-document blockquote,
+  .case-study-document li {
     orphans: 3;
     widows: 3;
   }
 
-  /* Document wrapper - remove gap for print */
-  .flex.flex-col.items-center.gap-8 {
-    gap: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* Title bar should be hidden in print */
-  .bg-white.border-b.border-slate-200.py-4 {
-    display: none !important;
-  }
-
-  /* Ensure rounded corners don't clip content in print */
-  .rounded-lg,
-  .rounded-xl {
-    border-radius: 4px !important;
-  }
-
-  /* Ensure links show their URLs in print (optional) */
-  a[href^="http"]:after {
-    content: none !important; /* Remove if you want URLs to show */
+  /* Keep headings with following content */
+  .case-study-document h1,
+  .case-study-document h2,
+  .case-study-document h3 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
 
   /* Fix flex containers for print */
@@ -878,9 +927,14 @@
     display: grid !important;
   }
 
-  /* Chart container sizing for print */
-  .h-\[280px\],
-  .h-\[320px\] {
-    height: 200px !important;
+  /* Ensure rounded corners don't clip content in print */
+  .rounded-lg,
+  .rounded-xl {
+    border-radius: 4px !important;
+  }
+
+  /* Title bar should be hidden in print */
+  .bg-white.border-b.border-slate-200.py-4 {
+    display: none !important;
   }
 }
