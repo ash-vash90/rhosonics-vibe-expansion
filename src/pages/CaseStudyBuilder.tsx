@@ -12,8 +12,9 @@ import { useToast } from "@/hooks/use-toast";
 import { BuilderInputPanel } from "@/components/case-study-builder/BuilderInputPanel";
 import { PreviewControls } from "@/components/case-study-builder/PreviewControls";
 import { CaseStudyLibrary } from "@/components/case-study-builder/CaseStudyLibrary";
+import { AISuggestions } from "@/components/case-study-builder/AISuggestions";
 import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
-import { VisualCaseStudy, createEmptyCaseStudy } from "@/types/visualCaseStudy";
+import { VisualCaseStudy, createEmptyCaseStudy, ChartBuilderData } from "@/types/visualCaseStudy";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -364,6 +365,12 @@ const CaseStudyBuilder = () => {
               onChange={handleChange}
             />
           </div>
+          <AISuggestions
+            caseStudy={caseStudy}
+            onApplyChallenge={(text) => handleChange({ challenge: text })}
+            onApplySolution={(text) => handleChange({ solution: text })}
+            onApplyChartType={(chartData: ChartBuilderData) => handleChange({ chartData })}
+          />
         </div>
 
         {/* Right Panel - Preview */}
