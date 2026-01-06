@@ -1,8 +1,10 @@
-import { MapPin, CheckCircle2, Gauge, Quote, Phone, Mail, Globe } from "lucide-react";
+import { MapPin, CheckCircle2, Gauge, Quote, Phone, Mail, Globe, ImageIcon, BarChart3 } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { TechnologyComparisonChart } from "@/components/charts/TechnologyComparisonChart";
+import { BrandChart } from "@/components/tools/BrandChart";
+import { ChartBuilderData } from "@/types/visualCaseStudy";
 
-interface CaseStudy {
+export interface CaseStudy {
   id: string;
   company: string;
   location: string;
@@ -32,9 +34,31 @@ interface CaseStudy {
 interface CaseStudyDocumentProps {
   study: CaseStudy;
   printMode?: boolean;
+  editMode?: boolean;
+  chartData?: ChartBuilderData;
 }
 
-export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumentProps) => {
+export const CaseStudyDocument = ({ 
+  study, 
+  printMode = false, 
+  editMode = false,
+  chartData,
+}: CaseStudyDocumentProps) => {
+  const isPlaceholder = (value: string) => value.startsWith("[") && value.endsWith("]");
+  
+  // Convert chartData to BrandChart format
+  const buildChartData = () => {
+    if (!chartData) return null;
+    return chartData.dataPoints.map(dp => ({
+      name: dp.name,
+      value: dp.value,
+      value2: dp.value2,
+      value3: dp.value3,
+    }));
+  };
+
+  const chartDataForBrand = buildChartData();
+
   return (
     <div className="case-study-document flex flex-col items-center gap-8 py-8 px-4">
       {/* Page 1 - Cover & Introduction */}
@@ -55,28 +79,37 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
 
         {/* Hero Image */}
         <div className="relative h-[280px] overflow-hidden flex-shrink-0">
-          <img 
-            src={study.heroImage} 
-            alt={`${study.company} installation`}
-            className="w-full h-full object-cover"
-            loading={printMode ? "eager" : "lazy"}
-          />
+          {study.heroImage ? (
+            <img 
+              src={study.heroImage} 
+              alt={`${study.company} installation`}
+              className="w-full h-full object-cover"
+              loading={printMode ? "eager" : "lazy"}
+            />
+          ) : (
+            <div className="w-full h-full bg-slate-200 flex items-center justify-center">
+              <div className="text-center text-slate-400">
+                <ImageIcon className="w-12 h-12 mx-auto mb-2" />
+                <span className="text-sm">{editMode ? "Upload hero image" : "No image"}</span>
+              </div>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-rho-obsidian/90 via-rho-obsidian/40 to-transparent" />
           
           {/* Overlay Content */}
           <div className="absolute bottom-0 left-0 right-0 p-8">
             <div className="flex items-center gap-2 mb-2">
-              <span className="px-3 py-1 bg-primary text-white label-tech-sm rounded">
+              <span className={`px-3 py-1 label-tech-sm rounded ${isPlaceholder(study.industry) ? "bg-slate-500/50 text-white/70" : "bg-primary text-white"}`}>
                 {study.industry}
               </span>
-              <span className="px-3 py-1 bg-white/20 backdrop-blur text-white label-tech-sm rounded">
+              <span className={`px-3 py-1 backdrop-blur label-tech-sm rounded ${isPlaceholder(study.product) ? "bg-slate-500/50 text-white/70" : "bg-white/20 text-white"}`}>
                 {study.product}
               </span>
             </div>
-            <h1 className="font-ui font-bold text-4xl text-white mb-2">
+            <h1 className={`font-ui font-bold text-4xl mb-2 ${isPlaceholder(study.company) ? "text-white/50" : "text-white"}`}>
               {study.company}
             </h1>
-            <div className="flex items-center gap-2 text-white/80">
+            <div className={`flex items-center gap-2 ${isPlaceholder(study.location) ? "text-white/40" : "text-white/80"}`}>
               <MapPin className="w-4 h-4" />
               <span className="text-sm">{study.location}</span>
             </div>
@@ -86,7 +119,7 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
         {/* Main Content */}
         <div className="flex-1 p-8 flex flex-col">
           {/* Tagline */}
-          <p className="text-xl text-primary font-semibold mb-6 border-l-4 border-primary pl-4">
+          <p className={`text-xl font-semibold mb-6 border-l-4 border-primary pl-4 ${isPlaceholder(study.tagline) ? "text-slate-400 italic" : "text-primary"}`}>
             {study.tagline}
           </p>
 
@@ -96,14 +129,14 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
             <div className="space-y-6">
               <div>
                 <h2 className="label-tech text-slate-500 mb-2">THE CHALLENGE</h2>
-                <p className="text-sm text-slate-700 leading-relaxed">
+                <p className={`text-sm leading-relaxed ${isPlaceholder(study.challenge) ? "text-slate-400 italic" : "text-slate-700"}`}>
                   {study.challenge}
                 </p>
               </div>
 
               <div>
                 <h2 className="label-tech text-slate-500 mb-2">OUR SOLUTION</h2>
-                <p className="text-sm text-slate-700 leading-relaxed">
+                <p className={`text-sm leading-relaxed ${isPlaceholder(study.solution) ? "text-slate-400 italic" : "text-slate-700"}`}>
                   {study.solution}
                 </p>
               </div>
@@ -113,10 +146,10 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
             <div className="space-y-6">
               {/* Primary Stat Card */}
               <div className="bg-rho-obsidian p-6 rounded-lg text-center">
-                <div className="font-data text-4xl text-primary mb-1">
+                <div className={`font-data text-4xl mb-1 ${study.primaryStat.value === "—" ? "text-slate-500" : "text-primary"}`}>
                   {study.primaryStat.value}
                 </div>
-                <div className="label-tech-sm text-slate-400">
+                <div className={`label-tech-sm ${isPlaceholder(study.primaryStat.label) ? "text-slate-500" : "text-slate-400"}`}>
                   {study.primaryStat.label}
                 </div>
               </div>
@@ -128,12 +161,16 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
                   SPECIFICATIONS
                 </h3>
                 <div className="space-y-2">
-                  {study.specs.map((spec, i) => (
-                    <div key={i} className="flex justify-between text-sm py-1 border-b border-slate-200 last:border-0">
-                      <span className="text-slate-500">{spec.label}</span>
-                      <span className="font-data text-slate-800">{spec.value}</span>
-                    </div>
-                  ))}
+                  {study.specs.length > 0 ? (
+                    study.specs.map((spec, i) => (
+                      <div key={i} className="flex justify-between text-sm py-1 border-b border-slate-200 last:border-0">
+                        <span className="text-slate-500">{spec.label || "[Label]"}</span>
+                        <span className="font-data text-slate-800">{spec.value || "[Value]"}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-slate-400 italic">[Add specifications]</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -158,7 +195,7 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
             <span className="font-logo text-white text-lg">Rhosonics</span>
           </div>
           <div className="label-tech text-slate-400">
-            {study.company.toUpperCase()} — RESULTS
+            {(isPlaceholder(study.company) ? "COMPANY" : study.company).toUpperCase()} — RESULTS
           </div>
         </div>
 
@@ -171,19 +208,48 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
               KEY RESULTS
             </h2>
             <div className="grid grid-cols-2 gap-3">
-              {study.results.map((result, i) => (
-                <div key={i} className="flex items-start gap-3 bg-eco-surface p-3 rounded-lg">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="font-data text-xs text-primary">{i + 1}</span>
+              {study.results.length > 0 && study.results.some(r => r.trim()) ? (
+                study.results.map((result, i) => (
+                  <div key={i} className="flex items-start gap-3 bg-eco-surface p-3 rounded-lg">
+                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="font-data text-xs text-primary">{i + 1}</span>
+                    </div>
+                    <span className={`text-sm ${result.trim() ? "text-slate-700" : "text-slate-400 italic"}`}>
+                      {result || "[Key result]"}
+                    </span>
                   </div>
-                  <span className="text-sm text-slate-700">{result}</span>
+                ))
+              ) : (
+                <div className="col-span-2 text-sm text-slate-400 italic p-3 bg-eco-surface rounded-lg">
+                  [Add key results]
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
-          {/* Chart Section */}
-          {study.chartImage && study.id !== "weir-minerals" && (
+          {/* Chart Section - Builder Chart Data */}
+          {chartData && chartDataForBrand && !printMode && (
+            <div className="mb-8">
+              <h2 className="label-tech text-slate-500 mb-4">
+                {chartData.title || "MEASUREMENT DATA"}
+              </h2>
+              <div className={`rounded-lg p-4 h-[240px] overflow-hidden ${chartData.background === "dark" ? "bg-rho-obsidian" : "bg-slate-50 border border-slate-200"}`}>
+                <BrandChart
+                  type={chartData.type}
+                  data={chartDataForBrand}
+                  colors={{
+                    primary: chartData.colors.primary,
+                    secondary: chartData.colors.secondary || "#73B82E",
+                    tertiary: chartData.colors.tertiary || "#a69359",
+                  }}
+                  isLightBg={chartData.background === "light"}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Chart Section - Static Image */}
+          {study.chartImage && !chartData && study.id !== "weir-minerals" && (
             <div className="mb-8">
               <h2 className="label-tech text-slate-500 mb-4">MEASUREMENT DATA</h2>
               <div className="border border-slate-200 rounded-lg overflow-hidden">
@@ -196,13 +262,23 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
             </div>
           )}
 
-          {/* Interactive Chart for Weir Minerals */}
-          {study.id === "weir-minerals" && (
+          {/* Chart Placeholder for Builder */}
+          {!chartData && !study.chartImage && editMode && (
+            <div className="mb-8">
+              <h2 className="label-tech text-slate-500 mb-4">DATA VISUALIZATION</h2>
+              <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 flex flex-col items-center justify-center text-slate-400 h-[200px]">
+                <BarChart3 className="w-10 h-10 mb-2" />
+                <span className="text-sm">Generate or upload a chart</span>
+              </div>
+            </div>
+          )}
+
+          {/* Interactive Chart for Weir Minerals (legacy) */}
+          {study.id === "weir-minerals" && !chartData && (
             <div className="mb-8 flex-1">
               <h2 className="label-tech text-slate-500 mb-4">TECHNOLOGY COMPARISON</h2>
 
               {printMode ? (
-                /* Static image only in print mode - no interactive chart mounted */
                 <div className="border border-slate-200 rounded-lg overflow-hidden">
                   <img
                     src={study.chartImage}
@@ -213,7 +289,6 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
                 </div>
               ) : (
                 <>
-                  {/* PDF export uses static image for reliability */}
                   <div className="pdf-only hidden border border-slate-200 rounded-lg overflow-hidden">
                     <img
                       src={study.chartImage}
@@ -222,7 +297,6 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
                     />
                   </div>
 
-                  {/* Web view keeps interactive chart */}
                   <div className="no-pdf">
                     <div className="bg-rho-obsidian rounded-lg p-4 h-[280px] overflow-hidden">
                       <TechnologyComparisonChart />
@@ -234,25 +308,34 @@ export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumen
           )}
 
           {/* Quote Section */}
-          {study.quote && (
+          {study.quote ? (
             <div className="bg-gradient-to-br from-slate-50 to-eco-surface border-l-4 border-primary p-6 rounded-r-lg mb-8">
               <Quote className="w-6 h-6 text-primary/30 mb-2" />
-              <blockquote className="text-base text-slate-700 italic mb-3">
-                "{study.quote.text}"
+              <blockquote className={`text-base italic mb-3 ${study.quote.text ? "text-slate-700" : "text-slate-400"}`}>
+                "{study.quote.text || "[Enter quote text]"}"
               </blockquote>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <span className="font-ui font-bold text-primary text-xs">
-                    {study.quote.author.split(' ').map(n => n[0]).join('')}
+                    {study.quote.author ? study.quote.author.split(' ').map(n => n[0]).join('') : "?"}
                   </span>
                 </div>
                 <div>
-                  <div className="font-ui font-semibold text-sm text-slate-800">{study.quote.author}</div>
-                  <div className="text-xs text-slate-500">{study.quote.role}</div>
+                  <div className={`font-ui font-semibold text-sm ${study.quote.author ? "text-slate-800" : "text-slate-400"}`}>
+                    {study.quote.author || "[Author name]"}
+                  </div>
+                  <div className={`text-xs ${study.quote.role ? "text-slate-500" : "text-slate-400"}`}>
+                    {study.quote.role || "[Role]"}
+                  </div>
                 </div>
               </div>
             </div>
-          )}
+          ) : editMode ? (
+            <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 mb-8 text-center text-slate-400">
+              <Quote className="w-8 h-8 mx-auto mb-2" />
+              <span className="text-sm">[Optional: Add customer quote]</span>
+            </div>
+          ) : null}
 
           {/* Contact CTA */}
           <div className="mt-auto bg-rho-obsidian rounded-lg p-6">
