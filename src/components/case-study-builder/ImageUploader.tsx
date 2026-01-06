@@ -76,12 +76,12 @@ export const ImageUploader = ({
   }
 
   return (
-    <div
+    <label
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       className={cn(
-        "border-2 border-dashed rounded-lg transition-colors flex flex-col items-center justify-center p-6 cursor-pointer",
+        "relative border-2 border-dashed rounded-lg transition-colors flex flex-col items-center justify-center p-6 cursor-pointer",
         isDragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50",
         className
       )}
@@ -91,7 +91,7 @@ export const ImageUploader = ({
         type="file"
         accept="image/*"
         onChange={handleInputChange}
-        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        className="sr-only"
       />
       <div className="flex flex-col items-center gap-2 text-center pointer-events-none">
         {isDragging ? (
@@ -106,6 +106,6 @@ export const ImageUploader = ({
           Drag & drop or click to browse
         </p>
       </div>
-    </div>
+    </label>
   );
 };
