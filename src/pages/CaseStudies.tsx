@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Eye, Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Eye, Plus, LogIn, LogOut } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
 import { CaseStudySelector } from "@/components/case-studies/CaseStudySelector";
@@ -14,6 +14,8 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 // Import images
 import rioTintoInstallation from "@/assets/case-studies/rio-tinto-installation.jpg";
 import rioTintoChart from "@/assets/case-studies/rio-tinto-chart.jpg";
@@ -153,6 +155,7 @@ const CaseStudies = () => {
   const [selectedStudyId, setSelectedStudyId] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
   
   const selectedStudy = selectedStudyId 
     ? caseStudies.find(s => s.id === selectedStudyId) 
@@ -160,6 +163,11 @@ const CaseStudies = () => {
 
   const handleBack = () => {
     setSelectedStudyId(null);
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    toast({ title: "Signed out" });
   };
 
   // Prefetch print route chunk on hover/focus
@@ -256,6 +264,28 @@ const CaseStudies = () => {
                 <span className="hidden sm:inline">Visit Website</span>
                 <ExternalLink className="w-4 h-4" />
               </a>
+              {user ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleSignOut}
+                  className="text-slate-400 hover:text-white gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="hidden sm:inline">Sign Out</span>
+                </Button>
+              ) : (
+                <Link to="/auth">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-slate-400 hover:text-white gap-2"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    <span className="hidden sm:inline">Sign In</span>
+                  </Button>
+                </Link>
+              )}
             </nav>
           </div>
         </div>
