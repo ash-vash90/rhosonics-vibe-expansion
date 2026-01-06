@@ -172,7 +172,8 @@ const CaseStudies = () => {
     if (!selectedStudy) return;
 
     // Synchronous open to avoid popup blockers
-    const w = window.open("about:blank", "_blank", "noopener,noreferrer");
+    // Note: Don't pass window features string - just target name
+    const w = window.open("", "_blank");
 
     if (!w) {
       toast({
