@@ -31,13 +31,14 @@ interface CaseStudy {
 
 interface CaseStudyDocumentProps {
   study: CaseStudy;
+  printMode?: boolean;
 }
 
-export const CaseStudyDocument = ({ study }: CaseStudyDocumentProps) => {
+export const CaseStudyDocument = ({ study, printMode = false }: CaseStudyDocumentProps) => {
   return (
     <div className="case-study-document flex flex-col items-center gap-8 py-8 px-4">
       {/* Page 1 - Cover & Introduction */}
-      <article className="bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] relative overflow-hidden flex flex-col print:shadow-none print:max-w-none print:w-[210mm] print:h-[297mm]">
+      <article className={`bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] relative overflow-hidden flex flex-col print:shadow-none print:max-w-none print:w-[210mm] print:h-[297mm] ${printMode ? "print-page" : ""}`}>
         {/* Header Bar */}
         <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -58,6 +59,7 @@ export const CaseStudyDocument = ({ study }: CaseStudyDocumentProps) => {
             src={study.heroImage} 
             alt={`${study.company} installation`}
             className="w-full h-full object-cover"
+            loading={printMode ? "eager" : "lazy"}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-rho-obsidian/90 via-rho-obsidian/40 to-transparent" />
           
@@ -146,7 +148,7 @@ export const CaseStudyDocument = ({ study }: CaseStudyDocumentProps) => {
       </article>
 
       {/* Page 2 - Results & Data */}
-      <article className="bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] relative overflow-hidden flex flex-col print:shadow-none print:max-w-none print:w-[210mm] print:h-[297mm]">
+      <article className={`bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] relative overflow-hidden flex flex-col print:shadow-none print:max-w-none print:w-[210mm] print:h-[297mm] ${printMode ? "print-page" : ""}`}>
         {/* Header Bar */}
         <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -199,21 +201,35 @@ export const CaseStudyDocument = ({ study }: CaseStudyDocumentProps) => {
             <div className="mb-8 flex-1">
               <h2 className="label-tech text-slate-500 mb-4">TECHNOLOGY COMPARISON</h2>
 
-              {/* PDF export uses static image for reliability */}
-              <div className="pdf-only hidden border border-slate-200 rounded-lg overflow-hidden">
-                <img
-                  src={study.chartImage}
-                  alt={`${study.company} technology comparison chart`}
-                  className="w-full object-contain max-h-64"
-                />
-              </div>
-
-              {/* Web view keeps interactive chart */}
-              <div className="no-pdf">
-                <div className="bg-rho-obsidian rounded-lg p-4 h-[280px] overflow-hidden">
-                  <TechnologyComparisonChart />
+              {printMode ? (
+                /* Static image only in print mode - no interactive chart mounted */
+                <div className="border border-slate-200 rounded-lg overflow-hidden">
+                  <img
+                    src={study.chartImage}
+                    alt={`${study.company} technology comparison chart`}
+                    className="w-full object-contain max-h-64"
+                    loading="eager"
+                  />
                 </div>
-              </div>
+              ) : (
+                <>
+                  {/* PDF export uses static image for reliability */}
+                  <div className="pdf-only hidden border border-slate-200 rounded-lg overflow-hidden">
+                    <img
+                      src={study.chartImage}
+                      alt={`${study.company} technology comparison chart`}
+                      className="w-full object-contain max-h-64"
+                    />
+                  </div>
+
+                  {/* Web view keeps interactive chart */}
+                  <div className="no-pdf">
+                    <div className="bg-rho-obsidian rounded-lg p-4 h-[280px] overflow-hidden">
+                      <TechnologyComparisonChart />
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
