@@ -244,6 +244,17 @@ const CaseStudyBuilder = () => {
     });
   }, [navigate, toast]);
 
+  const handleConvertFromPDF = useCallback((convertedStudy: VisualCaseStudy) => {
+    setCaseStudy(convertedStudy);
+    setSupabaseId(null);
+    setShowLibrary(false);
+    navigate("/case-studies/builder", { replace: true });
+    toast({
+      title: "Converted",
+      description: "PDF case study converted. Review and save when ready.",
+    });
+  }, [navigate, toast]);
+
   const documentStudy = useMemo(() => ({
     id: caseStudy.id,
     company: caseStudy.company || "[Company Name]",
@@ -423,6 +434,7 @@ const CaseStudyBuilder = () => {
             <CaseStudyLibrary
               onSelect={handleSelectFromLibrary}
               onClose={() => setShowLibrary(false)}
+              onConvert={handleConvertFromPDF}
             />
           </div>
         </DialogContent>
