@@ -53,19 +53,18 @@ Extract information from the provided case study document and return it as JSON 
 If certain fields cannot be determined from the text, use reasonable defaults or leave as empty string.
 Return ONLY valid JSON, no markdown or explanation.`;
 
-    const response = await fetch("https://api.lovable.dev/v1/chat/completions", {
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${LOVABLE_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "openai/gpt-5-mini",
+        model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `Convert this case study document to structured JSON:\n\nFile: ${fileName}\n\n${text.substring(0, 15000)}` }
         ],
-        temperature: 0.3,
       }),
     });
 
