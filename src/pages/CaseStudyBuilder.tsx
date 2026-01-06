@@ -118,21 +118,7 @@ const CaseStudyBuilder = () => {
     }
 
     setIsExporting(true);
-    
-    // Store data BEFORE opening the window to avoid race conditions
-    try {
-      sessionStorage.setItem("visual-case-study-print", JSON.stringify(caseStudy));
-    } catch (e) {
-      console.error("Failed to store case study:", e);
-      toast({
-        title: "Export Failed",
-        description: "Could not prepare case study for printing.",
-        variant: "destructive",
-      });
-      setIsExporting(false);
-      return;
-    }
-    
+
     // Open popup synchronously to avoid blockers
     const w = window.open("", "_blank");
     if (!w) {
@@ -144,12 +130,30 @@ const CaseStudyBuilder = () => {
       setIsExporting(false);
       return;
     }
-    
-    // Navigate after a short delay to ensure sessionStorage is flushed
-    setTimeout(() => {
-      w.location.href = `${window.location.origin}/case-studies/builder/print?autoprint=1`;
-    }, 50);
-    
+
+    // IMPORTANT: sessionStorage is per-tab. Write into the NEW tab's storage.
+    const payload = JSON.stringify(caseStudy);
+    try {
+      w.sessionStorage.setItem("visual-case-study-print", payload);
+      // Fallback for browsers that block cross-window sessionStorage writes
+      localStorage.setItem("visual-case-study-print", payload);
+    } catch (e) {
+      console.error("Failed to prepare print data:", e);
+      toast({
+        title: "Export Failed",
+        description: "Could not prepare case study for printing.",
+        variant: "destructive",
+      });
+      try {
+        w.close();
+      } catch {
+        // ignore
+      }
+      setIsExporting(false);
+      return;
+    }
+
+    w.location.href = `${window.location.origin}/case-studies/builder/print?autoprint=1`;
     setTimeout(() => setIsExporting(false), 2000);
   }, [caseStudy, toast]);
 
