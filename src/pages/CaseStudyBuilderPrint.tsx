@@ -20,10 +20,16 @@ const CaseStudyBuilderPrint = () => {
   const [caseStudy, setCaseStudy] = useState<VisualCaseStudy | null>(null);
   
   useEffect(() => {
-    const saved = sessionStorage.getItem("visual-case-study-print");
+    const KEY = "visual-case-study-print";
+    const savedFromSession = sessionStorage.getItem(KEY);
+    const savedFromLocal = savedFromSession ? null : localStorage.getItem(KEY);
+    const saved = savedFromSession ?? savedFromLocal;
+
     if (saved) {
       try {
         setCaseStudy(JSON.parse(saved));
+        // If we used localStorage as a fallback, clean it up so it doesn't linger.
+        if (savedFromLocal) localStorage.removeItem(KEY);
       } catch {
         setStatus("error");
         setErrorMessage("Failed to load case study data");
