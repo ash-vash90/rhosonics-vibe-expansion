@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BarChart3, Upload } from "lucide-react";
+import { BarChart3, Upload, Sparkles, Loader2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ImageUploader } from "./ImageUploader";
 import { ChartBuilderData } from "@/types/visualCaseStudy";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface ChartSectionProps {
   chartImage: string | null;
@@ -22,6 +24,8 @@ export const ChartSection = ({
   onChartDataChange,
 }: ChartSectionProps) => {
   const [mode, setMode] = useState<"generate" | "upload">(chartData ? "generate" : "upload");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const { toast } = useToast();
 
   const handleTypeChange = (type: ChartBuilderData["type"]) => {
     onChartDataChange({
@@ -65,6 +69,54 @@ export const ChartSection = ({
       ...chartData,
       dataPoints: chartData.dataPoints.filter((_, i) => i !== index),
     });
+  };
+
+  const analyzeAndConvert = async () => {
+    if (!chartImage) return;
+
+    setIsAnalyzing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("analyze-chart-image", {
+        body: { imageBase64: chartImage },
+      });
+
+      if (error) throw error;
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      // Apply extracted data with Rhosonics brand colors
+      const extractedData: ChartBuilderData = {
+        type: data.type || "bar",
+        title: data.title || "Extracted Chart",
+        dataPoints: data.dataPoints || [],
+        colors: {
+          primary: "#33993c",
+          secondary: "#73B82E",
+        },
+        labels: data.labels,
+        background: "dark",
+      };
+
+      onChartDataChange(extractedData);
+      onChartImageChange(null); // Clear the uploaded image
+      setMode("generate"); // Switch to generate tab
+
+      toast({
+        title: "Chart Analyzed",
+        description: `Extracted ${extractedData.dataPoints.length} data points as a ${extractedData.type} chart.`,
+      });
+    } catch (err) {
+      console.error("Chart analysis failed:", err);
+      toast({
+        title: "Analysis Failed",
+        description: err instanceof Error ? err.message : "Could not analyze the chart image.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   return (
@@ -197,7 +249,7 @@ export const ChartSection = ({
           )}
         </TabsContent>
 
-        <TabsContent value="upload" className="mt-4">
+        <TabsContent value="upload" className="mt-4 space-y-4">
           <ImageUploader
             value={chartImage}
             onChange={onChartImageChange}
@@ -205,8 +257,34 @@ export const ChartSection = ({
             label="Upload chart image"
             className="min-h-[120px]"
           />
-          <p className="text-xs text-muted-foreground mt-2">
-            Upload an existing chart image. For best results, use a 16:9 aspect ratio.
+          
+          {chartImage && (
+            <Button
+              variant="default"
+              className="w-full gap-2"
+              onClick={analyzeAndConvert}
+              disabled={isAnalyzing}
+            >
+              {isAnalyzing ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Analyzing Chart...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4" />
+                  AI Convert to Billboard.js
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </Button>
+          )}
+          
+          <p className="text-xs text-muted-foreground">
+            {chartImage 
+              ? "Click above to extract data and convert to a branded Billboard.js chart."
+              : "Upload an existing chart image. AI can analyze it and recreate it with Rhosonics branding."
+            }
           </p>
         </TabsContent>
       </Tabs>
