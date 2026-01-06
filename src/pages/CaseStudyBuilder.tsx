@@ -118,8 +118,22 @@ const CaseStudyBuilder = () => {
     }
 
     setIsExporting(true);
-    sessionStorage.setItem("visual-case-study-print", JSON.stringify(caseStudy));
     
+    // Store data BEFORE opening the window to avoid race conditions
+    try {
+      sessionStorage.setItem("visual-case-study-print", JSON.stringify(caseStudy));
+    } catch (e) {
+      console.error("Failed to store case study:", e);
+      toast({
+        title: "Export Failed",
+        description: "Could not prepare case study for printing.",
+        variant: "destructive",
+      });
+      setIsExporting(false);
+      return;
+    }
+    
+    // Open popup synchronously to avoid blockers
     const w = window.open("", "_blank");
     if (!w) {
       toast({
@@ -131,7 +145,11 @@ const CaseStudyBuilder = () => {
       return;
     }
     
-    w.location.href = `/case-studies/builder/print?autoprint=1`;
+    // Navigate after a short delay to ensure sessionStorage is flushed
+    setTimeout(() => {
+      w.location.href = `${window.location.origin}/case-studies/builder/print?autoprint=1`;
+    }, 50);
+    
     setTimeout(() => setIsExporting(false), 2000);
   }, [caseStudy, toast]);
 
