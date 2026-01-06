@@ -235,7 +235,7 @@ export const CaseStudyDocument = ({
               </h2>
               <div className={`rounded-lg p-4 h-[240px] overflow-hidden ${chartData.background === "dark" ? "bg-rho-obsidian" : "bg-slate-50 border border-slate-200"}`}>
                 <BrandChart
-                  type={chartData.type}
+                  chartType={chartData.type}
                   data={chartDataForBrand}
                   colors={{
                     primary: chartData.colors.primary,

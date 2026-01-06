@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Eye } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Eye, Plus } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
 import { CaseStudySelector } from "@/components/case-studies/CaseStudySelector";
@@ -369,11 +369,19 @@ const CaseStudies = () => {
           
           {/* Case Study Selector */}
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="mb-8">
-              <h2 className="label-tech text-slate-500 mb-2">SELECT A CASE STUDY</h2>
-              <p className="text-slate-600">
-                Click on any case study to view the full document in A4 format
-              </p>
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="label-tech text-slate-500 mb-2">SELECT A CASE STUDY</h2>
+                <p className="text-slate-600">
+                  Click on any case study to view the full document in A4 format
+                </p>
+              </div>
+              <Link to="/case-studies/builder">
+                <Button className="gap-2">
+                  <Plus className="w-4 h-4" />
+                  Create New
+                </Button>
+              </Link>
             </div>
             
             <CaseStudySelector 
