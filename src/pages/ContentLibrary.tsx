@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { FileText, BookOpen, Presentation, ScrollText, ChevronRight, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 const CONTENT_TYPES = [
   {
@@ -8,7 +11,6 @@ const CONTENT_TYPES = [
     description: "Customer success stories with metrics and results",
     icon: FileText,
     route: "/case-studies/builder",
-    count: 0,
     available: true,
   },
   {
@@ -17,7 +19,6 @@ const CONTENT_TYPES = [
     description: "Technical deep-dives and research documents",
     icon: BookOpen,
     route: null,
-    count: 0,
     available: false,
   },
   {
@@ -26,7 +27,6 @@ const CONTENT_TYPES = [
     description: "Slide decks for sales and marketing",
     icon: Presentation,
     route: null,
-    count: 0,
     available: false,
   },
   {
@@ -35,12 +35,32 @@ const CONTENT_TYPES = [
     description: "How-to documents and best practices",
     icon: ScrollText,
     route: null,
-    count: 0,
     available: false,
   },
 ];
 
 const ContentLibrary = () => {
+  const { user } = useAuth();
+  const [counts, setCounts] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      if (!user) {
+        setCounts({});
+        return;
+      }
+
+      const { count } = await supabase
+        .from("saved_case_studies")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.id);
+
+      setCounts({ "case-studies": count || 0 });
+    };
+
+    fetchCounts();
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -82,6 +102,11 @@ const ContentLibrary = () => {
                       </div>
                       <p className="text-sm text-muted-foreground mb-3">{type.description}</p>
                       <div className="flex items-center gap-2">
+                        {counts[type.id] > 0 ? (
+                          <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground font-medium">
+                            {counts[type.id]} saved
+                          </span>
+                        ) : null}
                         <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium">
                           <Plus className="w-3 h-3 inline mr-1" />
                           Create New
