@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const Index = lazy(() => import("./pages/Index"));
 const Tools = lazy(() => import("./pages/Tools"));
 const Auth = lazy(() => import("./pages/Auth"));
+const ContentLibrary = lazy(() => import("./pages/ContentLibrary"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
 const CaseStudyPrint = lazy(() => import("./pages/CaseStudyPrint"));
 const CaseStudyBuilder = lazy(() => import("./pages/CaseStudyBuilder"));
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/library" element={<ContentLibrary />} />
           <Route path="/case-studies/:id/print" element={<CaseStudyPrint />} />
           <Route path="/case-studies/builder/print" element={<CaseStudyBuilderPrint />} />
           <Route path="/case-studies/builder/:id?" element={<CaseStudyBuilder />} />

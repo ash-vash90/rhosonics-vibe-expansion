@@ -76,7 +76,7 @@ const navSections: NavSection[] = [
     label: "TOOLS",
     bridge: "Create & generate.",
     items: [
-      { id: "case-study-builder", label: "Case Study Builder", highlight: true },
+      { id: "content-library", label: "Content Library", highlight: true },
       { id: "ai-tools-page", label: "All AI Tools →", highlight: true },
     ],
   },
@@ -258,11 +258,11 @@ export const Navigation = () => {
                     );
                   }
                   
-                  if (item.id === 'case-study-builder') {
+                  if (item.id === 'content-library') {
                     return (
                       <Link
                         key={item.id}
-                        to="/case-studies/builder"
+                        to="/library"
                         className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
                       >
                         <span>{item.label}</span>
