@@ -128,8 +128,8 @@ export const OriginStory = () => {
 
           {/* Story narrative */}
           <div className="max-w-3xl">
-            <p className="text-xl md:text-2xl font-ui text-slate-100 leading-relaxed mb-6">
-              It started with a question in a Dutch garage: 
+            <p className="text-xl md:text-2xl font-ui leading-relaxed mb-6">
+              <span className="text-slate-400">It started with a question in a Dutch garage:</span>
               <span className="text-earth-ochre font-semibold"> how do you measure beer density?</span>
             </p>
             <p className="text-lg text-slate-400 leading-relaxed mb-8">
