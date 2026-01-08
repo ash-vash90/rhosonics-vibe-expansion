@@ -71,6 +71,15 @@ const navSections: NavSection[] = [
       { id: "case-studies-page", label: "Full Case Studies →", highlight: true },
     ],
   },
+  {
+    id: "07",
+    label: "TOOLS",
+    bridge: "Create & generate.",
+    items: [
+      { id: "case-study-builder", label: "Case Study Builder", highlight: true },
+      { id: "ai-tools-page", label: "All AI Tools →", highlight: true },
+    ],
+  },
 ];
 
 // Get all item IDs for scroll spy
@@ -235,12 +244,38 @@ export const Navigation = () => {
                 {section.items.map((item) => {
                   const isActive = activeSection === item.id;
                   
-                  // Special handling for case studies page link
+                  // Special handling for page links
                   if (item.id === 'case-studies-page') {
                     return (
                       <Link
                         key={item.id}
                         to="/case-studies"
+                        className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
+                      >
+                        <span>{item.label}</span>
+                        <ChevronRight className="w-3 h-3 opacity-100" />
+                      </Link>
+                    );
+                  }
+                  
+                  if (item.id === 'case-study-builder') {
+                    return (
+                      <Link
+                        key={item.id}
+                        to="/case-studies/builder"
+                        className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
+                      >
+                        <span>{item.label}</span>
+                        <ChevronRight className="w-3 h-3 opacity-100" />
+                      </Link>
+                    );
+                  }
+                  
+                  if (item.id === 'ai-tools-page') {
+                    return (
+                      <Link
+                        key={item.id}
+                        to="/tools"
                         className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
                       >
                         <span>{item.label}</span>
