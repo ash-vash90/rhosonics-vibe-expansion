@@ -59,6 +59,63 @@ export const OriginStory = () => {
         }
       );
 
+      // Timeline connector line animation
+      const timelineConnector = milestonesRef.current?.querySelector('.timeline-connector');
+      if (timelineConnector) {
+        gsap.fromTo(timelineConnector,
+          { scaleX: 0, transformOrigin: "left center" },
+          {
+            scaleX: 1,
+            duration: 1.2,
+            ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: milestonesRef.current,
+              start: "top 80%",
+            }
+          }
+        );
+      }
+
+      // Timeline dots animation
+      const timelineDots = milestonesRef.current?.querySelectorAll('.timeline-dot');
+      if (timelineDots) {
+        gsap.fromTo(timelineDots,
+          { scale: 0, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.3,
+            ease: "back.out(2)",
+            scrollTrigger: {
+              trigger: milestonesRef.current,
+              start: "top 80%",
+            }
+          }
+        );
+      }
+
+      // Progress pulses
+      const progressPulses = milestonesRef.current?.querySelectorAll('.progress-pulse');
+      if (progressPulses) {
+        progressPulses.forEach((pulse, index) => {
+          gsap.fromTo(pulse,
+            { scaleX: 0, opacity: 0, transformOrigin: "left center" },
+            {
+              scaleX: 1,
+              opacity: 1,
+              duration: 0.6,
+              delay: 0.3 + (index * 0.3),
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: milestonesRef.current,
+                start: "top 80%",
+              }
+            }
+          );
+        });
+      }
+
       // Milestones stagger
       const milestones = milestonesRef.current?.querySelectorAll('.milestone-card');
       if (milestones) {
@@ -151,52 +208,91 @@ export const OriginStory = () => {
         </div>
       </div>
 
-      {/* Journey milestones */}
-      <div ref={milestonesRef} className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Milestone 1 - Garage */}
-        <div className="milestone-card group relative">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-earth-ochre/60 transition-colors">
-              <Wrench className="w-5 h-5 text-earth-ochre" />
-            </div>
-            <div>
-              <div className="font-data text-xs text-earth-ochre mb-1">1984</div>
-              <h3 className="font-ui font-semibold text-foreground mb-2">The Garage</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                First prototype built on a workbench. One engineer, one problem, endless curiosity.
-              </p>
-            </div>
-          </div>
+      {/* Journey milestones with visual timeline */}
+      <div ref={milestonesRef} className="mt-12 relative">
+        {/* Timeline connector line - hidden on mobile, visible on md+ */}
+        <div className="hidden md:block absolute top-6 left-6 right-6 h-0.5 bg-slate-700/50 z-0">
+          <div className="timeline-connector absolute inset-0 bg-gradient-to-r from-earth-ochre via-earth-amber to-eco-forest" />
         </div>
 
-        {/* Milestone 2 - First Brew */}
-        <div className="milestone-card group relative">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-earth-amber/60 transition-colors">
-              <Beaker className="w-5 h-5 text-earth-amber" />
-            </div>
-            <div>
-              <div className="font-data text-xs text-earth-ochre mb-1">FIRST APPLICATION</div>
-              <h3 className="font-ui font-semibold text-foreground mb-2">Brewing Precision</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Measuring beer density for a local brewery proved the technology worked in the real world.
-              </p>
-            </div>
-          </div>
+        {/* Mobile vertical timeline */}
+        <div className="md:hidden absolute top-0 bottom-0 left-6 w-0.5 bg-slate-700/50 z-0">
+          <div className="timeline-connector absolute inset-0 bg-gradient-to-b from-earth-ochre via-earth-amber to-eco-forest" />
         </div>
 
-        {/* Milestone 3 - Global */}
-        <div className="milestone-card group relative">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-eco-forest/60 transition-colors">
-              <Globe className="w-5 h-5 text-eco-forest" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+          {/* Milestone 1 - Garage */}
+          <div className="milestone-card group relative pl-16 md:pl-0">
+            {/* Timeline dot */}
+            <div className="timeline-dot absolute left-4 md:left-1/2 top-0 md:top-0 md:-translate-x-1/2 w-5 h-5 rounded-full bg-earth-ochre border-4 border-slate-900 z-10 shadow-lg shadow-earth-ochre/30" />
+            
+            {/* Progress pulse - mobile (vertical) */}
+            <div className="md:hidden progress-pulse absolute left-[18px] top-5 w-0.5 h-8 bg-gradient-to-b from-earth-ochre/60 to-transparent" />
+            
+            {/* Progress pulse - desktop (horizontal) */}
+            <div className="hidden md:block progress-pulse absolute top-[10px] left-[calc(50%+10px)] w-[calc(100%-20px)] h-0.5 bg-gradient-to-r from-earth-ochre/60 to-earth-amber/30" />
+
+            <div className="pt-8 md:pt-10">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-earth-ochre/60 group-hover:shadow-lg group-hover:shadow-earth-ochre/20 transition-all duration-300">
+                  <Wrench className="w-5 h-5 text-earth-ochre" />
+                </div>
+                <div>
+                  <div className="font-data text-xs text-earth-ochre mb-1">1984</div>
+                  <h3 className="font-ui font-semibold text-foreground mb-2">The Garage</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    First prototype built on a workbench. One engineer, one problem, endless curiosity.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="font-data text-xs text-earth-ochre mb-1">TODAY</div>
-              <h3 className="font-ui font-semibold text-foreground mb-2">Worldwide Impact</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                From mining to semiconductors, our sensors optimize processes across six continents.
-              </p>
+          </div>
+
+          {/* Milestone 2 - First Brew */}
+          <div className="milestone-card group relative pl-16 md:pl-0">
+            {/* Timeline dot */}
+            <div className="timeline-dot absolute left-4 md:left-1/2 top-0 md:top-0 md:-translate-x-1/2 w-5 h-5 rounded-full bg-earth-amber border-4 border-slate-900 z-10 shadow-lg shadow-earth-amber/30" />
+            
+            {/* Progress pulse - mobile (vertical) */}
+            <div className="md:hidden progress-pulse absolute left-[18px] top-5 w-0.5 h-8 bg-gradient-to-b from-earth-amber/60 to-transparent" />
+            
+            {/* Progress pulse - desktop (horizontal) */}
+            <div className="hidden md:block progress-pulse absolute top-[10px] left-[calc(50%+10px)] w-[calc(100%-20px)] h-0.5 bg-gradient-to-r from-earth-amber/60 to-eco-forest/30" />
+
+            <div className="pt-8 md:pt-10">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-earth-amber/60 group-hover:shadow-lg group-hover:shadow-earth-amber/20 transition-all duration-300">
+                  <Beaker className="w-5 h-5 text-earth-amber" />
+                </div>
+                <div>
+                  <div className="font-data text-xs text-earth-ochre mb-1">FIRST APPLICATION</div>
+                  <h3 className="font-ui font-semibold text-foreground mb-2">Brewing Precision</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Measuring beer density for a local brewery proved the technology worked in the real world.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Milestone 3 - Global */}
+          <div className="milestone-card group relative pl-16 md:pl-0">
+            {/* Timeline dot */}
+            <div className="timeline-dot absolute left-4 md:left-1/2 top-0 md:top-0 md:-translate-x-1/2 w-5 h-5 rounded-full bg-eco-forest border-4 border-slate-900 z-10 shadow-lg shadow-eco-forest/30" />
+
+            <div className="pt-8 md:pt-10">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-slate-800 border border-border/50 flex items-center justify-center group-hover:border-eco-forest/60 group-hover:shadow-lg group-hover:shadow-eco-forest/20 transition-all duration-300">
+                  <Globe className="w-5 h-5 text-eco-forest" />
+                </div>
+                <div>
+                  <div className="font-data text-xs text-earth-ochre mb-1">TODAY</div>
+                  <h3 className="font-ui font-semibold text-foreground mb-2">Worldwide Impact</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    From mining to semiconductors, our sensors optimize processes across six continents.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
