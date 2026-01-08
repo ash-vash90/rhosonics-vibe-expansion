@@ -2,6 +2,7 @@ import { MapPin, CheckCircle2, Gauge, Quote, Phone, Mail, Globe, ImageIcon, BarC
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { TechnologyComparisonChart } from "@/components/charts/TechnologyComparisonChart";
 import { BrandChart } from "@/components/tools/BrandChart";
+import { TimeSeriesChartPreview } from "@/components/case-study-builder/TimeSeriesChartPreview";
 import { ChartBuilderData } from "@/types/visualCaseStudy";
 
 export interface CaseStudy {
@@ -233,18 +234,22 @@ export const CaseStudyDocument = ({
               <h2 className="label-tech text-slate-500 mb-4">
                 {chartData.title || "MEASUREMENT DATA"}
               </h2>
-              <div className={`rounded-lg p-4 h-[240px] overflow-hidden ${chartData.background === "dark" ? "bg-rho-obsidian" : "bg-slate-50 border border-slate-200"}`}>
-                <BrandChart
-                  chartType={chartData.type}
-                  data={chartDataForBrand}
-                  colors={{
-                    primary: chartData.colors.primary,
-                    secondary: chartData.colors.secondary || "#73B82E",
-                    tertiary: chartData.colors.tertiary || "#a69359",
-                  }}
-                  isLightBg={chartData.background === "light"}
-                />
-              </div>
+              {(chartData.type === "timeseries" || chartData.type === "timeseries-comparison") ? (
+                <TimeSeriesChartPreview data={chartData} height={240} printMode={printMode} />
+              ) : (
+                <div className={`rounded-lg p-4 h-[240px] overflow-hidden ${chartData.background === "dark" ? "bg-rho-obsidian" : "bg-slate-50 border border-slate-200"}`}>
+                  <BrandChart
+                    chartType={chartData.type}
+                    data={chartDataForBrand}
+                    colors={{
+                      primary: chartData.colors.primary,
+                      secondary: chartData.colors.secondary || "#73B82E",
+                      tertiary: chartData.colors.tertiary || "#a69359",
+                    }}
+                    isLightBg={chartData.background === "light"}
+                  />
+                </div>
+              )}
             </div>
           )}
 
