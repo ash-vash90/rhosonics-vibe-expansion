@@ -39,13 +39,14 @@ export interface VisualCaseStudy {
 }
 
 export interface ChartBuilderData {
-  type: "bar" | "line" | "grouped-bar" | "pie" | "area";
+  type: "bar" | "line" | "grouped-bar" | "pie" | "area" | "timeseries" | "timeseries-comparison";
   title: string;
   dataPoints: Array<{
     name: string;
     value: number;
     value2?: number;
     value3?: number;
+    timestamp?: string;
   }>;
   colors: {
     primary: string;
@@ -56,8 +57,16 @@ export interface ChartBuilderData {
     series1?: string;
     series2?: string;
     series3?: string;
+    xAxis?: string;
+    yAxis?: string;
+    yAxis2?: string;
   };
   background: "light" | "dark";
+  // Advanced options for time-series
+  timeFormat?: string;
+  dualAxis?: boolean;
+  showDataPoints?: boolean;
+  lineSmoothing?: boolean;
 }
 
 export const createEmptyCaseStudy = (): VisualCaseStudy => ({

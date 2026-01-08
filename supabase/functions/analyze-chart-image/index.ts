@@ -38,20 +38,45 @@ serve(async (req) => {
             content: [
               {
                 type: "text",
-                text: `Analyze this chart image and extract the data. Return a JSON object with:
-1. "type": The chart type - one of "bar", "grouped-bar", "line", "area", or "pie"
+                text: `Analyze this chart image and extract the data. This could be a simple bar chart or a complex time-series comparison chart.
+
+Return a JSON object with:
+1. "type": The chart type - one of:
+   - "bar" for simple bar charts
+   - "grouped-bar" for grouped/clustered bar charts  
+   - "line" for simple line charts
+   - "area" for area charts
+   - "pie" for pie charts
+   - "timeseries" for single-series time-based line charts
+   - "timeseries-comparison" for multi-series time-based comparison charts (like comparing two measurement methods over time)
+
 2. "title": The chart title if visible, or a descriptive title based on the data
-3. "dataPoints": An array of objects with:
-   - "name": The label/category name
-   - "value": The numeric value (estimate if needed)
-   - "value2": Second value if it's a grouped/stacked chart (optional)
+
+3. "dataPoints": An array of objects. For time-series data, extract as many points as you can read (up to 100). Each object has:
+   - "name": The label/category name or time label (e.g., "10:22:55 AM" or "Sample 1")
+   - "value": The numeric value for the first/primary series
+   - "value2": Second value if there are 2 series being compared (optional)
    - "value3": Third value if applicable (optional)
-4. "labels": Object with "series1", "series2", "series3" if there are legend labels for multiple series
+   - "timestamp": For time-series, the time string if readable
+
+4. "labels": Object with:
+   - "series1": Name of first series (e.g., "Rhosonics SDM ECO")
+   - "series2": Name of second series if applicable (e.g., "Nuclear Density Meter")
+   - "series3": Name of third series if applicable
+   - "xAxis": X-axis label (e.g., "Time" or "Category")
+   - "yAxis": Y-axis label (e.g., "Density (SG)" or "Value")
+
+5. "yAxisRange": Object with:
+   - "min": Minimum Y-axis value if visible
+   - "max": Maximum Y-axis value if visible
+
+IMPORTANT for time-series charts:
+- Extract data points in chronological order
+- If there are many data points, sample them evenly (extract ~30-50 representative points)
+- For comparison charts, make sure to pair values at each time point
+- Read axis scales carefully to estimate values accurately
 
 Be precise with the values - read them from the chart axes/labels if visible.
-If the chart shows percentages, use the percentage values.
-If values are approximate, estimate based on the visual representation.
-
 Return ONLY valid JSON, no markdown or explanation.`
               },
               {
@@ -104,11 +129,20 @@ Return ONLY valid JSON, no markdown or explanation.`
 
     // Ensure data points have required fields
     chartData.dataPoints = chartData.dataPoints.map((point: any, i: number) => ({
-      name: point.name || `Item ${i + 1}`,
+      name: point.name || point.timestamp || `Point ${i + 1}`,
       value: typeof point.value === "number" ? point.value : parseFloat(point.value) || 0,
-      value2: point.value2 ? (typeof point.value2 === "number" ? point.value2 : parseFloat(point.value2)) : undefined,
-      value3: point.value3 ? (typeof point.value3 === "number" ? point.value3 : parseFloat(point.value3)) : undefined,
+      value2: point.value2 !== undefined ? (typeof point.value2 === "number" ? point.value2 : parseFloat(point.value2)) : undefined,
+      value3: point.value3 !== undefined ? (typeof point.value3 === "number" ? point.value3 : parseFloat(point.value3)) : undefined,
+      timestamp: point.timestamp || point.name,
     }));
+
+    // Ensure labels exist for multi-series charts
+    if ((chartData.type === "timeseries-comparison" || chartData.type === "grouped-bar") && !chartData.labels) {
+      chartData.labels = {
+        series1: "Series 1",
+        series2: "Series 2",
+      };
+    }
 
     console.log("Extracted chart data:", chartData);
 
