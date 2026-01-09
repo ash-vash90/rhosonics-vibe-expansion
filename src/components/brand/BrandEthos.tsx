@@ -2,37 +2,7 @@ import { Radar, Target, Leaf, Sparkles } from "lucide-react";
 
 export const BrandEthos = () => {
   return (
-    <section id="intro" className="mb-24" aria-labelledby="brand-ethos-title">
-      {/* Bold Hero with wave background */}
-      <div className="mb-16 relative">
-        <div className="absolute inset-0 bg-wave-hero opacity-50 pointer-events-none" aria-hidden="true" />
-        <div className="relative">
-          <div className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-slate-100 border border-slate-200 rounded-md">
-            <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
-            <span className="font-data text-xs uppercase tracking-wider text-slate-600">DESIGN SYSTEM V.FINAL</span>
-          </div>
-          
-          <h1 id="brand-ethos-title" className="section-header-bold mb-6">
-            Precision.
-            <br />
-            <span className="gradient-text">Resilience.</span>
-            <br />
-            Intelligence.
-          </h1>
-
-          <p className="text-lg md:text-xl text-slate-500 max-w-xl leading-relaxed font-medium">
-            Industrial measurement meets sustainable engineering. 
-            Every element is purpose-built for extreme environments.
-          </p>
-          
-          {/* Origin story - subtle nod to garage roots */}
-          <div className="mt-8 flex items-center gap-4 text-sm text-slate-400">
-            <div className="w-8 h-px bg-gradient-to-r from-earth-ochre to-transparent" />
-            <span className="font-data tracking-wide">EST. 1984 — FROM GARAGE TO GLOBAL</span>
-          </div>
-        </div>
-      </div>
-
+    <section id="brand-ethos" className="mb-16" aria-labelledby="brand-ethos-title">
       {/* Two-column cards - chamfer on hero card only */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-12">
         {/* The Persona - Hero gradient card with chamfer */}
@@ -73,7 +43,7 @@ export const BrandEthos = () => {
       </div>
 
       {/* Core Values - Open layout without cards */}
-      <div className="border-t border-slate-200 pt-10 mt-8" role="list" aria-label="Core values">
+      <div className="border-t border-slate-200 pt-10" role="list" aria-label="Core values">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {[
             {

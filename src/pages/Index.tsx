@@ -278,18 +278,21 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 03: THE HERITAGE
         ───────────────────────────────────────────────────────────── */}
-        <ChapterHeader 
-          id="the-heritage"
-          number="03" 
-          title="The Heritage" 
-          subtitle="It started with a question in a Dutch garage: what if you could measure without touching?"
-        />
-        
-        <Suspense fallback={<SectionLoader />}>
-          <BrandEthos />
-          <OriginStory />
-          <MissionVision />
-        </Suspense>
+        <section className="relative">
+          <div className="absolute inset-0 bg-workshop-grid opacity-30 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-earth-ochre/5 via-transparent to-transparent pointer-events-none" />
+          <ChapterHeader 
+            id="the-heritage"
+            number="03" 
+            title="The Heritage" 
+            subtitle="It started with a question in a Dutch garage: what if you could measure without touching?"
+          />
+          
+          <Suspense fallback={<SectionLoader />}>
+            <OriginStory />
+            <MissionVision />
+          </Suspense>
+        </section>
 
         <SectionBridge number="04" label="THE VISUAL IDENTITY" bridge="The visual toolkit." />
 
@@ -304,6 +307,7 @@ const Index = () => {
         />
         
         <Suspense fallback={<SectionLoader />}>
+          <BrandEthos />
           <MasterLockup />
           <ColorMatrix />
           <TypographyScale />
@@ -354,21 +358,24 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 07: THE PROOF
         ───────────────────────────────────────────────────────────── */}
-        <ChapterHeader 
-          id="the-proof"
-          number="07" 
-          title="The Proof" 
-          subtitle="Measurement comparisons. Real installations. Real data."
-        />
-        
-        <LazySection fallback={<SectionLoader />} rootMargin="400px">
+        <section className="relative">
+          <div className="absolute inset-0 bg-grid-data opacity-20 pointer-events-none" />
+          <ChapterHeader 
+            id="the-proof"
+            number="07" 
+            title="The Proof" 
+            subtitle="Measurement comparisons. Real installations. Real data."
+          />
+          
+          <LazySection fallback={<SectionLoader />} rootMargin="400px">
+            <Suspense fallback={<SectionLoader />}>
+              <TechComparison />
+            </Suspense>
+          </LazySection>
           <Suspense fallback={<SectionLoader />}>
-            <TechComparison />
+            <CaseStudies />
           </Suspense>
-        </LazySection>
-        <Suspense fallback={<SectionLoader />}>
-          <CaseStudies />
-        </Suspense>
+        </section>
 
         <SectionBridge number="08" label="THE RESOURCES" bridge="Everything you need." />
 
