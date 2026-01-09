@@ -113,26 +113,38 @@ const Index = () => {
           HERO — BOLD STATEMENT
       ═══════════════════════════════════════════════════════════════ */}
       <section className="min-h-screen flex flex-col justify-center relative bg-slate-950 overflow-hidden">
-        {/* Rich layered background */}
+        {/* Base gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
         
-        {/* Radial glow from bottom-left */}
-        <div className="absolute -bottom-1/4 -left-1/4 w-[800px] h-[800px] bg-primary/8 rounded-full blur-[150px]" />
+        {/* Ultrasonic wave arcs emanating from bottom-right */}
+        <div className="absolute inset-0 overflow-hidden">
+          <svg 
+            className="absolute -bottom-[30%] -right-[20%] w-[140%] h-[140%]" 
+            viewBox="0 0 1000 1000" 
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Concentric arcs from origin point */}
+            <circle cx="1000" cy="1000" r="200" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.25" />
+            <circle cx="1000" cy="1000" r="350" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.2" />
+            <circle cx="1000" cy="1000" r="500" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.15" />
+            <circle cx="1000" cy="1000" r="650" stroke="hsl(125 50% 40%)" strokeWidth="1" opacity="0.12" />
+            <circle cx="1000" cy="1000" r="800" stroke="hsl(125 50% 40%)" strokeWidth="1" opacity="0.08" />
+            <circle cx="1000" cy="1000" r="950" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.05" />
+            
+            {/* Secondary wave set with offset */}
+            <circle cx="1000" cy="1000" r="275" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.1" />
+            <circle cx="1000" cy="1000" r="425" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.08" />
+            <circle cx="1000" cy="1000" r="575" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.06" />
+            <circle cx="1000" cy="1000" r="725" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.04" />
+          </svg>
+        </div>
         
-        {/* Secondary glow top-right */}
-        <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-earth-ochre/5 rounded-full blur-[120px]" />
+        {/* Radial glow from wave origin */}
+        <div className="absolute -bottom-1/4 -right-1/4 w-[800px] h-[800px] bg-primary/15 rounded-full blur-[200px]" />
         
-        {/* Ultrasonic wave pattern overlay */}
-        <div className="absolute inset-0 bg-wave-hero opacity-[0.04]" />
-        
-        {/* Subtle grid texture */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
-        }} />
-        
-        {/* Top edge gradient */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-primary/5 to-transparent" />
+        {/* Secondary subtle glow top-left */}
+        <div className="absolute -top-1/4 -left-1/4 w-[400px] h-[400px] bg-earth-ochre/5 rounded-full blur-[100px]" />
         
         <div className="relative z-10 px-6 md:px-12 lg:px-20 py-20">
           <div className="max-w-6xl mx-auto">
