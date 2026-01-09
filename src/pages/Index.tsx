@@ -4,7 +4,7 @@ import { LazySection } from "@/components/LazySection";
 import { ArrowDown, Zap } from "lucide-react";
 import { QuickNav } from "@/components/brand/QuickNav";
 import { ChapterProgress } from "@/components/brand/ChapterProgress";
-import { SectionBridge } from "@/components/brand/SectionBridge";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -88,11 +88,11 @@ const ChapterHeader = ({ number, title, subtitle, id }: ChapterHeaderProps) => {
   }, []);
   
   return (
-    <div ref={headerRef} id={id} className="mb-12 scroll-mt-20">
-      <div className="max-w-4xl">
-        <span className="chapter-num font-data text-sm text-slate-400 tracking-widest">{number}</span>
-        <h2 className="chapter-title font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-4 mb-6">{title}</h2>
-        <p className="chapter-subtitle text-xl md:text-2xl text-slate-600 leading-relaxed">{subtitle}</p>
+    <div ref={headerRef} id={id} className="mb-6 scroll-mt-20">
+      <div className="max-w-3xl">
+        <span className="chapter-num font-data text-xs text-slate-400 tracking-widest">{number}</span>
+        <h2 className="chapter-title font-ui text-2xl md:text-3xl font-bold text-foreground mt-2 mb-2">{title}</h2>
+        <p className="chapter-subtitle text-base md:text-lg text-slate-600 leading-relaxed">{subtitle}</p>
       </div>
     </div>
   );
@@ -361,7 +361,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 01: THE PROBLEM
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24 relative">
+        <section className="py-10 md:py-14 relative">
           <div className="absolute inset-0 bg-terrain-strata opacity-30 pointer-events-none" />
           <div className="relative">
             <ChapterHeader 
@@ -422,12 +422,12 @@ const Index = () => {
           </div>
         </section>
 
-        <SectionBridge number="02" label="THE SOLUTION" bridge="From problem to possibility." />
+        
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 02: THE SOLUTION
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24 relative">
+        <section className="py-10 md:py-14 relative">
           <div className="absolute inset-0 bg-wave-subtle opacity-20 pointer-events-none" />
           <div className="relative">
             <ChapterHeader 
@@ -477,12 +477,12 @@ const Index = () => {
           </div>
         </section>
 
-        <SectionBridge number="03" label="THE HERITAGE" bridge="From a Dutch garage to global operations." />
+        
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 03: THE HERITAGE
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24">
+        <section className="py-10 md:py-14">
           <ChapterHeader 
             id="the-heritage"
             number="03" 
@@ -498,12 +498,12 @@ const Index = () => {
           </div>
         </section>
 
-        <SectionBridge number="04" label="THE VISUAL IDENTITY" bridge="The visual toolkit." />
+        
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 04: THE VISUAL IDENTITY
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24">
+        <section className="py-10 md:py-14">
           <ChapterHeader 
             id="the-identity"
             number="04" 
@@ -522,12 +522,12 @@ const Index = () => {
           </Suspense>
         </section>
 
-        <SectionBridge number="05" label="THE VOICE" bridge="How we speak." />
+        
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 05: THE VOICE
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24">
+        <section className="py-10 md:py-14">
           <ChapterHeader 
             id="the-voice"
             number="05" 
@@ -542,12 +542,12 @@ const Index = () => {
           </Suspense>
         </section>
 
-        <SectionBridge number="06" label="THE APPLICATION" bridge="Where the brand meets reality." />
+        
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 06: THE APPLICATION
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24">
+        <section className="py-10 md:py-14">
           <ChapterHeader 
             id="the-application"
             number="06" 
@@ -563,12 +563,12 @@ const Index = () => {
           </Suspense>
         </section>
 
-        <SectionBridge number="07" label="THE PROOF" bridge="Results from the field." />
+        
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 07: THE PROOF
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24 relative">
+        <section className="py-10 md:py-14 relative">
           <div className="absolute inset-0 bg-grid-data opacity-20 pointer-events-none" />
           <div className="relative">
             <ChapterHeader 
@@ -589,12 +589,12 @@ const Index = () => {
           </div>
         </section>
 
-        <SectionBridge number="08" label="THE RESOURCES" bridge="Everything you need." />
+        
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 08: THE RESOURCES
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24">
+        <section className="py-10 md:py-14">
           <ChapterHeader 
             id="the-resources"
             number="08" 
