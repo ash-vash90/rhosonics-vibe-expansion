@@ -305,7 +305,7 @@ const Index = () => {
           <div className="max-w-6xl mx-auto">
             {/* Logo and brand header */}
             <div className="flex items-center gap-3 mb-12">
-              <div className="w-8 h-8 md:w-9 md:h-9">
+              <div className="w-9 h-9 md:w-10 md:h-10">
                 <RhosonicsLogo variant="gradient" />
               </div>
               <span className="font-logo text-2xl md:text-3xl text-white tracking-tight">Rhosonics</span>
