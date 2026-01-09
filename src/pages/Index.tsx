@@ -220,6 +220,37 @@ const Index = () => {
           </div>
         </section>
 
+        {/* ═══════════════════════════════════════════════════════════════
+            TRANSITION — DARK OBSIDIAN FULL-BLEED
+        ═══════════════════════════════════════════════════════════════ */}
+        <section className="relative -mx-6 md:-mx-12 lg:-mx-20 py-32 md:py-40 bg-slate-900 overflow-hidden">
+          {/* Layered backgrounds */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800" />
+          <div className="absolute inset-0 bg-wave-pattern opacity-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent" />
+          
+          {/* Accent glow */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[120px]" />
+          
+          {/* Content */}
+          <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 lg:px-20 text-center">
+            <div className="inline-flex items-center gap-2 mb-8 px-3 py-1.5 bg-primary/10 border border-primary/20 rounded-full">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <span className="font-data text-xs uppercase tracking-widest text-primary">The Shift</span>
+            </div>
+            
+            <h2 className="font-ui text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              What if measurement<br />
+              <span className="text-primary">never touched the process?</span>
+            </h2>
+            
+            <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              No probes to corrode. No sensors to clog. No radiation to license. 
+              Just sound waves and forty years of engineering.
+            </p>
+          </div>
+        </section>
+
         <SectionBridge number="02" label="THE SOLUTION" bridge="From problem to possibility." />
 
         {/* ─────────────────────────────────────────────────────────────
