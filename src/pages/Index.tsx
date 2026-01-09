@@ -303,7 +303,7 @@ const Index = () => {
               <div className="w-9 h-9 md:w-10 md:h-10">
                 <RhosonicsLogo variant="gradient" />
               </div>
-              <span className="font-logo text-2xl md:text-3xl text-white tracking-tight uppercase">Rhosonics</span>
+              <span className="font-logo text-2xl md:text-3xl text-white tracking-widest uppercase">RHOSONICS</span>
             </div>
             
             {/* Bold statement */}
