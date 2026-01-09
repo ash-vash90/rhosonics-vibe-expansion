@@ -76,10 +76,10 @@ export const MasterLockup = () => {
           </div>
           <h1 
             ref={titleRef}
-            className="font-logo text-slate-100 tracking-tight leading-none opacity-0"
+            className="font-logo text-slate-100 tracking-wide leading-none opacity-0 uppercase"
             style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
           >
-            Rhosonics
+            RHOSONICS
           </h1>
         </div>
 

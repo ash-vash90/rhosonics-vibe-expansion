@@ -203,7 +203,7 @@ export const Navigation = () => {
             <div className="w-7 h-7">
               <RhosonicsLogo variant="gradient" />
             </div>
-            <span className="font-logo text-lg tracking-tight">Rhosonics</span>
+            <span className="font-logo text-lg tracking-wide uppercase">RHOSONICS</span>
           </button>
           <button
             className="xl:hidden text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors touch-manipulation"
