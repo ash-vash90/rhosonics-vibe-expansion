@@ -309,20 +309,22 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 03: THE HERITAGE
         ───────────────────────────────────────────────────────────── */}
-        <section className="relative">
+        <section className="relative py-8">
           <div className="absolute inset-0 bg-workshop-grid opacity-30 pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-b from-earth-ochre/5 via-transparent to-transparent pointer-events-none" />
-          <ChapterHeader 
-            id="the-heritage"
-            number="03" 
-            title="The Heritage" 
-            subtitle="It started with a question in a Dutch garage: what if you could measure without touching?"
-          />
-          
-          <Suspense fallback={<SectionLoader />}>
-            <OriginStory />
-            <MissionVision />
-          </Suspense>
+          <div className="relative">
+            <ChapterHeader 
+              id="the-heritage"
+              number="03" 
+              title="The Heritage" 
+              subtitle="It started with a question in a Dutch garage: what if you could measure without touching?"
+            />
+            
+            <Suspense fallback={<SectionLoader />}>
+              <OriginStory />
+              <MissionVision />
+            </Suspense>
+          </div>
         </section>
 
         <SectionBridge number="04" label="THE VISUAL IDENTITY" bridge="The visual toolkit." />
@@ -330,82 +332,90 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 04: THE VISUAL IDENTITY
         ───────────────────────────────────────────────────────────── */}
-        <ChapterHeader 
-          id="the-identity"
-          number="04" 
-          title="The Visual Identity" 
-          subtitle="Every element reflects precision. Colors from the field. Typography for clarity. No decoration without purpose."
-        />
-        
-        <Suspense fallback={<SectionLoader />}>
-          <BrandEthos />
-          <MasterLockup />
-          <ColorMatrix />
-          <TypographyScale />
-          <SpacingSystem />
-          <LogoAssets />
-          <IconGuidelines />
-        </Suspense>
+        <section className="py-8">
+          <ChapterHeader 
+            id="the-identity"
+            number="04" 
+            title="The Visual Identity" 
+            subtitle="Every element reflects precision. Colors from the field. Typography for clarity. No decoration without purpose."
+          />
+          
+          <Suspense fallback={<SectionLoader />}>
+            <BrandEthos />
+            <MasterLockup />
+            <ColorMatrix />
+            <TypographyScale />
+            <SpacingSystem />
+            <LogoAssets />
+            <IconGuidelines />
+          </Suspense>
+        </section>
 
         <SectionBridge number="05" label="THE VOICE" bridge="How we speak." />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 05: THE VOICE
         ───────────────────────────────────────────────────────────── */}
-        <ChapterHeader 
-          id="the-voice"
-          number="05" 
-          title="The Voice" 
-          subtitle="Direct. Technical. Confident. We speak like the engineers we serve—no fluff, no hedging."
-        />
-        
-        <Suspense fallback={<SectionLoader />}>
-          <VoiceTone />
-          <MotionDesign />
-          <DosAndDonts />
-        </Suspense>
+        <section className="py-8">
+          <ChapterHeader 
+            id="the-voice"
+            number="05" 
+            title="The Voice" 
+            subtitle="Direct. Technical. Confident. We speak like the engineers we serve—no fluff, no hedging."
+          />
+          
+          <Suspense fallback={<SectionLoader />}>
+            <VoiceTone />
+            <MotionDesign />
+            <DosAndDonts />
+          </Suspense>
+        </section>
 
         <SectionBridge number="06" label="THE APPLICATION" bridge="Where the brand meets reality." />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 06: THE APPLICATION
         ───────────────────────────────────────────────────────────── */}
-        <ChapterHeader 
-          id="the-application"
-          number="06" 
-          title="The Application" 
-          subtitle="Mining. Dredging. Water treatment. The harshest environments demand the clearest expression."
-        />
-        
-        <Suspense fallback={<SectionLoader />}>
-          <IndustryApplications />
-          <EcoComponents />
-          <ImageryGuidelines />
-          <InterfaceKit />
-        </Suspense>
+        <section className="py-8">
+          <ChapterHeader 
+            id="the-application"
+            number="06" 
+            title="The Application" 
+            subtitle="Mining. Dredging. Water treatment. The harshest environments demand the clearest expression."
+          />
+          
+          <Suspense fallback={<SectionLoader />}>
+            <IndustryApplications />
+            <EcoComponents />
+            <ImageryGuidelines />
+            <InterfaceKit />
+          </Suspense>
+        </section>
 
         <SectionBridge number="07" label="THE PROOF" bridge="Results from the field." />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 07: THE PROOF
         ───────────────────────────────────────────────────────────── */}
-        <section className="relative">
+        <section className="relative py-8">
           <div className="absolute inset-0 bg-grid-data opacity-20 pointer-events-none" />
-          <ChapterHeader 
-            id="the-proof"
-            number="07" 
-            title="The Proof" 
-            subtitle="Measurement comparisons. Real installations. Real data."
-          />
-          
-          <LazySection fallback={<SectionLoader />} rootMargin="400px">
+          <div className="relative">
+            <ChapterHeader 
+              id="the-proof"
+              number="07" 
+              title="The Proof" 
+              subtitle="Measurement comparisons. Real installations. Real data."
+            />
+            
+            <LazySection fallback={<SectionLoader />} rootMargin="400px">
+              <Suspense fallback={<SectionLoader />}>
+                <TechComparison />
+              </Suspense>
+            </LazySection>
             <Suspense fallback={<SectionLoader />}>
-              <TechComparison />
+              <CaseStudies />
             </Suspense>
-          </LazySection>
-          <Suspense fallback={<SectionLoader />}>
-            <CaseStudies />
-          </Suspense>
+          </div>
         </section>
 
         <SectionBridge number="08" label="THE RESOURCES" bridge="Everything you need." />
@@ -413,17 +423,19 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 08: THE RESOURCES
         ───────────────────────────────────────────────────────────── */}
-        <ChapterHeader 
-          id="the-resources"
-          number="08" 
-          title="The Resources" 
-          subtitle="Download assets. Export guidelines. Deploy the brand."
-        />
-        
-        <Suspense fallback={<SectionLoader />}>
-          <DownloadableAssets />
-          <ExportSection />
-        </Suspense>
+        <section className="py-8">
+          <ChapterHeader 
+            id="the-resources"
+            number="08" 
+            title="The Resources" 
+            subtitle="Download assets. Export guidelines. Deploy the brand."
+          />
+          
+          <Suspense fallback={<SectionLoader />}>
+            <DownloadableAssets />
+            <ExportSection />
+          </Suspense>
+        </section>
 
         {/* ═══════════════════════════════════════════════════════════════
             FOOTER
