@@ -20,7 +20,7 @@ export const TypographyScale = () => {
             <tr className="border-b border-slate-100">
               <td className="px-6 py-5 label-tech text-slate-500">Logo</td>
               <td className="px-6 py-5">
-                <span className="font-logo text-2xl text-foreground">Rhosonics</span>
+                <span className="font-logo text-2xl text-foreground tracking-wide uppercase">RHOSONICS</span>
               </td>
               <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
                 Unbounded 500

@@ -593,7 +593,7 @@ const Index = () => {
                 <RhosonicsLogo variant="gradient" className="w-10 h-10" />
               </div>
               <div>
-                <p className="font-ui font-semibold text-foreground">Rhosonics</p>
+                <p className="font-logo font-semibold text-foreground tracking-wide uppercase">RHOSONICS</p>
                 <span className="font-data text-xs text-slate-500 tracking-widest">BRAND GUIDELINES</span>
               </div>
             </div>
