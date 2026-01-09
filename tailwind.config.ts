@@ -66,6 +66,7 @@ export default {
         rho: {
           green: "hsl(var(--rho-green))",
           "green-accent": "hsl(var(--rho-green-accent))",
+          "green-glow": "hsl(var(--rho-green-glow))",
           obsidian: "hsl(var(--rho-obsidian))",
         },
         eco: {

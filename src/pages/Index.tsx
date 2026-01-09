@@ -303,16 +303,18 @@ const Index = () => {
         
         <div className="relative z-10 px-6 md:px-12 lg:px-20 py-20">
           <div className="max-w-6xl mx-auto">
-            {/* Design system badge */}
-            <div className="inline-flex items-center gap-3 mb-12 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-sm">
-              <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-              <span className="font-data text-xs uppercase tracking-wider text-slate-400">BRAND GUIDELINES</span>
+            {/* Logo and brand header */}
+            <div className="flex items-center gap-4 mb-12">
+              <div className="w-12 h-12 md:w-14 md:h-14">
+                <RhosonicsLogo variant="gradient" />
+              </div>
+              <span className="font-logo text-2xl md:text-3xl text-white tracking-tight">Rhosonics</span>
             </div>
             
             {/* Bold statement */}
             <h1 className="font-ui text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.1] mb-8">
               We measure<br />
-              <span className="text-primary">what others can't.</span>
+              <span className="bg-gradient-to-r from-rho-green-accent to-rho-green bg-clip-text text-transparent">what others can't.</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mb-16 leading-relaxed">
