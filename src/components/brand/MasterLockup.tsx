@@ -53,7 +53,7 @@ export const MasterLockup = () => {
       <div className="border-t-2 border-slate-200 pt-16 mb-8" />
       <div className="flex items-center gap-3 mb-2">
         <Scan className="w-5 h-5 text-primary" />
-        <span className="label-tech text-primary">02 / IDENTITY</span>
+        <span className="label-tech text-primary">04 / IDENTITY</span>
       </div>
       <h2 className="section-header">Master Lockup</h2>
       <p className="text-muted-foreground mb-8 max-w-2xl">
