@@ -313,17 +313,15 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 03: THE HERITAGE
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24 relative">
-          <div className="absolute inset-0 bg-workshop-grid opacity-30 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-earth-ochre/5 via-transparent to-transparent pointer-events-none" />
-          <div className="relative">
-            <ChapterHeader 
-              id="the-heritage"
-              number="03" 
-              title="The Heritage" 
-              subtitle="It started with a question in a Dutch garage: what if you could measure without touching?"
-            />
-            
+        <section className="py-16 md:py-24">
+          <ChapterHeader 
+            id="the-heritage"
+            number="03" 
+            title="The Heritage" 
+            subtitle="It started with a question in a Dutch garage: what if you could measure without touching?"
+          />
+
+          <div className="mt-10">
             <Suspense fallback={<SectionLoader />}>
               <OriginStory />
               <MissionVision />
