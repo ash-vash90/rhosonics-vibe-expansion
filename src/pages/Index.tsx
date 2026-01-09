@@ -99,6 +99,67 @@ const ChapterHeader = ({ number, title, subtitle, id }: ChapterHeaderProps) => {
 };
 
 const Index = () => {
+  const waveRef = useRef<SVGSVGElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  
+  // Animate ultrasonic wave arcs
+  useEffect(() => {
+    const svg = waveRef.current;
+    const glow = glowRef.current;
+    if (!svg) return;
+    
+    const primaryArcs = svg.querySelectorAll('.wave-arc');
+    const secondaryArcs = svg.querySelectorAll('.wave-arc-secondary');
+    
+    // Subtle pulsing animation on primary arcs - staggered
+    const tl = gsap.timeline({ repeat: -1 });
+    
+    primaryArcs.forEach((arc, i) => {
+      const baseOpacity = parseFloat(arc.getAttribute('opacity') || '0.1');
+      tl.to(arc, {
+        opacity: baseOpacity * 1.6,
+        strokeWidth: '+=0.5',
+        duration: 1.5,
+        ease: 'sine.inOut',
+      }, i * 0.15)
+      .to(arc, {
+        opacity: baseOpacity,
+        strokeWidth: '-=0.5',
+        duration: 1.5,
+        ease: 'sine.inOut',
+      }, i * 0.15 + 1.5);
+    });
+    
+    // Secondary arcs pulse with offset
+    gsap.to(secondaryArcs, {
+      opacity: (_i, el) => parseFloat(el.getAttribute('opacity') || '0.05') * 1.8,
+      duration: 2,
+      ease: 'sine.inOut',
+      stagger: 0.2,
+      repeat: -1,
+      yoyo: true,
+    });
+    
+    // Glow pulse
+    if (glow) {
+      gsap.to(glow, {
+        opacity: 0.25,
+        scale: 1.05,
+        duration: 3,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        transformOrigin: 'center center',
+      });
+    }
+    
+    return () => {
+      tl.kill();
+      gsap.killTweensOf(secondaryArcs);
+      gsap.killTweensOf(glow);
+    };
+  }, []);
+  
   const scrollToContent = () => {
     document.getElementById('the-problem')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -119,29 +180,30 @@ const Index = () => {
         {/* Ultrasonic wave arcs emanating from bottom-right */}
         <div className="absolute inset-0 overflow-hidden">
           <svg 
+            ref={waveRef}
             className="absolute -bottom-[30%] -right-[20%] w-[140%] h-[140%]" 
             viewBox="0 0 1000 1000" 
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             {/* Concentric arcs from origin point */}
-            <circle cx="1000" cy="1000" r="200" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.25" />
-            <circle cx="1000" cy="1000" r="350" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.2" />
-            <circle cx="1000" cy="1000" r="500" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.15" />
-            <circle cx="1000" cy="1000" r="650" stroke="hsl(125 50% 40%)" strokeWidth="1" opacity="0.12" />
-            <circle cx="1000" cy="1000" r="800" stroke="hsl(125 50% 40%)" strokeWidth="1" opacity="0.08" />
-            <circle cx="1000" cy="1000" r="950" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.05" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="200" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.25" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="350" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.2" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="500" stroke="hsl(125 50% 40%)" strokeWidth="1.5" opacity="0.15" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="650" stroke="hsl(125 50% 40%)" strokeWidth="1" opacity="0.12" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="800" stroke="hsl(125 50% 40%)" strokeWidth="1" opacity="0.08" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="950" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.05" />
             
             {/* Secondary wave set with offset */}
-            <circle cx="1000" cy="1000" r="275" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.1" />
-            <circle cx="1000" cy="1000" r="425" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.08" />
-            <circle cx="1000" cy="1000" r="575" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.06" />
-            <circle cx="1000" cy="1000" r="725" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.04" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="275" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.1" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="425" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.08" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="575" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.06" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="725" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.04" />
           </svg>
         </div>
         
         {/* Radial glow from wave origin */}
-        <div className="absolute -bottom-1/4 -right-1/4 w-[800px] h-[800px] bg-primary/15 rounded-full blur-[200px]" />
+        <div ref={glowRef} className="absolute -bottom-1/4 -right-1/4 w-[800px] h-[800px] bg-primary/15 rounded-full blur-[200px]" />
         
         {/* Secondary subtle glow top-left */}
         <div className="absolute -top-1/4 -left-1/4 w-[400px] h-[400px] bg-earth-ochre/5 rounded-full blur-[100px]" />
