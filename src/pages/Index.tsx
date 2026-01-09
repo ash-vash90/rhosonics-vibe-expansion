@@ -1,8 +1,7 @@
 import { Suspense, lazy, useEffect, useRef } from "react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
-import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { LazySection } from "@/components/LazySection";
-import { ArrowDown, Zap, Sparkles } from "lucide-react";
+import { ArrowDown, Zap } from "lucide-react";
 import { QuickNav } from "@/components/brand/QuickNav";
 import { ChapterProgress } from "@/components/brand/ChapterProgress";
 import { SectionBridge } from "@/components/brand/SectionBridge";
@@ -113,28 +112,34 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════════
           HERO — BOLD STATEMENT
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="min-h-screen flex flex-col justify-center relative bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
-        {/* Enhanced background patterns */}
-        <div className="absolute inset-0 bg-wave-pattern opacity-10" />
-        <div className="absolute inset-0 bg-terrain-strata opacity-5" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+      <section className="min-h-screen flex flex-col justify-center relative bg-slate-950 overflow-hidden">
+        {/* Rich layered background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
         
-        {/* Floating accent elements */}
-        <div className="absolute top-20 right-[20%] w-2 h-2 rounded-full bg-primary/30 animate-pulse" />
-        <div className="absolute top-40 right-[30%] w-1.5 h-1.5 rounded-full bg-primary/20 animate-pulse delay-300" />
-        <div className="absolute bottom-40 left-[25%] w-2 h-2 rounded-full bg-primary/25 animate-pulse delay-700" />
+        {/* Radial glow from bottom-left */}
+        <div className="absolute -bottom-1/4 -left-1/4 w-[800px] h-[800px] bg-primary/8 rounded-full blur-[150px]" />
+        
+        {/* Secondary glow top-right */}
+        <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-earth-ochre/5 rounded-full blur-[120px]" />
+        
+        {/* Ultrasonic wave pattern overlay */}
+        <div className="absolute inset-0 bg-wave-hero opacity-[0.04]" />
+        
+        {/* Subtle grid texture */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0)`,
+          backgroundSize: '40px 40px'
+        }} />
+        
+        {/* Top edge gradient */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-primary/5 to-transparent" />
         
         <div className="relative z-10 px-6 md:px-12 lg:px-20 py-20">
           <div className="max-w-6xl mx-auto">
             {/* Design system badge */}
-            <div className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-slate-800/60 border border-slate-700 rounded-md backdrop-blur-sm">
-              <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
-              <span className="font-data text-xs uppercase tracking-wider text-slate-400">BRAND GUIDELINES V.FINAL</span>
-            </div>
-            
-            {/* Logo mark */}
-            <div className="w-20 h-20 md:w-28 md:h-28 mb-12">
-              <AnimatedLogo />
+            <div className="inline-flex items-center gap-3 mb-12 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-sm">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+              <span className="font-data text-xs uppercase tracking-wider text-slate-400">BRAND GUIDELINES</span>
             </div>
             
             {/* Bold statement */}
@@ -143,11 +148,11 @@ const Index = () => {
               <span className="text-primary">what others can't.</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mb-16 leading-relaxed">
+            <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mb-16 leading-relaxed">
               Ultrasonic precision for industries where measurement isn't optional—it's operational.
             </p>
             
-            {/* Meta info with earth accent */}
+            {/* Meta info */}
             <div className="flex flex-wrap gap-8 md:gap-16 text-sm">
               <div>
                 <span className="font-data text-slate-500 tracking-widest text-xs">ESTABLISHED</span>
@@ -174,7 +179,7 @@ const Index = () => {
         {/* Scroll indicator */}
         <button 
           onClick={scrollToContent}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-400 hover:text-white transition-colors cursor-pointer group"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 hover:text-white transition-colors cursor-pointer group"
           aria-label="Scroll to content"
         >
           <div className="flex flex-col items-center gap-2">
