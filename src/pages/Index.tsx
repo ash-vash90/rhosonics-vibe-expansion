@@ -159,46 +159,58 @@ const Index = () => {
         {/* Base gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
         
-        {/* Ultrasonic wave arcs - dense & concentrated from bottom-right */}
+        {/* Ultrasonic wave arcs - extended coverage from bottom-right */}
         <div className="absolute inset-0 overflow-hidden">
           <svg 
             ref={waveRef}
-            className="absolute bottom-0 right-0 w-[500px] h-[500px] md:w-[650px] md:h-[650px]" 
-            viewBox="0 0 400 400" 
+            className="absolute -bottom-[20%] -right-[15%] w-[120%] h-[120%] md:w-[110%] md:h-[110%]" 
+            viewBox="0 0 1000 1000" 
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* Dense concentric arcs from corner origin */}
-            <circle className="wave-arc" cx="400" cy="400" r="15" stroke="hsl(125 50% 40%)" strokeWidth="0.6" opacity="0.15" />
-            <circle className="wave-arc" cx="400" cy="400" r="25" stroke="hsl(125 50% 40%)" strokeWidth="0.6" opacity="0.14" />
-            <circle className="wave-arc" cx="400" cy="400" r="35" stroke="hsl(125 50% 40%)" strokeWidth="0.6" opacity="0.13" />
-            <circle className="wave-arc" cx="400" cy="400" r="45" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.12" />
-            <circle className="wave-arc" cx="400" cy="400" r="55" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.11" />
-            <circle className="wave-arc" cx="400" cy="400" r="65" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.10" />
-            <circle className="wave-arc" cx="400" cy="400" r="75" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.09" />
-            <circle className="wave-arc" cx="400" cy="400" r="85" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.08" />
-            <circle className="wave-arc" cx="400" cy="400" r="95" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.07" />
-            <circle className="wave-arc" cx="400" cy="400" r="105" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.065" />
-            <circle className="wave-arc" cx="400" cy="400" r="115" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.06" />
-            <circle className="wave-arc" cx="400" cy="400" r="125" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.055" />
-            <circle className="wave-arc" cx="400" cy="400" r="135" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.05" />
-            <circle className="wave-arc" cx="400" cy="400" r="145" stroke="hsl(125 50% 40%)" strokeWidth="0.35" opacity="0.045" />
-            <circle className="wave-arc" cx="400" cy="400" r="155" stroke="hsl(125 50% 40%)" strokeWidth="0.35" opacity="0.04" />
-            <circle className="wave-arc" cx="400" cy="400" r="165" stroke="hsl(125 50% 40%)" strokeWidth="0.35" opacity="0.035" />
-            <circle className="wave-arc" cx="400" cy="400" r="175" stroke="hsl(125 50% 40%)" strokeWidth="0.3" opacity="0.03" />
-            <circle className="wave-arc" cx="400" cy="400" r="185" stroke="hsl(125 50% 40%)" strokeWidth="0.3" opacity="0.025" />
-            <circle className="wave-arc" cx="400" cy="400" r="195" stroke="hsl(125 50% 40%)" strokeWidth="0.3" opacity="0.02" />
-            <circle className="wave-arc" cx="400" cy="400" r="205" stroke="hsl(125 50% 40%)" strokeWidth="0.25" opacity="0.015" />
+            {/* Dense concentric arcs from corner origin - extended range */}
+            <circle className="wave-arc" cx="1000" cy="1000" r="30" stroke="hsl(125 50% 40%)" strokeWidth="0.8" opacity="0.12" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="50" stroke="hsl(125 50% 40%)" strokeWidth="0.8" opacity="0.11" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="70" stroke="hsl(125 50% 40%)" strokeWidth="0.7" opacity="0.10" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="90" stroke="hsl(125 50% 40%)" strokeWidth="0.7" opacity="0.095" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="110" stroke="hsl(125 50% 40%)" strokeWidth="0.6" opacity="0.09" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="130" stroke="hsl(125 50% 40%)" strokeWidth="0.6" opacity="0.085" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="150" stroke="hsl(125 50% 40%)" strokeWidth="0.6" opacity="0.08" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="170" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.075" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="190" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.07" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="210" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.065" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="230" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.06" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="250" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.055" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="270" stroke="hsl(125 50% 40%)" strokeWidth="0.45" opacity="0.05" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="290" stroke="hsl(125 50% 40%)" strokeWidth="0.45" opacity="0.047" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="310" stroke="hsl(125 50% 40%)" strokeWidth="0.45" opacity="0.044" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="330" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.041" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="350" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.038" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="370" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.035" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="390" stroke="hsl(125 50% 40%)" strokeWidth="0.35" opacity="0.032" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="410" stroke="hsl(125 50% 40%)" strokeWidth="0.35" opacity="0.029" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="430" stroke="hsl(125 50% 40%)" strokeWidth="0.35" opacity="0.026" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="450" stroke="hsl(125 50% 40%)" strokeWidth="0.3" opacity="0.023" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="470" stroke="hsl(125 50% 40%)" strokeWidth="0.3" opacity="0.02" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="490" stroke="hsl(125 50% 40%)" strokeWidth="0.3" opacity="0.018" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="510" stroke="hsl(125 50% 40%)" strokeWidth="0.25" opacity="0.016" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="530" stroke="hsl(125 50% 40%)" strokeWidth="0.25" opacity="0.014" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="550" stroke="hsl(125 50% 40%)" strokeWidth="0.25" opacity="0.012" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="570" stroke="hsl(125 50% 40%)" strokeWidth="0.2" opacity="0.01" />
             
             {/* Secondary wave set interlaced */}
-            <circle className="wave-arc-secondary" cx="400" cy="400" r="20" stroke="hsl(90 60% 45%)" strokeWidth="0.3" opacity="0.08" />
-            <circle className="wave-arc-secondary" cx="400" cy="400" r="40" stroke="hsl(90 60% 45%)" strokeWidth="0.3" opacity="0.07" />
-            <circle className="wave-arc-secondary" cx="400" cy="400" r="60" stroke="hsl(90 60% 45%)" strokeWidth="0.3" opacity="0.06" />
-            <circle className="wave-arc-secondary" cx="400" cy="400" r="80" stroke="hsl(90 60% 45%)" strokeWidth="0.25" opacity="0.05" />
-            <circle className="wave-arc-secondary" cx="400" cy="400" r="100" stroke="hsl(90 60% 45%)" strokeWidth="0.25" opacity="0.04" />
-            <circle className="wave-arc-secondary" cx="400" cy="400" r="120" stroke="hsl(90 60% 45%)" strokeWidth="0.2" opacity="0.03" />
-            <circle className="wave-arc-secondary" cx="400" cy="400" r="140" stroke="hsl(90 60% 45%)" strokeWidth="0.2" opacity="0.025" />
-            <circle className="wave-arc-secondary" cx="400" cy="400" r="160" stroke="hsl(90 60% 45%)" strokeWidth="0.2" opacity="0.02" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="40" stroke="hsl(90 60% 45%)" strokeWidth="0.4" opacity="0.06" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="80" stroke="hsl(90 60% 45%)" strokeWidth="0.4" opacity="0.05" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="120" stroke="hsl(90 60% 45%)" strokeWidth="0.35" opacity="0.045" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="160" stroke="hsl(90 60% 45%)" strokeWidth="0.35" opacity="0.04" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="200" stroke="hsl(90 60% 45%)" strokeWidth="0.3" opacity="0.035" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="240" stroke="hsl(90 60% 45%)" strokeWidth="0.3" opacity="0.03" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="280" stroke="hsl(90 60% 45%)" strokeWidth="0.25" opacity="0.025" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="320" stroke="hsl(90 60% 45%)" strokeWidth="0.25" opacity="0.02" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="360" stroke="hsl(90 60% 45%)" strokeWidth="0.2" opacity="0.017" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="400" stroke="hsl(90 60% 45%)" strokeWidth="0.2" opacity="0.014" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="440" stroke="hsl(90 60% 45%)" strokeWidth="0.2" opacity="0.011" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="480" stroke="hsl(90 60% 45%)" strokeWidth="0.15" opacity="0.008" />
           </svg>
         </div>
         
