@@ -89,7 +89,7 @@ const ChapterHeader = ({ number, title, subtitle, id }: ChapterHeaderProps) => {
   }, []);
   
   return (
-    <div ref={headerRef} id={id} className="py-20 md:py-32 border-t-2 border-slate-200 scroll-mt-20">
+    <div ref={headerRef} id={id} className="mb-12 scroll-mt-20">
       <div className="max-w-4xl">
         <span className="chapter-num font-data text-sm text-slate-400 tracking-widest">{number}</span>
         <h2 className="chapter-title font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-4 mb-6">{title}</h2>
@@ -192,30 +192,32 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 01: THE PROBLEM
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32 relative">
+        <section className="py-16 md:py-24 relative">
           <div className="absolute inset-0 bg-terrain-strata opacity-30 pointer-events-none" />
-          <ChapterHeader 
-            id="the-problem"
-            number="01" 
-            title="The Problem" 
-            subtitle="Industries run on measurement. But traditional methods fail when conditions get real."
-          />
-          
-          <div className="grid md:grid-cols-3 gap-6 mt-12 relative">
-            <div className="card-earth p-8">
-              <span className="font-data text-4xl text-earth-ochre/50">01</span>
-              <h3 className="font-ui text-xl font-semibold text-foreground mt-4 mb-3">Invasive sensors fail</h3>
-              <p className="text-slate-600">Contact-based measurement degrades in corrosive, abrasive, or high-temperature slurries. Downtime follows.</p>
-            </div>
-            <div className="card-earth p-8">
-              <span className="font-data text-4xl text-earth-ochre/50">02</span>
-              <h3 className="font-ui text-xl font-semibold text-foreground mt-4 mb-3">Lab sampling lags</h3>
-              <p className="text-slate-600">Grab samples can't capture real-time process dynamics. By the time results arrive, the process has moved on.</p>
-            </div>
-            <div className="card-earth p-8">
-              <span className="font-data text-4xl text-earth-ochre/50">03</span>
-              <h3 className="font-ui text-xl font-semibold text-foreground mt-4 mb-3">Nuclear is complex</h3>
-              <p className="text-slate-600">Radioactive density gauges require licensing, safety protocols, and specialized handling. Overkill for most applications.</p>
+          <div className="relative">
+            <ChapterHeader 
+              id="the-problem"
+              number="01" 
+              title="The Problem" 
+              subtitle="Industries run on measurement. But traditional methods fail when conditions get real."
+            />
+            
+            <div className="grid md:grid-cols-3 gap-6 relative">
+              <div className="card-earth p-8">
+                <span className="font-data text-4xl text-earth-ochre/50">01</span>
+                <h3 className="font-ui text-xl font-semibold text-foreground mt-4 mb-3">Invasive sensors fail</h3>
+                <p className="text-slate-600">Contact-based measurement degrades in corrosive, abrasive, or high-temperature slurries. Downtime follows.</p>
+              </div>
+              <div className="card-earth p-8">
+                <span className="font-data text-4xl text-earth-ochre/50">02</span>
+                <h3 className="font-ui text-xl font-semibold text-foreground mt-4 mb-3">Lab sampling lags</h3>
+                <p className="text-slate-600">Grab samples can't capture real-time process dynamics. By the time results arrive, the process has moved on.</p>
+              </div>
+              <div className="card-earth p-8">
+                <span className="font-data text-4xl text-earth-ochre/50">03</span>
+                <h3 className="font-ui text-xl font-semibold text-foreground mt-4 mb-3">Nuclear is complex</h3>
+                <p className="text-slate-600">Radioactive density gauges require licensing, safety protocols, and specialized handling. Overkill for most applications.</p>
+              </div>
             </div>
           </div>
         </section>
@@ -256,49 +258,51 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 02: THE SOLUTION
         ───────────────────────────────────────────────────────────── */}
-        <section className="relative">
+        <section className="py-16 md:py-24 relative">
           <div className="absolute inset-0 bg-wave-subtle opacity-20 pointer-events-none" />
-          <ChapterHeader 
-            id="the-solution"
-            number="02" 
-            title="The Solution" 
-            subtitle="Non-invasive ultrasonic measurement. No contact. No radiation. No compromise."
-          />
-          
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 pb-20 relative">
-            <div>
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center shadow-glow-sm">
-                  <RhosonicsLogo variant="gradient" className="w-10 h-10" />
+          <div className="relative">
+            <ChapterHeader 
+              id="the-solution"
+              number="02" 
+              title="The Solution" 
+              subtitle="Non-invasive ultrasonic measurement. No contact. No radiation. No compromise."
+            />
+            
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center shadow-glow-sm">
+                    <RhosonicsLogo variant="gradient" className="w-10 h-10" />
+                  </div>
+                  <div>
+                    <h3 className="font-ui text-2xl font-bold text-foreground">SDM ECO Technology</h3>
+                    <span className="font-data text-sm text-slate-500">ULTRASONIC DENSITY MEASUREMENT</span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-ui text-2xl font-bold text-foreground">SDM ECO Technology</h3>
-                  <span className="font-data text-sm text-slate-500">ULTRASONIC DENSITY MEASUREMENT</span>
+                
+                <div className="space-y-6 text-lg text-slate-600">
+                  <p>Sound waves travel through the pipe wall, measuring slurry density from the outside. The sensor never touches the process fluid.</p>
+                  <p>No process penetration means no wear, no clogging, no contamination risk. The measurement keeps running while competitors' sensors get replaced.</p>
                 </div>
               </div>
               
-              <div className="space-y-6 text-lg text-slate-600">
-                <p>Sound waves travel through the pipe wall, measuring slurry density from the outside. The sensor never touches the process fluid.</p>
-                <p>No process penetration means no wear, no clogging, no contamination risk. The measurement keeps running while competitors' sensors get replaced.</p>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-6">
-              <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 chamfer-sm shadow-glow-sm">
-                <span className="font-data text-3xl text-primary font-bold">±0.5%</span>
-                <p className="text-sm text-slate-600 mt-2">Measurement precision across full density range</p>
-              </div>
-              <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 chamfer-sm shadow-glow-sm">
-                <span className="font-data text-3xl text-primary font-bold">99.8%</span>
-                <p className="text-sm text-slate-600 mt-2">Uptime—no process interruption required</p>
-              </div>
-              <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 chamfer-sm shadow-glow-sm">
-                <span className="font-data text-3xl text-primary font-bold">40+</span>
-                <p className="text-sm text-slate-600 mt-2">Years of field-proven technology</p>
-              </div>
-              <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 chamfer-sm shadow-glow-sm">
-                <span className="font-data text-3xl text-primary font-bold">0</span>
-                <p className="text-sm text-slate-600 mt-2">Radiation licensing requirements</p>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 chamfer-sm shadow-glow-sm">
+                  <span className="font-data text-3xl text-primary font-bold">±0.5%</span>
+                  <p className="text-sm text-slate-600 mt-2">Measurement precision across full density range</p>
+                </div>
+                <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 chamfer-sm shadow-glow-sm">
+                  <span className="font-data text-3xl text-primary font-bold">99.8%</span>
+                  <p className="text-sm text-slate-600 mt-2">Uptime—no process interruption required</p>
+                </div>
+                <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 chamfer-sm shadow-glow-sm">
+                  <span className="font-data text-3xl text-primary font-bold">40+</span>
+                  <p className="text-sm text-slate-600 mt-2">Years of field-proven technology</p>
+                </div>
+                <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 chamfer-sm shadow-glow-sm">
+                  <span className="font-data text-3xl text-primary font-bold">0</span>
+                  <p className="text-sm text-slate-600 mt-2">Radiation licensing requirements</p>
+                </div>
               </div>
             </div>
           </div>
@@ -309,7 +313,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 03: THE HERITAGE
         ───────────────────────────────────────────────────────────── */}
-        <section className="relative py-8">
+        <section className="py-16 md:py-24 relative">
           <div className="absolute inset-0 bg-workshop-grid opacity-30 pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-b from-earth-ochre/5 via-transparent to-transparent pointer-events-none" />
           <div className="relative">
@@ -332,7 +336,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 04: THE VISUAL IDENTITY
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-8">
+        <section className="py-16 md:py-24">
           <ChapterHeader 
             id="the-identity"
             number="04" 
@@ -356,7 +360,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 05: THE VOICE
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-8">
+        <section className="py-16 md:py-24">
           <ChapterHeader 
             id="the-voice"
             number="05" 
@@ -376,7 +380,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 06: THE APPLICATION
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-8">
+        <section className="py-16 md:py-24">
           <ChapterHeader 
             id="the-application"
             number="06" 
@@ -397,7 +401,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 07: THE PROOF
         ───────────────────────────────────────────────────────────── */}
-        <section className="relative py-8">
+        <section className="py-16 md:py-24 relative">
           <div className="absolute inset-0 bg-grid-data opacity-20 pointer-events-none" />
           <div className="relative">
             <ChapterHeader 
@@ -423,7 +427,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 08: THE RESOURCES
         ───────────────────────────────────────────────────────────── */}
-        <section className="py-8">
+        <section className="py-16 md:py-24">
           <ChapterHeader 
             id="the-resources"
             number="08" 
