@@ -38,6 +38,12 @@ const SectionLoader = () => (
   </div>
 );
 
+const ChapterDivider = () => (
+  <div className="py-6">
+    <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+  </div>
+);
+
 interface ChapterHeaderProps {
   number: string;
   title: string;
@@ -391,6 +397,8 @@ const Index = () => {
           </div>
         </section>
 
+        <ChapterDivider />
+
         {/* ═══════════════════════════════════════════════════════════════
             TRANSITION — DARK OBSIDIAN FULL-BLEED
         ═══════════════════════════════════════════════════════════════ */}
@@ -477,7 +485,7 @@ const Index = () => {
           </div>
         </section>
 
-        
+        <ChapterDivider />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 03: THE HERITAGE
@@ -498,7 +506,7 @@ const Index = () => {
           </div>
         </section>
 
-        
+        <ChapterDivider />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 04: THE VISUAL IDENTITY
@@ -522,7 +530,7 @@ const Index = () => {
           </Suspense>
         </section>
 
-        
+        <ChapterDivider />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 05: THE VOICE
@@ -542,7 +550,7 @@ const Index = () => {
           </Suspense>
         </section>
 
-        
+        <ChapterDivider />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 06: THE APPLICATION
@@ -563,7 +571,7 @@ const Index = () => {
           </Suspense>
         </section>
 
-        
+        <ChapterDivider />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 07: THE PROOF
@@ -589,7 +597,7 @@ const Index = () => {
           </div>
         </section>
 
-        
+        <ChapterDivider />
 
         {/* ─────────────────────────────────────────────────────────────
             CHAPTER 08: THE RESOURCES
