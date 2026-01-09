@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect, useRef } from "react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
-import { ArrowDown, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import { QuickNav } from "@/components/brand/QuickNav";
 import { ChapterProgress } from "@/components/brand/ChapterProgress";
 
@@ -244,40 +244,48 @@ const Index = () => {
           HERO — BOLD STATEMENT
       ═══════════════════════════════════════════════════════════════ */}
       <section className="min-h-screen flex flex-col justify-center relative bg-slate-950 overflow-hidden">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+        {/* Layered backgrounds */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900/95 to-slate-950" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_40%,hsl(125_50%_40%/0.08),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_80%_80%,hsl(90_60%_45%/0.06),transparent)]" />
         
         {/* Particle canvas for slurry/density visualization */}
         <canvas 
           ref={particlesRef} 
           className="absolute inset-0 pointer-events-none" 
-          style={{ opacity: 0.6 }}
+          style={{ opacity: 0.5 }}
         />
+        
+        {/* Grid overlay for industrial feel */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `linear-gradient(hsl(125 50% 40%) 1px, transparent 1px), linear-gradient(90deg, hsl(125 50% 40%) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
         
         {/* Ultrasonic wave arcs - starting from bottom-right corner */}
         <div className="absolute inset-0 overflow-hidden">
           <svg 
             ref={waveRef}
-            className="absolute bottom-0 right-0 w-[100vw] h-[100vh] md:w-[90vw] md:h-[90vh]" 
+            className="absolute bottom-0 right-0 w-[120vw] h-[120vh] md:w-[100vw] md:h-[100vh]" 
             viewBox="0 0 1000 1000" 
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            style={{ transform: 'translate(15%, 15%)' }}
+            style={{ transform: 'translate(20%, 20%)' }}
           >
             {/* Dense concentric arcs - strong start, fading out */}
-            <circle className="wave-arc" cx="1000" cy="1000" r="30" stroke="hsl(125 50% 45%)" strokeWidth="2" opacity="0.6" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="55" stroke="hsl(125 50% 45%)" strokeWidth="1.8" opacity="0.55" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="80" stroke="hsl(125 50% 44%)" strokeWidth="1.6" opacity="0.5" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="105" stroke="hsl(125 50% 43%)" strokeWidth="1.5" opacity="0.45" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="130" stroke="hsl(125 50% 42%)" strokeWidth="1.4" opacity="0.4" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="155" stroke="hsl(125 50% 41%)" strokeWidth="1.3" opacity="0.36" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="180" stroke="hsl(125 50% 40%)" strokeWidth="1.2" opacity="0.32" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="205" stroke="hsl(125 50% 40%)" strokeWidth="1.1" opacity="0.28" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="230" stroke="hsl(125 50% 40%)" strokeWidth="1" opacity="0.24" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="255" stroke="hsl(125 50% 40%)" strokeWidth="0.9" opacity="0.2" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="280" stroke="hsl(125 50% 40%)" strokeWidth="0.85" opacity="0.17" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="305" stroke="hsl(125 50% 40%)" strokeWidth="0.8" opacity="0.14" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="330" stroke="hsl(125 50% 40%)" strokeWidth="0.75" opacity="0.12" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="30" stroke="hsl(125 50% 45%)" strokeWidth="2.5" opacity="0.7" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="55" stroke="hsl(125 50% 45%)" strokeWidth="2.2" opacity="0.6" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="80" stroke="hsl(125 50% 44%)" strokeWidth="2" opacity="0.55" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="105" stroke="hsl(125 50% 43%)" strokeWidth="1.8" opacity="0.5" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="130" stroke="hsl(125 50% 42%)" strokeWidth="1.6" opacity="0.45" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="155" stroke="hsl(125 50% 41%)" strokeWidth="1.5" opacity="0.4" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="180" stroke="hsl(125 50% 40%)" strokeWidth="1.4" opacity="0.35" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="205" stroke="hsl(125 50% 40%)" strokeWidth="1.3" opacity="0.3" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="230" stroke="hsl(125 50% 40%)" strokeWidth="1.2" opacity="0.25" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="255" stroke="hsl(125 50% 40%)" strokeWidth="1.1" opacity="0.2" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="280" stroke="hsl(125 50% 40%)" strokeWidth="1" opacity="0.17" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="305" stroke="hsl(125 50% 40%)" strokeWidth="0.9" opacity="0.14" />
+            <circle className="wave-arc" cx="1000" cy="1000" r="330" stroke="hsl(125 50% 40%)" strokeWidth="0.8" opacity="0.12" />
             <circle className="wave-arc" cx="1000" cy="1000" r="355" stroke="hsl(125 50% 40%)" strokeWidth="0.7" opacity="0.1" />
             <circle className="wave-arc" cx="1000" cy="1000" r="380" stroke="hsl(125 50% 40%)" strokeWidth="0.65" opacity="0.08" />
             <circle className="wave-arc" cx="1000" cy="1000" r="405" stroke="hsl(125 50% 40%)" strokeWidth="0.6" opacity="0.07" />
@@ -285,63 +293,102 @@ const Index = () => {
             <circle className="wave-arc" cx="1000" cy="1000" r="455" stroke="hsl(125 50% 40%)" strokeWidth="0.5" opacity="0.05" />
             <circle className="wave-arc" cx="1000" cy="1000" r="480" stroke="hsl(125 50% 40%)" strokeWidth="0.45" opacity="0.04" />
             <circle className="wave-arc" cx="1000" cy="1000" r="505" stroke="hsl(125 50% 40%)" strokeWidth="0.4" opacity="0.035" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="530" stroke="hsl(125 50% 40%)" strokeWidth="0.35" opacity="0.03" />
-            <circle className="wave-arc" cx="1000" cy="1000" r="555" stroke="hsl(125 50% 40%)" strokeWidth="0.3" opacity="0.025" />
             
             {/* Secondary wave set interlaced - lime accent */}
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="42" stroke="hsl(90 60% 50%)" strokeWidth="1" opacity="0.35" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="92" stroke="hsl(90 60% 48%)" strokeWidth="0.9" opacity="0.28" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="142" stroke="hsl(90 60% 46%)" strokeWidth="0.8" opacity="0.22" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="192" stroke="hsl(90 60% 45%)" strokeWidth="0.7" opacity="0.17" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="242" stroke="hsl(90 60% 45%)" strokeWidth="0.6" opacity="0.13" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="292" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.1" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="342" stroke="hsl(90 60% 45%)" strokeWidth="0.45" opacity="0.07" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="392" stroke="hsl(90 60% 45%)" strokeWidth="0.4" opacity="0.05" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="442" stroke="hsl(90 60% 45%)" strokeWidth="0.35" opacity="0.035" />
-            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="492" stroke="hsl(90 60% 45%)" strokeWidth="0.3" opacity="0.025" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="42" stroke="hsl(90 60% 50%)" strokeWidth="1.2" opacity="0.4" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="92" stroke="hsl(90 60% 48%)" strokeWidth="1.1" opacity="0.32" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="142" stroke="hsl(90 60% 46%)" strokeWidth="1" opacity="0.25" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="192" stroke="hsl(90 60% 45%)" strokeWidth="0.9" opacity="0.2" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="242" stroke="hsl(90 60% 45%)" strokeWidth="0.8" opacity="0.15" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="292" stroke="hsl(90 60% 45%)" strokeWidth="0.7" opacity="0.12" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="342" stroke="hsl(90 60% 45%)" strokeWidth="0.6" opacity="0.08" />
+            <circle className="wave-arc-secondary" cx="1000" cy="1000" r="392" stroke="hsl(90 60% 45%)" strokeWidth="0.5" opacity="0.06" />
           </svg>
         </div>
         
-        <div className="relative z-10 px-6 md:px-12 lg:px-20 py-20">
-          <div className="max-w-6xl mx-auto">
-            {/* Logo and brand header */}
-            <div className="flex items-center gap-3 mb-12">
-              <div className="w-9 h-9 md:w-10 md:h-10">
-                <RhosonicsLogo variant="gradient" />
+        {/* Floating accent shapes */}
+        <div className="absolute top-1/4 left-[10%] w-32 h-32 border border-primary/20 rounded-full blur-[1px] opacity-40" />
+        <div className="absolute bottom-1/3 left-[15%] w-2 h-2 bg-primary rounded-full opacity-60" />
+        <div className="absolute top-1/3 right-[25%] w-1.5 h-1.5 bg-rho-green-accent rounded-full opacity-50" />
+        
+        {/* Content */}
+        <div className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
+          <div className="max-w-7xl mx-auto">
+            {/* Top bar with logo and document type */}
+            <div className="flex items-center justify-between mb-16 md:mb-24">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 md:w-12 md:h-12 relative">
+                  <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl" />
+                  <RhosonicsLogo variant="gradient" />
+                </div>
+                <span className="font-logo text-xl md:text-2xl text-white tracking-wide uppercase">RHOSONICS</span>
               </div>
-              <span className="font-logo text-2xl md:text-3xl text-white tracking-wide uppercase">RHOSONICS</span>
-            </div>
-            
-            {/* Bold statement */}
-            <h1 className="font-ui text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.1] mb-8">
-              We measure<br />
-              <span className="bg-gradient-to-r from-rho-green-accent to-rho-green bg-clip-text text-transparent">what others can't.</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mb-16 leading-relaxed">
-              Ultrasonic precision for industries where measurement isn't optional—it's operational.
-            </p>
-            
-            {/* Meta info */}
-            <div className="flex flex-wrap gap-8 md:gap-16 text-sm">
-              <div>
-                <span className="font-data text-slate-500 tracking-widest text-xs">ESTABLISHED</span>
-                <p className="text-white font-ui text-2xl mt-1">1984</p>
-              </div>
-              <div>
-                <span className="font-data text-slate-500 tracking-widest text-xs">HEADQUARTERS</span>
-                <p className="text-white font-ui text-2xl mt-1">Netherlands</p>
-              </div>
-              <div>
-                <span className="font-data text-slate-500 tracking-widest text-xs">SPECIALIZATION</span>
-                <p className="text-white font-ui text-2xl mt-1">Ultrasonic Density</p>
+              <div className="hidden sm:flex items-center gap-3">
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                <span className="font-data text-xs text-slate-400 tracking-widest">BRAND GUIDELINES V.2025</span>
               </div>
             </div>
             
-            {/* Origin nod */}
-            <div className="mt-12 flex items-center gap-4 text-sm text-slate-500">
-              <div className="w-8 h-px bg-gradient-to-r from-earth-ochre to-transparent" />
-              <span className="font-data tracking-wide">FROM GARAGE TO GLOBAL</span>
+            {/* Main headline - dramatic sizing */}
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+              <div className="lg:col-span-8">
+                <h1 className="font-ui text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white leading-[0.95] tracking-tight">
+                  We measure
+                  <br />
+                  <span className="relative inline-block">
+                    <span className="bg-gradient-to-r from-rho-green-accent via-primary to-rho-green bg-clip-text text-transparent">
+                      what others
+                    </span>
+                  </span>
+                  <br />
+                  <span className="bg-gradient-to-r from-primary to-rho-green-accent bg-clip-text text-transparent">
+                    can't.
+                  </span>
+                </h1>
+                
+                <p className="text-lg md:text-xl text-slate-400 max-w-xl mt-8 leading-relaxed">
+                  Ultrasonic precision for industries where measurement isn't optional—it's operational.
+                </p>
+              </div>
+              
+              {/* Right side stats */}
+              <div className="lg:col-span-4 flex flex-col gap-6 lg:border-l lg:border-slate-800 lg:pl-8">
+                <div className="group">
+                  <span className="font-data text-[10px] text-slate-500 tracking-widest block mb-1">ESTABLISHED</span>
+                  <p className="text-white font-ui text-4xl md:text-5xl font-light">1984</p>
+                </div>
+                <div className="group">
+                  <span className="font-data text-[10px] text-slate-500 tracking-widest block mb-1">HEADQUARTERS</span>
+                  <p className="text-white font-ui text-2xl md:text-3xl font-light">Netherlands</p>
+                </div>
+                <div className="group">
+                  <span className="font-data text-[10px] text-slate-500 tracking-widest block mb-1">SPECIALIZATION</span>
+                  <p className="text-white font-ui text-xl md:text-2xl font-light">Ultrasonic Density</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Bottom bar */}
+            <div className="mt-16 md:mt-24 flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-slate-800/50">
+              <div className="flex items-center gap-4 text-sm text-slate-500">
+                <div className="w-12 h-px bg-gradient-to-r from-earth-ochre to-transparent" />
+                <span className="font-data tracking-wide text-xs">FROM GARAGE TO GLOBAL</span>
+              </div>
+              
+              <div className="flex items-center gap-6">
+                <div className="hidden md:flex items-center gap-2 text-slate-500">
+                  <div className="w-1.5 h-1.5 bg-primary/60 rounded-full" />
+                  <span className="font-data text-[10px] tracking-wider">40+ YEARS</span>
+                </div>
+                <div className="hidden md:flex items-center gap-2 text-slate-500">
+                  <div className="w-1.5 h-1.5 bg-primary/60 rounded-full" />
+                  <span className="font-data text-[10px] tracking-wider">NON-INVASIVE</span>
+                </div>
+                <div className="hidden md:flex items-center gap-2 text-slate-500">
+                  <div className="w-1.5 h-1.5 bg-primary/60 rounded-full" />
+                  <span className="font-data text-[10px] tracking-wider">ZERO RADIATION</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -349,12 +396,12 @@ const Index = () => {
         {/* Scroll indicator */}
         <button 
           onClick={scrollToContent}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 hover:text-white transition-colors cursor-pointer group"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-500 hover:text-primary transition-colors cursor-pointer group"
           aria-label="Scroll to content"
         >
           <div className="flex flex-col items-center gap-2">
-            <span className="font-data text-xs tracking-widest">SCROLL</span>
-            <ArrowDown className="w-5 h-5 animate-bounce" />
+            <span className="font-data text-[10px] tracking-widest opacity-60">SCROLL</span>
+            <div className="w-px h-8 bg-gradient-to-b from-slate-500 to-transparent" />
           </div>
         </button>
       </section>
