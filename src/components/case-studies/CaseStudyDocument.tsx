@@ -71,7 +71,7 @@ export const CaseStudyDocument = ({
               <RhosonicsLogo variant="gradient" />
             </div>
             <div>
-              <span className="font-logo text-white text-lg">Rhosonics</span>
+              <span className="font-logo text-white text-lg tracking-wide uppercase">RHOSONICS</span>
               <span className="label-tech-sm text-slate-400 block">ULTRASONIC MEASUREMENT SOLUTIONS</span>
             </div>
           </div>
@@ -193,7 +193,7 @@ export const CaseStudyDocument = ({
             <div className="w-8 h-8">
               <RhosonicsLogo variant="gradient" />
             </div>
-            <span className="font-logo text-white text-lg">Rhosonics</span>
+            <span className="font-logo text-white text-lg tracking-wide uppercase">RHOSONICS</span>
           </div>
           <div className="label-tech text-slate-400">
             {(isPlaceholder(study.company) ? "COMPANY" : study.company).toUpperCase()} — RESULTS

@@ -106,7 +106,7 @@ export const MasterLockup = () => {
             <div className="w-8 h-8">
               <RhosonicsLogo variant="gradient" />
             </div>
-            <span className="font-logo text-xl text-foreground">Rhosonics</span>
+            <span className="font-logo text-xl text-foreground tracking-wide uppercase">RHOSONICS</span>
           </div>
           <span className="font-data text-xs uppercase tracking-wider text-slate-400 group-hover:text-primary transition-colors">HORIZONTAL</span>
         </div>
@@ -116,7 +116,7 @@ export const MasterLockup = () => {
             <div className="w-12 h-12">
               <RhosonicsLogo variant="gradient" />
             </div>
-            <span className="font-logo text-lg text-foreground">Rhosonics</span>
+            <span className="font-logo text-lg text-foreground tracking-wide uppercase">RHOSONICS</span>
           </div>
           <span className="font-data text-xs uppercase tracking-wider text-slate-400 group-hover:text-primary transition-colors">STACKED</span>
         </div>

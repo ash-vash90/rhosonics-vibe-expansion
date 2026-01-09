@@ -462,7 +462,7 @@ const CaseStudies = () => {
                   <div className="w-6 h-6">
                     <RhosonicsLogo variant="gradient" />
                   </div>
-                  <span className="font-logo text-slate-100">Rhosonics</span>
+                  <span className="font-logo text-slate-100 tracking-wide uppercase">RHOSONICS</span>
                   <span className="text-sm">Proven Process Insights</span>
                 </div>
                 <div className="text-sm">
