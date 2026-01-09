@@ -106,7 +106,7 @@ export const InterfaceKit = () => {
               <div className="w-5 h-5">
                 <RhosonicsLogo variant="white" />
               </div>
-              <span className="font-logo text-lg tracking-wide pt-0.5">Rhosonics</span>
+              <span className="font-logo text-lg tracking-wide uppercase pt-0.5">RHOSONICS</span>
             </div>
             <Menu className="w-5 h-5 text-slate-400" />
           </div>

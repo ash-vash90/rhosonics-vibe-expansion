@@ -133,7 +133,7 @@ export const DosAndDonts = () => {
             <div className="w-6 h-6">
               <RhosonicsLogo variant="gradient" />
             </div>
-            <span className="font-logo text-xl">Rhosonics</span>
+            <span className="font-logo text-xl tracking-wide uppercase">RHOSONICS</span>
           </div>
         </ExampleCard>
 

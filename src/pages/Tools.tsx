@@ -96,7 +96,7 @@ const Tools = () => {
               <div className="w-7 h-7 sm:w-8 sm:h-8">
                 <RhosonicsLogo variant="gradient" />
               </div>
-              <span className="font-logo text-base sm:text-lg text-foreground hidden sm:inline">Rhosonics</span>
+              <span className="font-logo text-base sm:text-lg text-foreground tracking-wide uppercase hidden sm:inline">RHOSONICS</span>
               <span className="px-1.5 sm:px-2 py-0.5 bg-primary/20 border border-primary/40 rounded text-[10px] sm:text-xs font-mono text-primary">
                 AI
               </span>

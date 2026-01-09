@@ -359,7 +359,7 @@ export const Navigation = () => {
           <div className="w-6 h-6">
             <RhosonicsLogo variant="gradient" />
           </div>
-          <span className="font-logo text-base text-slate-100">Rhosonics</span>
+          <span className="font-logo text-base text-slate-100 tracking-wide uppercase">RHOSONICS</span>
         </button>
         <div className="flex items-center gap-2">
           <Link
