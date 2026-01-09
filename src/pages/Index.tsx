@@ -495,29 +495,20 @@ const Index = () => {
               subtitle="Industries run on measurement. But traditional methods fail when conditions get real."
             />
             
-            <div className="grid md:grid-cols-3 gap-8 relative">
-              <div className="card-earth p-8 md:p-10 group hover:border-earth-ochre/40 transition-colors">
-                <div className="flex items-start justify-between mb-6">
-                  <span className="font-data text-5xl md:text-6xl text-earth-ochre/30 font-light">01</span>
-                  <div className="w-2 h-2 bg-earth-ochre/40 rounded-full mt-3" />
-                </div>
-                <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mb-4">Invasive sensors fail</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="p-8 md:p-10 bg-card border border-border rounded-xl group hover:border-slate-300 transition-colors">
+                <span className="font-data text-4xl text-slate-300 font-light">01</span>
+                <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mt-4 mb-4">Invasive sensors fail</h3>
                 <p className="text-slate-600 leading-relaxed">Contact-based measurement degrades in corrosive, abrasive, or high-temperature slurries. Downtime follows.</p>
               </div>
-              <div className="card-earth p-8 md:p-10 group hover:border-earth-ochre/40 transition-colors md:mt-8">
-                <div className="flex items-start justify-between mb-6">
-                  <span className="font-data text-5xl md:text-6xl text-earth-ochre/30 font-light">02</span>
-                  <div className="w-2 h-2 bg-earth-ochre/40 rounded-full mt-3" />
-                </div>
-                <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mb-4">Lab sampling lags</h3>
+              <div className="p-8 md:p-10 bg-card border border-border rounded-xl group hover:border-slate-300 transition-colors">
+                <span className="font-data text-4xl text-slate-300 font-light">02</span>
+                <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mt-4 mb-4">Lab sampling lags</h3>
                 <p className="text-slate-600 leading-relaxed">Grab samples can't capture real-time process dynamics. By the time results arrive, the process has moved on.</p>
               </div>
-              <div className="card-earth p-8 md:p-10 group hover:border-earth-ochre/40 transition-colors md:mt-16">
-                <div className="flex items-start justify-between mb-6">
-                  <span className="font-data text-5xl md:text-6xl text-earth-ochre/30 font-light">03</span>
-                  <div className="w-2 h-2 bg-earth-ochre/40 rounded-full mt-3" />
-                </div>
-                <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mb-4">Nuclear is complex</h3>
+              <div className="p-8 md:p-10 bg-card border border-border rounded-xl group hover:border-slate-300 transition-colors">
+                <span className="font-data text-4xl text-slate-300 font-light">03</span>
+                <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mt-4 mb-4">Nuclear is complex</h3>
                 <p className="text-slate-600 leading-relaxed">Radioactive density gauges require licensing, safety protocols, and specialized handling. Overkill for most applications.</p>
               </div>
             </div>
@@ -556,13 +547,8 @@ const Index = () => {
                   <p>Sound waves travel through the pipe wall, measuring slurry density from the outside. The sensor never touches the process fluid.</p>
                   <p>No process penetration means no wear, no clogging, no contamination risk. The measurement keeps running while competitors' sensors get replaced.</p>
                 </div>
-                
-                <div className="mt-10 flex items-center gap-4 text-sm">
-                  <div className="w-8 h-px bg-gradient-to-r from-primary to-transparent" />
-                  <span className="font-data text-xs text-slate-500 tracking-wide">PATENTED TECHNOLOGY</span>
-                </div>
               </div>
-              
+                
               {/* Right stats grid */}
               <div className="lg:col-span-7">
                 <div className="grid grid-cols-2 gap-6">
@@ -570,7 +556,7 @@ const Index = () => {
                     <span className="font-data text-4xl md:text-5xl text-primary font-bold block mb-3">±0.5%</span>
                     <p className="text-sm md:text-base text-slate-600">Measurement precision across full density range</p>
                   </div>
-                  <div className="p-8 md:p-10 bg-gradient-to-br from-primary/5 via-primary/8 to-primary/5 border border-primary/20 rounded-2xl shadow-glow-sm group hover:border-primary/40 transition-colors mt-8">
+                  <div className="p-8 md:p-10 bg-gradient-to-br from-primary/5 via-primary/8 to-primary/5 border border-primary/20 rounded-2xl shadow-glow-sm group hover:border-primary/40 transition-colors">
                     <span className="font-data text-4xl md:text-5xl text-primary font-bold block mb-3">99.8%</span>
                     <p className="text-sm md:text-base text-slate-600">Uptime—no process interruption required</p>
                   </div>
@@ -578,7 +564,7 @@ const Index = () => {
                     <span className="font-data text-4xl md:text-5xl text-primary font-bold block mb-3">40+</span>
                     <p className="text-sm md:text-base text-slate-600">Years of field-proven technology</p>
                   </div>
-                  <div className="p-8 md:p-10 bg-gradient-to-br from-primary/5 via-primary/8 to-primary/5 border border-primary/20 rounded-2xl shadow-glow-sm group hover:border-primary/40 transition-colors mt-8">
+                  <div className="p-8 md:p-10 bg-gradient-to-br from-primary/5 via-primary/8 to-primary/5 border border-primary/20 rounded-2xl shadow-glow-sm group hover:border-primary/40 transition-colors">
                     <span className="font-data text-4xl md:text-5xl text-primary font-bold block mb-3">0</span>
                     <p className="text-sm md:text-base text-slate-600">Radiation licensing requirements</p>
                   </div>
