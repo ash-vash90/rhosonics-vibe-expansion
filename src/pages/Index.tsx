@@ -107,6 +107,7 @@ const ChapterHeader = ({ number, title, subtitle, id }: ChapterHeaderProps) => {
 const Index = () => {
   const waveRef = useRef<SVGSVGElement>(null);
   const particlesRef = useRef<HTMLCanvasElement>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
   
   // Animate ultrasonic wave arcs - smooth ripple effect
   useEffect(() => {
@@ -230,6 +231,68 @@ const Index = () => {
     };
   }, []);
   
+  // Hero entrance animations
+  useEffect(() => {
+    const hero = heroContentRef.current;
+    if (!hero) return;
+    
+    const ctx = gsap.context(() => {
+      // Set initial states
+      gsap.set('.hero-logo', { opacity: 0, scale: 0.8, filter: 'blur(10px)' });
+      gsap.set('.hero-badge', { opacity: 0, x: 20 });
+      gsap.set('.hero-line-1', { opacity: 0, y: 60, filter: 'blur(8px)' });
+      gsap.set('.hero-line-2', { opacity: 0, y: 60, filter: 'blur(8px)' });
+      gsap.set('.hero-line-3', { opacity: 0, y: 60, filter: 'blur(8px)' });
+      gsap.set('.hero-tagline', { opacity: 0, y: 30 });
+      gsap.set('.hero-stats', { opacity: 0, x: 40 });
+      gsap.set('.hero-bottom', { opacity: 0, y: 20 });
+      gsap.set('.hero-scroll', { opacity: 0 });
+      
+      // Create timeline
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      
+      tl.to('.hero-logo', { 
+        opacity: 1, scale: 1, filter: 'blur(0px)', 
+        duration: 0.8 
+      })
+      .to('.hero-badge', { 
+        opacity: 1, x: 0, 
+        duration: 0.6 
+      }, '-=0.4')
+      .to('.hero-line-1', { 
+        opacity: 1, y: 0, filter: 'blur(0px)', 
+        duration: 0.8 
+      }, '-=0.3')
+      .to('.hero-line-2', { 
+        opacity: 1, y: 0, filter: 'blur(0px)', 
+        duration: 0.8 
+      }, '-=0.5')
+      .to('.hero-line-3', { 
+        opacity: 1, y: 0, filter: 'blur(0px)', 
+        duration: 0.8 
+      }, '-=0.5')
+      .to('.hero-tagline', { 
+        opacity: 1, y: 0, 
+        duration: 0.6 
+      }, '-=0.4')
+      .to('.hero-stats', { 
+        opacity: 1, x: 0, 
+        duration: 0.8,
+        stagger: 0.1 
+      }, '-=0.5')
+      .to('.hero-bottom', { 
+        opacity: 1, y: 0, 
+        duration: 0.6 
+      }, '-=0.4')
+      .to('.hero-scroll', { 
+        opacity: 1, 
+        duration: 0.8 
+      }, '-=0.2');
+    }, hero);
+    
+    return () => ctx.revert();
+  }, []);
+  
   const scrollToContent = () => {
     document.getElementById('the-problem')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -312,18 +375,18 @@ const Index = () => {
         <div className="absolute top-1/3 right-[25%] w-1.5 h-1.5 bg-rho-green-accent rounded-full opacity-50" />
         
         {/* Content */}
-        <div className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
+        <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
           <div className="max-w-7xl mx-auto">
             {/* Top bar with logo and document type */}
             <div className="flex items-center justify-between mb-16 md:mb-24">
-              <div className="flex items-center gap-3">
+              <div className="hero-logo flex items-center gap-3">
                 <div className="w-10 h-10 md:w-12 md:h-12 relative">
                   <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl" />
                   <RhosonicsLogo variant="gradient" />
                 </div>
                 <span className="font-logo text-xl md:text-2xl text-white tracking-wide uppercase">RHOSONICS</span>
               </div>
-              <div className="hidden sm:flex items-center gap-3">
+              <div className="hero-badge hidden sm:flex items-center gap-3">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                 <span className="font-data text-xs text-slate-400 tracking-widest">BRAND GUIDELINES V.2025</span>
               </div>
@@ -333,35 +396,34 @@ const Index = () => {
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
               <div className="lg:col-span-8">
                 <h1 className="font-ui text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white leading-[0.95] tracking-tight">
-                  We measure
-                  <br />
-                  <span className="relative inline-block">
+                  <span className="hero-line-1 block">We measure</span>
+                  <span className="hero-line-2 relative inline-block">
                     <span className="bg-gradient-to-r from-rho-green-accent via-primary to-rho-green bg-clip-text text-transparent">
                       what others
                     </span>
                   </span>
                   <br />
-                  <span className="bg-gradient-to-r from-primary to-rho-green-accent bg-clip-text text-transparent">
+                  <span className="hero-line-3 bg-gradient-to-r from-primary to-rho-green-accent bg-clip-text text-transparent inline-block">
                     can't.
                   </span>
                 </h1>
                 
-                <p className="text-lg md:text-xl text-slate-400 max-w-xl mt-8 leading-relaxed">
+                <p className="hero-tagline text-lg md:text-xl text-slate-400 max-w-xl mt-8 leading-relaxed">
                   Ultrasonic precision for industries where measurement isn't optional—it's operational.
                 </p>
               </div>
               
               {/* Right side stats */}
               <div className="lg:col-span-4 flex flex-col gap-6 lg:border-l lg:border-slate-800 lg:pl-8">
-                <div className="group">
+                <div className="hero-stats group">
                   <span className="font-data text-[10px] text-slate-500 tracking-widest block mb-1">ESTABLISHED</span>
                   <p className="text-white font-ui text-4xl md:text-5xl font-light">1984</p>
                 </div>
-                <div className="group">
+                <div className="hero-stats group">
                   <span className="font-data text-[10px] text-slate-500 tracking-widest block mb-1">HEADQUARTERS</span>
                   <p className="text-white font-ui text-2xl md:text-3xl font-light">Netherlands</p>
                 </div>
-                <div className="group">
+                <div className="hero-stats group">
                   <span className="font-data text-[10px] text-slate-500 tracking-widest block mb-1">SPECIALIZATION</span>
                   <p className="text-white font-ui text-xl md:text-2xl font-light">Ultrasonic Density</p>
                 </div>
@@ -369,7 +431,7 @@ const Index = () => {
             </div>
             
             {/* Bottom bar */}
-            <div className="mt-16 md:mt-24 flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-slate-800/50">
+            <div className="hero-bottom mt-16 md:mt-24 flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-slate-800/50">
               <div className="flex items-center gap-4 text-sm text-slate-500">
                 <div className="w-12 h-px bg-gradient-to-r from-earth-ochre to-transparent" />
                 <span className="font-data tracking-wide text-xs">FROM GARAGE TO GLOBAL</span>
@@ -396,7 +458,7 @@ const Index = () => {
         {/* Scroll indicator */}
         <button 
           onClick={scrollToContent}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-500 hover:text-primary transition-colors cursor-pointer group"
+          className="hero-scroll absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-500 hover:text-primary transition-colors cursor-pointer group"
           aria-label="Scroll to content"
         >
           <div className="flex flex-col items-center gap-2">
