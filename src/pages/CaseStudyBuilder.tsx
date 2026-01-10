@@ -85,10 +85,13 @@ export default function CaseStudyBuilder() {
     redo,
   } = useCaseStudy(getInitialDocument());
 
-  // Load from Supabase if ID provided
+  // Load from Supabase if ID provided, or show template selector for new
   useEffect(() => {
     if (paramId && user) {
       loadFromSupabase(paramId);
+    } else if (!paramId) {
+      // No ID means new case study - show template selector
+      setShowTemplateSelector(true);
     }
   }, [paramId, user]);
 
