@@ -77,6 +77,7 @@ const navSections: NavSection[] = [
     bridge: "Create & generate.",
     items: [
       { id: "content-library", label: "Content Library", highlight: true },
+      { id: "presentations-page", label: "Presentations →", highlight: true },
       { id: "ai-tools-page", label: "All AI Tools →", highlight: true },
     ],
   },
@@ -263,6 +264,19 @@ export const Navigation = () => {
                       <Link
                         key={item.id}
                         to="/library"
+                        className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
+                      >
+                        <span>{item.label}</span>
+                        <ChevronRight className="w-3 h-3 opacity-100" />
+                      </Link>
+                    );
+                  }
+                  
+                  if (item.id === 'presentations-page') {
+                    return (
+                      <Link
+                        key={item.id}
+                        to="/presentations/builder"
                         className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
                       >
                         <span>{item.label}</span>
