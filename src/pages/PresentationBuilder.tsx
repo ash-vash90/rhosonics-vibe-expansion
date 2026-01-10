@@ -6,12 +6,15 @@ import { SlideNavigator } from "@/components/presentation-builder/SlideNavigator
 import { BackgroundPicker } from "@/components/presentation-builder/BackgroundPicker";
 import { PresentationConverter } from "@/components/presentation-builder/PresentationConverter";
 import { FullscreenPreview } from "@/components/presentation-builder/FullscreenPreview";
+import { PresenterView } from "@/components/presentation-builder/PresenterView";
+import { RehearsalMode } from "@/components/presentation-builder/RehearsalMode";
 import { AISlideSuggestions } from "@/components/presentation-builder/AISlideSuggestions";
 import { SpeakerNotesPanel } from "@/components/presentation-builder/SpeakerNotesPanel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { usePresenterWindow } from "@/hooks/usePresenterWindow";
 import { supabase } from "@/integrations/supabase/client";
 import { Presentation, createEmptyPresentation } from "@/types/presentation";
 import { exportToPptx } from "@/lib/pptxExport";
@@ -29,6 +32,9 @@ import {
   PanelRight,
   PanelRightClose,
   FileSpreadsheet,
+  Monitor,
+  Clock,
+  ExternalLink,
 } from "lucide-react";
 import {
   Dialog,
@@ -37,6 +43,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const AUTOSAVE_KEY = "presentation-builder-draft";
 
@@ -52,8 +64,12 @@ export default function PresentationBuilder() {
   const [showLibrary, setShowLibrary] = useState(false);
   const [showImport, setShowImport] = useState(false);
   const [showFullscreen, setShowFullscreen] = useState(false);
+  const [showPresenterView, setShowPresenterView] = useState(false);
+  const [showRehearsalMode, setShowRehearsalMode] = useState(false);
   const [showAISidebar, setShowAISidebar] = useState(true);
   const [savedPresentations, setSavedPresentations] = useState<any[]>([]);
+  
+  const { openPresenterWindow, isWindowOpen } = usePresenterWindow();
 
   // Load initial presentation
   const getInitialPresentation = (): Presentation => {
@@ -385,6 +401,32 @@ export default function PresentationBuilder() {
             Preview
           </Button>
 
+          {/* Presenter View */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className={cn(isWindowOpen && "border-primary")}>
+                <Monitor className="h-4 w-4 mr-2" />
+                Presenter
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setShowPresenterView(true)}>
+                <Monitor className="h-4 w-4 mr-2" />
+                Open in this window
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => openPresenterWindow(presentation, currentSlideIndex)}>
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Open in new window
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Rehearse */}
+          <Button variant="outline" size="sm" onClick={() => setShowRehearsalMode(true)}>
+            <Clock className="h-4 w-4 mr-2" />
+            Rehearse
+          </Button>
+
           {/* AI Sidebar toggle */}
           <Button
             variant="outline"
@@ -482,6 +524,24 @@ export default function PresentationBuilder() {
           presentation={presentation}
           startSlideIndex={currentSlideIndex}
           onClose={() => setShowFullscreen(false)}
+        />
+      )}
+
+      {/* Presenter View */}
+      {showPresenterView && (
+        <PresenterView
+          presentation={presentation}
+          startSlideIndex={currentSlideIndex}
+          onClose={() => setShowPresenterView(false)}
+        />
+      )}
+
+      {/* Rehearsal Mode */}
+      {showRehearsalMode && (
+        <RehearsalMode
+          presentation={presentation}
+          startSlideIndex={currentSlideIndex}
+          onClose={() => setShowRehearsalMode(false)}
         />
       )}
     </div>

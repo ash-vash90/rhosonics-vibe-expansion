@@ -169,6 +169,21 @@ export const BACKGROUND_PRESETS: { name: string; background: SlideBackground }[]
   { name: "Earth Gradient", background: { type: "gradient", value: "linear-gradient(135deg, hsl(42 40% 35%) 0%, hsl(42 30% 50%) 100%)" } },
 ];
 
+// Slide timing data for rehearsal mode
+export interface SlideTimingData {
+  slideId: string;
+  duration: number; // seconds spent on this slide
+}
+
+// Rehearsal session data
+export interface RehearsalSession {
+  id: string;
+  startedAt: string;
+  endedAt?: string;
+  totalDuration: number;
+  slideTimings: SlideTimingData[];
+}
+
 // Individual slide
 export interface Slide {
   id: string;
@@ -176,6 +191,7 @@ export interface Slide {
   background: SlideBackground;
   transition?: SlideTransition;
   notes?: string;
+  targetDuration?: number; // seconds - target time for this slide
 }
 
 // Presentation theme
