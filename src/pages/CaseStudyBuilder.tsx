@@ -1,468 +1,474 @@
-import { useState, useCallback, useRef, useMemo, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Save, Loader2, FolderOpen, Cloud, CloudOff } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useCaseStudy, createEmptyCaseStudy, CaseStudyDocument } from "@/hooks/useCaseStudy";
+import { DocumentCanvas, PageNavigator, TemplateSelector } from "@/components/document-builder";
+import { BackgroundPicker } from "@/components/presentation-builder/BackgroundPicker";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { DocumentTemplate } from "@/types/template";
+import { cn } from "@/lib/utils";
+import {
+  ArrowLeft,
+  Save,
+  Download,
+  Undo2,
+  Redo2,
+  FolderOpen,
+  Plus,
+  PanelRight,
+  PanelRightClose,
+  FileText,
+  Loader2,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
-import { useToast } from "@/hooks/use-toast";
-import { BuilderInputPanel } from "@/components/case-study-builder/BuilderInputPanel";
-import { PreviewControls } from "@/components/case-study-builder/PreviewControls";
-import { CaseStudyLibrary } from "@/components/case-study-builder/CaseStudyLibrary";
-import { AISuggestions } from "@/components/case-study-builder/AISuggestions";
-import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
-import { VisualCaseStudy, createEmptyCaseStudy, ChartBuilderData } from "@/types/visualCaseStudy";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
 
-const STORAGE_KEY = "rhosonics-case-study-draft";
+const AUTOSAVE_KEY = "case-study-builder-draft";
 
-const CaseStudyBuilder = () => {
+export default function CaseStudyBuilder() {
+  const { id: paramId } = useParams();
   const navigate = useNavigate();
-  const { id: paramId } = useParams<{ id?: string }>();
   const { toast } = useToast();
-  const { user, loading: authLoading } = useAuth();
-  const previewRef = useRef<HTMLDivElement>(null);
-  
-  const [caseStudy, setCaseStudy] = useState<VisualCaseStudy>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [supabaseId, setSupabaseId] = useState<string | null>(null);
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [showLibrary, setShowLibrary] = useState(false);
+  const [showTemplateSelector, setShowTemplateSelector] = useState(false);
+  const [showAISidebar, setShowAISidebar] = useState(true);
+  const [savedCaseStudies, setSavedCaseStudies] = useState<any[]>([]);
+
+  // Load initial document
+  const getInitialDocument = (): CaseStudyDocument => {
+    const saved = localStorage.getItem(AUTOSAVE_KEY);
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch {
-        return createEmptyCaseStudy();
+      } catch (e) {
+        console.error("Failed to parse saved case study:", e);
       }
     }
-    return createEmptyCaseStudy();
-  });
-  
-  const [supabaseId, setSupabaseId] = useState<string | null>(paramId || null);
-  const [zoom, setZoom] = useState(70);
-  const [activePage, setActivePage] = useState<1 | 2>(1);
-  const [isExporting, setIsExporting] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [showLibrary, setShowLibrary] = useState(false);
-  const [isLoadingFromDb, setIsLoadingFromDb] = useState(!!paramId);
+    return createEmptyCaseStudy("Untitled Case Study");
+  };
 
-  // Load from Supabase if paramId provided
+  const {
+    document: caseStudy,
+    currentPageIndex,
+    currentPage,
+    selectedBlockId,
+    setDocument,
+    setCurrentPageIndex,
+    addPage,
+    deletePage,
+    duplicatePage,
+    reorderPages,
+    updatePageBackground,
+    updatePageTransition,
+    selectBlock,
+    addBlock,
+    updateBlock,
+    deleteBlock,
+    duplicateBlock,
+    reorderBlocks,
+    canUndo,
+    canRedo,
+    undo,
+    redo,
+  } = useCaseStudy(getInitialDocument());
+
+  // Load from Supabase if ID provided
   useEffect(() => {
     if (paramId && user) {
       loadFromSupabase(paramId);
-    } else if (paramId && !authLoading && !user) {
-      toast({
-        title: "Sign in required",
-        description: "Please sign in to edit saved case studies.",
-        variant: "destructive",
-      });
-      navigate("/case-studies/builder");
     }
-  }, [paramId, user, authLoading]);
-
-  const loadFromSupabase = async (id: string) => {
-    setIsLoadingFromDb(true);
-    const { data, error } = await supabase
-      .from("visual_case_studies")
-      .select("*")
-      .eq("id", id)
-      .single();
-
-    if (error || !data) {
-      toast({
-        title: "Not Found",
-        description: "Could not find the requested case study.",
-        variant: "destructive",
-      });
-      navigate("/case-studies/builder");
-    } else {
-      const content = typeof data.content === "string" 
-        ? JSON.parse(data.content) 
-        : data.content;
-      setCaseStudy(content as VisualCaseStudy);
-      setSupabaseId(data.id);
-    }
-    setIsLoadingFromDb(false);
-  };
+  }, [paramId, user]);
 
   // Auto-save to localStorage
   useEffect(() => {
-    if (isLoadingFromDb) return;
-    const timeout = setTimeout(() => {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(caseStudy));
-    }, 500);
-    return () => clearTimeout(timeout);
-  }, [caseStudy, isLoadingFromDb]);
+    const timer = setTimeout(() => {
+      localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(caseStudy));
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [caseStudy]);
 
-  const handleChange = useCallback((updates: Partial<VisualCaseStudy>) => {
-    setCaseStudy((prev) => ({ ...prev, ...updates }));
-  }, []);
-
-  const handlePageChange = useCallback((page: 1 | 2) => {
-    setActivePage(page);
-    if (previewRef.current) {
-      const pages = previewRef.current.querySelectorAll("article");
-      pages[page - 1]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Load saved case studies for library
+  useEffect(() => {
+    if (user && showLibrary) {
+      loadSavedCaseStudies();
     }
-  }, []);
+  }, [user, showLibrary]);
 
-  const handleExport = useCallback(() => {
-    if (!caseStudy.company || !caseStudy.tagline) {
-      toast({
-        title: "Missing Required Fields",
-        description: "Please fill in at least the company name and tagline.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsExporting(true);
-
-    // Open popup synchronously to avoid blockers
-    const w = window.open("", "_blank");
-    if (!w) {
-      toast({
-        title: "Popup Blocked",
-        description: "Please allow popups to download the PDF.",
-        variant: "destructive",
-      });
-      setIsExporting(false);
-      return;
-    }
-
-    // IMPORTANT: sessionStorage is per-tab. Write into the NEW tab's storage.
-    const payload = JSON.stringify(caseStudy);
+  const loadFromSupabase = async (id: string) => {
+    setIsLoading(true);
     try {
-      w.sessionStorage.setItem("visual-case-study-print", payload);
-      // Fallback for browsers that block cross-window sessionStorage writes
-      localStorage.setItem("visual-case-study-print", payload);
-    } catch (e) {
-      console.error("Failed to prepare print data:", e);
+      const { data, error } = await supabase
+        .from("visual_case_studies")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) throw error;
+      if (data) {
+        const contentData = data.content as unknown as CaseStudyDocument;
+        setDocument(contentData);
+        setSupabaseId(data.id);
+      }
+    } catch (error) {
+      console.error("Failed to load case study:", error);
       toast({
-        title: "Export Failed",
-        description: "Could not prepare case study for printing.",
+        title: "Error",
+        description: "Failed to load case study",
         variant: "destructive",
       });
-      try {
-        w.close();
-      } catch {
-        // ignore
-      }
-      setIsExporting(false);
-      return;
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    w.location.href = `${window.location.origin}/case-studies/builder/print?autoprint=1`;
-    setTimeout(() => setIsExporting(false), 2000);
-  }, [caseStudy, toast]);
+  const loadSavedCaseStudies = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("visual_case_studies")
+        .select("*")
+        .order("updated_at", { ascending: false });
 
-  const handleSaveToCloud = useCallback(async () => {
+      if (error) throw error;
+      setSavedCaseStudies(data || []);
+    } catch (error) {
+      console.error("Failed to load case studies:", error);
+    }
+  };
+
+  const handleSaveToCloud = async () => {
     if (!user) {
       toast({
-        title: "Sign In Required",
-        description: "Please sign in to save case studies to the cloud.",
-        variant: "destructive",
-      });
-      navigate("/auth");
-      return;
-    }
-
-    if (!caseStudy.company) {
-      toast({
-        title: "Missing Company Name",
-        description: "Please enter a company name before saving.",
+        title: "Sign in required",
+        description: "Please sign in to save your case study",
         variant: "destructive",
       });
       return;
     }
 
     setIsSaving(true);
-
     try {
       if (supabaseId) {
-        // Update existing
         const { error } = await supabase
           .from("visual_case_studies")
           .update({
-            name: caseStudy.company,
+            name: caseStudy.name,
             content: JSON.parse(JSON.stringify(caseStudy)),
+            updated_at: new Date().toISOString(),
           })
           .eq("id", supabaseId);
 
         if (error) throw error;
-
-        toast({
-          title: "Saved",
-          description: "Case study updated in your library.",
-        });
       } else {
-        // Create new
         const { data, error } = await supabase
           .from("visual_case_studies")
           .insert([{
             user_id: user.id,
-            name: caseStudy.company,
+            name: caseStudy.name,
             content: JSON.parse(JSON.stringify(caseStudy)),
           }])
-          .select("id")
+          .select()
           .single();
 
         if (error) throw error;
-
-        setSupabaseId(data.id);
-        toast({
-          title: "Saved",
-          description: "Case study added to your library.",
-        });
+        if (data) {
+          setSupabaseId(data.id);
+          navigate(`/case-studies/builder/${data.id}`, { replace: true });
+        }
       }
-    } catch (err) {
-      console.error("Save error:", err);
+
       toast({
-        title: "Save Failed",
-        description: "Could not save case study. Please try again.",
+        title: "Saved",
+        description: "Case study saved to cloud",
+      });
+    } catch (error) {
+      console.error("Failed to save:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save case study",
         variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
+  };
 
-    setIsSaving(false);
-  }, [user, caseStudy, supabaseId, toast, navigate]);
+  const handleExport = () => {
+    sessionStorage.setItem("case-study-print-data", JSON.stringify(caseStudy));
+    window.open("/case-studies/builder/print", "_blank");
+  };
 
-  const handleSaveLocal = useCallback(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(caseStudy));
-    toast({
-      title: "Draft Saved",
-      description: "Your case study has been saved locally.",
-    });
-  }, [caseStudy, toast]);
-
-  const handleFullscreen = useCallback(() => {
-    if (previewRef.current) {
-      previewRef.current.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, []);
-
-  const handleClearDraft = useCallback(() => {
-    if (confirm("Are you sure you want to clear this draft and start over?")) {
-      localStorage.removeItem(STORAGE_KEY);
-      setCaseStudy(createEmptyCaseStudy());
-      setSupabaseId(null);
-      navigate("/case-studies/builder", { replace: true });
-      toast({
-        title: "Draft Cleared",
-        description: "Started a new case study.",
-      });
-    }
-  }, [toast, navigate]);
-
-  const handleSelectFromLibrary = useCallback((saved: { id: string; content: VisualCaseStudy }) => {
-    setCaseStudy(saved.content);
+  const handleLoadFromLibrary = (saved: any) => {
+    setDocument(saved.content as CaseStudyDocument);
     setSupabaseId(saved.id);
     setShowLibrary(false);
     navigate(`/case-studies/builder/${saved.id}`, { replace: true });
-    toast({
-      title: "Loaded",
-      description: "Case study loaded for editing.",
-    });
-  }, [navigate, toast]);
+  };
 
-  const handleConvertFromPDF = useCallback((convertedStudy: VisualCaseStudy) => {
-    setCaseStudy(convertedStudy);
-    setSupabaseId(null);
+  const handleNewCaseStudy = () => {
+    setShowTemplateSelector(true);
     setShowLibrary(false);
+  };
+
+  const handleSelectTemplate = (template: DocumentTemplate) => {
+    // Create new document from template
+    const newDoc = createEmptyCaseStudy(template.name);
+    
+    // Apply template pages
+    if (template.pages.length > 0) {
+      newDoc.pages = template.pages.map((pageTemplate) => ({
+        id: crypto.randomUUID(),
+        blocks: pageTemplate.sections.flatMap((section) =>
+          section.defaultBlocks.map((block) => ({
+            id: crypto.randomUUID(),
+            type: block.type,
+            content: block.content,
+            style: block.style,
+          }))
+        ),
+        background: pageTemplate.background,
+      }));
+    }
+
+    newDoc.templateId = template.id;
+    newDoc.templateMode = "template";
+    
+    setDocument(newDoc);
+    setSupabaseId(null);
+    localStorage.removeItem(AUTOSAVE_KEY);
     navigate("/case-studies/builder", { replace: true });
-    toast({
-      title: "Converted",
-      description: "PDF case study converted. Review and save when ready.",
-    });
-  }, [navigate, toast]);
+    setShowTemplateSelector(false);
+  };
 
-  const documentStudy = useMemo(() => ({
-    id: caseStudy.id,
-    company: caseStudy.company || "[Company Name]",
-    location: caseStudy.location || "[Location]",
-    industry: caseStudy.industry || "[Industry]",
-    product: caseStudy.product || "[Product]",
-    heroImage: caseStudy.heroImage || "",
-    chartImage: caseStudy.chartImage || undefined,
-    tagline: caseStudy.tagline || "[Enter tagline or headline]",
-    challenge: caseStudy.challenge || "[Describe the challenge...]",
-    solution: caseStudy.solution || "[Describe the solution...]",
-    results: caseStudy.results.filter(r => r.trim()).length > 0 
-      ? caseStudy.results.filter(r => r.trim()) 
-      : ["[Key result 1]"],
-    quote: caseStudy.quote?.text ? caseStudy.quote : undefined,
-    specs: caseStudy.specs.filter(s => s.label.trim() || s.value.trim()),
-    primaryStat: {
-      value: caseStudy.primaryStat.value || "—",
-      label: caseStudy.primaryStat.label || "[Metric]",
-    },
-  }), [caseStudy]);
+  const updateDocumentName = (name: string) => {
+    setDocument({ ...caseStudy, name });
+  };
 
-  if (isLoadingFromDb) {
+  if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          <span className="text-sm text-muted-foreground">Loading case study...</span>
+          <span className="text-sm text-muted-foreground font-ui">Loading case study...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card px-4 py-3 flex items-center justify-between flex-shrink-0">
+      <header className="h-14 border-b border-border flex items-center justify-between px-4 bg-card">
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
-            size="sm"
-            onClick={() => navigate("/case-studies")}
-            className="gap-2"
+            size="icon"
+            onClick={() => navigate("/library")}
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back
+            <ArrowLeft className="h-4 w-4" />
           </Button>
-          <div className="h-6 w-px bg-border" />
-          <h1 className="font-ui font-semibold text-lg">Case Study Builder</h1>
-          {supabaseId && (
-            <span className="flex items-center gap-1 text-xs text-primary">
-              <Cloud className="w-3 h-3" />
-              Synced
-            </span>
+
+          {/* Title */}
+          {isEditingTitle ? (
+            <Input
+              value={caseStudy.name}
+              onChange={(e) => updateDocumentName(e.target.value)}
+              onBlur={() => setIsEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setIsEditingTitle(false)}
+              className="w-64 h-8 font-ui"
+              autoFocus
+            />
+          ) : (
+            <button
+              onClick={() => setIsEditingTitle(true)}
+              className="font-ui font-medium text-foreground hover:text-primary transition-colors flex items-center gap-2"
+            >
+              <FileText className="h-4 w-4 text-muted-foreground" />
+              {caseStudy.name}
+            </button>
           )}
-          {!supabaseId && (
-            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-              <CloudOff className="w-3 h-3" />
-              Local draft
-            </span>
-          )}
-        </div>
-        
-        <div className="flex items-center gap-2">
-          {user && (
+
+          {/* Undo/Redo */}
+          <div className="flex items-center gap-1 ml-4">
             <Button
               variant="ghost"
-              size="sm"
-              onClick={() => setShowLibrary(true)}
-              className="gap-2"
+              size="icon"
+              onClick={undo}
+              disabled={!canUndo}
             >
-              <FolderOpen className="w-4 h-4" />
-              Library
+              <Undo2 className="h-4 w-4" />
             </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={redo}
+              disabled={!canRedo}
+            >
+              <Redo2 className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {/* Background picker */}
+          {currentPage && (
+            <BackgroundPicker
+              currentBackground={currentPage.background}
+              currentTransition={currentPage.transition}
+              onSelect={(bg) => updatePageBackground(currentPage.id, bg)}
+              onTransitionChange={(t) => updatePageTransition(currentPage.id, t)}
+            />
           )}
+
+          {/* Library */}
+          <Dialog open={showLibrary} onOpenChange={setShowLibrary}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm">
+                <FolderOpen className="h-4 w-4 mr-2" />
+                Library
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>Case Study Library</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <Button onClick={handleNewCaseStudy} className="w-full">
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Case Study
+                </Button>
+                
+                {savedCaseStudies.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-4 max-h-96 overflow-y-auto">
+                    {savedCaseStudies.map((saved) => (
+                      <button
+                        key={saved.id}
+                        onClick={() => handleLoadFromLibrary(saved)}
+                        className={cn(
+                          "text-left p-4 rounded-lg border transition-all hover:border-primary",
+                          supabaseId === saved.id ? "border-primary bg-primary/5" : "border-border"
+                        )}
+                      >
+                        <h4 className="font-ui font-medium truncate">{saved.name}</h4>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {new Date(saved.updated_at || saved.created_at).toLocaleDateString()}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {(saved.content as CaseStudyDocument)?.pages?.length || 0} pages
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-center text-muted-foreground py-8">
+                    No saved case studies yet
+                  </p>
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          {/* AI Sidebar toggle */}
           <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleClearDraft}
+            variant="outline"
+            size="icon"
+            onClick={() => setShowAISidebar(!showAISidebar)}
+            className="hidden md:flex"
           >
-            New
+            {showAISidebar ? (
+              <PanelRightClose className="h-4 w-4" />
+            ) : (
+              <PanelRight className="h-4 w-4" />
+            )}
           </Button>
-          {user ? (
-            <Button
-              variant="default"
-              size="sm"
-              onClick={handleSaveToCloud}
-              disabled={isSaving}
-              className="gap-2"
-            >
-              {isSaving ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Cloud className="w-4 h-4" />
-              )}
-              Save
-            </Button>
-          ) : (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSaveLocal}
-              className="gap-2"
-            >
-              <Save className="w-4 h-4" />
-              Save Draft
-            </Button>
-          )}
+
+          {/* Export PDF */}
+          <Button variant="outline" size="sm" onClick={handleExport}>
+            <Download className="h-4 w-4 mr-2" />
+            PDF
+          </Button>
+
+          {/* Save */}
+          <Button size="sm" onClick={handleSaveToCloud} disabled={isSaving}>
+            <Save className="h-4 w-4 mr-2" />
+            {isSaving ? "Saving..." : "Save"}
+          </Button>
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Panel - Input */}
-        <div className="w-[400px] border-r border-border bg-card flex flex-col flex-shrink-0">
+        {/* Page navigator */}
+        <PageNavigator
+          pages={caseStudy.pages}
+          currentPageIndex={currentPageIndex}
+          onSelectPage={setCurrentPageIndex}
+          onAddPage={addPage}
+          onDeletePage={deletePage}
+          onDuplicatePage={duplicatePage}
+          onReorderPages={reorderPages}
+        />
+
+        {/* Canvas */}
+        {currentPage && (
           <div className="flex-1 overflow-hidden">
-            <BuilderInputPanel
-              caseStudy={caseStudy}
-              onChange={handleChange}
+            <DocumentCanvas
+              page={currentPage}
+              selectedBlockId={selectedBlockId}
+              onSelectBlock={selectBlock}
+              onUpdateBlock={(blockId, content, style) =>
+                updateBlock(currentPage.id, blockId, content, style)
+              }
+              onDeleteBlock={(blockId) => deleteBlock(currentPage.id, blockId)}
+              onDuplicateBlock={(blockId) => duplicateBlock(currentPage.id, blockId)}
+              onAddBlock={(block, afterBlockId) =>
+                addBlock(currentPage.id, block, afterBlockId)
+              }
+              onReorderBlocks={(from, to) => reorderBlocks(currentPage.id, from, to)}
+              layout="document"
             />
           </div>
-          <AISuggestions
-            caseStudy={caseStudy}
-            onApplyChallenge={(text) => handleChange({ challenge: text })}
-            onApplySolution={(text) => handleChange({ solution: text })}
-            onApplyChartType={(chartData: ChartBuilderData) => handleChange({ chartData })}
-          />
-        </div>
+        )}
 
-        {/* Right Panel - Preview */}
-        <div className="flex-1 flex flex-col overflow-hidden bg-muted/30">
-          {/* Preview Area */}
-          <div
-            ref={previewRef}
-            className="flex-1 overflow-auto p-6"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <div
-              style={{
-                transform: `scale(${zoom / 100})`,
-                transformOrigin: "top center",
-              }}
-              className="transition-transform duration-200"
-            >
-              <CaseStudyDocument
-                study={documentStudy}
-                editMode
-                chartData={caseStudy.chartData}
-              />
+        {/* AI Sidebar */}
+        {showAISidebar && (
+          <div className="w-80 border-l border-border bg-card flex flex-col overflow-hidden">
+            <div className="p-4 border-b border-border">
+              <h3 className="font-ui font-semibold text-sm">AI Suggestions</h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                Get AI-powered content suggestions
+              </p>
+            </div>
+            <div className="flex-1 overflow-auto p-4">
+              <p className="text-sm text-muted-foreground">
+                AI suggestions will appear here as you build your case study.
+              </p>
             </div>
           </div>
-
-          {/* Preview Controls */}
-          <PreviewControls
-            zoom={zoom}
-            onZoomChange={setZoom}
-            activePage={activePage}
-            onPageChange={handlePageChange}
-            onExport={handleExport}
-            onFullscreen={handleFullscreen}
-            isExporting={isExporting}
-          />
-        </div>
+        )}
       </div>
 
-      {/* Library Dialog */}
-      <Dialog open={showLibrary} onOpenChange={setShowLibrary}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
-          <DialogHeader>
-            <DialogTitle>Your Case Studies</DialogTitle>
-          </DialogHeader>
-          <div className="flex-1 overflow-auto">
-            <CaseStudyLibrary
-              onSelect={handleSelectFromLibrary}
-              onClose={() => setShowLibrary(false)}
-              onConvert={handleConvertFromPDF}
-            />
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* Template Selector */}
+      <TemplateSelector
+        open={showTemplateSelector}
+        onOpenChange={setShowTemplateSelector}
+        documentType="case-study"
+        onSelectTemplate={handleSelectTemplate}
+        title="New Case Study"
+        description="Choose a template to get started with your case study."
+      />
     </div>
   );
-};
-
-export default CaseStudyBuilder;
+}
