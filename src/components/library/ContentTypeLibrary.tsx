@@ -8,6 +8,7 @@ import {
   List,
   FolderOpen,
 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -127,6 +128,58 @@ export const ContentTypeLibrary = ({
 
   const handleSelect = (id: string) => {
     navigate(`${builderRoute}/${id}`);
+  };
+
+  const handleDuplicate = async (id: string) => {
+    if (!user) return;
+
+    const doc = documents.find((d) => d.id === id);
+    if (!doc) return;
+
+    try {
+      // Fetch the full document content
+      const { data: original, error: fetchError } = await supabase
+        .from(tableName)
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // Create a copy with a new name
+      const newName = `${doc.name} (Copy)`;
+      const { data: newDoc, error: insertError } = await supabase
+        .from(tableName)
+        .insert({
+          user_id: user.id,
+          name: newName,
+          content: original.content,
+          is_favorite: false,
+          thumbnail_url: original.thumbnail_url,
+        })
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+
+      // Add to local state
+      setDocuments((prev) => [
+        {
+          id: newDoc.id,
+          name: newDoc.name,
+          updatedAt: newDoc.updated_at || new Date().toISOString(),
+          isFavorite: false,
+          isComplete: doc.isComplete,
+          thumbnailUrl: newDoc.thumbnail_url || undefined,
+        },
+        ...prev,
+      ]);
+
+      toast.success(`Duplicated "${doc.name}"`);
+    } catch (error) {
+      console.error("Error duplicating document:", error);
+      toast.error("Failed to duplicate document");
+    }
   };
 
   const handleSelectTemplate = (template: DocumentTemplate) => {
@@ -326,6 +379,7 @@ export const ContentTypeLibrary = ({
                     onSelect={handleSelect}
                     onToggleFavorite={handleToggleFavorite}
                     onDelete={handleDelete}
+                    onDuplicate={handleDuplicate}
                   />
                 ))}
               </div>

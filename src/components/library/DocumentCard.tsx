@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heart, Trash2, MoreVertical, FileText, Presentation, Clock } from "lucide-react";
+import { Heart, Trash2, MoreVertical, FileText, Presentation, Clock, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -30,6 +30,7 @@ export interface DocumentCardProps {
   onSelect: (id: string) => void;
   onToggleFavorite: (id: string) => void;
   onDelete: (id: string) => void;
+  onDuplicate?: (id: string) => void;
 }
 
 export const DocumentCard = ({
@@ -43,6 +44,7 @@ export const DocumentCard = ({
   onSelect,
   onToggleFavorite,
   onDelete,
+  onDuplicate,
 }: DocumentCardProps) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
@@ -159,6 +161,17 @@ export const DocumentCard = ({
                 <Heart className={cn("w-4 h-4 mr-2", isFavorite && "fill-current")} />
                 {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
               </DropdownMenuItem>
+              {onDuplicate && (
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDuplicate(id);
+                  }}
+                >
+                  <Copy className="w-4 h-4 mr-2" />
+                  Duplicate
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();
