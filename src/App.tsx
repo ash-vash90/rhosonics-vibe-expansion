@@ -14,6 +14,7 @@ const CaseStudyBuilder = lazy(() => import("./pages/CaseStudyBuilder"));
 const CaseStudyBuilderPrint = lazy(() => import("./pages/CaseStudyBuilderPrint"));
 const PresentationBuilder = lazy(() => import("./pages/PresentationBuilder"));
 const PresentationBuilderPrint = lazy(() => import("./pages/PresentationBuilderPrint"));
+const PresenterViewPage = lazy(() => import("./pages/PresenterViewPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageLoader = () => (
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/case-studies/builder/:id?" element={<CaseStudyBuilder />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/presentations/builder/print" element={<PresentationBuilderPrint />} />
+          <Route path="/presentations/builder/presenter" element={<PresenterViewPage />} />
           <Route path="/presentations/builder/:id?" element={<PresentationBuilder />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
