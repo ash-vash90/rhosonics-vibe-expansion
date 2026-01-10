@@ -33,13 +33,6 @@ export function RehearsalSummary({
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const _formatLongTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    if (mins === 0) return `${secs} seconds`;
-    if (secs === 0) return `${mins} minute${mins !== 1 ? "s" : ""}`;
-    return `${mins} min ${secs} sec`;
-  };
 
   // Calculate statistics
   const avgTimePerSlide = slideTimings.length > 0

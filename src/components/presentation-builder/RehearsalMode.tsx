@@ -29,12 +29,10 @@ export function RehearsalMode({
 }: RehearsalModeProps) {
   const [currentIndex, setCurrentIndex] = useState(startSlideIndex);
   const [totalElapsed, setTotalElapsed] = useState(0);
-  const [slideStartTime, setSlideStartTime] = useState(0);
   const [currentSlideTime, setCurrentSlideTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [timings, setTimings] = useState<Map<string, number>>(new Map());
   const [showSummary, setShowSummary] = useState(false);
-  const [, setPauseTime] = useState(0);
 
   const startTimeRef = useRef<number>(Date.now());
   const slideStartRef = useRef<number>(Date.now());
@@ -59,10 +57,10 @@ export function RehearsalMode({
   useEffect(() => {
     if (isTimerRunning) {
       // Adjust start times when resuming
-      setPauseTime(0);
       startTimeRef.current = Date.now() - totalElapsed * 1000;
       slideStartRef.current = Date.now() - currentSlideTime * 1000;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTimerRunning]);
 
   const formatTime = (seconds: number) => {
