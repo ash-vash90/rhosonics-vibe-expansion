@@ -5,6 +5,8 @@ import { SlideCanvas } from "@/components/presentation-builder/SlideCanvas";
 import { SlideNavigator } from "@/components/presentation-builder/SlideNavigator";
 import { BackgroundPicker } from "@/components/presentation-builder/BackgroundPicker";
 import { PresentationConverter } from "@/components/presentation-builder/PresentationConverter";
+import { FullscreenPreview } from "@/components/presentation-builder/FullscreenPreview";
+import { AISlideSuggestions } from "@/components/presentation-builder/AISlideSuggestions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -22,6 +24,8 @@ import {
   FolderOpen,
   Plus,
   FileUp,
+  PanelRight,
+  PanelRightClose,
 } from "lucide-react";
 import {
   Dialog,
@@ -44,6 +48,8 @@ export default function PresentationBuilder() {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [showLibrary, setShowLibrary] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const [showFullscreen, setShowFullscreen] = useState(false);
+  const [showAISidebar, setShowAISidebar] = useState(true);
   const [savedPresentations, setSavedPresentations] = useState<any[]>([]);
 
   // Load initial presentation
@@ -357,9 +363,23 @@ export default function PresentationBuilder() {
           </Button>
 
           {/* Preview */}
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={() => setShowFullscreen(true)}>
             <Play className="h-4 w-4 mr-2" />
             Preview
+          </Button>
+
+          {/* AI Sidebar toggle */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setShowAISidebar(!showAISidebar)}
+            className="hidden md:flex"
+          >
+            {showAISidebar ? (
+              <PanelRightClose className="h-4 w-4" />
+            ) : (
+              <PanelRight className="h-4 w-4" />
+            )}
           </Button>
 
           {/* Export */}
@@ -407,6 +427,16 @@ export default function PresentationBuilder() {
             />
           </div>
         )}
+
+        {/* AI Suggestions Sidebar */}
+        {showAISidebar && currentSlide && (
+          <AISlideSuggestions
+            presentation={presentation}
+            currentSlide={currentSlide}
+            currentSlideIndex={currentSlideIndex}
+            onApplySuggestion={(block) => addBlock(currentSlide.id, block)}
+          />
+        )}
       </div>
 
       {/* Import Dialog */}
@@ -415,6 +445,15 @@ export default function PresentationBuilder() {
         onOpenChange={setShowImport}
         onConvert={handleImportedPresentation}
       />
+
+      {/* Fullscreen Preview */}
+      {showFullscreen && (
+        <FullscreenPreview
+          presentation={presentation}
+          startSlideIndex={currentSlideIndex}
+          onClose={() => setShowFullscreen(false)}
+        />
+      )}
     </div>
   );
 }
