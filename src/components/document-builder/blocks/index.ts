@@ -12,3 +12,8 @@ export { CTABlock } from "./CTABlock";
 export { CalloutBlock } from "./CalloutBlock";
 export { SpecTableBlock } from "./SpecTableBlock";
 export { ChartBlock } from "./ChartBlock";
+
+// Case study specific blocks
+export { IdentityCardBlock } from "./IdentityCardBlock";
+export { ChallengeSolutionBlock } from "./ChallengeSolutionBlock";
+export { ResultsGridBlock } from "./ResultsGridBlock";
