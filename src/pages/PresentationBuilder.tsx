@@ -7,6 +7,7 @@ import { BackgroundPicker } from "@/components/presentation-builder/BackgroundPi
 import { PresentationConverter } from "@/components/presentation-builder/PresentationConverter";
 import { FullscreenPreview } from "@/components/presentation-builder/FullscreenPreview";
 import { AISlideSuggestions } from "@/components/presentation-builder/AISlideSuggestions";
+import { SpeakerNotesPanel } from "@/components/presentation-builder/SpeakerNotesPanel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -81,6 +82,7 @@ export default function PresentationBuilder() {
     reorderSlides,
     updateSlideBackground,
     updateSlideTransition,
+    updateSlideNotes,
     selectBlock,
     addBlock,
     updateBlock,
@@ -432,20 +434,26 @@ export default function PresentationBuilder() {
 
         {/* Canvas */}
         {currentSlide && (
-          <div className="flex-1 overflow-hidden">
-            <SlideCanvas
-              slide={currentSlide}
-              selectedBlockId={selectedBlockId}
-              onSelectBlock={selectBlock}
-              onUpdateBlock={(blockId, content, style) =>
-                updateBlock(currentSlide.id, blockId, content, style)
-              }
-              onDeleteBlock={(blockId) => deleteBlock(currentSlide.id, blockId)}
-              onDuplicateBlock={(blockId) => duplicateBlock(currentSlide.id, blockId)}
-              onAddBlock={(block, afterBlockId) =>
-                addBlock(currentSlide.id, block, afterBlockId)
-              }
-              onReorderBlocks={(from, to) => reorderBlocks(currentSlide.id, from, to)}
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 overflow-hidden">
+              <SlideCanvas
+                slide={currentSlide}
+                selectedBlockId={selectedBlockId}
+                onSelectBlock={selectBlock}
+                onUpdateBlock={(blockId, content, style) =>
+                  updateBlock(currentSlide.id, blockId, content, style)
+                }
+                onDeleteBlock={(blockId) => deleteBlock(currentSlide.id, blockId)}
+                onDuplicateBlock={(blockId) => duplicateBlock(currentSlide.id, blockId)}
+                onAddBlock={(block, afterBlockId) =>
+                  addBlock(currentSlide.id, block, afterBlockId)
+                }
+                onReorderBlocks={(from, to) => reorderBlocks(currentSlide.id, from, to)}
+              />
+            </div>
+            <SpeakerNotesPanel
+              notes={currentSlide.notes || ""}
+              onChange={(notes) => updateSlideNotes(currentSlide.id, notes)}
             />
           </div>
         )}

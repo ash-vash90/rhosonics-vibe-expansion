@@ -19,6 +19,7 @@ interface UsePresentationReturn {
   reorderSlides: (fromIndex: number, toIndex: number) => void;
   updateSlideBackground: (slideId: string, background: Slide["background"]) => void;
   updateSlideTransition: (slideId: string, transition: SlideTransition) => void;
+  updateSlideNotes: (slideId: string, notes: string) => void;
   
   selectBlock: (blockId: string | null) => void;
   addBlock: (slideId: string, block: Omit<Block, "id">, afterBlockId?: string) => void;
@@ -124,6 +125,14 @@ export function usePresentation(initialPresentation?: Presentation): UsePresenta
     );
     saveToHistory({ ...presentation, slides: newSlides });
   }, [presentation, saveToHistory]);
+
+  const updateSlideNotes = useCallback((slideId: string, notes: string) => {
+    const newSlides = presentation.slides.map(s =>
+      s.id === slideId ? { ...s, notes } : s
+    );
+    // Don't save to history for every keystroke - just update presentation
+    setPresentation({ ...presentation, slides: newSlides });
+  }, [presentation]);
   
   // Block actions
   const selectBlock = useCallback((blockId: string | null) => {
@@ -236,6 +245,7 @@ export function usePresentation(initialPresentation?: Presentation): UsePresenta
     reorderSlides,
     updateSlideBackground,
     updateSlideTransition,
+    updateSlideNotes,
     selectBlock,
     addBlock,
     updateBlock,
