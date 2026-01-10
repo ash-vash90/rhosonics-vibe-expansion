@@ -26,8 +26,8 @@ const CONTENT_TYPES = [
     label: "Presentations",
     description: "Slide decks for sales and marketing",
     icon: Presentation,
-    route: null,
-    available: false,
+    route: "/presentations/builder",
+    available: true,
   },
   {
     id: "guides",
