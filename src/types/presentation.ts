@@ -1,145 +1,35 @@
-// Block Types for inline editing
-export type BlockType =
-  | "heading"
-  | "subheading"
-  | "paragraph"
-  | "bullet-list"
-  | "numbered-list"
-  | "stat-card"
-  | "stat-grid"
-  | "image"
-  | "chart"
-  | "spec-table"
-  | "quote"
-  | "logo-strip"
-  | "divider"
-  | "callout"
-  | "comparison"
-  | "icon-grid"
-  | "cta";
+// Re-export shared types from the unified document system
+import type {
+  BlockType as _BlockType,
+  StatContent as _StatContent,
+  ChartBlockData as _ChartBlockData,
+  SpecRow as _SpecRow,
+  IconItem as _IconItem,
+  QuoteContent as _QuoteContent,
+  CalloutContent as _CalloutContent,
+  CTAContent as _CTAContent,
+  ComparisonContent as _ComparisonContent,
+  BlockContent as _BlockContent,
+  BlockStyle as _BlockStyle,
+  Block as _Block,
+} from "./document";
 
-// Stat content for stat blocks
-export interface StatContent {
-  value: string;
-  label: string;
-  unit?: string;
-  trend?: "up" | "down" | "neutral";
-}
+import { BLOCK_TEMPLATES as _BLOCK_TEMPLATES } from "./document";
 
-// Chart data for chart blocks
-export interface ChartBlockData {
-  type: "bar" | "line" | "area" | "donut" | "gauge";
-  title: string;
-  data: { label: string; value: number; color?: string }[];
-  showLegend?: boolean;
-  yAxisLabel?: string;
-}
-
-// Spec table row
-export interface SpecRow {
-  label: string;
-  value: string;
-}
-
-// Icon item for icon grid
-export interface IconItem {
-  icon: string;
-  title: string;
-  description?: string;
-}
-
-// Quote content
-export interface QuoteContent {
-  text: string;
-  author: string;
-  role?: string;
-  company?: string;
-}
-
-// Callout content
-export interface CalloutContent {
-  type: "info" | "warning" | "success" | "error";
-  title?: string;
-  text: string;
-}
-
-// CTA content
-export interface CTAContent {
-  text: string;
-  buttonLabel: string;
-  buttonUrl?: string;
-  secondaryButtonLabel?: string;
-  secondaryButtonUrl?: string;
-}
-
-// Comparison content
-export interface ComparisonContent {
-  leftTitle: string;
-  rightTitle: string;
-  leftItems: string[];
-  rightItems: string[];
-}
-
-// Block content union type
-export interface BlockContent {
-  // Text blocks
-  text?: string;
-  items?: string[];
-  level?: 1 | 2 | 3;
-  
-  // Stat blocks
-  stat?: StatContent;
-  stats?: StatContent[];
-  
-  // Chart block
-  chart?: ChartBlockData;
-  
-  // Image block
-  imageUrl?: string;
-  imageAlt?: string;
-  caption?: string;
-  
-  // Spec table
-  specs?: SpecRow[];
-  
-  // Quote
-  quote?: QuoteContent;
-  
-  // Logo strip
-  logos?: { url: string; alt: string }[];
-  
-  // Callout
-  callout?: CalloutContent;
-  
-  // Icon grid
-  icons?: IconItem[];
-  
-  // CTA
-  cta?: CTAContent;
-  
-  // Comparison
-  comparison?: ComparisonContent;
-  
-  // Divider
-  dividerStyle?: "line" | "wave" | "dots" | "gradient";
-}
-
-// Block style overrides
-export interface BlockStyle {
-  alignment?: "left" | "center" | "right";
-  color?: string;
-  backgroundColor?: string;
-  padding?: "none" | "sm" | "md" | "lg";
-  width?: "full" | "wide" | "medium" | "narrow";
-}
-
-// Individual block
-export interface Block {
-  id: string;
-  type: BlockType;
-  content: BlockContent;
-  style?: BlockStyle;
-}
+// Re-export for use within this module and by consumers
+export type BlockType = _BlockType;
+export type StatContent = _StatContent;
+export type ChartBlockData = _ChartBlockData;
+export type SpecRow = _SpecRow;
+export type IconItem = _IconItem;
+export type QuoteContent = _QuoteContent;
+export type CalloutContent = _CalloutContent;
+export type CTAContent = _CTAContent;
+export type ComparisonContent = _ComparisonContent;
+export type BlockContent = _BlockContent;
+export type BlockStyle = _BlockStyle;
+export type Block = _Block;
+export const BLOCK_TEMPLATES = _BLOCK_TEMPLATES;
 
 // Slide background options
 export interface SlideBackground {
@@ -280,20 +170,3 @@ export const createEmptyPresentation = (): Presentation => ({
   theme: DEFAULT_THEME,
   aspectRatio: "16:9",
 });
-
-// Block templates for adding new blocks
-export const BLOCK_TEMPLATES: { type: BlockType; label: string; icon: string; defaultContent: BlockContent }[] = [
-  { type: "heading", label: "Heading", icon: "Type", defaultContent: { text: "Heading", level: 1 } },
-  { type: "subheading", label: "Subheading", icon: "Type", defaultContent: { text: "Subheading", level: 2 } },
-  { type: "paragraph", label: "Paragraph", icon: "AlignLeft", defaultContent: { text: "Add your text here..." } },
-  { type: "bullet-list", label: "Bullet List", icon: "List", defaultContent: { items: ["First item", "Second item", "Third item"] } },
-  { type: "stat-card", label: "Stat Card", icon: "TrendingUp", defaultContent: { stat: { value: "99%", label: "Accuracy" } } },
-  { type: "stat-grid", label: "Stat Grid", icon: "LayoutGrid", defaultContent: { stats: [{ value: "50+", label: "Customers" }, { value: "99%", label: "Uptime" }, { value: "24/7", label: "Support" }] } },
-  { type: "image", label: "Image", icon: "Image", defaultContent: { imageUrl: "", imageAlt: "Image description" } },
-  { type: "chart", label: "Chart", icon: "BarChart3", defaultContent: { chart: { type: "bar", title: "Chart Title", data: [{ label: "A", value: 30 }, { label: "B", value: 50 }, { label: "C", value: 20 }] } } },
-  { type: "spec-table", label: "Spec Table", icon: "Table", defaultContent: { specs: [{ label: "Spec 1", value: "Value 1" }, { label: "Spec 2", value: "Value 2" }] } },
-  { type: "quote", label: "Quote", icon: "Quote", defaultContent: { quote: { text: "Quote text here", author: "Author Name", role: "Role" } } },
-  { type: "callout", label: "Callout", icon: "AlertCircle", defaultContent: { callout: { type: "info", title: "Note", text: "Important information here" } } },
-  { type: "divider", label: "Divider", icon: "Minus", defaultContent: { dividerStyle: "line" } },
-  { type: "cta", label: "Call to Action", icon: "MousePointer", defaultContent: { cta: { text: "Ready to get started?", buttonLabel: "Contact Us" } } },
-];
