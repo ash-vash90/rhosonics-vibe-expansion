@@ -13,6 +13,7 @@ import { QuoteBlock } from "./blocks/QuoteBlock";
 import { CalloutBlock } from "./blocks/CalloutBlock";
 import { CTABlock } from "./blocks/CTABlock";
 import { SpecTableBlock } from "./blocks/SpecTableBlock";
+import { ChartBlock } from "./blocks/ChartBlock";
 import { AddBlockMenu } from "./AddBlockMenu";
 import { Plus } from "lucide-react";
 
@@ -103,6 +104,8 @@ export function SlideCanvas({
           return <ImageBlock {...blockProps} />;
         case "divider":
           return <DividerBlock {...blockProps} />;
+        case "chart":
+          return <ChartBlock {...blockProps} />;
         case "spec-table":
           return <SpecTableBlock {...blockProps} />;
         case "quote":

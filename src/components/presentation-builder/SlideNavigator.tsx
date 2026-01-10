@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Slide, Presentation } from "@/types/presentation";
 import { cn } from "@/lib/utils";
-import { Plus, Trash2, Copy, MoreVertical } from "lucide-react";
+import { Plus, Trash2, Copy, MoreVertical, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,6 +17,7 @@ interface SlideNavigatorProps {
   onAddSlide: (afterIndex?: number) => void;
   onDeleteSlide: (slideId: string) => void;
   onDuplicateSlide: (slideId: string) => void;
+  onReorderSlides?: (fromIndex: number, toIndex: number) => void;
 }
 
 export function SlideNavigator({
@@ -26,7 +27,58 @@ export function SlideNavigator({
   onAddSlide,
   onDeleteSlide,
   onDuplicateSlide,
+  onReorderSlides,
 }: SlideNavigatorProps) {
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const dragNodeRef = useRef<HTMLDivElement | null>(null);
+
+  const handleDragStart = (e: React.DragEvent, index: number) => {
+    setDraggedIndex(index);
+    dragNodeRef.current = e.target as HTMLDivElement;
+    
+    // Set drag image
+    if (e.dataTransfer) {
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", index.toString());
+    }
+    
+    // Add dragging class after a small delay to prevent flicker
+    setTimeout(() => {
+      if (dragNodeRef.current) {
+        dragNodeRef.current.style.opacity = "0.5";
+      }
+    }, 0);
+  };
+
+  const handleDragEnd = () => {
+    if (dragNodeRef.current) {
+      dragNodeRef.current.style.opacity = "1";
+    }
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+    dragNodeRef.current = null;
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+    setDragOverIndex(index);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverIndex(null);
+  };
+
+  const handleDrop = (e: React.DragEvent, toIndex: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === toIndex) return;
+    
+    onReorderSlides?.(draggedIndex, toIndex);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
   const getSlidePreviewStyle = (slide: Slide): React.CSSProperties => {
     if (slide.background.type === "solid") {
       return { backgroundColor: slide.background.value };
@@ -68,17 +120,39 @@ export function SlideNavigator({
         {presentation.slides.map((slide, index) => (
           <div
             key={slide.id}
+            draggable
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragEnd={handleDragEnd}
+            onDragOver={(e) => handleDragOver(e, index)}
+            onDragLeave={handleDragLeave}
+            onDrop={(e) => handleDrop(e, index)}
             className={cn(
               "group relative rounded-lg cursor-pointer transition-all",
               currentSlideIndex === index
                 ? "ring-2 ring-primary shadow-md"
-                : "hover:ring-1 hover:ring-muted-foreground/30"
+                : "hover:ring-1 hover:ring-muted-foreground/30",
+              draggedIndex === index && "opacity-50",
+              dragOverIndex === index && draggedIndex !== null && draggedIndex !== index && [
+                "before:absolute before:left-0 before:right-0 before:h-0.5 before:bg-primary before:rounded-full",
+                draggedIndex < index 
+                  ? "before:bottom-0 before:translate-y-1" 
+                  : "before:-top-1"
+              ]
             )}
             onClick={() => onSelectSlide(index)}
           >
+            {/* Drag handle */}
+            <div className={cn(
+              "absolute top-1/2 -translate-y-1/2 -left-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing z-20",
+              "w-4 h-8 flex items-center justify-center rounded-l",
+              "bg-muted/80 text-muted-foreground hover:bg-muted hover:text-foreground"
+            )}>
+              <GripVertical className="h-3 w-3" />
+            </div>
+
             {/* Slide number badge */}
             <div className={cn(
-              "absolute -top-1 -left-1 w-5 h-5 rounded-full flex items-center justify-center text-xs font-data z-10",
+              "absolute -top-1 left-2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-data z-10",
               currentSlideIndex === index
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground"
