@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Presentation, Slide, Block, createEmptyPresentation, createEmptySlide, BlockContent, BlockStyle } from "@/types/presentation";
+import { Presentation, Slide, Block, createEmptyPresentation, createEmptySlide, BlockContent, BlockStyle, SlideTransition } from "@/types/presentation";
 
 interface UsePresentationReturn {
   presentation: Presentation;
@@ -18,8 +18,8 @@ interface UsePresentationReturn {
   duplicateSlide: (slideId: string) => void;
   reorderSlides: (fromIndex: number, toIndex: number) => void;
   updateSlideBackground: (slideId: string, background: Slide["background"]) => void;
+  updateSlideTransition: (slideId: string, transition: SlideTransition) => void;
   
-  // Block actions
   selectBlock: (blockId: string | null) => void;
   addBlock: (slideId: string, block: Omit<Block, "id">, afterBlockId?: string) => void;
   updateBlock: (slideId: string, blockId: string, content: Partial<BlockContent>, style?: Partial<BlockStyle>) => void;
@@ -114,6 +114,13 @@ export function usePresentation(initialPresentation?: Presentation): UsePresenta
   const updateSlideBackground = useCallback((slideId: string, background: Slide["background"]) => {
     const newSlides = presentation.slides.map(s =>
       s.id === slideId ? { ...s, background } : s
+    );
+    saveToHistory({ ...presentation, slides: newSlides });
+  }, [presentation, saveToHistory]);
+
+  const updateSlideTransition = useCallback((slideId: string, transition: SlideTransition) => {
+    const newSlides = presentation.slides.map(s =>
+      s.id === slideId ? { ...s, transition } : s
     );
     saveToHistory({ ...presentation, slides: newSlides });
   }, [presentation, saveToHistory]);
@@ -228,6 +235,7 @@ export function usePresentation(initialPresentation?: Presentation): UsePresenta
     duplicateSlide,
     reorderSlides,
     updateSlideBackground,
+    updateSlideTransition,
     selectBlock,
     addBlock,
     updateBlock,

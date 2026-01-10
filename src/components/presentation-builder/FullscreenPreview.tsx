@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Presentation, Slide, Block } from "@/types/presentation";
+import { useState, useEffect, useCallback } from "react";
+import { Presentation, Slide, Block, SlideTransition } from "@/types/presentation";
 import { cn } from "@/lib/utils";
 import { X, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
@@ -9,6 +9,56 @@ interface FullscreenPreviewProps {
   onClose: () => void;
 }
 
+// Get transition style based on type and state
+const getTransitionStyle = (
+  transition: SlideTransition,
+  isExiting: boolean,
+  direction: "next" | "prev"
+): React.CSSProperties => {
+  const baseTransition = "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
+  
+  if (transition === "none") {
+    return { transition: "none" };
+  }
+
+  if (transition === "fade") {
+    return {
+      transition: baseTransition,
+      opacity: isExiting ? 0 : 1,
+    };
+  }
+
+  if (transition === "slide") {
+    return {
+      transition: baseTransition,
+      opacity: isExiting ? 0 : 1,
+      transform: isExiting 
+        ? `translateX(${direction === "next" ? "-100%" : "100%"})` 
+        : "translateX(0)",
+    };
+  }
+
+  if (transition === "zoom") {
+    return {
+      transition: baseTransition,
+      opacity: isExiting ? 0 : 1,
+      transform: isExiting ? "scale(0.8)" : "scale(1)",
+    };
+  }
+
+  if (transition === "flip") {
+    return {
+      transition: baseTransition,
+      opacity: isExiting ? 0 : 1,
+      transform: isExiting 
+        ? `perspective(1000px) rotateY(${direction === "next" ? "-90deg" : "90deg"})` 
+        : "perspective(1000px) rotateY(0)",
+    };
+  }
+
+  return { transition: baseTransition, opacity: isExiting ? 0 : 1 };
+};
+
 export function FullscreenPreview({
   presentation,
   startSlideIndex = 0,
@@ -16,11 +66,13 @@ export function FullscreenPreview({
 }: FullscreenPreviewProps) {
   const [currentIndex, setCurrentIndex] = useState(startSlideIndex);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [transitionDirection, setTransitionDirection] = useState<"next" | "prev">("next");
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
   const currentSlide = presentation.slides[currentIndex];
   const totalSlides = presentation.slides.length;
+  const currentTransition = currentSlide?.transition || "fade";
 
   // Hide controls after inactivity
   useEffect(() => {
@@ -49,11 +101,12 @@ export function FullscreenPreview({
 
   const goToNext = useCallback(() => {
     if (currentIndex < totalSlides - 1 && !isTransitioning) {
+      setTransitionDirection("next");
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
         setIsTransitioning(false);
-      }, 300);
+      }, 500);
     } else if (currentIndex === totalSlides - 1) {
       setIsAutoPlaying(false);
     }
@@ -61,11 +114,12 @@ export function FullscreenPreview({
 
   const goToPrevious = useCallback(() => {
     if (currentIndex > 0 && !isTransitioning) {
+      setTransitionDirection("prev");
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentIndex((prev) => prev - 1);
         setIsTransitioning(false);
-      }, 300);
+      }, 500);
     }
   }, [currentIndex, isTransitioning]);
 
@@ -298,14 +352,14 @@ export function FullscreenPreview({
   if (!currentSlide) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black">
+    <div className="fixed inset-0 z-[100] bg-black overflow-hidden">
       {/* Slide */}
       <div
-        className={cn(
-          "w-full h-full flex items-center justify-center transition-opacity duration-300",
-          isTransitioning ? "opacity-0" : "opacity-100"
-        )}
-        style={getBackgroundStyle(currentSlide)}
+        className="w-full h-full flex items-center justify-center"
+        style={{
+          ...getBackgroundStyle(currentSlide),
+          ...getTransitionStyle(currentTransition, isTransitioning, transitionDirection),
+        }}
       >
         {/* Overlay */}
         {currentSlide.background.overlay && currentSlide.background.overlay !== "none" && (

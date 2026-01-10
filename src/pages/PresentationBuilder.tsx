@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Presentation, createEmptyPresentation } from "@/types/presentation";
+import { exportToPptx } from "@/lib/pptxExport";
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
@@ -26,6 +27,7 @@ import {
   FileUp,
   PanelRight,
   PanelRightClose,
+  FileSpreadsheet,
 } from "lucide-react";
 import {
   Dialog,
@@ -78,6 +80,7 @@ export default function PresentationBuilder() {
     duplicateSlide,
     reorderSlides,
     updateSlideBackground,
+    updateSlideTransition,
     selectBlock,
     addBlock,
     updateBlock,
@@ -211,9 +214,18 @@ export default function PresentationBuilder() {
   };
 
   const handleExport = () => {
-    // Store presentation data for print route
     sessionStorage.setItem("presentation-print-data", JSON.stringify(presentation));
     window.open("/presentations/builder/print", "_blank");
+  };
+
+  const handleExportPptx = async () => {
+    try {
+      await exportToPptx(presentation);
+      toast({ title: "Success", description: "PowerPoint file downloaded" });
+    } catch (error) {
+      console.error("PPTX export error:", error);
+      toast({ title: "Error", description: "Failed to export PowerPoint", variant: "destructive" });
+    }
   };
 
   const handleLoadFromLibrary = (saved: any) => {
@@ -305,7 +317,9 @@ export default function PresentationBuilder() {
           {currentSlide && (
             <BackgroundPicker
               currentBackground={currentSlide.background}
+              currentTransition={currentSlide.transition}
               onSelect={(bg) => updateSlideBackground(currentSlide.id, bg)}
+              onTransitionChange={(t) => updateSlideTransition(currentSlide.id, t)}
             />
           )}
 
@@ -383,10 +397,16 @@ export default function PresentationBuilder() {
             )}
           </Button>
 
-          {/* Export */}
+          {/* Export PDF */}
           <Button variant="outline" size="sm" onClick={handleExport}>
             <Download className="h-4 w-4 mr-2" />
-            Export PDF
+            PDF
+          </Button>
+
+          {/* Export PPTX */}
+          <Button variant="outline" size="sm" onClick={handleExportPptx}>
+            <FileSpreadsheet className="h-4 w-4 mr-2" />
+            PPTX
           </Button>
 
           {/* Save */}

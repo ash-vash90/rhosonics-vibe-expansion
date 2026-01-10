@@ -148,6 +148,17 @@ export interface SlideBackground {
   overlay?: "none" | "dark" | "light";
 }
 
+// Slide transition types
+export type SlideTransition = "none" | "fade" | "slide" | "zoom" | "flip";
+
+export const TRANSITION_PRESETS: { value: SlideTransition; label: string; description: string }[] = [
+  { value: "none", label: "None", description: "Instant transition" },
+  { value: "fade", label: "Fade", description: "Smooth fade in/out" },
+  { value: "slide", label: "Slide", description: "Slide from right" },
+  { value: "zoom", label: "Zoom", description: "Zoom in/out effect" },
+  { value: "flip", label: "Flip", description: "3D flip effect" },
+];
+
 // Pre-defined background presets
 export const BACKGROUND_PRESETS: { name: string; background: SlideBackground }[] = [
   { name: "White", background: { type: "solid", value: "hsl(0 0% 100%)" } },
@@ -163,6 +174,7 @@ export interface Slide {
   id: string;
   blocks: Block[];
   background: SlideBackground;
+  transition?: SlideTransition;
   notes?: string;
 }
 
