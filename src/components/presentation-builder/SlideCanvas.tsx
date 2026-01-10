@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { Slide, Block, BlockContent, BlockStyle, BLOCK_TEMPLATES } from "@/types/presentation";
 import { cn } from "@/lib/utils";
-import { EditableBlock } from "./blocks/EditableBlock";
-import { HeadingBlock } from "./blocks/HeadingBlock";
-import { ParagraphBlock } from "./blocks/ParagraphBlock";
-import { StatCardBlock } from "./blocks/StatCardBlock";
-import { StatGridBlock } from "./blocks/StatGridBlock";
-import { BulletListBlock } from "./blocks/BulletListBlock";
-import { ImageBlock } from "./blocks/ImageBlock";
-import { DividerBlock } from "./blocks/DividerBlock";
-import { QuoteBlock } from "./blocks/QuoteBlock";
-import { CalloutBlock } from "./blocks/CalloutBlock";
-import { CTABlock } from "./blocks/CTABlock";
-import { SpecTableBlock } from "./blocks/SpecTableBlock";
-import { ChartBlock } from "./blocks/ChartBlock";
+import {
+  EditableBlock,
+  HeadingBlock,
+  ParagraphBlock,
+  StatCardBlock,
+  StatGridBlock,
+  BulletListBlock,
+  ImageBlock,
+  DividerBlock,
+  QuoteBlock,
+  CalloutBlock,
+  CTABlock,
+  SpecTableBlock,
+  ChartBlock,
+} from "@/components/document-builder/blocks";
 import { AddBlockMenu } from "./AddBlockMenu";
 import { Plus } from "lucide-react";
 

@@ -311,7 +311,7 @@ export function RehearsalMode({
                 )}
                 {block.type === "bullet-list" && (
                   <ul className="space-y-2">
-                    {block.content.items?.map((item, i) => (
+                    {block.content.items?.map((item: string, i: number) => (
                       <li key={i} className={cn("font-ui text-lg flex items-start gap-3", textColor)}>
                         <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
                         {item}
