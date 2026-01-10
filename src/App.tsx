@@ -8,6 +8,8 @@ const Index = lazy(() => import("./pages/Index"));
 const Tools = lazy(() => import("./pages/Tools"));
 const Auth = lazy(() => import("./pages/Auth"));
 const ContentLibrary = lazy(() => import("./pages/ContentLibrary"));
+const CaseStudyLibrary = lazy(() => import("./pages/CaseStudyLibrary"));
+const PresentationLibrary = lazy(() => import("./pages/PresentationLibrary"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
 const CaseStudyPrint = lazy(() => import("./pages/CaseStudyPrint"));
 const CaseStudyBuilder = lazy(() => import("./pages/CaseStudyBuilder"));
@@ -37,6 +39,8 @@ const App = () => (
           <Route path="/tools" element={<Tools />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/library" element={<ContentLibrary />} />
+          <Route path="/library/case-studies" element={<CaseStudyLibrary />} />
+          <Route path="/library/presentations" element={<PresentationLibrary />} />
           <Route path="/case-studies/:id/print" element={<CaseStudyPrint />} />
           <Route path="/case-studies/builder/print" element={<CaseStudyBuilderPrint />} />
           <Route path="/case-studies/builder/:id?" element={<CaseStudyBuilder />} />
