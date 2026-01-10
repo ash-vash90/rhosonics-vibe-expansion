@@ -17,3 +17,4 @@ export { ChartBlock } from "./ChartBlock";
 export { IdentityCardBlock } from "./IdentityCardBlock";
 export { ChallengeSolutionBlock } from "./ChallengeSolutionBlock";
 export { ResultsGridBlock } from "./ResultsGridBlock";
+export { HeroImageBlock } from "./HeroImageBlock";

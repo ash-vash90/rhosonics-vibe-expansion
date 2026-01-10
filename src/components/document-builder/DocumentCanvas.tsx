@@ -18,6 +18,7 @@ import {
   IdentityCardBlock,
   ChallengeSolutionBlock,
   ResultsGridBlock,
+  HeroImageBlock,
 } from "./blocks";
 import { AddBlockMenu } from "./AddBlockMenu";
 import { Plus } from "lucide-react";
@@ -133,6 +134,8 @@ export function DocumentCanvas({
           return <ChallengeSolutionBlock {...blockProps} />;
         case "results-grid":
           return <ResultsGridBlock {...blockProps} />;
+        case "hero-image":
+          return <HeroImageBlock {...blockProps} />;
         default:
           return (
             <div className={cn(
