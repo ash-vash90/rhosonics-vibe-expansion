@@ -4,6 +4,7 @@ import { usePresentation } from "@/hooks/usePresentation";
 import { SlideCanvas } from "@/components/presentation-builder/SlideCanvas";
 import { SlideNavigator } from "@/components/presentation-builder/SlideNavigator";
 import { BackgroundPicker } from "@/components/presentation-builder/BackgroundPicker";
+import { PresentationConverter } from "@/components/presentation-builder/PresentationConverter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -20,6 +21,7 @@ import {
   Play,
   FolderOpen,
   Plus,
+  FileUp,
 } from "lucide-react";
 import {
   Dialog,
@@ -41,6 +43,7 @@ export default function PresentationBuilder() {
   const [supabaseId, setSupabaseId] = useState<string | null>(null);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [showLibrary, setShowLibrary] = useState(false);
+  const [showImport, setShowImport] = useState(false);
   const [savedPresentations, setSavedPresentations] = useState<any[]>([]);
 
   // Load initial presentation
@@ -220,6 +223,12 @@ export default function PresentationBuilder() {
     navigate("/presentations/builder", { replace: true });
   };
 
+  const handleImportedPresentation = (imported: Presentation) => {
+    setPresentation(imported);
+    setSupabaseId(null);
+    setShowImport(false);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -341,6 +350,12 @@ export default function PresentationBuilder() {
             </DialogContent>
           </Dialog>
 
+          {/* Import */}
+          <Button variant="outline" size="sm" onClick={() => setShowImport(true)}>
+            <FileUp className="h-4 w-4 mr-2" />
+            Import
+          </Button>
+
           {/* Preview */}
           <Button variant="outline" size="sm">
             <Play className="h-4 w-4 mr-2" />
@@ -393,6 +408,13 @@ export default function PresentationBuilder() {
           </div>
         )}
       </div>
+
+      {/* Import Dialog */}
+      <PresentationConverter
+        open={showImport}
+        onOpenChange={setShowImport}
+        onConvert={handleImportedPresentation}
+      />
     </div>
   );
 }
