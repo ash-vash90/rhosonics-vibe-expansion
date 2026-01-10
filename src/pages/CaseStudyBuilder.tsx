@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { DocumentTemplate } from "@/types/template";
 import { cn } from "@/lib/utils";
+import { captureFirstPageThumbnail } from "@/lib/thumbnailGenerator";
 import {
   ArrowLeft,
   Save,
@@ -163,24 +164,52 @@ export default function CaseStudyBuilder() {
 
     setIsSaving(true);
     try {
+      // Generate thumbnail from first page
+      let thumbnailUrl: string | null = null;
+      if (currentPageIndex === 0) {
+        // If on first page, capture it
+        thumbnailUrl = await captureFirstPageThumbnail(
+          "[data-document-canvas]",
+          supabaseId || crypto.randomUUID(),
+          "case-study"
+        );
+      }
+
       if (supabaseId) {
+        const updateData: Record<string, unknown> = {
+          name: caseStudy.name,
+          content: JSON.parse(JSON.stringify(caseStudy)),
+          updated_at: new Date().toISOString(),
+        };
+        if (thumbnailUrl) {
+          updateData.thumbnail_url = thumbnailUrl;
+        }
+
         const { error } = await supabase
           .from("visual_case_studies")
-          .update({
-            name: caseStudy.name,
-            content: JSON.parse(JSON.stringify(caseStudy)),
-            updated_at: new Date().toISOString(),
-          })
+          .update(updateData)
           .eq("id", supabaseId);
 
         if (error) throw error;
       } else {
+        const newId = crypto.randomUUID();
+        // Generate thumbnail with the new ID
+        if (!thumbnailUrl && currentPageIndex === 0) {
+          thumbnailUrl = await captureFirstPageThumbnail(
+            "[data-document-canvas]",
+            newId,
+            "case-study"
+          );
+        }
+
         const { data, error } = await supabase
           .from("visual_case_studies")
           .insert([{
+            id: newId,
             user_id: user.id,
             name: caseStudy.name,
             content: JSON.parse(JSON.stringify(caseStudy)),
+            thumbnail_url: thumbnailUrl,
           }])
           .select()
           .single();

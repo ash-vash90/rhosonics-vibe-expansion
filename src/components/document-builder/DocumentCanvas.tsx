@@ -202,6 +202,8 @@ export function DocumentCanvas({
           ...getBackgroundStyle(),
         }}
         onClick={handleCanvasClick}
+        data-document-canvas
+        data-slide-canvas={layout === "presentation" ? "" : undefined}
       >
         {/* Overlay for dark backgrounds with images */}
         {page.background?.overlay && page.background.overlay !== "none" && (

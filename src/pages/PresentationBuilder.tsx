@@ -19,6 +19,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Presentation, createEmptyPresentation } from "@/types/presentation";
 import { exportToPptx } from "@/lib/pptxExport";
 import { cn } from "@/lib/utils";
+import { captureFirstPageThumbnail } from "@/lib/thumbnailGenerator";
 import {
   ArrowLeft,
   Save,
@@ -186,24 +187,50 @@ export default function PresentationBuilder() {
 
     setIsSaving(true);
     try {
+      // Generate thumbnail from first slide
+      let thumbnailUrl: string | null = null;
+      if (currentSlideIndex === 0) {
+        thumbnailUrl = await captureFirstPageThumbnail(
+          "[data-slide-canvas]",
+          supabaseId || crypto.randomUUID(),
+          "presentation"
+        );
+      }
+
       if (supabaseId) {
+        const updateData: Record<string, unknown> = {
+          name: presentation.name,
+          content: JSON.parse(JSON.stringify(presentation)),
+          updated_at: new Date().toISOString(),
+        };
+        if (thumbnailUrl) {
+          updateData.thumbnail_url = thumbnailUrl;
+        }
+
         const { error } = await supabase
           .from("presentations")
-          .update({
-            name: presentation.name,
-            content: JSON.parse(JSON.stringify(presentation)),
-            updated_at: new Date().toISOString(),
-          })
+          .update(updateData)
           .eq("id", supabaseId);
 
         if (error) throw error;
       } else {
+        const newId = crypto.randomUUID();
+        if (!thumbnailUrl && currentSlideIndex === 0) {
+          thumbnailUrl = await captureFirstPageThumbnail(
+            "[data-slide-canvas]",
+            newId,
+            "presentation"
+          );
+        }
+
         const { data, error } = await supabase
           .from("presentations")
           .insert([{
+            id: newId,
             user_id: user.id,
             name: presentation.name,
             content: JSON.parse(JSON.stringify(presentation)),
+            thumbnail_url: thumbnailUrl,
           }])
           .select()
           .single();
