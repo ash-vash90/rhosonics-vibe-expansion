@@ -76,6 +76,7 @@ export default function PresentationBuilder() {
     addSlide,
     deleteSlide,
     duplicateSlide,
+    reorderSlides,
     updateSlideBackground,
     selectBlock,
     addBlock,
@@ -406,6 +407,7 @@ export default function PresentationBuilder() {
           onAddSlide={addSlide}
           onDeleteSlide={deleteSlide}
           onDuplicateSlide={duplicateSlide}
+          onReorderSlides={reorderSlides}
         />
 
         {/* Canvas */}
