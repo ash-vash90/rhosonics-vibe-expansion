@@ -15,6 +15,9 @@ import {
   CTABlock,
   SpecTableBlock,
   ChartBlock,
+  IdentityCardBlock,
+  ChallengeSolutionBlock,
+  ResultsGridBlock,
 } from "./blocks";
 import { AddBlockMenu } from "./AddBlockMenu";
 import { Plus } from "lucide-react";
@@ -124,6 +127,12 @@ export function DocumentCanvas({
           return <CalloutBlock {...blockProps} />;
         case "cta":
           return <CTABlock {...blockProps} />;
+        case "identity-card":
+          return <IdentityCardBlock {...blockProps} />;
+        case "challenge-solution":
+          return <ChallengeSolutionBlock {...blockProps} />;
+        case "results-grid":
+          return <ResultsGridBlock {...blockProps} />;
         default:
           return (
             <div className={cn(
