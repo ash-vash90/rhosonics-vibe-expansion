@@ -4,6 +4,7 @@ import { LazySection } from "@/components/LazySection";
 import { Zap } from "lucide-react";
 import { QuickNav } from "@/components/brand/QuickNav";
 import { ChapterProgress } from "@/components/brand/ChapterProgress";
+import { Navigation } from "@/components/brand/Navigation";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -307,10 +308,15 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation overlays */}
-      <QuickNav />
-      <ChapterProgress />
+    <div className="min-h-screen bg-background flex">
+      {/* Left Navigation Sidebar */}
+      <Navigation />
+      
+      {/* Main Content Area */}
+      <div className="flex-1 min-w-0">
+        {/* Navigation overlays */}
+        <QuickNav />
+        <ChapterProgress />
       
       {/* ═══════════════════════════════════════════════════════════════
           HERO — BOLD STATEMENT
@@ -726,6 +732,7 @@ const Index = () => {
           </div>
         </footer>
       </main>
+      </div>
     </div>
   );
 };
