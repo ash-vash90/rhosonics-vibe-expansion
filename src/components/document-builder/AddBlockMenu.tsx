@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { BLOCK_TEMPLATES, BlockType } from "@/types/presentation";
+import { BLOCK_TEMPLATES, BlockType } from "@/types/document";
 import { cn } from "@/lib/utils";
 import { 
   Type, AlignLeft, List, TrendingUp, LayoutGrid, Image, 
@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 interface AddBlockMenuProps {
-  isDark: boolean;
+  isDark?: boolean;
   onSelect: (template: typeof BLOCK_TEMPLATES[0]) => void;
   onClose: () => void;
 }
@@ -46,7 +46,7 @@ const BLOCK_CATEGORIES = [
   },
 ];
 
-export function AddBlockMenu({ isDark, onSelect, onClose }: AddBlockMenuProps) {
+export function AddBlockMenu({ isDark = false, onSelect, onClose }: AddBlockMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export function AddBlockMenu({ isDark, onSelect, onClose }: AddBlockMenuProps) {
                   >
                     <IconComponent className={cn(
                       "w-4 h-4 flex-shrink-0",
-                      isDark ? "text-rho-green" : "text-rho-green"
+                      "text-rho-green"
                     )} />
                     <span className="font-ui text-sm truncate">{template.label}</span>
                   </button>
