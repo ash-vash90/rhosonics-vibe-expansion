@@ -1,11 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import { BlockContent, BlockStyle } from "@/types/document";
 import { BrandChart, DataPoint } from "@/components/tools/BrandChart";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Trash2, RefreshCw } from "lucide-react";
+import { Plus, Trash2, RefreshCw, ImagePlus, X, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface ChartBlockProps {
   content: BlockContent;
@@ -31,6 +33,9 @@ export function ChartBlock({
   onEndEdit,
 }: ChartBlockProps) {
   const chartRef = useRef<any>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  
   const chart = content.chart || { 
     type: "bar", 
     title: "Chart Title", 
@@ -78,6 +83,70 @@ export function ChartBlock({
     if (chart.data.length <= 1) return;
     const newData = chart.data.filter((_, i) => i !== index);
     onUpdate({ chart: { ...chart, data: newData } });
+  };
+
+  const uploadBackgroundImage = useCallback(async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload an image file");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image must be smaller than 10MB");
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const fileExt = file.name.split(".").pop()?.toLowerCase() || "jpg";
+      const fileName = `chart-bg-${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+      const filePath = `case-studies/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("documents")
+        .upload(filePath, file, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (uploadError) {
+        console.error("Upload error:", uploadError);
+        toast.error("Failed to upload image");
+        return;
+      }
+
+      const { data: urlData } = supabase.storage
+        .from("documents")
+        .getPublicUrl(filePath);
+
+      if (urlData?.publicUrl) {
+        onUpdate({ 
+          chart: { 
+            ...chart, 
+            backgroundImage: urlData.publicUrl,
+          } 
+        });
+        toast.success("Background image added");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Failed to upload image");
+    } finally {
+      setIsUploading(false);
+    }
+  }, [chart, onUpdate]);
+
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      uploadBackgroundImage(file);
+    }
+    e.target.value = "";
+  }, [uploadBackgroundImage]);
+
+  const handleRemoveBackground = () => {
+    onUpdate({ chart: { ...chart, backgroundImage: undefined } });
+    toast.success("Background removed");
   };
 
   if (isEditing) {
@@ -155,6 +224,58 @@ export function ChartBlock({
           />
         </div>
 
+        {/* Background Image */}
+        <div>
+          <label className={cn(
+            "block text-xs font-ui mb-1",
+            isDark ? "text-white/60" : "text-slate-500"
+          )}>
+            Background Image (optional)
+          </label>
+          {chart.backgroundImage ? (
+            <div className="flex items-center gap-2">
+              <div className="relative w-20 h-12 rounded overflow-hidden border border-slate-200">
+                <img 
+                  src={chart.backgroundImage} 
+                  alt="Background" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleRemoveBackground}
+                className={cn(isDark && "border-white/20 text-white hover:bg-white/10")}
+              >
+                <X className="w-4 h-4 mr-1" />
+                Remove
+              </Button>
+            </div>
+          ) : (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploading}
+              className={cn(isDark && "border-white/20 text-white hover:bg-white/10")}
+            >
+              {isUploading ? (
+                <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+              ) : (
+                <ImagePlus className="w-4 h-4 mr-1" />
+              )}
+              {isUploading ? "Uploading..." : "Add Background"}
+            </Button>
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </div>
+
         {/* Data Points */}
         <div>
           <label className={cn(
@@ -215,41 +336,55 @@ export function ChartBlock({
         </div>
 
         {/* Preview */}
-        <div className={cn(
-          "rounded-lg p-4 border",
-          isDark ? "bg-slate-800/50 border-white/10" : "bg-white border-slate-200"
-        )}>
-          <div className="flex justify-between items-center mb-3">
-            <span className={cn(
-              "text-xs font-ui",
-              isDark ? "text-white/60" : "text-slate-500"
-            )}>
-              Preview
-            </span>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={handleReplay}
-              className={cn(
-                "h-7",
-                isDark && "text-white/60 hover:text-white hover:bg-white/10"
-              )}
-            >
-              <RefreshCw className="h-3 w-3 mr-1" />
-              Replay
-            </Button>
+        <div 
+          className={cn(
+            "rounded-lg p-4 border relative overflow-hidden",
+            isDark ? "bg-slate-800/50 border-white/10" : "bg-white border-slate-200"
+          )}
+        >
+          {chart.backgroundImage && (
+            <div 
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage: `url(${chart.backgroundImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+          )}
+          <div className="relative z-10">
+            <div className="flex justify-between items-center mb-3">
+              <span className={cn(
+                "text-xs font-ui",
+                isDark ? "text-white/60" : "text-slate-500"
+              )}>
+                Preview
+              </span>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={handleReplay}
+                className={cn(
+                  "h-7",
+                  isDark && "text-white/60 hover:text-white hover:bg-white/10"
+                )}
+              >
+                <RefreshCw className="h-3 w-3 mr-1" />
+                Replay
+              </Button>
+            </div>
+            <BrandChart
+              ref={chartRef}
+              chartType={getBrandChartType(chart.type)}
+              data={chartData}
+              colors={CHART_COLORS}
+              yAxisLabel={chart.yAxisLabel}
+              showAxisTitles={!!chart.yAxisLabel}
+              isLightBg={!isDark}
+              height={200}
+              animationDuration={600}
+            />
           </div>
-          <BrandChart
-            ref={chartRef}
-            chartType={getBrandChartType(chart.type)}
-            data={chartData}
-            colors={CHART_COLORS}
-            yAxisLabel={chart.yAxisLabel}
-            showAxisTitles={!!chart.yAxisLabel}
-            isLightBg={!isDark}
-            height={200}
-            animationDuration={600}
-          />
         </div>
 
         <div className="flex justify-end">
@@ -264,30 +399,42 @@ export function ChartBlock({
   return (
     <div 
       className={cn(
-        "rounded-lg overflow-hidden",
+        "rounded-lg overflow-hidden relative",
         style?.alignment === "center" && "mx-auto max-w-2xl",
         style?.alignment === "right" && "ml-auto max-w-2xl"
       )}
     >
-      {chart.title && (
-        <h4 className={cn(
-          "font-ui text-lg font-semibold mb-4",
-          isDark ? "text-white" : "text-slate-800"
-        )}>
-          {chart.title}
-        </h4>
+      {chart.backgroundImage && (
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `url(${chart.backgroundImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
       )}
-      <BrandChart
-        ref={chartRef}
-        chartType={getBrandChartType(chart.type)}
-        data={chartData}
-        colors={CHART_COLORS}
-        yAxisLabel={chart.yAxisLabel}
-        showAxisTitles={!!chart.yAxisLabel}
-        isLightBg={!isDark}
-        height={280}
-        animationDuration={600}
-      />
+      <div className="relative z-10">
+        {chart.title && (
+          <h4 className={cn(
+            "font-ui text-lg font-semibold mb-4",
+            isDark ? "text-white" : "text-slate-800"
+          )}>
+            {chart.title}
+          </h4>
+        )}
+        <BrandChart
+          ref={chartRef}
+          chartType={getBrandChartType(chart.type)}
+          data={chartData}
+          colors={CHART_COLORS}
+          yAxisLabel={chart.yAxisLabel}
+          showAxisTitles={!!chart.yAxisLabel}
+          isLightBg={!isDark}
+          height={280}
+          animationDuration={600}
+        />
+      </div>
     </div>
   );
 }
