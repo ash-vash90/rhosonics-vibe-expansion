@@ -14,22 +14,20 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
       background: { type: "solid", value: "hsl(0 0% 100%)" },
       sections: [
         {
-          id: "header-section",
-          name: "Header",
-          allowedBlockTypes: ["image"],
-          defaultBlocks: [],
-          height: "fixed",
-          fixedHeight: 60,
-          placeholder: "Header area",
-        },
-        {
           id: "hero-section",
           name: "Hero",
-          allowedBlockTypes: ["image"],
+          allowedBlockTypes: ["hero-image", "image"],
           defaultBlocks: [
             {
-              type: "image",
-              content: { imageUrl: "", imageAlt: "Hero image" },
+              type: "hero-image",
+              content: { 
+                imageUrl: "", 
+                title: "Technical Case Study",
+                subtitle: "In-depth analysis of a Rhosonics implementation",
+                overlayOpacity: 0.6,
+                height: "240px",
+                gradientDirection: "right"
+              },
               style: { width: "full" },
             },
           ],
@@ -84,18 +82,9 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
       background: { type: "solid", value: "hsl(0 0% 100%)" },
       sections: [
         {
-          id: "header-section",
-          name: "Header",
-          allowedBlockTypes: ["image"],
-          defaultBlocks: [],
-          height: "fixed",
-          fixedHeight: 60,
-          placeholder: "Header area",
-        },
-        {
           id: "challenge-section",
           name: "The Challenge",
-          allowedBlockTypes: ["heading", "paragraph", "bullet-list", "callout", "image"],
+          allowedBlockTypes: ["heading", "paragraph", "bullet-list", "callout", "image", "challenge-solution"],
           defaultBlocks: [
             {
               type: "heading",
@@ -142,15 +131,6 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
       description: "Technical implementation details",
       background: { type: "solid", value: "hsl(0 0% 100%)" },
       sections: [
-        {
-          id: "header-section",
-          name: "Header",
-          allowedBlockTypes: ["image"],
-          defaultBlocks: [],
-          height: "fixed",
-          fixedHeight: 60,
-          placeholder: "Header area",
-        },
         {
           id: "solution-section",
           name: "Solution Overview",
@@ -218,15 +198,6 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
       background: { type: "solid", value: "hsl(0 0% 100%)" },
       sections: [
         {
-          id: "header-section",
-          name: "Header",
-          allowedBlockTypes: ["image"],
-          defaultBlocks: [],
-          height: "fixed",
-          fixedHeight: 60,
-          placeholder: "Header area",
-        },
-        {
           id: "results-section",
           name: "Measured Results",
           allowedBlockTypes: ["heading", "stat-grid", "results-grid", "chart"],
@@ -236,13 +207,15 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
               content: { text: "Measured Results", level: 1 },
             },
             {
-              type: "stat-grid",
+              type: "results-grid",
               content: { 
-                stats: [
-                  { value: "", label: "Accuracy Improvement" },
-                  { value: "", label: "Cost Savings" },
-                  { value: "", label: "Time Saved" },
-                ] 
+                resultsGrid: { 
+                  results: [
+                    "Improved measurement accuracy",
+                    "Reduced manual sampling requirements", 
+                    "Optimized process control",
+                  ] 
+                } 
               },
             },
           ],
@@ -259,7 +232,12 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
                 chart: { 
                   type: "line", 
                   title: "Performance Over Time",
-                  data: [],
+                  data: [
+                    { label: "Month 1", value: 75 },
+                    { label: "Month 2", value: 85 },
+                    { label: "Month 3", value: 92 },
+                    { label: "Month 4", value: 98 },
+                  ],
                 } 
               },
             },
@@ -273,7 +251,7 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
           defaultBlocks: [
             {
               type: "quote",
-              content: { quote: { text: "", author: "", role: "" } },
+              content: { quote: { text: "Add a testimonial from the customer...", author: "Customer Name", role: "Job Title" } },
             },
           ],
           placeholder: "Add customer testimonial",
@@ -292,7 +270,8 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
               content: { 
                 cta: { 
                   text: "Ready to achieve similar results?", 
-                  buttonLabel: "Contact Us" 
+                  buttonLabel: "Contact Us",
+                  buttonUrl: "https://rhosonics.com/contact"
                 } 
               },
             },
@@ -304,7 +283,7 @@ export const technicalDeepDiveTemplate: DocumentTemplate = {
   ],
   metadata: {
     author: "Rhosonics",
-    version: "1.0",
+    version: "2.0",
     tags: ["technical", "detailed", "4-page", "engineering"],
   },
   isCustomizable: true,

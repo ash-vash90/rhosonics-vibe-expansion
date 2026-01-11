@@ -126,6 +126,16 @@ export interface ResultsGridContent {
   results: string[];
 }
 
+// Hero image content (for case studies)
+export interface HeroImageContent {
+  imageUrl?: string;
+  title?: string;
+  subtitle?: string;
+  overlayOpacity?: number;
+  height?: string;
+  gradientDirection?: "left" | "right" | "bottom" | "top";
+}
+
 // Block content union type
 export interface BlockContent {
   // Text blocks
@@ -173,6 +183,14 @@ export interface BlockContent {
   identity?: IdentityCardContent;
   challengeSolution?: ChallengeSolutionContent;
   resultsGrid?: ResultsGridContent;
+  heroImage?: HeroImageContent;
+  
+  // Hero image direct properties (for HeroImageBlock compatibility)
+  title?: string;
+  subtitle?: string;
+  overlayOpacity?: number;
+  height?: string;
+  gradientDirection?: "left" | "right" | "bottom" | "top";
 }
 
 // Block style overrides
@@ -315,6 +333,7 @@ export const BLOCK_TEMPLATES: { type: BlockType; label: string; icon: string; de
   { type: "cta", label: "Call to Action", icon: "MousePointer", defaultContent: { cta: { text: "Ready to get started?", buttonLabel: "Contact Us" } }, category: "layout" },
   
   // Case study specific
+  { type: "hero-image", label: "Hero Image", icon: "ImagePlus", defaultContent: { imageUrl: "", title: "Hero Title", subtitle: "Hero subtitle", overlayOpacity: 0.6, height: "280px", gradientDirection: "right" }, category: "case-study" },
   { type: "identity-card", label: "Identity Card", icon: "Building2", defaultContent: { identity: { company: "", location: "", industry: "", product: "" } }, category: "case-study" },
   { type: "challenge-solution", label: "Challenge & Solution", icon: "Lightbulb", defaultContent: { challengeSolution: { challenge: "", solution: "" } }, category: "case-study" },
   { type: "results-grid", label: "Results Grid", icon: "CheckCircle", defaultContent: { resultsGrid: { results: ["Result 1", "Result 2", "Result 3"] } }, category: "case-study" },
