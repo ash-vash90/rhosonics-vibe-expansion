@@ -358,7 +358,10 @@ export function CaseStudyCanvas({
   })) || null;
 
   return (
-    <div className="case-study-document flex flex-col items-center gap-8 py-8 px-4" data-document-canvas>
+    <div
+      className="case-study-document w-full flex flex-col items-start gap-8 py-8 px-4"
+      data-document-canvas
+    >
       {/* Hidden file input for hero image */}
       <input
         ref={fileInputRef}
@@ -380,14 +383,14 @@ export function CaseStudyCanvas({
       )}
 
       {/* Page 1 - Cover & Introduction */}
-      <article 
+      <article
         className={cn(
-          "bg-white shadow-2xl relative overflow-hidden flex flex-col",
+          "mx-auto bg-white shadow-2xl relative overflow-hidden flex flex-col",
           "w-[210mm] h-[297mm]",
           "print:shadow-none print:w-[210mm] print:h-[297mm]",
           printMode && "print-page"
         )}
-        style={{ minHeight: '297mm', maxHeight: '297mm' }}
+        style={{ minHeight: "297mm", maxHeight: "297mm" }}
       >
         {/* Header Bar - EXACT match to CaseStudyDocument */}
         <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between flex-shrink-0">
@@ -645,14 +648,14 @@ export function CaseStudyCanvas({
       </article>
 
       {/* Page 2 - Results & Data */}
-      <article 
+      <article
         className={cn(
-          "bg-white shadow-2xl relative overflow-hidden flex flex-col",
+          "mx-auto bg-white shadow-2xl relative overflow-hidden flex flex-col",
           "w-[210mm] h-[297mm]",
           "print:shadow-none print:w-[210mm] print:h-[297mm]",
           printMode && "print-page"
         )}
-        style={{ minHeight: '297mm', maxHeight: '297mm' }}
+        style={{ minHeight: "297mm", maxHeight: "297mm" }}
       >
         {/* Header Bar - EXACT match */}
         <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between flex-shrink-0">
