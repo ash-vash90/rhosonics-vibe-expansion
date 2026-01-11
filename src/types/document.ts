@@ -57,6 +57,7 @@ export interface ChartBlockData {
     series3?: string;
   };
   background?: "light" | "dark";
+  backgroundImage?: string;
   dualAxis?: boolean;
   showDataPoints?: boolean;
   lineSmoothing?: boolean;
