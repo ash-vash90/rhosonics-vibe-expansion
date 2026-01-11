@@ -555,7 +555,7 @@ export default function CaseStudyBuilder() {
         />
 
         {/* Canvas */}
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 min-w-0 min-h-0 overflow-auto">
           <CaseStudyCanvas
             pages={caseStudy.pages}
             currentPageIndex={currentPageIndex}
