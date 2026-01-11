@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Heart, Trash2, MoreVertical, FileText, Presentation, Clock, Copy } from "lucide-react";
+import { Heart, Trash2, MoreVertical, FileText, Presentation, Clock, Copy, Pencil } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -31,6 +39,7 @@ export interface DocumentCardProps {
   onToggleFavorite: (id: string) => void;
   onDelete: (id: string) => void;
   onDuplicate?: (id: string) => void;
+  onRename?: (id: string, newName: string) => void;
 }
 
 export const DocumentCard = ({
@@ -45,8 +54,11 @@ export const DocumentCard = ({
   onToggleFavorite,
   onDelete,
   onDuplicate,
+  onRename,
 }: DocumentCardProps) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showRenameDialog, setShowRenameDialog] = useState(false);
+  const [newName, setNewName] = useState(name);
 
   const formattedDate = new Date(updatedAt).toLocaleDateString("en-US", {
     month: "short",
@@ -172,6 +184,18 @@ export const DocumentCard = ({
                   Duplicate
                 </DropdownMenuItem>
               )}
+              {onRename && (
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setNewName(name);
+                    setShowRenameDialog(true);
+                  }}
+                >
+                  <Pencil className="w-4 h-4 mr-2" />
+                  Rename
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();
@@ -210,6 +234,41 @@ export const DocumentCard = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Dialog open={showRenameDialog} onOpenChange={setShowRenameDialog}>
+        <DialogContent onClick={(e) => e.stopPropagation()}>
+          <DialogHeader>
+            <DialogTitle>Rename Document</DialogTitle>
+          </DialogHeader>
+          <Input
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            placeholder="Enter new name..."
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && newName.trim()) {
+                onRename?.(id, newName.trim());
+                setShowRenameDialog(false);
+              }
+            }}
+          />
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowRenameDialog(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                if (newName.trim()) {
+                  onRename?.(id, newName.trim());
+                  setShowRenameDialog(false);
+                }
+              }}
+              disabled={!newName.trim()}
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

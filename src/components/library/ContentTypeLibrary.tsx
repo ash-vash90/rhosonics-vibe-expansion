@@ -182,6 +182,33 @@ export const ContentTypeLibrary = ({
     }
   };
 
+  const handleRename = async (id: string, newName: string) => {
+    const doc = documents.find((d) => d.id === id);
+    if (!doc) return;
+
+    // Optimistic update
+    setDocuments((prev) =>
+      prev.map((d) => (d.id === id ? { ...d, name: newName } : d))
+    );
+
+    try {
+      const { error } = await supabase
+        .from(tableName)
+        .update({ name: newName })
+        .eq("id", id);
+
+      if (error) throw error;
+      toast.success(`Renamed to "${newName}"`);
+    } catch (error) {
+      // Revert on error
+      setDocuments((prev) =>
+        prev.map((d) => (d.id === id ? { ...d, name: doc.name } : d))
+      );
+      console.error("Error renaming document:", error);
+      toast.error("Failed to rename document");
+    }
+  };
+
   const handleSelectTemplate = (template: DocumentTemplate) => {
     // Navigate to builder with template - the builder will handle loading the template
     navigate(builderRoute, { state: { template } });
@@ -380,6 +407,7 @@ export const ContentTypeLibrary = ({
                     onToggleFavorite={handleToggleFavorite}
                     onDelete={handleDelete}
                     onDuplicate={handleDuplicate}
+                    onRename={handleRename}
                   />
                 ))}
               </div>
