@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCaseStudy, createEmptyCaseStudy, CaseStudyDocument } from "@/hooks/useCaseStudy";
 import { DocumentCanvas, PageNavigator, TemplateSelector } from "@/components/document-builder";
 import { BackgroundPicker } from "@/components/presentation-builder/BackgroundPicker";
+import { AIContentFill, type GeneratedCaseStudyContent } from "@/components/case-study-builder/AIContentFill";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -288,6 +289,111 @@ export default function CaseStudyBuilder() {
     setDocument({ ...caseStudy, name });
   };
 
+  // Handle AI-generated content
+  const handleApplyAIContent = (content: GeneratedCaseStudyContent) => {
+    // Map AI content to block types and update matching blocks
+    const updatedPages = caseStudy.pages.map((page) => ({
+      ...page,
+      blocks: page.blocks.map((block) => {
+        switch (block.type) {
+          case "hero-image":
+            return {
+              ...block,
+              content: {
+                ...block.content,
+                title: content.heroTitle,
+                subtitle: content.heroSubtitle,
+              },
+            };
+          case "identity-card":
+            return {
+              ...block,
+              content: {
+                ...block.content,
+                identity: {
+                  company: content.company,
+                  location: content.location,
+                  industry: content.industry,
+                  product: content.product,
+                },
+              },
+            };
+          case "subheading":
+            // Tagline
+            if (!block.content.text || block.content.text.includes("compelling tagline")) {
+              return {
+                ...block,
+                content: { ...block.content, text: content.tagline },
+              };
+            }
+            return block;
+          case "challenge-solution":
+            return {
+              ...block,
+              content: {
+                ...block.content,
+                challengeSolution: {
+                  challenge: content.challenge,
+                  solution: content.solution,
+                },
+              },
+            };
+          case "stat-card":
+            return {
+              ...block,
+              content: {
+                ...block.content,
+                stat: content.primaryStat,
+              },
+            };
+          case "spec-table":
+            return {
+              ...block,
+              content: {
+                ...block.content,
+                specs: content.specs,
+              },
+            };
+          case "results-grid":
+            return {
+              ...block,
+              content: {
+                ...block.content,
+                resultsGrid: { results: content.results },
+              },
+            };
+          case "quote":
+            return {
+              ...block,
+              content: {
+                ...block.content,
+                quote: content.quote,
+              },
+            };
+          case "cta":
+            return {
+              ...block,
+              content: {
+                ...block.content,
+                cta: {
+                  text: content.ctaText,
+                  buttonLabel: block.content.cta?.buttonLabel || "Contact Us",
+                  buttonUrl: block.content.cta?.buttonUrl || "https://rhosonics.com/contact",
+                },
+              },
+            };
+          default:
+            return block;
+        }
+      }),
+    }));
+
+    setDocument({
+      ...caseStudy,
+      pages: updatedPages,
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -478,15 +584,17 @@ export default function CaseStudyBuilder() {
         {showAISidebar && (
           <div className="w-80 border-l border-border bg-card flex flex-col overflow-hidden">
             <div className="p-4 border-b border-border">
-              <h3 className="font-ui font-semibold text-sm">AI Suggestions</h3>
+              <h3 className="font-ui font-semibold text-sm">AI Assistant</h3>
               <p className="text-xs text-muted-foreground mt-1">
                 Get AI-powered content suggestions
               </p>
             </div>
-            <div className="flex-1 overflow-auto p-4">
-              <p className="text-sm text-muted-foreground">
-                AI suggestions will appear here as you build your case study.
-              </p>
+            <div className="flex-1 overflow-auto p-4 space-y-4">
+              <AIContentFill onApplyContent={handleApplyAIContent} />
+              
+              <div className="text-xs text-muted-foreground text-center p-4 border border-dashed border-border rounded-lg">
+                <p>More AI features coming soon...</p>
+              </div>
             </div>
           </div>
         )}

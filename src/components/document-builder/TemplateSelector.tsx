@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { DocumentTemplate, TEMPLATE_CATEGORIES } from "@/types/template";
 import { DocumentType } from "@/types/document";
 import { getTemplatesByType, getBlankTemplate } from "@/data/templates";
+import { TemplatePreview } from "./TemplatePreview";
 
 interface TemplateSelectorProps {
   open: boolean;
@@ -212,7 +213,7 @@ function TemplateCard({ template, isSelected, onClick, onDoubleClick }: Template
       )}
     >
       {/* Thumbnail / Preview */}
-      <div className="aspect-[4/3] bg-muted relative">
+      <div className="aspect-[4/3] bg-muted relative overflow-hidden">
         {template.thumbnailUrl ? (
           <img 
             src={template.thumbnailUrl} 
@@ -220,7 +221,7 @@ function TemplateCard({ template, isSelected, onClick, onDoubleClick }: Template
             className="w-full h-full object-cover"
           />
         ) : (
-          <TemplatePlaceholder template={template} />
+          <TemplatePreview template={template} />
         )}
         
         {/* Selection Indicator */}
@@ -251,39 +252,5 @@ function TemplateCard({ template, isSelected, onClick, onDoubleClick }: Template
         </div>
       </div>
     </button>
-  );
-}
-
-interface TemplatePlaceholderProps {
-  template: DocumentTemplate;
-}
-
-function TemplatePlaceholder({ template }: TemplatePlaceholderProps) {
-  const pageCount = Math.min(template.pages.length, 3);
-  
-  return (
-    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50 p-4">
-      <div className="flex gap-1">
-        {Array.from({ length: pageCount }).map((_, i) => (
-          <div 
-            key={i}
-            className={cn(
-              "bg-background border shadow-sm rounded",
-              template.documentType === "presentation"
-                ? "w-12 h-8" // Landscape for presentations
-                : "w-8 h-10", // Portrait for documents
-              i > 0 && "opacity-60",
-              i > 1 && "opacity-30"
-            )}
-          >
-            <div className="p-1 space-y-0.5">
-              <div className="h-1 bg-primary/40 rounded-full w-3/4" />
-              <div className="h-0.5 bg-muted-foreground/20 rounded-full w-full" />
-              <div className="h-0.5 bg-muted-foreground/20 rounded-full w-2/3" />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
