@@ -14,26 +14,23 @@ export const rhosonics2PageTemplate: DocumentTemplate = {
       background: { type: "solid", value: "hsl(0 0% 100%)" },
       sections: [
         {
-          id: "header-section",
-          name: "Header",
-          description: "Rhosonics branding header",
-          allowedBlockTypes: ["image"],
-          defaultBlocks: [],
-          height: "fixed",
-          fixedHeight: 60,
-          placeholder: "Header area",
-        },
-        {
           id: "hero-section",
           name: "Hero Image",
           description: "Large hero image showcasing the installation or application",
-          allowedBlockTypes: ["image"],
-          requiredBlockTypes: ["image"],
+          allowedBlockTypes: ["hero-image", "image"],
+          requiredBlockTypes: ["hero-image"],
           maxBlocks: 1,
           defaultBlocks: [
             {
-              type: "image",
-              content: { imageUrl: "", imageAlt: "Hero image", caption: "" },
+              type: "hero-image",
+              content: { 
+                imageUrl: "", 
+                title: "Customer Success Story",
+                subtitle: "Achieving breakthrough results with Rhosonics technology",
+                overlayOpacity: 0.6,
+                height: "280px",
+                gradientDirection: "right"
+              },
               style: { width: "full" },
             },
           ],
@@ -124,7 +121,10 @@ export const rhosonics2PageTemplate: DocumentTemplate = {
               type: "spec-table",
               content: { 
                 specs: [
-                  { label: "", value: "" },
+                  { label: "Measurement Type", value: "" },
+                  { label: "Medium", value: "" },
+                  { label: "Range", value: "" },
+                  { label: "Accuracy", value: "" },
                 ] 
               },
             },
@@ -140,16 +140,6 @@ export const rhosonics2PageTemplate: DocumentTemplate = {
       background: { type: "solid", value: "hsl(0 0% 100%)" },
       sections: [
         {
-          id: "header-section",
-          name: "Header",
-          description: "Rhosonics branding header",
-          allowedBlockTypes: ["image"],
-          defaultBlocks: [],
-          height: "fixed",
-          fixedHeight: 60,
-          placeholder: "Header area",
-        },
-        {
           id: "results-section",
           name: "Key Results",
           description: "Bullet points of achieved outcomes",
@@ -163,7 +153,11 @@ export const rhosonics2PageTemplate: DocumentTemplate = {
               type: "results-grid",
               content: { 
                 resultsGrid: { 
-                  results: ["Result 1", "Result 2", "Result 3"] 
+                  results: [
+                    "Improved measurement accuracy",
+                    "Reduced manual sampling requirements", 
+                    "Optimized process control",
+                  ] 
                 } 
               },
             },
@@ -182,7 +176,7 @@ export const rhosonics2PageTemplate: DocumentTemplate = {
               content: { 
                 chart: { 
                   type: "bar", 
-                  title: "Performance Data",
+                  title: "Performance Comparison",
                   data: [
                     { label: "Before", value: 70 },
                     { label: "After", value: 98 },
@@ -204,9 +198,9 @@ export const rhosonics2PageTemplate: DocumentTemplate = {
               type: "quote",
               content: { 
                 quote: { 
-                  text: "", 
-                  author: "", 
-                  role: "" 
+                  text: "Add a testimonial quote from the customer...", 
+                  author: "Customer Name", 
+                  role: "Job Title" 
                 } 
               },
             },
@@ -224,7 +218,8 @@ export const rhosonics2PageTemplate: DocumentTemplate = {
               content: { 
                 cta: { 
                   text: "Ready to achieve similar results?", 
-                  buttonLabel: "Contact Us" 
+                  buttonLabel: "Contact Us",
+                  buttonUrl: "https://rhosonics.com/contact"
                 } 
               },
             },
@@ -236,10 +231,10 @@ export const rhosonics2PageTemplate: DocumentTemplate = {
   ],
   metadata: {
     author: "Rhosonics",
-    version: "1.0",
+    version: "2.0",
     tags: ["standard", "2-page", "rhosonics"],
   },
   isCustomizable: true,
   minPages: 2,
-  maxPages: 2,
+  maxPages: 4,
 };

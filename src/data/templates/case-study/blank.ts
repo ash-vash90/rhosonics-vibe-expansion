@@ -19,7 +19,8 @@ export const blankCaseStudyTemplate: DocumentTemplate = {
           allowedBlockTypes: [
             "heading", "subheading", "paragraph", "bullet-list", "image",
             "stat-card", "stat-grid", "chart", "spec-table", "quote",
-            "callout", "divider", "cta", "identity-card", "challenge-solution", "results-grid"
+            "callout", "divider", "cta", "hero-image", "identity-card", 
+            "challenge-solution", "results-grid"
           ],
           defaultBlocks: [
             {
@@ -34,7 +35,7 @@ export const blankCaseStudyTemplate: DocumentTemplate = {
   ],
   metadata: {
     author: "Rhosonics",
-    version: "1.0",
+    version: "2.0",
     tags: ["blank", "starter", "free-form"],
   },
   isCustomizable: true,

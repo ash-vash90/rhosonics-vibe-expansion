@@ -14,23 +14,21 @@ export const quickWinTemplate: DocumentTemplate = {
       background: { type: "solid", value: "hsl(0 0% 100%)" },
       sections: [
         {
-          id: "header-section",
-          name: "Header",
-          allowedBlockTypes: ["image"],
-          defaultBlocks: [],
-          height: "fixed",
-          fixedHeight: 60,
-          placeholder: "Header area",
-        },
-        {
           id: "hero-section",
           name: "Hero",
           description: "Compact hero with key stat overlay",
-          allowedBlockTypes: ["image", "stat-card"],
+          allowedBlockTypes: ["hero-image", "image", "stat-card"],
           defaultBlocks: [
             {
-              type: "image",
-              content: { imageUrl: "", imageAlt: "Hero image" },
+              type: "hero-image",
+              content: { 
+                imageUrl: "", 
+                title: "Quick Win Success",
+                subtitle: "Rapid results with Rhosonics technology",
+                overlayOpacity: 0.6,
+                height: "180px",
+                gradientDirection: "right"
+              },
               style: { width: "full" },
             },
           ],
@@ -59,7 +57,7 @@ export const quickWinTemplate: DocumentTemplate = {
           defaultBlocks: [
             {
               type: "stat-card",
-              content: { stat: { value: "", label: "" } },
+              content: { stat: { value: "", label: "Key Result" } },
               style: { alignment: "center" },
             },
           ],
@@ -69,16 +67,17 @@ export const quickWinTemplate: DocumentTemplate = {
           id: "story-section",
           name: "The Story",
           description: "Brief challenge and solution",
-          allowedBlockTypes: ["paragraph", "heading"],
-          maxBlocks: 2,
+          allowedBlockTypes: ["challenge-solution", "paragraph", "heading"],
+          maxBlocks: 1,
           defaultBlocks: [
             {
-              type: "heading",
-              content: { text: "The Challenge", level: 3 },
-            },
-            {
-              type: "paragraph",
-              content: { text: "Brief description of the challenge and solution in 2-3 sentences..." },
+              type: "challenge-solution",
+              content: { 
+                challengeSolution: { 
+                  challenge: "", 
+                  solution: "" 
+                } 
+              },
             },
           ],
           placeholder: "Add brief story",
@@ -87,7 +86,7 @@ export const quickWinTemplate: DocumentTemplate = {
           id: "results-section",
           name: "Quick Results",
           description: "3 key outcomes",
-          allowedBlockTypes: ["stat-grid", "bullet-list"],
+          allowedBlockTypes: ["stat-grid", "results-grid", "bullet-list"],
           maxBlocks: 1,
           defaultBlocks: [
             {
@@ -112,7 +111,7 @@ export const quickWinTemplate: DocumentTemplate = {
           defaultBlocks: [
             {
               type: "quote",
-              content: { quote: { text: "", author: "", role: "" } },
+              content: { quote: { text: "Add a brief testimonial...", author: "Customer Name", role: "Job Title" } },
             },
           ],
           placeholder: "Add short testimonial",
@@ -128,7 +127,8 @@ export const quickWinTemplate: DocumentTemplate = {
               content: { 
                 cta: { 
                   text: "Learn more", 
-                  buttonLabel: "Contact Us" 
+                  buttonLabel: "Contact Us",
+                  buttonUrl: "https://rhosonics.com/contact"
                 } 
               },
             },
@@ -140,7 +140,7 @@ export const quickWinTemplate: DocumentTemplate = {
   ],
   metadata: {
     author: "Rhosonics",
-    version: "1.0",
+    version: "2.0",
     tags: ["quick", "1-page", "summary", "snapshot"],
   },
   isCustomizable: true,
