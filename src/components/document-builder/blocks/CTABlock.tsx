@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { BlockContent, BlockStyle, CTAContent } from "@/types/document";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { Phone, Mail, Globe } from "lucide-react";
 
 interface CTABlockProps {
   content: BlockContent;
@@ -15,17 +14,20 @@ interface CTABlockProps {
 
 export function CTABlock({
   content,
-  style,
   isEditing,
   isDark,
   onUpdate,
   onEndEdit,
 }: CTABlockProps) {
-  const cta = content.cta || { text: "Ready to get started?", buttonLabel: "Contact Us" };
-  const [editingField, setEditingField] = useState<"text" | "button" | "secondaryButton" | null>(null);
+  const cta = content.cta || { 
+    text: "Ready to achieve similar results?", 
+    buttonLabel: "+31 (0)10 262 8088" 
+  };
+  const [editingField, setEditingField] = useState<"text" | "phone" | "email" | "website" | null>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
-  const buttonRef = useRef<HTMLSpanElement>(null);
-  const secondaryRef = useRef<HTMLSpanElement>(null);
+  const phoneRef = useRef<HTMLSpanElement>(null);
+  const emailRef = useRef<HTMLSpanElement>(null);
+  const websiteRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (isEditing && !editingField) {
@@ -34,7 +36,7 @@ export function CTABlock({
   }, [isEditing]);
 
   useEffect(() => {
-    const refs = { text: textRef, button: buttonRef, secondaryButton: secondaryRef };
+    const refs = { text: textRef, phone: phoneRef, email: emailRef, website: websiteRef };
     const ref = refs[editingField as keyof typeof refs];
     if (ref?.current && editingField) {
       ref.current.focus();
@@ -46,9 +48,9 @@ export function CTABlock({
     }
   }, [editingField]);
 
-  const handleBlur = (field: "text" | "button" | "secondaryButton") => {
-    const refs = { text: textRef, button: buttonRef, secondaryButton: secondaryRef };
-    const fieldMap = { text: "text", button: "buttonLabel", secondaryButton: "secondaryButtonLabel" };
+  const handleBlur = (field: "text" | "phone" | "email" | "website") => {
+    const refs = { text: textRef, phone: phoneRef, email: emailRef, website: websiteRef };
+    const fieldMap = { text: "text", phone: "buttonLabel", email: "secondaryButtonLabel", website: "buttonUrl" };
     const ref = refs[field];
     
     if (ref?.current) {
@@ -61,13 +63,14 @@ export function CTABlock({
     setEditingField(null);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent, field: "text" | "button" | "secondaryButton") => {
-    if (e.key === "Enter") {
+  const handleKeyDown = (e: React.KeyboardEvent, field: "text" | "phone" | "email" | "website") => {
+    if (e.key === "Enter" || e.key === "Tab") {
       e.preventDefault();
-      if (field === "text") {
-        setEditingField("button");
-      } else if (field === "button" && cta.secondaryButtonLabel) {
-        setEditingField("secondaryButton");
+      const order = ["text", "phone", "email", "website"] as const;
+      const currentIndex = order.indexOf(field);
+      if (currentIndex < order.length - 1) {
+        handleBlur(field);
+        setEditingField(order[currentIndex + 1]);
       } else {
         handleBlur(field);
         onEndEdit();
@@ -79,98 +82,103 @@ export function CTABlock({
     }
   };
 
-  const alignment = style?.alignment || "center";
-
   return (
     <div className={cn(
-      "py-8",
-      alignment === "center" && "text-center",
-      alignment === "right" && "text-right",
-      isEditing && "ring-2 ring-primary/30 rounded-xl"
+      "flex items-center justify-between gap-8 py-6",
+      isEditing && "ring-2 ring-primary/30 rounded-xl px-4"
     )}>
-      {/* CTA Text */}
-      <p
-        ref={textRef}
-        className={cn(
-          "font-logo text-2xl md:text-3xl font-semibold mb-6 outline-none",
-          isDark ? "text-white" : "text-slate-800",
-          editingField === "text" && "bg-primary/10 rounded px-2 inline-block"
-        )}
-        contentEditable={editingField === "text"}
-        suppressContentEditableWarning
-        onBlur={() => handleBlur("text")}
-        onKeyDown={(e) => handleKeyDown(e, "text")}
-        onClick={() => isEditing && setEditingField("text")}
-      >
-        {cta.text}
-      </p>
-
-      {/* Buttons */}
-      <div className={cn(
-        "flex gap-4",
-        alignment === "center" && "justify-center",
-        alignment === "right" && "justify-end"
-      )}>
-        {/* Primary button */}
-        <Button
-          size="lg"
-          className="bg-rho-green hover:bg-rho-green/90 text-white px-8 py-6 text-lg"
-          onClick={(e) => {
-            if (isEditing) {
-              e.preventDefault();
-              setEditingField("button");
-            }
-          }}
+      {/* Left side: Text */}
+      <div className="flex-1">
+        <p
+          ref={textRef}
+          className={cn(
+            "font-logo text-xl font-semibold outline-none",
+            isDark ? "text-white" : "text-slate-800",
+            editingField === "text" && "bg-primary/10 rounded px-2 inline-block"
+          )}
+          contentEditable={editingField === "text"}
+          suppressContentEditableWarning
+          onBlur={() => handleBlur("text")}
+          onKeyDown={(e) => handleKeyDown(e, "text")}
+          onClick={() => isEditing && setEditingField("text")}
         >
-          <span
-            ref={buttonRef}
-            className={cn(
-              "outline-none",
-              editingField === "button" && "bg-white/20 rounded px-1"
-            )}
-            contentEditable={editingField === "button"}
-            suppressContentEditableWarning
-            onBlur={() => handleBlur("button")}
-            onKeyDown={(e) => handleKeyDown(e, "button")}
-          >
-            {cta.buttonLabel}
-          </span>
-          <ArrowRight className="ml-2 h-5 w-5" />
-        </Button>
+          {cta.text}
+        </p>
+        <p className={cn(
+          "font-ui text-sm mt-1",
+          isDark ? "text-white/60" : "text-slate-500"
+        )}>
+          Get in touch with our team to learn more
+        </p>
+      </div>
 
-        {/* Secondary button (optional) */}
-        {(cta.secondaryButtonLabel || isEditing) && (
-          <Button
-            size="lg"
-            variant="outline"
+      {/* Right side: Contact info with icons */}
+      <div className="flex flex-col gap-2">
+        {/* Phone */}
+        <div className={cn(
+          "flex items-center gap-2 text-sm",
+          isDark ? "text-white" : "text-slate-700"
+        )}>
+          <Phone className="w-4 h-4 text-rho-green flex-shrink-0" />
+          <span
+            ref={phoneRef}
             className={cn(
-              "px-8 py-6 text-lg",
-              isDark 
-                ? "border-white/20 text-white hover:bg-white/10" 
-                : "border-slate-300 hover:bg-slate-50"
+              "font-ui outline-none",
+              editingField === "phone" && "bg-primary/10 rounded px-1"
             )}
-            onClick={(e) => {
-              if (isEditing) {
-                e.preventDefault();
-                setEditingField("secondaryButton");
-              }
-            }}
+            contentEditable={editingField === "phone"}
+            suppressContentEditableWarning
+            onBlur={() => handleBlur("phone")}
+            onKeyDown={(e) => handleKeyDown(e, "phone")}
+            onClick={() => isEditing && setEditingField("phone")}
           >
-            <span
-              ref={secondaryRef}
-              className={cn(
-                "outline-none",
-                editingField === "secondaryButton" && "bg-primary/20 rounded px-1"
-              )}
-              contentEditable={editingField === "secondaryButton"}
-              suppressContentEditableWarning
-              onBlur={() => handleBlur("secondaryButton")}
-              onKeyDown={(e) => handleKeyDown(e, "secondaryButton")}
-            >
-              {cta.secondaryButtonLabel || (isEditing ? "Learn More" : "")}
-            </span>
-          </Button>
-        )}
+            {cta.buttonLabel || "+31 (0)10 262 8088"}
+          </span>
+        </div>
+        
+        {/* Email */}
+        <div className={cn(
+          "flex items-center gap-2 text-sm",
+          isDark ? "text-white" : "text-slate-700"
+        )}>
+          <Mail className="w-4 h-4 text-rho-green flex-shrink-0" />
+          <span
+            ref={emailRef}
+            className={cn(
+              "font-ui outline-none",
+              editingField === "email" && "bg-primary/10 rounded px-1"
+            )}
+            contentEditable={editingField === "email"}
+            suppressContentEditableWarning
+            onBlur={() => handleBlur("email")}
+            onKeyDown={(e) => handleKeyDown(e, "email")}
+            onClick={() => isEditing && setEditingField("email")}
+          >
+            {cta.secondaryButtonLabel || "info@rhosonics.com"}
+          </span>
+        </div>
+        
+        {/* Website */}
+        <div className={cn(
+          "flex items-center gap-2 text-sm",
+          isDark ? "text-white" : "text-slate-700"
+        )}>
+          <Globe className="w-4 h-4 text-rho-green flex-shrink-0" />
+          <span
+            ref={websiteRef}
+            className={cn(
+              "font-ui outline-none",
+              editingField === "website" && "bg-primary/10 rounded px-1"
+            )}
+            contentEditable={editingField === "website"}
+            suppressContentEditableWarning
+            onBlur={() => handleBlur("website")}
+            onKeyDown={(e) => handleKeyDown(e, "website")}
+            onClick={() => isEditing && setEditingField("website")}
+          >
+            {cta.buttonUrl || "rhosonics.com"}
+          </span>
+        </div>
       </div>
     </div>
   );

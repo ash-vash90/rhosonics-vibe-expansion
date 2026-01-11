@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BlockContent, BlockStyle, StatContent } from "@/types/document";
 import { cn } from "@/lib/utils";
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 interface StatCardBlockProps {
   content: BlockContent;
@@ -84,57 +83,47 @@ export function StatCardBlock({
     }
   };
 
-  const TrendIcon = stat.trend === "up" ? TrendingUp : stat.trend === "down" ? TrendingDown : Minus;
-  const trendColor = stat.trend === "up" 
-    ? "text-rho-green" 
-    : stat.trend === "down" 
-    ? "text-red-500" 
-    : "text-slate-400";
-
   return (
     <div
       className={cn(
-        "inline-flex flex-col items-center justify-center p-6 rounded-xl transition-all",
+        "flex flex-col items-center justify-center p-6 rounded-xl transition-all",
         isDark 
-          ? "bg-white/5 border border-white/10" 
-          : "bg-slate-50 border border-slate-200",
+          ? "bg-rho-green/10 border border-rho-green/30" 
+          : "bg-gradient-to-br from-rho-green/10 to-rho-lime/5 border border-rho-green/20",
         isEditing && "ring-2 ring-primary/30"
       )}
     >
-      <div className="flex items-center gap-2">
-        <span
-          ref={valueRef}
-          className={cn(
-            "font-data text-4xl md:text-5xl font-bold outline-none",
-            isDark ? "text-rho-green" : "text-rho-green",
-            editingField === "value" && "bg-primary/10 rounded px-1"
-          )}
-          contentEditable={editingField === "value"}
-          suppressContentEditableWarning
-          onBlur={handleValueBlur}
-          onKeyDown={(e) => handleKeyDown(e, "value")}
-          onClick={() => isEditing && setEditingField("value")}
-        >
-          {stat.value}
+      <span
+        ref={valueRef}
+        className={cn(
+          "font-data text-4xl md:text-5xl font-bold outline-none text-center",
+          isDark ? "text-rho-green" : "text-rho-green",
+          editingField === "value" && "bg-primary/10 rounded px-2"
+        )}
+        contentEditable={editingField === "value"}
+        suppressContentEditableWarning
+        onBlur={handleValueBlur}
+        onKeyDown={(e) => handleKeyDown(e, "value")}
+        onClick={() => isEditing && setEditingField("value")}
+      >
+        {stat.value}
+      </span>
+      
+      {stat.unit && (
+        <span className={cn(
+          "font-data text-xl mt-1",
+          isDark ? "text-white/60" : "text-slate-500"
+        )}>
+          {stat.unit}
         </span>
-        {stat.unit && (
-          <span className={cn(
-            "font-data text-2xl",
-            isDark ? "text-white/60" : "text-slate-500"
-          )}>
-            {stat.unit}
-          </span>
-        )}
-        {stat.trend && (
-          <TrendIcon className={cn("w-6 h-6", trendColor)} />
-        )}
-      </div>
+      )}
+      
       <span
         ref={labelRef}
         className={cn(
-          "font-ui text-sm uppercase tracking-wider mt-2 outline-none",
-          isDark ? "text-white/60" : "text-slate-500",
-          editingField === "label" && "bg-primary/10 rounded px-1"
+          "font-data text-xs uppercase tracking-widest mt-2 outline-none text-center",
+          isDark ? "text-white/50" : "text-slate-500",
+          editingField === "label" && "bg-primary/10 rounded px-2"
         )}
         contentEditable={editingField === "label"}
         suppressContentEditableWarning

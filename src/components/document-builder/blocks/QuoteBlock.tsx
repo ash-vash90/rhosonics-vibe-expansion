@@ -84,22 +84,35 @@ export function QuoteBlock({
     }
   };
 
+  // Generate initials from author name
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
   return (
     <div className={cn(
-      "relative pl-8 py-4",
-      isEditing && "ring-2 ring-primary/30 rounded-xl"
+      "relative p-6 rounded-xl",
+      isDark 
+        ? "bg-gradient-to-br from-rho-green/10 to-rho-lime/5" 
+        : "bg-gradient-to-br from-rho-green/10 to-rho-lime/5",
+      isEditing && "ring-2 ring-primary/30"
     )}>
-      {/* Quote mark */}
+      {/* Quote icon */}
       <QuoteIcon className={cn(
-        "absolute left-0 top-4 w-6 h-6",
-        isDark ? "text-rho-green/50" : "text-rho-green/30"
+        "absolute top-4 left-4 w-8 h-8",
+        isDark ? "text-rho-green/30" : "text-rho-green/20"
       )} />
       
       {/* Quote text */}
       <p
         ref={textRef}
         className={cn(
-          "font-logo text-xl md:text-2xl italic leading-relaxed outline-none mb-4",
+          "font-ui text-base italic leading-relaxed outline-none mb-6 pl-8 pt-4",
           isDark ? "text-white" : "text-slate-700",
           editingField === "text" && "bg-primary/10 rounded px-2 -mx-2"
         )}
@@ -112,34 +125,40 @@ export function QuoteBlock({
         "{quote.text}"
       </p>
       
-      {/* Attribution */}
-      <div className="flex items-center gap-2">
+      {/* Attribution with avatar */}
+      <div className="flex items-center gap-3 pl-8">
+        {/* Initials Avatar */}
         <div className={cn(
-          "w-8 h-px",
-          isDark ? "bg-white/30" : "bg-slate-300"
-        )} />
-        <span
-          ref={authorRef}
-          className={cn(
-            "font-ui font-medium outline-none",
-            isDark ? "text-white" : "text-slate-700",
-            editingField === "author" && "bg-primary/10 rounded px-1"
-          )}
-          contentEditable={editingField === "author"}
-          suppressContentEditableWarning
-          onBlur={() => handleBlur("author")}
-          onKeyDown={(e) => handleKeyDown(e, "author")}
-          onClick={() => isEditing && setEditingField("author")}
-        >
-          {quote.author}
-        </span>
-        {(quote.role || isEditing) && (
-          <>
-            <span className={isDark ? "text-white/40" : "text-slate-400"}>•</span>
+          "w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold",
+          isDark 
+            ? "bg-rho-green/30 text-rho-green" 
+            : "bg-rho-green text-white"
+        )}>
+          {getInitials(quote.author || "AU")}
+        </div>
+        
+        <div className="flex flex-col">
+          <span
+            ref={authorRef}
+            className={cn(
+              "font-ui font-semibold text-sm outline-none",
+              isDark ? "text-white" : "text-slate-800",
+              editingField === "author" && "bg-primary/10 rounded px-1"
+            )}
+            contentEditable={editingField === "author"}
+            suppressContentEditableWarning
+            onBlur={() => handleBlur("author")}
+            onKeyDown={(e) => handleKeyDown(e, "author")}
+            onClick={() => isEditing && setEditingField("author")}
+          >
+            {quote.author}
+          </span>
+          
+          {(quote.role || isEditing) && (
             <span
               ref={roleRef}
               className={cn(
-                "font-ui text-sm outline-none",
+                "font-ui text-xs outline-none",
                 isDark ? "text-white/60" : "text-slate-500",
                 editingField === "role" && "bg-primary/10 rounded px-1"
               )}
@@ -151,8 +170,8 @@ export function QuoteBlock({
             >
               {quote.role || (isEditing ? "Role/Company" : "")}
             </span>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
