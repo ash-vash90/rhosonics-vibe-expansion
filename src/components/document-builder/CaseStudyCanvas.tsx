@@ -385,12 +385,19 @@ export function CaseStudyCanvas({
       {/* Page 1 - Cover & Introduction */}
       <article
         className={cn(
-          "mx-auto bg-white shadow-2xl relative overflow-hidden flex flex-col",
-          "w-[210mm] h-[297mm]",
+          "mx-auto bg-white shadow-2xl relative flex flex-col flex-shrink-0",
           "print:shadow-none print:w-[210mm] print:h-[297mm]",
           printMode && "print-page"
         )}
-        style={{ minHeight: "297mm", maxHeight: "297mm" }}
+        style={{ 
+          width: '210mm', 
+          height: '297mm', 
+          minWidth: '210mm', 
+          maxWidth: '210mm', 
+          minHeight: '297mm', 
+          maxHeight: '297mm',
+          overflow: 'hidden'
+        }}
       >
         {/* Header Bar - EXACT match to CaseStudyDocument */}
         <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between flex-shrink-0">
@@ -650,12 +657,19 @@ export function CaseStudyCanvas({
       {/* Page 2 - Results & Data */}
       <article
         className={cn(
-          "mx-auto bg-white shadow-2xl relative overflow-hidden flex flex-col",
-          "w-[210mm] h-[297mm]",
+          "mx-auto bg-white shadow-2xl relative flex flex-col flex-shrink-0",
           "print:shadow-none print:w-[210mm] print:h-[297mm]",
           printMode && "print-page"
         )}
-        style={{ minHeight: "297mm", maxHeight: "297mm" }}
+        style={{ 
+          width: '210mm', 
+          height: '297mm', 
+          minWidth: '210mm', 
+          maxWidth: '210mm', 
+          minHeight: '297mm', 
+          maxHeight: '297mm',
+          overflow: 'hidden'
+        }}
       >
         {/* Header Bar - EXACT match */}
         <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between flex-shrink-0">
