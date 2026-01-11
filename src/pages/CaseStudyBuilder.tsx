@@ -575,7 +575,10 @@ export default function CaseStudyBuilder() {
                 addBlock(currentPage.id, block, afterBlockId)
               }
               onReorderBlocks={(from, to) => reorderBlocks(currentPage.id, from, to)}
-              layout="document"
+              layout="case-study"
+              pageIndex={currentPageIndex}
+              totalPages={caseStudy.pages.length}
+              companyName={caseStudy.pages[0]?.blocks.find(b => b.type === "identity-card")?.content.identity?.company}
             />
           </div>
         )}

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BlockContent, BlockStyle } from "@/types/document";
 import { cn } from "@/lib/utils";
-import { CheckCircle, Plus, X, GripVertical } from "lucide-react";
+import { Plus, X } from "lucide-react";
 
 interface ResultsGridBlockProps {
   content: BlockContent;
@@ -21,7 +21,6 @@ export function ResultsGridBlock({
 }: ResultsGridBlockProps) {
   const resultsGrid = content.resultsGrid || { results: [""] };
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const itemRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
@@ -103,93 +102,50 @@ export function ResultsGridBlock({
     }
   };
 
-  const handleDragStart = (index: number) => {
-    setDraggedIndex(index);
-  };
-
-  const handleDragOver = (e: React.DragEvent, index: number) => {
-    e.preventDefault();
-    if (draggedIndex === null || draggedIndex === index) return;
-    
-    const newResults = [...resultsGrid.results];
-    const draggedItem = newResults[draggedIndex];
-    newResults.splice(draggedIndex, 1);
-    newResults.splice(index, 0, draggedItem);
-    
-    onUpdate({ resultsGrid: { results: newResults } });
-    setDraggedIndex(index);
-  };
-
-  const handleDragEnd = () => {
-    setDraggedIndex(null);
-  };
-
   return (
     <div
       className={cn(
-        "rounded-xl border p-5 transition-all",
-        isDark 
-          ? "bg-gradient-to-br from-rho-green/5 to-transparent border-rho-green/20" 
-          : "bg-gradient-to-br from-green-50/50 to-transparent border-green-200/50",
-        isEditing && "ring-2 ring-primary/30"
+        "space-y-3 transition-all",
+        isEditing && "ring-2 ring-primary/30 rounded-xl p-3 -m-3"
       )}
     >
       {/* Header */}
-      <div className="flex items-center gap-2 mb-4">
-        <div className={cn(
-          "p-2 rounded-lg",
-          isDark ? "bg-rho-green/20" : "bg-green-100"
-        )}>
-          <CheckCircle className="w-4 h-4 text-rho-green" />
-        </div>
-        <h3 className={cn(
-          "font-ui font-semibold text-sm uppercase tracking-wider",
-          isDark ? "text-rho-green" : "text-green-700"
-        )}>
-          Key Results
-        </h3>
-      </div>
+      <h3 className={cn(
+        "font-data text-xs uppercase tracking-widest mb-4",
+        isDark ? "text-white/50" : "text-slate-400"
+      )}>
+        KEY RESULTS
+      </h3>
 
-      {/* Results List */}
-      <div className="space-y-2">
+      {/* Numbered Results Grid - 2 columns */}
+      <div className="grid grid-cols-2 gap-3">
         {resultsGrid.results.map((result, index) => (
           <div
             key={index}
             className={cn(
-              "group flex items-start gap-3 p-2 rounded-lg transition-colors",
-              isDark ? "hover:bg-white/5" : "hover:bg-slate-50",
-              editingIndex === index && (isDark ? "bg-white/5" : "bg-slate-50"),
-              draggedIndex === index && "opacity-50"
+              "group flex items-start gap-3 p-3 rounded-lg transition-colors",
+              isDark 
+                ? "bg-white/5 hover:bg-white/10" 
+                : "bg-slate-50 hover:bg-slate-100",
+              editingIndex === index && (isDark ? "bg-white/10" : "bg-slate-100")
             )}
-            draggable={isEditing}
-            onDragStart={() => handleDragStart(index)}
-            onDragOver={(e) => handleDragOver(e, index)}
-            onDragEnd={handleDragEnd}
             onClick={() => isEditing && setEditingIndex(index)}
           >
-            {/* Drag handle */}
-            {isEditing && (
-              <div className={cn(
-                "opacity-0 group-hover:opacity-100 transition-opacity cursor-grab",
-                isDark ? "text-white/30" : "text-slate-300"
-              )}>
-                <GripVertical className="w-4 h-4" />
-              </div>
-            )}
-            
-            {/* Checkmark */}
+            {/* Numbered Circle */}
             <div className={cn(
-              "flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5",
-              isDark ? "bg-rho-green/30" : "bg-green-100"
+              "flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold",
+              isDark 
+                ? "bg-rho-green/30 text-rho-green" 
+                : "bg-rho-green text-white"
             )}>
-              <CheckCircle className="w-3 h-3 text-rho-green" />
+              {index + 1}
             </div>
 
             {/* Result Text */}
             <span
               ref={(el) => { itemRefs.current[index] = el; }}
               className={cn(
-                "flex-1 font-ui text-sm outline-none",
+                "flex-1 font-ui text-sm outline-none leading-snug",
                 isDark ? "text-white/80" : "text-slate-700",
                 !result && (isDark ? "text-white/30" : "text-slate-300"),
                 editingIndex === index && "bg-primary/5 rounded px-1"
@@ -206,7 +162,7 @@ export function ResultsGridBlock({
             {isEditing && resultsGrid.results.length > 1 && (
               <button
                 className={cn(
-                  "opacity-0 group-hover:opacity-100 p-1 rounded-full transition-all",
+                  "opacity-0 group-hover:opacity-100 p-1 rounded-full transition-all flex-shrink-0",
                   isDark 
                     ? "hover:bg-red-500/20 text-white/40 hover:text-red-400" 
                     : "hover:bg-red-100 text-slate-300 hover:text-red-500"

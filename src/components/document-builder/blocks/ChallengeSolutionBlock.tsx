@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BlockContent, BlockStyle, ChallengeSolutionContent } from "@/types/document";
 import { cn } from "@/lib/utils";
-import { AlertCircle, Lightbulb } from "lucide-react";
 
 interface ChallengeSolutionBlockProps {
   content: BlockContent;
@@ -34,7 +33,6 @@ export function ChallengeSolutionBlock({
     const ref = editingField === "challenge" ? challengeRef : solutionRef;
     if (ref.current && editingField) {
       ref.current.focus();
-      // Place cursor at end
       const selection = window.getSelection();
       const range = document.createRange();
       range.selectNodeContents(ref.current);
@@ -74,43 +72,23 @@ export function ChallengeSolutionBlock({
   return (
     <div
       className={cn(
-        "grid md:grid-cols-2 gap-6 transition-all",
-        isEditing && "ring-2 ring-primary/30 rounded-xl p-2 -m-2"
+        "space-y-6 transition-all",
+        isEditing && "ring-2 ring-primary/30 rounded-xl p-3 -m-3"
       )}
     >
-      {/* Challenge Section */}
-      <div
-        className={cn(
-          "rounded-xl border p-5 transition-colors cursor-text",
-          isDark 
-            ? "bg-red-500/5 border-red-500/20 hover:border-red-500/40" 
-            : "bg-red-50/50 border-red-200/50 hover:border-red-300",
-          editingField === "challenge" && (isDark ? "border-red-500/60" : "border-red-400")
-        )}
-        onClick={() => isEditing && setEditingField("challenge")}
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <div className={cn(
-            "p-2 rounded-lg",
-            isDark ? "bg-red-500/20" : "bg-red-100"
-          )}>
-            <AlertCircle className={cn(
-              "w-4 h-4",
-              isDark ? "text-red-400" : "text-red-500"
-            )} />
-          </div>
-          <h3 className={cn(
-            "font-ui font-semibold text-sm uppercase tracking-wider",
-            isDark ? "text-red-400" : "text-red-600"
-          )}>
-            The Challenge
-          </h3>
-        </div>
+      {/* Challenge Section - Stacked paragraph style */}
+      <div className="space-y-2">
+        <h3 className={cn(
+          "font-data text-xs uppercase tracking-widest",
+          isDark ? "text-white/50" : "text-slate-400"
+        )}>
+          THE CHALLENGE
+        </h3>
         
         <p
           ref={challengeRef}
           className={cn(
-            "font-ui text-sm leading-relaxed outline-none min-h-[60px]",
+            "font-ui text-sm leading-relaxed outline-none",
             isDark ? "text-white/80" : "text-slate-700",
             !challengeSolution.challenge && (isDark ? "text-white/30" : "text-slate-300"),
             editingField === "challenge" && "bg-primary/5 rounded px-2 py-1 -mx-2 -my-1"
@@ -119,44 +97,25 @@ export function ChallengeSolutionBlock({
           suppressContentEditableWarning
           onBlur={() => handleBlur("challenge")}
           onKeyDown={(e) => handleKeyDown(e, "challenge")}
+          onClick={() => isEditing && setEditingField("challenge")}
         >
           {challengeSolution.challenge || "Describe the challenge the customer faced..."}
         </p>
       </div>
 
-      {/* Solution Section */}
-      <div
-        className={cn(
-          "rounded-xl border p-5 transition-colors cursor-text",
-          isDark 
-            ? "bg-rho-green/5 border-rho-green/20 hover:border-rho-green/40" 
-            : "bg-green-50/50 border-green-200/50 hover:border-green-300",
-          editingField === "solution" && (isDark ? "border-rho-green/60" : "border-green-400")
-        )}
-        onClick={() => isEditing && setEditingField("solution")}
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <div className={cn(
-            "p-2 rounded-lg",
-            isDark ? "bg-rho-green/20" : "bg-green-100"
-          )}>
-            <Lightbulb className={cn(
-              "w-4 h-4",
-              isDark ? "text-rho-green" : "text-green-600"
-            )} />
-          </div>
-          <h3 className={cn(
-            "font-ui font-semibold text-sm uppercase tracking-wider",
-            isDark ? "text-rho-green" : "text-green-700"
-          )}>
-            The Solution
-          </h3>
-        </div>
+      {/* Solution Section - Stacked paragraph style */}
+      <div className="space-y-2">
+        <h3 className={cn(
+          "font-data text-xs uppercase tracking-widest",
+          isDark ? "text-rho-green/80" : "text-rho-green"
+        )}>
+          OUR SOLUTION
+        </h3>
         
         <p
           ref={solutionRef}
           className={cn(
-            "font-ui text-sm leading-relaxed outline-none min-h-[60px]",
+            "font-ui text-sm leading-relaxed outline-none",
             isDark ? "text-white/80" : "text-slate-700",
             !challengeSolution.solution && (isDark ? "text-white/30" : "text-slate-300"),
             editingField === "solution" && "bg-primary/5 rounded px-2 py-1 -mx-2 -my-1"
@@ -165,6 +124,7 @@ export function ChallengeSolutionBlock({
           suppressContentEditableWarning
           onBlur={() => handleBlur("solution")}
           onKeyDown={(e) => handleKeyDown(e, "solution")}
+          onClick={() => isEditing && setEditingField("solution")}
         >
           {challengeSolution.solution || "Describe how Rhosonics solved this challenge..."}
         </p>
