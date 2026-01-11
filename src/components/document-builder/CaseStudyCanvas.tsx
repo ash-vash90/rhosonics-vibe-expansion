@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { MapPin, CheckCircle2, Gauge, Quote, Phone, Mail, Globe, ImageIcon, BarChart3, Upload } from "lucide-react";
+import { MapPin, CheckCircle2, Gauge, Quote, Phone, Mail, Globe, ImageIcon, BarChart3, Upload, Plus, X } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { BrandChart } from "@/components/tools/BrandChart";
 import { TimeSeriesChartPreview } from "@/components/case-study-builder/TimeSeriesChartPreview";
@@ -119,10 +119,13 @@ function findBlock(pages: Page[], type: string): { pageIndex: number; block: Blo
 
 export function CaseStudyCanvas({
   pages,
-  currentPageIndex,
+  currentPageIndex: _currentPageIndex,
   onUpdateBlock,
   printMode = false,
 }: CaseStudyCanvasProps) {
+  // _currentPageIndex available for future page-specific rendering
+  void _currentPageIndex;
+  
   const { toast } = useToast();
   const [editingField, setEditingField] = useState<string | null>(null);
   const [showImageCropper, setShowImageCropper] = useState(false);
@@ -131,9 +134,9 @@ export function CaseStudyCanvas({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const data = extractCaseStudyData(pages);
-  const isPlaceholder = (value: string) => !value || value.startsWith("[") && value.endsWith("]");
+  const isPlaceholder = (value: string) => !value || (value.startsWith("[") && value.endsWith("]"));
 
-  // Inline editable text component
+  // Inline editable text component - mirrors exact styling from CaseStudyDocument
   const EditableText = ({
     value,
     field,
@@ -142,6 +145,7 @@ export function CaseStudyCanvas({
     className,
     placeholder,
     multiline = false,
+    as: Component = "span",
   }: {
     value: string;
     field: string;
@@ -150,14 +154,14 @@ export function CaseStudyCanvas({
     className?: string;
     placeholder?: string;
     multiline?: boolean;
+    as?: keyof JSX.IntrinsicElements;
   }) => {
-    const ref = useRef<HTMLSpanElement>(null);
+    const ref = useRef<HTMLElement>(null);
     const isEditing = editingField === field;
 
     useEffect(() => {
       if (isEditing && ref.current) {
         ref.current.focus();
-        // Select all text
         const range = document.createRange();
         range.selectNodeContents(ref.current);
         const sel = window.getSelection();
@@ -173,7 +177,6 @@ export function CaseStudyCanvas({
         if (found) {
           const updateContent: Partial<BlockContent> = {};
           
-          // Build the nested update based on blockType
           if (blockType === "identity-card") {
             updateContent.identity = {
               company: found.block.content.identity?.company || "",
@@ -221,8 +224,10 @@ export function CaseStudyCanvas({
       }
     };
 
+    const Elem = Component as any;
+
     return (
-      <span
+      <Elem
         ref={ref}
         contentEditable={isEditing}
         suppressContentEditableWarning
@@ -231,13 +236,12 @@ export function CaseStudyCanvas({
         onKeyDown={handleKeyDown}
         className={cn(
           className,
-          !printMode && "cursor-pointer hover:ring-2 hover:ring-primary/20 rounded transition-all",
-          isEditing && "ring-2 ring-primary outline-none",
-          isPlaceholder(value) && "text-opacity-50 italic"
+          !printMode && "cursor-pointer hover:ring-2 hover:ring-primary/30 rounded-sm transition-all",
+          isEditing && "ring-2 ring-primary outline-none bg-white/10"
         )}
       >
         {value || placeholder}
-      </span>
+      </Elem>
     );
   };
 
@@ -287,7 +291,7 @@ export function CaseStudyCanvas({
     }
   };
 
-  // Results grid handlers
+  // Results handlers
   const updateResult = (index: number, newValue: string) => {
     const found = findBlock(pages, "results-grid");
     if (found) {
@@ -303,12 +307,22 @@ export function CaseStudyCanvas({
     const found = findBlock(pages, "results-grid");
     if (found) {
       onUpdateBlock(found.pageIndex, found.block.id, {
-        resultsGrid: { results: [...data.results, "New result"] },
+        resultsGrid: { results: [...data.results, ""] },
       });
     }
   };
 
-  // Spec table handlers
+  const removeResult = (index: number) => {
+    const found = findBlock(pages, "results-grid");
+    if (found) {
+      const newResults = data.results.filter((_, i) => i !== index);
+      onUpdateBlock(found.pageIndex, found.block.id, {
+        resultsGrid: { results: newResults },
+      });
+    }
+  };
+
+  // Spec handlers
   const updateSpec = (index: number, field: "label" | "value", newValue: string) => {
     const found = findBlock(pages, "spec-table");
     if (found) {
@@ -322,26 +336,30 @@ export function CaseStudyCanvas({
     const found = findBlock(pages, "spec-table");
     if (found) {
       onUpdateBlock(found.pageIndex, found.block.id, {
-        specs: [...data.specs, { label: "New Spec", value: "" }],
+        specs: [...data.specs, { label: "", value: "" }],
       });
     }
   };
 
-  // Chart data conversion
-  const buildChartData = () => {
-    if (!data.chartData) return null;
-    return data.chartData.data?.map((dp: any) => ({
-      name: dp.label,
-      value: dp.value,
-      value2: dp.value2,
-      value3: dp.value3,
-    }));
+  const removeSpec = (index: number) => {
+    const found = findBlock(pages, "spec-table");
+    if (found) {
+      const newSpecs = data.specs.filter((_, i) => i !== index);
+      onUpdateBlock(found.pageIndex, found.block.id, { specs: newSpecs });
+    }
   };
 
-  const chartDataForBrand = buildChartData();
+  // Build chart data for BrandChart
+  const chartDataForBrand = data.chartData?.dataPoints?.map((dp: any) => ({
+    name: dp.name,
+    value: dp.value,
+    value2: dp.value2,
+    value3: dp.value3,
+  })) || null;
 
   return (
-    <div className="case-study-canvas flex flex-col items-center gap-8 py-8 px-4" data-document-canvas>
+    <div className="case-study-document flex flex-col items-center gap-8 py-8 px-4" data-document-canvas>
+      {/* Hidden file input for hero image */}
       <input
         ref={fileInputRef}
         type="file"
@@ -350,477 +368,509 @@ export function CaseStudyCanvas({
         className="hidden"
       />
 
-      {/* Image Cropper Modal */}
-      <ImageCropper
-        open={showImageCropper && !!pendingImage}
-        onOpenChange={(open) => {
-          if (!open) {
-            setShowImageCropper(false);
-            setPendingImage(null);
-          }
-        }}
-        imageSrc={pendingImage || ""}
-        onCropComplete={handleCropComplete}
-        aspectRatio={16 / 9}
-      />
+      {/* Image Cropper Dialog */}
+      {pendingImage && (
+        <ImageCropper
+          imageSrc={pendingImage}
+          open={showImageCropper}
+          onOpenChange={setShowImageCropper}
+          onCropComplete={handleCropComplete}
+          aspectRatio={16 / 9}
+        />
+      )}
 
       {/* Page 1 - Cover & Introduction */}
-      {currentPageIndex === 0 && (
-        <article className={cn(
-          "bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] relative overflow-hidden flex flex-col",
-          "print:shadow-none print:max-w-none print:w-[210mm] print:h-[297mm]",
+      <article 
+        className={cn(
+          "bg-white shadow-2xl relative overflow-hidden flex flex-col",
+          "w-[210mm] h-[297mm]",
+          "print:shadow-none print:w-[210mm] print:h-[297mm]",
           printMode && "print-page"
-        )}>
-          {/* Header Bar */}
-          <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between flex-shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8">
-                <RhosonicsLogo variant="gradient" />
-              </div>
-              <div>
-                <span className="font-logo text-white text-lg tracking-wide uppercase">RHOSONICS</span>
-                <span className="label-tech-sm text-slate-400 block">ULTRASONIC MEASUREMENT SOLUTIONS</span>
+        )}
+        style={{ minHeight: '297mm', maxHeight: '297mm' }}
+      >
+        {/* Header Bar - EXACT match to CaseStudyDocument */}
+        <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8">
+              <RhosonicsLogo variant="gradient" />
+            </div>
+            <div>
+              <span className="font-logo text-white text-lg tracking-wide uppercase">RHOSONICS</span>
+              <span className="label-tech-sm text-slate-400 block">ULTRASONIC MEASUREMENT SOLUTIONS</span>
+            </div>
+          </div>
+          <div className="label-tech text-primary">CASE STUDY</div>
+        </div>
+
+        {/* Hero Image - EXACT match */}
+        <div 
+          className="relative h-[280px] overflow-hidden flex-shrink-0 group"
+          onClick={() => !printMode && fileInputRef.current?.click()}
+        >
+          {data.heroImage ? (
+            <img 
+              src={data.heroImage} 
+              alt={`${data.company} installation`}
+              className="w-full h-full object-cover"
+              loading={printMode ? "eager" : "lazy"}
+            />
+          ) : (
+            <div className="w-full h-full bg-slate-200 flex items-center justify-center">
+              <div className="text-center text-slate-400">
+                <ImageIcon className="w-12 h-12 mx-auto mb-2" />
+                <span className="text-sm">{printMode ? "No image" : "Click to upload hero image"}</span>
               </div>
             </div>
-            <div className="label-tech text-primary">CASE STUDY</div>
-          </div>
-
-          {/* Hero Image */}
-          <div 
-            className="relative h-[280px] overflow-hidden flex-shrink-0 group cursor-pointer"
-            onClick={() => !printMode && fileInputRef.current?.click()}
-          >
-            {data.heroImage ? (
-              <img 
-                src={data.heroImage} 
-                alt={`${data.company} installation`}
-                className="w-full h-full object-cover"
-                loading={printMode ? "eager" : "lazy"}
-              />
-            ) : (
-              <div className="w-full h-full bg-slate-200 flex items-center justify-center">
-                <div className="text-center text-slate-400">
-                  <ImageIcon className="w-12 h-12 mx-auto mb-2" />
-                  <span className="text-sm">Click to upload hero image</span>
-                </div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-rho-obsidian/90 via-rho-obsidian/40 to-transparent" />
+          
+          {/* Upload overlay on hover */}
+          {!printMode && (
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+              <div className="text-white text-center">
+                <Upload className="w-8 h-8 mx-auto mb-2" />
+                <span className="text-sm font-medium">
+                  {isUploading ? "Uploading..." : "Click to change image"}
+                </span>
               </div>
+            </div>
+          )}
+          
+          {/* Overlay Content - EXACT match */}
+          <div className="absolute bottom-0 left-0 right-0 p-8">
+            <div className="flex items-center gap-2 mb-2">
+              <EditableText
+                value={data.industry}
+                field="industry"
+                blockType="identity-card"
+                contentKey="industry"
+                placeholder="[Industry]"
+                className={cn(
+                  "px-3 py-1 label-tech-sm rounded",
+                  isPlaceholder(data.industry) ? "bg-slate-500/50 text-white/70" : "bg-primary text-white"
+                )}
+              />
+              <EditableText
+                value={data.product}
+                field="product"
+                blockType="identity-card"
+                contentKey="product"
+                placeholder="[Product]"
+                className={cn(
+                  "px-3 py-1 backdrop-blur label-tech-sm rounded",
+                  isPlaceholder(data.product) ? "bg-slate-500/50 text-white/70" : "bg-white/20 text-white"
+                )}
+              />
+            </div>
+            <EditableText
+              value={data.company}
+              field="company"
+              blockType="identity-card"
+              contentKey="company"
+              placeholder="[Company Name]"
+              as="h1"
+              className={cn(
+                "font-ui font-bold text-4xl mb-2 block",
+                isPlaceholder(data.company) ? "text-white/50" : "text-white"
+              )}
+            />
+            <div className={cn(
+              "flex items-center gap-2",
+              isPlaceholder(data.location) ? "text-white/40" : "text-white/80"
+            )}>
+              <MapPin className="w-4 h-4" />
+              <EditableText
+                value={data.location}
+                field="location"
+                blockType="identity-card"
+                contentKey="location"
+                placeholder="[Location]"
+                className="text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 p-8 flex flex-col overflow-hidden">
+          {/* Tagline - EXACT match */}
+          <EditableText
+            value={data.tagline}
+            field="tagline"
+            blockType="subheading"
+            contentKey="text"
+            placeholder="[Enter compelling tagline here]"
+            as="p"
+            className={cn(
+              "text-xl font-semibold mb-6 border-l-4 border-primary pl-4 block",
+              isPlaceholder(data.tagline) ? "text-slate-400 italic" : "text-primary"
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-rho-obsidian/90 via-rho-obsidian/40 to-transparent" />
-            
-            {/* Upload overlay on hover */}
-            {!printMode && (
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <div className="text-white text-center">
-                  {isUploading ? (
-                    <div className="animate-spin w-8 h-8 border-2 border-white border-t-transparent rounded-full mx-auto" />
+          />
+
+          {/* Two Column Layout - EXACT match: grid-cols-2 gap-8 */}
+          <div className="grid grid-cols-2 gap-8 flex-1">
+            {/* Left Column */}
+            <div className="space-y-6">
+              <div>
+                <h2 className="label-tech text-slate-500 mb-2">THE CHALLENGE</h2>
+                <EditableText
+                  value={data.challenge}
+                  field="challenge"
+                  blockType="challenge-solution"
+                  contentKey="challenge"
+                  placeholder="[Describe the challenge faced by the customer]"
+                  multiline
+                  as="p"
+                  className={cn(
+                    "text-sm leading-relaxed block",
+                    isPlaceholder(data.challenge) ? "text-slate-400 italic" : "text-slate-700"
+                  )}
+                />
+              </div>
+
+              <div>
+                <h2 className="label-tech text-slate-500 mb-2">OUR SOLUTION</h2>
+                <EditableText
+                  value={data.solution}
+                  field="solution"
+                  blockType="challenge-solution"
+                  contentKey="solution"
+                  placeholder="[Describe the solution provided]"
+                  multiline
+                  as="p"
+                  className={cn(
+                    "text-sm leading-relaxed block",
+                    isPlaceholder(data.solution) ? "text-slate-400 italic" : "text-slate-700"
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-6">
+              {/* Primary Stat Card - EXACT match */}
+              <div className="bg-rho-obsidian p-6 rounded-lg text-center">
+                <EditableText
+                  value={data.primaryStat.value}
+                  field="stat-value"
+                  blockType="stat-card"
+                  contentKey="value"
+                  placeholder="—"
+                  className={cn(
+                    "font-data text-4xl mb-1 block",
+                    data.primaryStat.value === "—" ? "text-slate-500" : "text-primary"
+                  )}
+                />
+                <EditableText
+                  value={data.primaryStat.label}
+                  field="stat-label"
+                  blockType="stat-card"
+                  contentKey="label"
+                  placeholder="[Stat label]"
+                  className={cn(
+                    "label-tech-sm block",
+                    isPlaceholder(data.primaryStat.label) ? "text-slate-500" : "text-slate-400"
+                  )}
+                />
+              </div>
+
+              {/* Specifications - EXACT match */}
+              <div className="bg-slate-50 p-4 rounded-lg">
+                <h3 className="label-tech text-slate-500 mb-3 flex items-center gap-2">
+                  <Gauge className="w-4 h-4" />
+                  SPECIFICATIONS
+                </h3>
+                <div className="space-y-2">
+                  {data.specs.length > 0 ? (
+                    data.specs.map((spec, i) => (
+                      <div key={i} className="flex justify-between text-sm py-1 border-b border-slate-200 last:border-0 group/spec">
+                        <input
+                          type="text"
+                          value={spec.label}
+                          onChange={(e) => updateSpec(i, "label", e.target.value)}
+                          placeholder="[Label]"
+                          disabled={printMode}
+                          className={cn(
+                            "text-slate-500 bg-transparent border-none outline-none flex-1 min-w-0",
+                            !printMode && "hover:bg-slate-100 focus:bg-slate-100 rounded px-1 -mx-1"
+                          )}
+                        />
+                        <div className="flex items-center gap-1">
+                          <input
+                            type="text"
+                            value={spec.value}
+                            onChange={(e) => updateSpec(i, "value", e.target.value)}
+                            placeholder="[Value]"
+                            disabled={printMode}
+                            className={cn(
+                              "font-data text-slate-800 bg-transparent border-none outline-none text-right w-24",
+                              !printMode && "hover:bg-slate-100 focus:bg-slate-100 rounded px-1"
+                            )}
+                          />
+                          {!printMode && (
+                            <button
+                              onClick={() => removeSpec(i)}
+                              className="opacity-0 group-hover/spec:opacity-100 text-slate-400 hover:text-red-500 transition-opacity p-0.5"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))
                   ) : (
-                    <>
-                      <Upload className="w-8 h-8 mx-auto mb-2" />
-                      <span className="text-sm">Click to change image</span>
-                    </>
+                    <p className="text-sm text-slate-400 italic">[Add specifications]</p>
+                  )}
+                  {!printMode && (
+                    <button
+                      onClick={addSpec}
+                      className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 mt-2"
+                    >
+                      <Plus className="w-3 h-3" />
+                      Add specification
+                    </button>
                   )}
                 </div>
               </div>
-            )}
-            
-            {/* Overlay Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-8">
-              <div className="flex items-center gap-2 mb-2">
-                <span className={cn(
-                  "px-3 py-1 label-tech-sm rounded",
-                  isPlaceholder(data.industry) ? "bg-slate-500/50 text-white/70" : "bg-primary text-white"
-                )}>
-                  <EditableText
-                    value={data.industry}
-                    field="industry"
-                    blockType="identity-card"
-                    contentKey="industry"
-                    placeholder="[Industry]"
-                  />
-                </span>
-                <span className={cn(
-                  "px-3 py-1 backdrop-blur label-tech-sm rounded",
-                  isPlaceholder(data.product) ? "bg-slate-500/50 text-white/70" : "bg-white/20 text-white"
-                )}>
-                  <EditableText
-                    value={data.product}
-                    field="product"
-                    blockType="identity-card"
-                    contentKey="product"
-                    placeholder="[Product]"
-                  />
-                </span>
-              </div>
-              <h1 className={cn(
-                "font-ui font-bold text-4xl mb-2",
-                isPlaceholder(data.company) ? "text-white/50" : "text-white"
-              )}>
-                <EditableText
-                  value={data.company}
-                  field="company"
-                  blockType="identity-card"
-                  contentKey="company"
-                  placeholder="[Company Name]"
-                />
-              </h1>
-              <div className={cn(
-                "flex items-center gap-2",
-                isPlaceholder(data.location) ? "text-white/40" : "text-white/80"
-              )}>
-                <MapPin className="w-4 h-4" />
-                <EditableText
-                  value={data.location}
-                  field="location"
-                  blockType="identity-card"
-                  contentKey="location"
-                  className="text-sm"
-                  placeholder="[Location]"
-                />
-              </div>
             </div>
           </div>
+        </div>
 
-          {/* Main Content */}
-          <div className="flex-1 p-8 flex flex-col">
-            {/* Tagline */}
-            <p className={cn(
-              "text-xl font-semibold mb-6 border-l-4 border-primary pl-4",
-              isPlaceholder(data.tagline) ? "text-slate-400 italic" : "text-primary"
-            )}>
-              <EditableText
-                value={data.tagline}
-                field="tagline"
-                blockType="subheading"
-                contentKey="text"
-                placeholder="A compelling tagline that captures the success story"
-                multiline
-              />
-            </p>
-
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-2 gap-8 flex-1">
-              {/* Left Column */}
-              <div className="space-y-6">
-                <div>
-                  <h2 className="label-tech text-slate-500 mb-2">THE CHALLENGE</h2>
-                  <p className={cn(
-                    "text-sm leading-relaxed",
-                    isPlaceholder(data.challenge) ? "text-slate-400 italic" : "text-slate-700"
-                  )}>
-                    <EditableText
-                      value={data.challenge}
-                      field="challenge"
-                      blockType="challenge-solution"
-                      contentKey="challenge"
-                      placeholder="[Describe the challenge the customer faced...]"
-                      multiline
-                    />
-                  </p>
-                </div>
-
-                <div>
-                  <h2 className="label-tech text-slate-500 mb-2">OUR SOLUTION</h2>
-                  <p className={cn(
-                    "text-sm leading-relaxed",
-                    isPlaceholder(data.solution) ? "text-slate-400 italic" : "text-slate-700"
-                  )}>
-                    <EditableText
-                      value={data.solution}
-                      field="solution"
-                      blockType="challenge-solution"
-                      contentKey="solution"
-                      placeholder="[Describe how Rhosonics solved the problem...]"
-                      multiline
-                    />
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-6">
-                {/* Primary Stat Card */}
-                <div 
-                  className="bg-rho-obsidian p-6 rounded-lg text-center cursor-pointer group"
-                  onClick={() => !printMode && setEditingField("stat-value")}
-                >
-                  <div className={cn(
-                    "font-data text-4xl mb-1",
-                    data.primaryStat.value === "—" ? "text-slate-500" : "text-primary"
-                  )}>
-                    <EditableText
-                      value={data.primaryStat.value}
-                      field="stat-value"
-                      blockType="stat-card"
-                      contentKey="value"
-                      placeholder="—"
-                    />
-                  </div>
-                  <div className={cn(
-                    "label-tech-sm",
-                    isPlaceholder(data.primaryStat.label) ? "text-slate-500" : "text-slate-400"
-                  )}>
-                    <EditableText
-                      value={data.primaryStat.label}
-                      field="stat-label"
-                      blockType="stat-card"
-                      contentKey="label"
-                      placeholder="[Stat Label]"
-                    />
-                  </div>
-                </div>
-
-                {/* Specifications */}
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <h3 className="label-tech text-slate-500 mb-3 flex items-center gap-2">
-                    <Gauge className="w-4 h-4" />
-                    SPECIFICATIONS
-                  </h3>
-                  <div className="space-y-2">
-                    {data.specs.length > 0 ? (
-                      data.specs.map((spec, i) => (
-                        <div key={i} className="flex justify-between text-sm py-1 border-b border-slate-200 last:border-0">
-                          <span 
-                            className="text-slate-500 cursor-pointer hover:text-slate-700"
-                            contentEditable={!printMode}
-                            suppressContentEditableWarning
-                            onBlur={(e) => updateSpec(i, "label", e.currentTarget.textContent || "")}
-                          >
-                            {spec.label || "[Label]"}
-                          </span>
-                          <span 
-                            className="font-data text-slate-800 cursor-pointer hover:text-primary"
-                            contentEditable={!printMode}
-                            suppressContentEditableWarning
-                            onBlur={(e) => updateSpec(i, "value", e.currentTarget.textContent || "")}
-                          >
-                            {spec.value || "[Value]"}
-                          </span>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-sm text-slate-400 italic">[Add specifications]</p>
-                    )}
-                    {!printMode && (
-                      <button
-                        onClick={addSpec}
-                        className="text-xs text-primary hover:underline mt-2"
-                      >
-                        + Add specification
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="bg-slate-100 px-8 py-3 flex items-center justify-between text-xs text-slate-500 flex-shrink-0">
-            <span>www.rhosonics.com</span>
-            <span>Page 1 of 2</span>
-          </div>
-        </article>
-      )}
+        {/* Footer - EXACT match */}
+        <div className="bg-slate-100 px-8 py-3 flex items-center justify-between text-xs text-slate-500 flex-shrink-0">
+          <span>www.rhosonics.com</span>
+          <span>Page 1 of 2</span>
+        </div>
+      </article>
 
       {/* Page 2 - Results & Data */}
-      {currentPageIndex === 1 && (
-        <article className={cn(
-          "bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] relative overflow-hidden flex flex-col",
-          "print:shadow-none print:max-w-none print:w-[210mm] print:h-[297mm]",
+      <article 
+        className={cn(
+          "bg-white shadow-2xl relative overflow-hidden flex flex-col",
+          "w-[210mm] h-[297mm]",
+          "print:shadow-none print:w-[210mm] print:h-[297mm]",
           printMode && "print-page"
-        )}>
-          {/* Header Bar */}
-          <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between flex-shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8">
-                <RhosonicsLogo variant="gradient" />
-              </div>
-              <span className="font-logo text-white text-lg tracking-wide uppercase">RHOSONICS</span>
+        )}
+        style={{ minHeight: '297mm', maxHeight: '297mm' }}
+      >
+        {/* Header Bar - EXACT match */}
+        <div className="bg-rho-obsidian px-8 py-4 flex items-center justify-between flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8">
+              <RhosonicsLogo variant="gradient" />
             </div>
-            <div className="label-tech text-slate-400">
-              {(isPlaceholder(data.company) ? "COMPANY" : data.company).toUpperCase()} — RESULTS
-            </div>
+            <span className="font-logo text-white text-lg tracking-wide uppercase">RHOSONICS</span>
           </div>
+          <div className="label-tech text-slate-400">
+            {(isPlaceholder(data.company) ? "COMPANY" : data.company).toUpperCase()} — RESULTS
+          </div>
+        </div>
 
-          {/* Content */}
-          <div className="flex-1 p-8 flex flex-col">
-            {/* Results Section */}
-            <div className="mb-8">
-              <h2 className="label-tech text-slate-500 mb-4 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
-                KEY RESULTS
-              </h2>
-              <div className="grid grid-cols-2 gap-3">
-                {data.results.length > 0 && data.results.some(r => r.trim()) ? (
-                  data.results.map((result, i) => (
-                    <div key={i} className="flex items-start gap-3 bg-eco-surface p-3 rounded-lg">
-                      <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="font-data text-xs text-primary">{i + 1}</span>
-                      </div>
-                      <span 
-                        className={cn(
-                          "text-sm flex-1",
-                          result.trim() ? "text-slate-700" : "text-slate-400 italic"
-                        )}
-                        contentEditable={!printMode}
-                        suppressContentEditableWarning
-                        onBlur={(e) => updateResult(i, e.currentTarget.textContent || "")}
-                      >
+        {/* Content */}
+        <div className="flex-1 p-8 flex flex-col overflow-hidden">
+          {/* Results Section - EXACT match */}
+          <div className="mb-8">
+            <h2 className="label-tech text-slate-500 mb-4 flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-primary" />
+              KEY RESULTS
+            </h2>
+            <div className="grid grid-cols-2 gap-3">
+              {data.results.length > 0 && data.results.some(r => r.trim()) ? (
+                data.results.map((result, i) => (
+                  <div key={i} className="flex items-start gap-3 bg-eco-surface p-3 rounded-lg group/result">
+                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="font-data text-xs text-primary">{i + 1}</span>
+                    </div>
+                    {printMode ? (
+                      <span className={cn(
+                        "text-sm flex-1",
+                        result.trim() ? "text-slate-700" : "text-slate-400 italic"
+                      )}>
                         {result || "[Key result]"}
                       </span>
-                    </div>
-                  ))
-                ) : (
-                  <div className="col-span-2 text-sm text-slate-400 italic p-3 bg-eco-surface rounded-lg">
-                    [Add key results]
+                    ) : (
+                      <div className="flex-1 flex items-start gap-1">
+                        <input
+                          type="text"
+                          value={result}
+                          onChange={(e) => updateResult(i, e.target.value)}
+                          placeholder="[Key result]"
+                          className={cn(
+                            "text-sm bg-transparent border-none outline-none flex-1 min-w-0",
+                            "hover:bg-white/50 focus:bg-white/50 rounded px-1 -mx-1",
+                            result.trim() ? "text-slate-700" : "text-slate-400 italic"
+                          )}
+                        />
+                        <button
+                          onClick={() => removeResult(i)}
+                          className="opacity-0 group-hover/result:opacity-100 text-slate-400 hover:text-red-500 transition-opacity p-0.5"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              {!printMode && (
-                <button
-                  onClick={addResult}
-                  className="text-xs text-primary hover:underline mt-3"
-                >
-                  + Add result
-                </button>
+                ))
+              ) : (
+                <div className="col-span-2 text-sm text-slate-400 italic p-3 bg-eco-surface rounded-lg">
+                  [Add key results]
+                </div>
               )}
             </div>
-
-            {/* Chart Section */}
-            {data.chartData && chartDataForBrand && !printMode && (
-              <div className="mb-8">
-                <h2 className="label-tech text-slate-500 mb-4">
-                  {data.chartData.title || "MEASUREMENT DATA"}
-                </h2>
-                {(data.chartData.type === "timeseries" || data.chartData.type === "timeseries-comparison") ? (
-                  <TimeSeriesChartPreview data={data.chartData} height={240} printMode={printMode} />
-                ) : (
-                  <div className={cn(
-                    "rounded-lg p-4 h-[240px] overflow-hidden",
-                    data.chartData.background === "dark" ? "bg-rho-obsidian" : "bg-slate-50 border border-slate-200"
-                  )}>
-                    <BrandChart
-                      chartType={data.chartData.type}
-                      data={chartDataForBrand}
-                      colors={{
-                        primary: data.chartData.colors?.primary || "#33993c",
-                        secondary: data.chartData.colors?.secondary || "#73B82E",
-                        tertiary: data.chartData.colors?.tertiary || "#a69359",
-                      }}
-                      isLightBg={data.chartData.background === "light"}
-                    />
-                  </div>
-                )}
-              </div>
+            {!printMode && (
+              <button
+                onClick={addResult}
+                className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 mt-3"
+              >
+                <Plus className="w-3 h-3" />
+                Add result
+              </button>
             )}
+          </div>
 
-            {/* Chart Placeholder */}
-            {!data.chartData && !printMode && (
-              <div className="mb-8">
-                <h2 className="label-tech text-slate-500 mb-4">DATA VISUALIZATION</h2>
-                <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 flex flex-col items-center justify-center text-slate-400 h-[200px]">
-                  <BarChart3 className="w-10 h-10 mb-2" />
-                  <span className="text-sm">Add a chart block to visualize data</span>
-                </div>
-              </div>
-            )}
-
-            {/* Quote Section */}
-            {data.quote ? (
-              <div className="bg-gradient-to-br from-slate-50 to-eco-surface border-l-4 border-primary p-6 rounded-r-lg mb-8">
-                <Quote className="w-6 h-6 text-primary/30 mb-2" />
-                <blockquote className={cn(
-                  "text-base italic mb-3",
-                  data.quote.text ? "text-slate-700" : "text-slate-400"
+          {/* Chart Section */}
+          {data.chartData && chartDataForBrand && !printMode && (
+            <div className="mb-8">
+              <h2 className="label-tech text-slate-500 mb-4">
+                {data.chartData.title || "MEASUREMENT DATA"}
+              </h2>
+              {(data.chartData.type === "timeseries" || data.chartData.type === "timeseries-comparison") ? (
+                <TimeSeriesChartPreview data={data.chartData} height={240} printMode={printMode} />
+              ) : (
+                <div className={cn(
+                  "rounded-lg p-4 h-[240px] overflow-hidden",
+                  data.chartData.background === "dark" ? "bg-rho-obsidian" : "bg-slate-50 border border-slate-200"
                 )}>
-                  "<EditableText
-                    value={data.quote.text}
-                    field="quote-text"
-                    blockType="quote"
-                    contentKey="text"
-                    placeholder="Enter quote text"
-                    multiline
-                  />"
-                </blockquote>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="font-ui font-bold text-primary text-xs">
-                      {data.quote.author ? data.quote.author.split(' ').map(n => n[0]).join('') : "?"}
-                    </span>
-                  </div>
-                  <div>
-                    <div className={cn(
-                      "font-ui font-semibold text-sm",
-                      data.quote.author ? "text-slate-800" : "text-slate-400"
-                    )}>
-                      <EditableText
-                        value={data.quote.author}
-                        field="quote-author"
-                        blockType="quote"
-                        contentKey="author"
-                        placeholder="[Author name]"
-                      />
-                    </div>
-                    <div className={cn(
-                      "text-xs",
-                      data.quote.role ? "text-slate-500" : "text-slate-400"
-                    )}>
-                      <EditableText
-                        value={data.quote.role || ""}
-                        field="quote-role"
-                        blockType="quote"
-                        contentKey="role"
-                        placeholder="[Role]"
-                      />
-                    </div>
-                  </div>
+                  <BrandChart
+                    chartType={data.chartData.type}
+                    data={chartDataForBrand}
+                    colors={{
+                      primary: data.chartData.colors.primary,
+                      secondary: data.chartData.colors.secondary || "#73B82E",
+                      tertiary: data.chartData.colors.tertiary || "#a69359",
+                    }}
+                    isLightBg={data.chartData.background === "light"}
+                  />
                 </div>
-              </div>
-            ) : !printMode ? (
-              <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 mb-8 text-center text-slate-400">
-                <Quote className="w-8 h-8 mx-auto mb-2" />
-                <span className="text-sm">[Add a quote block for customer testimonial]</span>
-              </div>
-            ) : null}
+              )}
+            </div>
+          )}
 
-            {/* Contact CTA */}
-            <div className="mt-auto bg-rho-obsidian rounded-lg p-6">
-              <div className="flex items-center justify-between">
+          {/* Chart Placeholder */}
+          {!data.chartData && !printMode && (
+            <div className="mb-8">
+              <h2 className="label-tech text-slate-500 mb-4">DATA VISUALIZATION</h2>
+              <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 flex flex-col items-center justify-center text-slate-400 h-[200px]">
+                <BarChart3 className="w-10 h-10 mb-2" />
+                <span className="text-sm">Generate or upload a chart</span>
+              </div>
+            </div>
+          )}
+
+          {/* Quote Section - EXACT match */}
+          {data.quote ? (
+            <div className="bg-gradient-to-br from-slate-50 to-eco-surface border-l-4 border-primary p-6 rounded-r-lg mb-8">
+              <Quote className="w-6 h-6 text-primary/30 mb-2" />
+              <blockquote className="text-base italic mb-3">
+                "
+                <EditableText
+                  value={data.quote.text}
+                  field="quote-text"
+                  blockType="quote"
+                  contentKey="text"
+                  placeholder="[Enter quote text]"
+                  multiline
+                  className={data.quote.text ? "text-slate-700" : "text-slate-400"}
+                />
+                "
+              </blockquote>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="font-ui font-bold text-primary text-xs">
+                    {data.quote.author ? data.quote.author.split(' ').map(n => n[0]).join('') : "?"}
+                  </span>
+                </div>
                 <div>
-                  <h3 className="font-ui font-semibold text-white mb-1">
-                    Ready to optimize your process?
-                  </h3>
-                  <p className="text-sm text-slate-400">
-                    Contact our team to discuss your measurement challenges.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2 text-sm">
-                  <a href="tel:+31341370073" className="flex items-center gap-2 text-slate-300 hover:text-primary transition-colors">
-                    <Phone className="w-4 h-4" />
-                    +31 341 37 00 73
-                  </a>
-                  <a href="mailto:info@rhosonics.com" className="flex items-center gap-2 text-slate-300 hover:text-primary transition-colors">
-                    <Mail className="w-4 h-4" />
-                    info@rhosonics.com
-                  </a>
-                  <a href="https://rhosonics.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-300 hover:text-primary transition-colors">
-                    <Globe className="w-4 h-4" />
-                    www.rhosonics.com
-                  </a>
+                  <EditableText
+                    value={data.quote.author}
+                    field="quote-author"
+                    blockType="quote"
+                    contentKey="author"
+                    placeholder="[Author name]"
+                    className={cn(
+                      "font-ui font-semibold text-sm block",
+                      data.quote.author ? "text-slate-800" : "text-slate-400"
+                    )}
+                  />
+                  <EditableText
+                    value={data.quote.role}
+                    field="quote-role"
+                    blockType="quote"
+                    contentKey="role"
+                    placeholder="[Role]"
+                    className={cn(
+                      "text-xs block",
+                      data.quote.role ? "text-slate-500" : "text-slate-400"
+                    )}
+                  />
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Footer */}
-          <div className="bg-slate-100 px-8 py-3 flex items-center justify-between text-xs text-slate-500 flex-shrink-0">
-            <div className="flex items-center gap-4">
-              <span>Hoge Eng West 30, 3882 TR Putten, Netherlands</span>
+          ) : !printMode && (
+            <div 
+              className="border-2 border-dashed border-slate-300 rounded-lg p-6 mb-8 text-center text-slate-400 cursor-pointer hover:border-primary/50 transition-colors"
+              onClick={() => {
+                const found = findBlock(pages, "quote");
+                if (found) {
+                  onUpdateBlock(found.pageIndex, found.block.id, {
+                    quote: { text: "", author: "", role: "" },
+                  });
+                }
+              }}
+            >
+              <Quote className="w-8 h-8 mx-auto mb-2" />
+              <span className="text-sm">[Click to add customer quote]</span>
             </div>
-            <span>Page 2 of 2</span>
+          )}
+
+          {/* Contact CTA - EXACT match */}
+          <div className="mt-auto bg-rho-obsidian rounded-lg p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-ui font-semibold text-white mb-1">
+                  Ready to optimize your process?
+                </h3>
+                <p className="text-sm text-slate-400">
+                  Contact our team to discuss your measurement challenges.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 text-sm">
+                <a href="tel:+31341370073" className="flex items-center gap-2 text-slate-300 hover:text-primary transition-colors">
+                  <Phone className="w-4 h-4" />
+                  +31 341 37 00 73
+                </a>
+                <a href="mailto:info@rhosonics.com" className="flex items-center gap-2 text-slate-300 hover:text-primary transition-colors">
+                  <Mail className="w-4 h-4" />
+                  info@rhosonics.com
+                </a>
+                <a href="https://rhosonics.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-300 hover:text-primary transition-colors">
+                  <Globe className="w-4 h-4" />
+                  www.rhosonics.com
+                </a>
+              </div>
+            </div>
           </div>
-        </article>
-      )}
+        </div>
+
+        {/* Footer - EXACT match */}
+        <div className="bg-slate-100 px-8 py-3 flex items-center justify-between text-xs text-slate-500 flex-shrink-0">
+          <div className="flex items-center gap-4">
+            <span>Hoge Eng West 30, 3882 TR Putten, Netherlands</span>
+          </div>
+          <span>Page 2 of 2</span>
+        </div>
+      </article>
     </div>
   );
 }
