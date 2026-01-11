@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCaseStudy, createEmptyCaseStudy, CaseStudyDocument } from "@/hooks/useCaseStudy";
-import { DocumentCanvas, PageNavigator, TemplateSelector } from "@/components/document-builder";
+import { PageNavigator, TemplateSelector } from "@/components/document-builder";
+import { CaseStudyCanvas } from "@/components/document-builder/CaseStudyCanvas";
 import { BackgroundPicker } from "@/components/presentation-builder/BackgroundPicker";
 import { AIContentFill, type GeneratedCaseStudyContent } from "@/components/case-study-builder/AIContentFill";
 import { Button } from "@/components/ui/button";
@@ -66,7 +67,6 @@ export default function CaseStudyBuilder() {
     document: caseStudy,
     currentPageIndex,
     currentPage,
-    selectedBlockId,
     setDocument,
     setCurrentPageIndex,
     addPage,
@@ -75,12 +75,7 @@ export default function CaseStudyBuilder() {
     reorderPages,
     updatePageBackground,
     updatePageTransition,
-    selectBlock,
-    addBlock,
     updateBlock,
-    deleteBlock,
-    duplicateBlock,
-    reorderBlocks,
     canUndo,
     canRedo,
     undo,
@@ -560,28 +555,18 @@ export default function CaseStudyBuilder() {
         />
 
         {/* Canvas */}
-        {currentPage && (
-          <div className="flex-1 overflow-hidden">
-            <DocumentCanvas
-              page={currentPage}
-              selectedBlockId={selectedBlockId}
-              onSelectBlock={selectBlock}
-              onUpdateBlock={(blockId, content, style) =>
-                updateBlock(currentPage.id, blockId, content, style)
+        <div className="flex-1 overflow-auto">
+          <CaseStudyCanvas
+            pages={caseStudy.pages}
+            currentPageIndex={currentPageIndex}
+            onUpdateBlock={(pageIndex, blockId, content) => {
+              const page = caseStudy.pages[pageIndex];
+              if (page) {
+                updateBlock(page.id, blockId, content);
               }
-              onDeleteBlock={(blockId) => deleteBlock(currentPage.id, blockId)}
-              onDuplicateBlock={(blockId) => duplicateBlock(currentPage.id, blockId)}
-              onAddBlock={(block, afterBlockId) =>
-                addBlock(currentPage.id, block, afterBlockId)
-              }
-              onReorderBlocks={(from, to) => reorderBlocks(currentPage.id, from, to)}
-              layout="case-study"
-              pageIndex={currentPageIndex}
-              totalPages={caseStudy.pages.length}
-              companyName={caseStudy.pages[0]?.blocks.find(b => b.type === "identity-card")?.content.identity?.company}
-            />
-          </div>
-        )}
+            }}
+          />
+        </div>
 
         {/* AI Sidebar */}
         {showAISidebar && (
