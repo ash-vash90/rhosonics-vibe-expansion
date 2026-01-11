@@ -1,14 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Loader2, Printer, AlertTriangle, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Loader2, Printer, AlertTriangle, ArrowLeft, CheckCircle2, Quote, Phone, Mail, Globe, MapPin, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DocumentBase, Page, Block } from "@/types/document";
 import { cn } from "@/lib/utils";
 import { BrandChart } from "@/components/tools/BrandChart";
+import { AnimatedLogo } from "@/components/AnimatedLogo";
 
 type PrintStatus = "preparing" | "ready" | "printing" | "done" | "error";
 
 const STORAGE_KEY = "case-study-builder-draft";
+
+// Block types that should go in specific columns
+const LEFT_COLUMN_BLOCKS = ["challenge-solution"];
+const RIGHT_COLUMN_BLOCKS = ["stat-card", "spec-table"];
+const FULL_WIDTH_BLOCKS = ["hero-image", "identity-card", "results-grid", "quote", "cta", "chart", "image"];
 
 const CaseStudyBuilderPrint = () => {
   const [searchParams] = useSearchParams();
@@ -129,18 +135,31 @@ const CaseStudyBuilderPrint = () => {
     };
   }, [status, searchParams]);
 
-  // Render individual block for print (static, no editing)
-  const renderBlock = (block: Block, isDark: boolean) => {
-    const textColor = isDark ? "text-white" : "text-slate-800";
-    const mutedColor = isDark ? "text-white/70" : "text-slate-600";
+  // Get company name and identity info from document
+  const getCompanyName = (): string => {
+    if (!document) return "";
+    for (const page of document.pages) {
+      for (const block of page.blocks) {
+        if (block.type === "identity-card" && block.content.identity?.company) {
+          return block.content.identity.company;
+        }
+        if (block.type === "hero-image" && block.content.heroImage?.title) {
+          return block.content.heroImage.title;
+        }
+      }
+    }
+    return "";
+  };
 
+  // Render individual block for print (static, no editing)
+  const renderBlock = (block: Block) => {
     switch (block.type) {
       case "heading":
       case "subheading":
         return (
           <h1 className={cn(
             block.type === "heading" ? "font-logo text-3xl font-bold" : "font-logo text-xl font-semibold",
-            textColor
+            "text-slate-800"
           )}>
             {block.content.text || "Heading"}
           </h1>
@@ -148,14 +167,14 @@ const CaseStudyBuilderPrint = () => {
         
       case "paragraph":
         return (
-          <p className={cn("font-ui text-base leading-relaxed whitespace-pre-wrap", mutedColor)}>
+          <p className="font-ui text-base leading-relaxed whitespace-pre-wrap text-slate-600">
             {block.content.text || "Paragraph text"}
           </p>
         );
         
       case "bullet-list":
         return (
-          <ul className={cn("space-y-1", mutedColor)}>
+          <ul className="space-y-1 text-slate-600">
             {(block.content.items || []).filter(Boolean).map((item, i) => (
               <li key={i} className="flex items-start gap-2 font-ui text-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-rho-green mt-1.5 flex-shrink-0" />
@@ -165,13 +184,66 @@ const CaseStudyBuilderPrint = () => {
           </ul>
         );
         
+      case "hero-image":
+        return (
+          <div className="relative w-full">
+            {block.content.heroImage?.imageUrl ? (
+              <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                <img
+                  src={block.content.heroImage.imageUrl}
+                  alt={block.content.heroImage?.title || "Hero"}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-full h-48 bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg flex items-center justify-center">
+                <span className="text-slate-400 font-ui text-sm">Hero Image</span>
+              </div>
+            )}
+            {/* Company name and location below image */}
+            <div className="mt-4">
+              <h2 className="font-logo text-2xl font-bold text-slate-900">
+                {block.content.heroImage?.title || "Company Name"}
+              </h2>
+              {block.content.heroImage?.subtitle && (
+                <div className="flex items-center gap-1.5 mt-1 text-slate-500">
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span className="font-ui text-sm">{block.content.heroImage.subtitle}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
+      case "identity-card":
+        return (
+          <div className="grid grid-cols-4 gap-4 py-3 border-y border-slate-200">
+            <div>
+              <span className="font-data text-[10px] uppercase tracking-wider text-slate-400">Company</span>
+              <p className="font-ui text-sm font-medium text-slate-800">{block.content.identity?.company || "—"}</p>
+            </div>
+            <div>
+              <span className="font-data text-[10px] uppercase tracking-wider text-slate-400">Location</span>
+              <p className="font-ui text-sm font-medium text-slate-800">{block.content.identity?.location || "—"}</p>
+            </div>
+            <div>
+              <span className="font-data text-[10px] uppercase tracking-wider text-slate-400">Industry</span>
+              <p className="font-ui text-sm font-medium text-slate-800">{block.content.identity?.industry || "—"}</p>
+            </div>
+            <div>
+              <span className="font-data text-[10px] uppercase tracking-wider text-slate-400">Product</span>
+              <p className="font-ui text-sm font-medium text-slate-800">{block.content.identity?.product || "—"}</p>
+            </div>
+          </div>
+        );
+
       case "stat-card":
         return (
-          <div className="inline-flex flex-col items-center p-4 rounded-lg bg-rho-green/10 border border-rho-green/20">
-            <span className="font-data text-3xl font-bold text-rho-green">
+          <div className="flex flex-col items-center justify-center p-6 rounded-lg bg-rho-green/10 border border-rho-green/20">
+            <span className="font-data text-4xl font-bold text-rho-green">
               {block.content.stat?.value || "—"}
             </span>
-            <span className={cn("font-ui text-xs uppercase tracking-wider mt-1", mutedColor)}>
+            <span className="font-data text-xs uppercase tracking-wider mt-2 text-slate-600 text-center">
               {block.content.stat?.label || "Metric"}
             </span>
           </div>
@@ -183,7 +255,7 @@ const CaseStudyBuilderPrint = () => {
             {(block.content.stats || []).map((stat, i) => (
               <div key={i} className="flex flex-col items-center p-3 rounded-lg bg-rho-green/10 border border-rho-green/20">
                 <span className="font-data text-xl font-bold text-rho-green">{stat.value}</span>
-                <span className={cn("font-ui text-xs uppercase tracking-wider mt-1", mutedColor)}>
+                <span className="font-ui text-xs uppercase tracking-wider mt-1 text-slate-600">
                   {stat.label}
                 </span>
               </div>
@@ -200,7 +272,7 @@ const CaseStudyBuilderPrint = () => {
               className="max-w-full h-auto rounded-lg"
             />
             {block.content.caption && (
-              <p className={cn("mt-2 text-sm text-center", mutedColor)}>
+              <p className="mt-2 text-sm text-center text-slate-600">
                 {block.content.caption}
               </p>
             )}
@@ -260,35 +332,55 @@ const CaseStudyBuilderPrint = () => {
         
       case "spec-table":
         return (
-          <table className="w-full text-sm">
-            <tbody>
-              {(block.content.specs || []).map((spec, i) => (
-                <tr key={i} className={cn(
-                  "border-b",
-                  isDark ? "border-white/10" : "border-slate-200"
-                )}>
-                  <td className={cn("py-2 pr-4 font-ui font-medium", textColor)}>
-                    {spec.label}
-                  </td>
-                  <td className={cn("py-2 font-data", mutedColor)}>
-                    {spec.value}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="rounded-lg border border-slate-200 overflow-hidden">
+            <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 border-b border-slate-200">
+              <Settings2 className="w-4 h-4 text-slate-500" />
+              <span className="font-data text-xs uppercase tracking-wider text-slate-600">
+                Specifications
+              </span>
+            </div>
+            <table className="w-full text-sm">
+              <tbody>
+                {(block.content.specs || []).map((spec, i) => (
+                  <tr key={i} className={cn(
+                    i % 2 === 0 ? "bg-white" : "bg-slate-50"
+                  )}>
+                    <td className="py-2 px-4 font-ui text-slate-600">
+                      {spec.label}
+                    </td>
+                    <td className="py-2 px-4 font-data text-slate-800 text-right">
+                      {spec.value}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         );
         
       case "quote":
+        const initials = block.content.quote?.author
+          ? block.content.quote.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
+          : "??";
         return (
-          <div className="pl-4 border-l-4 border-rho-green">
-            <p className={cn("font-logo text-lg italic mb-2", textColor)}>
+          <div className="p-6 rounded-lg bg-rho-green/5 border border-rho-green/10">
+            <Quote className="w-8 h-8 text-rho-green/40 mb-3" />
+            <p className="font-logo text-lg italic text-slate-700 leading-relaxed mb-4">
               "{block.content.quote?.text || "Quote text"}"
             </p>
-            <p className={mutedColor}>
-              — {block.content.quote?.author || "Author"}
-              {block.content.quote?.role && `, ${block.content.quote.role}`}
-            </p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-rho-green/20 flex items-center justify-center">
+                <span className="font-logo text-sm font-bold text-rho-green">{initials}</span>
+              </div>
+              <div>
+                <p className="font-ui text-sm font-medium text-slate-800">
+                  {block.content.quote?.author || "Author"}
+                </p>
+                {block.content.quote?.role && (
+                  <p className="font-ui text-xs text-slate-500">{block.content.quote.role}</p>
+                )}
+              </div>
+            </div>
           </div>
         );
         
@@ -313,67 +405,58 @@ const CaseStudyBuilderPrint = () => {
         );
         
       case "divider":
-        return (
-          <hr className={cn(
-            "my-4",
-            isDark ? "border-white/20" : "border-slate-200"
-          )} />
-        );
+        return <hr className="my-4 border-slate-200" />;
         
       case "cta":
         return (
-          <div className="text-center py-6">
-            <p className={cn("font-logo text-xl font-semibold mb-4", textColor)}>
-              {block.content.cta?.text || "Ready to get started?"}
-            </p>
-            <span className="inline-block px-6 py-2 bg-rho-green text-white font-ui font-medium rounded-lg">
-              {block.content.cta?.buttonLabel || "Contact Us"}
-            </span>
+          <div className="grid grid-cols-2 gap-8 py-6 border-t border-slate-200">
+            <div>
+              <h3 className="font-logo text-xl font-bold text-slate-900 mb-2">
+                {block.content.cta?.text || "Ready to optimize your process?"}
+              </h3>
+              <p className="font-ui text-sm text-slate-600">
+                Contact our team to discuss how Rhosonics can help improve your operations.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-rho-green/10 flex items-center justify-center">
+                  <Phone className="w-4 h-4 text-rho-green" />
+                </div>
+                <span className="font-ui text-sm text-slate-700">+31 (0)78 684 6466</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-rho-green/10 flex items-center justify-center">
+                  <Mail className="w-4 h-4 text-rho-green" />
+                </div>
+                <span className="font-ui text-sm text-slate-700">info@rhosonics.com</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-rho-green/10 flex items-center justify-center">
+                  <Globe className="w-4 h-4 text-rho-green" />
+                </div>
+                <span className="font-ui text-sm text-slate-700">www.rhosonics.com</span>
+              </div>
+            </div>
           </div>
         );
 
-      // Case study specific blocks
-      case "identity-card":
-        return (
-          <div className={cn(
-            "grid grid-cols-2 gap-4 p-4 rounded-lg",
-            isDark ? "bg-white/5" : "bg-slate-50"
-          )}>
-            <div>
-              <span className={cn("font-ui text-xs uppercase tracking-wider", mutedColor)}>Company</span>
-              <p className={cn("font-logo font-semibold", textColor)}>{block.content.identity?.company || "—"}</p>
-            </div>
-            <div>
-              <span className={cn("font-ui text-xs uppercase tracking-wider", mutedColor)}>Location</span>
-              <p className={cn("font-logo font-semibold", textColor)}>{block.content.identity?.location || "—"}</p>
-            </div>
-            <div>
-              <span className={cn("font-ui text-xs uppercase tracking-wider", mutedColor)}>Industry</span>
-              <p className={cn("font-logo font-semibold", textColor)}>{block.content.identity?.industry || "—"}</p>
-            </div>
-            <div>
-              <span className={cn("font-ui text-xs uppercase tracking-wider", mutedColor)}>Product</span>
-              <p className={cn("font-logo font-semibold", textColor)}>{block.content.identity?.product || "—"}</p>
-            </div>
-          </div>
-        );
-        
       case "challenge-solution":
         return (
-          <div className="grid grid-cols-2 gap-6">
-            <div className={cn("p-4 rounded-lg", isDark ? "bg-red-500/10" : "bg-red-50")}>
-              <h3 className={cn("font-logo text-lg font-semibold mb-2", isDark ? "text-red-300" : "text-red-700")}>
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-data text-xs uppercase tracking-wider text-slate-500 mb-2">
                 The Challenge
               </h3>
-              <p className={cn("font-ui text-sm leading-relaxed", isDark ? "text-red-200" : "text-red-600")}>
+              <p className="font-ui text-sm leading-relaxed text-slate-700">
                 {block.content.challengeSolution?.challenge || "Challenge description"}
               </p>
             </div>
-            <div className={cn("p-4 rounded-lg", isDark ? "bg-green-500/10" : "bg-green-50")}>
-              <h3 className={cn("font-logo text-lg font-semibold mb-2", isDark ? "text-green-300" : "text-green-700")}>
-                The Solution
+            <div>
+              <h3 className="font-data text-xs uppercase tracking-wider text-rho-green mb-2">
+                Our Solution
               </h3>
-              <p className={cn("font-ui text-sm leading-relaxed", isDark ? "text-green-200" : "text-green-600")}>
+              <p className="font-ui text-sm leading-relaxed text-slate-700">
                 {block.content.challengeSolution?.solution || "Solution description"}
               </p>
             </div>
@@ -381,108 +464,164 @@ const CaseStudyBuilderPrint = () => {
         );
         
       case "results-grid":
+        const results = block.content.resultsGrid?.results || [];
+        const midpoint = Math.ceil(results.length / 2);
+        const leftResults = results.slice(0, midpoint);
+        const rightResults = results.slice(midpoint);
+        
         return (
-          <div className="space-y-2">
-            {(block.content.resultsGrid?.results || []).filter(Boolean).map((result, i) => (
-              <div key={i} className={cn(
-                "flex items-center gap-3 p-3 rounded-lg",
-                isDark ? "bg-white/5" : "bg-slate-50"
-              )}>
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-rho-green flex items-center justify-center text-white text-xs font-bold">
-                  {i + 1}
-                </span>
-                <span className={cn("font-ui text-sm", textColor)}>{result}</span>
+          <div className="space-y-4">
+            <h3 className="font-data text-xs uppercase tracking-wider text-slate-500">
+              Key Results
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-3">
+                {leftResults.filter(Boolean).map((result, i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-slate-50">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-rho-green flex items-center justify-center text-white text-xs font-bold">
+                      {i + 1}
+                    </span>
+                    <span className="font-ui text-sm text-slate-700 leading-relaxed">{result}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+              <div className="space-y-3">
+                {rightResults.filter(Boolean).map((result, i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-slate-50">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-rho-green flex items-center justify-center text-white text-xs font-bold">
+                      {midpoint + i + 1}
+                    </span>
+                    <span className="font-ui text-sm text-slate-700 leading-relaxed">{result}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         );
         
       default:
         return (
-          <div className={cn(
-            "p-4 border rounded-lg",
-            isDark ? "border-white/20 text-white/60" : "border-slate-200 text-slate-500"
-          )}>
+          <div className="p-4 border rounded-lg border-slate-200 text-slate-500">
             {block.type} block
           </div>
         );
     }
   };
 
-  // Render a page
+  // Render page with branded layout
   const renderPage = (page: Page, pageIndex: number, totalPages: number) => {
-    const isDark = page.background?.type === "solid" 
-      ? page.background.value.includes("10%") || page.background.value.includes("20%") || page.background.value.includes("225")
-      : page.background?.type === "gradient" && page.background.value.includes("225");
+    const companyName = getCompanyName();
+    const headerTitle = pageIndex === 0 
+      ? "CASE STUDY" 
+      : companyName 
+        ? `${companyName.toUpperCase()} — RESULTS` 
+        : "CASE STUDY";
 
-    const getBackgroundStyle = (): React.CSSProperties => {
-      if (!page.background) return { backgroundColor: "white" };
-      
-      if (page.background.type === "solid") {
-        return { backgroundColor: page.background.value };
+    // Separate blocks into layout groups
+    const fullWidthBlocks: Block[] = [];
+    const leftColumnBlocks: Block[] = [];
+    const rightColumnBlocks: Block[] = [];
+
+    page.blocks.forEach((block) => {
+      if (FULL_WIDTH_BLOCKS.includes(block.type)) {
+        fullWidthBlocks.push(block);
+      } else if (LEFT_COLUMN_BLOCKS.includes(block.type)) {
+        leftColumnBlocks.push(block);
+      } else if (RIGHT_COLUMN_BLOCKS.includes(block.type)) {
+        rightColumnBlocks.push(block);
+      } else {
+        // Default to full width for unknown block types
+        fullWidthBlocks.push(block);
       }
-      if (page.background.type === "gradient") {
-        return { background: page.background.value };
-      }
-      if (page.background.type === "image") {
-        return { 
-          backgroundImage: `url(${page.background.value})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        };
-      }
-      return { backgroundColor: "white" };
-    };
+    });
+
+    const hasTwoColumnContent = leftColumnBlocks.length > 0 || rightColumnBlocks.length > 0;
+
+    // Determine which full-width blocks go before/after two-column section
+    const heroBlocks = fullWidthBlocks.filter(b => b.type === "hero-image" || b.type === "identity-card");
+    const afterBlocks = fullWidthBlocks.filter(b => b.type !== "hero-image" && b.type !== "identity-card");
 
     return (
       <div
         key={page.id}
-        className="print-page relative bg-white"
+        className="print-page relative bg-white flex flex-col"
         style={{
           width: "210mm",
           height: "297mm",
           pageBreakAfter: pageIndex < totalPages - 1 ? "always" : "auto",
           pageBreakInside: "avoid",
-          ...getBackgroundStyle(),
         }}
       >
-        {/* Overlay for images */}
-        {page.background?.overlay && page.background.overlay !== "none" && (
-          <div className={cn(
-            "absolute inset-0",
-            page.background.overlay === "dark" && "bg-black/50",
-            page.background.overlay === "light" && "bg-white/30"
-          )} />
-        )}
-
-        {/* Content */}
-        <div className="relative z-10 h-full p-12 flex flex-col gap-4 overflow-hidden">
-          {page.blocks.map((block) => (
-            <div key={block.id}>
-              {renderBlock(block, isDark)}
-            </div>
-          ))}
-        </div>
-
-        {/* Page number */}
-        <div className={cn(
-          "absolute bottom-4 right-6 font-data text-xs",
-          isDark ? "text-white/40" : "text-slate-400"
-        )}>
-          {pageIndex + 1} / {totalPages}
-        </div>
-
-        {/* Rhosonics branding */}
-        <div className="absolute bottom-4 left-6">
-          <div className={cn(
-            "flex items-center gap-2 font-logo text-xs",
-            isDark ? "text-white/40" : "text-slate-400"
-          )}>
-            <span className="font-semibold">Rhosonics</span>
-            <span>•</span>
-            <span>Analytical B.V.</span>
+        {/* Header Bar */}
+        <header 
+          className="flex-shrink-0 flex items-center justify-between px-6 py-3"
+          style={{ backgroundColor: "hsl(225 40% 12%)" }}
+        >
+          <div className="flex items-center gap-3">
+            <AnimatedLogo variant="white" className="w-6 h-6" />
+            <span className="font-logo text-sm font-semibold text-white tracking-wide">
+              RHOSONICS
+            </span>
           </div>
-        </div>
+          <span className="font-data text-xs text-white/60 tracking-wider uppercase">
+            {headerTitle}
+          </span>
+        </header>
+
+        {/* Content Area */}
+        <main className="flex-1 overflow-hidden px-8 py-6">
+          <div className="h-full flex flex-col gap-4">
+            {/* Hero / Identity blocks (full width, top) */}
+            {heroBlocks.map((block) => (
+              <div key={block.id}>
+                {renderBlock(block)}
+              </div>
+            ))}
+
+            {/* Two-column section if applicable */}
+            {hasTwoColumnContent && (
+              <div className="grid grid-cols-2 gap-6 flex-1">
+                <div className="space-y-4">
+                  {leftColumnBlocks.map((block) => (
+                    <div key={block.id}>
+                      {renderBlock(block)}
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-4">
+                  {rightColumnBlocks.map((block) => (
+                    <div key={block.id}>
+                      {renderBlock(block)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Remaining full-width blocks (results, quote, cta, etc.) */}
+            {afterBlocks.map((block) => (
+              <div key={block.id}>
+                {renderBlock(block)}
+              </div>
+            ))}
+          </div>
+        </main>
+
+        {/* Footer Bar */}
+        <footer className="flex-shrink-0 flex items-center justify-between px-6 py-2 bg-white border-t border-slate-200">
+          <div className="flex items-center gap-4">
+            <span className="font-ui text-xs text-slate-500">
+              rhosonics.com
+            </span>
+            <span className="text-slate-300">|</span>
+            <span className="font-ui text-xs text-slate-500">
+              Headquarters: The Netherlands
+            </span>
+          </div>
+          <span className="font-data text-xs text-slate-400">
+            {pageIndex + 1} / {totalPages}
+          </span>
+        </footer>
       </div>
     );
   };
