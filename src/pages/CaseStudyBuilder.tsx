@@ -7,6 +7,7 @@ import { BackgroundPicker } from "@/components/presentation-builder/BackgroundPi
 import { AIContentFill, type GeneratedCaseStudyContent } from "@/components/case-study-builder/AIContentFill";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,6 +26,8 @@ import {
   PanelRightClose,
   FileText,
   Loader2,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react";
 import {
   Dialog,
@@ -48,6 +51,7 @@ export default function CaseStudyBuilder() {
   const [showLibrary, setShowLibrary] = useState(false);
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
   const [showAISidebar, setShowAISidebar] = useState(true);
+  const [zoom, setZoom] = useState(0.6); // Default 60% zoom to fit A4 on screen
   const [savedCaseStudies, setSavedCaseStudies] = useState<any[]>([]);
 
   // Load initial document
@@ -554,18 +558,63 @@ export default function CaseStudyBuilder() {
           onReorderPages={reorderPages}
         />
 
-        {/* Canvas */}
-        <div className="flex-1 min-w-0 min-h-0 overflow-auto">
-          <CaseStudyCanvas
-            pages={caseStudy.pages}
-            currentPageIndex={currentPageIndex}
-            onUpdateBlock={(pageIndex, blockId, content) => {
-              const page = caseStudy.pages[pageIndex];
-              if (page) {
-                updateBlock(page.id, blockId, content);
-              }
-            }}
-          />
+        {/* Canvas with Zoom */}
+        <div className="flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden">
+          {/* Zoom Controls */}
+          <div className="flex-shrink-0 bg-muted/50 border-b border-border px-4 py-2 flex items-center gap-4">
+            <ZoomOut className="w-4 h-4 text-muted-foreground" />
+            <Slider
+              value={[zoom * 100]}
+              onValueChange={([value]) => setZoom(value / 100)}
+              min={25}
+              max={150}
+              step={5}
+              className="w-32"
+            />
+            <ZoomIn className="w-4 h-4 text-muted-foreground" />
+            <span className="text-xs text-muted-foreground font-mono w-12">
+              {Math.round(zoom * 100)}%
+            </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs h-6"
+              onClick={() => setZoom(0.6)}
+            >
+              Fit
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs h-6"
+              onClick={() => setZoom(1)}
+            >
+              100%
+            </Button>
+          </div>
+
+          {/* Scrollable Canvas Area */}
+          <div className="flex-1 overflow-auto bg-muted/30">
+            <div 
+              className="p-8"
+              style={{
+                transformOrigin: 'top center',
+                transform: `scale(${zoom})`,
+                width: `${100 / zoom}%`,
+              }}
+            >
+              <CaseStudyCanvas
+                pages={caseStudy.pages}
+                currentPageIndex={currentPageIndex}
+                onUpdateBlock={(pageIndex, blockId, content) => {
+                  const page = caseStudy.pages[pageIndex];
+                  if (page) {
+                    updateBlock(page.id, blockId, content);
+                  }
+                }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* AI Sidebar */}
