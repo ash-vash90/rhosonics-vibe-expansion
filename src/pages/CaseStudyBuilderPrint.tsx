@@ -548,6 +548,11 @@ const CaseStudyBuilderPrint = () => {
         style={{
           width: "210mm",
           height: "297mm",
+          minWidth: "210mm",
+          maxWidth: "210mm",
+          minHeight: "297mm",
+          maxHeight: "297mm",
+          overflow: "hidden",
           pageBreakAfter: pageIndex < totalPages - 1 ? "always" : "auto",
           pageBreakInside: "avoid",
         }}
