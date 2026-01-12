@@ -31,6 +31,7 @@ const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
 const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
 const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
+const BrandGallery = lazy(() => import("@/components/brand/BrandGallery"));
 const ExportSection = lazy(() => import("@/components/brand/ExportSection"));
 
 const SectionLoader = () => (
@@ -681,6 +682,9 @@ const Index = () => {
             </LazySection>
             <Suspense fallback={<SectionLoader />}>
               <CaseStudies />
+            </Suspense>
+            <Suspense fallback={<SectionLoader />}>
+              <BrandGallery />
             </Suspense>
           </div>
         </section>

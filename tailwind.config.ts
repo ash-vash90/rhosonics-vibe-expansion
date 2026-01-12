@@ -79,15 +79,6 @@ export default {
           deep: "hsl(var(--mineral-deep))",
           bronze: "hsl(var(--mineral-bronze))",
         },
-        // Legacy earth aliases (use mineral-* in new code)
-        earth: {
-          ochre: "hsl(var(--mineral-neutral))",
-          "ochre-light": "hsl(var(--earth-ochre-light))",
-          "ochre-dark": "hsl(var(--mineral-deep))",
-          sand: "hsl(var(--mineral-surface))",
-          clay: "hsl(var(--mineral-deep))",
-          amber: "hsl(var(--mineral-bronze))",
-        },
         slate: {
           50: "hsl(var(--slate-50))",
           100: "hsl(var(--slate-100))",
