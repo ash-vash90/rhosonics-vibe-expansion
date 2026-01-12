@@ -127,7 +127,7 @@ export const ColorMatrix = () => {
   }];
   return <section id="colors" className="mb-32">
       <h2 className="section-header">Color Roles</h2>
-      <p className="section-subtitle text-lg md:text-xl text-slate-500 leading-relaxed max-w-2xl">HOW COLOR FUNCTIONS INSIDE THE SYSTEM</p>
+      <p className="label-tech text-slate-500 mb-6">HOW COLOR FUNCTIONS INSIDE THE SYSTEM</p>
       
       {/* Functional Framing Rule */}
       <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-8">
