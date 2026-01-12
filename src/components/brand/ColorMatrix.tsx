@@ -138,7 +138,7 @@ export const ColorMatrix = () => {
   return (
     <section id="colors" className="mb-32">
       <h2 className="section-header">Color Roles</h2>
-      <p className="font-ui text-sm uppercase tracking-wider text-slate-500 mb-6">How color functions inside the system</p>
+      <p className="font-ui text-sm text-slate-500 mb-6">How color functions inside the system</p>
       
       {/* Functional Framing Rule */}
       <BrandCallout variant="rule" title="Functional Color Principle" className="mb-8">
@@ -150,7 +150,7 @@ export const ColorMatrix = () => {
       </p>
 
       {/* Primary Colors */}
-      <h3 className="font-ui text-sm uppercase tracking-wider text-primary mb-4">Signal Colors</h3>
+      <h3 className="label-tech text-primary mb-4">SIGNAL COLORS</h3>
       <div className="flex flex-col gap-6 mb-12">
         {primaryColors.map((color) => (
           <ColorSwatch key={color.hex} {...color} />
@@ -158,7 +158,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* Mineral Colors */}
-      <h3 className="font-ui text-sm uppercase tracking-wider text-mineral-neutral mb-4">Field Aesthetic — Mineral Neutrals</h3>
+      <h3 className="label-tech text-mineral-neutral mb-4">FIELD AESTHETIC — MINERAL NEUTRALS</h3>
       <p className="text-sm text-muted-foreground mb-6">
         These colors are inspired by coated metals, enclosures, control-room hardware, and mineral surfaces. They support industrial contexts without fighting the core UI palette.
       </p>
@@ -169,7 +169,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* Eco Colors */}
-      <h3 className="font-ui text-sm uppercase tracking-wider text-primary mb-4">Sustainability Tints</h3>
+      <h3 className="label-tech text-primary mb-4">SUSTAINABILITY TINTS</h3>
       <div className="flex flex-col gap-6 mb-12">
         {ecoColors.map((color) => (
           <ColorSwatch key={color.hex} {...color} />
@@ -177,7 +177,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* Slate Scale */}
-      <h3 className="font-ui text-sm uppercase tracking-wider text-slate-500 mb-4">The Slate Scale</h3>
+      <h3 className="label-tech text-slate-500 mb-4">THE SLATE SCALE</h3>
       <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2">
         {[
           { name: "50", bg: "bg-slate-50", text: "text-slate-600" },
@@ -199,7 +199,7 @@ export const ColorMatrix = () => {
 
       {/* Gradient Examples */}
       <div className="mt-12">
-        <h3 className="font-ui text-sm uppercase tracking-wider text-slate-500 mb-4">Brand Gradients</h3>
+        <h3 className="label-tech text-slate-500 mb-4">BRAND GRADIENTS</h3>
         
         {/* Gradient constraint */}
         <BrandCallout variant="note" title="Gradient Usage Rule" className="mb-6">
@@ -231,7 +231,7 @@ export const ColorMatrix = () => {
 
       {/* Terrain Textures */}
       <div className="mt-12">
-        <h3 className="font-ui text-sm uppercase tracking-wider text-mineral-neutral mb-4">Terrain Textures</h3>
+        <h3 className="label-tech text-mineral-neutral mb-4">TERRAIN TEXTURES</h3>
         <p className="text-muted-foreground text-sm mb-4">
           Subtle background patterns that reinforce the field aesthetic. Use sparingly on cards and sections related to mining, minerals, and outdoor operations.
         </p>

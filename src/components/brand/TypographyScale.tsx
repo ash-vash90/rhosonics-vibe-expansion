@@ -4,7 +4,7 @@ export const TypographyScale = () => {
   return (
     <section id="typography" className="mb-32">
       <h2 className="section-header">Typography</h2>
-      <p className="font-ui text-sm uppercase tracking-wider text-slate-500 mb-6">Clarity, measurement, and trust</p>
+      <p className="font-ui text-sm text-slate-500 mb-6">Clarity, measurement, and trust</p>
       
       {/* Typography Philosophy */}
       <BrandCallout variant="rule" title="Typography Philosophy" className="mb-8">
@@ -20,68 +20,68 @@ export const TypographyScale = () => {
         <table className="w-full text-left">
           <thead className="bg-slate-50 border-b border-border">
             <tr>
-              <th className="px-6 py-4 font-ui text-xs uppercase tracking-wider text-slate-500">Role</th>
-              <th className="px-6 py-4 font-ui text-xs uppercase tracking-wider text-slate-500">Example</th>
-              <th className="px-6 py-4 font-ui text-xs uppercase tracking-wider text-slate-500 text-right hidden md:table-cell">Specification</th>
+              <th className="px-6 py-4 label-tech text-slate-500">ROLE</th>
+              <th className="px-6 py-4 label-tech text-slate-500">EXAMPLE</th>
+              <th className="px-6 py-4 label-tech text-slate-500 text-right hidden md:table-cell">SPECIFICATION</th>
             </tr>
           </thead>
           <tbody>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 font-ui text-xs uppercase tracking-wider text-slate-500">Logo</td>
+              <td className="px-6 py-5 label-tech text-slate-500">LOGO</td>
               <td className="px-6 py-5">
                 <span className="font-logo text-2xl text-foreground tracking-wide uppercase">RHOSONICS</span>
               </td>
-              <td className="px-6 py-5 text-right font-ui text-xs text-slate-500 hidden md:table-cell">
-                Unbounded 500
+              <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
+                UNBOUNDED 500
               </td>
             </tr>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 font-ui text-xs uppercase tracking-wider text-slate-500">Display</td>
+              <td className="px-6 py-5 label-tech text-slate-500">DISPLAY</td>
               <td className="px-6 py-5">
                 <span className="font-ui font-bold text-4xl text-foreground">Precision</span>
               </td>
-              <td className="px-6 py-5 text-right font-ui text-xs text-slate-500 hidden md:table-cell">
-                Instrument Sans 700
+              <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
+                INSTRUMENT SANS 700
               </td>
             </tr>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 font-ui text-xs uppercase tracking-wider text-slate-500">Heading</td>
+              <td className="px-6 py-5 label-tech text-slate-500">HEADING</td>
               <td className="px-6 py-5">
                 <span className="font-ui font-bold text-2xl text-foreground">Slurry Density</span>
               </td>
-              <td className="px-6 py-5 text-right font-ui text-xs text-slate-500 hidden md:table-cell">
-                Instrument Sans 700
+              <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
+                INSTRUMENT SANS 700
               </td>
             </tr>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 font-ui text-xs uppercase tracking-wider text-slate-500">Body</td>
+              <td className="px-6 py-5 label-tech text-slate-500">BODY</td>
               <td className="px-6 py-5">
                 <span className="font-ui text-base text-foreground">
                   Optimized density measurement reduced fresh water intake.
                 </span>
               </td>
-              <td className="px-6 py-5 text-right font-ui text-xs text-slate-500 hidden md:table-cell">
-                Instrument Sans 400
+              <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
+                INSTRUMENT SANS 400
               </td>
             </tr>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 font-ui text-xs uppercase tracking-wider text-slate-500">Data</td>
+              <td className="px-6 py-5 label-tech text-slate-500">DATA</td>
               <td className="px-6 py-5">
                 <span className="font-data text-sm bg-slate-100 px-2 py-1 rounded text-foreground">
                   1.4502 G/L
                 </span>
               </td>
-              <td className="px-6 py-5 text-right font-ui text-xs text-slate-500 hidden md:table-cell">
-                JetBrains Mono 500
+              <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
+                JETBRAINS MONO 500
               </td>
             </tr>
             <tr>
-              <td className="px-6 py-5 font-ui text-xs uppercase tracking-wider text-slate-500">Label</td>
+              <td className="px-6 py-5 label-tech text-slate-500">LABEL</td>
               <td className="px-6 py-5">
                 <span className="label-tech text-primary">PRIMARY MEASUREMENT</span>
               </td>
-              <td className="px-6 py-5 text-right font-ui text-xs text-slate-500 hidden md:table-cell">
-                JetBrains Mono 500 / Uppercase
+              <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
+                JETBRAINS MONO 500 / UPPERCASE
               </td>
             </tr>
           </tbody>
@@ -94,7 +94,7 @@ export const TypographyScale = () => {
       </BrandCallout>
 
       {/* Type Scale */}
-      <h3 className="font-ui text-sm uppercase tracking-wider text-slate-500 mb-2">Type Scale</h3>
+      <h3 className="label-tech text-slate-500 mb-2">TYPE SCALE</h3>
       <p className="text-sm text-muted-foreground mb-6 italic">
         Type size in this system reflects authority, not emphasis.
       </p>
@@ -102,19 +102,19 @@ export const TypographyScale = () => {
       {/* Role descriptions */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <span className="font-ui text-xs uppercase tracking-wider text-slate-400">Display</span>
+          <span className="label-tech text-slate-400">DISPLAY</span>
           <p className="text-sm text-foreground mt-1">Brand statements, section anchors</p>
         </div>
         <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <span className="font-ui text-xs uppercase tracking-wider text-slate-400">Headings</span>
+          <span className="label-tech text-slate-400">HEADINGS</span>
           <p className="text-sm text-foreground mt-1">Information structure</p>
         </div>
         <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <span className="font-ui text-xs uppercase tracking-wider text-slate-400">Body</span>
+          <span className="label-tech text-slate-400">BODY</span>
           <p className="text-sm text-foreground mt-1">Explanation and instruction</p>
         </div>
         <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <span className="font-ui text-xs uppercase tracking-wider text-slate-400">Data</span>
+          <span className="label-tech text-slate-400">DATA</span>
           <p className="text-sm text-foreground mt-1">Measurement and truth</p>
         </div>
       </div>
