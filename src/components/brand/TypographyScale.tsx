@@ -8,11 +8,13 @@ export const TypographyScale = () => {
       
       {/* Typography Philosophy */}
       <BrandCallout variant="rule" title="Typography Philosophy" className="mb-8">
-        Rhosonics typography prioritizes clarity, measurement, and trust. The system favors legibility over personality, structure over flourish, and consistency over novelty.
+        Rhosonics typography prioritizes clarity, measurement, and trust. The system favors legibility over personality, 
+        structure over flourish, and consistency over novelty.
       </BrandCallout>
       
       <p className="text-muted-foreground mb-8">
-        We speak to engineers and operators who evaluate claims critically. Monospaced type is used where precision matters. Humanist sans is used where explanation matters. The logo typeface appears only as the logo.
+        We speak to engineers and operators who evaluate claims critically. Typography that looks consistent reads as credible. 
+        Typography that looks styled reads as marketing. Precision through constraint.
       </p>
 
       {/* Font Families Table */}
@@ -88,10 +90,84 @@ export const TypographyScale = () => {
         </table>
       </div>
       
-      {/* Data Trust Rule */}
-      <BrandCallout variant="note" title="Data Typography Rule" className="mb-12">
-        Data should never be styled for excitement. Precision, spacing, and consistency matter more than visual impact.
+      {/* JetBrains Mono Rules */}
+      <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg mb-8">
+        <h4 className="font-ui font-semibold text-lg text-foreground mb-4">JetBrains Mono Usage Rules</h4>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <span className="label-tech text-primary mb-3 block">ALWAYS USED FOR</span>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Data values and measurements (1.4502 G/L)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Badges and status chips (ONLINE, ACTIVE)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Labels, table headers, chart axes</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>IDs, codes, and system indicators</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Always ALL CAPS when used as labels</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <span className="label-tech text-destructive mb-3 block">NEVER USED FOR</span>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-destructive mt-0.5">•</span>
+                <span>Body copy or paragraphs</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-destructive mt-0.5">•</span>
+                <span>Headings or section titles</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-destructive mt-0.5">•</span>
+                <span>Marketing or explanatory text</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-destructive mt-0.5">•</span>
+                <span>Any readable sentence or phrase</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <BrandCallout variant="avoid" title="The Paragraph Test" className="mb-12">
+        If text can be read as a paragraph, it must never be set in JetBrains Mono. 
+        JetBrains Mono is a signal font for scanning and categorization — not a reading font.
       </BrandCallout>
+
+      {/* Instrument Sans & Unbounded Rules */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
+          <h4 className="font-ui font-semibold text-lg text-foreground mb-3">Instrument Sans</h4>
+          <span className="label-tech text-slate-400 mb-3 block">THE READING FONT</span>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            All explanatory content, headings, and display typography use this family. 
+            It prioritizes legibility and calm authority. Use for anything that needs to be read and understood.
+          </p>
+        </div>
+        <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
+          <h4 className="font-logo text-lg text-foreground mb-3 uppercase">Unbounded</h4>
+          <span className="label-tech text-slate-400 mb-3 block">LOGO ONLY — NO EXCEPTIONS</span>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Reserved exclusively for the logo wordmark. It must never appear elsewhere in the system — 
+            not in headings, not in decorative text, not in any other context.
+          </p>
+        </div>
+      </div>
 
       {/* Type Scale */}
       <h3 className="label-tech text-slate-500 mb-2">TYPE SCALE</h3>
@@ -104,18 +180,22 @@ export const TypographyScale = () => {
         <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
           <span className="label-tech text-slate-400">DISPLAY</span>
           <p className="text-sm text-foreground mt-1">Brand statements, section anchors</p>
+          <span className="text-xs text-muted-foreground">Instrument Sans 700</span>
         </div>
         <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
           <span className="label-tech text-slate-400">HEADINGS</span>
           <p className="text-sm text-foreground mt-1">Information structure</p>
+          <span className="text-xs text-muted-foreground">Instrument Sans 700</span>
         </div>
         <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
           <span className="label-tech text-slate-400">BODY</span>
           <p className="text-sm text-foreground mt-1">Explanation and instruction</p>
+          <span className="text-xs text-muted-foreground">Instrument Sans 400</span>
         </div>
         <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
           <span className="label-tech text-slate-400">DATA</span>
           <p className="text-sm text-foreground mt-1">Measurement and truth</p>
+          <span className="text-xs text-muted-foreground">JetBrains Mono 500</span>
         </div>
       </div>
       
@@ -144,6 +224,12 @@ export const TypographyScale = () => {
       {/* Uppercase Labels Explanation */}
       <BrandCallout variant="note" title="Uppercase Label Usage" className="mt-12">
         Uppercase labels are used for categorization and scanning, not reading. They should remain short and functional.
+      </BrandCallout>
+
+      {/* Why This Matters */}
+      <BrandCallout variant="rule" title="Why This Matters" className="mt-8">
+        Precision through constraint. Engineers evaluate claims critically. Typography that looks consistent reads as credible. 
+        Typography that looks styled reads as marketing. The system enforces credibility through restraint.
       </BrandCallout>
 
       {/* Line Height & Letter Spacing */}
