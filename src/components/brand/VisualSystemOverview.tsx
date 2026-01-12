@@ -94,15 +94,15 @@ const VisualSystemOverview = () => {
 
           {/* Contextual elements - Softer treatment */}
           <div id="contextual" className="scroll-mt-24">
-            <div className="p-8 bg-slate-50 border border-mineral-neutral/40 rounded-lg">
+            <div className="p-8 bg-mineral-surface border border-mineral-neutral/40 rounded-lg">
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 bg-mineral-neutral/70 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-14 h-14 bg-mineral-neutral rounded-lg flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-7 h-7 text-white/90" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
                     <h4 className="font-ui text-xl font-semibold text-foreground/90">Contextual Elements</h4>
-                    <span className="font-data text-[10px] bg-mineral-neutral/70 text-white px-2 py-0.5 rounded tracking-widest">
+                    <span className="font-data text-[10px] bg-mineral-neutral text-white px-2 py-0.5 rounded tracking-widest">
                       SITUATIONAL
                     </span>
                   </div>
@@ -110,15 +110,17 @@ const VisualSystemOverview = () => {
                     These elements provide situational relevance:
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1.5 bg-mineral-surface/80 text-mineral-deep/80 text-sm rounded-lg">Field neutrals</span>
-                    <span className="px-3 py-1.5 bg-mineral-surface/80 text-mineral-deep/80 text-sm rounded-lg">Sustainability indicators</span>
-                    <span className="px-3 py-1.5 bg-mineral-surface/80 text-mineral-deep/80 text-sm rounded-lg">Textures & patterns</span>
+                    <span className="px-3 py-1.5 bg-white/60 text-mineral-deep text-sm rounded-lg">Field neutrals (Mineral)</span>
+                    <span className="px-3 py-1.5 bg-white/60 text-mineral-deep text-sm rounded-lg">Sustainability indicators</span>
+                    <span className="px-3 py-1.5 bg-white/60 text-mineral-deep text-sm rounded-lg">Textures & patterns</span>
                   </div>
                   <p className="text-sm text-slate-400 mt-4 italic">
                     They support specific contexts and are deliberately constrained.
                   </p>
-                  <BrandCallout variant="avoid" title="Important Constraint" className="mt-4">
-                    Contextual elements are not brand identifiers. They should never be used as primary visual anchors.
+                  <BrandCallout variant="avoid" title="Critical Separation: Slate vs Mineral" className="mt-4">
+                    <strong>Slate</strong> is for software: UI structure, text, forms, navigation, data containers. Cool, blue-biased, chromatically neutral.<br /><br />
+                    <strong>Mineral</strong> is for environment: field modules, industry panels, outdoor contexts. Warm-neutral, olive, stone-like tones.<br /><br />
+                    These are categorically different systems. Mineral colors must <strong>never</strong> substitute for Slate UI neutrals.
                   </BrandCallout>
                 </div>
               </div>
