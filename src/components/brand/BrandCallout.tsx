@@ -11,22 +11,22 @@ interface BrandCalloutProps {
 }
 
 const variantStyles: Record<CalloutVariant, {
-  rail: string;
+  container: string;
   icon: React.ElementType;
   iconColor: string;
 }> = {
   rule: {
-    rail: "border-l-primary",
+    container: "bg-primary/5 border-primary/20 border-l-primary",
     icon: CheckCircle2,
     iconColor: "text-primary",
   },
   note: {
-    rail: "border-l-slate-400",
+    container: "bg-slate-100 border-slate-200 border-l-slate-400",
     icon: Info,
     iconColor: "text-slate-500",
   },
   avoid: {
-    rail: "border-l-amber-500",
+    container: "bg-amber-50 border-amber-200 border-l-amber-500",
     icon: AlertTriangle,
     iconColor: "text-amber-600",
   },
@@ -44,8 +44,8 @@ export const BrandCallout = ({
   return (
     <div 
       className={cn(
-        "p-5 bg-slate-50 border border-slate-200 border-l-4 rounded-lg",
-        styles.rail,
+        "p-5 border border-l-4 rounded-lg",
+        styles.container,
         className
       )}
     >
