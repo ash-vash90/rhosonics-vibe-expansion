@@ -32,9 +32,7 @@ const ColorSwatch = ({
       <h3 className="font-ui font-bold text-lg text-foreground mb-2">{name}</h3>
       <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{description}</p>
       <div className="flex flex-wrap gap-3">
-        <span className="text-xs font-data font-medium text-primary bg-eco-surface px-3 py-1 rounded border border-eco-border">
-          USE FOR: {doUse}
-        </span>
+        
         <span className="text-xs font-data font-medium text-destructive bg-red-50 px-3 py-1 rounded border border-red-100">
           AVOID: {dontUse}
         </span>
