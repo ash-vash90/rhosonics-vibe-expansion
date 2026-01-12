@@ -73,13 +73,20 @@ export default {
           surface: "hsl(var(--eco-surface))",
           border: "hsl(var(--eco-border))",
         },
+        mineral: {
+          neutral: "hsl(var(--mineral-neutral))",
+          surface: "hsl(var(--mineral-surface))",
+          deep: "hsl(var(--mineral-deep))",
+          bronze: "hsl(var(--mineral-bronze))",
+        },
+        // Legacy earth aliases (use mineral-* in new code)
         earth: {
-          ochre: "hsl(var(--earth-ochre))",
+          ochre: "hsl(var(--mineral-neutral))",
           "ochre-light": "hsl(var(--earth-ochre-light))",
-          "ochre-dark": "hsl(var(--earth-ochre-dark))",
-          sand: "hsl(var(--earth-sand))",
-          clay: "hsl(var(--earth-clay))",
-          amber: "hsl(var(--earth-amber))",
+          "ochre-dark": "hsl(var(--mineral-deep))",
+          sand: "hsl(var(--mineral-surface))",
+          clay: "hsl(var(--mineral-deep))",
+          amber: "hsl(var(--mineral-bronze))",
         },
         slate: {
           50: "hsl(var(--slate-50))",

@@ -9,24 +9,24 @@ export const IndustryApplications = () => {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {/* Mineral Processing - Earth tones */}
-        <div className="relative overflow-hidden rounded-lg border border-earth-ochre/30">
+        {/* Mineral Processing - Mineral neutrals */}
+        <div className="relative overflow-hidden rounded-lg border border-mineral-neutral/30">
           <div className="absolute inset-0 bg-terrain-ore" />
           <div className="absolute inset-0 bg-terrain-strata opacity-30" />
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-earth-ochre to-earth-ochre-dark" />
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-mineral-neutral to-mineral-deep" />
           <div className="relative">
             <div className="p-6 border-b border-slate-800/50 flex justify-between items-center">
-              <span className="font-data text-xs uppercase tracking-wider text-earth-ochre">MINERALS</span>
-              <Beaker className="w-5 h-5 text-earth-ochre-light" />
+              <span className="font-data text-xs uppercase tracking-wider text-mineral-neutral">MINERALS</span>
+              <Beaker className="w-5 h-5 text-slate-400" />
             </div>
             <div className="p-6 text-slate-100">
               <div className="font-ui text-sm text-slate-400 mb-1">Thickener Underflow</div>
               <div className="font-ui font-bold text-3xl mb-4">1.68 SG</div>
 
-              <div className="bg-slate-800/80 rounded p-3 border border-earth-ochre/20">
+              <div className="bg-slate-800/80 rounded p-3 border border-mineral-neutral/20">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 rounded-full bg-earth-ochre"></div>
-                  <span className="font-data text-xs text-earth-ochre">FIELD DATA</span>
+                  <div className="w-2 h-2 rounded-full bg-mineral-neutral"></div>
+                  <span className="font-data text-xs text-mineral-neutral">FIELD DATA</span>
                 </div>
                 <div className="text-sm text-slate-300">
                   Maximized water recovery reduces tailings volume.
@@ -84,15 +84,15 @@ export const IndustryApplications = () => {
         </div>
       </div>
 
-      {/* Pattern Legend with earth accent */}
-      <div className="p-6 bg-slate-50 rounded-lg border border-slate-200 border-l-4 border-l-earth-ochre">
+      {/* Pattern Legend with mineral accent */}
+      <div className="p-6 bg-slate-50 rounded-lg border border-slate-200 border-l-4 border-l-mineral-neutral">
         <h4 className="font-ui font-bold text-lg mb-4">Industry Pattern Reference</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-pattern-minerals rounded border border-earth-ochre/50"></div>
+            <div className="w-16 h-16 bg-pattern-minerals rounded border border-mineral-neutral/50"></div>
             <div>
               <div className="font-ui font-medium text-foreground">Minerals</div>
-              <div className="text-sm text-earth-ochre-dark">Crystal lattice / field ops</div>
+              <div className="text-sm text-mineral-deep">Crystal lattice / field ops</div>
             </div>
           </div>
           <div className="flex items-center gap-4">

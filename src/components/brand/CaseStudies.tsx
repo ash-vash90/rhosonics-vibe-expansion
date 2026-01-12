@@ -64,7 +64,7 @@ export const CaseStudies = () => {
           <article 
             key={study.id}
             className={`group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
-              idx === 0 ? 'card-gradient chamfer-lg' : idx === 1 ? 'card-earth' : 'card-metal'
+              idx === 0 ? 'card-gradient chamfer-lg' : idx === 1 ? 'card-mineral' : 'card-metal'
             }`}
           >
             {/* Background texture */}
@@ -76,7 +76,7 @@ export const CaseStudies = () => {
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
                 <span className={`font-data text-xs uppercase tracking-wider ${
-                  idx === 0 ? 'text-slate-400' : idx === 1 ? 'text-earth-ochre-dark' : 'text-slate-500'
+                  idx === 0 ? 'text-slate-400' : idx === 1 ? 'text-mineral-deep' : 'text-slate-500'
                 }`}>
                   {study.industry}
                 </span>
@@ -84,7 +84,7 @@ export const CaseStudies = () => {
                   idx === 0 
                     ? 'bg-primary/20 text-primary' 
                     : idx === 1 
-                      ? 'bg-earth-ochre/20 text-earth-ochre-dark group-hover:bg-earth-ochre group-hover:text-white'
+                      ? 'bg-mineral-neutral/20 text-mineral-deep group-hover:bg-mineral-neutral group-hover:text-white'
                       : 'bg-slate-200 text-slate-600 group-hover:bg-primary group-hover:text-white'
                 }`}>
                   {study.icon}
@@ -94,12 +94,12 @@ export const CaseStudies = () => {
               {/* Main stat */}
               <div className="mb-6">
                 <div className={`text-5xl font-bold font-ui tracking-tight mb-1 transition-colors ${
-                  idx === 0 ? 'text-primary' : idx === 1 ? 'text-earth-ochre-dark group-hover:text-earth-ochre' : 'text-foreground group-hover:text-primary'
+                  idx === 0 ? 'text-primary' : idx === 1 ? 'text-mineral-deep group-hover:text-mineral-neutral' : 'text-foreground group-hover:text-primary'
                 }`}>
                   {study.stat}
                 </div>
                 <div className={`text-sm font-medium ${
-                  idx === 0 ? 'text-slate-300' : idx === 1 ? 'text-earth-clay' : 'text-slate-500'
+                  idx === 0 ? 'text-slate-300' : idx === 1 ? 'text-mineral-deep' : 'text-slate-500'
                 }`}>
                   {study.statLabel}
                 </div>
@@ -112,19 +112,19 @@ export const CaseStudies = () => {
                 {study.title}
               </h3>
               <p className={`text-sm leading-relaxed mb-6 ${
-                idx === 0 ? 'text-slate-300' : idx === 1 ? 'text-earth-clay' : 'text-slate-500'
+                idx === 0 ? 'text-slate-300' : idx === 1 ? 'text-mineral-deep' : 'text-slate-500'
               }`}>
                 {study.description}
               </p>
 
               {/* Metrics */}
               <div className={`grid grid-cols-3 gap-2 p-4 rounded-lg ${
-                idx === 0 ? 'bg-slate-800/50' : idx === 1 ? 'bg-earth-ochre/10' : 'bg-slate-100'
+                idx === 0 ? 'bg-slate-800/50' : idx === 1 ? 'bg-mineral-neutral/10' : 'bg-slate-100'
               }`}>
                 {study.metrics.map((metric) => (
                   <div key={metric.label} className="text-center">
                     <div className={`font-data text-xs uppercase tracking-wider mb-1 ${
-                      idx === 0 ? 'text-slate-500' : idx === 1 ? 'text-earth-ochre' : 'text-slate-400'
+                      idx === 0 ? 'text-slate-500' : idx === 1 ? 'text-mineral-neutral' : 'text-slate-400'
                     }`}>
                       {metric.label}
                     </div>
@@ -143,7 +143,7 @@ export const CaseStudies = () => {
                   idx === 0 
                     ? 'text-primary hover:text-primary/80' 
                     : idx === 1 
-                      ? 'text-earth-ochre-dark hover:text-earth-ochre'
+                      ? 'text-mineral-deep hover:text-mineral-neutral'
                       : 'text-slate-600 hover:text-primary'
                 }`}
                 aria-label={`Read full ${study.industry} case study`}
