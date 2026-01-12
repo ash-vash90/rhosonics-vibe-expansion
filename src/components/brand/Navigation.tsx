@@ -7,87 +7,104 @@ import { exportDesignSystemPDF } from "@/lib/designSystemExport";
 interface NavSection {
   id: string;
   label: string;
-  bridge?: string;
   items: { id: string; label: string; highlight?: boolean }[];
 }
 
 const navSections: NavSection[] = [
   {
-    id: "01",
-    label: "THE PROBLEM",
+    id: "00",
+    label: "ABOUT",
     items: [
-      { id: "the-problem", label: "Industry Challenges" },
+      { id: "about", label: "About This System" },
+      { id: "who-for", label: "Who It's For" },
+      { id: "how-to-use", label: "How to Use" },
+    ],
+  },
+  {
+    id: "01",
+    label: "POSITIONING",
+    items: [
+      { id: "positioning", label: "Brand Positioning" },
+      { id: "what-we-communicate", label: "Core Attributes" },
+      { id: "audience", label: "Audience Reality" },
     ],
   },
   {
     id: "02",
-    label: "THE SOLUTION",
+    label: "PRINCIPLES",
     items: [
-      { id: "the-solution", label: "Ultrasonic Technology" },
+      { id: "principles", label: "Brand Principles" },
+      { id: "precision-decoration", label: "Precision First" },
+      { id: "expression-intent", label: "Expression with Intent" },
+      { id: "engineered", label: "Engineered, Not Styled" },
+      { id: "consistency", label: "Consistency Enables Flexibility" },
     ],
   },
   {
     id: "03",
-    label: "THE HERITAGE",
+    label: "SYSTEM OVERVIEW",
     items: [
-      { id: "the-heritage", label: "Origin Story" },
-      { id: "origin", label: "Our Story" },
-      { id: "mission", label: "Mission & Vision" },
+      { id: "visual-system", label: "System Structure" },
+      { id: "foundations", label: "Foundations Layer" },
+      { id: "signals", label: "Signals Layer" },
+      { id: "contextual", label: "Contextual Layer" },
     ],
   },
   {
     id: "04",
-    label: "THE IDENTITY",
-    bridge: "Visual system.",
+    label: "COLOR",
     items: [
-      { id: "the-identity", label: "Visual System" },
-      { id: "intro", label: "Brand Ethos" },
-      { id: "lockup", label: "Master Lockup" },
-      { id: "colors", label: "Color Matrix" },
-      { id: "typography", label: "Typography Scale" },
-      { id: "spacing", label: "Spacing System" },
-      { id: "assets", label: "Logo System" },
-      { id: "icons", label: "Icon Guidelines" },
+      { id: "colors", label: "Color System" },
     ],
   },
   {
     id: "05",
-    label: "THE VOICE",
+    label: "TYPOGRAPHY",
     items: [
-      { id: "the-voice", label: "Tone & Motion" },
-      { id: "voice", label: "Voice & Tone" },
-      { id: "motion", label: "Motion Design" },
-      { id: "dos-donts", label: "Do's & Don'ts" },
+      { id: "typography", label: "Typography" },
     ],
   },
   {
     id: "06",
-    label: "THE APPLICATION",
+    label: "LOGO & ASSETS",
     items: [
-      { id: "the-application", label: "Industry Use" },
-      { id: "industries", label: "Industry Apps" },
-      { id: "eco", label: "Eco Components", highlight: true },
-      { id: "imagery", label: "Imagery Guide" },
-      { id: "components", label: "Interface Kit" },
+      { id: "logo-assets", label: "Logo System" },
     ],
   },
   {
     id: "07",
-    label: "THE PROOF",
+    label: "VOICE & TONE",
     items: [
-      { id: "the-proof", label: "Evidence & Data" },
-      { id: "comparison", label: "Tech Comparison" },
-      { id: "cases", label: "Case Studies", highlight: true },
-      { id: "case-studies-page", label: "Full Case Studies →", highlight: true },
+      { id: "voice", label: "Voice & Tone" },
     ],
   },
   {
     id: "08",
-    label: "THE RESOURCES",
-    bridge: "Downloads & tools.",
+    label: "IMAGERY & MOTION",
     items: [
-      { id: "the-resources", label: "Downloads & Tools" },
-      { id: "downloads", label: "Downloads", highlight: true },
+      { id: "imagery", label: "Imagery & Motion" },
+    ],
+  },
+  {
+    id: "09",
+    label: "APPLICATIONS",
+    items: [
+      { id: "applications", label: "Industry Applications" },
+    ],
+  },
+  {
+    id: "10",
+    label: "PROOF & EXAMPLES",
+    items: [
+      { id: "proof", label: "Evidence & Data" },
+      { id: "case-studies-page", label: "Full Case Studies →", highlight: true },
+    ],
+  },
+  {
+    id: "11",
+    label: "RESOURCES",
+    items: [
+      { id: "resources", label: "Downloads & Tools" },
       { id: "content-library", label: "Content Library", highlight: true },
       { id: "presentations-page", label: "Presentations →", highlight: true },
       { id: "ai-tools-page", label: "All AI Tools →", highlight: true },
@@ -106,8 +123,8 @@ const getSectionForItem = (itemId: string): string | null => {
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<string[]>(["01"]);
-  const [activeSection, setActiveSection] = useState<string | null>("the-problem");
+  const [expandedSections, setExpandedSections] = useState<string[]>(["00"]);
+  const [activeSection, setActiveSection] = useState<string | null>("about");
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Scroll spy effect
@@ -206,7 +223,7 @@ export const Navigation = () => {
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
           <button 
-            onClick={() => scrollToSection('the-problem')}
+            onClick={() => scrollToSection('about')}
             className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
           >
             <div className="w-7 h-7">
@@ -344,7 +361,7 @@ export const Navigation = () => {
             </button>
             <button
               onClick={() => {
-                const downloadsSection = document.getElementById('downloads');
+                const downloadsSection = document.getElementById('resources');
                 if (downloadsSection) {
                   downloadsSection.scrollIntoView({ behavior: 'smooth' });
                 }
@@ -375,7 +392,7 @@ export const Navigation = () => {
       {/* Top Header Bar - Mobile & Tablet */}
       <div className="fixed top-0 left-0 right-0 h-14 bg-rho-obsidian/95 backdrop-blur-sm border-b border-slate-800/80 flex items-center justify-between px-4 z-30 xl:hidden">
         <button 
-          onClick={() => scrollToSection('the-problem')}
+          onClick={() => scrollToSection('about')}
           className="flex items-center gap-2 touch-manipulation"
         >
           <div className="w-6 h-6">
