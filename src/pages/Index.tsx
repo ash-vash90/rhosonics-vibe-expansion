@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect, useRef } from "react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
 import { Zap } from "lucide-react";
-import { QuickNav } from "@/components/brand/QuickNav";
+
 import { ChapterProgress } from "@/components/brand/ChapterProgress";
 import { Navigation } from "@/components/brand/Navigation";
 
@@ -316,7 +316,6 @@ const Index = () => {
       {/* Main Content Area */}
       <div className="flex-1 min-w-0">
         {/* Navigation overlays */}
-        <QuickNav />
         <ChapterProgress />
       
       {/* ═══════════════════════════════════════════════════════════════
