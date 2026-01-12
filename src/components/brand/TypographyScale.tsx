@@ -5,12 +5,10 @@ export const TypographyScale = () => {
       <p className="label-tech text-slate-500 mb-6">CLARITY, MEASUREMENT, AND TRUST</p>
       
       {/* Typography Philosophy */}
-      <div className="p-6 bg-slate-50 rounded-lg mb-8 border border-slate-200">
-        <p className="font-ui font-semibold text-lg text-foreground leading-relaxed">
-          Rhosonics typography prioritizes clarity, measurement, and trust.
-        </p>
-        <p className="text-muted-foreground mt-2">
-          The system favors legibility over personality, structure over flourish, and consistency over novelty.
+      <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-8">
+        <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Typography Philosophy</h4>
+        <p className="text-sm text-muted-foreground">
+          Rhosonics typography prioritizes clarity, measurement, and trust. The system favors legibility over personality, structure over flourish, and consistency over novelty.
         </p>
       </div>
       

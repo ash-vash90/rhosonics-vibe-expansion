@@ -1,4 +1,4 @@
-import { AlertTriangle } from "lucide-react";
+
 
 interface ColorSwatchProps {
   name: string;
@@ -141,12 +141,10 @@ export const ColorMatrix = () => {
       <p className="label-tech text-slate-500 mb-6">HOW COLOR FUNCTIONS INSIDE THE SYSTEM</p>
       
       {/* Functional Framing Rule */}
-      <div className="p-6 bg-slate-50 rounded-lg mb-8 border border-slate-200">
-        <p className="font-ui font-semibold text-lg text-foreground leading-relaxed">
-          Color in the Rhosonics system is functional, not atmospheric.
-        </p>
-        <p className="text-muted-foreground mt-2">
-          Every color exists to communicate state, structure, or context — never mood.
+      <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-8">
+        <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Functional Color Principle</h4>
+        <p className="text-sm text-muted-foreground">
+          Color in the Rhosonics system is functional, not atmospheric. Every color exists to communicate state, structure, or context — never mood.
         </p>
       </div>
       
@@ -207,9 +205,12 @@ export const ColorMatrix = () => {
         <h3 className="label-tech text-slate-500 mb-4">BRAND GRADIENTS</h3>
         
         {/* Gradient constraint */}
-        <p className="text-sm text-muted-foreground mb-6 italic">
-          Gradients are used to create depth or transition — never as decoration. Flat color is preferred unless depth adds meaning.
-        </p>
+        <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-6">
+          <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Gradient Usage Rule</h4>
+          <p className="text-sm text-muted-foreground">
+            Gradients are used to create depth or transition — never as decoration. Flat color is preferred unless depth adds meaning.
+          </p>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="h-32 bg-brand-gradient rounded-lg flex items-end p-4">
@@ -242,9 +243,9 @@ export const ColorMatrix = () => {
         </p>
         
         {/* Terrain constraint */}
-        <div className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg mb-6">
-          <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-          <p className="text-sm text-amber-800">
+        <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-6">
+          <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Texture Usage Rule</h4>
+          <p className="text-sm text-muted-foreground">
             Terrain textures must never compete with data, controls, or primary messaging. If a texture is noticeable before the content, it is being overused.
           </p>
         </div>
