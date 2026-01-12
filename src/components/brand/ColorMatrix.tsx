@@ -1,4 +1,4 @@
-
+import { BrandCallout } from "./BrandCallout";
 
 interface ColorSwatchProps {
   name: string;
@@ -138,22 +138,19 @@ export const ColorMatrix = () => {
   return (
     <section id="colors" className="mb-32">
       <h2 className="section-header">Color Roles</h2>
-      <p className="label-tech text-slate-500 mb-6">HOW COLOR FUNCTIONS INSIDE THE SYSTEM</p>
+      <p className="font-ui text-sm uppercase tracking-wider text-slate-500 mb-6">How color functions inside the system</p>
       
       {/* Functional Framing Rule */}
-      <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-8">
-        <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Functional Color Principle</h4>
-        <p className="text-sm text-muted-foreground">
-          Color in the Rhosonics system is functional, not atmospheric. Every color exists to communicate state, structure, or context — never mood.
-        </p>
-      </div>
+      <BrandCallout variant="rule" title="Functional Color Principle" className="mb-8">
+        Color in the Rhosonics system is functional, not atmospheric. Every color exists to communicate state, structure, or context — never mood.
+      </BrandCallout>
       
       <p className="text-muted-foreground mb-8">
         Our palette comes from the places we work: control room panels, active measurement indicators, field sites. Forty years of deployment informed these choices.
       </p>
 
       {/* Primary Colors */}
-      <h3 className="label-tech text-primary mb-4">SIGNAL COLORS</h3>
+      <h3 className="font-ui text-sm uppercase tracking-wider text-primary mb-4">Signal Colors</h3>
       <div className="flex flex-col gap-6 mb-12">
         {primaryColors.map((color) => (
           <ColorSwatch key={color.hex} {...color} />
@@ -161,7 +158,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* Mineral Colors */}
-      <h3 className="label-tech text-mineral-neutral mb-4">FIELD AESTHETIC — MINERAL NEUTRALS</h3>
+      <h3 className="font-ui text-sm uppercase tracking-wider text-mineral-neutral mb-4">Field Aesthetic — Mineral Neutrals</h3>
       <p className="text-sm text-muted-foreground mb-6">
         These colors are inspired by coated metals, enclosures, control-room hardware, and mineral surfaces. They support industrial contexts without fighting the core UI palette.
       </p>
@@ -172,7 +169,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* Eco Colors */}
-      <h3 className="label-tech text-primary mb-4">SUSTAINABILITY TINTS</h3>
+      <h3 className="font-ui text-sm uppercase tracking-wider text-primary mb-4">Sustainability Tints</h3>
       <div className="flex flex-col gap-6 mb-12">
         {ecoColors.map((color) => (
           <ColorSwatch key={color.hex} {...color} />
@@ -180,7 +177,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* Slate Scale */}
-      <h3 className="label-tech text-slate-500 mb-4">THE SLATE SCALE</h3>
+      <h3 className="font-ui text-sm uppercase tracking-wider text-slate-500 mb-4">The Slate Scale</h3>
       <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2">
         {[
           { name: "50", bg: "bg-slate-50", text: "text-slate-600" },
@@ -202,15 +199,12 @@ export const ColorMatrix = () => {
 
       {/* Gradient Examples */}
       <div className="mt-12">
-        <h3 className="label-tech text-slate-500 mb-4">BRAND GRADIENTS</h3>
+        <h3 className="font-ui text-sm uppercase tracking-wider text-slate-500 mb-4">Brand Gradients</h3>
         
         {/* Gradient constraint */}
-        <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-6">
-          <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Gradient Usage Rule</h4>
-          <p className="text-sm text-muted-foreground">
-            Gradients are used to create depth or transition — never as decoration. Flat color is preferred unless depth adds meaning.
-          </p>
-        </div>
+        <BrandCallout variant="note" title="Gradient Usage Rule" className="mb-6">
+          Gradients are used to create depth or transition — never as decoration. Flat color is preferred unless depth adds meaning.
+        </BrandCallout>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="h-32 bg-brand-gradient rounded-lg flex items-end p-4">
@@ -237,18 +231,15 @@ export const ColorMatrix = () => {
 
       {/* Terrain Textures */}
       <div className="mt-12">
-        <h3 className="label-tech text-mineral-neutral mb-4">TERRAIN TEXTURES</h3>
+        <h3 className="font-ui text-sm uppercase tracking-wider text-mineral-neutral mb-4">Terrain Textures</h3>
         <p className="text-muted-foreground text-sm mb-4">
           Subtle background patterns that reinforce the field aesthetic. Use sparingly on cards and sections related to mining, minerals, and outdoor operations.
         </p>
         
         {/* Terrain constraint */}
-        <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-6">
-          <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Texture Usage Rule</h4>
-          <p className="text-sm text-muted-foreground">
-            Terrain textures must never compete with data, controls, or primary messaging. If a texture is noticeable before the content, it is being overused.
-          </p>
-        </div>
+        <BrandCallout variant="avoid" title="Texture Usage Rule" className="mb-6">
+          Terrain textures must never compete with data, controls, or primary messaging. If a texture is noticeable before the content, it is being overused.
+        </BrandCallout>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="h-28 rounded-lg border border-mineral-neutral/30 bg-mineral-surface bg-terrain-contour flex flex-col justify-end p-4">

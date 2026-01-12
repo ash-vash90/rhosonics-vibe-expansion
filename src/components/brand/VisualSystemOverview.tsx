@@ -1,4 +1,5 @@
 import { Zap, MapPin, ArrowRight, Layers } from "lucide-react";
+import { BrandCallout } from "./BrandCallout";
 
 const VisualSystemOverview = () => {
   return (
@@ -32,9 +33,9 @@ const VisualSystemOverview = () => {
           <div id="foundations" className="scroll-mt-24 relative">
             <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-slate-400 to-transparent hidden md:block" />
             
-            <div className="p-8 bg-gradient-to-br from-slate-100 to-slate-50 border-[3px] border-slate-300 rounded-2xl shadow-sm">
+            <div className="p-8 bg-slate-50 border-2 border-slate-300 rounded-lg">
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 bg-slate-900 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                <div className="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
                   <Layers className="w-7 h-7 text-white" />
                 </div>
                 <div className="flex-1">
@@ -65,9 +66,9 @@ const VisualSystemOverview = () => {
           <div id="signals" className="scroll-mt-24 relative">
             <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-primary/40 to-transparent hidden md:block" />
             
-            <div className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/30 rounded-2xl shadow-[0_0_24px_-6px_hsl(var(--primary)/0.2)]">
+            <div className="p-8 bg-slate-50 border-2 border-primary/30 rounded-lg">
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/25">
+                <div className="w-14 h-14 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/25">
                   <Zap className="w-7 h-7 text-white" />
                 </div>
                 <div className="flex-1">
@@ -95,9 +96,9 @@ const VisualSystemOverview = () => {
 
           {/* Contextual elements - Softer treatment */}
           <div id="contextual" className="scroll-mt-24">
-            <div className="p-8 bg-gradient-to-br from-mineral-surface/40 to-white border border-mineral-neutral/40 rounded-2xl">
+            <div className="p-8 bg-slate-50 border border-mineral-neutral/40 rounded-lg">
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 bg-mineral-neutral/70 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-14 h-14 bg-mineral-neutral/70 rounded-lg flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-7 h-7 text-white/90" />
                 </div>
                 <div className="flex-1">
@@ -118,11 +119,9 @@ const VisualSystemOverview = () => {
                   <p className="text-sm text-slate-400 mt-4 italic">
                     They support specific contexts and are deliberately constrained.
                   </p>
-                  <div className="mt-4 p-3 bg-amber-50/80 border border-amber-200/80 rounded-lg">
-                    <p className="text-sm text-amber-700">
-                      <strong>Note:</strong> They are not brand identifiers.
-                    </p>
-                  </div>
+                  <BrandCallout variant="avoid" title="Important Constraint" className="mt-4">
+                    Contextual elements are not brand identifiers. They should never be used as primary visual anchors.
+                  </BrandCallout>
                 </div>
               </div>
             </div>
@@ -168,11 +167,9 @@ const VisualSystemOverview = () => {
             </li>
           </ul>
           
-          <div className="mt-8 p-6 bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary rounded-r-lg">
-            <p className="text-foreground font-medium">
-              This structure allows the brand to be both clear and characterful, without relying on excess.
-            </p>
-          </div>
+          <BrandCallout variant="rule" title="System Benefit" className="mt-8">
+            This structure allows the brand to be both clear and characterful, without relying on excess.
+          </BrandCallout>
         </div>
       </div>
 
@@ -197,7 +194,7 @@ const VisualSystemOverview = () => {
           ].map((item) => (
             <div 
               key={item.section}
-              className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors group cursor-pointer"
+              className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors group cursor-pointer"
             >
               <span className="font-data text-sm text-primary font-medium">{item.section}</span>
               <span className="text-slate-700 flex-1">{item.label}</span>

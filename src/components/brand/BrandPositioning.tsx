@@ -1,4 +1,5 @@
-import { Target, Shield, Lightbulb, Eye, BarChart3, Type, Palette, Layers, ArrowRight } from "lucide-react";
+import { Target, Shield, Lightbulb, Eye, BarChart3, Type, Palette, Layers } from "lucide-react";
+import { BrandCallout } from "./BrandCallout";
 
 const BrandPositioning = () => {
   return (
@@ -22,7 +23,7 @@ const BrandPositioning = () => {
           <div className="relative">
             <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-primary/20 rounded-full" />
             <div className="pl-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <Target className="w-6 h-6 text-primary" />
               </div>
               <h4 className="font-ui text-xl font-semibold text-foreground mb-3">Precision</h4>
@@ -35,7 +36,7 @@ const BrandPositioning = () => {
           <div className="relative">
             <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-primary/20 rounded-full" />
             <div className="pl-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-primary" />
               </div>
               <h4 className="font-ui text-xl font-semibold text-foreground mb-3">Resilience</h4>
@@ -48,7 +49,7 @@ const BrandPositioning = () => {
           <div className="relative">
             <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-primary/20 rounded-full" />
             <div className="pl-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <Lightbulb className="w-6 h-6 text-primary" />
               </div>
               <h4 className="font-ui text-xl font-semibold text-foreground mb-3">Intelligence</h4>
@@ -64,19 +65,9 @@ const BrandPositioning = () => {
         </p>
         
         {/* Decision-making heuristic */}
-        <div className="mt-8 p-6 bg-primary/5 border border-primary/20 rounded-xl">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-              <ArrowRight className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <span className="font-data text-xs text-primary tracking-widest">DECISION RULE</span>
-              <p className="text-foreground mt-2 leading-relaxed">
-                When choosing between two valid design options, prefer the one that improves clarity, reinforces performance, or reveals insight.
-              </p>
-            </div>
-          </div>
-        </div>
+        <BrandCallout variant="rule" title="Decision Rule" className="mt-8">
+          When choosing between two valid design options, prefer the one that improves clarity, reinforces performance, or reveals insight.
+        </BrandCallout>
       </div>
 
       {/* How positioning shapes expression */}
@@ -99,8 +90,8 @@ const BrandPositioning = () => {
         <p className="text-lg text-slate-600 mb-6">In practice, this leads to:</p>
         
         <div className="grid sm:grid-cols-2 gap-4">
-          <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-xl">
-            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
+          <div className="flex items-start gap-4 p-5 bg-slate-50 border border-slate-200 rounded-lg">
+            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0 border border-slate-100">
               <Eye className="w-4 h-4 text-primary" />
             </div>
             <div>
@@ -109,8 +100,8 @@ const BrandPositioning = () => {
             </div>
           </div>
           
-          <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-xl">
-            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
+          <div className="flex items-start gap-4 p-5 bg-slate-50 border border-slate-200 rounded-lg">
+            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0 border border-slate-100">
               <BarChart3 className="w-4 h-4 text-primary" />
             </div>
             <div>
@@ -119,8 +110,8 @@ const BrandPositioning = () => {
             </div>
           </div>
           
-          <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-xl">
-            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
+          <div className="flex items-start gap-4 p-5 bg-slate-50 border border-slate-200 rounded-lg">
+            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0 border border-slate-100">
               <Palette className="w-4 h-4 text-primary" />
             </div>
             <div>
@@ -129,8 +120,8 @@ const BrandPositioning = () => {
             </div>
           </div>
           
-          <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-xl">
-            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
+          <div className="flex items-start gap-4 p-5 bg-slate-50 border border-slate-200 rounded-lg">
+            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0 border border-slate-100">
               <Type className="w-4 h-4 text-primary" />
             </div>
             <div>
@@ -139,8 +130,8 @@ const BrandPositioning = () => {
             </div>
           </div>
           
-          <div className="flex items-start gap-4 p-5 bg-slate-50 rounded-xl sm:col-span-2 sm:max-w-md">
-            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
+          <div className="flex items-start gap-4 p-5 bg-slate-50 border border-slate-200 rounded-lg sm:col-span-2 sm:max-w-md">
+            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0 border border-slate-100">
               <Layers className="w-4 h-4 text-primary" />
             </div>
             <div>
@@ -188,11 +179,9 @@ const BrandPositioning = () => {
             not exaggeration.
           </p>
           
-          <div className="p-6 bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary rounded-r-lg mt-6">
-            <p className="text-foreground font-medium">
-              This system is designed to meet that expectation.
-            </p>
-          </div>
+          <BrandCallout variant="rule" title="Audience Expectation" className="mt-6">
+            This system is designed to meet that expectation.
+          </BrandCallout>
         </div>
       </div>
     </div>
