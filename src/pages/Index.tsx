@@ -392,14 +392,10 @@ const Index = () => {
         {/* Content */}
         <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
           <div className="max-w-7xl mx-auto">
-            {/* Top bar with logo and document type */}
+            {/* Top bar with document type */}
             <div className="flex items-center justify-between mb-16 md:mb-24">
-              <div className="hero-logo flex items-center gap-3">
-                <div className="w-10 h-10 md:w-12 md:h-12 relative">
-                  <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl" />
-                  <RhosonicsLogo variant="gradient" />
-                </div>
-                <span className="font-logo text-xl md:text-2xl text-white tracking-wide uppercase">RHOSONICS</span>
+              <div className="hero-logo">
+                <span className="font-logo text-lg md:text-xl text-white tracking-wide uppercase">RHOSONICS</span>
               </div>
               <div className="hero-badge hidden sm:flex items-center gap-3">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
@@ -410,7 +406,7 @@ const Index = () => {
             {/* Main headline - dramatic sizing */}
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
               <div className="lg:col-span-8">
-                <h1 className="font-ui text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white leading-[0.95] tracking-tight">
+                <h1 className="font-ui text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[0.95] tracking-tight">
                   <span className="hero-line-1 block">We measure</span>
                   <span className="hero-line-2 relative inline-block">
                     <span className="bg-gradient-to-r from-rho-green-accent via-primary to-rho-green bg-clip-text text-transparent">
