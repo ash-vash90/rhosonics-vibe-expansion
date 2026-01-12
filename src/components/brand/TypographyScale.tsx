@@ -1,9 +1,21 @@
 export const TypographyScale = () => {
   return (
     <section id="typography" className="mb-32">
-      <h2 className="section-header">Typography Scale</h2>
+      <h2 className="section-header">Typography</h2>
+      <p className="label-tech text-slate-500 mb-6">CLARITY, MEASUREMENT, AND TRUST</p>
+      
+      {/* Typography Philosophy */}
+      <div className="p-6 bg-slate-900 text-slate-100 rounded-lg mb-8 border-l-4 border-primary">
+        <p className="font-ui text-lg leading-relaxed">
+          Rhosonics typography prioritizes clarity, measurement, and trust.
+        </p>
+        <p className="text-slate-400 mt-2">
+          The system favors legibility over personality, structure over flourish, and consistency over novelty.
+        </p>
+      </div>
+      
       <p className="text-muted-foreground mb-8">
-        We speak to engineers. JetBrains Mono for data. Instrument Sans for everything else. Unbounded for the logo only.
+        We speak to engineers and operators who evaluate claims critically. Monospaced type is used where precision matters. Humanist sans is used where explanation matters. The logo typeface appears only as the logo.
       </p>
 
       {/* Font Families Table */}
@@ -18,69 +30,101 @@ export const TypographyScale = () => {
           </thead>
           <tbody>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 label-tech text-slate-500">Logo</td>
+              <td className="px-6 py-5 label-tech text-slate-500">LOGO</td>
               <td className="px-6 py-5">
                 <span className="font-logo text-2xl text-foreground tracking-wide uppercase">RHOSONICS</span>
               </td>
               <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
-                Unbounded 500
+                UNBOUNDED 500
               </td>
             </tr>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 label-tech text-slate-500">Display</td>
+              <td className="px-6 py-5 label-tech text-slate-500">DISPLAY</td>
               <td className="px-6 py-5">
                 <span className="font-ui font-bold text-4xl text-foreground">Precision</span>
               </td>
               <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
-                Instrument Sans 700
+                INSTRUMENT SANS 700
               </td>
             </tr>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 label-tech text-slate-500">Heading</td>
+              <td className="px-6 py-5 label-tech text-slate-500">HEADING</td>
               <td className="px-6 py-5">
                 <span className="font-ui font-bold text-2xl text-foreground">Slurry Density</span>
               </td>
               <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
-                Instrument Sans 700
+                INSTRUMENT SANS 700
               </td>
             </tr>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 label-tech text-slate-500">Body</td>
+              <td className="px-6 py-5 label-tech text-slate-500">BODY</td>
               <td className="px-6 py-5">
                 <span className="font-ui text-base text-foreground">
                   Optimized density measurement reduced fresh water intake.
                 </span>
               </td>
               <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
-                Instrument Sans 400
+                INSTRUMENT SANS 400
               </td>
             </tr>
             <tr className="border-b border-slate-100">
-              <td className="px-6 py-5 label-tech text-slate-500">Data</td>
+              <td className="px-6 py-5 label-tech text-slate-500">DATA</td>
               <td className="px-6 py-5">
                 <span className="font-data text-sm bg-slate-100 px-2 py-1 rounded text-foreground">
-                  1.4502 g/L
+                  1.4502 G/L
                 </span>
               </td>
               <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
-                JetBrains Mono 500
+                JETBRAINS MONO 500
               </td>
             </tr>
             <tr>
-              <td className="px-6 py-5 label-tech text-slate-500">Label</td>
+              <td className="px-6 py-5 label-tech text-slate-500">LABEL</td>
               <td className="px-6 py-5">
                 <span className="label-tech text-primary">PRIMARY MEASUREMENT</span>
               </td>
               <td className="px-6 py-5 text-right label-tech text-slate-500 hidden md:table-cell">
-                JetBrains Mono 500 / UPPERCASE
+                JETBRAINS MONO 500 / UPPERCASE
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      
+      {/* Data Trust Rule */}
+      <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-12">
+        <h4 className="label-tech text-slate-500 mb-3">DATA TYPOGRAPHY RULE</h4>
+        <p className="text-sm text-muted-foreground italic">
+          Data should never be styled for excitement. Precision, spacing, and consistency matter more than visual impact.
+        </p>
+      </div>
 
       {/* Type Scale */}
-      <h3 className="label-tech text-slate-500 mb-4">TYPE SCALE</h3>
+      <h3 className="label-tech text-slate-500 mb-2">TYPE SCALE</h3>
+      <p className="text-sm text-muted-foreground mb-6 italic">
+        Type size in this system reflects authority, not emphasis.
+      </p>
+      
+      {/* Role descriptions */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <span className="label-tech text-slate-400 text-xs">DISPLAY</span>
+          <p className="text-sm text-foreground mt-1">Brand statements, section anchors</p>
+        </div>
+        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <span className="label-tech text-slate-400 text-xs">HEADINGS</span>
+          <p className="text-sm text-foreground mt-1">Information structure</p>
+        </div>
+        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <span className="label-tech text-slate-400 text-xs">BODY</span>
+          <p className="text-sm text-foreground mt-1">Explanation and instruction</p>
+        </div>
+        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <span className="label-tech text-slate-400 text-xs">DATA</span>
+          <p className="text-sm text-foreground mt-1">Measurement and truth</p>
+        </div>
+      </div>
+      
       <div className="space-y-6">
         {[
           { size: "5xl", px: "48px", example: "Display Hero" },
@@ -98,9 +142,17 @@ export const TypographyScale = () => {
             <div className={`font-ui font-medium text-${item.size} text-foreground flex-1`}>
               {item.example}
             </div>
-            <div className="label-tech text-slate-400 hidden sm:block">{item.size}</div>
+            <div className="label-tech text-slate-400 hidden sm:block">{item.size.toUpperCase()}</div>
           </div>
         ))}
+      </div>
+
+      {/* Uppercase Labels Explanation */}
+      <div className="mt-12 p-5 bg-slate-50 border border-slate-200 rounded-lg">
+        <h4 className="label-tech text-slate-500 mb-3">UPPERCASE LABEL USAGE</h4>
+        <p className="text-sm text-muted-foreground italic">
+          Uppercase labels are used for categorization and scanning, not reading. They should remain short and functional.
+        </p>
       </div>
 
       {/* Line Height & Letter Spacing */}
@@ -110,15 +162,15 @@ export const TypographyScale = () => {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="font-ui text-foreground">Headings</span>
-              <span className="font-data text-sm text-muted-foreground">1.1 - 1.2</span>
+              <span className="label-tech text-muted-foreground">1.1 - 1.2</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-ui text-foreground">Body</span>
-              <span className="font-data text-sm text-muted-foreground">1.5 - 1.6</span>
+              <span className="label-tech text-muted-foreground">1.5 - 1.6</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-ui text-foreground">Data</span>
-              <span className="font-data text-sm text-muted-foreground">1.2</span>
+              <span className="label-tech text-muted-foreground">1.2</span>
             </div>
           </div>
         </div>
@@ -127,15 +179,15 @@ export const TypographyScale = () => {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="font-ui text-foreground">Logo</span>
-              <span className="font-data text-sm text-muted-foreground">-0.02em</span>
+              <span className="label-tech text-muted-foreground">-0.02EM</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-ui text-foreground">Headings</span>
-              <span className="font-data text-sm text-muted-foreground">-0.01em</span>
+              <span className="label-tech text-muted-foreground">-0.01EM</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-ui text-foreground">Labels</span>
-              <span className="font-data text-sm text-muted-foreground">0.05em</span>
+              <span className="label-tech text-muted-foreground">0.05EM</span>
             </div>
           </div>
         </div>

@@ -309,8 +309,8 @@ const Index = () => {
           <SectionHeader 
             id="colors"
             number="04" 
-            title="Color System" 
-            subtitle="Color roles, palettes, and usage guidelines."
+            title="Color Roles" 
+            subtitle="How color functions inside the system."
           />
           
           <Suspense fallback={<SectionLoader />}>
@@ -328,7 +328,7 @@ const Index = () => {
             id="typography"
             number="05" 
             title="Typography" 
-            subtitle="Type hierarchy, fonts, and text treatments."
+            subtitle="Clarity, measurement, and trust."
           />
           
           <Suspense fallback={<SectionLoader />}>
