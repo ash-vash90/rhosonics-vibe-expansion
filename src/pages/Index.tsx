@@ -3,7 +3,6 @@ import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
 import { Zap } from "lucide-react";
 
-import { ChapterProgress } from "@/components/brand/ChapterProgress";
 import { Navigation } from "@/components/brand/Navigation";
 
 import gsap from "gsap";
@@ -315,8 +314,6 @@ const Index = () => {
       
       {/* Main Content Area */}
       <div className="flex-1 min-w-0">
-        {/* Navigation overlays */}
-        <ChapterProgress />
       
       {/* ═══════════════════════════════════════════════════════════════
           HERO — BOLD STATEMENT
