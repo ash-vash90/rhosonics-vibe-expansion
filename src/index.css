@@ -22,14 +22,6 @@
     --mineral-deep: 135 4% 38%;         /* #5F6460 - borders/icons/text */
     --mineral-bronze: 48 15% 43%;       /* #7E745E - micro-accent only */
     
-    /* Legacy aliases (temporary - use mineral-* in new code) */
-    --earth-ochre: var(--mineral-neutral);
-    --earth-ochre-light: 120 4% 64%;
-    --earth-ochre-dark: var(--mineral-deep);
-    --earth-sand: var(--mineral-surface);
-    --earth-clay: var(--mineral-deep);
-    --earth-amber: var(--mineral-bronze);
-    
     /* Eco Tints */
     --eco-surface: 125 43% 95%;
     --eco-border: 125 50% 90%;
@@ -95,14 +87,12 @@
     --gradient-ore: linear-gradient(180deg, hsl(215 25% 27%) 0%, hsl(var(--rho-obsidian)) 100%);
     --gradient-mineral: linear-gradient(145deg, hsl(120 4% 64%) 0%, hsl(var(--mineral-neutral)) 100%);
     --gradient-field: linear-gradient(180deg, hsl(var(--mineral-surface)) 0%, hsl(100 4% 94%) 100%);
-    --gradient-earth: var(--gradient-mineral); /* legacy alias */
     --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
     --shadow-elevated: 0 15px 30px -5px rgb(0 0 0 / 0.12), 0 10px 10px -5px rgb(0 0 0 / 0.08);
     --shadow-cutout: drop-shadow(0 15px 30px rgba(0,0,0,0.15));
     --shadow-glow: 0 0 60px -10px hsl(var(--rho-green) / 0.4);
     --shadow-glow-sm: 0 0 30px -5px hsl(var(--rho-green) / 0.3);
     --shadow-mineral: 0 4px 20px -5px hsl(var(--mineral-neutral) / 0.25);
-    --shadow-earth: var(--shadow-mineral); /* legacy alias */
     
     /* Chamfer clips */
     --chamfer-lg: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
@@ -387,19 +377,6 @@
 
   .border-mineral-strong {
     border-color: hsl(var(--mineral-neutral));
-  }
-
-  /* Legacy aliases for earth cards */
-  .card-earth {
-    @apply card-mineral;
-  }
-
-  .border-earth {
-    @apply border-mineral;
-  }
-
-  .border-earth-strong {
-    @apply border-mineral-strong;
   }
 
   /* Corner brackets for technical framing */
