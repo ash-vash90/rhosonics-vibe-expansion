@@ -59,7 +59,7 @@ const BrandPositioning = () => {
           </div>
         </div>
         
-        <p className="text-sm text-slate-500 mt-8 font-data tracking-wide">
+        <p className="text-sm text-slate-500 mt-8 italic">
           These qualities guide every decision in this system.
         </p>
         

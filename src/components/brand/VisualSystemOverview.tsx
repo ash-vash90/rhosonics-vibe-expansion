@@ -53,7 +53,7 @@ const VisualSystemOverview = () => {
                     <span className="px-3 py-1.5 bg-slate-200 text-slate-800 text-sm rounded-lg font-medium">Structural spacing</span>
                     <span className="px-3 py-1.5 bg-slate-200 text-slate-800 text-sm rounded-lg font-medium">Layout rules</span>
                   </div>
-                  <p className="text-sm text-slate-600 mt-4 font-data tracking-wide font-medium">
+                  <p className="text-sm text-slate-600 mt-4 italic">
                     They appear everywhere and rarely change.
                   </p>
                 </div>
@@ -85,7 +85,7 @@ const VisualSystemOverview = () => {
                     <span className="px-3 py-1.5 bg-primary/15 text-primary text-sm rounded-lg font-medium">Status indicators</span>
                     <span className="px-3 py-1.5 bg-primary/15 text-primary text-sm rounded-lg font-medium">Interactive highlights</span>
                   </div>
-                  <p className="text-sm text-slate-500 mt-4 font-data tracking-wide">
+                  <p className="text-sm text-slate-500 mt-4 italic">
                     They are used sparingly and intentionally.
                   </p>
                 </div>
@@ -115,7 +115,7 @@ const VisualSystemOverview = () => {
                     <span className="px-3 py-1.5 bg-mineral-surface/80 text-mineral-deep/80 text-sm rounded-lg">Sustainability indicators</span>
                     <span className="px-3 py-1.5 bg-mineral-surface/80 text-mineral-deep/80 text-sm rounded-lg">Textures & patterns</span>
                   </div>
-                  <p className="text-sm text-slate-400 mt-4 font-data tracking-wide">
+                  <p className="text-sm text-slate-400 mt-4 italic">
                     They support specific contexts and are deliberately constrained.
                   </p>
                   <div className="mt-4 p-3 bg-amber-50/80 border border-amber-200/80 rounded-lg">
