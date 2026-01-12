@@ -141,11 +141,11 @@ export const ColorMatrix = () => {
       <p className="label-tech text-slate-500 mb-6">HOW COLOR FUNCTIONS INSIDE THE SYSTEM</p>
       
       {/* Functional Framing Rule */}
-      <div className="p-6 bg-slate-900 text-slate-100 rounded-lg mb-8 border-l-4 border-primary">
-        <p className="font-ui text-lg leading-relaxed">
+      <div className="p-6 bg-slate-50 rounded-lg mb-8 border border-slate-200">
+        <p className="font-ui font-semibold text-lg text-foreground leading-relaxed">
           Color in the Rhosonics system is functional, not atmospheric.
         </p>
-        <p className="text-slate-400 mt-2">
+        <p className="text-muted-foreground mt-2">
           Every color exists to communicate state, structure, or context — never mood.
         </p>
       </div>

@@ -5,11 +5,11 @@ export const TypographyScale = () => {
       <p className="label-tech text-slate-500 mb-6">CLARITY, MEASUREMENT, AND TRUST</p>
       
       {/* Typography Philosophy */}
-      <div className="p-6 bg-slate-900 text-slate-100 rounded-lg mb-8 border-l-4 border-primary">
-        <p className="font-ui text-lg leading-relaxed">
+      <div className="p-6 bg-slate-50 rounded-lg mb-8 border border-slate-200">
+        <p className="font-ui font-semibold text-lg text-foreground leading-relaxed">
           Rhosonics typography prioritizes clarity, measurement, and trust.
         </p>
-        <p className="text-slate-400 mt-2">
+        <p className="text-muted-foreground mt-2">
           The system favors legibility over personality, structure over flourish, and consistency over novelty.
         </p>
       </div>
@@ -93,8 +93,8 @@ export const TypographyScale = () => {
       
       {/* Data Trust Rule */}
       <div className="p-5 bg-slate-50 border border-slate-200 rounded-lg mb-12">
-        <h4 className="label-tech text-slate-500 mb-3">DATA TYPOGRAPHY RULE</h4>
-        <p className="text-sm text-muted-foreground italic">
+        <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Data Typography Rule</h4>
+        <p className="text-sm text-muted-foreground">
           Data should never be styled for excitement. Precision, spacing, and consistency matter more than visual impact.
         </p>
       </div>
@@ -149,8 +149,8 @@ export const TypographyScale = () => {
 
       {/* Uppercase Labels Explanation */}
       <div className="mt-12 p-5 bg-slate-50 border border-slate-200 rounded-lg">
-        <h4 className="label-tech text-slate-500 mb-3">UPPERCASE LABEL USAGE</h4>
-        <p className="text-sm text-muted-foreground italic">
+        <h4 className="font-ui font-semibold text-sm text-slate-600 mb-2">Uppercase Label Usage</h4>
+        <p className="text-sm text-muted-foreground">
           Uppercase labels are used for categorization and scanning, not reading. They should remain short and functional.
         </p>
       </div>
@@ -158,7 +158,7 @@ export const TypographyScale = () => {
       {/* Line Height & Letter Spacing */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
         <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
-          <h4 className="label-tech text-slate-500 mb-4">LINE HEIGHT</h4>
+          <h4 className="font-ui font-semibold text-sm text-slate-600 mb-4">Line Height</h4>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="font-ui text-foreground">Headings</span>
@@ -175,7 +175,7 @@ export const TypographyScale = () => {
           </div>
         </div>
         <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
-          <h4 className="label-tech text-slate-500 mb-4">LETTER SPACING</h4>
+          <h4 className="font-ui font-semibold text-sm text-slate-600 mb-4">Letter Spacing</h4>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="font-ui text-foreground">Logo</span>
