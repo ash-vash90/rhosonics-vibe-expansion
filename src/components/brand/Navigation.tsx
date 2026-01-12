@@ -192,8 +192,6 @@ export const Navigation = () => {
           ${isOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}
         `}
       >
-        {/* Green accent bar */}
-        <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-primary hidden xl:block" />
         
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
@@ -392,15 +390,6 @@ export const Navigation = () => {
         </div>
       </div>
 
-      {/* Floating AI Tools Button - Desktop */}
-      <Link
-        to="/tools"
-        className="hidden xl:flex fixed bottom-6 right-6 items-center gap-3 px-5 py-3 bg-gradient-to-r from-primary to-rho-lime text-rho-obsidian font-semibold rounded-full shadow-lg hover:shadow-primary/30 hover:scale-105 transition-all z-40 group"
-      >
-        <Sparkles className="w-5 h-5" />
-        <span>AI Tools</span>
-        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-      </Link>
 
       {/* Spacer for mobile/tablet header */}
       <div className="h-14 xl:hidden" />
