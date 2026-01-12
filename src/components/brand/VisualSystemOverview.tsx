@@ -1,9 +1,7 @@
 import { Zap, MapPin, ArrowRight, Layers } from "lucide-react";
 import { BrandCallout } from "./BrandCallout";
-
 const VisualSystemOverview = () => {
-  return (
-    <div className="space-y-16">
+  return <div className="space-y-16">
       {/* How the system is structured */}
       <div id="system-structure" className="scroll-mt-24">
         <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mb-6">
@@ -31,7 +29,7 @@ const VisualSystemOverview = () => {
         <div className="space-y-6">
           {/* Foundations - Strongest visual weight */}
           <div id="foundations" className="scroll-mt-24 relative">
-            <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-slate-400 to-transparent hidden md:block" />
+            
             
             <div className="p-8 bg-slate-50 border-2 border-slate-300 rounded-lg">
               <div className="flex items-start gap-5">
@@ -184,31 +182,35 @@ const VisualSystemOverview = () => {
         </p>
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            { label: "Color roles and usage", section: "04" },
-            { label: "Typography hierarchy", section: "05" },
-            { label: "Layout & spacing rules", section: "06" },
-            { label: "Voice & tone", section: "07" },
-            { label: "Imagery guidelines", section: "08" },
-            { label: "Application examples", section: "09" }
-          ].map((item) => (
-            <div 
-              key={item.section}
-              className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors group cursor-pointer"
-            >
+          {[{
+          label: "Color roles and usage",
+          section: "04"
+        }, {
+          label: "Typography hierarchy",
+          section: "05"
+        }, {
+          label: "Layout & spacing rules",
+          section: "06"
+        }, {
+          label: "Voice & tone",
+          section: "07"
+        }, {
+          label: "Imagery guidelines",
+          section: "08"
+        }, {
+          label: "Application examples",
+          section: "09"
+        }].map(item => <div key={item.section} className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors group cursor-pointer">
               <span className="font-data text-sm text-primary font-medium">{item.section}</span>
               <span className="text-slate-700 flex-1">{item.label}</span>
               <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
-            </div>
-          ))}
+            </div>)}
         </div>
         
         <p className="text-slate-500 mt-8 text-lg">
           Each section explains not just what to use, but <strong className="text-slate-600">why it exists</strong>.
         </p>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default VisualSystemOverview;
