@@ -50,11 +50,11 @@ const generateCSSVariables = () => {
   --rho-lime: #73B82E;
   --rho-obsidian: #111522;
   
-  /* Earth Tones */
-  --earth-ochre: #a69359;
-  --earth-sand: #d9d0b8;
-  --earth-clay: #7a6b4e;
-  --earth-amber: #c9a227;
+  /* Mineral Neutrals - Field Aesthetic */
+  --mineral-neutral: #8B8F88;
+  --mineral-surface: #E7E8E6;
+  --mineral-deep: #5F6460;
+  --mineral-bronze: #7E745E;
   
   /* Eco Tints */
   --eco-surface: #ecf8ed;
@@ -63,6 +63,7 @@ const generateCSSVariables = () => {
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, var(--rho-lime) 0%, var(--rho-green) 100%);
   --gradient-obsidian: linear-gradient(135deg, #1c2130 0%, var(--rho-obsidian) 100%);
+  --gradient-mineral: linear-gradient(145deg, #A3A6A0 0%, var(--mineral-neutral) 100%);
 }`;
 };
 
@@ -76,10 +77,10 @@ module.exports = {
         'rho-green': '#33993c',
         'rho-lime': '#73B82E',
         'rho-obsidian': '#111522',
-        'earth-ochre': '#a69359',
-        'earth-sand': '#d9d0b8',
-        'earth-clay': '#7a6b4e',
-        'earth-amber': '#c9a227',
+        'mineral-neutral': '#8B8F88',
+        'mineral-surface': '#E7E8E6',
+        'mineral-deep': '#5F6460',
+        'mineral-bronze': '#7E745E',
         'eco-surface': '#ecf8ed',
         'eco-border': '#d9f2db',
       }
@@ -199,7 +200,7 @@ export const DownloadableAssets = () => {
           description="Brand palette in various formats."
           icon={<Palette className="w-5 h-5" />}
           items={colorResources}
-          note="More greens than strictly necessary."
+          note="Mineral neutrals for field applications."
         />
 
         <AssetCategory

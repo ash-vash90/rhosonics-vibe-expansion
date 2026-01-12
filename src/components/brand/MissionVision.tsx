@@ -79,13 +79,13 @@ export const MissionVision = () => {
       </div>
 
       {/* Legacy Statement */}
-      <div className="mt-12 border-l-2 border-earth-ochre pl-6 py-4">
+      <div className="mt-12 border-l-2 border-mineral-neutral pl-6 py-4">
         <blockquote className="text-lg text-slate-600 italic leading-relaxed mb-3">
           "From a single measurement in a Dutch brewery to optimizing processes worldwide—the curiosity that started it all still drives us forward."
         </blockquote>
         <div className="flex items-center gap-3">
-          <div className="w-6 h-px bg-earth-ochre/50" />
-          <span className="font-data text-xs uppercase tracking-wider text-earth-ochre">
+          <div className="w-6 h-px bg-mineral-neutral/50" />
+          <span className="font-data text-xs uppercase tracking-wider text-mineral-neutral">
             Continuing the vision since 1984
           </span>
         </div>

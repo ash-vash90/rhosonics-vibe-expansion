@@ -14,49 +14,47 @@ interface NavSection {
 const navSections: NavSection[] = [
   {
     id: "01",
-    label: "FOUNDATION",
-    bridge: "The visual toolkit.",
+    label: "THE PROBLEM",
     items: [
-      { id: "intro", label: "Brand Ethos" },
-      { id: "origin", label: "Our Story", highlight: true },
-      { id: "lockup", label: "Master Lockup" },
-      { id: "mission", label: "Mission & Vision" },
+      { id: "the-problem", label: "Industry Challenges" },
     ],
   },
   {
     id: "02",
-    label: "SYSTEM",
-    bridge: "What you download.",
+    label: "THE SOLUTION",
     items: [
-      { id: "colors", label: "Color Matrix" },
-      { id: "typography", label: "Typography Scale" },
-      { id: "spacing", label: "Spacing System" },
+      { id: "the-solution", label: "Ultrasonic Technology" },
     ],
   },
   {
     id: "03",
-    label: "ASSETS",
-    bridge: "How not to misuse them.",
+    label: "THE HERITAGE",
     items: [
-      { id: "assets", label: "Logo System" },
-      { id: "icons", label: "Icon Guidelines" },
-      { id: "components", label: "Interface Kit" },
-      { id: "downloads", label: "Downloads", highlight: true },
+      { id: "the-heritage", label: "Origin Story" },
+      { id: "origin", label: "Our Story" },
+      { id: "mission", label: "Mission & Vision" },
     ],
   },
   {
     id: "04",
-    label: "SUSTAINABILITY",
+    label: "THE IDENTITY",
+    bridge: "Visual system.",
     items: [
-      { id: "eco", label: "Eco Components", highlight: true },
-      { id: "industries", label: "Industry Apps" },
-      { id: "imagery", label: "Imagery Guide" },
+      { id: "the-identity", label: "Visual System" },
+      { id: "intro", label: "Brand Ethos" },
+      { id: "lockup", label: "Master Lockup" },
+      { id: "colors", label: "Color Matrix" },
+      { id: "typography", label: "Typography Scale" },
+      { id: "spacing", label: "Spacing System" },
+      { id: "assets", label: "Logo System" },
+      { id: "icons", label: "Icon Guidelines" },
     ],
   },
   {
     id: "05",
-    label: "PRINCIPLES",
+    label: "THE VOICE",
     items: [
+      { id: "the-voice", label: "Tone & Motion" },
       { id: "voice", label: "Voice & Tone" },
       { id: "motion", label: "Motion Design" },
       { id: "dos-donts", label: "Do's & Don'ts" },
@@ -64,18 +62,32 @@ const navSections: NavSection[] = [
   },
   {
     id: "06",
-    label: "ANALYSIS",
+    label: "THE APPLICATION",
     items: [
+      { id: "the-application", label: "Industry Use" },
+      { id: "industries", label: "Industry Apps" },
+      { id: "eco", label: "Eco Components", highlight: true },
+      { id: "imagery", label: "Imagery Guide" },
+      { id: "components", label: "Interface Kit" },
+    ],
+  },
+  {
+    id: "07",
+    label: "THE PROOF",
+    items: [
+      { id: "the-proof", label: "Evidence & Data" },
       { id: "comparison", label: "Tech Comparison" },
       { id: "cases", label: "Case Studies", highlight: true },
       { id: "case-studies-page", label: "Full Case Studies →", highlight: true },
     ],
   },
   {
-    id: "07",
-    label: "TOOLS",
-    bridge: "Create & generate.",
+    id: "08",
+    label: "THE RESOURCES",
+    bridge: "Downloads & tools.",
     items: [
+      { id: "the-resources", label: "Downloads & Tools" },
+      { id: "downloads", label: "Downloads", highlight: true },
       { id: "content-library", label: "Content Library", highlight: true },
       { id: "presentations-page", label: "Presentations →", highlight: true },
       { id: "ai-tools-page", label: "All AI Tools →", highlight: true },
@@ -95,14 +107,14 @@ const getSectionForItem = (itemId: string): string | null => {
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(["01"]);
-  const [activeSection, setActiveSection] = useState<string | null>("intro");
+  const [activeSection, setActiveSection] = useState<string | null>("the-problem");
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Scroll spy effect
   useEffect(() => {
     const observerOptions: IntersectionObserverInit = {
       root: null,
-      rootMargin: "-20% 0px -60% 0px", // Trigger when section is in upper-middle of viewport
+      rootMargin: "-20% 0px -60% 0px",
       threshold: 0,
     };
 
@@ -112,7 +124,6 @@ export const Navigation = () => {
           const id = entry.target.id;
           setActiveSection(id);
           
-          // Auto-expand the section containing this item
           const sectionId = getSectionForItem(id);
           if (sectionId && !expandedSections.includes(sectionId)) {
             setExpandedSections(prev => [...prev, sectionId]);
@@ -123,7 +134,6 @@ export const Navigation = () => {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Observe all sections
     allItemIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
@@ -196,7 +206,7 @@ export const Navigation = () => {
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
           <button 
-            onClick={() => scrollToSection('intro')}
+            onClick={() => scrollToSection('the-problem')}
             className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
           >
             <div className="w-7 h-7">
@@ -365,7 +375,7 @@ export const Navigation = () => {
       {/* Top Header Bar - Mobile & Tablet */}
       <div className="fixed top-0 left-0 right-0 h-14 bg-rho-obsidian/95 backdrop-blur-sm border-b border-slate-800/80 flex items-center justify-between px-4 z-30 xl:hidden">
         <button 
-          onClick={() => scrollToSection('intro')}
+          onClick={() => scrollToSection('the-problem')}
           className="flex items-center gap-2 touch-manipulation"
         >
           <div className="w-6 h-6">

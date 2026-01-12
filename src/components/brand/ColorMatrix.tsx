@@ -67,35 +67,35 @@ export const ColorMatrix = () => {
     },
   ];
 
-  const earthColors: ColorSwatchProps[] = [
+  const mineralColors: ColorSwatchProps[] = [
     {
-      name: "Earth Ochre",
-      hex: "#a69359",
+      name: "Mineral Neutral",
+      hex: "#8B8F88",
       usage: "FIELD ACCENT",
-      bgClass: "bg-earth-ochre",
+      bgClass: "bg-mineral-neutral",
       textClass: "text-white",
-      description: "The primary earth tone representing field operations and mineral processing. Evokes soil, ore, and natural materials found in industrial environments.",
-      doUse: "Mining Cards, Field Data, Accent Borders",
+      description: "The primary field tone representing industrial hardware and mineral processing environments. Inspired by coated metals, control-room enclosures, and weathered equipment surfaces.",
+      doUse: "Mining Cards, Field Data, Accent Borders, Industry Modules",
       dontUse: "Primary Buttons, Main Backgrounds"
     },
     {
-      name: "Earth Sand",
-      hex: "#d9d0b8",
+      name: "Mineral Surface",
+      hex: "#E7E8E6",
       usage: "SURFACE",
-      bgClass: "bg-earth-sand",
-      textClass: "text-earth-clay",
-      description: "A warm, sandy neutral for field-themed surfaces. Provides subtle warmth without overwhelming the industrial aesthetic.",
-      doUse: "Card Backgrounds, Field Module Surfaces",
+      bgClass: "bg-mineral-surface",
+      textClass: "text-mineral-deep",
+      description: "A cool, neutral surface for field-themed cards and containers. Provides subtle industrial texture without fighting the core UI palette.",
+      doUse: "Card Backgrounds, Field Module Surfaces, Neutral Containers",
       dontUse: "Text, Primary Actions"
     },
     {
-      name: "Earth Clay",
-      hex: "#7a6b4e",
+      name: "Mineral Deep",
+      hex: "#5F6460",
       usage: "DEEP ACCENT",
-      bgClass: "bg-earth-clay",
+      bgClass: "bg-mineral-deep",
       textClass: "text-white",
-      description: "A rich, deep earth tone for grounding elements. Represents depth and permanence in field applications.",
-      doUse: "Borders, Text on Light Earth, Icon Fills",
+      description: "A rich, cool-toned gray for grounding elements. Provides weight and permanence in field applications without warm undertones.",
+      doUse: "Borders, Text on Light Mineral, Icon Fills",
       dontUse: "Large Backgrounds, Primary UI"
     },
   ];
@@ -137,10 +137,13 @@ export const ColorMatrix = () => {
         ))}
       </div>
 
-      {/* Earth Colors */}
-      <h3 className="label-tech text-earth-ochre mb-4">FIELD AESTHETIC — EARTH TONES</h3>
+      {/* Mineral Colors */}
+      <h3 className="label-tech text-mineral-neutral mb-4">FIELD AESTHETIC — MINERAL NEUTRALS</h3>
+      <p className="text-sm text-muted-foreground mb-6">
+        These colors are inspired by coated metals, enclosures, control-room hardware, and mineral surfaces. They support industrial contexts without fighting the core UI palette.
+      </p>
       <div className="flex flex-col gap-6 mb-12">
-        {earthColors.map((color) => (
+        {mineralColors.map((color) => (
           <ColorSwatch key={color.hex} {...color} />
         ))}
       </div>
@@ -190,11 +193,11 @@ export const ColorMatrix = () => {
               <code className="label-tech text-slate-400">135° | #1c2130 → #111522</code>
             </div>
           </div>
-          <div className="h-32 rounded-lg flex items-end p-4 relative overflow-hidden" style={{ background: 'linear-gradient(145deg, hsl(45 35% 65%) 0%, hsl(45 30% 50%) 100%)' }}>
+          <div className="h-32 rounded-lg flex items-end p-4 relative overflow-hidden" style={{ background: 'linear-gradient(145deg, hsl(120 4% 64%) 0%, hsl(120 3% 55%) 100%)' }}>
             <div className="absolute inset-0 bg-terrain-contour opacity-50" aria-hidden="true" />
             <div className="relative">
-              <span className="font-ui font-bold text-white block">Earth Gradient</span>
-              <code className="label-tech text-white/70">145° | #c4b88a → #a69359</code>
+              <span className="font-ui font-bold text-white block">Mineral Gradient</span>
+              <code className="label-tech text-white/70">145° | #A3A6A0 → #8B8F88</code>
             </div>
           </div>
         </div>
@@ -202,26 +205,26 @@ export const ColorMatrix = () => {
 
       {/* Terrain Textures */}
       <div className="mt-12">
-        <h3 className="label-tech text-earth-ochre mb-4">TERRAIN TEXTURES</h3>
+        <h3 className="label-tech text-mineral-neutral mb-4">TERRAIN TEXTURES</h3>
         <p className="text-muted-foreground text-sm mb-6">
           Subtle background patterns that reinforce the field aesthetic. Use sparingly on cards and sections related to mining, minerals, and outdoor operations.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-contour flex flex-col justify-end p-4">
-            <span className="font-ui font-medium text-earth-clay text-sm">Contour Lines</span>
-            <span className="label-tech text-earth-ochre/70 text-xs">TOPOGRAPHIC</span>
+          <div className="h-28 rounded-lg border border-mineral-neutral/30 bg-mineral-surface bg-terrain-contour flex flex-col justify-end p-4">
+            <span className="font-ui font-medium text-mineral-deep text-sm">Contour Lines</span>
+            <span className="label-tech text-mineral-neutral/70 text-xs">TOPOGRAPHIC</span>
           </div>
-          <div className="h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-strata flex flex-col justify-end p-4">
-            <span className="font-ui font-medium text-earth-clay text-sm">Strata Layers</span>
-            <span className="label-tech text-earth-ochre/70 text-xs">GEOLOGICAL</span>
+          <div className="h-28 rounded-lg border border-mineral-neutral/30 bg-mineral-surface bg-terrain-strata flex flex-col justify-end p-4">
+            <span className="font-ui font-medium text-mineral-deep text-sm">Strata Layers</span>
+            <span className="label-tech text-mineral-neutral/70 text-xs">GEOLOGICAL</span>
           </div>
-          <div className="h-28 rounded-lg border border-earth-ochre/30 bg-earth-sand bg-terrain-grain flex flex-col justify-end p-4">
-            <span className="font-ui font-medium text-earth-clay text-sm">Grain Particles</span>
-            <span className="label-tech text-earth-ochre/70 text-xs">MINERAL</span>
+          <div className="h-28 rounded-lg border border-mineral-neutral/30 bg-mineral-surface bg-terrain-grain flex flex-col justify-end p-4">
+            <span className="font-ui font-medium text-mineral-deep text-sm">Grain Particles</span>
+            <span className="label-tech text-mineral-neutral/70 text-xs">MINERAL</span>
           </div>
           <div className="h-28 rounded-lg bg-terrain-ore flex flex-col justify-end p-4">
-            <span className="font-ui font-medium text-earth-ochre-light text-sm">Ore Deposits</span>
-            <span className="label-tech text-earth-ochre/70 text-xs">DARK FIELD</span>
+            <span className="font-ui font-medium text-slate-300 text-sm">Ore Deposits</span>
+            <span className="label-tech text-mineral-neutral/70 text-xs">DARK FIELD</span>
           </div>
         </div>
       </div>

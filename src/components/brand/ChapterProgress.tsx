@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 
 const chapters = [
-  { id: "the-problem", num: "01", label: "The Problem" },
-  { id: "the-solution", num: "02", label: "The Solution" },
-  { id: "the-heritage", num: "03", label: "The Heritage" },
-  { id: "the-identity", num: "04", label: "The Visual Identity" },
-  { id: "the-voice", num: "05", label: "The Voice" },
-  { id: "the-application", num: "06", label: "The Application" },
-  { id: "the-proof", num: "07", label: "The Proof" },
-  { id: "the-resources", num: "08", label: "The Resources" },
+  { id: "the-problem", num: "01", label: "Problem" },
+  { id: "the-solution", num: "02", label: "Solution" },
+  { id: "the-heritage", num: "03", label: "Heritage" },
+  { id: "the-identity", num: "04", label: "Identity" },
+  { id: "the-voice", num: "05", label: "Voice" },
+  { id: "the-application", num: "06", label: "Application" },
+  { id: "the-proof", num: "07", label: "Proof" },
+  { id: "the-resources", num: "08", label: "Resources" },
 ];
 
 export const ChapterProgress = () => {
@@ -34,7 +34,6 @@ export const ChapterProgress = () => {
       if (el) observer.observe(el);
     });
 
-    // Show only after scrolling past hero
     const handleScroll = () => {
       setIsVisible(window.scrollY > window.innerHeight * 0.5);
     };
@@ -63,7 +62,6 @@ export const ChapterProgress = () => {
       role="navigation"
       aria-label="Chapter progress"
     >
-      {/* Vertical line connector */}
       <div className="absolute right-[5px] top-2 bottom-2 w-px bg-slate-300" />
       
       {chapters.map((chapter, index) => {
@@ -81,7 +79,6 @@ export const ChapterProgress = () => {
             aria-label={`Go to ${chapter.label}`}
             aria-current={isActive ? "step" : undefined}
           >
-            {/* Label (appears on hover) */}
             <span
               className={`font-ui text-sm whitespace-nowrap transition-all duration-200 ${
                 isHovered || isActive
@@ -92,7 +89,6 @@ export const ChapterProgress = () => {
               {chapter.label}
             </span>
             
-            {/* Dot */}
             <span
               className={`relative z-10 rounded-full transition-all duration-200 ${
                 isActive
