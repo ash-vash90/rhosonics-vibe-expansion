@@ -1,4 +1,5 @@
-import { Users, Palette, Code, Megaphone, CheckCircle2, XCircle } from "lucide-react";
+import { Users, Palette, Code, Megaphone, CheckCircle2 } from "lucide-react";
+import { BrandCallout } from "./BrandCallout";
 
 const AboutThisSystem = () => {
   return (
@@ -47,7 +48,7 @@ const AboutThisSystem = () => {
         </p>
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 border border-border rounded-xl hover:border-primary/30 transition-colors">
+          <div className="p-6 border border-border rounded-lg hover:border-primary/30 transition-colors">
             <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
               <Palette className="w-5 h-5 text-primary" />
             </div>
@@ -57,7 +58,7 @@ const AboutThisSystem = () => {
             </p>
           </div>
           
-          <div className="p-6 border border-border rounded-xl hover:border-primary/30 transition-colors">
+          <div className="p-6 border border-border rounded-lg hover:border-primary/30 transition-colors">
             <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
               <Megaphone className="w-5 h-5 text-primary" />
             </div>
@@ -67,7 +68,7 @@ const AboutThisSystem = () => {
             </p>
           </div>
           
-          <div className="p-6 border border-border rounded-xl hover:border-primary/30 transition-colors">
+          <div className="p-6 border border-border rounded-lg hover:border-primary/30 transition-colors">
             <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
               <Code className="w-5 h-5 text-primary" />
             </div>
@@ -77,7 +78,7 @@ const AboutThisSystem = () => {
             </p>
           </div>
           
-          <div className="p-6 border border-border rounded-xl hover:border-primary/30 transition-colors">
+          <div className="p-6 border border-border rounded-lg hover:border-primary/30 transition-colors">
             <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
               <Users className="w-5 h-5 text-primary" />
             </div>
@@ -100,33 +101,26 @@ const AboutThisSystem = () => {
           <p>Each section explains:</p>
           
           <div className="grid sm:grid-cols-2 gap-4 my-8">
-            <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
+            <div className="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-              <span>What exists in the system</span>
+              <span className="text-base">What exists in the system</span>
             </div>
-            <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
+            <div className="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-              <span>Why it exists</span>
+              <span className="text-base">Why it exists</span>
             </div>
-            <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
+            <div className="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-              <span>How it should be used</span>
+              <span className="text-base">How it should be used</span>
             </div>
-            <div className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-              <XCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-              <div>
-                <span className="text-amber-800 font-medium">Where it should not be used</span>
-                <p className="text-sm text-amber-700 mt-1">Often the most valuable guidance</p>
-              </div>
-            </div>
+            <BrandCallout variant="avoid" title="Where it should not be used">
+              Often the most valuable guidance
+            </BrandCallout>
           </div>
           
-          <div className="p-6 bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary rounded-r-lg">
-            <p className="text-foreground font-medium mb-2">The goal is not creative restriction.</p>
-            <p className="text-slate-600">
-              The goal is shared understanding, so decisions can be made confidently and consistently.
-            </p>
-          </div>
+          <BrandCallout variant="rule" title="System Purpose">
+            The goal is not creative restriction. The goal is shared understanding, so decisions can be made confidently and consistently.
+          </BrandCallout>
         </div>
       </div>
     </div>
