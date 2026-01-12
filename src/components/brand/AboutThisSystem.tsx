@@ -1,4 +1,4 @@
-import { Users, Palette, Code, Megaphone } from "lucide-react";
+import { Users, Palette, Code, Megaphone, CheckCircle2, XCircle } from "lucide-react";
 
 const AboutThisSystem = () => {
   return (
@@ -16,7 +16,7 @@ const AboutThisSystem = () => {
             It is a system of decisions designed to ensure clarity, consistency, and credibility 
             wherever the brand appears.
           </p>
-          <p>The system balances two realities:</p>
+          <p>The system is designed to resolve a fundamental tension:</p>
           <ul className="space-y-3 ml-4">
             <li className="flex items-start gap-3">
               <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2.5 flex-shrink-0" />
@@ -101,20 +101,23 @@ const AboutThisSystem = () => {
           
           <div className="grid sm:grid-cols-2 gap-4 my-8">
             <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
-              <span className="font-data text-sm text-primary font-medium">01</span>
+              <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
               <span>What exists in the system</span>
             </div>
             <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
-              <span className="font-data text-sm text-primary font-medium">02</span>
+              <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
               <span>Why it exists</span>
             </div>
             <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
-              <span className="font-data text-sm text-primary font-medium">03</span>
+              <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
               <span>How it should be used</span>
             </div>
-            <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
-              <span className="font-data text-sm text-primary font-medium">04</span>
-              <span>Where it should not be used</span>
+            <div className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+              <XCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="text-amber-800 font-medium">Where it should not be used</span>
+                <p className="text-sm text-amber-700 mt-1">Often the most valuable guidance</p>
+              </div>
             </div>
           </div>
           
