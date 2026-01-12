@@ -393,10 +393,7 @@ const Index = () => {
         <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
           <div className="max-w-7xl mx-auto">
             {/* Top bar with document type */}
-            <div className="flex items-center justify-between mb-16 md:mb-24">
-              <div className="hero-logo">
-                <span className="font-logo text-lg md:text-xl text-white tracking-wide uppercase">RHOSONICS</span>
-              </div>
+            <div className="flex items-center justify-end mb-16 md:mb-24">
               <div className="hero-badge hidden sm:flex items-center gap-3">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                 <span className="font-data text-xs text-slate-400 tracking-widest">BRAND GUIDELINES V.2025</span>
