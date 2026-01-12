@@ -26,7 +26,7 @@ const ColorSwatch = ({
         <span className="font-bold text-sm block mt-1">{name}</span>
         <code className="label-tech opacity-70">{hex}</code>
       </div>
-      <span className="label-tech opacity-50">{usage}</span>
+      
     </div>
     <div className="flex-1 py-1">
       <h3 className="font-ui font-bold text-lg text-foreground mb-2">{name}</h3>
