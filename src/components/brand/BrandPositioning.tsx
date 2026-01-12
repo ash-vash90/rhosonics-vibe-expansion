@@ -1,4 +1,4 @@
-import { Target, Shield, Lightbulb, Eye, BarChart3, Type, Palette, Layers } from "lucide-react";
+import { Target, Shield, Lightbulb, Eye, BarChart3, Type, Palette, Layers, ArrowRight } from "lucide-react";
 
 const BrandPositioning = () => {
   return (
@@ -62,6 +62,21 @@ const BrandPositioning = () => {
         <p className="text-sm text-slate-500 mt-8 font-data tracking-wide">
           These qualities guide every decision in this system.
         </p>
+        
+        {/* Decision-making heuristic */}
+        <div className="mt-8 p-6 bg-primary/5 border border-primary/20 rounded-xl">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+              <ArrowRight className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <span className="font-data text-xs text-primary tracking-widest">DECISION RULE</span>
+              <p className="text-foreground mt-2 leading-relaxed">
+                When choosing between two valid design options, prefer the one that improves clarity, reinforces performance, or reveals insight.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* How positioning shapes expression */}

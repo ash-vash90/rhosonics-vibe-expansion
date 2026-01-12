@@ -51,11 +51,12 @@ const BrandPrinciples = () => {
       iconName: "focus",
       title: "Precision before decoration",
       meaning: "Information clarity always takes priority over visual flourish.",
-      why: "Rhosonics communicates measurement, performance, and operational insight. Decoration that does not reinforce understanding introduces noise.",
+      why: "This principle governs information hierarchy — what content receives visual emphasis. Rhosonics communicates measurement, performance, and operational insight. Decoration that does not reinforce understanding introduces noise.",
       practices: [
         "Data and key messages are visually dominant",
         "Decorative elements are secondary and restrained",
-        "Visual emphasis is earned, not applied everywhere"
+        "Visual emphasis is earned, not applied everywhere",
+        "See also: Engineered, not styled (system construction)"
       ]
     },
     {
@@ -75,11 +76,12 @@ const BrandPrinciples = () => {
       iconName: "wrench",
       title: "Engineered, not styled",
       meaning: "The brand should feel designed with purpose, not styled for effect.",
-      why: "Rhosonics products are evaluated on performance and reliability. The visual system should reflect the same discipline.",
+      why: "This principle governs system construction — how the visual system itself is built. Rhosonics products are evaluated on performance and reliability. The visual system should reflect the same discipline.",
       practices: [
         "Layouts follow consistent structural logic",
         "Spacing and alignment are systematic",
-        "Motion, when used, communicates feedback or change"
+        "Motion, when used, communicates feedback or change",
+        "See also: Precision before decoration (information hierarchy)"
       ]
     },
     {

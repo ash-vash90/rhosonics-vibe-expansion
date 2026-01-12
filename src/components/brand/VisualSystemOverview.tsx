@@ -1,4 +1,4 @@
-import { CircleDot, Zap, MapPin, ArrowRight } from "lucide-react";
+import { Zap, MapPin, ArrowRight, Layers } from "lucide-react";
 
 const VisualSystemOverview = () => {
   return (
@@ -28,32 +28,32 @@ const VisualSystemOverview = () => {
         </h3>
         
         <div className="space-y-6">
-          {/* Foundations */}
+          {/* Foundations - Strongest visual weight */}
           <div id="foundations" className="scroll-mt-24 relative">
-            <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-slate-300 to-transparent hidden md:block" />
+            <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-slate-400 to-transparent hidden md:block" />
             
-            <div className="p-8 bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-2xl">
+            <div className="p-8 bg-gradient-to-br from-slate-100 to-slate-50 border-[3px] border-slate-300 rounded-2xl shadow-sm">
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 bg-slate-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <CircleDot className="w-7 h-7 text-white" />
+                <div className="w-14 h-14 bg-slate-900 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                  <Layers className="w-7 h-7 text-white" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    <h4 className="font-ui text-xl font-semibold text-foreground">Foundations</h4>
+                    <h4 className="font-ui text-xl font-bold text-foreground">Foundations</h4>
                     <span className="font-data text-[10px] bg-slate-900 text-white px-2 py-0.5 rounded tracking-widest">
                       CONSTANT
                     </span>
                   </div>
-                  <p className="text-slate-600 mb-5 leading-relaxed">
+                  <p className="text-slate-700 mb-5 leading-relaxed">
                     These elements form the constant base of the brand:
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">Primary neutrals</span>
-                    <span className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">Core typography</span>
-                    <span className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">Structural spacing</span>
-                    <span className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">Layout rules</span>
+                    <span className="px-3 py-1.5 bg-slate-200 text-slate-800 text-sm rounded-lg font-medium">Primary neutrals</span>
+                    <span className="px-3 py-1.5 bg-slate-200 text-slate-800 text-sm rounded-lg font-medium">Core typography</span>
+                    <span className="px-3 py-1.5 bg-slate-200 text-slate-800 text-sm rounded-lg font-medium">Structural spacing</span>
+                    <span className="px-3 py-1.5 bg-slate-200 text-slate-800 text-sm rounded-lg font-medium">Layout rules</span>
                   </div>
-                  <p className="text-sm text-slate-500 mt-4 font-data tracking-wide">
+                  <p className="text-sm text-slate-600 mt-4 font-data tracking-wide font-medium">
                     They appear everywhere and rarely change.
                   </p>
                 </div>
@@ -61,13 +61,13 @@ const VisualSystemOverview = () => {
             </div>
           </div>
 
-          {/* Signals */}
+          {/* Signals - Energetic treatment */}
           <div id="signals" className="scroll-mt-24 relative">
-            <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent hidden md:block" />
+            <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-primary/40 to-transparent hidden md:block" />
             
-            <div className="p-8 bg-gradient-to-br from-primary/5 to-white border-2 border-primary/20 rounded-2xl">
+            <div className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/30 rounded-2xl shadow-[0_0_24px_-6px_hsl(var(--primary)/0.2)]">
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/25">
                   <Zap className="w-7 h-7 text-white" />
                 </div>
                 <div className="flex-1">
@@ -81,9 +81,9 @@ const VisualSystemOverview = () => {
                     These elements communicate action, state, or emphasis:
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1.5 bg-primary/10 text-primary text-sm rounded-lg">Primary action colors</span>
-                    <span className="px-3 py-1.5 bg-primary/10 text-primary text-sm rounded-lg">Status indicators</span>
-                    <span className="px-3 py-1.5 bg-primary/10 text-primary text-sm rounded-lg">Interactive highlights</span>
+                    <span className="px-3 py-1.5 bg-primary/15 text-primary text-sm rounded-lg font-medium">Primary action colors</span>
+                    <span className="px-3 py-1.5 bg-primary/15 text-primary text-sm rounded-lg font-medium">Status indicators</span>
+                    <span className="px-3 py-1.5 bg-primary/15 text-primary text-sm rounded-lg font-medium">Interactive highlights</span>
                   </div>
                   <p className="text-sm text-slate-500 mt-4 font-data tracking-wide">
                     They are used sparingly and intentionally.
@@ -93,33 +93,33 @@ const VisualSystemOverview = () => {
             </div>
           </div>
 
-          {/* Contextual elements */}
+          {/* Contextual elements - Softer treatment */}
           <div id="contextual" className="scroll-mt-24">
-            <div className="p-8 bg-gradient-to-br from-mineral-surface/50 to-white border-2 border-mineral-neutral/30 rounded-2xl">
+            <div className="p-8 bg-gradient-to-br from-mineral-surface/40 to-white border border-mineral-neutral/40 rounded-2xl">
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 bg-mineral-neutral rounded-xl flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-7 h-7 text-white" />
+                <div className="w-14 h-14 bg-mineral-neutral/70 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-7 h-7 text-white/90" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    <h4 className="font-ui text-xl font-semibold text-foreground">Contextual Elements</h4>
-                    <span className="font-data text-[10px] bg-mineral-neutral text-white px-2 py-0.5 rounded tracking-widest">
+                    <h4 className="font-ui text-xl font-semibold text-foreground/90">Contextual Elements</h4>
+                    <span className="font-data text-[10px] bg-mineral-neutral/70 text-white px-2 py-0.5 rounded tracking-widest">
                       SITUATIONAL
                     </span>
                   </div>
-                  <p className="text-slate-600 mb-5 leading-relaxed">
+                  <p className="text-slate-500 mb-5 leading-relaxed">
                     These elements provide situational relevance:
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1.5 bg-mineral-surface text-mineral-deep text-sm rounded-lg">Field neutrals</span>
-                    <span className="px-3 py-1.5 bg-mineral-surface text-mineral-deep text-sm rounded-lg">Sustainability indicators</span>
-                    <span className="px-3 py-1.5 bg-mineral-surface text-mineral-deep text-sm rounded-lg">Textures & patterns</span>
+                    <span className="px-3 py-1.5 bg-mineral-surface/80 text-mineral-deep/80 text-sm rounded-lg">Field neutrals</span>
+                    <span className="px-3 py-1.5 bg-mineral-surface/80 text-mineral-deep/80 text-sm rounded-lg">Sustainability indicators</span>
+                    <span className="px-3 py-1.5 bg-mineral-surface/80 text-mineral-deep/80 text-sm rounded-lg">Textures & patterns</span>
                   </div>
-                  <p className="text-sm text-slate-500 mt-4 font-data tracking-wide">
+                  <p className="text-sm text-slate-400 mt-4 font-data tracking-wide">
                     They support specific contexts and are deliberately constrained.
                   </p>
-                  <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                    <p className="text-sm text-amber-800">
+                  <div className="mt-4 p-3 bg-amber-50/80 border border-amber-200/80 rounded-lg">
+                    <p className="text-sm text-amber-700">
                       <strong>Note:</strong> They are not brand identifiers.
                     </p>
                   </div>
