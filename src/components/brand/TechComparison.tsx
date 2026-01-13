@@ -100,12 +100,12 @@ export const TechComparison = () => {
         duration: 0,
       },
       size: {
-        height: 256,
+        height: 280,
       },
       padding: {
         top: 10,
         right: 20,
-        bottom: 10,
+        bottom: 30,
         left: 80,
       },
       onrendered: function() {
