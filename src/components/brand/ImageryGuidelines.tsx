@@ -1,20 +1,26 @@
+import { BrandCallout } from "./BrandCallout";
+
 export const ImageryGuidelines = () => {
   return (
     <section id="imagery" className="mb-32">
       <h2 className="section-header">Imagery Guidelines</h2>
+      <p className="text-muted-foreground mb-4">
+        Rhosonics imagery exists to prove credibility, not to decorate pages.
+      </p>
       <p className="text-muted-foreground mb-8">
-        Two types of imagery: real industrial environments (with visible wear) and clean technical renders. Stock photos of people pointing at screens are not welcome.
+        We show real environments where measurement happens, and clean abstractions where concepts need clarity.
+        If an image doesn't increase trust or understanding, it doesn't belong.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        {/* The Field */}
+        {/* Field Context */}
         <div>
           <div className="mb-4 h-64 rounded-lg overflow-hidden relative bg-rho-obsidian flex items-center justify-center">
             <div className="absolute inset-0 opacity-40 bg-pattern-minerals grayscale"></div>
             <div className="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
             <div className="z-10 text-slate-100 text-center">
               <span className="label-tech border border-slate-100/30 px-2 py-1 mb-2 inline-block">
-                THE FIELD
+                FIELD CONTEXT
               </span>
               <h3 className="font-ui text-2xl font-bold">Real & Gritty</h3>
             </div>
@@ -37,13 +43,13 @@ export const ImageryGuidelines = () => {
           </div>
         </div>
 
-        {/* The Lab */}
+        {/* Engineering Context */}
         <div>
           <div className="mb-4 h-64 rounded-lg overflow-hidden relative bg-card border border-border flex items-center justify-center">
             <div className="absolute inset-0 bg-pattern-semicon opacity-50"></div>
             <div className="z-10 text-foreground text-center">
               <span className="label-tech border border-border px-2 py-1 mb-2 inline-block">
-                THE LAB
+                ENGINEERING CONTEXT
               </span>
               <h3 className="font-ui text-2xl font-bold">Abstract & Precise</h3>
             </div>
@@ -66,9 +72,15 @@ export const ImageryGuidelines = () => {
         </div>
       </div>
 
+      {/* Field Image Rule Callout */}
+      <BrandCallout variant="rule" title="Field Image Rule" className="mb-8">
+        Field images must show evidence of use: wear, scale, context, or operation.
+        Pristine environments without signs of real work reduce credibility.
+      </BrandCallout>
+
       {/* Photo Treatment Examples */}
       <h3 className="label-tech text-slate-500 mb-4">PHOTO TREATMENT EXAMPLES</h3>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
         <div className="aspect-square bg-slate-200 rounded-lg flex items-center justify-center">
           <span className="label-tech text-slate-400">ORIGINAL</span>
         </div>
@@ -80,9 +92,12 @@ export const ImageryGuidelines = () => {
         </div>
         <div className="aspect-square bg-rho-obsidian rounded-lg flex items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-primary/20"></div>
-          <span className="label-tech text-primary relative z-10">+ GREEN TINT</span>
+          <span className="label-tech text-primary relative z-10">CONTROLLED BRAND ACCENT</span>
         </div>
       </div>
+      <p className="text-sm text-muted-foreground mb-8">
+        Color grading should never be noticeable before content.
+      </p>
 
       {/* Do's and Don'ts for Imagery */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

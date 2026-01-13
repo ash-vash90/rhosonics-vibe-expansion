@@ -4,8 +4,12 @@ export const IndustryApplications = () => {
   return (
     <section id="industries" className="mb-32">
       <h2 className="section-header">Industry Applications</h2>
+      <p className="text-muted-foreground mb-4">
+        Each industry has its own visual language because context matters.
+        The underlying measurement system remains the same — only the interface framing changes.
+      </p>
       <p className="text-muted-foreground mb-8">
-        Each industry gets its own visual treatment. Minerals look different from semiconductors. The sensors don't care—they measure both.
+        The sensors don't care — they measure both.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -84,9 +88,12 @@ export const IndustryApplications = () => {
         </div>
       </div>
 
-      {/* Pattern Legend */}
+      {/* Pattern Constraints */}
       <div className="mt-8">
-        <h4 className="label-tech text-slate-500 mb-4">INDUSTRY PATTERN REFERENCE</h4>
+        <h4 className="label-tech text-slate-500 mb-2">INDUSTRY PATTERN CONSTRAINTS</h4>
+        <p className="text-sm text-muted-foreground mb-4">
+          Patterns are contextual, not expressive. They help users orient themselves, not brand the interface.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-pattern-minerals rounded-lg border border-mineral-neutral/50"></div>

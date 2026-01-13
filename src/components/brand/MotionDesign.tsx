@@ -64,15 +64,18 @@ export const MotionDesign = () => {
   return (
     <section ref={sectionRef} id="motion" className="mb-32">
       <h2 className="section-header">Motion Design</h2>
+      <p className="text-muted-foreground mb-4">
+        Motion in the Rhosonics system communicates cause and effect.
+      </p>
       <p className="text-muted-foreground mb-8">
-        If it moves, there should be a reason. Our signature animation mirrors ultrasonic wave propagation—the technology we actually sell.
+        It mirrors physical processes — propagation, response, stabilization — not decoration.
       </p>
 
       {/* Motion Principles */}
       <div ref={principlesRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div className="principle-card card-base p-6">
           <div className="text-4xl font-data text-primary mb-4">200ms</div>
-          <h3 className="font-ui font-bold text-lg mb-2">Quick Feedback</h3>
+          <h3 className="font-ui font-bold text-lg mb-2">Immediate Response</h3>
           <p className="text-sm text-muted-foreground">
             Micro-interactions like button hovers and state changes. Fast, snappy, immediate.
           </p>
@@ -80,7 +83,7 @@ export const MotionDesign = () => {
 
         <div className="principle-card card-base p-6">
           <div className="text-4xl font-data text-primary mb-4">300ms</div>
-          <h3 className="font-ui font-bold text-lg mb-2">Standard Transitions</h3>
+          <h3 className="font-ui font-bold text-lg mb-2">System Transition</h3>
           <p className="text-sm text-muted-foreground">
             Page transitions, modal appearances, accordion expansions. Smooth but not sluggish.
           </p>
@@ -88,7 +91,7 @@ export const MotionDesign = () => {
 
         <div className="principle-card card-base p-6">
           <div className="text-4xl font-data text-primary mb-4">500ms</div>
-          <h3 className="font-ui font-bold text-lg mb-2">Emphasis</h3>
+          <h3 className="font-ui font-bold text-lg mb-2">Deliberate Emphasis</h3>
           <p className="text-sm text-muted-foreground">
             Brand reveal animations, loading sequences. Reserved for important moments.
           </p>
@@ -96,7 +99,10 @@ export const MotionDesign = () => {
       </div>
 
       {/* Animation Examples */}
-      <h3 className="label-tech text-slate-500 mb-4">SIGNATURE ANIMATIONS</h3>
+      <h3 className="label-tech text-slate-500 mb-2">SIGNATURE ANIMATIONS</h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Signature animations are rare by design. If everything animates, nothing feels important.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {/* Boot Sequence */}
         <div className="card-base p-8">
@@ -200,7 +206,7 @@ export const MotionDesign = () => {
       {/* Easing Reference */}
       <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
         <h4 className="font-ui font-bold text-lg mb-4">Easing Functions</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
           <div>
             <div className="font-data text-sm text-primary mb-2">ease-out</div>
             <div className="h-2 bg-primary/20 rounded-full overflow-hidden">
@@ -229,6 +235,9 @@ export const MotionDesign = () => {
             </p>
           </div>
         </div>
+        <p className="text-sm text-muted-foreground border-t border-slate-200 pt-4">
+          Linear easing is preferred for data because it reflects mechanical consistency, not human gesture.
+        </p>
       </div>
     </section>
   );
