@@ -100,23 +100,24 @@ const AboutThisSystem = () => {
         <div className="max-w-3xl space-y-5 text-lg text-slate-600 leading-relaxed">
           <p>Each section explains:</p>
           
-          <div className="grid sm:grid-cols-2 gap-4 my-8">
-            <div className="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+          <ul className="space-y-3 my-8">
+            <li className="flex items-start gap-3">
               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
               <span className="text-base">What exists in the system</span>
-            </div>
-            <div className="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+            </li>
+            <li className="flex items-start gap-3">
               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
               <span className="text-base">Why it exists</span>
-            </div>
-            <div className="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+            </li>
+            <li className="flex items-start gap-3">
               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
               <span className="text-base">How it should be used</span>
-            </div>
-            <BrandCallout variant="avoid" title="Where it should not be used">
-              Often the most valuable guidance
-            </BrandCallout>
-          </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <span className="text-base"><strong>Where it should not be used</strong> — often the most valuable guidance</span>
+            </li>
+          </ul>
           
           <BrandCallout variant="rule" title="System Purpose">
             The goal is not creative restriction. The goal is shared understanding, so decisions can be made confidently and consistently.
