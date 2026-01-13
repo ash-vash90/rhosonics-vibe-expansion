@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
+import { BrandCallout } from "./BrandCallout";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -26,42 +27,66 @@ export const MotionDesign = () => {
   return (
     <section ref={sectionRef} id="motion" className="mb-32">
       <h2 className="section-header">Motion Design</h2>
-      <p className="text-muted-foreground mb-12 max-w-2xl">
-        Motion communicates cause and effect — mirroring physical processes like propagation and stabilization. Not decoration.
-      </p>
+      
+      {/* Two-column: Intro + Timing */}
+      <div className="grid lg:grid-cols-3 gap-8 mb-12">
+        <div className="lg:col-span-2">
+          <p className="text-muted-foreground text-lg mb-8">
+            Motion communicates cause and effect — mirroring physical processes like propagation and stabilization. Not decoration.
+          </p>
 
-      {/* Timing */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="card-base p-6">
-          <div className="text-4xl font-data text-primary mb-4">200ms</div>
-          <h3 className="font-ui font-bold text-lg mb-2">Immediate</h3>
-          <p className="text-sm text-muted-foreground">
-            Micro-interactions. Button hovers, state changes.
-          </p>
+          {/* Timing */}
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="card-base p-6">
+              <div className="text-4xl font-data text-primary mb-4">200ms</div>
+              <h3 className="font-ui font-bold text-lg mb-2">Immediate</h3>
+              <p className="text-sm text-muted-foreground">
+                Micro-interactions. Button hovers, state changes.
+              </p>
+            </div>
+            <div className="card-base p-6">
+              <div className="text-4xl font-data text-primary mb-4">300ms</div>
+              <h3 className="font-ui font-bold text-lg mb-2">Transition</h3>
+              <p className="text-sm text-muted-foreground">
+                Page transitions, modals, accordions.
+              </p>
+            </div>
+            <div className="card-base p-6">
+              <div className="text-4xl font-data text-primary mb-4">500ms</div>
+              <h3 className="font-ui font-bold text-lg mb-2">Emphasis</h3>
+              <p className="text-sm text-muted-foreground">
+                Brand reveals, loading sequences.
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="card-base p-6">
-          <div className="text-4xl font-data text-primary mb-4">300ms</div>
-          <h3 className="font-ui font-bold text-lg mb-2">Transition</h3>
-          <p className="text-sm text-muted-foreground">
-            Page transitions, modals, accordions.
-          </p>
-        </div>
-        <div className="card-base p-6">
-          <div className="text-4xl font-data text-primary mb-4">500ms</div>
-          <h3 className="font-ui font-bold text-lg mb-2">Emphasis</h3>
-          <p className="text-sm text-muted-foreground">
-            Brand reveals, loading sequences. Reserved for important moments.
-          </p>
+
+        {/* Sidebar */}
+        <div className="space-y-6">
+          <BrandCallout variant="rule" title="Motion Principle">
+            Linear easing for data (mechanical precision). Ease-out for UI (natural deceleration).
+          </BrandCallout>
+          
+          <div className="card-base p-6">
+            <h4 className="font-ui font-bold mb-4">Live Indicator</h4>
+            <div className="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-full border border-border w-fit">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse-dot"></div>
+              <span className="label-tech text-primary">LIVE</span>
+            </div>
+            <p className="text-sm text-muted-foreground mt-4">
+              2s duration, infinite loop.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Animation Examples */}
+      {/* Animation Examples - full width */}
       <h3 className="label-tech text-slate-500 mb-4">SIGNATURE ANIMATIONS</h3>
-      <p className="text-sm text-muted-foreground mb-6 max-w-xl">
+      <p className="text-sm text-muted-foreground mb-6">
         Signature animations are rare by design. If everything animates, nothing feels important.
       </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <div className="grid md:grid-cols-2 gap-8">
         {/* Boot Sequence */}
         <div className="card-base p-8">
           <div className="flex justify-between items-center mb-6">
@@ -106,18 +131,6 @@ export const MotionDesign = () => {
             </span>
           </div>
         </div>
-      </div>
-
-      {/* Live Indicator */}
-      <div className="card-base p-6 max-w-sm">
-        <h4 className="font-ui font-bold mb-4">Live Indicator</h4>
-        <div className="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-full border border-border w-fit">
-          <div className="w-2 h-2 bg-primary rounded-full animate-pulse-dot"></div>
-          <span className="label-tech text-primary">LIVE</span>
-        </div>
-        <p className="text-sm text-muted-foreground mt-4">
-          Continuous pulse for active states. 2s duration, infinite.
-        </p>
       </div>
     </section>
   );

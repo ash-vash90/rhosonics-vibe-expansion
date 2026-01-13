@@ -3,13 +3,13 @@ import { Zap, MapPin, Layers } from "lucide-react";
 const VisualSystemOverview = () => {
   return (
     <section className="space-y-12">
-      {/* Intro */}
-      <p className="text-lg text-slate-600 max-w-2xl">
+      {/* Intro - full width */}
+      <p className="text-lg text-slate-600">
         The visual system is built from clearly defined layers, each with a specific role.
         Not every element carries the same weight or authority.
       </p>
 
-      {/* Three layers grid */}
+      {/* Three layers grid - full width */}
       <div className="grid md:grid-cols-3 gap-6">
         {/* Foundations */}
         <div className="p-6 bg-slate-50 border-2 border-slate-300 rounded-lg">
@@ -64,47 +64,47 @@ const VisualSystemOverview = () => {
         </div>
       </div>
 
-      {/* Slate vs Mineral callout */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="p-5 bg-slate-100 border border-slate-300 rounded-lg">
-          <h4 className="font-ui font-semibold text-foreground mb-2">Slate = Software</h4>
-          <p className="text-sm text-slate-600">
-            UI structure, text, forms, navigation, data containers. Cool, blue-biased, chromatically neutral.
-          </p>
+      {/* Slate vs Mineral + What this enables */}
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Slate vs Mineral */}
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div className="p-5 bg-slate-100 border border-slate-300 rounded-lg">
+            <h4 className="font-ui font-semibold text-foreground mb-2">Slate = Software</h4>
+            <p className="text-sm text-slate-600">
+              UI structure, text, forms, navigation, data containers. Cool, blue-biased, chromatically neutral.
+            </p>
+          </div>
+          <div className="p-5 bg-mineral-surface border border-mineral-neutral/30 rounded-lg">
+            <h4 className="font-ui font-semibold text-foreground mb-2">Mineral = Environment</h4>
+            <p className="text-sm text-slate-600">
+              Field modules, industry panels, outdoor contexts. Warm-neutral, olive, stone-like tones.
+            </p>
+          </div>
         </div>
-        <div className="p-5 bg-mineral-surface border border-mineral-neutral/30 rounded-lg">
-          <h4 className="font-ui font-semibold text-foreground mb-2">Mineral = Environment</h4>
-          <p className="text-sm text-slate-600">
-            Field modules, industry panels, outdoor contexts. Warm-neutral, olive, stone-like tones.
-          </p>
-        </div>
-      </div>
 
-      {/* What this enables */}
-      <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-            <span className="font-data text-sm text-primary font-medium">1</span>
+        {/* What this enables */}
+        <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
+          <h4 className="font-ui font-semibold text-foreground mb-4">What this enables</h4>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <span className="font-data text-sm text-primary font-medium">1</span>
+              <p className="text-sm text-slate-600">
+                <strong className="text-foreground">Remains expressive</strong> without becoming inconsistent
+              </p>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="font-data text-sm text-primary font-medium">2</span>
+              <p className="text-sm text-slate-600">
+                <strong className="text-foreground">Supports multiple environments</strong> without visual drift
+              </p>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="font-data text-sm text-primary font-medium">3</span>
+              <p className="text-sm text-slate-600">
+                <strong className="text-foreground">Makes design decisions</strong> repeatable and explainable
+              </p>
+            </div>
           </div>
-          <p className="text-slate-600">
-            <strong className="text-foreground">Remains expressive</strong> without becoming inconsistent
-          </p>
-        </div>
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-            <span className="font-data text-sm text-primary font-medium">2</span>
-          </div>
-          <p className="text-slate-600">
-            <strong className="text-foreground">Supports multiple environments</strong> without visual drift
-          </p>
-        </div>
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-            <span className="font-data text-sm text-primary font-medium">3</span>
-          </div>
-          <p className="text-slate-600">
-            <strong className="text-foreground">Makes design decisions</strong> repeatable and explainable
-          </p>
         </div>
       </div>
     </section>

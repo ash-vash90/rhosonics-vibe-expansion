@@ -3,9 +3,9 @@ import { Target, Shield, Lightbulb } from "lucide-react";
 const BrandPositioning = () => {
   return (
     <section className="space-y-12">
-      {/* Brand Promise */}
+      {/* Brand Promise - full width */}
       <div>
-        <p className="text-lg text-slate-600 mb-8 max-w-2xl">
+        <p className="text-lg text-slate-600 mb-8">
           Rhosonics builds measurement systems for environments where conditions are rarely ideal 
           and accuracy is operationally critical. The brand must communicate:
         </p>
@@ -37,41 +37,41 @@ const BrandPositioning = () => {
         </div>
       </div>
 
-      {/* Expression approach + Audience */}
-      <div className="grid md:grid-cols-2 gap-8">
+      {/* Expression approach + Audience + Decision heuristic */}
+      <div className="grid lg:grid-cols-3 gap-6">
         <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
           <h3 className="font-ui text-lg font-semibold text-foreground mb-4">How this shapes expression</h3>
           <p className="text-slate-600 mb-4">
             Expression is <strong className="text-foreground">purposeful rather than decorative</strong>.
           </p>
           <ul className="space-y-2 text-sm text-slate-600">
-            <li>• Clear visual hierarchy — information layers are immediately apparent</li>
-            <li>• Color signals meaning — state, action, or context — not mood</li>
-            <li>• Typography prioritizes legibility and data clarity</li>
-            <li>• Visual elements reinforce credibility, not distract from it</li>
+            <li>• Clear visual hierarchy</li>
+            <li>• Color signals meaning — not mood</li>
+            <li>• Typography prioritizes legibility</li>
           </ul>
         </div>
 
         <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
           <h3 className="font-ui text-lg font-semibold text-foreground mb-4">The audience</h3>
           <p className="text-slate-600 mb-4">
-            The brand is experienced by people who:
+            People who:
           </p>
           <ul className="space-y-2 text-sm text-slate-600">
             <li>• Work in operational or engineering roles</li>
             <li>• Evaluate claims critically</li>
             <li>• Look for evidence before persuasion</li>
-            <li>• Spend time with data, interfaces, and documentation</li>
+            <li>• Spend time with data and interfaces</li>
           </ul>
         </div>
-      </div>
-
-      {/* Decision heuristic */}
-      <div className="p-5 bg-primary/5 border-l-4 border-primary rounded-r-lg">
-        <p className="text-foreground font-medium">
-          When choosing between two valid design options, prefer the one that improves clarity, 
-          reinforces performance, or reveals insight.
-        </p>
+        
+        {/* Decision heuristic */}
+        <div className="p-6 bg-primary/5 border-l-4 border-primary rounded-r-lg h-fit">
+          <h3 className="font-ui text-lg font-semibold text-foreground mb-3">Decision heuristic</h3>
+          <p className="text-foreground">
+            When choosing between two valid design options, prefer the one that improves clarity, 
+            reinforces performance, or reveals insight.
+          </p>
+        </div>
       </div>
     </section>
   );

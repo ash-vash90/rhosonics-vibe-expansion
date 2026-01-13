@@ -3,17 +3,29 @@ import { Palette, Code, Megaphone, Users } from "lucide-react";
 const AboutThisSystem = () => {
   return (
     <section className="space-y-12">
-      {/* Hero statement */}
-      <div className="grid md:grid-cols-2 gap-12 items-start">
-        <div>
+      {/* Hero statement - full width grid */}
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
           <h3 className="font-ui text-xl font-semibold text-foreground mb-4">What this is</h3>
-          <p className="text-lg text-slate-600 leading-relaxed">
+          <p className="text-lg text-slate-600 leading-relaxed mb-6">
             A system of decisions designed to ensure clarity, consistency, and credibility 
             wherever the Rhosonics brand appears.
           </p>
+          
+          {/* How to use */}
+          <div className="p-5 bg-primary/5 border-l-4 border-primary rounded-r-lg">
+            <h4 className="font-ui font-semibold text-foreground mb-2">How to use this</h4>
+            <p className="text-slate-600">
+              Each section explains what exists, why it exists, how it should be used, 
+              and where it should <em>not</em> be used. The goal is shared understanding, 
+              so decisions can be made confidently and consistently.
+            </p>
+          </div>
         </div>
-        <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
-          <p className="text-sm text-slate-500 mb-4">The system resolves a fundamental tension:</p>
+        
+        {/* Sidebar: The tension */}
+        <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg h-fit">
+          <p className="text-sm text-slate-500 mb-4 font-medium">The system resolves a fundamental tension:</p>
           <ul className="space-y-3 text-slate-600">
             <li className="flex items-start gap-2">
               <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
@@ -27,7 +39,7 @@ const AboutThisSystem = () => {
         </div>
       </div>
 
-      {/* Who this is for */}
+      {/* Who this is for - full width grid */}
       <div>
         <h3 className="font-ui text-xl font-semibold text-foreground mb-6">Who this is for</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -45,22 +57,6 @@ const AboutThisSystem = () => {
               <p className="text-sm text-slate-500">{item.desc}</p>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* How to use - inline with the closing statement */}
-      <div className="grid md:grid-cols-2 gap-8 items-start pt-4 border-t border-slate-100">
-        <div>
-          <h3 className="font-ui text-xl font-semibold text-foreground mb-4">How to use this</h3>
-          <p className="text-slate-600">
-            Each section explains what exists, why it exists, how it should be used, 
-            and where it should <em>not</em> be used.
-          </p>
-        </div>
-        <div className="p-5 bg-primary/5 border-l-4 border-primary rounded-r-lg">
-          <p className="text-foreground font-medium">
-            The goal is shared understanding, so decisions can be made confidently and consistently.
-          </p>
         </div>
       </div>
     </section>
