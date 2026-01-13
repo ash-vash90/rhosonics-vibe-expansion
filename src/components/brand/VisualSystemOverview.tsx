@@ -3,78 +3,83 @@ import { Zap, MapPin, Layers } from "lucide-react";
 const VisualSystemOverview = () => {
   return (
     <section className="space-y-12">
-      {/* Intro - full width */}
-      <p className="text-lg text-slate-600">
+      {/* Intro */}
+      <p className="text-lg text-slate-600 max-w-3xl">
         The visual system is built from clearly defined layers, each with a specific role.
         Not every element carries the same weight or authority.
       </p>
 
-      {/* Three layers grid - full width */}
-      <div className="grid md:grid-cols-3 gap-6">
+      {/* Three layers - cleaner cards */}
+      <div className="grid md:grid-cols-3 gap-8">
         {/* Foundations */}
-        <div className="p-6 bg-slate-50 border-2 border-slate-300 rounded-lg">
-          <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4">
-            <Layers className="w-6 h-6 text-white" />
+        <div className="border border-border rounded-lg p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
+              <Layers className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h4 className="font-ui text-lg font-semibold text-foreground">Foundations</h4>
+              <span className="font-data text-[10px] text-slate-500 uppercase tracking-wide">Constant</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 mb-3">
-            <h4 className="font-ui text-lg font-bold text-foreground">Foundations</h4>
-            <span className="font-data text-[10px] bg-slate-900 text-white px-2 py-0.5 rounded">CONSTANT</span>
-          </div>
-          <p className="text-sm text-slate-600 mb-4">The constant base of the brand:</p>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-2 py-1 bg-slate-200 text-slate-700 text-xs rounded">Primary neutrals</span>
-            <span className="px-2 py-1 bg-slate-200 text-slate-700 text-xs rounded">Core typography</span>
-            <span className="px-2 py-1 bg-slate-200 text-slate-700 text-xs rounded">Spacing</span>
-            <span className="px-2 py-1 bg-slate-200 text-slate-700 text-xs rounded">Layout rules</span>
-          </div>
+          <p className="text-sm text-slate-600 mb-4">The stable base of the brand:</p>
+          <ul className="text-sm text-slate-500 space-y-1">
+            <li>Primary neutrals</li>
+            <li>Core typography</li>
+            <li>Spacing &amp; layout rules</li>
+          </ul>
         </div>
 
         {/* Signals */}
-        <div className="p-6 bg-slate-50 border-2 border-primary/30 rounded-lg">
-          <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4 shadow-lg shadow-primary/25">
-            <Zap className="w-6 h-6 text-white" />
-          </div>
-          <div className="flex items-center gap-2 mb-3">
-            <h4 className="font-ui text-lg font-semibold text-foreground">Signals</h4>
-            <span className="font-data text-[10px] bg-primary text-white px-2 py-0.5 rounded">INTENTIONAL</span>
+        <div className="border border-primary/30 rounded-lg p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+              <Zap className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h4 className="font-ui text-lg font-semibold text-foreground">Signals</h4>
+              <span className="font-data text-[10px] text-primary uppercase tracking-wide">Intentional</span>
+            </div>
           </div>
           <p className="text-sm text-slate-600 mb-4">Communicates action, state, or emphasis:</p>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-2 py-1 bg-primary/15 text-primary text-xs rounded">Action colors</span>
-            <span className="px-2 py-1 bg-primary/15 text-primary text-xs rounded">Status indicators</span>
-            <span className="px-2 py-1 bg-primary/15 text-primary text-xs rounded">Interactive highlights</span>
-          </div>
+          <ul className="text-sm text-slate-500 space-y-1">
+            <li>Action colors</li>
+            <li>Status indicators</li>
+            <li>Interactive highlights</li>
+          </ul>
         </div>
 
         {/* Contextual */}
-        <div className="p-6 bg-mineral-surface border border-mineral-neutral/40 rounded-lg">
-          <div className="w-12 h-12 bg-mineral-neutral rounded-lg flex items-center justify-center mb-4">
-            <MapPin className="w-6 h-6 text-white/90" />
+        <div className="border border-mineral-neutral/40 rounded-lg p-6 bg-mineral-surface/30">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-mineral-neutral rounded-lg flex items-center justify-center">
+              <MapPin className="w-5 h-5 text-white/90" />
+            </div>
+            <div>
+              <h4 className="font-ui text-lg font-semibold text-foreground">Contextual</h4>
+              <span className="font-data text-[10px] text-mineral-deep uppercase tracking-wide">Situational</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 mb-3">
-            <h4 className="font-ui text-lg font-semibold text-foreground/90">Contextual</h4>
-            <span className="font-data text-[10px] bg-mineral-neutral text-white px-2 py-0.5 rounded">SITUATIONAL</span>
-          </div>
-          <p className="text-sm text-slate-500 mb-4">Provides situational relevance:</p>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-2 py-1 bg-white/60 text-mineral-deep text-xs rounded">Field neutrals</span>
-            <span className="px-2 py-1 bg-white/60 text-mineral-deep text-xs rounded">Eco indicators</span>
-            <span className="px-2 py-1 bg-white/60 text-mineral-deep text-xs rounded">Textures</span>
-          </div>
+          <p className="text-sm text-slate-600 mb-4">Provides situational relevance:</p>
+          <ul className="text-sm text-slate-500 space-y-1">
+            <li>Field neutrals</li>
+            <li>Eco indicators</li>
+            <li>Textures</li>
+          </ul>
         </div>
       </div>
 
       {/* Slate vs Mineral + What this enables */}
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-12 pt-8 border-t border-border">
         {/* Slate vs Mineral */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div className="p-5 bg-slate-100 border border-slate-300 rounded-lg">
+        <div className="grid sm:grid-cols-2 gap-6">
+          <div>
             <h4 className="font-ui font-semibold text-foreground mb-2">Slate = Software</h4>
             <p className="text-sm text-slate-600">
               UI structure, text, forms, navigation, data containers. Cool, blue-biased, chromatically neutral.
             </p>
           </div>
-          <div className="p-5 bg-mineral-surface border border-mineral-neutral/30 rounded-lg">
+          <div>
             <h4 className="font-ui font-semibold text-foreground mb-2">Mineral = Environment</h4>
             <p className="text-sm text-slate-600">
               Field modules, industry panels, outdoor contexts. Warm-neutral, olive, stone-like tones.
@@ -83,7 +88,7 @@ const VisualSystemOverview = () => {
         </div>
 
         {/* What this enables */}
-        <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
+        <div>
           <h4 className="font-ui font-semibold text-foreground mb-4">What this enables</h4>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
