@@ -209,11 +209,12 @@ const Index = () => {
         {/* Content */}
         <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Logo */}
-            <div className="hero-logo flex items-center justify-center mb-8">
-              <div className="w-16 h-16 md:w-20 md:h-20">
+            {/* Logo + Wordmark */}
+            <div className="hero-logo flex items-center justify-center gap-4 mb-8">
+              <div className="w-14 h-14 md:w-16 md:h-16">
                 <RhosonicsLogo variant="gradient" />
               </div>
+              <span className="font-logo text-2xl md:text-3xl text-white tracking-wide uppercase">RHOSONICS</span>
             </div>
             
             {/* Version badge */}

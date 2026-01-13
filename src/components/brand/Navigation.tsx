@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { RhosonicsLogo } from "../RhosonicsLogo";
 import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown, Download, FileText } from "lucide-react";
 import { exportDesignSystemPDF } from "@/lib/designSystemExport";
 
@@ -224,12 +223,9 @@ export const Navigation = () => {
         <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
           <button 
             onClick={() => scrollToSection('about')}
-            className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <div className="w-7 h-7">
-              <RhosonicsLogo variant="gradient" />
-            </div>
-            <span className="font-logo text-lg tracking-wide uppercase">RHOSONICS</span>
+            <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
           </button>
           <button
             className="xl:hidden text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors touch-manipulation"
@@ -395,10 +391,7 @@ export const Navigation = () => {
           onClick={() => scrollToSection('about')}
           className="flex items-center gap-2 touch-manipulation"
         >
-          <div className="w-6 h-6">
-            <RhosonicsLogo variant="gradient" />
-          </div>
-          <span className="font-logo text-base text-slate-100 tracking-wide uppercase">RHOSONICS</span>
+          <span className="font-data text-xs text-slate-400 tracking-widest">BRAND SYSTEM</span>
         </button>
         <div className="flex items-center gap-2">
           <Link
