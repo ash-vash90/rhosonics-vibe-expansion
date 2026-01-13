@@ -135,6 +135,21 @@ export const EcoComponents = () => {
         </div>
       </div>
 
+      {/* Eco Contrast Warning */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 max-w-xl">
+        <div className="flex items-start gap-2">
+          <span className="text-amber-600 font-bold">⚠</span>
+          <div>
+            <div className="font-ui font-medium text-amber-800 mb-1">Contrast Verification Required</div>
+            <p className="text-sm text-amber-700">
+              Eco surfaces lean green intentionally. Verify text on eco-surface backgrounds meets 
+              <strong> WCAG AA 4.5:1 contrast ratio</strong>. Reserve heavy green fills for status/CTA regions, 
+              not entire modules. Let numbers do the work.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Eco Design Principles */}
       <div className="p-6 bg-eco-surface rounded-lg border border-eco-border">
         <h4 className="font-ui font-bold text-lg mb-4 text-foreground">Eco Design Principles</h4>

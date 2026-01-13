@@ -168,7 +168,7 @@ export const InterfaceKit = () => {
 
       {/* Badges & Tags */}
       <h3 className="label-tech text-slate-500 mb-4">BADGES & TAGS</h3>
-      <div className="card-base p-8">
+      <div className="card-base p-8 mb-8">
         <div className="flex flex-wrap gap-3 mb-4">
           <span className="px-3 py-1 bg-primary text-primary-foreground font-data text-xs uppercase rounded-full">
             Active
@@ -188,6 +188,117 @@ export const InterfaceKit = () => {
         </div>
         <p className="text-sm text-muted-foreground border-t border-border pt-4">
           All badges use JetBrains Mono, uppercase, and short labels. Badges communicate state, not emotion.
+        </p>
+      </div>
+
+      {/* Component States */}
+      <h3 className="label-tech text-slate-500 mb-4">COMPONENT STATES</h3>
+      <div className="card-base p-8 mb-8">
+        <p className="text-sm text-muted-foreground mb-6">
+          All interactive components must define these states. Consistency prevents cognitive load.
+        </p>
+        
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+          <div className="text-center">
+            <div className="h-12 bg-primary text-primary-foreground rounded-md flex items-center justify-center font-ui text-sm mb-2">
+              Default
+            </div>
+            <span className="text-xs text-muted-foreground">Resting state</span>
+          </div>
+          <div className="text-center">
+            <div className="h-12 bg-primary/80 text-primary-foreground rounded-md flex items-center justify-center font-ui text-sm mb-2 ring-2 ring-primary/30 ring-offset-2">
+              Hover
+            </div>
+            <span className="text-xs text-muted-foreground">Cursor over</span>
+          </div>
+          <div className="text-center">
+            <div className="h-12 bg-primary text-primary-foreground rounded-md flex items-center justify-center font-ui text-sm mb-2 ring-2 ring-primary ring-offset-2">
+              Focus
+            </div>
+            <span className="text-xs text-muted-foreground">Keyboard nav</span>
+          </div>
+          <div className="text-center">
+            <div className="h-12 bg-primary/90 text-primary-foreground rounded-md flex items-center justify-center font-ui text-sm mb-2 scale-[0.98] transform">
+              Active
+            </div>
+            <span className="text-xs text-muted-foreground">Pressed</span>
+          </div>
+          <div className="text-center">
+            <div className="h-12 bg-muted text-muted-foreground rounded-md flex items-center justify-center font-ui text-sm mb-2 opacity-50 cursor-not-allowed">
+              Disabled
+            </div>
+            <span className="text-xs text-muted-foreground">Unavailable</span>
+          </div>
+        </div>
+
+        {/* Focus Ring Spec */}
+        <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-6">
+          <div className="label-tech text-slate-600 mb-2">FOCUS RING SPECIFICATION</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div>
+              <span className="font-data text-primary">ring-2</span>
+              <span className="text-muted-foreground"> — 2px solid</span>
+            </div>
+            <div>
+              <span className="font-data text-primary">ring-primary</span>
+              <span className="text-muted-foreground"> — Brand color</span>
+            </div>
+            <div>
+              <span className="font-data text-primary">ring-offset-2</span>
+              <span className="text-muted-foreground"> — 2px gap</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Form Validation */}
+        <div className="label-tech text-slate-600 mb-3">FORM VALIDATION STATES</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="label-tech text-muted-foreground block mb-2">Valid Input</label>
+            <input 
+              type="text" 
+              value="1.4502" 
+              readOnly
+              className="w-full px-4 py-2.5 bg-card border-2 border-primary rounded-md font-data text-foreground focus:outline-none"
+            />
+            <p className="text-xs text-primary mt-1 flex items-center gap-1">
+              <span>✓</span> Value within range
+            </p>
+          </div>
+          <div>
+            <label className="label-tech text-muted-foreground block mb-2">Error Input</label>
+            <input 
+              type="text" 
+              value="999.999" 
+              readOnly
+              className="w-full px-4 py-2.5 bg-card border-2 border-destructive rounded-md font-data text-foreground focus:outline-none"
+            />
+            <p className="text-xs text-destructive mt-1 flex items-center gap-1">
+              <span>✕</span> Value exceeds maximum (10.000)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Loading States */}
+      <h3 className="label-tech text-slate-500 mb-4">LOADING STATES</h3>
+      <div className="card-base p-8">
+        <div className="flex flex-wrap gap-4 items-center">
+          <button className="chamfer-shape bg-primary text-primary-foreground px-6 py-2.5 font-data text-xs uppercase flex items-center gap-2 opacity-70 cursor-wait">
+            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            Processing...
+          </button>
+          <div className="h-10 w-32 bg-slate-200 rounded-md animate-pulse"></div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <span className="text-sm font-data">Syncing data...</span>
+          </div>
+        </div>
+        <p className="text-sm text-muted-foreground border-t border-border pt-4 mt-6">
+          Loading states must be obvious and non-blocking when possible. Use skeleton loaders for content, spinners for actions.
         </p>
       </div>
     </section>
