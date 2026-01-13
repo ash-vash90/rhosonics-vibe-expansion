@@ -26,7 +26,7 @@ export const ColorMatrix = () => {
               {[
                 { name: "Slate 50", hex: "#F8FAFC", rgb: "248, 250, 252", hsl: "210 40% 98%", bg: "bg-slate-50", text: "text-slate-700", use: "Page backgrounds" },
                 { name: "Slate 200", hex: "#E2E8F0", rgb: "226, 232, 240", hsl: "214 32% 91%", bg: "bg-slate-200", text: "text-slate-700", use: "Borders, dividers" },
-                { name: "Slate 500", hex: "#64748B", rgb: "100, 116, 139", hsl: "215 19% 35%", bg: "bg-slate-500", text: "text-white", use: "Secondary text" },
+                { name: "Slate 600", hex: "#475569", rgb: "71, 85, 105", hsl: "215 19% 35%", bg: "bg-slate-600", text: "text-white", use: "Secondary text" },
                 { name: "Slate 900", hex: "#0F172A", rgb: "15, 23, 42", hsl: "222 47% 11%", bg: "bg-slate-900", text: "text-white", use: "Primary text" },
               ].map(color => (
                 <div key={color.name} className="flex items-center gap-4">
