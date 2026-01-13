@@ -62,7 +62,7 @@ const VisualSystemOverview = () => {
 
           {/* Signals - Energetic treatment */}
           <div id="signals" className="scroll-mt-24 relative">
-            <div className="absolute left-8 top-20 bottom-0 w-px bg-gradient-to-b from-primary/40 to-transparent hidden md:block" />
+            
             
             <div className="p-8 bg-slate-50 border-2 border-primary/30 rounded-lg">
               <div className="flex items-start gap-5">
