@@ -9,11 +9,9 @@ export const EcoComponents = () => {
           ECO_PACK
         </span>
       </h2>
-      <p className="text-muted-foreground mb-4">
+      <p className="text-muted-foreground mb-12">
         Sustainability metrics are operational outcomes, not marketing claims.
-      </p>
-      <p className="text-muted-foreground mb-8">
-        Every 0.1% accuracy improvement is waste prevented. We track this because customers asked.
+        Every 0.1% accuracy improvement is waste prevented.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
@@ -52,7 +50,6 @@ export const EcoComponents = () => {
           </div>
 
           <div className="flex items-center justify-center py-4">
-            {/* Circular Metric */}
             <div className="relative w-32 h-32 flex items-center justify-center">
               <svg className="absolute inset-0 w-full h-full text-slate-200" viewBox="0 0 80 80">
                 <circle cx="40" cy="40" r="35" stroke="currentColor" strokeWidth="6" fill="none" />
@@ -135,41 +132,26 @@ export const EcoComponents = () => {
         </div>
       </div>
 
-      {/* Eco Contrast Warning */}
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 max-w-xl">
-        <div className="flex items-start gap-2">
-          <span className="text-amber-600 font-bold">⚠</span>
-          <div>
-            <div className="font-ui font-medium text-amber-800 mb-1">Contrast Verification Required</div>
-            <p className="text-sm text-amber-700">
-              Eco surfaces lean green intentionally. Verify text on eco-surface backgrounds meets 
-              <strong> WCAG AA 4.5:1 contrast ratio</strong>. Reserve heavy green fills for status/CTA regions, 
-              not entire modules. Let numbers do the work.
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Eco Design Principles */}
-      <div className="p-6 bg-eco-surface rounded-lg border border-eco-border">
+      <div className="p-6 bg-eco-surface rounded-lg border border-eco-border max-w-2xl">
         <h4 className="font-ui font-bold text-lg mb-4 text-foreground">Eco Design Principles</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <div className="label-tech text-primary mb-2">SUBTLE BY DEFAULT</div>
             <p className="text-sm text-muted-foreground">
-              Sustainability messaging is integrated naturally. Avoid "greenwashing" with over-the-top eco imagery.
+              Integrated naturally. No "greenwashing" with over-the-top eco imagery.
             </p>
           </div>
           <div>
             <div className="label-tech text-primary mb-2">DATA FIRST</div>
             <p className="text-sm text-muted-foreground">
-              Every eco claim must be tied to measurable data. Show the numbers, not just the sentiment.
+              Every claim tied to measurable data. Show numbers, not sentiment.
             </p>
           </div>
           <div>
-            <div className="label-tech text-primary mb-2">CONTEXTUAL PATTERN</div>
+            <div className="label-tech text-primary mb-2">CONTEXTUAL</div>
             <p className="text-sm text-muted-foreground">
-              The topographic line pattern represents natural terrain and is used exclusively on eco components.
+              Topographic patterns used exclusively on eco components.
             </p>
           </div>
         </div>

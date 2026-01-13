@@ -1,196 +1,64 @@
 import { BrandCallout } from "./BrandCallout";
 
-interface ColorSwatchProps {
-  name: string;
-  hex: string;
-  bgClass: string;
-  textClass: string;
-  description: string;
-  dontUse: string;
-  role: string;
-}
-
-const ColorSwatch = ({
-  name,
-  hex,
-  bgClass,
-  textClass,
-  description,
-  dontUse,
-  role
-}: ColorSwatchProps) => (
-  <div className="flex flex-col md:flex-row gap-6 p-6 bg-card border border-border rounded-lg shadow-card items-start">
-    <div className={`swatch ${bgClass} ${textClass} border-none w-full md:w-48 shrink-0`}>
-      <div>
-        <span className="label-tech opacity-60 text-xs">{role}</span>
-        <span className="font-bold text-sm block mt-1">{name}</span>
-        <code className="label-tech opacity-70">{hex}</code>
-      </div>
-    </div>
-    <div className="flex-1 py-1">
-      <h3 className="font-ui font-bold text-lg text-foreground mb-2">{name}</h3>
-      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{description}</p>
-      <div className="flex flex-wrap gap-3">
-        <span className="text-xs font-data font-medium text-destructive bg-red-50 px-3 py-1 rounded border border-red-100">
-          AVOID: {dontUse}
-        </span>
-      </div>
-    </div>
-  </div>
-);
-
 export const ColorMatrix = () => {
-  const primaryColors: ColorSwatchProps[] = [
-    {
-      name: "Rhosonics Green",
-      hex: "#33993c",
-      bgClass: "bg-primary",
-      textClass: "text-primary-foreground",
-      role: "CORE SIGNAL",
-      description: "The core identifier of the Rhosonics brand. Represents reliability and active measurement. Use for the most important actions.",
-      dontUse: "Large Backgrounds, Body Text"
-    },
-    {
-      name: "Lime Accent",
-      hex: "#73B82E",
-      bgClass: "bg-rho-green-accent",
-      textClass: "text-primary-foreground",
-      role: "SUPPORTING SIGNAL",
-      description: "A supporting tone used exclusively to add depth to the primary green in gradients.",
-      dontUse: "Solid Buttons, Text (Poor Contrast)"
-    },
-    {
-      name: "Obsidian",
-      hex: "#111522",
-      bgClass: "bg-rho-obsidian",
-      textClass: "text-slate-100",
-      role: "FOUNDATIONAL SURFACE",
-      description: "A rich, blue-tinted black for the hardware aesthetic. Replaces pure black for dark surfaces.",
-      dontUse: "Pure Black (#000000)"
-    }
-  ];
-
-  const mineralColors: ColorSwatchProps[] = [
-    {
-      name: "Mineral Neutral",
-      hex: "#8A836F",
-      bgClass: "bg-mineral-neutral",
-      textClass: "text-white",
-      role: "ENVIRONMENT ACCENT",
-      description: "A warm stone tone for field sites and mineral processing environments. Never substitute for Slate in UI.",
-      dontUse: "UI Text, Buttons, Backgrounds, Forms"
-    },
-    {
-      name: "Mineral Surface",
-      hex: "#EDE9E2",
-      bgClass: "bg-mineral-surface",
-      textClass: "text-mineral-deep",
-      role: "ENVIRONMENT SURFACE",
-      description: "A warm cream surface for field-themed cards. Only in environmental or industry context modules.",
-      dontUse: "General UI Cards, Standard Backgrounds"
-    },
-    {
-      name: "Mineral Deep",
-      hex: "#5E5749",
-      bgClass: "bg-mineral-deep",
-      textClass: "text-white",
-      role: "ENVIRONMENT ACCENT",
-      description: "A deep olive-stone tone for grounding elements in field contexts.",
-      dontUse: "UI Text, Tables, Navigation"
-    }
-  ];
-
-  const ecoColors: ColorSwatchProps[] = [
-    {
-      name: "Eco Surface",
-      hex: "#ecf8ed",
-      bgClass: "bg-eco-surface",
-      textClass: "text-muted-foreground",
-      role: "CONTEXTUAL INDICATOR",
-      description: "A subtle green tint for Eco Pack modules. Provides a subconscious sustainability cue.",
-      dontUse: "Main Page Backgrounds, Text"
-    },
-    {
-      name: "Eco Border",
-      hex: "#d9f2db",
-      bgClass: "bg-eco-border",
-      textClass: "text-muted-foreground",
-      role: "CONTEXTUAL INDICATOR",
-      description: "Used for structure within Eco modules. Provides separation for sustainable metrics.",
-      dontUse: "Text, Primary Buttons, Solid Fills"
-    }
-  ];
-
   return (
     <section id="colors" className="mb-32">
       <h2 className="section-header">Color Roles</h2>
-      <p className="label-tech text-slate-500 mb-6">FUNCTIONAL COLOR GOVERNANCE</p>
-      
-      {/* Core Philosophy */}
-      <p className="text-muted-foreground mb-8 max-w-3xl">
-        Color communicates <strong className="text-foreground">State</strong>, <strong className="text-foreground">Structure</strong>, or <strong className="text-foreground">Context</strong>. 
-        Mood, decoration, and expressive color without meaning are not permitted.
+      <p className="text-muted-foreground mb-12 max-w-2xl">
+        Color communicates State, Structure, or Context. 
+        Mood and decoration without meaning are not permitted.
       </p>
-
-      {/* Accessibility Requirements - NEW */}
-      <div className="p-5 bg-blue-50 border border-blue-200 rounded-lg mb-12 max-w-2xl">
-        <span className="label-tech text-blue-700 mb-2 block">ACCESSIBILITY REQUIREMENTS</span>
-        <div className="space-y-2 text-sm text-blue-900">
-          <p><strong>WCAG AA Minimum:</strong> 4.5:1 for normal text, 3:1 for large text (18px+)</p>
-          <p><strong>Dark backgrounds:</strong> Use Obsidian (#111522), never pure black (#000000)</p>
-          <p><strong>Verification required:</strong> Green-on-eco-surface combinations</p>
-        </div>
-      </div>
 
       {/* Color Role Hierarchy */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
         <div className="p-5 bg-slate-100 border border-slate-300 rounded-lg">
           <span className="label-tech text-slate-500 mb-2 block">SLATE</span>
           <p className="font-ui font-semibold text-lg text-foreground mb-1">Software</p>
-          <p className="text-sm text-muted-foreground">UI structure, text, forms, tables, navigation, data containers</p>
+          <p className="text-sm text-muted-foreground">UI structure, text, forms, navigation</p>
         </div>
         <div className="p-5 bg-mineral-surface border border-mineral-neutral/30 rounded-lg">
           <span className="label-tech text-mineral-deep mb-2 block">MINERAL</span>
           <p className="font-ui font-semibold text-lg text-foreground mb-1">Environment</p>
-          <p className="text-sm text-muted-foreground">Field modules, industry panels, outdoor contexts, environmental surfaces</p>
+          <p className="text-sm text-muted-foreground">Field modules, industry panels, outdoor contexts</p>
         </div>
         <div className="p-5 bg-rho-obsidian rounded-lg">
           <span className="label-tech text-slate-400 mb-2 block">OBSIDIAN</span>
           <p className="font-ui font-semibold text-lg text-slate-100 mb-1">Hardware</p>
-          <p className="text-sm text-slate-400">Device surfaces, enclosures, premium dark UI, physical products</p>
+          <p className="text-sm text-slate-400">Device surfaces, dark UI, physical products</p>
         </div>
       </div>
 
-
-      {/* Primary Colors */}
+      {/* Signal Colors */}
       <h3 className="label-tech text-primary mb-4">SIGNAL COLORS</h3>
-      <div className="flex flex-col gap-6 mb-12">
-        {primaryColors.map(color => <ColorSwatch key={color.hex} {...color} />)}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        <div className="card-base p-6">
+          <div className="w-full h-16 bg-primary rounded-md mb-4"></div>
+          <h4 className="font-ui font-bold text-foreground">Rhosonics Green</h4>
+          <code className="label-tech text-muted-foreground">#33993c</code>
+          <p className="text-sm text-muted-foreground mt-2">Core identifier. Actions and active states.</p>
+        </div>
+        <div className="card-base p-6">
+          <div className="w-full h-16 bg-rho-green-accent rounded-md mb-4"></div>
+          <h4 className="font-ui font-bold text-foreground">Lime Accent</h4>
+          <code className="label-tech text-muted-foreground">#73B82E</code>
+          <p className="text-sm text-muted-foreground mt-2">Supporting tone for gradient depth.</p>
+        </div>
+        <div className="card-base p-6">
+          <div className="w-full h-16 bg-rho-obsidian rounded-md mb-4"></div>
+          <h4 className="font-ui font-bold text-foreground">Obsidian</h4>
+          <code className="label-tech text-muted-foreground">#111522</code>
+          <p className="text-sm text-muted-foreground mt-2">Blue-tinted black. Never pure #000.</p>
+        </div>
       </div>
 
-      {/* Mineral Colors */}
-      <h3 className="label-tech text-mineral-neutral mb-4">FIELD AESTHETIC — MINERAL TONES</h3>
-      <BrandCallout variant="avoid" title="Critical Separation" className="mb-6">
-        Mineral colors are warm-neutral environmental tones. They are <strong>categorically different</strong> from Slate UI grays. 
-        Mineral must never substitute for Slate in UI elements.
+      <BrandCallout variant="avoid" title="Critical Separation" className="mb-12">
+        Mineral colors are warm-neutral environmental tones. 
+        They must never substitute for Slate in UI elements.
       </BrandCallout>
-      <div className="flex flex-col gap-6 mb-12">
-        {mineralColors.map(color => <ColorSwatch key={color.hex} {...color} />)}
-      </div>
-
-      {/* Eco Colors */}
-      <h3 className="label-tech text-primary mb-4">SUSTAINABILITY TINTS</h3>
-      <div className="flex flex-col gap-6 mb-12">
-        {ecoColors.map(color => <ColorSwatch key={color.hex} {...color} />)}
-      </div>
 
       {/* Slate Scale */}
-      <h3 className="label-tech text-slate-500 mb-4">THE SLATE SCALE — UI STRUCTURE</h3>
-      <p className="text-sm text-muted-foreground mb-6">
-        Cool, blue-biased, chromatically neutral. Used exclusively for UI structure: 
-        text, dividers, tables, forms, navigation, and data containers.
-      </p>
-      <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2">
+      <h3 className="label-tech text-slate-500 mb-4">SLATE SCALE — UI STRUCTURE</h3>
+      <div className="grid grid-cols-5 lg:grid-cols-10 gap-2 mb-12">
         {[
           { name: "50", bg: "bg-slate-50", text: "text-slate-600" },
           { name: "100", bg: "bg-slate-100", text: "text-slate-600" },
@@ -203,69 +71,28 @@ export const ColorMatrix = () => {
           { name: "800", bg: "bg-slate-800", text: "text-slate-100" },
           { name: "900", bg: "bg-slate-900", text: "text-slate-100" }
         ].map(shade => (
-          <div key={shade.name} className={`swatch-sm ${shade.bg} ${shade.text}`}>
+          <div key={shade.name} className={`aspect-square ${shade.bg} ${shade.text} rounded flex items-center justify-center`}>
             <span className="font-data text-xs font-bold">{shade.name}</span>
           </div>
         ))}
       </div>
 
-      {/* Gradient Examples */}
-      <div className="mt-12">
-        <h3 className="label-tech text-slate-500 mb-4">BRAND GRADIENTS</h3>
-        <p className="text-sm text-muted-foreground mb-6">
-          Flat color is preferred by default. Gradients add depth or signal transition — never decoration.
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="h-32 bg-brand-gradient rounded-lg flex items-end p-4">
-            <div>
-              <span className="font-ui font-bold text-primary-foreground block">Primary Gradient</span>
-              <code className="label-tech text-primary-foreground/70">135° | #73B82E → #33993c</code>
-            </div>
-          </div>
-          <div className="h-32 bg-obsidian-gradient rounded-lg flex items-end p-4">
-            <div>
-              <span className="font-ui font-bold text-slate-100 block">Obsidian Gradient</span>
-              <code className="label-tech text-slate-400">135° | #1c2130 → #111522</code>
-            </div>
-          </div>
-          <div className="h-32 rounded-lg flex items-end p-4 relative overflow-hidden" style={{
-            background: 'linear-gradient(145deg, hsl(45 10% 58%) 0%, hsl(45 8% 52%) 100%)'
-          }}>
-            <div className="absolute inset-0 bg-terrain-contour opacity-30" aria-hidden="true" />
-            <div className="relative">
-              <span className="font-ui font-bold text-white block">Mineral Gradient</span>
-              <code className="label-tech text-white/70">145° | Warm stone tones</code>
-            </div>
-          </div>
+      {/* Gradients */}
+      <h3 className="label-tech text-slate-500 mb-4">BRAND GRADIENTS</h3>
+      <p className="text-sm text-muted-foreground mb-6 max-w-xl">
+        Flat color is preferred. Gradients add depth or signal transition — never decoration.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="h-24 bg-brand-gradient rounded-lg flex items-end p-4">
+          <span className="font-ui font-bold text-primary-foreground">Primary</span>
         </div>
-      </div>
-
-      {/* Terrain Textures */}
-      <div className="mt-12">
-        <h3 className="label-tech text-mineral-neutral mb-4">TERRAIN TEXTURES</h3>
-        <p className="text-muted-foreground text-sm mb-6">
-          Subtle background patterns. Textures must support content, not compete with it. 
-          If a texture is noticeable before the content, it is being overused.
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="h-28 rounded-lg border border-mineral-neutral/30 bg-mineral-surface bg-terrain-contour flex flex-col justify-end p-4">
-            <span className="font-ui font-medium text-mineral-deep text-sm">Contour Lines</span>
-            <span className="label-tech text-mineral-neutral/70 text-xs">TOPOGRAPHIC</span>
-          </div>
-          <div className="h-28 rounded-lg border border-mineral-neutral/30 bg-mineral-surface bg-terrain-strata flex flex-col justify-end p-4">
-            <span className="font-ui font-medium text-mineral-deep text-sm">Strata Layers</span>
-            <span className="label-tech text-mineral-neutral/70 text-xs">GEOLOGICAL</span>
-          </div>
-          <div className="h-28 rounded-lg border border-mineral-neutral/30 bg-mineral-surface bg-terrain-grain flex flex-col justify-end p-4">
-            <span className="font-ui font-medium text-mineral-deep text-sm">Grain Particles</span>
-            <span className="label-tech text-mineral-neutral/70 text-xs">MINERAL</span>
-          </div>
-          <div className="h-28 rounded-lg bg-terrain-ore flex flex-col justify-end p-4">
-            <span className="font-ui font-medium text-slate-300 text-sm">Ore Deposits</span>
-            <span className="label-tech text-mineral-neutral/70 text-xs">DARK FIELD</span>
-          </div>
+        <div className="h-24 bg-obsidian-gradient rounded-lg flex items-end p-4">
+          <span className="font-ui font-bold text-slate-100">Obsidian</span>
+        </div>
+        <div className="h-24 rounded-lg flex items-end p-4" style={{
+          background: 'linear-gradient(145deg, hsl(45 10% 58%) 0%, hsl(45 8% 52%) 100%)'
+        }}>
+          <span className="font-ui font-bold text-white">Mineral</span>
         </div>
       </div>
     </section>
