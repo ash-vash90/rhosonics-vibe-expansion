@@ -1,3 +1,5 @@
+import { BrandCallout } from "./BrandCallout";
+
 export const SpacingSystem = () => {
   const spacingScale = [
     { name: "1", px: "4px", use: "Tight inline spacing" },
@@ -15,9 +17,80 @@ export const SpacingSystem = () => {
   return (
     <section id="spacing" className="mb-32">
       <h2 className="section-header">Spacing System</h2>
-      <p className="text-muted-foreground mb-8">
-        4px increments. Consistency over creativity.
+      <p className="text-muted-foreground mb-8 max-w-2xl">
+        Spacing in the Rhosonics system is functional, not expressive. It creates clarity, 
+        hierarchy, and rhythm — not personality. Consistent spacing allows users to understand 
+        structure at a glance, especially in data-dense and operational contexts.
       </p>
+
+      {/* Core Principle */}
+      <p className="text-lg font-medium text-foreground mb-12 max-w-2xl">
+        Consistency over creativity. Structure before expression.
+      </p>
+
+      {/* Spacing Philosophy */}
+      <div className="mb-12 max-w-2xl">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Spacing Philosophy</h3>
+        <p className="text-muted-foreground mb-4">
+          Rhosonics uses a strict, predictable spacing system because predictability builds trust. 
+          When spacing behaves consistently, users can focus on the information rather than the interface.
+        </p>
+        <p className="text-muted-foreground">
+          Spacing is not used to decorate or dramatize content. It is used to separate, group, 
+          and prioritize information clearly.
+        </p>
+      </div>
+
+      {/* Spacing Scale Rules */}
+      <div className="mb-12">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Spacing Scale Rules</h3>
+        <ul className="space-y-2 text-muted-foreground mb-6 max-w-2xl">
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-1">•</span>
+            <span>All spacing is based on <strong className="text-foreground">4px increments</strong></span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-1">•</span>
+            <span>No arbitrary spacing values are allowed</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-1">•</span>
+            <span>Larger spacing communicates structural breaks, not importance</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-1">•</span>
+            <span>Smaller spacing communicates related information, not compression</span>
+          </li>
+        </ul>
+
+        <BrandCallout variant="rule" title="Relationship Rule">
+          If two elements feel related, spacing should reinforce that relationship. 
+          If they feel separate, spacing should make that obvious.
+        </BrandCallout>
+      </div>
+
+      {/* Spacing Usage Guidance */}
+      <div className="mb-12">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Spacing Usage Guidance</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+          <div className="card-base p-4">
+            <span className="label-tech text-primary">TIGHT</span>
+            <p className="text-sm text-muted-foreground mt-1">Within components</p>
+          </div>
+          <div className="card-base p-4">
+            <span className="label-tech text-primary">MEDIUM</span>
+            <p className="text-sm text-muted-foreground mt-1">Between related components</p>
+          </div>
+          <div className="card-base p-4">
+            <span className="label-tech text-primary">LARGE</span>
+            <p className="text-sm text-muted-foreground mt-1">Between sections and concepts</p>
+          </div>
+          <div className="card-base p-4">
+            <span className="label-tech text-primary">VERY LARGE</span>
+            <p className="text-sm text-muted-foreground mt-1">Page-level or conceptual breaks only</p>
+          </div>
+        </div>
+      </div>
 
       {/* Spacing Scale Visual */}
       <div className="card-base p-8 mb-8">
