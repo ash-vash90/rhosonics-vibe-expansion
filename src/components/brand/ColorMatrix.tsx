@@ -1,281 +1,284 @@
 import { BrandCallout } from "./BrandCallout";
-import { CheckCircle, AlertTriangle, XCircle, Info } from "lucide-react";
 
 export const ColorMatrix = () => {
   return (
     <section id="colors" className="mb-32">
       <h2 className="section-header">Color System</h2>
       
-      {/* Two-column: Intro + Callout */}
-      <div className="grid lg:grid-cols-3 gap-8 mb-12">
-        <div className="lg:col-span-2">
-          <p className="text-muted-foreground text-lg mb-8">
-            Color communicates State, Structure, or Context. 
-            Mood and decoration without meaning are not permitted. Every color choice must be justifiable by its functional role.
-          </p>
+      <p className="text-muted-foreground text-lg mb-16 max-w-3xl">
+        Color follows the same layer philosophy as the visual system: Foundations establish structure, 
+        Signals communicate action and state, Contextual elements provide situational relevance.
+      </p>
 
-          {/* Color Role Hierarchy */}
-          <h3 className="label-tech text-slate-500 mb-4">COLOR WORLDS</h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="p-5 bg-slate-100 border border-slate-300 rounded-lg">
-              <span className="label-tech text-slate-500 mb-2 block">SLATE</span>
-              <p className="font-ui font-semibold text-lg text-foreground mb-1">Software</p>
-              <p className="text-sm text-muted-foreground">UI structure, text, forms, navigation, data containers</p>
-            </div>
-            <div className="p-5 bg-mineral-surface border border-mineral-neutral/30 rounded-lg">
-              <span className="label-tech text-mineral-deep mb-2 block">MINERAL</span>
-              <p className="font-ui font-semibold text-lg text-foreground mb-1">Environment</p>
-              <p className="text-sm text-muted-foreground">Field modules, industry panels, outdoor contexts</p>
-            </div>
-            <div className="p-5 bg-rho-obsidian rounded-lg">
-              <span className="label-tech text-slate-400 mb-2 block">OBSIDIAN</span>
-              <p className="font-ui font-semibold text-lg text-slate-100 mb-1">Hardware</p>
-              <p className="text-sm text-slate-400">Device surfaces, dark UI, physical products</p>
-            </div>
-          </div>
+      {/* FOUNDATIONS */}
+      <div className="mb-20">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-3 h-3 bg-slate-900 rounded-sm"></div>
+          <h3 className="font-ui text-xl font-semibold text-foreground">Foundations</h3>
+          <span className="font-data text-[10px] bg-slate-900 text-white px-2 py-0.5 rounded">CONSTANT</span>
         </div>
-
-        {/* Sidebar */}
-        <div className="space-y-4">
-          <BrandCallout variant="avoid" title="Critical Separation">
-            Mineral colors are olive/stone environmental tones. 
-            They must never substitute for Slate in UI elements.
-          </BrandCallout>
-          <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
-            <h4 className="font-ui font-semibold text-sm text-foreground mb-2">Accessibility</h4>
-            <p className="text-xs text-muted-foreground">
-              All color combinations maintain WCAG AA contrast (4.5:1 minimum). 
-              The Slate scale is calibrated for text readability across light and dark modes.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Signal Colors - Primary Brand */}
-      <div className="mb-12">
-        <h3 className="label-tech text-primary mb-6">PRIMARY SIGNAL COLORS</h3>
-        <div className="grid md:grid-cols-4 gap-4">
-          <div className="card-base p-5">
-            <div className="w-full h-14 bg-primary rounded-md mb-4"></div>
-            <h4 className="font-ui font-bold text-foreground text-sm">Rhosonics Green</h4>
-            <code className="font-data text-xs text-muted-foreground">#33993C</code>
-            <p className="text-xs text-muted-foreground mt-2">Primary actions, active states, brand identity</p>
-          </div>
-          <div className="card-base p-5">
-            <div className="w-full h-14 bg-rho-green-accent rounded-md mb-4"></div>
-            <h4 className="font-ui font-bold text-foreground text-sm">Lime Accent</h4>
-            <code className="font-data text-xs text-muted-foreground">#73B82E</code>
-            <p className="text-xs text-muted-foreground mt-2">Gradient depth, eco indicators, highlights</p>
-          </div>
-          <div className="card-base p-5">
-            <div className="w-full h-14 bg-rho-obsidian rounded-md mb-4"></div>
-            <h4 className="font-ui font-bold text-foreground text-sm">Obsidian</h4>
-            <code className="font-data text-xs text-muted-foreground">#111522</code>
-            <p className="text-xs text-muted-foreground mt-2">Blue-tinted black. Never use pure #000</p>
-          </div>
-          <div className="card-base p-5">
-            <div className="w-full h-14 bg-brand-gradient rounded-md mb-4"></div>
-            <h4 className="font-ui font-bold text-foreground text-sm">Brand Gradient</h4>
-            <code className="font-data text-xs text-muted-foreground">Lime → Green</code>
-            <p className="text-xs text-muted-foreground mt-2">Hero elements, CTAs, featured content</p>
-          </div>
-        </div>
-      </div>
-
-      {/* State Colors */}
-      <div className="mb-12">
-        <h3 className="label-tech text-slate-500 mb-4">STATE COLORS</h3>
-        <p className="text-sm text-muted-foreground mb-6">
-          State colors communicate operational status. They must never be used decoratively.
-        </p>
-        <div className="grid md:grid-cols-4 gap-4">
-          <div className="p-5 bg-green-50 border border-green-200 rounded-lg">
-            <div className="flex items-center gap-2 mb-3">
-              <CheckCircle className="w-5 h-5 text-green-600" />
-              <span className="font-ui font-semibold text-green-800">Success</span>
-            </div>
-            <div className="flex gap-2 mb-2">
-              <div className="w-8 h-8 bg-green-500 rounded"></div>
-              <div className="w-8 h-8 bg-green-600 rounded"></div>
-              <div className="w-8 h-8 bg-green-700 rounded"></div>
-            </div>
-            <p className="text-xs text-green-700">Confirmations, completed actions, valid states</p>
-          </div>
-          <div className="p-5 bg-amber-50 border border-amber-200 rounded-lg">
-            <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle className="w-5 h-5 text-amber-600" />
-              <span className="font-ui font-semibold text-amber-800">Warning</span>
-            </div>
-            <div className="flex gap-2 mb-2">
-              <div className="w-8 h-8 bg-amber-400 rounded"></div>
-              <div className="w-8 h-8 bg-amber-500 rounded"></div>
-              <div className="w-8 h-8 bg-amber-600 rounded"></div>
-            </div>
-            <p className="text-xs text-amber-700">Cautions, attention needed, pending states</p>
-          </div>
-          <div className="p-5 bg-red-50 border border-red-200 rounded-lg">
-            <div className="flex items-center gap-2 mb-3">
-              <XCircle className="w-5 h-5 text-red-600" />
-              <span className="font-ui font-semibold text-red-800">Error</span>
-            </div>
-            <div className="flex gap-2 mb-2">
-              <div className="w-8 h-8 bg-red-500 rounded"></div>
-              <div className="w-8 h-8 bg-red-600 rounded"></div>
-              <div className="w-8 h-8 bg-red-700 rounded"></div>
-            </div>
-            <p className="text-xs text-red-700">Failures, critical alerts, destructive actions</p>
-          </div>
-          <div className="p-5 bg-blue-50 border border-blue-200 rounded-lg">
-            <div className="flex items-center gap-2 mb-3">
-              <Info className="w-5 h-5 text-blue-600" />
-              <span className="font-ui font-semibold text-blue-800">Info</span>
-            </div>
-            <div className="flex gap-2 mb-2">
-              <div className="w-8 h-8 bg-blue-400 rounded"></div>
-              <div className="w-8 h-8 bg-blue-500 rounded"></div>
-              <div className="w-8 h-8 bg-blue-600 rounded"></div>
-            </div>
-            <p className="text-xs text-blue-700">Neutral information, help text, guidance</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Slate Scale */}
-      <div className="mb-12">
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <h3 className="label-tech text-slate-500 mb-4">SLATE SCALE — UI STRUCTURE</h3>
-            <p className="text-sm text-muted-foreground mb-6">
-              Cool, blue-biased neutrals for all software interfaces. The primary palette for text, backgrounds, and UI chrome.
-            </p>
-            <div className="card-base p-6">
-              <div className="grid grid-cols-10 gap-2 mb-6">
-                {[
-                  { name: "50", bg: "bg-slate-50", text: "text-slate-600" },
-                  { name: "100", bg: "bg-slate-100", text: "text-slate-600" },
-                  { name: "200", bg: "bg-slate-200", text: "text-slate-600" },
-                  { name: "300", bg: "bg-slate-300", text: "text-slate-700" },
-                  { name: "400", bg: "bg-slate-400", text: "text-slate-100" },
-                  { name: "500", bg: "bg-slate-500", text: "text-slate-100" },
-                  { name: "600", bg: "bg-slate-600", text: "text-slate-100" },
-                  { name: "700", bg: "bg-slate-700", text: "text-slate-100" },
-                  { name: "800", bg: "bg-slate-800", text: "text-slate-100" },
-                  { name: "900", bg: "bg-slate-900", text: "text-slate-100" }
-                ].map(shade => (
-                  <div key={shade.name} className={`aspect-square ${shade.bg} ${shade.text} rounded flex items-center justify-center`}>
-                    <span className="font-data text-[10px] font-bold">{shade.name}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-muted-foreground">
-                <div><span className="font-data text-foreground">50-100</span> — Page backgrounds</div>
-                <div><span className="font-data text-foreground">200-300</span> — Borders, dividers</div>
-                <div><span className="font-data text-foreground">400-600</span> — Secondary text, icons</div>
-                <div><span className="font-data text-foreground">700-900</span> — Primary text, headers</div>
-              </div>
-            </div>
-          </div>
-          
+        
+        <div className="grid lg:grid-cols-2 gap-12 mb-12">
+          {/* Slate Scale */}
           <div>
-            <h3 className="label-tech text-mineral-deep mb-4">MINERAL SCALE — FIELD CONTEXTS</h3>
-            <p className="text-sm text-muted-foreground mb-6">
-              Olive/stone tones for environmental and industrial contexts only.
-            </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-mineral-surface border border-mineral-neutral/30 rounded"></div>
-                <div>
-                  <span className="font-data text-xs text-foreground">Surface</span>
-                  <p className="text-xs text-muted-foreground">Backgrounds, panels</p>
+            <h4 className="label-tech text-slate-500 mb-6">SLATE — SOFTWARE UI</h4>
+            <div className="space-y-4">
+              {[
+                { name: "Slate 50", hex: "#F8FAFC", rgb: "248, 250, 252", hsl: "210 40% 98%", bg: "bg-slate-50", text: "text-slate-700", use: "Page backgrounds" },
+                { name: "Slate 200", hex: "#E2E8F0", rgb: "226, 232, 240", hsl: "214 32% 91%", bg: "bg-slate-200", text: "text-slate-700", use: "Borders, dividers" },
+                { name: "Slate 500", hex: "#64748B", rgb: "100, 116, 139", hsl: "215 19% 35%", bg: "bg-slate-500", text: "text-white", use: "Secondary text" },
+                { name: "Slate 900", hex: "#0F172A", rgb: "15, 23, 42", hsl: "222 47% 11%", bg: "bg-slate-900", text: "text-white", use: "Primary text" },
+              ].map(color => (
+                <div key={color.name} className="flex items-center gap-4">
+                  <div className={`w-14 h-14 ${color.bg} rounded-lg border border-slate-200 flex-shrink-0`}></div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="font-ui font-semibold text-foreground">{color.name}</span>
+                      <span className="text-xs text-muted-foreground">{color.use}</span>
+                    </div>
+                    <div className="font-data text-xs text-muted-foreground space-x-3">
+                      <span>{color.hex}</span>
+                      <span className="text-slate-300">|</span>
+                      <span>rgb({color.rgb})</span>
+                      <span className="text-slate-300">|</span>
+                      <span>hsl({color.hsl})</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-mineral-neutral rounded"></div>
-                <div>
-                  <span className="font-data text-xs text-foreground">Neutral</span>
-                  <p className="text-xs text-muted-foreground">Accents, borders</p>
+              ))}
+            </div>
+          </div>
+
+          {/* Obsidian */}
+          <div>
+            <h4 className="label-tech text-slate-500 mb-6">OBSIDIAN — HARDWARE & DARK UI</h4>
+            <div className="space-y-4">
+              {[
+                { name: "Obsidian", hex: "#111522", rgb: "17, 21, 34", hsl: "226 33% 10%", bg: "bg-rho-obsidian", text: "text-white", use: "Dark surfaces, devices" },
+                { name: "Obsidian Light", hex: "#1E2433", rgb: "30, 36, 51", hsl: "226 25% 15%", bg: "bg-[#1E2433]", text: "text-white", use: "Dark panels, cards" },
+              ].map(color => (
+                <div key={color.name} className="flex items-center gap-4">
+                  <div className={`w-14 h-14 ${color.bg} rounded-lg border border-slate-700 flex-shrink-0`}></div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="font-ui font-semibold text-foreground">{color.name}</span>
+                      <span className="text-xs text-muted-foreground">{color.use}</span>
+                    </div>
+                    <div className="font-data text-xs text-muted-foreground space-x-3">
+                      <span>{color.hex}</span>
+                      <span className="text-slate-300">|</span>
+                      <span>rgb({color.rgb})</span>
+                      <span className="text-slate-300">|</span>
+                      <span>hsl({color.hsl})</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-mineral-deep rounded"></div>
-                <div>
-                  <span className="font-data text-xs text-foreground">Deep</span>
-                  <p className="text-xs text-muted-foreground">Text, emphasis</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-mineral-bronze rounded"></div>
-                <div>
-                  <span className="font-data text-xs text-foreground">Bronze</span>
-                  <p className="text-xs text-muted-foreground">Earthy accents</p>
-                </div>
-              </div>
+              ))}
+            </div>
+            
+            <div className="mt-8 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+              <p className="text-sm text-muted-foreground">
+                <strong className="text-foreground">Never use pure black (#000).</strong> Obsidian's blue tint creates visual cohesion with the Slate scale.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Gradients + Application */}
-      <div className="grid lg:grid-cols-2 gap-8">
-        <div>
-          <h3 className="label-tech text-slate-500 mb-4">GRADIENTS</h3>
-          <p className="text-sm text-muted-foreground mb-6">
-            Flat color is preferred. Gradients add depth or signal transition — never used for decoration.
-          </p>
-          <div className="space-y-4">
-            <div className="h-16 bg-brand-gradient rounded-lg flex items-center justify-between px-4">
-              <span className="font-ui font-bold text-primary-foreground">Primary</span>
-              <span className="font-data text-xs text-white/80">Hero CTAs, featured content</span>
+      {/* SIGNALS */}
+      <div className="mb-20">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-3 h-3 bg-primary rounded-sm"></div>
+          <h3 className="font-ui text-xl font-semibold text-foreground">Signals</h3>
+          <span className="font-data text-[10px] bg-primary text-white px-2 py-0.5 rounded">INTENTIONAL</span>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8 mb-12">
+          {/* Primary Brand */}
+          <div>
+            <h4 className="label-tech text-primary mb-6">BRAND</h4>
+            <div className="space-y-4">
+              {[
+                { name: "Rhosonics Green", hex: "#33993C", rgb: "51, 153, 60", hsl: "125 50% 40%", bg: "bg-primary", use: "Primary actions, identity" },
+                { name: "Lime Accent", hex: "#73B82E", rgb: "115, 184, 46", hsl: "90 60% 45%", bg: "bg-rho-green-accent", use: "Gradients, highlights" },
+              ].map(color => (
+                <div key={color.name} className="flex items-start gap-4">
+                  <div className={`w-14 h-14 ${color.bg} rounded-lg flex-shrink-0`}></div>
+                  <div className="flex-1 min-w-0">
+                    <div className="mb-1">
+                      <span className="font-ui font-semibold text-foreground block">{color.name}</span>
+                      <span className="text-xs text-muted-foreground">{color.use}</span>
+                    </div>
+                    <div className="font-data text-xs text-muted-foreground">
+                      <div>{color.hex}</div>
+                      <div>rgb({color.rgb})</div>
+                      <div>hsl({color.hsl})</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="h-16 bg-obsidian-gradient rounded-lg flex items-center justify-between px-4">
-              <span className="font-ui font-bold text-slate-100">Obsidian</span>
-              <span className="font-data text-xs text-slate-400">Dark panels, hardware UI</span>
+          </div>
+
+          {/* State: Positive */}
+          <div>
+            <h4 className="label-tech text-green-600 mb-6">STATE — POSITIVE</h4>
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 bg-green-600 rounded-lg flex-shrink-0"></div>
+              <div className="flex-1 min-w-0">
+                <div className="mb-1">
+                  <span className="font-ui font-semibold text-foreground block">Success Green</span>
+                  <span className="text-xs text-muted-foreground">Confirmations, valid states</span>
+                </div>
+                <div className="font-data text-xs text-muted-foreground">
+                  <div>#16A34A</div>
+                  <div>rgb(22, 163, 74)</div>
+                  <div>hsl(142 72% 36%)</div>
+                </div>
+              </div>
             </div>
-            <div className="h-16 rounded-lg flex items-center justify-between px-4" style={{
-              background: 'linear-gradient(145deg, hsl(60 12% 58%) 0%, hsl(60 12% 48%) 100%)'
-            }}>
-              <span className="font-ui font-bold text-white">Mineral</span>
-              <span className="font-data text-xs text-white/80">Field contexts only</span>
+          </div>
+
+          {/* State: Negative */}
+          <div>
+            <h4 className="label-tech text-red-600 mb-6">STATE — NEGATIVE</h4>
+            <div className="space-y-4">
+              {[
+                { name: "Warning Amber", hex: "#D97706", rgb: "217, 119, 6", hsl: "32 95% 44%", bg: "bg-amber-600", use: "Cautions, attention" },
+                { name: "Error Red", hex: "#DC2626", rgb: "220, 38, 38", hsl: "0 84% 51%", bg: "bg-red-600", use: "Failures, critical" },
+              ].map(color => (
+                <div key={color.name} className="flex items-start gap-4">
+                  <div className={`w-14 h-14 ${color.bg} rounded-lg flex-shrink-0`}></div>
+                  <div className="flex-1 min-w-0">
+                    <div className="mb-1">
+                      <span className="font-ui font-semibold text-foreground block">{color.name}</span>
+                      <span className="text-xs text-muted-foreground">{color.use}</span>
+                    </div>
+                    <div className="font-data text-xs text-muted-foreground">
+                      <div>{color.hex}</div>
+                      <div>rgb({color.rgb})</div>
+                      <div>hsl({color.hsl})</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        <div>
-          <h3 className="label-tech text-slate-500 mb-4">COLOR APPLICATION</h3>
-          <p className="text-sm text-muted-foreground mb-6">
-            When and where to apply each color world.
-          </p>
-          <div className="card-base p-0 overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-slate-50 border-b border-border">
-                <tr>
-                  <th className="px-4 py-3 text-left font-data text-xs text-slate-500">CONTEXT</th>
-                  <th className="px-4 py-3 text-left font-data text-xs text-slate-500">USE</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-slate-100">
-                  <td className="px-4 py-3 text-muted-foreground">Web application UI</td>
-                  <td className="px-4 py-3 font-medium text-foreground">Slate + Green</td>
-                </tr>
-                <tr className="border-b border-slate-100">
-                  <td className="px-4 py-3 text-muted-foreground">Technical documentation</td>
-                  <td className="px-4 py-3 font-medium text-foreground">Slate + Green</td>
-                </tr>
-                <tr className="border-b border-slate-100">
-                  <td className="px-4 py-3 text-muted-foreground">Field/industry panels</td>
-                  <td className="px-4 py-3 font-medium text-foreground">Mineral + Green</td>
-                </tr>
-                <tr className="border-b border-slate-100">
-                  <td className="px-4 py-3 text-muted-foreground">Hardware device UI</td>
-                  <td className="px-4 py-3 font-medium text-foreground">Obsidian + Green</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-muted-foreground">Marketing/brand moments</td>
-                  <td className="px-4 py-3 font-medium text-foreground">Gradients allowed</td>
-                </tr>
-              </tbody>
-            </table>
+        <BrandCallout variant="rule" title="State Color Rule">
+          State colors communicate operational status only. They must never be used decoratively or to "add visual interest."
+        </BrandCallout>
+      </div>
+
+      {/* CONTEXTUAL */}
+      <div className="mb-20">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-3 h-3 bg-mineral-neutral rounded-sm"></div>
+          <h3 className="font-ui text-xl font-semibold text-foreground">Contextual</h3>
+          <span className="font-data text-[10px] bg-mineral-neutral text-white px-2 py-0.5 rounded">SITUATIONAL</span>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Mineral Scale */}
+          <div>
+            <h4 className="label-tech text-mineral-deep mb-6">MINERAL — FIELD ENVIRONMENTS</h4>
+            <p className="text-sm text-muted-foreground mb-6">
+              Olive/stone tones for industrial and outdoor contexts. Never substitute for Slate in software UI.
+            </p>
+            <div className="space-y-4">
+              {[
+                { name: "Mineral Surface", hex: "#EBEADF", rgb: "235, 234, 223", hsl: "55 15% 91%", bg: "bg-mineral-surface", border: "border-mineral-neutral/30", use: "Backgrounds" },
+                { name: "Mineral Neutral", hex: "#848058", rgb: "132, 128, 88", hsl: "60 12% 48%", bg: "bg-mineral-neutral", border: "border-transparent", use: "Accents, borders" },
+                { name: "Mineral Deep", hex: "#565443", rgb: "86, 84, 67", hsl: "65 14% 32%", bg: "bg-mineral-deep", border: "border-transparent", use: "Text, emphasis" },
+                { name: "Mineral Bronze", hex: "#746C4D", rgb: "116, 108, 77", hsl: "55 20% 38%", bg: "bg-mineral-bronze", border: "border-transparent", use: "Earthy accents" },
+              ].map(color => (
+                <div key={color.name} className="flex items-start gap-4">
+                  <div className={`w-14 h-14 ${color.bg} ${color.border} border rounded-lg flex-shrink-0`}></div>
+                  <div className="flex-1 min-w-0">
+                    <div className="mb-1">
+                      <span className="font-ui font-semibold text-foreground block">{color.name}</span>
+                      <span className="text-xs text-muted-foreground">{color.use}</span>
+                    </div>
+                    <div className="font-data text-xs text-muted-foreground">
+                      <div>{color.hex}</div>
+                      <div>rgb({color.rgb})</div>
+                      <div>hsl({color.hsl})</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Eco Tints */}
+          <div>
+            <h4 className="label-tech text-primary mb-6">ECO — SUSTAINABILITY</h4>
+            <p className="text-sm text-muted-foreground mb-6">
+              Subtle green tints for environmental metrics. Used sparingly and always tied to measurable data.
+            </p>
+            <div className="space-y-4 mb-8">
+              {[
+                { name: "Eco Surface", hex: "#ECFDF0", rgb: "236, 253, 240", hsl: "125 43% 95%", bg: "bg-eco-surface", border: "border-eco-border", use: "Eco card backgrounds" },
+                { name: "Eco Border", hex: "#C6F7D0", rgb: "198, 247, 208", hsl: "125 50% 90%", bg: "bg-[#C6F7D0]", border: "border-transparent", use: "Eco component borders" },
+              ].map(color => (
+                <div key={color.name} className="flex items-start gap-4">
+                  <div className={`w-14 h-14 ${color.bg} ${color.border} border rounded-lg flex-shrink-0`}></div>
+                  <div className="flex-1 min-w-0">
+                    <div className="mb-1">
+                      <span className="font-ui font-semibold text-foreground block">{color.name}</span>
+                      <span className="text-xs text-muted-foreground">{color.use}</span>
+                    </div>
+                    <div className="font-data text-xs text-muted-foreground">
+                      <div>{color.hex}</div>
+                      <div>rgb({color.rgb})</div>
+                      <div>hsl({color.hsl})</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <BrandCallout variant="avoid" title="Contextual Constraint">
+              Contextual colors are not brand identifiers. They help users orient to a specific environment or domain — nothing more.
+            </BrandCallout>
+          </div>
+        </div>
+      </div>
+
+      {/* GRADIENTS */}
+      <div>
+        <h3 className="label-tech text-slate-500 mb-6">GRADIENTS</h3>
+        <p className="text-sm text-muted-foreground mb-8 max-w-2xl">
+          Flat color is preferred. Gradients add depth or signal transition — never used for decoration. 
+          Reserved for hero elements and primary CTAs.
+        </p>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div>
+            <div className="h-20 bg-brand-gradient rounded-lg mb-4"></div>
+            <h4 className="font-ui font-semibold text-foreground mb-1">Primary Gradient</h4>
+            <p className="font-data text-xs text-muted-foreground">
+              linear-gradient(135deg, #73B82E 0%, #33993C 100%)
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">Hero CTAs, featured content</p>
+          </div>
+          <div>
+            <div className="h-20 bg-obsidian-gradient rounded-lg mb-4"></div>
+            <h4 className="font-ui font-semibold text-foreground mb-1">Obsidian Gradient</h4>
+            <p className="font-data text-xs text-muted-foreground">
+              linear-gradient(180deg, #1E2433 0%, #111522 100%)
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">Dark panels, hardware UI</p>
+          </div>
+          <div>
+            <div className="h-20 rounded-lg mb-4" style={{
+              background: 'linear-gradient(145deg, #9A9573 0%, #848058 100%)'
+            }}></div>
+            <h4 className="font-ui font-semibold text-foreground mb-1">Mineral Gradient</h4>
+            <p className="font-data text-xs text-muted-foreground">
+              linear-gradient(145deg, #9A9573 0%, #848058 100%)
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">Field contexts only</p>
           </div>
         </div>
       </div>
