@@ -117,14 +117,15 @@ const VisualSystemOverview = () => {
                   <p className="text-sm text-slate-400 mt-4 italic">
                     They support specific contexts and are deliberately constrained.
                   </p>
-                  <BrandCallout variant="avoid" title="Critical Separation: Slate vs Mineral" className="mt-4">
-                    <strong>Slate</strong> is for software: UI structure, text, forms, navigation, data containers. Cool, blue-biased, chromatically neutral.<br /><br />
-                    <strong>Mineral</strong> is for environment: field modules, industry panels, outdoor contexts. Warm-neutral, olive, stone-like tones.<br /><br />
-                    These are categorically different systems. Mineral colors must <strong>never</strong> substitute for Slate UI neutrals.
-                  </BrandCallout>
                 </div>
               </div>
             </div>
+            
+            <BrandCallout variant="avoid" title="Critical Separation: Slate vs Mineral" className="mt-6">
+              <strong>Slate</strong> is for software: UI structure, text, forms, navigation, data containers. Cool, blue-biased, chromatically neutral.<br /><br />
+              <strong>Mineral</strong> is for environment: field modules, industry panels, outdoor contexts. Warm-neutral, olive, stone-like tones.<br /><br />
+              These are categorically different systems. Mineral colors must <strong>never</strong> substitute for Slate UI neutrals.
+            </BrandCallout>
           </div>
         </div>
       </div>
