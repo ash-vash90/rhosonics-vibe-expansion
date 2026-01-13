@@ -9,12 +9,15 @@ export const EcoComponents = () => {
           ECO_PACK
         </span>
       </h2>
-      <p className="text-muted-foreground mb-12">
+      
+      {/* Intro */}
+      <p className="text-muted-foreground text-lg mb-8">
         Sustainability metrics are operational outcomes, not marketing claims.
         Every 0.1% accuracy improvement is waste prevented.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      {/* Main Cards - full width */}
+      <div className="grid lg:grid-cols-2 gap-8 mb-12">
         {/* Resource Recovery Card */}
         <div className="card-eco p-8 bg-pattern-topo relative overflow-hidden">
           <div className="relative z-10">
@@ -80,9 +83,9 @@ export const EcoComponents = () => {
         </div>
       </div>
 
-      {/* Eco Metrics Grid */}
+      {/* Eco Metrics Grid - full width */}
       <h3 className="label-tech text-slate-500 mb-4">ECO METRIC PATTERNS</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid md:grid-cols-3 gap-6 mb-12">
         <div className="card-eco p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-full bg-card border border-eco-border flex items-center justify-center">
@@ -132,28 +135,25 @@ export const EcoComponents = () => {
         </div>
       </div>
 
-      {/* Eco Design Principles */}
-      <div className="p-6 bg-eco-surface rounded-lg border border-eco-border max-w-2xl">
-        <h4 className="font-ui font-bold text-lg mb-4 text-foreground">Eco Design Principles</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <div className="label-tech text-primary mb-2">SUBTLE BY DEFAULT</div>
-            <p className="text-sm text-muted-foreground">
-              Integrated naturally. No "greenwashing" with over-the-top eco imagery.
-            </p>
-          </div>
-          <div>
-            <div className="label-tech text-primary mb-2">DATA FIRST</div>
-            <p className="text-sm text-muted-foreground">
-              Every claim tied to measurable data. Show numbers, not sentiment.
-            </p>
-          </div>
-          <div>
-            <div className="label-tech text-primary mb-2">CONTEXTUAL</div>
-            <p className="text-sm text-muted-foreground">
-              Topographic patterns used exclusively on eco components.
-            </p>
-          </div>
+      {/* Eco Design Principles - full width */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        <div className="p-6 bg-eco-surface rounded-lg border border-eco-border">
+          <div className="label-tech text-primary mb-2">SUBTLE BY DEFAULT</div>
+          <p className="text-sm text-muted-foreground">
+            Integrated naturally. No "greenwashing" with over-the-top eco imagery.
+          </p>
+        </div>
+        <div className="p-6 bg-eco-surface rounded-lg border border-eco-border">
+          <div className="label-tech text-primary mb-2">DATA FIRST</div>
+          <p className="text-sm text-muted-foreground">
+            Every claim tied to measurable data. Show numbers, not sentiment.
+          </p>
+        </div>
+        <div className="p-6 bg-eco-surface rounded-lg border border-eco-border">
+          <div className="label-tech text-primary mb-2">CONTEXTUAL</div>
+          <p className="text-sm text-muted-foreground">
+            Topographic patterns used exclusively on eco components.
+          </p>
         </div>
       </div>
     </section>
