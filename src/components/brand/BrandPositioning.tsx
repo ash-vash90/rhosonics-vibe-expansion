@@ -1,5 +1,4 @@
 import { Target, Shield, Lightbulb, Eye, BarChart3, Type, Palette, Layers } from "lucide-react";
-import { BrandCallout } from "./BrandCallout";
 
 const BrandPositioning = () => {
   return (
@@ -64,10 +63,10 @@ const BrandPositioning = () => {
           These qualities guide every decision in this system.
         </p>
         
-        {/* Decision-making heuristic */}
-        <BrandCallout variant="rule" title="Decision Rule" className="mt-8">
+        {/* Decision-making heuristic - inline */}
+        <p className="text-foreground font-medium mt-8 border-l-2 border-primary pl-4">
           When choosing between two valid design options, prefer the one that improves clarity, reinforces performance, or reveals insight.
-        </BrandCallout>
+        </p>
       </div>
 
       {/* How positioning shapes expression */}
@@ -179,9 +178,9 @@ const BrandPositioning = () => {
             not exaggeration.
           </p>
           
-          <BrandCallout variant="rule" title="Audience Expectation" className="mt-6">
+          <p className="text-foreground font-medium mt-6">
             This system is designed to meet that expectation.
-          </BrandCallout>
+          </p>
         </div>
       </div>
     </div>

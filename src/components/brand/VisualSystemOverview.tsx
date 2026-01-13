@@ -168,9 +168,9 @@ const VisualSystemOverview = () => {
             </li>
           </ul>
           
-          <BrandCallout variant="rule" title="System Benefit" className="mt-8">
+          <p className="text-foreground font-medium mt-8">
             This structure allows the brand to be both clear and characterful, without relying on excess.
-          </BrandCallout>
+          </p>
         </div>
       </div>
 

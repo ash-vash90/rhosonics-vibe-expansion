@@ -126,16 +126,11 @@ export const ColorMatrix = () => {
       <h2 className="section-header">Color Roles</h2>
       <p className="label-tech text-slate-500 mb-6">FUNCTIONAL COLOR GOVERNANCE</p>
       
-      {/* Core Philosophy */}
-      <BrandCallout variant="rule" title="Functional Color Principle" className="mb-8">
-        Color exists to communicate: <strong>State</strong>, <strong>Structure</strong>, or <strong>Context</strong>. 
-        Mood, decoration, and expressive color without meaning are not permitted. 
-        If a color choice cannot be justified by function, it should not be used.
-      </BrandCallout>
-      
-      <p className="text-muted-foreground mb-8">
-        Every color in this system serves a purpose. Precision demands clarity; clarity demands constraint. 
-        Colors are assigned to roles, not chosen for aesthetics. This consistency builds trust across every touchpoint.
+      {/* Core Philosophy - inline */}
+      <p className="text-muted-foreground mb-8 max-w-3xl">
+        Color exists to communicate <strong className="text-foreground">State</strong>, <strong className="text-foreground">Structure</strong>, or <strong className="text-foreground">Context</strong>. 
+        Mood, decoration, and expressive color without meaning are not permitted. Every color in this system serves a purpose — 
+        precision demands clarity; clarity demands constraint.
       </p>
 
       {/* Color Role Hierarchy */}
@@ -157,11 +152,6 @@ export const ColorMatrix = () => {
         </div>
       </div>
 
-      {/* Why This Matters */}
-      <BrandCallout variant="note" title="Why This Matters" className="mb-12">
-        Trust through consistency. When operators see the same signal colors in the field that they saw in documentation, 
-        recognition becomes instant. This is how brands become reliable.
-      </BrandCallout>
 
       {/* Primary Colors */}
       <h3 className="label-tech text-primary mb-4">SIGNAL COLORS</h3>
@@ -217,11 +207,9 @@ export const ColorMatrix = () => {
       {/* Gradient Examples */}
       <div className="mt-12">
         <h3 className="label-tech text-slate-500 mb-4">BRAND GRADIENTS</h3>
-        
-        <BrandCallout variant="rule" title="Gradient Usage Rule" className="mb-6">
-          Flat color is preferred by default. Gradients add depth or signal transition — never decoration. 
-          If a gradient does not improve clarity or create meaningful dimension, use a solid color instead.
-        </BrandCallout>
+        <p className="text-sm text-muted-foreground mb-6">
+          Flat color is preferred by default. Gradients add depth or signal transition — never decoration.
+        </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="h-32 bg-brand-gradient rounded-lg flex items-end p-4">
@@ -251,15 +239,10 @@ export const ColorMatrix = () => {
       {/* Terrain Textures */}
       <div className="mt-12">
         <h3 className="label-tech text-mineral-neutral mb-4">TERRAIN TEXTURES</h3>
-        <p className="text-muted-foreground text-sm mb-4">
-          Subtle background patterns that reinforce the field aesthetic. Use sparingly on cards and sections 
-          related to mining, minerals, and outdoor operations.
+        <p className="text-muted-foreground text-sm mb-6">
+          Subtle background patterns that reinforce the field aesthetic. Use sparingly — textures must support content, not compete with it. 
+          If a texture is noticeable before the content, it is being overused.
         </p>
-        
-        <BrandCallout variant="avoid" title="Texture Usage Rule" className="mb-6">
-          Textures must support content, not compete with it. If a texture is noticeable before the content, 
-          it is being overused. Textures exist as subtle environmental cues, never as primary visual elements.
-        </BrandCallout>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="h-28 rounded-lg border border-mineral-neutral/30 bg-mineral-surface bg-terrain-contour flex flex-col justify-end p-4">
