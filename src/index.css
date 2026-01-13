@@ -16,14 +16,14 @@
     --rho-obsidian: 226 33% 10%;
     --rho-obsidian-light: 226 25% 15%;
     
-    /* Mineral Neutrals - Warm-neutral / Olive / Stone tones
+    /* Mineral Neutrals - Olive / Stone tones
        These are ENVIRONMENTAL colors, not UI grays.
        Slate is for software. Mineral is for field contexts.
        They must NEVER substitute for Slate UI neutrals. */
-    --mineral-neutral: 45 8% 52%;       /* ~#8A836F - warm stone */
-    --mineral-surface: 40 12% 92%;      /* ~#EDE9E2 - warm cream */
-    --mineral-deep: 50 10% 35%;         /* ~#5E5749 - warm deep stone */
-    --mineral-bronze: 38 18% 40%;       /* #7A6A4F - earthy accent */
+    --mineral-neutral: 60 12% 48%;      /* #847F5E - olive stone */
+    --mineral-surface: 55 15% 91%;      /* #EAE8DE - warm olive cream */
+    --mineral-deep: 65 14% 32%;         /* #555443 - deep olive stone */
+    --mineral-bronze: 55 20% 38%;       /* #736B4D - earthy olive accent */
     
     /* Eco Tints */
     --eco-surface: 125 43% 95%;
