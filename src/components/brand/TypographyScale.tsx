@@ -6,12 +6,30 @@ export const TypographyScale = () => {
       <h2 className="section-header">Typography</h2>
       <p className="font-ui text-sm text-slate-500 mb-6">Clarity, measurement, and trust</p>
       
-      {/* Typography Philosophy - inline, not callout */}
+      {/* Typography Philosophy */}
       <p className="text-muted-foreground mb-8 max-w-3xl">
         Rhosonics typography prioritizes clarity, measurement, and trust. The system favors legibility over personality, 
-        structure over flourish, and consistency over novelty. We speak to engineers and operators who evaluate claims critically.
+        structure over flourish, and consistency over novelty.
       </p>
-      
+
+      {/* Implementation Specs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+          <span className="label-tech text-slate-400">BASE SIZE</span>
+          <p className="font-ui font-semibold text-foreground mt-1">16px (1rem)</p>
+          <p className="text-xs text-muted-foreground mt-1">Web default, all breakpoints</p>
+        </div>
+        <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+          <span className="label-tech text-slate-400">LINE LENGTH</span>
+          <p className="font-ui font-semibold text-foreground mt-1">65–75 characters</p>
+          <p className="text-xs text-muted-foreground mt-1">Optimal for body copy</p>
+        </div>
+        <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+          <span className="label-tech text-slate-400">TOUCH TARGETS</span>
+          <p className="font-ui font-semibold text-foreground mt-1">44px minimum</p>
+          <p className="text-xs text-muted-foreground mt-1">WCAG 2.1 compliant</p>
+        </div>
+      </div>
 
       {/* Font Families Table */}
       <div className="card-base p-0 overflow-hidden mb-12">
@@ -86,6 +104,59 @@ export const TypographyScale = () => {
         </table>
       </div>
       
+      {/* Token Mapping */}
+      <h3 className="label-tech text-slate-500 mb-4">TOKEN MAPPING</h3>
+      <div className="card-base p-0 overflow-hidden mb-12">
+        <table className="w-full text-left">
+          <thead className="bg-slate-50 border-b border-border">
+            <tr>
+              <th className="px-6 py-3 label-tech text-slate-500">SEMANTIC</th>
+              <th className="px-6 py-3 label-tech text-slate-500">TOKEN</th>
+              <th className="px-6 py-3 label-tech text-slate-500">SIZE</th>
+              <th className="px-6 py-3 label-tech text-slate-500 hidden md:table-cell">WEIGHT</th>
+            </tr>
+          </thead>
+          <tbody className="text-sm">
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 text-foreground">H1 / Display</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">text-5xl</td>
+              <td className="px-6 py-3 text-muted-foreground">48px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">700</td>
+            </tr>
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 text-foreground">H2 / Section</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">text-4xl</td>
+              <td className="px-6 py-3 text-muted-foreground">36px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">700</td>
+            </tr>
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 text-foreground">H3 / Subsection</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">text-2xl</td>
+              <td className="px-6 py-3 text-muted-foreground">24px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">600</td>
+            </tr>
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 text-foreground">Body</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">text-base</td>
+              <td className="px-6 py-3 text-muted-foreground">16px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">400</td>
+            </tr>
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 text-foreground">Caption</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">text-sm</td>
+              <td className="px-6 py-3 text-muted-foreground">14px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">400</td>
+            </tr>
+            <tr>
+              <td className="px-6 py-3 text-foreground">Label</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">text-xs + uppercase</td>
+              <td className="px-6 py-3 text-muted-foreground">12px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">500</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
       {/* JetBrains Mono Rules */}
       <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg mb-8">
         <h4 className="font-ui font-semibold text-lg text-foreground mb-4">JetBrains Mono Usage Rules</h4>
@@ -139,11 +210,72 @@ export const TypographyScale = () => {
           </div>
         </div>
       </div>
+
+      {/* Label Casing Guardrail */}
+      <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg mb-8 max-w-2xl">
+        <span className="label-tech text-amber-700 mb-2 block">LABEL CASING GUARDRAIL</span>
+        <p className="text-sm text-amber-900">
+          Labels must stay under <strong>12 characters</strong>. If longer, switch to sentence case in Instrument Sans.
+        </p>
+      </div>
       
       <BrandCallout variant="avoid" title="The Paragraph Test" className="mb-12">
         If text can be read as a paragraph, it must never be set in JetBrains Mono. 
         JetBrains Mono is a signal font for scanning and categorization — not a reading font.
       </BrandCallout>
+
+      {/* Data Formatting Standard */}
+      <h3 className="label-tech text-slate-500 mb-4">DATA FORMATTING STANDARD</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="card-base p-6">
+          <h4 className="font-ui font-semibold text-foreground mb-4">Numeric Formatting</h4>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+              <span className="text-sm text-muted-foreground">Decimal precision</span>
+              <span className="font-data text-xs text-foreground">Max 4 significant digits</span>
+            </div>
+            <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+              <span className="text-sm text-muted-foreground">Thousands separator</span>
+              <span className="font-data text-xs text-foreground">Comma (1,000) or space by locale</span>
+            </div>
+            <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+              <span className="text-sm text-muted-foreground">Unit spacing</span>
+              <span className="font-data text-xs text-foreground">Space before unit (1.45 g/L)</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-muted-foreground">Unit presence</span>
+              <span className="font-data text-xs text-foreground">Always required</span>
+            </div>
+          </div>
+        </div>
+        <div className="card-base p-6">
+          <h4 className="font-ui font-semibold text-foreground mb-4">Examples</h4>
+          <div className="space-y-3">
+            <div className="flex items-center gap-4">
+              <span className="w-6 text-primary">✓</span>
+              <span className="font-data text-sm text-foreground">1.4502 g/L</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="w-6 text-primary">✓</span>
+              <span className="font-data text-sm text-foreground">24.5 °C</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="w-6 text-primary">✓</span>
+              <span className="font-data text-sm text-foreground">1,013 hPa</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="w-6 text-destructive">✕</span>
+              <span className="font-data text-sm text-muted-foreground line-through">1.4502g/L</span>
+              <span className="text-xs text-destructive">No space</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="w-6 text-destructive">✕</span>
+              <span className="font-data text-sm text-muted-foreground line-through">1.45023456</span>
+              <span className="text-xs text-destructive">Too many digits</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Instrument Sans & Unbounded Rules */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
@@ -151,16 +283,16 @@ export const TypographyScale = () => {
           <h4 className="font-ui font-semibold text-lg text-foreground mb-3">Instrument Sans</h4>
           <span className="label-tech text-slate-400 mb-3 block">THE READING FONT</span>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            All explanatory content, headings, and display typography use this family. 
-            It prioritizes legibility and calm authority. Use for anything that needs to be read and understood.
+            All explanatory content, headings, and display typography. 
+            Prioritizes legibility and calm authority.
           </p>
         </div>
         <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
           <h4 className="font-logo text-lg text-foreground mb-3 uppercase">Unbounded</h4>
           <span className="label-tech text-slate-400 mb-3 block">LOGO ONLY — NO EXCEPTIONS</span>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Reserved exclusively for the logo wordmark. It must never appear elsewhere in the system — 
-            not in headings, not in decorative text, not in any other context.
+            Reserved exclusively for the logo wordmark. Never in headings, 
+            decorative text, or any other context.
           </p>
         </div>
       </div>
@@ -168,32 +300,8 @@ export const TypographyScale = () => {
       {/* Type Scale */}
       <h3 className="label-tech text-slate-500 mb-2">TYPE SCALE</h3>
       <p className="text-sm text-muted-foreground mb-6 italic">
-        Type size in this system reflects authority, not emphasis.
+        Type size reflects authority, not emphasis.
       </p>
-      
-      {/* Role descriptions */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <span className="label-tech text-slate-400">DISPLAY</span>
-          <p className="text-sm text-foreground mt-1">Brand statements, section anchors</p>
-          <span className="text-xs text-muted-foreground">Instrument Sans 700</span>
-        </div>
-        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <span className="label-tech text-slate-400">HEADINGS</span>
-          <p className="text-sm text-foreground mt-1">Information structure</p>
-          <span className="text-xs text-muted-foreground">Instrument Sans 700</span>
-        </div>
-        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <span className="label-tech text-slate-400">BODY</span>
-          <p className="text-sm text-foreground mt-1">Explanation and instruction</p>
-          <span className="text-xs text-muted-foreground">Instrument Sans 400</span>
-        </div>
-        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-          <span className="label-tech text-slate-400">DATA</span>
-          <p className="text-sm text-foreground mt-1">Measurement and truth</p>
-          <span className="text-xs text-muted-foreground">JetBrains Mono 500</span>
-        </div>
-      </div>
       
       <div className="space-y-6">
         {[
@@ -216,15 +324,6 @@ export const TypographyScale = () => {
           </div>
         ))}
       </div>
-
-      {/* Uppercase Labels Explanation - inline */}
-      <p className="text-sm text-muted-foreground mt-12 mb-4">
-        <strong className="text-foreground">Uppercase labels</strong> are used for categorization and scanning, not reading. They should remain short and functional.
-      </p>
-      
-      <p className="text-sm text-muted-foreground italic">
-        Precision through constraint. Typography that looks consistent reads as credible.
-      </p>
 
       {/* Line Height & Letter Spacing */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">

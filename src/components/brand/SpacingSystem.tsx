@@ -18,9 +18,8 @@ export const SpacingSystem = () => {
     <section id="spacing" className="mb-32">
       <h2 className="section-header">Spacing System</h2>
       <p className="text-muted-foreground mb-8 max-w-2xl">
-        Spacing in the Rhosonics system is functional, not expressive. It creates clarity, 
-        hierarchy, and rhythm — not personality. Consistent spacing allows users to understand 
-        structure at a glance, especially in data-dense and operational contexts.
+        Spacing creates clarity, hierarchy, and rhythm. Consistent spacing allows users to understand 
+        structure at a glance, especially in data-dense contexts.
       </p>
 
       {/* Core Principle */}
@@ -28,17 +27,70 @@ export const SpacingSystem = () => {
         Consistency over creativity. Structure before expression.
       </p>
 
-      {/* Spacing Philosophy */}
-      <div className="mb-12 max-w-2xl">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Spacing Philosophy</h3>
-        <p className="text-muted-foreground mb-4">
-          Rhosonics uses a strict, predictable spacing system because predictability builds trust. 
-          When spacing behaves consistently, users can focus on the information rather than the interface.
-        </p>
-        <p className="text-muted-foreground">
-          Spacing is not used to decorate or dramatize content. It is used to separate, group, 
-          and prioritize information clearly.
-        </p>
+      {/* Token Mapping - NEW */}
+      <h3 className="label-tech text-slate-500 mb-4">TOKEN MAPPING</h3>
+      <div className="card-base p-0 overflow-hidden mb-12">
+        <table className="w-full text-left">
+          <thead className="bg-slate-50 border-b border-border">
+            <tr>
+              <th className="px-6 py-3 label-tech text-slate-500">SEMANTIC</th>
+              <th className="px-6 py-3 label-tech text-slate-500">TOKEN</th>
+              <th className="px-6 py-3 label-tech text-slate-500">VALUE</th>
+              <th className="px-6 py-3 label-tech text-slate-500 hidden md:table-cell">USE CASE</th>
+            </tr>
+          </thead>
+          <tbody className="text-sm">
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 text-foreground font-medium">Tight</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">space-1, space-2</td>
+              <td className="px-6 py-3 text-muted-foreground">4–8px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">Within components</td>
+            </tr>
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 text-foreground font-medium">Medium</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">space-4</td>
+              <td className="px-6 py-3 text-muted-foreground">16px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">Between related components</td>
+            </tr>
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 text-foreground font-medium">Large</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">space-8</td>
+              <td className="px-6 py-3 text-muted-foreground">32px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">Between sections</td>
+            </tr>
+            <tr>
+              <td className="px-6 py-3 text-foreground font-medium">Very Large</td>
+              <td className="px-6 py-3 font-data text-xs text-primary">space-16, space-20</td>
+              <td className="px-6 py-3 text-muted-foreground">64–80px</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">Conceptual breaks</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Vertical Rhythm Defaults - NEW */}
+      <h3 className="label-tech text-slate-500 mb-4">VERTICAL RHYTHM DEFAULTS</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12 max-w-2xl">
+        <div className="card-base p-4">
+          <span className="label-tech text-muted-foreground">PARAGRAPH STACK</span>
+          <p className="font-data text-lg text-foreground mt-1">16px</p>
+          <p className="text-xs text-muted-foreground">Between paragraphs</p>
+        </div>
+        <div className="card-base p-4">
+          <span className="label-tech text-muted-foreground">CARD PADDING</span>
+          <p className="font-data text-lg text-foreground mt-1">24px</p>
+          <p className="text-xs text-muted-foreground">Internal card padding</p>
+        </div>
+        <div className="card-base p-4">
+          <span className="label-tech text-muted-foreground">SECTION SPACING</span>
+          <p className="font-data text-lg text-foreground mt-1">64px</p>
+          <p className="text-xs text-muted-foreground">Between major sections</p>
+        </div>
+        <div className="card-base p-4">
+          <span className="label-tech text-muted-foreground">FORM GROUP</span>
+          <p className="font-data text-lg text-foreground mt-1">24px</p>
+          <p className="text-xs text-muted-foreground">Between form fields</p>
+        </div>
       </div>
 
       {/* Spacing Scale Rules */}
@@ -67,29 +119,6 @@ export const SpacingSystem = () => {
           If two elements feel related, spacing should reinforce that relationship. 
           If they feel separate, spacing should make that obvious.
         </BrandCallout>
-      </div>
-
-      {/* Spacing Usage Guidance */}
-      <div className="mb-12">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Spacing Usage Guidance</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
-          <div className="card-base p-4">
-            <span className="label-tech text-primary">TIGHT</span>
-            <p className="text-sm text-muted-foreground mt-1">Within components</p>
-          </div>
-          <div className="card-base p-4">
-            <span className="label-tech text-primary">MEDIUM</span>
-            <p className="text-sm text-muted-foreground mt-1">Between related components</p>
-          </div>
-          <div className="card-base p-4">
-            <span className="label-tech text-primary">LARGE</span>
-            <p className="text-sm text-muted-foreground mt-1">Between sections and concepts</p>
-          </div>
-          <div className="card-base p-4">
-            <span className="label-tech text-primary">VERY LARGE</span>
-            <p className="text-sm text-muted-foreground mt-1">Page-level or conceptual breaks only</p>
-          </div>
-        </div>
       </div>
 
       {/* Spacing Scale Visual */}
