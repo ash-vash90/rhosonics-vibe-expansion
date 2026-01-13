@@ -1,17 +1,24 @@
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { ArrowRight, Menu, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BrandCallout } from "./BrandCallout";
 
 export const InterfaceKit = () => {
   return (
     <section id="components" className="mb-32">
       <h2 className="section-header">Interface Kit</h2>
+      <p className="text-muted-foreground mb-4">
+        These components are functional building blocks.
+      </p>
       <p className="text-muted-foreground mb-8">
-        The building blocks. Buttons, cards, inputs—the components that make interfaces work. Nothing decorative.
+        They exist to support decision-making, data entry, and system control — not visual expression.
       </p>
 
       {/* Buttons */}
-      <h3 className="label-tech text-slate-500 mb-4">BUTTONS</h3>
+      <h3 className="label-tech text-slate-500 mb-2">BUTTONS</h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        Primary actions should be obvious without being aggressive.
+      </p>
       <div className="card-base p-8 mb-8">
         {/* Standard Buttons */}
         <div className="mb-8">
@@ -64,6 +71,11 @@ export const InterfaceKit = () => {
           The angled corners mirror the arc geometry of the Rhosonics logo and reinforce the field equipment aesthetic.
         </p>
       </div>
+
+      {/* Data Priority Rule Callout */}
+      <BrandCallout variant="rule" title="Data Priority Rule" className="mb-8">
+        The primary measurement must be readable at a glance, from a distance.
+      </BrandCallout>
 
       {/* Cards */}
       <h3 className="label-tech text-slate-500 mb-4">DATA CARDS</h3>
@@ -157,7 +169,7 @@ export const InterfaceKit = () => {
       {/* Badges & Tags */}
       <h3 className="label-tech text-slate-500 mb-4">BADGES & TAGS</h3>
       <div className="card-base p-8">
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 mb-4">
           <span className="px-3 py-1 bg-primary text-primary-foreground font-data text-xs uppercase rounded-full">
             Active
           </span>
@@ -174,6 +186,9 @@ export const InterfaceKit = () => {
             Error
           </span>
         </div>
+        <p className="text-sm text-muted-foreground border-t border-border pt-4">
+          All badges use JetBrains Mono, uppercase, and short labels. Badges communicate state, not emotion.
+        </p>
       </div>
     </section>
   );

@@ -9,6 +9,9 @@ export const EcoComponents = () => {
           ECO_PACK
         </span>
       </h2>
+      <p className="text-muted-foreground mb-4">
+        Sustainability metrics are operational outcomes, not marketing claims.
+      </p>
       <p className="text-muted-foreground mb-8">
         Every 0.1% accuracy improvement is waste prevented. We track this because customers asked.
       </p>
@@ -137,19 +140,19 @@ export const EcoComponents = () => {
         <h4 className="font-ui font-bold text-lg mb-4 text-foreground">Eco Design Principles</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <div className="label-tech text-primary mb-2">SUBTLE, NOT LOUD</div>
+            <div className="label-tech text-primary mb-2">SUBTLE BY DEFAULT</div>
             <p className="text-sm text-muted-foreground">
               Sustainability messaging is integrated naturally. Avoid "greenwashing" with over-the-top eco imagery.
             </p>
           </div>
           <div>
-            <div className="label-tech text-primary mb-2">DATA-BACKED</div>
+            <div className="label-tech text-primary mb-2">DATA FIRST</div>
             <p className="text-sm text-muted-foreground">
               Every eco claim must be tied to measurable data. Show the numbers, not just the sentiment.
             </p>
           </div>
           <div>
-            <div className="label-tech text-primary mb-2">TOPO PATTERN</div>
+            <div className="label-tech text-primary mb-2">CONTEXTUAL PATTERN</div>
             <p className="text-sm text-muted-foreground">
               The topographic line pattern represents natural terrain and is used exclusively on eco components.
             </p>
