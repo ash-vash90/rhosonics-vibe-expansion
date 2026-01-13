@@ -436,9 +436,12 @@ export const BrandGallery = () => {
         ))}
       </div>
 
-      {/* Usage Notes */}
+      {/* Usage Constraints */}
       <div className="mt-12 p-6 bg-slate-50 rounded-lg border border-slate-200">
-        <h4 className="font-ui font-bold mb-3">Application Notes</h4>
+        <h4 className="font-ui font-bold mb-3">Usage Constraints</h4>
+        <p className="text-sm text-muted-foreground mb-4">
+          These examples demonstrate system-level thinking, not templates to copy. Context determines application — layouts, typography, and spacing must be evaluated against specific use cases.
+        </p>
         <ul className="space-y-2 text-sm text-muted-foreground">
           <li className="flex items-start gap-2">
             <span className="text-primary mt-0.5">•</span>
@@ -455,6 +458,10 @@ export const BrandGallery = () => {
           <li className="flex items-start gap-2">
             <span className="text-primary mt-0.5">•</span>
             Print materials include CMYK color specifications and minimum logo sizes from the Downloads section.
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-amber-600 mt-0.5">⚠</span>
+            <span className="text-amber-800">Do not replicate layouts without understanding the underlying brand rules. When in doubt, refer to the Visual System chapters rather than copying gallery examples.</span>
           </li>
         </ul>
       </div>

@@ -8,6 +8,7 @@ const caseStudies = [
     stat: "42%",
     statLabel: "Efficiency increase",
     description: "Real-time slurry density monitoring enabled precise dredging operations, reducing fuel consumption and environmental impact.",
+    conditions: "Continuous operation, North Sea winter conditions, 6-month measurement period",
     metrics: [
       { label: "Accuracy", value: "±0.5%" },
       { label: "Uptime", value: "99.8%" },
@@ -22,6 +23,7 @@ const caseStudies = [
     stat: "31%",
     statLabel: "Water savings",
     description: "Continuous density measurement in thickener underflow improved water recovery and reduced tailings dam footprint.",
+    conditions: "Thickener underflow, 850 m³/h nominal, -10°C to +40°C ambient",
     metrics: [
       { label: "Flow Rate", value: "850 m³/h" },
       { label: "Temp Range", value: "-10 to 65°C" },
@@ -36,6 +38,7 @@ const caseStudies = [
     stat: "28%",
     statLabel: "Cost reduction",
     description: "Automated density-based dosing control optimized polymer usage and dewatering performance in centrifuge systems.",
+    conditions: "Municipal sludge, 3-5% inlet solids, polymer dosing loop",
     metrics: [
       { label: "Throughput", value: "120 t/day" },
       { label: "Energy", value: "-15%" },
@@ -55,7 +58,7 @@ export const CaseStudies = () => {
       </div>
       <h2 className="section-header">Case Studies</h2>
       <p className="text-slate-500 text-lg max-w-2xl mb-12">
-        Real applications. Measurable results. No hypotheticals.
+        Documented deployments with measured outcomes. Each case includes operating conditions and constraints.
       </p>
 
       {/* Case Study Cards */}
@@ -111,11 +114,18 @@ export const CaseStudies = () => {
               }`}>
                 {study.title}
               </h3>
-              <p className={`text-sm leading-relaxed mb-6 ${
+              <p className={`text-sm leading-relaxed mb-4 ${
                 idx === 0 ? 'text-slate-300' : idx === 1 ? 'text-mineral-deep' : 'text-slate-500'
               }`}>
                 {study.description}
               </p>
+
+              {/* Operating Conditions */}
+              <div className={`text-xs mb-6 px-3 py-2 rounded ${
+                idx === 0 ? 'bg-slate-800/30 text-slate-400' : idx === 1 ? 'bg-mineral-neutral/5 text-mineral-deep' : 'bg-slate-100 text-slate-500'
+              }`}>
+                <span className="font-data uppercase tracking-wider">Conditions:</span> {study.conditions}
+              </div>
 
               {/* Metrics */}
               <div className={`grid grid-cols-3 gap-2 p-4 rounded-lg ${
@@ -171,6 +181,10 @@ export const CaseStudies = () => {
             </div>
           ))}
         </div>
+        {/* Constraint note */}
+        <p className="text-xs text-slate-400 text-center mt-6 font-data">
+          Metrics represent outcomes under stated conditions. Results are site-specific and not guaranteed.
+        </p>
       </div>
     </section>
   );
