@@ -1,10 +1,8 @@
 import { BrandCallout } from "./BrandCallout";
-
 export const TypographyScale = () => {
-  return (
-    <section id="typography" className="mb-32">
-      <h2 className="section-header">Typography</h2>
-      <p className="font-ui text-sm text-slate-500 mb-6">Clarity, measurement, and trust</p>
+  return <section id="typography" className="mb-32">
+      
+      
       
       {/* Typography Philosophy */}
       <p className="text-muted-foreground mb-8 max-w-3xl">
@@ -304,25 +302,49 @@ export const TypographyScale = () => {
       </p>
       
       <div className="space-y-6">
-        {[
-          { size: "5xl", px: "48px", example: "Display Hero" },
-          { size: "4xl", px: "36px", example: "Section Title" },
-          { size: "3xl", px: "30px", example: "Page Heading" },
-          { size: "2xl", px: "24px", example: "Card Title" },
-          { size: "xl", px: "20px", example: "Subheading" },
-          { size: "lg", px: "18px", example: "Large Body" },
-          { size: "base", px: "16px", example: "Body Copy" },
-          { size: "sm", px: "14px", example: "Caption" },
-          { size: "xs", px: "12px", example: "Labels" },
-        ].map((item) => (
-          <div key={item.size} className="flex items-baseline gap-6 pb-4 border-b border-slate-100">
+        {[{
+        size: "5xl",
+        px: "48px",
+        example: "Display Hero"
+      }, {
+        size: "4xl",
+        px: "36px",
+        example: "Section Title"
+      }, {
+        size: "3xl",
+        px: "30px",
+        example: "Page Heading"
+      }, {
+        size: "2xl",
+        px: "24px",
+        example: "Card Title"
+      }, {
+        size: "xl",
+        px: "20px",
+        example: "Subheading"
+      }, {
+        size: "lg",
+        px: "18px",
+        example: "Large Body"
+      }, {
+        size: "base",
+        px: "16px",
+        example: "Body Copy"
+      }, {
+        size: "sm",
+        px: "14px",
+        example: "Caption"
+      }, {
+        size: "xs",
+        px: "12px",
+        example: "Labels"
+      }].map(item => <div key={item.size} className="flex items-baseline gap-6 pb-4 border-b border-slate-100">
             <div className="w-16 font-data text-xs text-slate-400">{item.px}</div>
             <div className={`font-ui font-medium text-${item.size} text-foreground flex-1`}>
               {item.example}
             </div>
             <div className="font-data text-xs text-slate-400 hidden sm:block">{item.size.toUpperCase()}</div>
-          </div>
-        ))}
+          </div>)}
       </div>
 
       {/* Line Height & Letter Spacing */}
@@ -362,8 +384,6 @@ export const TypographyScale = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default TypographyScale;
