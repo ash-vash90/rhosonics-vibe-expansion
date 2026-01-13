@@ -58,7 +58,7 @@
     --secondary-foreground: var(--rho-obsidian);
 
     --muted: var(--slate-100);
-    --muted-foreground: var(--slate-500);
+    --muted-foreground: var(--slate-600);
 
     --accent: var(--eco-surface);
     --accent-foreground: var(--rho-green);
