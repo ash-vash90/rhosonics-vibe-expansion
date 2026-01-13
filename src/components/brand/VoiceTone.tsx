@@ -274,6 +274,69 @@ export const VoiceTone = () => {
         ))}
       </div>
 
+      {/* Claims Policy */}
+      <h3 className="label-tech text-slate-500 mb-4">CLAIMS POLICY</h3>
+      <div className="card-base p-6 mb-8">
+        <p className="text-sm text-muted-foreground mb-4">
+          Performance claims require precision. Match language to data certainty.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="p-4 bg-eco-surface rounded-lg border border-eco-border">
+            <div className="label-tech text-primary mb-2">UNIVERSAL CLAIM</div>
+            <p className="font-ui font-medium text-foreground mb-1">"Reduces X by Y%"</p>
+            <p className="text-xs text-muted-foreground">
+              Only when true across all installations and conditions.
+            </p>
+          </div>
+          <div className="p-4 bg-amber-50 rounded-lg border border-amber-200">
+            <div className="label-tech text-amber-700 mb-2">CONDITIONAL CLAIM</div>
+            <p className="font-ui font-medium text-foreground mb-1">"Can reduce X by Y%"</p>
+            <p className="text-xs text-muted-foreground">
+              When dependent on application, installation, or operating conditions.
+            </p>
+          </div>
+          <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+            <div className="label-tech text-slate-600 mb-2">BEST-CASE CLAIM</div>
+            <p className="font-ui font-medium text-foreground mb-1">"Up to Y% reduction"</p>
+            <p className="text-xs text-muted-foreground">
+              For citing maximum results. Must include qualifying conditions.
+            </p>
+          </div>
+        </div>
+        <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+          <div className="label-tech text-slate-600 mb-2">COMPARATIVE CLAIMS MUST INCLUDE:</div>
+          <ul className="text-sm text-muted-foreground space-y-1">
+            <li>• Date range of measurement period</li>
+            <li>• Number of installations sampled (n=X)</li>
+            <li>• Operating conditions (e.g., "in slurries at 20-40% solids concentration")</li>
+            <li>• Source citation or internal reference number</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Forbidden Words */}
+      <h3 className="label-tech text-slate-500 mb-4">FORBIDDEN WORDS</h3>
+      <div className="card-base p-6 mb-8">
+        <p className="text-sm text-muted-foreground mb-4">
+          These terms signal marketing over substance. Our audience notices.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {[
+            "Cutting-edge", "Revolutionary", "Game-changing", "Synergy", 
+            "Leverage", "Utilize", "Best-in-class", "World-leading",
+            "Next-gen", "Disruptive", "Paradigm shift", "Holistic",
+            "Scalable" , "Turnkey", "Seamless", "Robust"
+          ].map((word, i) => (
+            <span key={i} className="px-3 py-1.5 bg-red-50 text-destructive font-data text-xs rounded border border-red-200 line-through">
+              {word}
+            </span>
+          ))}
+        </div>
+        <p className="text-xs text-muted-foreground mt-4 italic">
+          Exception: "Innovative" may be used only when describing a specific, documented technical feature.
+        </p>
+      </div>
+
       {/* Terminology */}
       <h3 className="label-tech text-slate-500 mb-4">PREFERRED TERMINOLOGY</h3>
       <div className="card-base p-0 overflow-hidden">

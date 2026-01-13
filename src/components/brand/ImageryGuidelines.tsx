@@ -60,6 +60,18 @@ export const ImageryGuidelines = () => {
             perfect lighting, and geometric patterns.
           </p>
 
+          {/* 3D Guardrails */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+            <div className="label-tech text-amber-700 mb-2">3D/ABSTRACT GUARDRAILS</div>
+            <ul className="text-sm text-amber-700 space-y-1">
+              <li>✗ No floating holograms or holographic effects</li>
+              <li>✗ No excessive glow or bloom effects</li>
+              <li>✗ No futuristic UI overlays or HUD elements</li>
+              <li>✗ No sci-fi aesthetic (we're industrial, not space-age)</li>
+              <li>✓ Maintain architectural precision, not fantasy</li>
+            </ul>
+          </div>
+
           {/* AI Prompt Box */}
           <div className="bg-slate-50 p-4 rounded border border-slate-200">
             <div className="label-tech text-muted-foreground mb-2">OFFICIAL AI PROMPT</div>
@@ -94,6 +106,17 @@ export const ImageryGuidelines = () => {
           <div className="absolute inset-0 bg-primary/20"></div>
           <span className="label-tech text-primary relative z-10">CONTROLLED BRAND ACCENT</span>
         </div>
+      </div>
+      
+      {/* Color Grading Rules */}
+      <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-4 max-w-xl">
+        <div className="label-tech text-slate-600 mb-2">MEASURABLE COLOR GRADING RULES</div>
+        <ul className="text-sm text-muted-foreground space-y-1">
+          <li><strong>Target saturation:</strong> 10-20% reduction from original</li>
+          <li><strong>Target contrast:</strong> +5-10% from original</li>
+          <li><strong>Green accent:</strong> Maximum 5% of total image area</li>
+          <li><strong>Verification test:</strong> If grading is noticeable before content, it's wrong</li>
+        </ul>
       </div>
       <p className="text-sm text-muted-foreground mb-8">
         Color grading should never be noticeable before content.

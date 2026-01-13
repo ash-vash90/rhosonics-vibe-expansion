@@ -94,6 +94,25 @@ export const IndustryApplications = () => {
         <p className="text-sm text-muted-foreground mb-4">
           Patterns are contextual, not expressive. They help users orient themselves, not brand the interface.
         </p>
+        
+        {/* Pattern Governance Rules */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 max-w-xl">
+          <div className="flex items-start gap-2">
+            <span className="text-amber-600 font-bold">⚠</span>
+            <div>
+              <div className="font-ui font-medium text-amber-800 mb-1">Pattern Governance</div>
+              <ul className="text-sm text-amber-700 space-y-1">
+                <li><strong>Max opacity:</strong> Patterns must never exceed 30%</li>
+                <li><strong>Allowed:</strong> Hero sections, card backgrounds, section headers</li>
+                <li><strong>Forbidden:</strong> Data tables, forms, dense information panels</li>
+              </ul>
+              <p className="text-sm text-amber-700 mt-2 italic">
+                Patterns reinforce context—they never carry information.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-pattern-minerals rounded-lg border border-mineral-neutral/50"></div>

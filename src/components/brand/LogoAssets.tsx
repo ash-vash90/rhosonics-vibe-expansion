@@ -49,6 +49,61 @@ export const LogoAssets = () => {
         </ul>
       </div>
 
+      {/* Minimum Size & Clear Space */}
+      <div className="mb-8">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Size & Clear Space Requirements</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+          {/* Minimum Size */}
+          <div className="card-base p-6">
+            <div className="label-tech text-primary mb-3">MINIMUM SIZE</div>
+            <div className="flex items-end gap-6 mb-4">
+              <div className="flex flex-col items-center">
+                <div className="w-10 h-10 border-2 border-dashed border-primary/50 flex items-center justify-center">
+                  <RhosonicsLogo variant="gradient" className="w-10 h-10" />
+                </div>
+                <span className="text-xs text-muted-foreground mt-2">40px</span>
+                <span className="text-xs text-primary font-medium">Digital min</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-6 h-6 border-2 border-dashed border-destructive/50 flex items-center justify-center opacity-50">
+                  <RhosonicsLogo variant="gradient" className="w-6 h-6" />
+                </div>
+                <span className="text-xs text-destructive mt-2">24px</span>
+                <span className="text-xs text-destructive font-medium">Too small</span>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              <strong>Digital:</strong> 40px minimum width<br />
+              <strong>Print:</strong> 10mm minimum width
+            </p>
+          </div>
+
+          {/* Clear Space */}
+          <div className="card-base p-6">
+            <div className="label-tech text-primary mb-3">CLEAR SPACE</div>
+            <div className="flex items-center justify-center mb-4">
+              <div className="relative">
+                {/* Clear space indicator */}
+                <div className="absolute -inset-4 border-2 border-dashed border-primary/30 rounded"></div>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 -translate-y-1">
+                  <span className="text-[10px] text-primary bg-card px-1">R</span>
+                </div>
+                <div className="absolute -left-4 top-1/2 -translate-y-1/2 -translate-x-1">
+                  <span className="text-[10px] text-primary bg-card px-1">R</span>
+                </div>
+                <div className="w-12 h-12">
+                  <RhosonicsLogo variant="gradient" />
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Clear space equals the height of the "R" character on all sides. 
+              Nothing may enter this zone.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Avoid */}
       <div className="mb-8 max-w-2xl">
         <h4 className="label-tech text-slate-500 mb-3">AVOID</h4>
@@ -69,13 +124,16 @@ export const LogoAssets = () => {
             <span className="text-amber-500 mt-1">✗</span>
             <span>Using the logo as a background pattern</span>
           </li>
+          <li className="flex items-start gap-2">
+            <span className="text-amber-500 mt-1">✗</span>
+            <span>Displaying below minimum size (40px digital, 10mm print)</span>
+          </li>
         </ul>
       </div>
 
       <BrandCallout variant="avoid" title="Misuse Warning">
         If the logo draws attention to itself, it is being misused.
       </BrandCallout>
-
       {/* Logo Context Guidance */}
       <div className="mt-12 mb-12">
         <h3 className="text-lg font-semibold text-foreground mb-4">Logo in Context</h3>
