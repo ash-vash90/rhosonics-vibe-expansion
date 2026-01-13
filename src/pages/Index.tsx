@@ -127,10 +127,15 @@ const Index = () => {
     if (!hero) return;
     const ctx = gsap.context(() => {
       // Set initial states
-      gsap.set('.hero-logo', {
+      gsap.set('.hero-logo > div:first-child', {
         opacity: 0,
         scale: 0.8,
         filter: 'blur(10px)'
+      });
+      gsap.set('.wordmark-char', {
+        opacity: 0,
+        y: 20,
+        rotateX: -90
       });
       gsap.set('.hero-version', {
         opacity: 0,
@@ -155,16 +160,23 @@ const Index = () => {
           ease: 'power3.out'
         }
       });
-      tl.to('.hero-logo', {
+      tl.to('.hero-logo > div:first-child', {
         opacity: 1,
         scale: 1,
         filter: 'blur(0px)',
         duration: 0.8
-      }).to('.hero-version', {
+      }).to('.wordmark-char', {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        duration: 0.4,
+        stagger: 0.04,
+        ease: 'power2.out'
+      }, '-=0.5').to('.hero-version', {
         opacity: 1,
         y: 0,
         duration: 0.6
-      }, '-=0.4').to('.hero-title', {
+      }, '-=0.2').to('.hero-title', {
         opacity: 1,
         y: 0,
         filter: 'blur(0px)',
@@ -214,13 +226,12 @@ const Index = () => {
               <div className="w-14 h-14 md:w-16 md:h-16">
                 <RhosonicsLogo variant="gradient" />
               </div>
-              <span className="font-logo text-2xl md:text-3xl text-white tracking-wide uppercase">RHOSONICS</span>
+              <span className="hero-wordmark font-logo text-2xl md:text-3xl text-white tracking-wide uppercase overflow-hidden">
+                {'RHOSONICS'.split('').map((char, i) => (
+                  <span key={i} className="wordmark-char inline-block">{char}</span>
+                ))}
+              </span>
             </div>
-            
-            {/* Version badge */}
-            <span className="hero-version font-data text-xs text-slate-500 tracking-widest mb-6 block">
-              VERSION 2025
-            </span>
             
             {/* Main title */}
             <h1 className="hero-title font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
