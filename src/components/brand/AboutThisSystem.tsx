@@ -1,6 +1,4 @@
 import { Users, Palette, Code, Megaphone, CheckCircle2 } from "lucide-react";
-import { BrandCallout } from "./BrandCallout";
-
 const AboutThisSystem = () => {
   return (
     <div className="space-y-16">
@@ -119,9 +117,9 @@ const AboutThisSystem = () => {
             </li>
           </ul>
           
-          <BrandCallout variant="rule" title="System Purpose">
+          <p className="text-foreground font-medium">
             The goal is not creative restriction. The goal is shared understanding, so decisions can be made confidently and consistently.
-          </BrandCallout>
+          </p>
         </div>
       </div>
     </div>

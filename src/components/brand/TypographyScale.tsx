@@ -6,16 +6,12 @@ export const TypographyScale = () => {
       <h2 className="section-header">Typography</h2>
       <p className="font-ui text-sm text-slate-500 mb-6">Clarity, measurement, and trust</p>
       
-      {/* Typography Philosophy */}
-      <BrandCallout variant="rule" title="Typography Philosophy" className="mb-8">
+      {/* Typography Philosophy - inline, not callout */}
+      <p className="text-muted-foreground mb-8 max-w-3xl">
         Rhosonics typography prioritizes clarity, measurement, and trust. The system favors legibility over personality, 
-        structure over flourish, and consistency over novelty.
-      </BrandCallout>
-      
-      <p className="text-muted-foreground mb-8">
-        We speak to engineers and operators who evaluate claims critically. Typography that looks consistent reads as credible. 
-        Typography that looks styled reads as marketing. Precision through constraint.
+        structure over flourish, and consistency over novelty. We speak to engineers and operators who evaluate claims critically.
       </p>
+      
 
       {/* Font Families Table */}
       <div className="card-base p-0 overflow-hidden mb-12">
@@ -221,16 +217,14 @@ export const TypographyScale = () => {
         ))}
       </div>
 
-      {/* Uppercase Labels Explanation */}
-      <BrandCallout variant="note" title="Uppercase Label Usage" className="mt-12">
-        Uppercase labels are used for categorization and scanning, not reading. They should remain short and functional.
-      </BrandCallout>
-
-      {/* Why This Matters */}
-      <BrandCallout variant="rule" title="Why This Matters" className="mt-8">
-        Precision through constraint. Engineers evaluate claims critically. Typography that looks consistent reads as credible. 
-        Typography that looks styled reads as marketing. The system enforces credibility through restraint.
-      </BrandCallout>
+      {/* Uppercase Labels Explanation - inline */}
+      <p className="text-sm text-muted-foreground mt-12 mb-4">
+        <strong className="text-foreground">Uppercase labels</strong> are used for categorization and scanning, not reading. They should remain short and functional.
+      </p>
+      
+      <p className="text-sm text-muted-foreground italic">
+        Precision through constraint. Typography that looks consistent reads as credible.
+      </p>
 
       {/* Line Height & Letter Spacing */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
