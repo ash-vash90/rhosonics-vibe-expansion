@@ -35,15 +35,20 @@ const BrandPrinciples = () => {
         They resolve ambiguity when multiple design options are possible.
       </p>
       
-      <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
+      <div className="grid md:grid-cols-2 gap-6">
         {principles.map((principle) => (
-          <div key={principle.title} className="group">
-            <div className="flex items-center gap-3 mb-3">
-              <principle.icon className="w-5 h-5 text-primary" />
-              <h4 className="font-ui text-lg font-semibold text-foreground">{principle.title}</h4>
+          <div 
+            key={principle.title} 
+            className="p-6 border border-border rounded-lg hover:border-primary/30 transition-colors"
+          >
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <principle.icon className="w-5 h-5 text-primary" />
+              </div>
+              <h4 className="font-ui text-lg font-semibold text-foreground pt-1">{principle.title}</h4>
             </div>
             
-            <p className="text-foreground mb-2">{principle.meaning}</p>
+            <p className="text-foreground mb-3">{principle.meaning}</p>
             <p className="text-sm text-slate-500">{principle.practice}</p>
           </div>
         ))}
