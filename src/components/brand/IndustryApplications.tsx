@@ -1,5 +1,4 @@
 import { Beaker, Cpu, Anchor, Recycle } from "lucide-react";
-import { BrandCallout } from "./BrandCallout";
 
 export const IndustryApplications = () => {
   return (
@@ -85,9 +84,10 @@ export const IndustryApplications = () => {
         </div>
       </div>
 
-      {/* Pattern Legend with unified callout */}
-      <BrandCallout variant="note" title="Industry Pattern Reference">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-3">
+      {/* Pattern Legend */}
+      <div className="mt-8">
+        <h4 className="label-tech text-slate-500 mb-4">INDUSTRY PATTERN REFERENCE</h4>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-pattern-minerals rounded-lg border border-mineral-neutral/50"></div>
             <div>
@@ -110,7 +110,7 @@ export const IndustryApplications = () => {
             </div>
           </div>
         </div>
-      </BrandCallout>
+      </div>
     </section>
   );
 };

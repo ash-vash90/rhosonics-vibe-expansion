@@ -44,7 +44,7 @@ export const BrandCallout = ({
   return (
     <div 
       className={cn(
-        "p-5 border border-l-4 rounded-lg",
+        "p-5 border border-l-4 rounded-lg max-w-[600px]",
         styles.container,
         className
       )}
