@@ -4,16 +4,13 @@ export const IndustryApplications = () => {
   return (
     <section id="industries" className="mb-32">
       <h2 className="section-header">Industry Applications</h2>
-      <p className="text-muted-foreground mb-4">
+      <p className="text-muted-foreground mb-12">
         Each industry has its own visual language because context matters.
         The underlying measurement system remains the same — only the interface framing changes.
       </p>
-      <p className="text-muted-foreground mb-8">
-        The sensors don't care — they measure both.
-      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {/* Mineral Processing - Mineral neutrals */}
+        {/* Mineral Processing */}
         <div className="relative overflow-hidden rounded-lg border border-mineral-neutral/30">
           <div className="absolute inset-0 bg-terrain-ore" />
           <div className="absolute inset-0 bg-terrain-strata opacity-30" />
@@ -26,7 +23,6 @@ export const IndustryApplications = () => {
             <div className="p-6 text-slate-100">
               <div className="font-ui text-sm text-slate-400 mb-1">Thickener Underflow</div>
               <div className="font-ui font-bold text-3xl mb-4">1.68 SG</div>
-
               <div className="bg-slate-800/80 rounded-lg p-3 border border-mineral-neutral/20">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-2 h-2 rounded-full bg-mineral-neutral"></div>
@@ -51,7 +47,6 @@ export const IndustryApplications = () => {
             <div className="font-ui font-bold text-3xl text-foreground mb-4">
               1.0425 <span className="text-sm font-normal text-muted-foreground">g/cm³</span>
             </div>
-
             <div className="bg-eco-surface/80 rounded-lg p-3 border border-eco-border">
               <div className="flex items-center gap-2 mb-1">
                 <Recycle className="w-3 h-3 text-primary" />
@@ -75,7 +70,6 @@ export const IndustryApplications = () => {
             <div className="font-ui font-bold text-3xl text-slate-700 mb-4">
               1.35 <span className="text-sm font-normal text-muted-foreground">t/m³</span>
             </div>
-
             <div className="bg-card/80 rounded-lg p-3 border border-border shadow-sm">
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-data text-xs text-muted-foreground">EFFICIENCY</span>
@@ -88,52 +82,31 @@ export const IndustryApplications = () => {
         </div>
       </div>
 
-      {/* Pattern Constraints */}
-      <div className="mt-8">
-        <h4 className="label-tech text-slate-500 mb-2">INDUSTRY PATTERN CONSTRAINTS</h4>
-        <p className="text-sm text-muted-foreground mb-4">
-          Patterns are contextual, not expressive. They help users orient themselves, not brand the interface.
-        </p>
-        
-        {/* Pattern Governance Rules */}
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 max-w-xl">
-          <div className="flex items-start gap-2">
-            <span className="text-amber-600 font-bold">⚠</span>
-            <div>
-              <div className="font-ui font-medium text-amber-800 mb-1">Pattern Governance</div>
-              <ul className="text-sm text-amber-700 space-y-1">
-                <li><strong>Max opacity:</strong> Patterns must never exceed 30%</li>
-                <li><strong>Allowed:</strong> Hero sections, card backgrounds, section headers</li>
-                <li><strong>Forbidden:</strong> Data tables, forms, dense information panels</li>
-              </ul>
-              <p className="text-sm text-amber-700 mt-2 italic">
-                Patterns reinforce context—they never carry information.
-              </p>
-            </div>
+      {/* Pattern Examples */}
+      <h3 className="label-tech text-slate-500 mb-4">INDUSTRY PATTERNS</h3>
+      <p className="text-sm text-muted-foreground mb-6 max-w-xl">
+        Patterns are contextual, not expressive. They help users orient themselves, not brand the interface.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 bg-pattern-minerals rounded-lg border border-mineral-neutral/50"></div>
+          <div>
+            <div className="font-ui font-medium text-foreground">Minerals</div>
+            <div className="text-sm text-muted-foreground">Crystal lattice / field ops</div>
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-pattern-minerals rounded-lg border border-mineral-neutral/50"></div>
-            <div>
-              <div className="font-ui font-medium text-foreground">Minerals</div>
-              <div className="text-sm text-mineral-deep">Crystal lattice / field ops</div>
-            </div>
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 bg-pattern-semicon rounded-lg border border-slate-200"></div>
+          <div>
+            <div className="font-ui font-medium text-foreground">Semiconductor</div>
+            <div className="text-sm text-muted-foreground">Circuit / precision tech</div>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-pattern-semicon rounded-lg border border-slate-200"></div>
-            <div>
-              <div className="font-ui font-medium text-foreground">Semiconductor</div>
-              <div className="text-sm text-muted-foreground">Circuit / precision tech</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-pattern-dredging rounded-lg border border-slate-200"></div>
-            <div>
-              <div className="font-ui font-medium text-foreground">Dredging</div>
-              <div className="text-sm text-muted-foreground">Fluid waves / flow</div>
-            </div>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 bg-pattern-dredging rounded-lg border border-slate-200"></div>
+          <div>
+            <div className="font-ui font-medium text-foreground">Dredging</div>
+            <div className="text-sm text-muted-foreground">Fluid waves / flow</div>
           </div>
         </div>
       </div>
