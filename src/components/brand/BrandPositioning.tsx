@@ -6,16 +6,12 @@ const BrandPositioning = () => {
       {/* What the brand must communicate */}
       <div id="what-we-communicate" className="scroll-mt-24">
         <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mb-6">
-          What the Rhosonics brand must communicate
+          What the brand promises externally
         </h3>
         
-        <p className="text-lg text-slate-600 max-w-3xl mb-10 leading-relaxed">
+        <p className="text-lg text-slate-600 max-w-3xl mb-8 leading-relaxed">
           Rhosonics builds measurement systems for environments where conditions are rarely ideal 
-          and accuracy is operationally critical.
-        </p>
-        
-        <p className="text-lg text-slate-600 max-w-3xl mb-8">
-          As a result, the brand must consistently communicate:
+          and accuracy is operationally critical. The brand must communicate:
         </p>
         
         <div className="grid md:grid-cols-3 gap-8">
@@ -59,12 +55,8 @@ const BrandPositioning = () => {
           </div>
         </div>
         
-        <p className="text-sm text-slate-500 mt-8 italic">
-          These qualities guide every decision in this system.
-        </p>
-        
-        {/* Decision-making heuristic - inline */}
-        <p className="text-foreground font-medium mt-8 border-l-2 border-primary pl-4">
+        {/* Decision-making heuristic */}
+        <p className="text-foreground font-medium mt-10 border-l-2 border-primary pl-4">
           When choosing between two valid design options, prefer the one that improves clarity, reinforces performance, or reveals insight.
         </p>
       </div>
@@ -72,21 +64,13 @@ const BrandPositioning = () => {
       {/* How positioning shapes expression */}
       <div id="expression-approach" className="scroll-mt-24">
         <h3 className="font-ui text-xl md:text-2xl font-semibold text-foreground mb-6">
-          How this positioning shapes expression
+          How positioning shapes expression
         </h3>
         
-        <div className="max-w-3xl space-y-5 text-lg text-slate-600 leading-relaxed mb-10">
-          <p>
-            Because the brand operates in technical and industrial contexts, 
-            expression is <strong className="text-foreground">purposeful rather than decorative</strong>.
-          </p>
-          <p className="border-l-2 border-slate-200 pl-5 text-slate-500">
-            This does not mean the brand is neutral or minimal.<br />
-            It means expression is used deliberately, in service of understanding.
-          </p>
-        </div>
-        
-        <p className="text-lg text-slate-600 mb-6">In practice, this leads to:</p>
+        <p className="max-w-3xl text-lg text-slate-600 leading-relaxed mb-8">
+          Expression is <strong className="text-foreground">purposeful rather than decorative</strong>. 
+          It is used deliberately, in service of understanding.
+        </p>
         
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="flex items-start gap-4 p-5 bg-slate-50 border border-slate-200 rounded-lg">
@@ -115,7 +99,7 @@ const BrandPositioning = () => {
             </div>
             <div>
               <h5 className="font-ui font-medium text-foreground mb-1">Color signals meaning</h5>
-              <p className="text-sm text-slate-500">Not mood</p>
+              <p className="text-sm text-slate-500">State, action, or context — not mood</p>
             </div>
           </div>
           
@@ -139,10 +123,6 @@ const BrandPositioning = () => {
             </div>
           </div>
         </div>
-        
-        <p className="text-lg text-foreground font-medium mt-8">
-          Expression exists to support comprehension.
-        </p>
       </div>
 
       {/* The audience reality */}
@@ -152,7 +132,7 @@ const BrandPositioning = () => {
         </h3>
         
         <div className="max-w-3xl space-y-5 text-lg text-slate-600 leading-relaxed">
-          <p>Much of the brand is experienced by people who:</p>
+          <p>The brand is experienced by people who:</p>
           
           <ul className="space-y-3 ml-4">
             <li className="flex items-start gap-3">
@@ -173,13 +153,8 @@ const BrandPositioning = () => {
             </li>
           </ul>
           
-          <p>
-            The brand therefore <strong className="text-foreground">earns trust through clarity and consistency</strong>, 
-            not exaggeration.
-          </p>
-          
-          <p className="text-foreground font-medium mt-6">
-            This system is designed to meet that expectation.
+          <p className="text-foreground font-medium pt-4">
+            The brand earns trust through clarity and consistency, not exaggeration.
           </p>
         </div>
       </div>

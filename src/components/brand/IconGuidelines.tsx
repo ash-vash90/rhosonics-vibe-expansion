@@ -54,7 +54,7 @@ export const IconGuidelines = () => {
     <section id="icons" className="mb-32">
       <h2 className="section-header">Icon System</h2>
       <p className="text-muted-foreground mb-12 max-w-2xl">
-        Icons in the Rhosonics system exist to support recognition and scanning — not decoration. 
+        Icons support recognition and scanning — not decoration. 
         They are functional symbols designed to communicate quickly and unambiguously.
       </p>
 
@@ -62,7 +62,7 @@ export const IconGuidelines = () => {
       <div className="mb-12 max-w-2xl">
         <h3 className="text-lg font-semibold text-foreground mb-4">Icon Philosophy</h3>
         <p className="text-muted-foreground mb-4">
-          Rhosonics icons are engineered, not illustrated. They are simple, geometric, and purposeful. 
+          Rhosonics icons are engineered, not illustrated. Simple, geometric, and purposeful. 
           Every icon should feel like it belongs in a control room, not a marketing slide.
         </p>
         <p className="text-muted-foreground">
@@ -101,6 +101,28 @@ export const IconGuidelines = () => {
         </BrandCallout>
       </div>
 
+      {/* Icon Specifications - NEW */}
+      <div className="mb-12">
+        <h3 className="label-tech text-slate-500 mb-4">ICON SPECIFICATIONS</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl">
+          <div className="card-base p-4">
+            <span className="label-tech text-muted-foreground">GRID</span>
+            <p className="font-data text-lg text-foreground mt-1">24px</p>
+            <p className="text-xs text-muted-foreground">Standard icon grid</p>
+          </div>
+          <div className="card-base p-4">
+            <span className="label-tech text-muted-foreground">STROKE</span>
+            <p className="font-data text-lg text-foreground mt-1">1.5px</p>
+            <p className="text-xs text-muted-foreground">Consistent weight</p>
+          </div>
+          <div className="card-base p-4">
+            <span className="label-tech text-muted-foreground">CORNERS</span>
+            <p className="font-data text-lg text-foreground mt-1">2px radius</p>
+            <p className="text-xs text-muted-foreground">For joins and ends</p>
+          </div>
+        </div>
+      </div>
+
       {/* Icon Usage Contexts */}
       <div className="mb-12">
         <h3 className="text-lg font-semibold text-foreground mb-4">Icon Usage Contexts</h3>
@@ -124,6 +146,28 @@ export const IconGuidelines = () => {
         </div>
       </div>
 
+      {/* Accessibility Rules - NEW */}
+      <div className="mb-12">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Icon Accessibility</h3>
+        <div className="p-5 bg-blue-50 border border-blue-200 rounded-lg max-w-2xl">
+          <span className="label-tech text-blue-700 mb-3 block">ACCESSIBILITY RULES</span>
+          <ul className="space-y-2 text-sm text-blue-900">
+            <li className="flex items-start gap-2">
+              <span className="text-blue-700 mt-0.5">•</span>
+              <span><strong>Never rely on color alone</strong> for meaning. Pair color with shape or label.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-700 mt-0.5">•</span>
+              <span><strong>Outline is default</strong>. Filled only for active/selected states.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-700 mt-0.5">•</span>
+              <span>Interactive icons require <strong>44px minimum touch target</strong>.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       {/* Avoid */}
       <div className="mb-12 max-w-2xl">
         <h4 className="label-tech text-slate-500 mb-3">AVOID</h4>
@@ -143,6 +187,10 @@ export const IconGuidelines = () => {
           <li className="flex items-start gap-2">
             <span className="text-amber-500 mt-1">✗</span>
             <span>Using icons where text alone is clearer</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-amber-500 mt-1">✗</span>
+            <span>Relying on color alone for meaning</span>
           </li>
         </ul>
       </div>

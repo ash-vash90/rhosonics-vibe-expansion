@@ -64,11 +64,8 @@ export const MotionDesign = () => {
   return (
     <section ref={sectionRef} id="motion" className="mb-32">
       <h2 className="section-header">Motion Design</h2>
-      <p className="text-muted-foreground mb-4">
-        Motion in the Rhosonics system communicates cause and effect.
-      </p>
-      <p className="text-muted-foreground mb-8">
-        It mirrors physical processes — propagation, response, stabilization — not decoration.
+      <p className="text-muted-foreground mb-8 max-w-2xl">
+        Motion communicates cause and effect, mirroring physical processes — propagation, response, stabilization — not decoration.
       </p>
 
       {/* Motion Principles */}
@@ -96,6 +93,59 @@ export const MotionDesign = () => {
             Brand reveal animations, loading sequences. Reserved for important moments.
           </p>
         </div>
+      </div>
+
+      {/* Easing Token Reference - NEW */}
+      <h3 className="label-tech text-slate-500 mb-4">EASING TOKENS</h3>
+      <div className="card-base p-0 overflow-hidden mb-12">
+        <table className="w-full text-left">
+          <thead className="bg-slate-50 border-b border-border">
+            <tr>
+              <th className="px-6 py-3 label-tech text-slate-500">NAME</th>
+              <th className="px-6 py-3 label-tech text-slate-500">CUBIC-BEZIER</th>
+              <th className="px-6 py-3 label-tech text-slate-500 hidden md:table-cell">USE CASE</th>
+            </tr>
+          </thead>
+          <tbody className="text-sm">
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 font-data text-primary">ease-out</td>
+              <td className="px-6 py-3 font-data text-xs text-muted-foreground">cubic-bezier(0.33, 1, 0.68, 1)</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">Entrances — fast start, gentle finish</td>
+            </tr>
+            <tr className="border-b border-slate-100">
+              <td className="px-6 py-3 font-data text-primary">ease-in-out</td>
+              <td className="px-6 py-3 font-data text-xs text-muted-foreground">cubic-bezier(0.65, 0, 0.35, 1)</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">Continuous loops — smooth both ends</td>
+            </tr>
+            <tr>
+              <td className="px-6 py-3 font-data text-primary">linear</td>
+              <td className="px-6 py-3 font-data text-xs text-muted-foreground">cubic-bezier(0, 0, 1, 1)</td>
+              <td className="px-6 py-3 text-muted-foreground hidden md:table-cell">Data updates — mechanical precision</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Reduced Motion Accessibility - NEW */}
+      <div className="p-5 bg-blue-50 border border-blue-200 rounded-lg mb-12 max-w-2xl">
+        <span className="label-tech text-blue-700 mb-3 block">REDUCED MOTION SUPPORT</span>
+        <p className="text-sm text-blue-900 mb-3">
+          When <code className="font-data text-xs bg-white px-1 py-0.5 rounded">prefers-reduced-motion: reduce</code> is set:
+        </p>
+        <ul className="space-y-2 text-sm text-blue-900">
+          <li className="flex items-start gap-2">
+            <span className="text-blue-700 mt-0.5">•</span>
+            <span>Disable boot sequence animation</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-blue-700 mt-0.5">•</span>
+            <span>Reduce transitions to opacity changes only (no transforms)</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-blue-700 mt-0.5">•</span>
+            <span>Set all durations to instantaneous or 0ms</span>
+          </li>
+        </ul>
       </div>
 
       {/* Animation Examples */}
@@ -203,7 +253,7 @@ export const MotionDesign = () => {
         </div>
       </div>
 
-      {/* Easing Reference */}
+      {/* Easing Visual Reference */}
       <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
         <h4 className="font-ui font-bold text-lg mb-4">Easing Functions</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">

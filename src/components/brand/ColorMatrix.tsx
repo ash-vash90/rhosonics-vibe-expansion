@@ -47,7 +47,7 @@ export const ColorMatrix = () => {
       bgClass: "bg-primary",
       textClass: "text-primary-foreground",
       role: "CORE SIGNAL",
-      description: "The core identifier of the Rhosonics brand. It represents reliability and active measurement. Use this color to draw attention to the most important actions on the screen.",
+      description: "The core identifier of the Rhosonics brand. Represents reliability and active measurement. Use for the most important actions.",
       dontUse: "Large Backgrounds, Body Text"
     },
     {
@@ -56,7 +56,7 @@ export const ColorMatrix = () => {
       bgClass: "bg-rho-green-accent",
       textClass: "text-primary-foreground",
       role: "SUPPORTING SIGNAL",
-      description: "A supporting tone used exclusively to add depth and vibrancy to the primary green. It creates the \"inner glow\" effect seen in our branding.",
+      description: "A supporting tone used exclusively to add depth to the primary green in gradients.",
       dontUse: "Solid Buttons, Text (Poor Contrast)"
     },
     {
@@ -65,7 +65,7 @@ export const ColorMatrix = () => {
       bgClass: "bg-rho-obsidian",
       textClass: "text-slate-100",
       role: "FOUNDATIONAL SURFACE",
-      description: "The foundation of our \"Hardware\" aesthetic. A rich, blue-tinted black that replaces standard black for a more premium, industrial feel. Used for the physical hardware housing.",
+      description: "A rich, blue-tinted black for the hardware aesthetic. Replaces pure black for dark surfaces.",
       dontUse: "Pure Black (#000000)"
     }
   ];
@@ -77,7 +77,7 @@ export const ColorMatrix = () => {
       bgClass: "bg-mineral-neutral",
       textClass: "text-white",
       role: "ENVIRONMENT ACCENT",
-      description: "A warm stone tone representing field sites, outdoor operations, and mineral processing environments. This is an environmental color — not a UI gray. It must never substitute for Slate.",
+      description: "A warm stone tone for field sites and mineral processing environments. Never substitute for Slate in UI.",
       dontUse: "UI Text, Buttons, Backgrounds, Forms"
     },
     {
@@ -86,7 +86,7 @@ export const ColorMatrix = () => {
       bgClass: "bg-mineral-surface",
       textClass: "text-mineral-deep",
       role: "ENVIRONMENT SURFACE",
-      description: "A warm cream surface for field-themed cards and containers. Provides earthy texture that clearly differs from cool Slate surfaces. Use only in environmental or industry context modules.",
+      description: "A warm cream surface for field-themed cards. Only in environmental or industry context modules.",
       dontUse: "General UI Cards, Standard Backgrounds"
     },
     {
@@ -95,7 +95,7 @@ export const ColorMatrix = () => {
       bgClass: "bg-mineral-deep",
       textClass: "text-white",
       role: "ENVIRONMENT ACCENT",
-      description: "A deep olive-stone tone for grounding elements in field contexts. Provides weight and permanence with warm undertones that distinguish it from Slate.",
+      description: "A deep olive-stone tone for grounding elements in field contexts.",
       dontUse: "UI Text, Tables, Navigation"
     }
   ];
@@ -107,7 +107,7 @@ export const ColorMatrix = () => {
       bgClass: "bg-eco-surface",
       textClass: "text-muted-foreground",
       role: "CONTEXTUAL INDICATOR",
-      description: "A very subtle green tint used to distinguish \"Eco Pack\" modules from standard operational data. It provides a subconscious cue of sustainability without being overwhelming.",
+      description: "A subtle green tint for Eco Pack modules. Provides a subconscious sustainability cue.",
       dontUse: "Main Page Backgrounds, Text"
     },
     {
@@ -116,7 +116,7 @@ export const ColorMatrix = () => {
       bgClass: "bg-eco-border",
       textClass: "text-muted-foreground",
       role: "CONTEXTUAL INDICATOR",
-      description: "Used for structure within Eco modules. It provides separation and definition for sustainable metrics.",
+      description: "Used for structure within Eco modules. Provides separation for sustainable metrics.",
       dontUse: "Text, Primary Buttons, Solid Fills"
     }
   ];
@@ -126,12 +126,21 @@ export const ColorMatrix = () => {
       <h2 className="section-header">Color Roles</h2>
       <p className="label-tech text-slate-500 mb-6">FUNCTIONAL COLOR GOVERNANCE</p>
       
-      {/* Core Philosophy - inline */}
+      {/* Core Philosophy */}
       <p className="text-muted-foreground mb-8 max-w-3xl">
-        Color exists to communicate <strong className="text-foreground">State</strong>, <strong className="text-foreground">Structure</strong>, or <strong className="text-foreground">Context</strong>. 
-        Mood, decoration, and expressive color without meaning are not permitted. Every color in this system serves a purpose — 
-        precision demands clarity; clarity demands constraint.
+        Color communicates <strong className="text-foreground">State</strong>, <strong className="text-foreground">Structure</strong>, or <strong className="text-foreground">Context</strong>. 
+        Mood, decoration, and expressive color without meaning are not permitted.
       </p>
+
+      {/* Accessibility Requirements - NEW */}
+      <div className="p-5 bg-blue-50 border border-blue-200 rounded-lg mb-12 max-w-2xl">
+        <span className="label-tech text-blue-700 mb-2 block">ACCESSIBILITY REQUIREMENTS</span>
+        <div className="space-y-2 text-sm text-blue-900">
+          <p><strong>WCAG AA Minimum:</strong> 4.5:1 for normal text, 3:1 for large text (18px+)</p>
+          <p><strong>Dark backgrounds:</strong> Use Obsidian (#111522), never pure black (#000000)</p>
+          <p><strong>Verification required:</strong> Green-on-eco-surface combinations</p>
+        </div>
+      </div>
 
       {/* Color Role Hierarchy */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
@@ -163,12 +172,8 @@ export const ColorMatrix = () => {
       <h3 className="label-tech text-mineral-neutral mb-4">FIELD AESTHETIC — MINERAL TONES</h3>
       <BrandCallout variant="avoid" title="Critical Separation" className="mb-6">
         Mineral colors are warm-neutral environmental tones. They are <strong>categorically different</strong> from Slate UI grays. 
-        Mineral must never substitute for Slate in UI elements like text, forms, navigation, or data containers.
+        Mineral must never substitute for Slate in UI elements.
       </BrandCallout>
-      <p className="text-sm text-muted-foreground mb-6">
-        These colors evoke stone, earth, and mineral processing environments. They support industrial and field contexts 
-        without encroaching on the cool, blue-biased Slate scale reserved for software interfaces.
-      </p>
       <div className="flex flex-col gap-6 mb-12">
         {mineralColors.map(color => <ColorSwatch key={color.hex} {...color} />)}
       </div>
@@ -182,7 +187,7 @@ export const ColorMatrix = () => {
       {/* Slate Scale */}
       <h3 className="label-tech text-slate-500 mb-4">THE SLATE SCALE — UI STRUCTURE</h3>
       <p className="text-sm text-muted-foreground mb-6">
-        Cool, blue-biased, chromatically neutral. Used exclusively for UI structure and interface logic: 
+        Cool, blue-biased, chromatically neutral. Used exclusively for UI structure: 
         text, dividers, tables, forms, navigation, and data containers.
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2">
@@ -240,7 +245,7 @@ export const ColorMatrix = () => {
       <div className="mt-12">
         <h3 className="label-tech text-mineral-neutral mb-4">TERRAIN TEXTURES</h3>
         <p className="text-muted-foreground text-sm mb-6">
-          Subtle background patterns that reinforce the field aesthetic. Use sparingly — textures must support content, not compete with it. 
+          Subtle background patterns. Textures must support content, not compete with it. 
           If a texture is noticeable before the content, it is being overused.
         </p>
         

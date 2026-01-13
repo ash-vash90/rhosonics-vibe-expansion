@@ -51,12 +51,11 @@ const BrandPrinciples = () => {
       iconName: "focus",
       title: "Precision before decoration",
       meaning: "Information clarity always takes priority over visual flourish.",
-      why: "This principle governs information hierarchy — what content receives visual emphasis. Rhosonics communicates measurement, performance, and operational insight. Decoration that does not reinforce understanding introduces noise.",
+      why: "Governs information hierarchy. Decoration that does not reinforce understanding introduces noise.",
       practices: [
         "Data and key messages are visually dominant",
         "Decorative elements are secondary and restrained",
-        "Visual emphasis is earned, not applied everywhere",
-        "See also: Engineered, not styled (system construction)"
+        "Visual emphasis is earned, not applied everywhere"
       ]
     },
     {
@@ -64,7 +63,7 @@ const BrandPrinciples = () => {
       iconName: "sparkles",
       title: "Expression with intent",
       meaning: "The system allows for expressive elements — color, contrast, texture — but only where they serve a clear role.",
-      why: "Expression helps guide attention and reinforce meaning when used deliberately. Uncontrolled expression dilutes the system and weakens clarity.",
+      why: "Expression guides attention when used deliberately. Uncontrolled expression dilutes clarity.",
       practices: [
         "Color signals state, action, or context",
         "Gradients and textures add depth, not distraction",
@@ -76,12 +75,11 @@ const BrandPrinciples = () => {
       iconName: "wrench",
       title: "Engineered, not styled",
       meaning: "The brand should feel designed with purpose, not styled for effect.",
-      why: "This principle governs system construction — how the visual system itself is built. Rhosonics products are evaluated on performance and reliability. The visual system should reflect the same discipline.",
+      why: "Governs system construction. The visual system should reflect the same discipline as our products.",
       practices: [
         "Layouts follow consistent structural logic",
         "Spacing and alignment are systematic",
-        "Motion, when used, communicates feedback or change",
-        "See also: Precision before decoration (information hierarchy)"
+        "Motion, when used, communicates feedback or change"
       ]
     },
     {
@@ -111,12 +109,11 @@ const BrandPrinciples = () => {
   return (
     <div className="space-y-8">
       <div className="max-w-3xl mb-12">
-        <p className="text-lg text-slate-600 leading-relaxed">
-          Brand principles are decision-making tools.
-          They exist to resolve ambiguity when multiple design options are possible.
+        <p className="text-sm text-primary font-medium mb-2">
+          Positioning defines what the brand promises. Principles define how we deliver.
         </p>
-        <p className="text-lg text-slate-500 mt-4">
-          Each principle defines not only what to aim for, but what to avoid.
+        <p className="text-lg text-slate-600 leading-relaxed">
+          Brand principles are decision-making tools. They resolve ambiguity when multiple design options are possible.
         </p>
       </div>
       
