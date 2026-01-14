@@ -3,37 +3,38 @@ import { Leaf, Recycle, Droplets } from "lucide-react";
 export const EcoComponents = () => {
   return (
     <section id="eco" className="mb-32">
-      <h2 className="section-header flex items-center gap-3">
-        Sustainability Modules{" "}
-        <span className="text-xs font-data text-primary bg-eco-surface px-2 py-1 rounded border border-eco-border">
-          ECO_PACK
-        </span>
-      </h2>
-      
-      {/* Intro */}
-      <p className="text-muted-foreground text-lg mb-8">
-        Sustainability metrics are operational outcomes, not marketing claims.
-        Every 0.1% accuracy improvement is waste prevented.
-      </p>
+      {/* Hero Statement */}
+      <div className="mb-16">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="label-tech text-primary bg-eco-surface px-3 py-1.5 rounded border border-eco-border">
+            ECO_PACK
+          </span>
+        </div>
+        <p className="text-2xl md:text-3xl font-ui text-foreground leading-relaxed max-w-4xl">
+          Sustainability metrics are operational outcomes
+          <span className="text-muted-foreground">, not marketing claims. Every 0.1% accuracy improvement is waste prevented.</span>
+        </p>
+      </div>
 
-      {/* Main Cards - full width */}
-      <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* Resource Recovery Card */}
-        <div className="card-eco p-8 bg-pattern-topo relative overflow-hidden">
-          <div className="relative z-10">
-            <div className="flex justify-between items-center mb-6">
+      {/* Main Metrics - Full width split */}
+      <div className="grid lg:grid-cols-2 gap-px bg-border mb-16">
+        {/* Resource Recovery */}
+        <div className="bg-card p-10 relative overflow-hidden">
+          <div className="absolute inset-0 bg-pattern-topo opacity-30"></div>
+          <div className="relative">
+            <div className="flex justify-between items-start mb-8">
               <span className="label-tech text-primary">RESOURCE RECOVERY</span>
-              <div className="w-8 h-8 rounded-full bg-card border border-eco-border flex items-center justify-center text-primary">
-                <Leaf className="w-4 h-4" />
+              <div className="w-10 h-10 rounded-full bg-eco-surface border border-eco-border flex items-center justify-center text-primary">
+                <Leaf className="w-5 h-5" />
               </div>
             </div>
 
-            <div className="flex items-end gap-2 mb-2">
-              <span className="font-ui font-bold text-5xl text-primary">85%</span>
-              <span className="font-data text-sm text-muted-foreground mb-2">Water Recycled</span>
+            <div className="mb-6">
+              <div className="font-data text-6xl md:text-7xl text-primary mb-2">85%</div>
+              <div className="font-ui text-lg text-muted-foreground">Water Recycled</div>
             </div>
 
-            <p className="font-ui text-sm text-muted-foreground mb-6">
+            <p className="text-muted-foreground mb-8 max-w-md">
               Optimized density measurement reduced fresh water intake by 15,000L today.
             </p>
 
@@ -43,17 +44,17 @@ export const EcoComponents = () => {
           </div>
         </div>
 
-        {/* Carbon Reduction Card */}
-        <div className="card-eco p-8">
-          <div className="flex justify-between items-start mb-6">
+        {/* Carbon Reduction */}
+        <div className="bg-background p-10 flex flex-col">
+          <div className="flex justify-between items-start mb-8">
             <div>
-              <span className="label-tech text-primary">CARBON IMPACT</span>
-              <h3 className="font-ui font-bold text-2xl text-foreground mt-1">CO2 Reduction</h3>
+              <span className="label-tech text-primary block mb-2">CARBON IMPACT</span>
+              <h3 className="font-ui font-bold text-2xl text-foreground">CO2 Reduction</h3>
             </div>
           </div>
 
-          <div className="flex items-center justify-center py-4">
-            <div className="relative w-32 h-32 flex items-center justify-center">
+          <div className="flex-1 flex items-center justify-center">
+            <div className="relative w-40 h-40 flex items-center justify-center">
               <svg className="absolute inset-0 w-full h-full text-slate-200" viewBox="0 0 80 80">
                 <circle cx="40" cy="40" r="35" stroke="currentColor" strokeWidth="6" fill="none" />
               </svg>
@@ -75,7 +76,7 @@ export const EcoComponents = () => {
                 />
               </svg>
               <div className="text-center">
-                <div className="font-ui font-bold text-2xl text-foreground">-42%</div>
+                <div className="font-data text-3xl font-bold text-foreground">-42%</div>
                 <div className="font-data text-xs text-muted-foreground">YTD</div>
               </div>
             </div>
@@ -83,78 +84,48 @@ export const EcoComponents = () => {
         </div>
       </div>
 
-      {/* Eco Metrics Grid - full width */}
-      <h3 className="label-tech text-slate-500 mb-4">ECO METRIC PATTERNS</h3>
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        <div className="card-eco p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-card border border-eco-border flex items-center justify-center">
-              <Droplets className="w-5 h-5 text-primary" />
+      {/* Eco Metrics - Horizontal strip */}
+      <h3 className="label-tech text-muted-foreground mb-6">ECO METRIC PATTERNS</h3>
+      <div className="flex items-stretch border-t border-b border-border mb-16">
+        {[
+          { icon: Droplets, label: "WATER SAVED", period: "Today", value: "12.4K", unit: "Liters" },
+          { icon: Recycle, label: "WASTE REDUCED", period: "This Week", value: "-28%", unit: "vs Baseline" },
+          { icon: Leaf, label: "CARBON OFFSET", period: "YTD", value: "847", unit: "Tons CO2e" },
+        ].map((metric, idx) => (
+          <div key={idx} className="flex-1 py-8 px-6 border-r border-border last:border-r-0 group hover:bg-eco-surface/30 transition-colors">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-eco-surface border border-eco-border flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                <metric.icon className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="label-tech text-muted-foreground">{metric.label}</div>
+                <div className="font-ui text-sm font-medium text-foreground">{metric.period}</div>
+              </div>
             </div>
-            <div>
-              <div className="label-tech text-muted-foreground">WATER SAVED</div>
-              <div className="font-ui font-bold text-foreground">Today</div>
-            </div>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="font-ui text-4xl font-bold text-primary">12.4K</span>
-            <span className="font-data text-sm text-muted-foreground">Liters</span>
-          </div>
-        </div>
-
-        <div className="card-eco p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-card border border-eco-border flex items-center justify-center">
-              <Recycle className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <div className="label-tech text-muted-foreground">WASTE REDUCED</div>
-              <div className="font-ui font-bold text-foreground">This Week</div>
+            <div className="flex items-baseline gap-2">
+              <span className="font-data text-4xl md:text-5xl text-primary">{metric.value}</span>
+              <span className="font-data text-sm text-muted-foreground">{metric.unit}</span>
             </div>
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="font-ui text-4xl font-bold text-primary">-28%</span>
-            <span className="font-data text-sm text-muted-foreground">vs Baseline</span>
-          </div>
-        </div>
-
-        <div className="card-eco p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-card border border-eco-border flex items-center justify-center">
-              <Leaf className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <div className="label-tech text-muted-foreground">CARBON OFFSET</div>
-              <div className="font-ui font-bold text-foreground">YTD</div>
-            </div>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="font-ui text-4xl font-bold text-primary">847</span>
-            <span className="font-data text-sm text-muted-foreground">Tons CO2e</span>
-          </div>
-        </div>
+        ))}
       </div>
 
-      {/* Eco Design Principles - full width */}
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="p-6 bg-eco-surface rounded-lg border border-eco-border">
-          <div className="label-tech text-primary mb-2">SUBTLE BY DEFAULT</div>
-          <p className="text-sm text-muted-foreground">
-            Integrated naturally. No "greenwashing" with over-the-top eco imagery.
-          </p>
-        </div>
-        <div className="p-6 bg-eco-surface rounded-lg border border-eco-border">
-          <div className="label-tech text-primary mb-2">DATA FIRST</div>
-          <p className="text-sm text-muted-foreground">
-            Every claim tied to measurable data. Show numbers, not sentiment.
-          </p>
-        </div>
-        <div className="p-6 bg-eco-surface rounded-lg border border-eco-border">
-          <div className="label-tech text-primary mb-2">CONTEXTUAL</div>
-          <p className="text-sm text-muted-foreground">
-            Topographic patterns used exclusively on eco components.
-          </p>
-        </div>
+      {/* Eco Design Principles - Numbered list */}
+      <h3 className="label-tech text-muted-foreground mb-6">DESIGN PRINCIPLES</h3>
+      <div className="space-y-0 border-t border-border">
+        {[
+          { num: "01", title: "Subtle by Default", desc: "Integrated naturally. No 'greenwashing' with over-the-top eco imagery." },
+          { num: "02", title: "Data First", desc: "Every claim tied to measurable data. Show numbers, not sentiment." },
+          { num: "03", title: "Contextual", desc: "Topographic patterns used exclusively on eco components." },
+        ].map((principle, idx) => (
+          <div key={idx} className="flex items-start gap-6 py-6 border-b border-border group hover:bg-slate-50 transition-colors px-4 -mx-4">
+            <span className="font-data text-2xl text-primary">{principle.num}</span>
+            <div>
+              <h4 className="font-ui font-bold text-lg text-foreground mb-1">{principle.title}</h4>
+              <p className="text-muted-foreground">{principle.desc}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

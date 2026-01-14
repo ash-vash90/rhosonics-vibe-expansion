@@ -14,7 +14,7 @@ const caseStudies = [
       { label: "ROI", value: "8 mo" },
     ],
     icon: Droplets,
-    variant: "gradient" as const,
+    variant: "dark" as const,
   },
   {
     id: "mining",
@@ -44,80 +44,88 @@ const caseStudies = [
       { label: "Compliance", value: "100%" },
     ],
     icon: TrendingUp,
-    variant: "metal" as const,
+    variant: "light" as const,
   },
 ];
 
 export const CaseStudies = () => {
   return (
-    <section id="cases" className="mb-16">
+    <section id="cases" className="mb-32">
       {/* Case Study Cards - Full width grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-border mb-16">
         {caseStudies.map((study) => (
           <article 
             key={study.id}
-            className={`group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
-              study.variant === 'gradient' ? 'card-gradient chamfer-lg' : 
-              study.variant === 'mineral' ? 'card-mineral' : 'card-metal'
+            className={`group relative overflow-hidden transition-all duration-300 ${
+              study.variant === 'dark' ? 'bg-rho-obsidian' : 
+              study.variant === 'mineral' ? 'bg-mineral-surface' : 'bg-background'
             }`}
           >
-            <div className="relative p-6">
-              <div className="flex items-center justify-between mb-4">
-                <span className={`font-data text-xs uppercase tracking-wider ${
-                  study.variant === 'gradient' ? 'text-slate-400' : 
-                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-slate-500'
+            {/* Background patterns */}
+            {study.variant === 'dark' && (
+              <div className="absolute inset-0 bg-pattern-dredging opacity-30"></div>
+            )}
+            {study.variant === 'mineral' && (
+              <div className="absolute inset-0 bg-pattern-minerals opacity-20"></div>
+            )}
+            
+            <div className="relative p-8 min-h-[400px] flex flex-col">
+              <div className="flex items-center justify-between mb-6">
+                <span className={`label-tech ${
+                  study.variant === 'dark' ? 'text-slate-400' : 
+                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-muted-foreground'
                 }`}>
                   {study.industry}
                 </span>
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  study.variant === 'gradient' ? 'bg-primary/20 text-primary' : 
-                  study.variant === 'mineral' ? 'bg-mineral-neutral/20 text-mineral-deep' : 'bg-slate-200 text-slate-600'
+                  study.variant === 'dark' ? 'bg-primary/20 text-primary' : 
+                  study.variant === 'mineral' ? 'bg-mineral-neutral/20 text-mineral-deep' : 'bg-slate-100 text-slate-600'
                 }`}>
                   <study.icon className="w-5 h-5" />
                 </div>
               </div>
 
-              <div className="mb-4">
-                <div className={`text-4xl font-bold font-ui tracking-tight mb-1 ${
-                  study.variant === 'gradient' ? 'text-primary' : 
-                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
+              <div className="mb-6">
+                <div className={`font-data text-5xl md:text-6xl mb-2 ${
+                  study.variant === 'dark' ? 'text-primary' : 
+                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-primary'
                 }`}>
                   {study.stat}
                 </div>
                 <div className={`text-sm ${
-                  study.variant === 'gradient' ? 'text-slate-300' : 
-                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-slate-500'
+                  study.variant === 'dark' ? 'text-slate-400' : 
+                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-muted-foreground'
                 }`}>
                   {study.statLabel}
                 </div>
               </div>
 
-              <h3 className={`text-lg font-semibold font-ui mb-2 ${
-                study.variant === 'gradient' ? 'text-slate-100' : 'text-foreground'
+              <h3 className={`text-xl font-semibold font-ui mb-3 ${
+                study.variant === 'dark' ? 'text-slate-100' : 'text-foreground'
               }`}>
                 {study.title}
               </h3>
-              <p className={`text-sm leading-relaxed mb-4 ${
-                study.variant === 'gradient' ? 'text-slate-300' : 
-                study.variant === 'mineral' ? 'text-mineral-deep' : 'text-slate-500'
+              <p className={`text-sm leading-relaxed mb-auto ${
+                study.variant === 'dark' ? 'text-slate-400' : 
+                study.variant === 'mineral' ? 'text-mineral-deep' : 'text-muted-foreground'
               }`}>
                 {study.description}
               </p>
 
-              <div className={`grid grid-cols-3 gap-2 p-3 rounded-lg ${
-                study.variant === 'gradient' ? 'bg-slate-800/50' : 
-                study.variant === 'mineral' ? 'bg-mineral-neutral/10' : 'bg-slate-100'
+              <div className={`grid grid-cols-3 gap-2 p-4 rounded-lg mt-6 ${
+                study.variant === 'dark' ? 'bg-slate-800/50' : 
+                study.variant === 'mineral' ? 'bg-mineral-neutral/10' : 'bg-slate-50'
               }`}>
                 {study.metrics.map((metric) => (
                   <div key={metric.label} className="text-center">
-                    <div className={`font-data text-xs uppercase tracking-wider mb-0.5 ${
-                      study.variant === 'gradient' ? 'text-slate-500' : 
-                      study.variant === 'mineral' ? 'text-mineral-neutral' : 'text-slate-400'
+                    <div className={`font-data text-xs uppercase tracking-wider mb-1 ${
+                      study.variant === 'dark' ? 'text-slate-500' : 
+                      study.variant === 'mineral' ? 'text-mineral-neutral' : 'text-muted-foreground'
                     }`}>
                       {metric.label}
                     </div>
                     <div className={`text-sm font-semibold font-ui ${
-                      study.variant === 'gradient' ? 'text-slate-100' : 'text-foreground'
+                      study.variant === 'dark' ? 'text-slate-100' : 'text-foreground'
                     }`}>
                       {metric.value}
                     </div>
@@ -125,10 +133,10 @@ export const CaseStudies = () => {
                 ))}
               </div>
 
-              <button className={`mt-4 flex items-center gap-2 text-sm font-medium ${
-                study.variant === 'gradient' ? 'text-primary' : 
-                study.variant === 'mineral' ? 'text-mineral-deep hover:text-mineral-neutral' : 'text-slate-600 hover:text-primary'
-              }`}>
+              <button className={`mt-6 flex items-center gap-2 text-sm font-medium ${
+                study.variant === 'dark' ? 'text-primary hover:text-lime-400' : 
+                study.variant === 'mineral' ? 'text-mineral-deep hover:text-mineral-neutral' : 'text-primary hover:text-primary/80'
+              } transition-colors`}>
                 <span className="font-ui">Read full study</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -137,21 +145,19 @@ export const CaseStudies = () => {
         ))}
       </div>
 
-      {/* Stats bar - Full width */}
-      <div className="py-6 border-t border-slate-200">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {[
-            { value: "500+", label: "Installations worldwide" },
-            { value: "35+", label: "Years of expertise" },
-            { value: "99.7%", label: "Average uptime" },
-            { value: "< 2yr", label: "Typical payback" },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <div className="text-2xl font-bold text-foreground font-ui mb-1">{stat.value}</div>
-              <div className="font-data text-xs text-slate-500 uppercase tracking-wider">{stat.label}</div>
-            </div>
-          ))}
-        </div>
+      {/* Stats bar - Horizontal strip */}
+      <div className="flex items-stretch border-t border-b border-border">
+        {[
+          { value: "500+", label: "Installations worldwide" },
+          { value: "35+", label: "Years of expertise" },
+          { value: "99.7%", label: "Average uptime" },
+          { value: "< 2yr", label: "Typical payback" },
+        ].map((stat, idx) => (
+          <div key={idx} className="flex-1 py-8 px-4 border-r border-border last:border-r-0 text-center group hover:bg-slate-50 transition-colors">
+            <div className="font-data text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
+            <div className="font-data text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+          </div>
+        ))}
       </div>
     </section>
   );
