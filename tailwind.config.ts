@@ -73,6 +73,11 @@ export default {
           surface: "hsl(var(--eco-surface))",
           border: "hsl(var(--eco-border))",
         },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          surface: "hsl(var(--info-surface))",
+          border: "hsl(var(--info-border))",
+        },
         mineral: {
           neutral: "hsl(var(--mineral-neutral))",
           surface: "hsl(var(--mineral-surface))",

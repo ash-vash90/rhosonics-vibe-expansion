@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
+import { BrandCallout } from "./BrandCallout";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -35,7 +36,6 @@ export const MotionDesign = () => {
       {/* Timing Scale - Horizontal ruler style */}
       <div>
         <h3 className="label-tech text-muted-foreground mb-8">TIMING SCALE</h3>
-        <h3 className="label-tech text-muted-foreground mb-8">TIMING SCALE</h3>
         <div className="flex items-stretch border-t border-b border-border">
           {[
             { ms: "200", label: "Immediate", desc: "Micro-interactions, button hovers, state changes" },
@@ -54,16 +54,10 @@ export const MotionDesign = () => {
         </div>
       </div>
 
-      {/* Motion Principle - inline callout */}
-      <div className="flex items-start gap-4 p-6 bg-muted/50 border-l-4 border-primary rounded-r-lg">
-        <div className="w-8 h-8 bg-primary text-primary-foreground rounded flex items-center justify-center font-data text-sm flex-shrink-0">!</div>
-        <div>
-          <h4 className="font-ui font-bold text-foreground mb-1">Easing Principle</h4>
-          <p className="text-muted-foreground">
-            Linear easing for data (mechanical precision). Ease-out for UI (natural deceleration).
-          </p>
-        </div>
-      </div>
+      {/* Motion Principle */}
+      <BrandCallout variant="rule" title="Easing Principle">
+        Linear easing for data (mechanical precision). Ease-out for UI (natural deceleration).
+      </BrandCallout>
 
       {/* Signature Animations */}
       <div>

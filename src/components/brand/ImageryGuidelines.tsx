@@ -1,3 +1,5 @@
+import { BrandCallout } from "./BrandCallout";
+
 export const ImageryGuidelines = () => {
   return (
     <section id="imagery" className="space-y-16">
@@ -37,17 +39,11 @@ export const ImageryGuidelines = () => {
         </div>
       </div>
 
-      {/* Field Image Rule - inline callout */}
-      <div className="flex items-start gap-4 p-6 bg-muted/50 border-l-4 border-primary rounded-r-lg">
-        <div className="w-8 h-8 bg-primary text-primary-foreground rounded flex items-center justify-center font-data text-sm flex-shrink-0">!</div>
-        <div>
-          <h4 className="font-ui font-bold text-foreground mb-1">Field Image Rule</h4>
-          <p className="text-muted-foreground">
-            Field images must show evidence of use: wear, scale, context, or operation.
-            Pristine environments without signs of real work reduce credibility.
-          </p>
-        </div>
-      </div>
+      {/* Field Image Rule */}
+      <BrandCallout variant="rule" title="Field Image Rule">
+        Field images must show evidence of use: wear, scale, context, or operation.
+        Pristine environments without signs of real work reduce credibility.
+      </BrandCallout>
 
       {/* Do's and Don'ts - Side by side comparison */}
       <div className="grid md:grid-cols-2 gap-0 border border-border rounded-lg overflow-hidden">
