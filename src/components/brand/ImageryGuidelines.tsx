@@ -2,8 +2,8 @@ export const ImageryGuidelines = () => {
   return (
     <section id="imagery" className="space-y-16">
       {/* Hero Statement */}
-      <div className="mb-16">
-        <p className="text-2xl md:text-3xl font-ui text-foreground leading-relaxed max-w-4xl">
+      <div>
+        <p className="text-lg md:text-xl font-ui text-foreground leading-relaxed max-w-4xl">
           Imagery proves credibility, not decoration. 
           <span className="text-muted-foreground"> We show real environments where measurement happens, and clean abstractions where concepts need clarity.</span>
         </p>
