@@ -1,4 +1,9 @@
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BrandCallout } from "./BrandCallout";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Horizontal specimen row component
 const ColorSpecimen = ({ 
@@ -44,6 +49,31 @@ const ColorSpecimen = ({
 );
 
 export const ColorMatrix = () => {
+  const foundationsRef = useRef<HTMLDivElement>(null);
+  const signalsRef = useRef<HTMLDivElement>(null);
+  const contextualRef = useRef<HTMLDivElement>(null);
+  const gradientsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate each section on scroll
+      const sections = [foundationsRef, signalsRef, contextualRef, gradientsRef];
+      sections.forEach((ref) => {
+        if (ref.current) {
+          gsap.fromTo(ref.current,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
+              scrollTrigger: { trigger: ref.current, start: "top 85%" }
+            }
+          );
+        }
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section id="colors" className="space-y-20">
       <p className="text-muted-foreground text-lg max-w-3xl">
@@ -52,7 +82,7 @@ export const ColorMatrix = () => {
       </p>
 
       {/* ═══ FOUNDATIONS ═══ */}
-      <div>
+      <div ref={foundationsRef}>
         <div className="flex items-center gap-4 mb-8">
           <div className="w-4 h-4 bg-slate-900" />
           <h3 className="font-ui text-xl font-semibold text-foreground">Foundations</h3>
@@ -87,7 +117,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* ═══ SIGNALS ═══ */}
-      <div>
+      <div ref={signalsRef}>
         <div className="flex items-center gap-4 mb-8">
           <div className="w-4 h-4 bg-primary" />
           <h3 className="font-ui text-xl font-semibold text-foreground">Signals</h3>
@@ -127,7 +157,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* ═══ CONTEXTUAL ═══ */}
-      <div>
+      <div ref={contextualRef}>
         <div className="flex items-center gap-4 mb-8">
           <div className="w-4 h-4 bg-mineral-neutral" />
           <h3 className="font-ui text-xl font-semibold text-foreground">Contextual</h3>
@@ -169,7 +199,7 @@ export const ColorMatrix = () => {
       </div>
 
       {/* ═══ GRADIENTS ═══ */}
-      <div>
+      <div ref={gradientsRef}>
         <div className="flex items-center gap-4 mb-8">
           <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Gradients</h3>
           <div className="h-px flex-1 bg-border" />

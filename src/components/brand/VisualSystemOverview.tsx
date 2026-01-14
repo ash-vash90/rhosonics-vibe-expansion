@@ -1,6 +1,56 @@
 import { Zap, MapPin, Layers } from "lucide-react";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const VisualSystemOverview = () => {
+  const layersRef = useRef<HTMLDivElement>(null);
+  const comparisonRef = useRef<HTMLDivElement>(null);
+  const enablesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate layers
+      if (layersRef.current) {
+        const layers = layersRef.current.children;
+        gsap.fromTo(layers,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out",
+            scrollTrigger: { trigger: layersRef.current, start: "top 80%" }
+          }
+        );
+      }
+
+      // Animate comparison
+      if (comparisonRef.current) {
+        gsap.fromTo(comparisonRef.current,
+          { opacity: 0, scale: 0.98 },
+          {
+            opacity: 1, scale: 1, duration: 0.7, ease: "power3.out",
+            scrollTrigger: { trigger: comparisonRef.current, start: "top 85%" }
+          }
+        );
+      }
+
+      // Animate enables
+      if (enablesRef.current) {
+        const items = enablesRef.current.querySelectorAll('.enable-item');
+        gsap.fromTo(items,
+          { opacity: 0, x: -20 },
+          {
+            opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out",
+            scrollTrigger: { trigger: enablesRef.current, start: "top 85%" }
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section className="space-y-16">
       {/* Intro */}
@@ -10,7 +60,7 @@ const VisualSystemOverview = () => {
       </p>
 
       {/* Three layers - distinct visual treatment per layer */}
-      <div className="grid md:grid-cols-3 gap-0 -mx-6">
+      <div ref={layersRef} className="grid md:grid-cols-3 gap-0 -mx-6">
         {/* Foundations - solid, grounded */}
         <div className="p-8 bg-slate-900 text-white">
           <Layers className="w-8 h-8 text-white/60 mb-6" />
@@ -58,7 +108,7 @@ const VisualSystemOverview = () => {
       </div>
 
       {/* Slate vs Mineral - side by side comparison */}
-      <div className="grid lg:grid-cols-2 gap-0 border border-border overflow-hidden rounded-lg">
+      <div ref={comparisonRef} className="grid lg:grid-cols-2 gap-0 border border-border overflow-hidden rounded-lg">
         <div className="p-8 bg-slate-100">
           <h4 className="font-ui font-semibold text-foreground mb-3">Slate = Software</h4>
           <p className="text-muted-foreground mb-4">
@@ -78,13 +128,13 @@ const VisualSystemOverview = () => {
       {/* What this enables - inline bullets */}
       <div>
         <h3 className="font-ui text-lg font-semibold text-foreground mb-6">What this enables</h3>
-        <div className="grid sm:grid-cols-3 gap-8">
+        <div ref={enablesRef} className="grid sm:grid-cols-3 gap-8">
           {[
             { num: "01", title: "Remains expressive", desc: "without becoming inconsistent" },
             { num: "02", title: "Supports multiple environments", desc: "without visual drift" },
             { num: "03", title: "Makes design decisions", desc: "repeatable and explainable" },
           ].map(item => (
-            <div key={item.num} className="flex items-start gap-4">
+            <div key={item.num} className="enable-item flex items-start gap-4">
               <span className="font-data text-sm text-primary">{item.num}</span>
               <div>
                 <p className="text-foreground font-medium">{item.title}</p>
