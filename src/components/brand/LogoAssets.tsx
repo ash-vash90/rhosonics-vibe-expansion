@@ -47,13 +47,13 @@ export const LogoAssets = () => {
     return (
       <div className={`${bgClass} rounded-lg p-8 flex items-center justify-center min-h-[120px]`}>
         {variant.hasText ? (
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <RhosonicsLogo 
               variant={variant.iconFill === "white" ? "white" : "gradient"} 
-              className="w-12 h-12" 
+              className="w-14 h-14" 
             />
             <span 
-              className="font-data text-lg font-bold tracking-wider"
+              className="font-logo text-xl font-semibold tracking-tight"
               style={{ color: variant.textColor }}
             >
               RHOSONICS
@@ -62,7 +62,7 @@ export const LogoAssets = () => {
         ) : (
           <RhosonicsLogo 
             variant={variant.iconFill === "white" ? "white" : "gradient"} 
-            className="w-16 h-16" 
+            className="w-16 h-16"
           />
         )}
       </div>

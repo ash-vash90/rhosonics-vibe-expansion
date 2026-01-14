@@ -78,11 +78,13 @@ export const logoVariants: LogoVariant[] = [
   },
 ];
 
-// Generate full lockup SVG
+// Generate full lockup SVG using optical scaling conventions
+// Icon 80px = text cap-height ~52-56px (65-75% of icon height)
 export const generateLockupSVG = (variant: LogoVariant): string => {
   const iconSize = 80;
-  const gap = 16;
-  const textWidth = variant.hasText ? 200 : 0;
+  const textSize = 28; // Optical scaling: ~35% of icon for proper visual balance
+  const gap = 12;
+  const textWidth = variant.hasText ? 180 : 0;
   const padding = variant.background ? 32 : 0;
   
   const totalWidth = iconSize + (variant.hasText ? gap + textWidth : 0) + (padding * 2);
@@ -127,10 +129,15 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
     ${ARC_PATHS.map(d => `<path d="${d}" fill="${fill}"/>`).join("\n    ")}
   </g>`;
   
-  const textGroup = variant.hasText ? `<text x="${padding + iconSize + gap}" y="${padding + (iconSize / 2) + 7}" font-family="JetBrains Mono, monospace" font-size="20" font-weight="700" letter-spacing="0.1em" fill="${variant.textColor}">RHOSONICS</text>` : "";
+  // Unbounded font for wordmark, vertically centered with icon
+  const textY = padding + (iconSize / 2) + (textSize * 0.35); // Optical vertical centering
+  const textGroup = variant.hasText 
+    ? `<text x="${padding + iconSize + gap}" y="${textY}" font-family="Unbounded, sans-serif" font-size="${textSize}" font-weight="600" letter-spacing="0.02em" fill="${variant.textColor}">RHOSONICS</text>` 
+    : "";
   
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalWidth} ${totalHeight}" width="${totalWidth}" height="${totalHeight}">
   <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600&amp;display=swap');</style>
     ${gradientDef}
     ${bgGradientDef}
   </defs>
