@@ -28,96 +28,114 @@ export const MasterLockup = () => {
   }, [replayAnimation]);
 
   return (
-    <section id="lockup" className="mb-16">
-      {/* Two-column layout: Hero + Rules */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Hero lockup display - spans 2 columns */}
-        <div ref={heroRef} className="lg:col-span-2 card-gradient chamfer-lg flex flex-col items-center justify-center py-16 sm:py-24 relative overflow-hidden">
-          <div className="absolute inset-0 bg-wave-subtle opacity-40 pointer-events-none" />
-          
-          <div className="flex items-center gap-4 relative z-10 px-4">
-            <div 
-              className="flex-shrink-0" 
-              style={{ width: 'clamp(3.5rem, 10vw, 6rem)', height: 'clamp(3.5rem, 10vw, 6rem)' }}
-            >
-              <AnimatedLogo ref={logoRef} variant="gradient" autoPlay />
-            </div>
-            <h1 
-              ref={titleRef}
-              className="font-logo text-slate-100 tracking-wide leading-none opacity-0 uppercase"
-              style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
-            >
-              RHOSONICS
-            </h1>
-          </div>
-
-          <button 
-            onClick={replayAnimation}
-            className="absolute bottom-4 right-4 flex items-center gap-2 label-ui text-slate-400 hover:text-primary transition-colors px-3 py-2 bg-slate-800/50 rounded-md"
+    <section id="lockup" className="mb-32">
+      {/* Hero lockup display - Full width */}
+      <div 
+        ref={heroRef} 
+        className="bg-rho-obsidian rounded-lg flex flex-col items-center justify-center py-20 md:py-32 relative overflow-hidden mb-16"
+      >
+        <div className="absolute inset-0 bg-wave-subtle opacity-40 pointer-events-none" />
+        
+        <div className="flex items-center gap-6 relative z-10 px-4">
+          <div 
+            className="flex-shrink-0" 
+            style={{ width: 'clamp(4rem, 12vw, 8rem)', height: 'clamp(4rem, 12vw, 8rem)' }}
           >
-            <RotateCcw className="w-4 h-4" />
-            <span className="hidden sm:inline">REPLAY</span>
-          </button>
-
-          <div className="absolute top-4 left-4 label-tech text-slate-500">
-            LOCKUP.HORIZONTAL.V1
+            <AnimatedLogo ref={logoRef} variant="gradient" autoPlay />
           </div>
+          <h1 
+            ref={titleRef}
+            className="font-logo text-slate-100 tracking-wide leading-none opacity-0 uppercase"
+            style={{ fontSize: 'clamp(2.5rem, 8vw, 6rem)' }}
+          >
+            RHOSONICS
+          </h1>
         </div>
 
-        {/* Rules sidebar */}
-        <div className="space-y-6">
-          <div className="card-base p-6">
-            <h3 className="font-data text-xs uppercase tracking-wider text-slate-500 mb-4">USAGE RULES</h3>
-            <ul className="space-y-3 text-sm text-slate-600">
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Use as provided. No modifications.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Maintain clear space equal to smallest arc height.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Minimum size: 24px digital, 10mm print.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Below minimum, use icon-only mark.</span>
-              </li>
-            </ul>
-          </div>
+        <button 
+          onClick={replayAnimation}
+          className="absolute bottom-6 right-6 flex items-center gap-2 label-tech text-slate-400 hover:text-primary transition-colors px-4 py-2 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-primary"
+        >
+          <RotateCcw className="w-4 h-4" />
+          <span className="hidden sm:inline">REPLAY</span>
+        </button>
 
-          <div className="p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
-            <p className="text-sm text-amber-800">
-              <strong>Never:</strong> stretch, rotate, add effects, or place on busy backgrounds.
-            </p>
-          </div>
+        <div className="absolute top-6 left-6 label-tech text-slate-500">
+          LOCKUP.HORIZONTAL.V1
         </div>
       </div>
 
-      {/* Lockup Variations - Full width row */}
-      <div className="flex flex-wrap items-end justify-center gap-12 mt-12 py-8 border-y border-slate-200">
-        <div className="flex flex-col items-center group">
-          <div className="flex items-center gap-2.5 mb-3">
-            <div className="w-8 h-8"><RhosonicsLogo variant="gradient" /></div>
-            <span className="font-logo text-xl text-foreground tracking-wide uppercase">RHOSONICS</span>
-          </div>
-          <span className="font-data text-xs uppercase tracking-wider text-slate-400">HORIZONTAL</span>
+      {/* Usage Rules */}
+      <div className="grid md:grid-cols-2 gap-px bg-border mb-16">
+        <div className="bg-background p-8">
+          <h3 className="label-tech text-muted-foreground mb-6">USAGE RULES</h3>
+          <ul className="space-y-4">
+            {[
+              "Use as provided. No modifications.",
+              "Maintain clear space equal to smallest arc height.",
+              "Minimum size: 40px digital, 10mm print.",
+              "Below minimum, use icon-only mark."
+            ].map((rule, idx) => (
+              <li key={idx} className="flex items-start gap-3 text-muted-foreground">
+                <span className="font-data text-primary">{String(idx + 1).padStart(2, '0')}</span>
+                <span>{rule}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="flex flex-col items-center group">
-          <div className="flex flex-col items-center gap-2 mb-3">
-            <div className="w-12 h-12"><RhosonicsLogo variant="gradient" /></div>
-            <span className="font-logo text-lg text-foreground tracking-wide uppercase">RHOSONICS</span>
-          </div>
-          <span className="font-data text-xs uppercase tracking-wider text-slate-400">STACKED</span>
+        <div className="bg-background p-8">
+          <h3 className="label-tech text-destructive mb-6">NEVER</h3>
+          <ul className="space-y-4">
+            {[
+              "Stretch or distort proportions",
+              "Rotate or skew the lockup",
+              "Add shadows, glows, or effects",
+              "Place on busy or conflicting backgrounds"
+            ].map((rule, idx) => (
+              <li key={idx} className="flex items-start gap-3 text-muted-foreground">
+                <span className="w-1.5 h-1.5 bg-destructive rounded-full mt-2 flex-shrink-0"></span>
+                <span>{rule}</span>
+              </li>
+            ))}
+          </ul>
         </div>
+      </div>
 
-        <div className="flex flex-col items-center group">
-          <div className="w-10 h-10 mb-3"><RhosonicsLogo variant="gradient" /></div>
-          <span className="font-data text-xs uppercase tracking-wider text-slate-400">ICON ONLY</span>
-        </div>
+      {/* Lockup Variations - Horizontal strip */}
+      <h3 className="label-tech text-muted-foreground mb-6">LOCKUP VARIATIONS</h3>
+      <div className="flex items-stretch border-t border-b border-border">
+        {[
+          {
+            label: "HORIZONTAL",
+            content: (
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10"><RhosonicsLogo variant="gradient" /></div>
+                <span className="font-logo text-xl text-foreground tracking-wide uppercase">RHOSONICS</span>
+              </div>
+            )
+          },
+          {
+            label: "STACKED",
+            content: (
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-12 h-12"><RhosonicsLogo variant="gradient" /></div>
+                <span className="font-logo text-lg text-foreground tracking-wide uppercase">RHOSONICS</span>
+              </div>
+            )
+          },
+          {
+            label: "ICON ONLY",
+            content: (
+              <div className="w-12 h-12"><RhosonicsLogo variant="gradient" /></div>
+            )
+          },
+        ].map((variation, idx) => (
+          <div key={idx} className="flex-1 py-10 px-6 border-r border-border last:border-r-0 flex flex-col items-center justify-center gap-6 group hover:bg-slate-50 transition-colors">
+            {variation.content}
+            <span className="font-data text-xs uppercase tracking-wider text-muted-foreground">{variation.label}</span>
+          </div>
+        ))}
       </div>
     </section>
   );
