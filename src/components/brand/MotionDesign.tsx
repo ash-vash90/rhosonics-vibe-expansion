@@ -55,7 +55,7 @@ export const MotionDesign = () => {
       </div>
 
       {/* Motion Principle */}
-      <BrandCallout variant="rule" title="Easing Principle">
+      <BrandCallout variant="info" title="Easing Principle">
         Linear easing for data (mechanical precision). Ease-out for UI (natural deceleration).
       </BrandCallout>
 
