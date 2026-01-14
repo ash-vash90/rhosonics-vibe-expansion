@@ -99,21 +99,17 @@ const BrandPositioning = () => {
         {/* Staggered 5-card layout with varied sizing */}
         <div ref={valuesRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { icon: Users, title: "Connecting", desc: "We believe in teamwork. Down-to-earth, transparent, and committed to building sustainable, long-term relationships.", featured: false },
-            { icon: Award, title: "Expertise", desc: "We deliver high-quality measurement technologies through leadership, knowledge, and versatility — providing solutions our customers need.", featured: true },
-            { icon: Zap, title: "Dynamic", desc: "We take initiative with a no-nonsense approach. Our creative mindset, adaptability, and all-round knowledge allows us to fix any problem.", featured: false },
-            { icon: Heart, title: "Passionate", desc: "With enthusiasm and drive, we see challenges as adventures. This results in long-term growth together with our customers and partners.", featured: false },
-            { icon: Leaf, title: "Sustainability", desc: "We strive for a greener, smarter industry. Our reliable measuring technologies help customers optimize production and become more sustainable.", featured: true },
+            { icon: Users, title: "Connecting", desc: "We believe in teamwork. Down-to-earth, transparent, and committed to building sustainable, long-term relationships." },
+            { icon: Award, title: "Expertise", desc: "We deliver high-quality measurement technologies through leadership, knowledge, and versatility — providing solutions our customers need." },
+            { icon: Zap, title: "Dynamic", desc: "We take initiative with a no-nonsense approach. Our creative mindset, adaptability, and all-round knowledge allows us to fix any problem." },
+            { icon: Heart, title: "Passionate", desc: "With enthusiasm and drive, we see challenges as adventures. This results in long-term growth together with our customers and partners." },
+            { icon: Leaf, title: "Sustainability", desc: "We strive for a greener, smarter industry. Our reliable measuring technologies help customers optimize production and become more sustainable." },
           ].map((value) => (
-            <div 
-              key={value.title} 
-              className={`value-card group p-8 rounded-lg transition-all duration-300 ${
-                value.featured 
-                  ? 'bg-primary/5 border-l-4 border-primary hover:bg-primary/10' 
-                  : 'bg-muted/30 hover:bg-muted/50 border border-transparent hover:border-border'
-              }`}
+            <div
+              key={value.title}
+              className="value-card group p-8 rounded-lg border border-transparent bg-muted/30 hover:bg-muted/50 hover:border-border transition-all duration-300"
             >
-              <value.icon className={`w-6 h-6 mb-6 ${value.featured ? 'text-primary' : 'text-muted-foreground group-hover:text-primary'} transition-colors`} />
+              <value.icon className="w-6 h-6 mb-6 text-muted-foreground group-hover:text-foreground transition-colors" />
               <h4 className="font-ui text-xl font-semibold text-foreground mb-3">{value.title}</h4>
               <p className="text-muted-foreground leading-relaxed">{value.desc}</p>
             </div>
