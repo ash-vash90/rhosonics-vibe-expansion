@@ -125,7 +125,7 @@ export const ColorMatrix = () => {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-16 mb-10">
+        <div className="grid lg:grid-cols-2 gap-16 mb-10">
           {/* Primary Brand */}
           <div>
             <h4 className="font-data text-xs text-primary uppercase tracking-wider mb-6">Brand</h4>
@@ -137,25 +137,37 @@ export const ColorMatrix = () => {
 
           {/* State: Positive */}
           <div>
-            <h4 className="font-data text-xs text-green-600 uppercase tracking-wider mb-6">State — Positive</h4>
-            <ColorSpecimen name="Success Green" hex="#16A34A" rgb="22, 163, 74" hsl="142 72% 36%" bg="bg-green-600" use="Confirmations" textLight />
+            <h4 className="font-data text-xs text-green-600 uppercase tracking-wider mb-6">State — Success</h4>
+            <div className="space-y-0">
+              <ColorSpecimen name="Success Green" hex="#16A34A" rgb="22, 163, 74" hsl="142 72% 36%" bg="bg-green-600" use="Confirmations, badges" textLight />
+              <ColorSpecimen name="Success Surface" hex="#DCFCE7" rgb="220, 252, 231" hsl="142 76% 92%" bg="bg-green-100" use="Success callout backgrounds" border="border-green-200" />
+            </div>
           </div>
 
           {/* State: Info */}
           <div>
             <h4 className="font-data text-xs text-info uppercase tracking-wider mb-6">State — Info</h4>
             <div className="space-y-0">
-              <ColorSpecimen name="Info Blue" hex="#2D8CF0" rgb="45, 140, 240" hsl="210 80% 55%" bg="bg-info" use="Informational callouts" textLight />
-              <ColorSpecimen name="Info Surface" hex="#EBF5FF" rgb="235, 245, 255" hsl="210 80% 96%" bg="bg-info-surface" use="Info backgrounds" border="border-info-border" />
+              <ColorSpecimen name="Info Blue" hex="#2D8CF0" rgb="45, 140, 240" hsl="210 80% 55%" bg="bg-info" use="Informational callouts, badges" textLight />
+              <ColorSpecimen name="Info Surface" hex="#EBF5FF" rgb="235, 245, 255" hsl="210 80% 96%" bg="bg-info-surface" use="Info callout backgrounds" border="border-info-border" />
             </div>
           </div>
 
-          {/* State: Negative */}
+          {/* State: Warning */}
           <div>
-            <h4 className="font-data text-xs text-red-600 uppercase tracking-wider mb-6">State — Negative</h4>
+            <h4 className="font-data text-xs text-amber-600 uppercase tracking-wider mb-6">State — Warning</h4>
             <div className="space-y-0">
-              <ColorSpecimen name="Warning Amber" hex="#D97706" rgb="217, 119, 6" hsl="32 95% 44%" bg="bg-amber-600" use="Cautions" textLight />
+              <ColorSpecimen name="Warning Amber" hex="#D97706" rgb="217, 119, 6" hsl="32 95% 44%" bg="bg-amber-600" use="Cautions, badges" textLight />
+              <ColorSpecimen name="Warning Surface" hex="#FEF3C7" rgb="254, 243, 199" hsl="48 96% 89%" bg="bg-amber-100" use="Warning callout backgrounds" border="border-amber-200" />
+            </div>
+          </div>
+
+          {/* State: Error */}
+          <div>
+            <h4 className="font-data text-xs text-red-600 uppercase tracking-wider mb-6">State — Error</h4>
+            <div className="space-y-0">
               <ColorSpecimen name="Error Red" hex="#DC2626" rgb="220, 38, 38" hsl="0 84% 51%" bg="bg-red-600" use="Failures, critical" textLight />
+              <ColorSpecimen name="Error Surface" hex="#FEE2E2" rgb="254, 226, 226" hsl="0 93% 94%" bg="bg-red-100" use="Error callout backgrounds" border="border-red-200" />
             </div>
           </div>
         </div>
