@@ -1,4 +1,4 @@
-import { Target, Shield, Lightbulb, Users, Award, Zap, Heart, Leaf } from "lucide-react";
+import { Target, Shield, Lightbulb, Users, Wrench, BookOpen, TrendingUp } from "lucide-react";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -97,24 +97,48 @@ const BrandPositioning = () => {
           <div className="h-px flex-1 bg-border max-w-32" />
         </div>
         <p className="text-muted-foreground mb-12 max-w-2xl">
-          The principles that drive how we work, build relationships, and deliver solutions.
+          The principles that drive how we work, build relationships, and deliver lasting impact.
         </p>
         
-        {/* Staggered 5-card layout with varied sizing */}
-        <div ref={valuesRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* 2x2 grid for 4 core values */}
+        <div ref={valuesRef} className="grid md:grid-cols-2 gap-8">
           {[
-            { icon: Users, title: "Connecting", desc: "We believe in teamwork. Down-to-earth, transparent, and committed to building sustainable, long-term relationships." },
-            { icon: Award, title: "Expertise", desc: "We deliver high-quality measurement technologies through leadership, knowledge, and versatility — providing solutions our customers need." },
-            { icon: Zap, title: "Dynamic", desc: "We take initiative with a no-nonsense approach. Our creative mindset, adaptability, and all-round knowledge allows us to fix any problem." },
-            { icon: Heart, title: "Passionate", desc: "With enthusiasm and drive, we see challenges as adventures. This results in long-term growth together with our customers and partners." },
-            { icon: Leaf, title: "Sustainability", desc: "We strive for a greener, smarter industry. Our reliable measuring technologies help customers optimize production and become more sustainable." },
+            { 
+              icon: Users, 
+              num: "01",
+              title: "Built on Partnership", 
+              desc: "We build lasting relationships through openness, trust, and shared responsibility. By working closely with our customers and partners, we create solutions that perform in the long term — not just at delivery." 
+            },
+            { 
+              icon: Wrench, 
+              num: "02",
+              title: "Engineered for Challenge", 
+              desc: "We thrive in complex, demanding environments. New applications and harsh conditions drive us to adapt, innovate, and engineer practical solutions without compromising rigor." 
+            },
+            { 
+              icon: BookOpen, 
+              num: "03",
+              title: "Expertise in Practice", 
+              desc: "We use our knowledge to improve understanding and advance the conversation. By explaining how and why, not just what, we help customers make better decisions and move their industries forward." 
+            },
+            { 
+              icon: TrendingUp, 
+              num: "04",
+              title: "Progress That Matters", 
+              desc: "We focus on progress that delivers real, measurable impact. Through better measurement and insight, we help customers operate more efficiently, responsibly and sustainably — for their business and the world around it." 
+            },
           ].map((value) => (
             <div
               key={value.title}
-              className="value-card group p-8 rounded-lg border border-transparent bg-muted/30 hover:bg-muted/50 hover:border-border transition-all duration-300"
+              className="value-card group p-8 rounded-xl border border-border/50 bg-gradient-to-br from-muted/40 to-transparent hover:from-muted/60 hover:border-border transition-all duration-300"
             >
-              <value.icon className="w-6 h-6 mb-6 text-muted-foreground group-hover:text-foreground transition-colors" />
-              <h4 className="font-ui text-xl font-semibold text-foreground mb-3">{value.title}</h4>
+              <div className="flex items-start justify-between mb-6">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <value.icon className="w-6 h-6 text-primary" />
+                </div>
+                <span className="font-data text-3xl text-muted-foreground/30 group-hover:text-muted-foreground/50 transition-colors">{value.num}</span>
+              </div>
+              <h4 className="font-ui text-xl font-bold text-foreground mb-3">{value.title}</h4>
               <p className="text-muted-foreground leading-relaxed">{value.desc}</p>
             </div>
           ))}
@@ -189,8 +213,8 @@ const BrandPositioning = () => {
           <div className="p-8 bg-foreground text-background rounded-lg">
             <span className="font-data text-xs text-primary-foreground/60 uppercase tracking-wider">Decision Heuristic</span>
             <p className="font-ui text-xl font-medium leading-relaxed mt-3">
-              When choosing between two valid design options, prefer the one that improves clarity, 
-              reinforces performance, or reveals insight.
+              When choosing between two valid options, prefer the one that deepens understanding, 
+              supports long-term performance, or delivers measurable impact.
             </p>
           </div>
         </div>

@@ -41,9 +41,9 @@ export const BrandEthos = () => {
       {/* Core Values - Three columns */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-slate-200">
         {[
-          { num: "01", title: "Garage Spirit", desc: "Innovation born from curiosity, not committees.", icon: Sparkles },
-          { num: "02", title: "Built to Last", desc: "Designed for environments that break lesser equipment.", icon: Radar },
-          { num: "03", title: "Legacy Forward", desc: "Forty years of measurement. Still learning.", icon: Leaf },
+          { num: "01", title: "Curiosity-Driven", desc: "Innovation born from genuine technical interest, not marketing briefs.", icon: Sparkles },
+          { num: "02", title: "Engineered for Endurance", desc: "Designed for environments that break lesser equipment.", icon: Radar },
+          { num: "03", title: "Four Decades of Learning", desc: "Forty years of measurement. Still adapting.", icon: Leaf },
         ].map((item) => (
           <div key={item.num} className="group">
             <div className="flex items-center gap-3 mb-3">
