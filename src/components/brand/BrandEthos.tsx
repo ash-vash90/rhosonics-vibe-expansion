@@ -1,4 +1,5 @@
-import { Radar, Target, Leaf, Sparkles } from "lucide-react";
+import { Radar, Target } from "lucide-react";
+import { BRAND_VALUES } from "@/data/brand-values";
 
 export const BrandEthos = () => {
   return (
@@ -38,25 +39,28 @@ export const BrandEthos = () => {
         </div>
       </div>
 
-      {/* Core Values - Three columns */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-slate-200">
-        {[
-          { num: "01", title: "Curiosity-Driven", desc: "Innovation born from genuine technical interest, not marketing briefs.", icon: Sparkles },
-          { num: "02", title: "Engineered for Endurance", desc: "Designed for environments that break lesser equipment.", icon: Radar },
-          { num: "03", title: "Four Decades of Learning", desc: "Forty years of measurement. Still adapting.", icon: Leaf },
-        ].map((item) => (
-          <div key={item.num} className="group">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="font-data text-sm text-slate-400 group-hover:text-foreground transition-colors">{item.num}</span>
-              <div className="h-px flex-1 bg-slate-200 group-hover:bg-slate-300 transition-colors" />
-              <div className="w-8 h-8 bg-slate-100 flex items-center justify-center rounded text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700 transition-all">
-                <item.icon className="w-4 h-4" />
+      {/* Core Values - Four columns */}
+      <div className="pt-8 border-t border-slate-200">
+        <div className="flex items-baseline gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Core Values</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {BRAND_VALUES.map((value) => (
+            <div key={value.id} className="group">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="font-data text-sm text-muted-foreground group-hover:text-foreground transition-colors">{value.num}</span>
+                <div className="h-px flex-1 bg-slate-200 group-hover:bg-slate-300 transition-colors" />
+                <div className="w-8 h-8 bg-primary/10 flex items-center justify-center rounded text-primary group-hover:bg-primary/20 transition-all">
+                  <value.icon className="w-4 h-4" />
+                </div>
               </div>
+              <h4 className="font-ui font-bold text-lg mb-1 text-foreground">{value.title}</h4>
+              <p className="text-slate-500 text-sm leading-relaxed">{value.desc.split('.')[0]}.</p>
             </div>
-            <h4 className="font-ui font-bold text-lg mb-1 text-foreground">{item.title}</h4>
-            <p className="text-slate-500 text-sm">{item.desc}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

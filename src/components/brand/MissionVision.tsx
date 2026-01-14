@@ -1,4 +1,5 @@
 import { Target, Eye } from "lucide-react";
+import { BRAND_VALUES } from "@/data/brand-values";
 
 export const MissionVision = () => {
   return (
@@ -37,6 +38,26 @@ export const MissionVision = () => {
               Every process optimized, every industry more sustainable. Through partnership, expertise, and measurable impact.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Values Bridge - How values connect mission to vision */}
+      <div className="mb-16">
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">How We Deliver</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        <p className="text-muted-foreground mb-8 max-w-2xl">
+          Our mission is delivered through four core values. Each value shapes how we work, build relationships, and create lasting impact.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {BRAND_VALUES.map((value) => (
+            <div key={value.id} className="group p-4 rounded-lg border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all">
+              <value.icon className="w-5 h-5 text-primary mb-3" />
+              <h4 className="font-ui font-semibold text-sm text-foreground mb-1">{value.shortTitle}</h4>
+              <p className="text-xs text-muted-foreground">{value.keywords.slice(0, 2).join(', ')}</p>
+            </div>
+          ))}
         </div>
       </div>
 

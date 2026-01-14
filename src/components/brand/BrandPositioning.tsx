@@ -1,7 +1,8 @@
-import { Target, Shield, Lightbulb, Users, Wrench, BookOpen, TrendingUp } from "lucide-react";
+import { Target, Shield, Lightbulb } from "lucide-react";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { BRAND_VALUES } from "@/data/brand-values";
 
 import audienceEngineer from "@/assets/brand/audience-engineer-control-room.jpg";
 import audienceOperations from "@/assets/brand/audience-operations-manager.jpg";
@@ -100,36 +101,11 @@ const BrandPositioning = () => {
           The principles that drive how we work, build relationships, and deliver lasting impact.
         </p>
         
-        {/* 2x2 grid for 4 core values */}
+        {/* 2x2 grid for 4 core values - using BRAND_VALUES from data file */}
         <div ref={valuesRef} className="grid md:grid-cols-2 gap-8">
-          {[
-            { 
-              icon: Users, 
-              num: "01",
-              title: "Built on Partnership", 
-              desc: "We build lasting relationships through openness, trust, and shared responsibility. By working closely with our customers and partners, we create solutions that perform in the long term — not just at delivery." 
-            },
-            { 
-              icon: Wrench, 
-              num: "02",
-              title: "Engineered for Challenge", 
-              desc: "We thrive in complex, demanding environments. New applications and harsh conditions drive us to adapt, innovate, and engineer practical solutions without compromising rigor." 
-            },
-            { 
-              icon: BookOpen, 
-              num: "03",
-              title: "Expertise in Practice", 
-              desc: "We use our knowledge to improve understanding and advance the conversation. By explaining how and why, not just what, we help customers make better decisions and move their industries forward." 
-            },
-            { 
-              icon: TrendingUp, 
-              num: "04",
-              title: "Progress That Matters", 
-              desc: "We focus on progress that delivers real, measurable impact. Through better measurement and insight, we help customers operate more efficiently, responsibly and sustainably — for their business and the world around it." 
-            },
-          ].map((value) => (
+          {BRAND_VALUES.map((value) => (
             <div
-              key={value.title}
+              key={value.id}
               className="value-card group p-8 rounded-xl border border-border/50 bg-gradient-to-br from-muted/40 to-transparent hover:from-muted/60 hover:border-border transition-all duration-300"
             >
               <div className="flex items-start justify-between mb-6">
@@ -208,14 +184,31 @@ const BrandPositioning = () => {
           </div>
         </div>
         
-        {/* Decision heuristic - 2 cols - HERO STATEMENT style */}
+        {/* Decision heuristic - 2 cols - HERO STATEMENT style - Updated with value references */}
         <div className="lg:col-span-2 flex items-center">
           <div className="p-5 md:p-8 bg-foreground text-background rounded-lg w-full">
             <span className="font-data text-[10px] md:text-xs text-primary-foreground/60 uppercase tracking-wider">Decision Heuristic</span>
             <p className="font-ui text-base md:text-lg lg:text-xl font-medium leading-relaxed mt-2 md:mt-3">
-              When choosing between two valid options, prefer the one that deepens understanding, 
-              supports long-term performance, or delivers measurable impact.
+              When choosing between two valid options, prefer the one that:
             </p>
+            <ul className="mt-4 space-y-2 text-sm md:text-base text-primary-foreground/80">
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Deepens understanding <span className="text-primary-foreground/50">(Expertise)</span></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Supports long-term partnerships <span className="text-primary-foreground/50">(Partnership)</span></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Demonstrates real-world capability <span className="text-primary-foreground/50">(Challenge)</span></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">•</span>
+                <span>Delivers measurable impact <span className="text-primary-foreground/50">(Progress)</span></span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

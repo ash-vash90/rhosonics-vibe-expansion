@@ -2,6 +2,8 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BrandCallout } from "./BrandCallout";
+import { COLOR_VALUE_MAPPING } from "@/data/brand-values";
+import { ValueBadge } from "./ValueBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,10 +78,18 @@ export const ColorMatrix = () => {
 
   return (
     <section id="colors" className="space-y-20">
-      <p className="text-muted-foreground text-lg max-w-3xl">
-        Color follows the same layer philosophy as the visual system: Foundations establish structure, 
-        Signals communicate action and state, Contextual elements provide situational relevance.
-      </p>
+      <div>
+        <p className="text-muted-foreground text-lg max-w-3xl mb-6">
+          Color follows the same layer philosophy as the visual system: Foundations establish structure, 
+          Signals communicate action and state, Contextual elements provide situational relevance.
+        </p>
+        <p className="text-muted-foreground max-w-3xl">
+          Each color category connects to a core value: <strong className="text-foreground">Primary green</strong> represents progress and measurable outcomes. 
+          <strong className="text-foreground"> Slate</strong> embodies expertise through clarity and precision. 
+          <strong className="text-foreground"> Mineral</strong> reflects real-world challenge and field conditions. 
+          <strong className="text-foreground"> Obsidian</strong> conveys partnership through professional trust.
+        </p>
+      </div>
 
       {/* ═══ FOUNDATIONS ═══ */}
       <div ref={foundationsRef}>
@@ -93,7 +103,10 @@ export const ColorMatrix = () => {
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Slate Scale */}
           <div>
-            <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-6">Slate — Software UI</h4>
+            <div className="flex items-center gap-3 mb-6">
+              <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Slate — Software UI</h4>
+              <ValueBadge valueId={COLOR_VALUE_MAPPING.slate} showIcon />
+            </div>
             <div className="space-y-0">
               <ColorSpecimen name="Slate 50" hex="#F8FAFC" rgb="248, 250, 252" hsl="210 40% 98%" bg="bg-slate-50" use="Page backgrounds" border="border-slate-200" />
               <ColorSpecimen name="Slate 200" hex="#E2E8F0" rgb="226, 232, 240" hsl="214 32% 91%" bg="bg-slate-200" use="Borders, dividers" border="border-slate-300" />
@@ -104,7 +117,10 @@ export const ColorMatrix = () => {
 
           {/* Obsidian */}
           <div>
-            <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-6">Obsidian — Hardware & Dark UI</h4>
+            <div className="flex items-center gap-3 mb-6">
+              <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Obsidian — Hardware & Dark UI</h4>
+              <ValueBadge valueId={COLOR_VALUE_MAPPING.obsidian} showIcon />
+            </div>
             <div className="space-y-0 mb-8">
               <ColorSpecimen name="Obsidian" hex="#111522" rgb="17, 21, 34" hsl="226 33% 10%" bg="bg-rho-obsidian" use="Dark surfaces, devices" textLight />
               <ColorSpecimen name="Obsidian Light" hex="#1E2433" rgb="30, 36, 51" hsl="226 25% 15%" bg="bg-[#1E2433]" use="Dark panels, cards" textLight />
@@ -122,6 +138,7 @@ export const ColorMatrix = () => {
           <div className="w-4 h-4 bg-primary" />
           <h3 className="font-ui text-xl font-semibold text-foreground">Signals</h3>
           <span className="font-data text-[10px] bg-primary text-white px-2 py-0.5">INTENTIONAL</span>
+          <ValueBadge valueId={COLOR_VALUE_MAPPING.primary} showIcon />
           <div className="h-px flex-1 bg-border" />
         </div>
 
@@ -183,6 +200,7 @@ export const ColorMatrix = () => {
           <div className="w-4 h-4 bg-mineral-neutral" />
           <h3 className="font-ui text-xl font-semibold text-foreground">Contextual</h3>
           <span className="font-data text-[10px] bg-mineral-neutral text-white px-2 py-0.5">SITUATIONAL</span>
+          <ValueBadge valueId={COLOR_VALUE_MAPPING.mineral} showIcon />
           <div className="h-px flex-1 bg-border" />
         </div>
 

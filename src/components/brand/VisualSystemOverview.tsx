@@ -2,6 +2,8 @@ import { Zap, MapPin, Layers } from "lucide-react";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { VISUAL_LAYER_VALUE_MAPPING } from "@/data/brand-values";
+import { ValueBadge } from "./ValueBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,6 +53,48 @@ const VisualSystemOverview = () => {
     return () => ctx.revert();
   }, []);
 
+  const layers = [
+    {
+      id: "foundations",
+      icon: Layers,
+      title: "Foundations",
+      tag: "CONSTANT",
+      desc: "The constant base of the brand:",
+      items: ["Primary neutrals", "Core typography", "Spacing", "Layout rules"],
+      valueId: VISUAL_LAYER_VALUE_MAPPING.foundations,
+      bgClass: "bg-slate-900 text-white",
+      tagClass: "bg-white/20",
+      itemClass: "bg-white/10 text-white/80",
+    },
+    {
+      id: "signals",
+      icon: Zap,
+      title: "Signals",
+      tag: "INTENTIONAL",
+      desc: "Communicates action, state, or emphasis:",
+      items: ["Action colors", "Status indicators", "Interactive highlights"],
+      valueId: VISUAL_LAYER_VALUE_MAPPING.signals,
+      bgClass: "bg-primary text-white",
+      tagClass: "bg-white/20",
+      itemClass: "bg-white/20 text-white",
+    },
+    {
+      id: "contextual",
+      icon: MapPin,
+      title: "Contextual",
+      tag: "SITUATIONAL",
+      desc: "Provides situational relevance:",
+      items: ["Field neutrals", "Eco indicators", "Textures"],
+      valueId: VISUAL_LAYER_VALUE_MAPPING.contextual,
+      bgClass: "bg-mineral-surface border-y border-r border-mineral-neutral/30",
+      tagClass: "bg-mineral-neutral text-white",
+      itemClass: "bg-white/80 text-mineral-deep",
+      titleClass: "text-mineral-deep",
+      descClass: "text-mineral-deep/70",
+      iconClass: "text-mineral-deep/60",
+    },
+  ];
+
   return (
     <section className="space-y-16">
       {/* Intro */}
@@ -61,50 +105,24 @@ const VisualSystemOverview = () => {
 
       {/* Three layers - distinct visual treatment per layer */}
       <div ref={layersRef} className="grid md:grid-cols-3 gap-0 rounded-lg overflow-hidden border border-border">
-        {/* Foundations - solid, grounded */}
-        <div className="p-8 bg-slate-900 text-white">
-          <Layers className="w-8 h-8 text-white/60 mb-6" />
-          <div className="flex items-center gap-3 mb-4">
-            <h4 className="font-ui text-xl font-bold">Foundations</h4>
-            <span className="font-data text-[10px] bg-white/20 px-2 py-0.5">CONSTANT</span>
+        {layers.map((layer) => (
+          <div key={layer.id} className={`p-8 ${layer.bgClass}`}>
+            <layer.icon className={`w-8 h-8 mb-6 ${layer.iconClass || 'text-white/60'}`} />
+            <div className="flex flex-col gap-2 mb-4">
+              <div className="flex items-center gap-3">
+                <h4 className={`font-ui text-xl font-bold ${layer.titleClass || ''}`}>{layer.title}</h4>
+                <span className={`font-data text-[10px] px-2 py-0.5 ${layer.tagClass}`}>{layer.tag}</span>
+              </div>
+              <ValueBadge valueId={layer.valueId} showIcon className={layer.id === 'contextual' ? 'text-mineral-deep/60' : 'text-white/60'} />
+            </div>
+            <p className={`mb-6 ${layer.descClass || 'text-white/70'}`}>{layer.desc}</p>
+            <div className="flex flex-wrap gap-2">
+              {layer.items.map(tag => (
+                <span key={tag} className={`px-2 py-1 text-xs ${layer.itemClass}`}>{tag}</span>
+              ))}
+            </div>
           </div>
-          <p className="text-white/70 mb-6">The constant base of the brand:</p>
-          <div className="flex flex-wrap gap-2">
-            {["Primary neutrals", "Core typography", "Spacing", "Layout rules"].map(tag => (
-              <span key={tag} className="px-2 py-1 bg-white/10 text-white/80 text-xs">{tag}</span>
-            ))}
-          </div>
-        </div>
-
-        {/* Signals - vibrant, action-oriented */}
-        <div className="p-8 bg-primary text-white">
-          <Zap className="w-8 h-8 text-white/60 mb-6" />
-          <div className="flex items-center gap-3 mb-4">
-            <h4 className="font-ui text-xl font-bold">Signals</h4>
-            <span className="font-data text-[10px] bg-white/20 px-2 py-0.5">INTENTIONAL</span>
-          </div>
-          <p className="text-white/80 mb-6">Communicates action, state, or emphasis:</p>
-          <div className="flex flex-wrap gap-2">
-            {["Action colors", "Status indicators", "Interactive highlights"].map(tag => (
-              <span key={tag} className="px-2 py-1 bg-white/20 text-white text-xs">{tag}</span>
-            ))}
-          </div>
-        </div>
-
-        {/* Contextual - warm, environmental */}
-        <div className="p-8 bg-mineral-surface border-y border-r border-mineral-neutral/30">
-          <MapPin className="w-8 h-8 text-mineral-deep/60 mb-6" />
-          <div className="flex items-center gap-3 mb-4">
-            <h4 className="font-ui text-xl font-bold text-mineral-deep">Contextual</h4>
-            <span className="font-data text-[10px] bg-mineral-neutral text-white px-2 py-0.5">SITUATIONAL</span>
-          </div>
-          <p className="text-mineral-deep/70 mb-6">Provides situational relevance:</p>
-          <div className="flex flex-wrap gap-2">
-            {["Field neutrals", "Eco indicators", "Textures"].map(tag => (
-              <span key={tag} className="px-2 py-1 bg-white/80 text-mineral-deep text-xs">{tag}</span>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Slate vs Mineral - side by side comparison */}
