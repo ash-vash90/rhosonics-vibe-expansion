@@ -121,54 +121,66 @@ const BrandPositioning = () => {
         </div>
       </div>
 
-      {/* Expression + Audience + Heuristic - SPLIT CANVAS */}
-      <div ref={splitRef} className="grid lg:grid-cols-5 gap-12">
-        {/* Expression & Audience - 3 cols */}
-        <div className="lg:col-span-3 space-y-12">
-          <div>
-            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">How this shapes expression</h3>
-            <p className="text-muted-foreground mb-6">
-              Expression is <strong className="text-foreground">purposeful rather than decorative</strong>.
-            </p>
-            <div className="flex flex-wrap gap-x-8 gap-y-2 text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                Clear visual hierarchy
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                Color signals meaning
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                Typography prioritizes legibility
-              </span>
+      {/* The Audience - Full width section */}
+      <div className="space-y-8">
+        <div>
+          <h3 className="font-ui text-2xl font-semibold text-foreground mb-4">The Audience</h3>
+          <p className="text-lg text-muted-foreground max-w-3xl">
+            People who work in operational or engineering roles, evaluate claims critically, 
+            look for evidence before persuasion, and spend time with data and interfaces.
+          </p>
+        </div>
+        
+        {/* Audience imagery - full width */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="relative rounded-lg overflow-hidden aspect-[16/10]">
+            <img src={audienceEngineer} alt="Process engineer in control room" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4">
+              <span className="font-data text-xs text-white/70 uppercase tracking-wider">Control Room</span>
+              <p className="text-white font-ui text-sm mt-1">Process Engineers</p>
             </div>
           </div>
-
-          <div>
-            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">The audience</h3>
-            <p className="text-muted-foreground mb-8">People who work in operational or engineering roles, evaluate claims critically, 
-            look for evidence before persuasion, and spend time with data and interfaces.</p>
-            
-            {/* Audience imagery */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="relative rounded-lg overflow-hidden aspect-video">
-                <img src={audienceEngineer} alt="Process engineer in control room" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
-                <span className="absolute bottom-2 left-3 font-data text-xs text-white/80 uppercase tracking-wider">Control Room</span>
-              </div>
-              <div className="relative rounded-lg overflow-hidden aspect-video">
-                <img src={audienceOperations} alt="Operations manager in the field" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
-                <span className="absolute bottom-2 left-3 font-data text-xs text-white/80 uppercase tracking-wider">Field Operations</span>
-              </div>
-              <div className="relative rounded-lg overflow-hidden aspect-video">
-                <img src={audienceTechnical} alt="Technical specialist with instrumentation" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
-                <span className="absolute bottom-2 left-3 font-data text-xs text-white/80 uppercase tracking-wider">Technical Lab</span>
-              </div>
+          <div className="relative rounded-lg overflow-hidden aspect-[16/10]">
+            <img src={audienceOperations} alt="Operations manager in the field" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4">
+              <span className="font-data text-xs text-white/70 uppercase tracking-wider">Field Operations</span>
+              <p className="text-white font-ui text-sm mt-1">Operations Managers</p>
             </div>
+          </div>
+          <div className="relative rounded-lg overflow-hidden aspect-[16/10]">
+            <img src={audienceTechnical} alt="Technical specialist with instrumentation" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4">
+              <span className="font-data text-xs text-white/70 uppercase tracking-wider">Technical Lab</span>
+              <p className="text-white font-ui text-sm mt-1">Instrumentation Specialists</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Expression + Heuristic - SPLIT CANVAS */}
+      <div ref={splitRef} className="grid lg:grid-cols-5 gap-12">
+        {/* Expression - 3 cols */}
+        <div className="lg:col-span-3">
+          <h3 className="font-ui text-lg font-semibold text-foreground mb-4">How this shapes expression</h3>
+          <p className="text-muted-foreground mb-6">
+            Expression is <strong className="text-foreground">purposeful rather than decorative</strong>.
+          </p>
+          <div className="flex flex-wrap gap-x-8 gap-y-2 text-muted-foreground">
+            <span className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+              Clear visual hierarchy
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+              Color signals meaning
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+              Typography prioritizes legibility
+            </span>
           </div>
         </div>
         
