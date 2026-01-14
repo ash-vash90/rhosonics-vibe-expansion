@@ -212,11 +212,12 @@ const Index = () => {
         <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
             {/* Logo + Wordmark */}
+            {/* Logo lockup: 64/45px (Marketing UI) on mobile, 80/55px (Page headers) on desktop */}
             <div className="hero-logo flex items-center justify-center gap-4 mb-8">
-              <div className="w-14 h-14 md:w-16 md:h-16">
+              <div className="w-16 h-16 md:w-20 md:h-20">
                 <RhosonicsLogo variant="gradient" />
               </div>
-              <span className="hero-wordmark font-logo text-2xl md:text-3xl text-white tracking-wide uppercase overflow-hidden">
+              <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden" style={{ fontSize: 'clamp(45px, 5vw, 55px)' }}>
                 {'RHOSONICS'.split('').map((char, i) => (
                   <span key={i} className="wordmark-char inline-block">{char}</span>
                 ))}
@@ -424,12 +425,13 @@ const Index = () => {
          ═══════════════════════════════════════════════════════════════ */}
         <footer className="mt-20 py-12 border-t-2 border-slate-200" role="contentinfo">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            {/* Logo lockup: 32/23px (UI headers) */}
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8">
+              <div className="w-8 h-8" style={{ width: 32, height: 32 }}>
                 <RhosonicsLogo variant="dark" />
               </div>
               <div>
-                <span className="font-logo text-sm tracking-wide text-foreground">RHOSONICS</span>
+                <span className="font-logo tracking-wide text-foreground" style={{ fontSize: 23 }}>RHOSONICS</span>
                 <span className="font-data text-xs text-slate-400 ml-2">BRAND SYSTEM</span>
               </div>
             </div>

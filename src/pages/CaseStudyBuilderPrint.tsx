@@ -562,9 +562,12 @@ const CaseStudyBuilderPrint = () => {
           className="flex-shrink-0 flex items-center justify-between px-6 py-3"
           style={{ backgroundColor: "hsl(225 40% 12%)" }}
         >
-          <div className="flex items-center gap-3">
-            <AnimatedLogo variant="white" className="w-6 h-6" />
-            <span className="font-logo text-sm font-semibold text-white tracking-wide">
+          {/* Logo lockup: 24/18px (Small UI, nav) */}
+          <div className="flex items-center gap-2">
+            <div style={{ width: 24, height: 24 }}>
+              <AnimatedLogo variant="white" />
+            </div>
+            <span className="font-logo font-semibold text-white tracking-wide" style={{ fontSize: 18 }}>
               RHOSONICS
             </span>
           </div>

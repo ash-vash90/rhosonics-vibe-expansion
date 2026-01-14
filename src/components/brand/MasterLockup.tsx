@@ -36,17 +36,18 @@ export const MasterLockup = () => {
       >
         <div className="absolute inset-0 bg-wave-subtle opacity-40 pointer-events-none" />
         
+        {/* Logo lockup: 96/64px (Large layouts) on mobile, 128/84px (Hero/signage) on desktop */}
         <div className="flex items-center gap-6 relative z-10 px-4">
           <div 
             className="flex-shrink-0" 
-            style={{ width: 'clamp(4rem, 12vw, 8rem)', height: 'clamp(4rem, 12vw, 8rem)' }}
+            style={{ width: 'clamp(96px, 12vw, 128px)', height: 'clamp(96px, 12vw, 128px)' }}
           >
             <AnimatedLogo ref={logoRef} variant="gradient" autoPlay />
           </div>
           <h1 
             ref={titleRef}
             className="font-logo text-slate-100 tracking-wide leading-none opacity-0 uppercase"
-            style={{ fontSize: 'clamp(2.5rem, 8vw, 6rem)' }}
+            style={{ fontSize: 'clamp(64px, 8vw, 84px)' }}
           >
             RHOSONICS
           </h1>
@@ -254,13 +255,14 @@ logo.text.size.xl = 64`}
       {/* Lockup Variations - Horizontal strip */}
       <h3 className="label-tech text-muted-foreground mb-6">LOCKUP VARIATIONS</h3>
       <div className="flex items-stretch border-t border-b border-border">
+        {/* All lockup variations use 44/32px (Base) size band */}
         {[
           {
             label: "HORIZONTAL",
             content: (
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10"><RhosonicsLogo variant="gradient" /></div>
-                <span className="font-logo text-xl text-foreground tracking-wide uppercase">RHOSONICS</span>
+                <div style={{ width: 44, height: 44 }}><RhosonicsLogo variant="gradient" /></div>
+                <span className="font-logo text-foreground tracking-wide uppercase" style={{ fontSize: 32 }}>RHOSONICS</span>
               </div>
             )
           },
@@ -268,15 +270,15 @@ logo.text.size.xl = 64`}
             label: "STACKED",
             content: (
               <div className="flex flex-col items-center gap-2">
-                <div className="w-12 h-12"><RhosonicsLogo variant="gradient" /></div>
-                <span className="font-logo text-lg text-foreground tracking-wide uppercase">RHOSONICS</span>
+                <div style={{ width: 44, height: 44 }}><RhosonicsLogo variant="gradient" /></div>
+                <span className="font-logo text-foreground tracking-wide uppercase" style={{ fontSize: 32 }}>RHOSONICS</span>
               </div>
             )
           },
           {
             label: "ICON ONLY",
             content: (
-              <div className="w-12 h-12"><RhosonicsLogo variant="gradient" /></div>
+              <div style={{ width: 44, height: 44 }}><RhosonicsLogo variant="gradient" /></div>
             )
           },
         ].map((variation, idx) => (
