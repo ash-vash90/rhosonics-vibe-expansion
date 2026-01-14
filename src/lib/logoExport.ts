@@ -2,9 +2,7 @@
 
 // Brand gradient colors
 const GRADIENT_START = "#73B82E";
-const GRADIENT_END = "#33993c";
-const LIME_START = "#a3e635"; // Lime gradient for white-on-gradient
-const LIME_END = "#65a30d";
+const GRADIENT_END = "#33993C";
 const OBSIDIAN_START = "#1e293b";
 const OBSIDIAN_END = "#0f172a";
 
@@ -33,7 +31,7 @@ export interface LogoVariant {
   iconFill: string | "gradient" | "white";
   textColor: string;
   background?: string;
-  backgroundType?: "primary" | "lime" | "obsidian";
+  backgroundType?: "primary" | "obsidian" | "white";
   hasText: boolean;
 }
 
@@ -71,6 +69,16 @@ export const logoVariants: LogoVariant[] = [
     hasText: false,
   },
   {
+    id: "gradient-icon-white-bg",
+    name: "Gradient Icon on White",
+    description: "Icon on white background",
+    iconFill: "gradient",
+    textColor: "",
+    background: "#ffffff",
+    backgroundType: "white",
+    hasText: false,
+  },
+  {
     id: "white-icon-only",
     name: "White Icon",
     description: "White mark, transparent",
@@ -79,13 +87,13 @@ export const logoVariants: LogoVariant[] = [
     hasText: false,
   },
   {
-    id: "white-icon-lime-bg",
-    name: "White Icon on Lime",
+    id: "white-icon-primary-bg",
+    name: "White Icon on Primary",
     description: "For brand applications",
     iconFill: "white",
     textColor: "",
-    background: `linear-gradient(135deg, ${LIME_START}, ${LIME_END})`,
-    backgroundType: "lime",
+    background: `linear-gradient(135deg, ${GRADIENT_START}, ${GRADIENT_END})`,
+    backgroundType: "primary",
     hasText: false,
   },
   {
@@ -130,10 +138,10 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
   let bgGradientDef = "";
   let bgRect = "";
   if (variant.background) {
-    if (variant.backgroundType === "lime") {
+    if (variant.backgroundType === "primary") {
       bgGradientDef = `<linearGradient id="bg-${variant.id}" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="${LIME_START}"/>
-        <stop offset="100%" stop-color="${LIME_END}"/>
+        <stop offset="0%" stop-color="${GRADIENT_START}"/>
+        <stop offset="100%" stop-color="${GRADIENT_END}"/>
       </linearGradient>`;
       bgRect = `<rect width="${totalWidth}" height="${totalHeight}" fill="url(#bg-${variant.id})" rx="8"/>`;
     } else if (variant.backgroundType === "obsidian") {
@@ -142,6 +150,8 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
         <stop offset="100%" stop-color="${OBSIDIAN_END}"/>
       </linearGradient>`;
       bgRect = `<rect width="${totalWidth}" height="${totalHeight}" fill="url(#bg-${variant.id})" rx="8"/>`;
+    } else if (variant.backgroundType === "white") {
+      bgRect = `<rect width="${totalWidth}" height="${totalHeight}" fill="#ffffff" rx="8"/>`;
     }
   }
   
@@ -193,10 +203,10 @@ export const generateIconOnlySVG = (variant: LogoVariant): string => {
   let bgGradientDef = "";
   let bgRect = "";
   if (variant.background) {
-    if (variant.backgroundType === "lime") {
+    if (variant.backgroundType === "primary") {
       bgGradientDef = `<linearGradient id="bg-${variant.id}" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="${LIME_START}"/>
-        <stop offset="100%" stop-color="${LIME_END}"/>
+        <stop offset="0%" stop-color="${GRADIENT_START}"/>
+        <stop offset="100%" stop-color="${GRADIENT_END}"/>
       </linearGradient>`;
       bgRect = `<rect width="${totalSize}" height="${totalSize}" fill="url(#bg-${variant.id})" rx="12"/>`;
     } else if (variant.backgroundType === "obsidian") {
@@ -205,6 +215,8 @@ export const generateIconOnlySVG = (variant: LogoVariant): string => {
         <stop offset="100%" stop-color="${OBSIDIAN_END}"/>
       </linearGradient>`;
       bgRect = `<rect width="${totalSize}" height="${totalSize}" fill="url(#bg-${variant.id})" rx="12"/>`;
+    } else if (variant.backgroundType === "white") {
+      bgRect = `<rect width="${totalSize}" height="${totalSize}" fill="#ffffff" rx="12"/>`;
     }
   }
   

@@ -21,14 +21,14 @@ export const LogoAssets = () => {
     downloadSVG(svg, `rhosonics-${variantId}`);
   };
 
-  const handleDownloadPNG = async (variantId: string) => {
+  const handleDownloadPNG = async (variantId: string, scale: number) => {
     const variant = logoVariants.find(v => v.id === variantId);
     if (!variant) return;
     
-    setDownloading(variantId);
+    setDownloading(`${variantId}-${scale}x`);
     try {
       const svg = variant.hasText ? generateLockupSVG(variant) : generateIconOnlySVG(variant);
-      await downloadPNG(svg, `rhosonics-${variantId}`, 2);
+      await downloadPNG(svg, `rhosonics-${variantId}`, scale);
     } finally {
       setDownloading(null);
     }
@@ -40,10 +40,12 @@ export const LogoAssets = () => {
     let bgClass = "bg-white border border-border";
     
     if (variant.background) {
-      if (variant.backgroundType === "lime") {
-        bgClass = "bg-gradient-to-br from-lime-400 to-lime-600";
+      if (variant.backgroundType === "primary") {
+        bgClass = "bg-gradient-to-br from-primary to-primary-dark";
       } else if (variant.backgroundType === "obsidian") {
         bgClass = "bg-gradient-to-br from-slate-800 to-slate-950";
+      } else if (variant.backgroundType === "white") {
+        bgClass = "bg-white border border-border";
       }
     } else if (variant.textColor === "#ffffff") {
       bgClass = "bg-slate-900";
@@ -109,7 +111,7 @@ export const LogoAssets = () => {
                   <p className="text-xs text-muted-foreground">{variant.description}</p>
                 </div>
                 
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleDownloadSVG(variant.id)}
                     className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors"
@@ -118,12 +120,28 @@ export const LogoAssets = () => {
                     SVG
                   </button>
                   <button
-                    onClick={() => handleDownloadPNG(variant.id)}
-                    disabled={downloading === variant.id}
+                    onClick={() => handleDownloadPNG(variant.id, 2)}
+                    disabled={downloading === `${variant.id}-2x`}
                     className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors disabled:opacity-50"
                   >
                     <FileImage className="w-3.5 h-3.5" />
-                    {downloading === variant.id ? "..." : "PNG @2x"}
+                    {downloading === `${variant.id}-2x` ? "..." : "@2x"}
+                  </button>
+                  <button
+                    onClick={() => handleDownloadPNG(variant.id, 4)}
+                    disabled={downloading === `${variant.id}-4x`}
+                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors disabled:opacity-50"
+                  >
+                    <FileImage className="w-3.5 h-3.5" />
+                    {downloading === `${variant.id}-4x` ? "..." : "@4x"}
+                  </button>
+                  <button
+                    onClick={() => handleDownloadPNG(variant.id, 8)}
+                    disabled={downloading === `${variant.id}-8x`}
+                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors disabled:opacity-50"
+                  >
+                    <FileImage className="w-3.5 h-3.5" />
+                    {downloading === `${variant.id}-8x` ? "..." : "@8x"}
                   </button>
                 </div>
               </div>
