@@ -109,9 +109,9 @@ export const ColorMatrix = () => {
               <ColorSpecimen name="Obsidian" hex="#111522" rgb="17, 21, 34" hsl="226 33% 10%" bg="bg-rho-obsidian" use="Dark surfaces, devices" textLight />
               <ColorSpecimen name="Obsidian Light" hex="#1E2433" rgb="30, 36, 51" hsl="226 25% 15%" bg="bg-[#1E2433]" use="Dark panels, cards" textLight />
             </div>
-            <p className="text-sm text-muted-foreground border-l-2 border-slate-300 pl-4">
-              <strong className="text-foreground">Never use pure black (#000).</strong> Obsidian's blue tint creates visual cohesion with the Slate scale.
-            </p>
+            <BrandCallout variant="avoid" title="Never use pure black (#000)">
+              Obsidian's blue tint creates visual cohesion with the Slate scale.
+            </BrandCallout>
           </div>
         </div>
       </div>
