@@ -1,7 +1,7 @@
-import { AlertTriangle, CheckCircle2, Info, Lightbulb } from "lucide-react";
+import { AlertTriangle, Info, Lightbulb } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type CalloutVariant = "rule" | "note" | "avoid" | "info";
+type CalloutVariant = "note" | "avoid" | "info";
 
 interface BrandCalloutProps {
   variant?: CalloutVariant;
@@ -17,13 +17,6 @@ const variantStyles: Record<CalloutVariant, {
   icon: React.ElementType;
   iconSymbol?: string;
 }> = {
-  rule: {
-    container: "bg-muted/50 border-l-4 border-primary",
-    iconBg: "bg-primary",
-    iconColor: "text-primary-foreground",
-    icon: CheckCircle2,
-    iconSymbol: "✓",
-  },
   note: {
     container: "bg-muted/50 border-l-4 border-muted-foreground",
     iconBg: "bg-muted-foreground",
