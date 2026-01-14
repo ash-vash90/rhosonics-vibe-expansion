@@ -115,7 +115,7 @@ export const TechComparison = () => {
       radar: { axis: { max: 100, text: { show: true } }, level: { depth: 4 }, direction: { clockwise: true } },
       legend: { show: true },
       transition: { duration: 0 },
-      size: { height: 220 },
+      size: { height: 240 },
       padding: { top: 10, right: 10, bottom: 10, left: 10 },
     });
 
@@ -175,71 +175,70 @@ export const TechComparison = () => {
   }, []);
 
   return (
-    <section id="comparison" className="mb-16">
-      {/* Highlight Stats - Full width */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 py-6 border-y border-slate-200">
+    <section id="comparison" className="mb-32">
+      {/* Highlight Stats - Horizontal strip */}
+      <div className="flex items-stretch border-t border-b border-border mb-16">
         {highlights.map((item, idx) => (
-          <article key={idx} className="text-center group">
-            <div className="w-10 h-10 bg-slate-100 rounded flex items-center justify-center mx-auto mb-2 text-slate-500 group-hover:bg-primary group-hover:text-white transition-all">
+          <div key={idx} className="flex-1 py-8 px-6 border-r border-border last:border-r-0 text-center group hover:bg-slate-50 transition-colors">
+            <div className="w-10 h-10 bg-slate-100 rounded flex items-center justify-center mx-auto mb-3 text-slate-500 group-hover:bg-primary group-hover:text-white transition-all">
               <item.icon className="w-5 h-5" />
             </div>
-            <div className="font-data text-xs uppercase tracking-wider text-slate-500 mb-1">{item.label}</div>
-            <div className="text-2xl font-bold text-foreground font-ui">{item.value}</div>
-            <div className="text-xs text-slate-500 mt-1">{item.desc}</div>
-          </article>
+            <div className="font-data text-xs uppercase tracking-wider text-muted-foreground mb-1">{item.label}</div>
+            <div className="text-2xl md:text-3xl font-bold text-foreground font-ui">{item.value}</div>
+            <div className="text-xs text-muted-foreground mt-1">{item.desc}</div>
+          </div>
         ))}
       </div>
 
-      {/* Charts Grid - Two columns */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="card-gradient chamfer-lg p-6">
-          <div className="flex items-center gap-3 mb-4">
+      {/* Charts Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-border mb-16">
+        <div className="bg-rho-obsidian p-8">
+          <div className="flex items-center gap-3 mb-2">
             <Droplets className="w-5 h-5 text-primary" />
-            <span className="font-data text-xs uppercase tracking-wider text-slate-400">ENERGY CONSUMPTION</span>
+            <span className="label-tech text-primary">ENERGY CONSUMPTION</span>
           </div>
-          <p className="text-slate-300 text-sm mb-4">Watts per measurement cycle</p>
-          <div ref={barChartRef} className="h-56 bb-chart-dark" />
+          <p className="text-slate-400 text-sm mb-6">Watts per measurement cycle</p>
+          <div ref={barChartRef} className="h-60 bb-chart-dark" />
         </div>
 
-        <div className="card-metal p-6">
-          <div className="flex items-center gap-3 mb-4">
+        <div className="bg-background p-8">
+          <div className="flex items-center gap-3 mb-2">
             <Gauge className="w-5 h-5 text-primary" />
-            <span className="font-data text-xs uppercase tracking-wider text-slate-500">MULTI-FACTOR ANALYSIS</span>
+            <span className="label-tech text-muted-foreground">MULTI-FACTOR ANALYSIS</span>
           </div>
-          <p className="text-slate-600 text-sm mb-4">Performance across key metrics</p>
-          <div ref={radarChartRef} className="h-56 bb-chart-light" />
+          <p className="text-muted-foreground text-sm mb-6">Performance across key metrics</p>
+          <div ref={radarChartRef} className="h-60 bb-chart-light" />
         </div>
       </div>
 
-      {/* Comparison Table - Full width */}
-      <div className="border border-slate-200 rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-slate-200 bg-slate-50/50">
-                <th className="text-left p-3 font-ui text-xs font-semibold text-slate-600 uppercase tracking-wider">Technology</th>
-                <th className="text-center p-3 font-ui text-xs font-semibold text-slate-600 uppercase tracking-wider">Energy (W)</th>
-                <th className="text-center p-3 font-ui text-xs font-semibold text-slate-600 uppercase tracking-wider">Accuracy (%)</th>
-                <th className="text-center p-3 font-ui text-xs font-semibold text-slate-600 uppercase tracking-wider hidden sm:table-cell">Maint. (h/yr)</th>
-                <th className="text-center p-3 font-ui text-xs font-semibold text-slate-600 uppercase tracking-wider">Rel. Cost</th>
+      {/* Comparison Table */}
+      <h3 className="label-tech text-muted-foreground mb-4">DETAILED COMPARISON</h3>
+      <div className="border border-border rounded-lg overflow-hidden">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-border bg-slate-50/50">
+              <th className="text-left p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider">Technology</th>
+              <th className="text-center p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider">Energy (W)</th>
+              <th className="text-center p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider">Accuracy (%)</th>
+              <th className="text-center p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden sm:table-cell">Maint. (h/yr)</th>
+              <th className="text-center p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider">Rel. Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonData.map((row, idx) => (
+              <tr key={row.name} className={`border-b border-border last:border-b-0 ${idx === 0 ? 'bg-primary/5' : ''}`}>
+                <td className={`p-4 font-ui font-semibold ${idx === 0 ? 'text-primary' : 'text-foreground'}`}>
+                  {row.name}
+                  {idx === 0 && <span className="ml-2 text-xs bg-primary text-white px-2 py-0.5 rounded-full">BEST</span>}
+                </td>
+                <td className="text-center p-4 font-data text-muted-foreground">{row.energy}</td>
+                <td className="text-center p-4 font-data text-muted-foreground">{row.accuracy}</td>
+                <td className="text-center p-4 font-data text-muted-foreground hidden sm:table-cell">{row.maintenance}</td>
+                <td className="text-center p-4 font-data text-muted-foreground">{row.cost}%</td>
               </tr>
-            </thead>
-            <tbody>
-              {comparisonData.map((row, idx) => (
-                <tr key={row.name} className={`border-b border-slate-100 ${idx === 0 ? 'bg-primary/5' : ''}`}>
-                  <td className={`p-3 font-ui font-semibold ${idx === 0 ? 'text-primary' : 'text-foreground'}`}>
-                    {row.name}
-                    {idx === 0 && <span className="ml-2 text-xs bg-primary text-white px-2 py-0.5 rounded-full">BEST</span>}
-                  </td>
-                  <td className="text-center p-3 font-data text-slate-600">{row.energy}</td>
-                  <td className="text-center p-3 font-data text-slate-600">{row.accuracy}</td>
-                  <td className="text-center p-3 font-data text-slate-600 hidden sm:table-cell">{row.maintenance}</td>
-                  <td className="text-center p-3 font-data text-slate-600">{row.cost}%</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </section>
   );
