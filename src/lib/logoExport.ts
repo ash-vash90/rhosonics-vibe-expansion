@@ -110,12 +110,13 @@ export const logoVariants: LogoVariant[] = [
 
 // Generate full lockup SVG using optical scaling conventions
 // Icon 80px = text 55px (ratio 0.69) per size bands table
+// RHOSONICS at 55px with 0.025em tracking ≈ 440px wide
 export const generateLockupSVG = (variant: LogoVariant): string => {
   const iconSize = 80;
   const textSize = 55; // Per size bands: 80px icon = 55px text (0.69 ratio)
-  const gap = 16;
-  const textWidth = variant.hasText ? 320 : 0;
-  const padding = variant.background ? 32 : 0;
+  const gap = 20;
+  const textWidth = variant.hasText ? 460 : 0; // Measured width for RHOSONICS at 55px
+  const padding = variant.background ? 32 : 16; // Add padding even without background to prevent clipping
   
   const totalWidth = iconSize + (variant.hasText ? gap + textWidth : 0) + (padding * 2);
   const totalHeight = iconSize + (padding * 2);
@@ -161,15 +162,28 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
     ${ARC_PATHS.map(d => `<path d="${d}" fill="${fill}"/>`).join("\n    ")}
   </g>`;
   
-  // Unbounded font for wordmark with tracking-wide (0.025em), vertically centered
+  // Unbounded font embedded via Google Fonts CSS2 API with proper encoding
+  // Vertically centered with icon
+  const textX = padding + iconSize + gap;
   const textY = padding + (iconSize / 2) + (textSize * 0.32); // Optical vertical centering
+  
+  // Use embedded font with proper CSS - note: for PNG export we need to load font first
+  const fontStyle = `
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 600;
+      src: url(https://fonts.gstatic.com/s/unbounded/v7/Yq6F-LOTXCb04q32xlpat-6uR42XTqtG65jEzNjPFCk.woff2) format('woff2');
+    }
+  `;
+  
   const textGroup = variant.hasText 
-    ? `<text x="${padding + iconSize + gap}" y="${textY}" font-family="Unbounded, sans-serif" font-size="${textSize}" font-weight="600" letter-spacing="0.025em" fill="${variant.textColor}">RHOSONICS</text>` 
+    ? `<text x="${textX}" y="${textY}" font-family="Unbounded, system-ui, sans-serif" font-size="${textSize}" font-weight="600" letter-spacing="0.025em" fill="${variant.textColor}">RHOSONICS</text>` 
     : "";
   
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalWidth} ${totalHeight}" width="${totalWidth}" height="${totalHeight}">
   <defs>
-    <style>@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600&amp;display=swap');</style>
+    <style>${fontStyle}</style>
     ${gradientDef}
     ${bgGradientDef}
   </defs>
@@ -247,8 +261,31 @@ export const downloadSVG = (svg: string, filename: string) => {
   URL.revokeObjectURL(url);
 };
 
+// Preload font for PNG rendering
+const preloadFont = async (): Promise<void> => {
+  const font = new FontFace(
+    'Unbounded',
+    'url(https://fonts.gstatic.com/s/unbounded/v7/Yq6F-LOTXCb04q32xlpat-6uR42XTqtG65jEzNjPFCk.woff2)',
+    { weight: '600' }
+  );
+  
+  try {
+    const loadedFont = await font.load();
+    document.fonts.add(loadedFont);
+  } catch (e) {
+    console.warn('Could not load Unbounded font for PNG export:', e);
+  }
+};
+
 // Convert SVG to PNG and download
 export const downloadPNG = async (svg: string, filename: string, scale = 2) => {
+  // Preload font if SVG contains text
+  if (svg.includes('RHOSONICS')) {
+    await preloadFont();
+    // Give font time to register
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  
   return new Promise<void>((resolve, reject) => {
     const img = new Image();
     const svgBlob = new Blob([svg], { type: "image/svg+xml" });
