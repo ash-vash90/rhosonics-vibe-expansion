@@ -36,24 +36,30 @@ export const LogoAssets = () => {
 
   // Render a preview of the logo variant
   const renderVariantPreview = (variant: typeof logoVariants[0]) => {
-    const bgClass = variant.background 
-      ? variant.background.includes("#73B82E") 
-        ? "bg-gradient-to-br from-primary to-primary-dark" 
-        : "bg-gradient-to-br from-slate-800 to-slate-950"
-      : variant.textColor === "#ffffff" 
-        ? "bg-slate-900" 
-        : "bg-white border border-border";
+    // Handle background types properly
+    let bgClass = "bg-white border border-border";
+    
+    if (variant.background) {
+      if (variant.backgroundType === "lime") {
+        bgClass = "bg-gradient-to-br from-lime-400 to-lime-600";
+      } else if (variant.backgroundType === "obsidian") {
+        bgClass = "bg-gradient-to-br from-slate-800 to-slate-950";
+      }
+    } else if (variant.textColor === "#ffffff") {
+      bgClass = "bg-slate-900";
+    }
 
+    // Optical sizing: 44px icon = 32px text (0.73 ratio for base/default preview)
     return (
-      <div className={`${bgClass} rounded-lg p-8 flex items-center justify-center min-h-[120px]`}>
+      <div className={`${bgClass} rounded-lg p-8 flex items-center justify-center min-h-[120px] aspect-square`}>
         {variant.hasText ? (
           <div className="flex items-center gap-3">
             <RhosonicsLogo 
               variant={variant.iconFill === "white" ? "white" : "gradient"} 
-              className="w-14 h-14" 
+              className="w-11 h-11" 
             />
             <span 
-              className="font-logo text-xl font-semibold tracking-tight"
+              className="font-logo text-2xl font-semibold tracking-wide"
               style={{ color: variant.textColor }}
             >
               RHOSONICS
