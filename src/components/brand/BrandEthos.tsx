@@ -47,9 +47,9 @@ export const BrandEthos = () => {
         ].map((item) => (
           <div key={item.num} className="group">
             <div className="flex items-center gap-3 mb-3">
-              <span className="font-data text-sm text-slate-400 group-hover:text-primary transition-colors">{item.num}</span>
-              <div className="h-px flex-1 bg-slate-200 group-hover:bg-primary/30 transition-colors" />
-              <div className="w-8 h-8 bg-slate-100 flex items-center justify-center rounded text-slate-500 group-hover:bg-primary group-hover:text-white transition-all">
+              <span className="font-data text-sm text-slate-400 group-hover:text-foreground transition-colors">{item.num}</span>
+              <div className="h-px flex-1 bg-slate-200 group-hover:bg-slate-300 transition-colors" />
+              <div className="w-8 h-8 bg-slate-100 flex items-center justify-center rounded text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700 transition-all">
                 <item.icon className="w-4 h-4" />
               </div>
             </div>
