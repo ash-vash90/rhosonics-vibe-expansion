@@ -92,11 +92,12 @@ const Tools = () => {
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </Button>
+            {/* Logo lockup: 32/23px (UI headers) */}
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="w-7 h-7 sm:w-8 sm:h-8">
+              <div style={{ width: 32, height: 32 }}>
                 <RhosonicsLogo variant="gradient" />
               </div>
-              <span className="font-logo text-base sm:text-lg text-foreground tracking-wide uppercase hidden sm:inline">RHOSONICS</span>
+              <span className="font-logo text-foreground tracking-wide uppercase hidden sm:inline" style={{ fontSize: 23 }}>RHOSONICS</span>
               <span className="px-1.5 sm:px-2 py-0.5 bg-primary/20 border border-primary/40 rounded text-[10px] sm:text-xs font-mono text-primary">
                 AI
               </span>
