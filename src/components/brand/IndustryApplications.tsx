@@ -4,8 +4,8 @@ export const IndustryApplications = () => {
   return (
     <section id="industries" className="space-y-16">
       {/* Hero Statement */}
-      <div className="mb-16">
-        <p className="text-2xl md:text-3xl font-ui text-foreground leading-relaxed max-w-4xl">
+      <div>
+        <p className="text-lg md:text-xl font-ui text-foreground leading-relaxed max-w-4xl">
           Each industry has its own visual language
           <span className="text-muted-foreground"> because context matters. The underlying measurement system remains the same — only the interface framing changes.</span>
         </p>
