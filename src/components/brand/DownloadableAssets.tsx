@@ -70,37 +70,40 @@ export const DownloadableAssets = () => {
   };
 
   return (
-    <section id="downloads" className="mb-16">
-      {/* Two-column: Preview + Downloads */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <section id="downloads" className="mb-32">
+      {/* Two-column layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-border mb-16">
         {/* Logo Preview */}
-        <div className="card-base p-6 bg-slate-50">
+        <div className="bg-slate-50 p-8">
+          <h3 className="label-tech text-muted-foreground mb-6">LOGO VARIANTS</h3>
           <div className="grid grid-cols-2 gap-4">
-            <div className="aspect-square bg-white rounded-lg flex items-center justify-center p-6 border border-slate-200">
+            <div className="aspect-square bg-white rounded-lg flex items-center justify-center p-8 border border-border group hover:border-primary transition-colors">
               <RhosonicsLogo variant="gradient" className="w-full h-full" />
             </div>
-            <div className="aspect-square bg-rho-obsidian rounded-lg flex items-center justify-center p-6">
+            <div className="aspect-square bg-rho-obsidian rounded-lg flex items-center justify-center p-8 group hover:ring-2 hover:ring-primary transition-all">
               <RhosonicsLogo variant="white" className="w-full h-full" />
             </div>
-            <div className="aspect-square bg-white rounded-lg flex items-center justify-center p-6 border border-slate-200">
+            <div className="aspect-square bg-white rounded-lg flex items-center justify-center p-8 border border-border group hover:border-primary transition-colors">
               <RhosonicsLogo variant="gradient" className="w-full h-full" />
             </div>
-            <div className="aspect-square bg-slate-200 rounded-lg flex items-center justify-center p-6">
+            <div className="aspect-square bg-slate-200 rounded-lg flex items-center justify-center p-8 group hover:ring-2 hover:ring-primary transition-all">
               <RhosonicsLogo variant="dark" className="w-full h-full" />
             </div>
           </div>
         </div>
 
         {/* Download Categories */}
-        <div className="space-y-4">
+        <div className="bg-background p-8">
+          <h3 className="label-tech text-muted-foreground mb-6">ASSETS</h3>
+          
           {/* Logo Files */}
-          <div className="card-base p-5">
+          <div className="mb-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
                 <FileImage className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-ui font-bold text-foreground">Logo Files</h3>
+                <h4 className="font-ui font-bold text-foreground">Logo Files</h4>
                 <p className="text-xs text-muted-foreground">All approved variants</p>
               </div>
             </div>
@@ -109,10 +112,10 @@ export const DownloadableAssets = () => {
                 <button
                   key={variant}
                   onClick={() => downloadFile(generateLogoSVG(variant as any), `rhosonics-logo-${variant}.svg`, 'image/svg+xml')}
-                  className="flex items-center justify-between p-2 bg-slate-50 hover:bg-slate-100 rounded-md transition-colors text-sm"
+                  className="flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors text-sm border border-border group"
                 >
-                  <span className="capitalize">{variant}</span>
-                  <Download className="w-3 h-3 text-muted-foreground" />
+                  <span className="capitalize font-ui">{variant}</span>
+                  <Download className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                 </button>
               ))}
             </div>
@@ -120,45 +123,43 @@ export const DownloadableAssets = () => {
 
           {/* Color + Typography */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="card-base p-4">
+            <div className="p-4 bg-slate-50 rounded-lg border border-border">
               <div className="flex items-center gap-2 mb-3">
                 <Palette className="w-4 h-4 text-primary" />
                 <span className="font-ui font-medium text-sm">Colors</span>
               </div>
               <button
                 onClick={() => downloadFile(generateCSSVariables(), 'rhosonics-colors.css', 'text/css')}
-                className="w-full flex items-center justify-between p-2 bg-slate-50 hover:bg-slate-100 rounded text-xs"
+                className="w-full flex items-center justify-between p-2 bg-white hover:bg-slate-100 rounded text-xs transition-colors border border-border group"
               >
                 <span>CSS Variables</span>
-                <Download className="w-3 h-3" />
+                <Download className="w-3 h-3 group-hover:text-primary transition-colors" />
               </button>
             </div>
 
-            <div className="card-base p-4">
+            <div className="p-4 bg-slate-50 rounded-lg border border-border">
               <div className="flex items-center gap-2 mb-3">
                 <Type className="w-4 h-4 text-primary" />
                 <span className="font-ui font-medium text-sm">Typography</span>
               </div>
               <button
                 onClick={() => downloadFile(generateFontCSS(), 'rhosonics-fonts.css', 'text/css')}
-                className="w-full flex items-center justify-between p-2 bg-slate-50 hover:bg-slate-100 rounded text-xs"
+                className="w-full flex items-center justify-between p-2 bg-white hover:bg-slate-100 rounded text-xs transition-colors border border-border group"
               >
                 <span>Font Stack</span>
-                <Download className="w-3 h-3" />
+                <Download className="w-3 h-3 group-hover:text-primary transition-colors" />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* All-in-one download - Full width */}
-      <div className="p-5 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <Package className="w-6 h-6 text-primary" />
-          <div>
-            <h4 className="font-ui font-bold text-foreground">Complete Brand Package</h4>
-            <p className="text-sm text-muted-foreground">All assets, all formats, one download.</p>
-          </div>
+      {/* All-in-one download */}
+      <div className="flex items-start gap-4 p-6 bg-slate-50 border-l-4 border-primary">
+        <Package className="w-6 h-6 text-primary flex-shrink-0" />
+        <div className="flex-1">
+          <h4 className="font-ui font-bold text-foreground mb-1">Complete Brand Package</h4>
+          <p className="text-muted-foreground text-sm">All assets, all formats, one download.</p>
         </div>
         <button
           onClick={handleDownloadAll}
