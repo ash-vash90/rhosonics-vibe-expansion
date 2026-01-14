@@ -26,7 +26,7 @@ const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
 const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
 const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
-const BrandGallery = lazy(() => import("@/components/brand/BrandGallery"));
+
 const ExportSection = lazy(() => import("@/components/brand/ExportSection"));
 const SectionLoader = () => <div className="py-16 flex justify-center">
     <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -401,9 +401,6 @@ const Index = () => {
             </LazySection>
             <Suspense fallback={<SectionLoader />}>
               <CaseStudies />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <BrandGallery />
             </Suspense>
           </div>
         </section>
