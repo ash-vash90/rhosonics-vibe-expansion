@@ -1,6 +1,56 @@
 import { Target, Shield, Lightbulb, Users, Award, Zap, Heart, Leaf } from "lucide-react";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const BrandPositioning = () => {
+  const pillarsRef = useRef<HTMLDivElement>(null);
+  const valuesRef = useRef<HTMLDivElement>(null);
+  const splitRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate pillars on scroll
+      if (pillarsRef.current) {
+        const pillars = pillarsRef.current.querySelectorAll('.pillar-item');
+        gsap.fromTo(pillars, 
+          { opacity: 0, x: -30 },
+          { 
+            opacity: 1, x: 0, duration: 0.6, stagger: 0.15, ease: "power3.out",
+            scrollTrigger: { trigger: pillarsRef.current, start: "top 80%" }
+          }
+        );
+      }
+
+      // Animate value cards
+      if (valuesRef.current) {
+        const cards = valuesRef.current.querySelectorAll('.value-card');
+        gsap.fromTo(cards,
+          { opacity: 0, y: 30, scale: 0.95 },
+          {
+            opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: "power3.out",
+            scrollTrigger: { trigger: valuesRef.current, start: "top 80%" }
+          }
+        );
+      }
+
+      // Animate split section
+      if (splitRef.current) {
+        gsap.fromTo(splitRef.current,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+            scrollTrigger: { trigger: splitRef.current, start: "top 85%" }
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section className="space-y-24">
       {/* Brand Promise - HERO DISPLAY: Full-width dramatic statement */}
@@ -11,7 +61,7 @@ const BrandPositioning = () => {
         </p>
         
         {/* Hero pillars - dramatic large type, no cards */}
-        <div className="space-y-0">
+        <div ref={pillarsRef} className="space-y-0">
           {[
             { icon: Target, title: "Precision", desc: "Measurement you can trust" },
             { icon: Shield, title: "Resilience", desc: "Performance in harsh, real-world conditions" },
@@ -19,7 +69,7 @@ const BrandPositioning = () => {
           ].map((pillar, i) => (
             <div 
               key={pillar.title} 
-              className="group flex items-baseline gap-6 py-8 border-b border-border/50 first:border-t hover:bg-muted/30 transition-colors -mx-6 px-6"
+              className="pillar-item group flex items-baseline gap-6 py-8 border-b border-border/50 first:border-t hover:bg-muted/30 transition-colors -mx-6 px-6"
             >
               <span className="font-data text-sm text-muted-foreground w-8">0{i + 1}</span>
               <div className="flex-1">
@@ -47,7 +97,7 @@ const BrandPositioning = () => {
         </p>
         
         {/* Staggered 5-card layout with varied sizing */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={valuesRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
             { icon: Users, title: "Connecting", desc: "We believe in teamwork. Down-to-earth, transparent, and committed to building sustainable, long-term relationships.", featured: false },
             { icon: Award, title: "Expertise", desc: "We deliver high-quality measurement technologies through leadership, knowledge, and versatility — providing solutions our customers need.", featured: true },
@@ -57,7 +107,7 @@ const BrandPositioning = () => {
           ].map((value) => (
             <div 
               key={value.title} 
-              className={`group p-8 rounded-lg transition-all duration-300 ${
+              className={`value-card group p-8 rounded-lg transition-all duration-300 ${
                 value.featured 
                   ? 'bg-primary/5 border-l-4 border-primary hover:bg-primary/10' 
                   : 'bg-muted/30 hover:bg-muted/50 border border-transparent hover:border-border'
@@ -72,7 +122,7 @@ const BrandPositioning = () => {
       </div>
 
       {/* Expression + Audience + Heuristic - SPLIT CANVAS */}
-      <div className="grid lg:grid-cols-5 gap-12">
+      <div ref={splitRef} className="grid lg:grid-cols-5 gap-12">
         {/* Expression & Audience - 3 cols */}
         <div className="lg:col-span-3 space-y-12">
           <div>
