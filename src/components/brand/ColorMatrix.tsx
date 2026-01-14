@@ -172,7 +172,7 @@ export const ColorMatrix = () => {
           </div>
         </div>
 
-        <BrandCallout variant="rule" title="State Color Rule">
+        <BrandCallout variant="info" title="State Color Rule">
           State colors communicate operational status only. They must never be used decoratively or to "add visual interest."
         </BrandCallout>
       </div>
