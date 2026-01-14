@@ -9,8 +9,8 @@ export const BrandEthos = () => {
           <div className="absolute inset-0 bg-wave-subtle opacity-20 pointer-events-none" />
           <div className="relative">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-10 h-10 bg-primary/20 flex items-center justify-center rounded-lg">
-                <Target className="w-5 h-5 text-primary" />
+              <div className="w-10 h-10 bg-slate-600 flex items-center justify-center rounded-lg">
+                <Target className="w-5 h-5 text-slate-200" />
               </div>
               <span className="font-data text-xs uppercase tracking-wider text-slate-400">THE PERSONA</span>
             </div>
