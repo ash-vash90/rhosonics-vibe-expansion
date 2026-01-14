@@ -1,6 +1,34 @@
 import { MessageSquare, FileText, Headphones, Megaphone } from "lucide-react";
+import { VOICE_VALUE_MAPPING } from "@/data/brand-values";
+import { ValueBadge } from "./ValueBadge";
 
 export const VoiceTone = () => {
+  const voicePillars = [
+    { 
+      num: "01", 
+      title: "Direct", 
+      desc: "Lead with the point. Respect the reader's time.",
+      valueId: VOICE_VALUE_MAPPING.direct,
+    },
+    { 
+      num: "02", 
+      title: "Educational", 
+      desc: "Explain how and why, not just what. Knowledge builds trust.",
+      valueId: VOICE_VALUE_MAPPING.educational,
+    },
+    { 
+      num: "03", 
+      title: "Evidence-Based", 
+      desc: "Measurable impact over abstract claims. Show the data.",
+      valueId: VOICE_VALUE_MAPPING.evidenceBased,
+    },
+    { 
+      num: "04", 
+      title: "Partnership-First", 
+      desc: "The reader's success is our success. Write for long-term relationships.",
+      valueId: VOICE_VALUE_MAPPING.partnershipFirst,
+    },
+  ];
 
   const toneContexts = [
     { context: "Technical Documentation", icon: FileText, tone: "Precise & Instructive", example: "Connect the 4-20mA output to terminals 3 and 4." },
@@ -16,7 +44,7 @@ export const VoiceTone = () => {
         Our reader skips to the specification table. We put it first.
       </p>
 
-      {/* Voice Pillars - numbered list, no cards */}
+      {/* Voice Pillars - numbered list with value badges */}
       <div>
         <div className="flex items-center gap-4 mb-10">
           <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Voice Pillars</h3>
@@ -24,17 +52,15 @@ export const VoiceTone = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
-          {[
-            { num: "01", title: "Direct", desc: "Lead with the point. Respect the reader's time." },
-            { num: "02", title: "Educational", desc: "Explain how and why, not just what. Knowledge builds trust." },
-            { num: "03", title: "Evidence-Based", desc: "Measurable impact over abstract claims. Show the data." },
-            { num: "04", title: "Partnership-First", desc: "The reader's success is our success. Write for long-term relationships." },
-          ].map((pillar, i) => (
+          {voicePillars.map((pillar, i) => (
             <div 
               key={pillar.num} 
               className={`p-4 md:p-6 ${i > 0 ? 'sm:border-l border-border' : ''} ${i >= 2 ? 'border-t lg:border-t-0' : ''} ${i === 1 ? 'border-t sm:border-t-0' : ''} hover:bg-muted/30 transition-colors`}
             >
-              <span className="font-data text-xl md:text-2xl text-primary/40">{pillar.num}</span>
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-data text-xl md:text-2xl text-primary/40">{pillar.num}</span>
+                <ValueBadge valueId={pillar.valueId} showIcon />
+              </div>
               <h3 className="font-ui font-bold text-lg md:text-xl mt-2 md:mt-3 mb-1 md:mb-2 text-foreground">{pillar.title}</h3>
               <p className="text-xs md:text-sm text-muted-foreground">{pillar.desc}</p>
             </div>

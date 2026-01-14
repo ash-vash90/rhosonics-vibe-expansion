@@ -3,6 +3,7 @@ import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
 import { BrandCallout } from "./BrandCallout";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ValueBadge } from "./ValueBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,6 +31,10 @@ export const MotionDesign = () => {
         <p className="text-lg md:text-xl font-ui text-foreground leading-relaxed max-w-4xl">
           Motion communicates cause and effect
           <span className="text-muted-foreground"> — mirroring physical processes like propagation and stabilization. Not decoration.</span>
+        </p>
+        <p className="text-muted-foreground mt-4 max-w-2xl">
+          Purposeful motion reflects <strong className="text-foreground">Expertise in Practice</strong> — every animation clarifies understanding. 
+          Responsive, feedback-oriented animation builds trust through <strong className="text-foreground">Partnership</strong>.
         </p>
       </div>
 
@@ -61,7 +66,10 @@ export const MotionDesign = () => {
 
       {/* Signature Animations */}
       <div>
-        <h3 className="label-tech text-muted-foreground mb-2">SIGNATURE ANIMATIONS</h3>
+        <div className="flex items-center gap-4 mb-2">
+          <h3 className="label-tech text-muted-foreground">SIGNATURE ANIMATIONS</h3>
+          <ValueBadge valueId="expertise" showIcon />
+        </div>
         <p className="text-muted-foreground mb-8">
           Signature animations are rare by design. If everything animates, nothing feels important.
         </p>
