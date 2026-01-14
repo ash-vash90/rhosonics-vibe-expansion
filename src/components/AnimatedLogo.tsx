@@ -111,14 +111,14 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
     return (
       <svg ref={svgRef} className={cn("w-full h-full", className)} viewBox="0 0 80 80">
         <defs>
-          <linearGradient id={brandGradientId} x1="100%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="#33993c" />
-            <stop offset="50%" stopColor="#4da653" />
-            <stop offset="100%" stopColor="#73B82E" />
+          <linearGradient id={brandGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#73B82E" />
+            <stop offset="55%" stopColor="#4da653" />
+            <stop offset="100%" stopColor="#33993c" />
           </linearGradient>
-          <linearGradient id={whiteGradientId} x1="100%" y1="100%" x2="0%" y2="0%">
+          <linearGradient id={whiteGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="100%" stopColor="#e8f0e8" />
+            <stop offset="100%" stopColor="#f1f5f9" />
           </linearGradient>
         </defs>
 
