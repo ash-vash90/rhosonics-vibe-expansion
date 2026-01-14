@@ -3,6 +3,10 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import audienceEngineer from "@/assets/brand/audience-engineer-control-room.jpg";
+import audienceOperations from "@/assets/brand/audience-operations-manager.jpg";
+import audienceTechnical from "@/assets/brand/audience-technical-specialist.jpg";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const BrandPositioning = () => {
@@ -144,8 +148,27 @@ const BrandPositioning = () => {
 
           <div>
             <h3 className="font-ui text-lg font-semibold text-foreground mb-4">The audience</h3>
-            <p className="text-muted-foreground">People who work in operational or engineering roles, evaluate claims critically, 
+            <p className="text-muted-foreground mb-8">People who work in operational or engineering roles, evaluate claims critically, 
             look for evidence before persuasion, and spend time with data and interfaces.</p>
+            
+            {/* Audience imagery */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="relative rounded-lg overflow-hidden aspect-video">
+                <img src={audienceEngineer} alt="Process engineer in control room" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
+                <span className="absolute bottom-2 left-3 font-data text-xs text-white/80 uppercase tracking-wider">Control Room</span>
+              </div>
+              <div className="relative rounded-lg overflow-hidden aspect-video">
+                <img src={audienceOperations} alt="Operations manager in the field" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
+                <span className="absolute bottom-2 left-3 font-data text-xs text-white/80 uppercase tracking-wider">Field Operations</span>
+              </div>
+              <div className="relative rounded-lg overflow-hidden aspect-video">
+                <img src={audienceTechnical} alt="Technical specialist with instrumentation" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
+                <span className="absolute bottom-2 left-3 font-data text-xs text-white/80 uppercase tracking-wider">Technical Lab</span>
+              </div>
+            </div>
           </div>
         </div>
         
