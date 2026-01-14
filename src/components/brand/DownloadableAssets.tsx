@@ -1,4 +1,5 @@
-import { Download, FileImage, Palette, Type, Package } from "lucide-react";
+import { Download, FileImage, Palette, Type } from "lucide-react";
+import { BrandCallout } from "./BrandCallout";
 import { RhosonicsLogo } from "../RhosonicsLogo";
 
 const generateCSSVariables = () => `/* Rhosonics Brand Colors */
@@ -155,20 +156,18 @@ export const DownloadableAssets = () => {
       </div>
 
       {/* All-in-one download */}
-      <div className="flex items-start gap-4 p-6 bg-muted/50 border-l-4 border-primary rounded-r-lg">
-        <Package className="w-6 h-6 text-primary flex-shrink-0" />
-        <div className="flex-1">
-          <h4 className="font-ui font-bold text-foreground mb-1">Complete Brand Package</h4>
-          <p className="text-muted-foreground text-sm">All assets, all formats, one download.</p>
-        </div>
-        <button
-          onClick={handleDownloadAll}
-          className="chamfer-shape bg-brand-gradient text-primary-foreground px-5 py-2.5 font-data text-xs uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2"
-        >
-          <Download className="w-4 h-4" />
-          Download All
-        </button>
-      </div>
+      <BrandCallout variant="info" title="Complete Brand Package">
+        <span className="flex items-center justify-between">
+          <span>All assets, all formats, one download.</span>
+          <button
+            onClick={handleDownloadAll}
+            className="chamfer-shape bg-brand-gradient text-primary-foreground px-5 py-2.5 font-data text-xs uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 ml-4"
+          >
+            <Download className="w-4 h-4" />
+            Download All
+          </button>
+        </span>
+      </BrandCallout>
     </section>
   );
 };

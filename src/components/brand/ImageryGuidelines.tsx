@@ -40,7 +40,7 @@ export const ImageryGuidelines = () => {
       </div>
 
       {/* Field Image Rule */}
-      <BrandCallout variant="rule" title="Field Image Rule">
+      <BrandCallout variant="info" title="Field Image Rule">
         Field images must show evidence of use: wear, scale, context, or operation.
         Pristine environments without signs of real work reduce credibility.
       </BrandCallout>
