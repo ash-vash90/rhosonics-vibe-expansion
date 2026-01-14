@@ -118,7 +118,10 @@ const Index = () => {
     const hero = heroContentRef.current;
     if (!hero) return;
     const ctx = gsap.context(() => {
-      // Set initial states
+      // Set initial states - hide everything including logo container
+      gsap.set('.hero-logo', {
+        opacity: 0
+      });
       gsap.set('.wordmark-char', {
         opacity: 0,
         x: -20,
@@ -141,17 +144,23 @@ const Index = () => {
         opacity: 0
       });
 
-      // Trigger logo wave animation after a short delay
-      setTimeout(() => {
-        heroLogoRef.current?.play();
-      }, 200);
+      // Show logo container then trigger wave animation
+      gsap.to('.hero-logo', {
+        opacity: 1,
+        duration: 0.1,
+        delay: 0.1,
+        onComplete: () => {
+          heroLogoRef.current?.play();
+        }
+      });
 
-      // Create timeline for text animations
+      // Create timeline for text animations - starts AFTER wave animation completes
+      // Wave animation: 3 arcs × 0.15s stagger + 0.65s duration = ~1s total
       const tl = gsap.timeline({
         defaults: {
           ease: 'power3.out'
         },
-        delay: 0.3 // Start after logo begins animating
+        delay: 1.1 // Start after wave animation finishes
       });
       
       // Wordmark fades in from left to right with stagger
