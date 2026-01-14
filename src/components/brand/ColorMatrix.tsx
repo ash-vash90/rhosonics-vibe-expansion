@@ -245,6 +245,17 @@ export const ColorMatrix = () => {
           </div>
           
           <div className="flex items-stretch -mx-4 mt-8">
+            <div className="w-full h-16" style={{ background: 'linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%)' }} />
+          </div>
+          <div className="flex justify-between text-sm">
+            <div>
+              <span className="font-ui font-semibold text-foreground">Slate Gradient</span>
+              <span className="text-muted-foreground ml-3">Light panels, subtle depth</span>
+            </div>
+            <span className="font-data text-xs text-muted-foreground">linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%)</span>
+          </div>
+          
+          <div className="flex items-stretch -mx-4 mt-8">
             <div className="w-full h-16 bg-obsidian-gradient" />
           </div>
           <div className="flex justify-between text-sm">
