@@ -42,10 +42,10 @@ export const IconGuidelines = () => {
   ];
 
   const iconStates = [
-    { icon: CheckCircle, state: "Success", color: "text-green-600", bg: "bg-green-600" },
-    { icon: AlertTriangle, state: "Warning", color: "text-amber-500", bg: "bg-amber-500" },
-    { icon: XCircle, state: "Error", color: "text-red-500", bg: "bg-red-500" },
-    { icon: Info, state: "Info", color: "text-blue-500", bg: "bg-blue-500" },
+    { icon: CheckCircle, state: "Success", color: "text-success", bg: "bg-success" },
+    { icon: AlertTriangle, state: "Warning", color: "text-warning", bg: "bg-warning" },
+    { icon: XCircle, state: "Error", color: "text-error", bg: "bg-error" },
+    { icon: Info, state: "Info", color: "text-info", bg: "bg-info" },
   ];
 
   return (

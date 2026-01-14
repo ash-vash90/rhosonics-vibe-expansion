@@ -39,6 +39,16 @@
     --warning-surface: 48 96% 89%;
     --warning-border: 48 90% 80%;
     
+    /* Success Green */
+    --success: 142 72% 36%;
+    --success-surface: 142 76% 92%;
+    --success-border: 142 60% 80%;
+    
+    /* Error Red */
+    --error: 0 84% 51%;
+    --error-surface: 0 93% 94%;
+    --error-border: 0 80% 85%;
+    
     /* Slate Scale - WCAG AA compliant (4.5:1 against --slate-50 background) */
     --slate-50: 210 40% 98%;
     --slate-100: 210 40% 96%;

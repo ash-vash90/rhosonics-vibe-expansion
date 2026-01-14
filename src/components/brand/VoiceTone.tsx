@@ -117,10 +117,10 @@ export const VoiceTone = () => {
               className="grid md:grid-cols-2 gap-0 border-b border-border last:border-b-0"
             >
               {/* Don't side */}
-              <div className="p-6 bg-red-50/50 border-l-4 border-red-300">
+              <div className="p-6 bg-error-surface border-l-4 border-error-border">
                 <div className="flex items-center gap-2 mb-3">
-                  <XCircle className="w-4 h-4 text-destructive" />
-                  <span className="font-data text-xs text-destructive uppercase tracking-wider">{example.context} — Don't</span>
+                  <XCircle className="w-4 h-4 text-error" />
+                  <span className="font-data text-xs text-error uppercase tracking-wider">{example.context} — Don't</span>
                 </div>
                 <p className="text-muted-foreground italic">"{example.dont}"</p>
               </div>

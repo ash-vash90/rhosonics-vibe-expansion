@@ -621,7 +621,7 @@ export function CaseStudyCanvas({
                           {!printMode && (
                             <button
                               onClick={() => removeSpec(i)}
-                              className="opacity-0 group-hover/spec:opacity-100 text-slate-400 hover:text-red-500 transition-opacity p-0.5"
+                              className="opacity-0 group-hover/spec:opacity-100 text-slate-400 hover:text-error transition-opacity p-0.5"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -721,7 +721,7 @@ export function CaseStudyCanvas({
                         />
                         <button
                           onClick={() => removeResult(i)}
-                          className="opacity-0 group-hover/result:opacity-100 text-slate-400 hover:text-red-500 transition-opacity p-0.5"
+                          className="opacity-0 group-hover/result:opacity-100 text-slate-400 hover:text-error transition-opacity p-0.5"
                         >
                           <X className="w-3 h-3" />
                         </button>

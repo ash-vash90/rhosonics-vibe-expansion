@@ -86,9 +86,9 @@ export function StatCardBlock({
 
   const TrendIcon = stat.trend === "up" ? TrendingUp : stat.trend === "down" ? TrendingDown : Minus;
   const trendColor = stat.trend === "up" 
-    ? "text-rho-green" 
+    ? "text-success" 
     : stat.trend === "down" 
-    ? "text-red-500" 
+    ? "text-error" 
     : "text-slate-400";
 
   return (

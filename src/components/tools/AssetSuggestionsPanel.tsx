@@ -178,7 +178,7 @@ export const AssetSuggestionsPanel = ({
           className="w-full flex items-center justify-between py-2"
         >
           <div className="flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-lime-500" />
+            <BarChart3 className="w-4 h-4 text-rho-green-accent" />
             <span className="font-ui text-sm font-medium text-foreground">
               Recommended Charts
             </span>
@@ -200,10 +200,10 @@ export const AssetSuggestionsPanel = ({
               return (
                 <div
                   key={idx}
-                  className="p-3 bg-lime-500/5 border border-lime-500/20 rounded-lg"
+                  className="p-3 bg-eco-surface border border-eco-border rounded-lg"
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <GraphIcon className="w-4 h-4 text-lime-500" />
+                    <GraphIcon className="w-4 h-4 text-rho-green-accent" />
                     <span className="font-ui text-xs font-medium text-foreground capitalize">
                       {graph.type.replace(/_/g, " ")} Chart
                     </span>
