@@ -1,7 +1,7 @@
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { ArrowRight, Menu, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import { BrandCallout } from "./BrandCallout";
 export const InterfaceKit = () => {
   return (
     <section id="components" className="space-y-16 pt-16">
@@ -166,6 +166,33 @@ export const InterfaceKit = () => {
         <p className="text-muted-foreground max-w-xl">
           Badges use JetBrains Mono, uppercase, short labels. They communicate operational state, 
           never decoration. Color indicates function.
+        </p>
+      </div>
+
+      {/* Callouts Showcase */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <span className="font-data text-sm text-primary uppercase tracking-wider">04</span>
+          <h3 className="font-ui text-2xl font-semibold text-foreground">Callouts</h3>
+        </div>
+
+        <div className="space-y-6">
+          <BrandCallout variant="note" title="Guidance Note">
+            Use notes for general guidance, tips, or neutral information that helps users understand a concept or process.
+          </BrandCallout>
+
+          <BrandCallout variant="info" title="Contextual Information">
+            Info callouts highlight important details that require attention — best practices, key insights, or recommendations.
+          </BrandCallout>
+
+          <BrandCallout variant="avoid" title="Avoid This Pattern">
+            Warning callouts signal what not to do. Always pair with a clear rationale so users understand why it matters.
+          </BrandCallout>
+        </div>
+
+        <p className="text-muted-foreground max-w-xl mt-8">
+          Callouts communicate critical insights with clear visual hierarchy. 
+          Each variant maps to a specific intent: neutral guidance, helpful context, or explicit warnings.
         </p>
       </div>
     </section>
