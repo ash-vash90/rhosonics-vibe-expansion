@@ -32,7 +32,28 @@ const ExportSection = lazy(() => import("@/components/brand/ExportSection"));
 const SectionLoader = () => <div className="py-16 flex justify-center">
     <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
   </div>;
-const SectionDivider = () => <div className="py-16 md:py-24" />;
+const SectionDivider = () => (
+  <div className="py-12 md:py-16 flex items-center justify-center">
+    <div className="flex items-center gap-4 w-full max-w-md">
+      <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-border" />
+      <div className="relative">
+        <div className="w-2 h-2 rounded-full bg-primary/20" />
+        <div className="absolute inset-0 w-2 h-2 rounded-full bg-primary/40 animate-ping" style={{ animationDuration: '3s' }} />
+      </div>
+      <div className="w-1 h-1 rounded-full bg-border" />
+      <div className="relative">
+        <div className="w-3 h-3 rounded-full border border-primary/30 flex items-center justify-center">
+          <div className="w-1.5 h-1.5 rounded-full bg-primary/50" />
+        </div>
+      </div>
+      <div className="w-1 h-1 rounded-full bg-border" />
+      <div className="relative">
+        <div className="w-2 h-2 rounded-full bg-primary/20" />
+      </div>
+      <div className="flex-1 h-px bg-gradient-to-l from-transparent via-border to-border" />
+    </div>
+  </div>
+);
 interface SectionHeaderProps {
   number: string;
   title: string;
@@ -307,7 +328,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 00: ABOUT THIS SYSTEM
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="about" number="00" title="About This System" subtitle="What this is, who it's for, and how to use it." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -320,7 +341,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 01: BRAND POSITIONING
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -333,7 +354,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 02: BRAND PRINCIPLES
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="principles" number="02" title="Brand Principles" subtitle="Decision-making tools for resolving design ambiguity." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -346,7 +367,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 03: THE VISUAL SYSTEM (OVERVIEW)
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="visual-system" number="03" title="The Visual System" subtitle="How the system is structured in layers." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -359,7 +380,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 04: COLOR
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="colors" number="04" title="Color Roles" subtitle="How color functions inside the system." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -372,7 +393,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 05: TYPOGRAPHY
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="typography" number="05" title="Typography" subtitle="Clarity, measurement, and trust." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -400,7 +421,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 07: VOICE & TONE
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="voice" number="07" title="Voice & Tone" subtitle="Direct. Technical. Confident. No fluff, no hedging." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -414,7 +435,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 08: IMAGERY & MOTION
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="imagery" number="08" title="Imagery & Motion" subtitle="Photography, illustration, and animation guidelines." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -428,7 +449,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 09: APPLICATIONS
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="applications" number="09" title="Applications" subtitle="Industry use cases, components, and interface patterns." />
           
           <Suspense fallback={<SectionLoader />}>
@@ -443,7 +464,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 10: PROOF & EXAMPLES
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32 relative">
+        <section className="py-16 md:py-24 relative">
           <div className="absolute inset-0 bg-grid-data opacity-20 pointer-events-none" />
           <div className="relative">
             <SectionHeader id="proof" number="10" title="Proof & Examples" subtitle="Technology comparisons, case studies, and brand gallery." />
@@ -464,7 +485,7 @@ const Index = () => {
         {/* ─────────────────────────────────────────────────────────────
             SECTION 11: RESOURCES
          ───────────────────────────────────────────────────────────── */}
-        <section className="py-20 md:py-32">
+        <section className="py-16 md:py-24">
           <SectionHeader id="resources" number="11" title="Resources" subtitle="Download assets. Export guidelines. Deploy the brand." />
           
           <Suspense fallback={<SectionLoader />}>
