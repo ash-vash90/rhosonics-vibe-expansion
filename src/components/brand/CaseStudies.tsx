@@ -50,9 +50,9 @@ const caseStudies = [
 
 export const CaseStudies = () => {
   return (
-    <section id="cases" className="mb-32">
+    <section id="cases" className="space-y-16">
       {/* Case Study Cards - Full width grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-border mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-border rounded-lg overflow-hidden">
         {caseStudies.map((study) => (
           <article 
             key={study.id}
@@ -153,7 +153,7 @@ export const CaseStudies = () => {
           { value: "99.7%", label: "Average uptime" },
           { value: "< 2yr", label: "Typical payback" },
         ].map((stat, idx) => (
-          <div key={idx} className="flex-1 py-8 px-4 border-r border-border last:border-r-0 text-center group hover:bg-slate-50 transition-colors">
+          <div key={idx} className="flex-1 py-8 px-4 border-r border-border last:border-r-0 text-center group hover:bg-muted/30 transition-colors">
             <div className="font-data text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
             <div className="font-data text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
           </div>

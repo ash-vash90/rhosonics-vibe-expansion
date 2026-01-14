@@ -29,7 +29,7 @@ export const VoiceTone = () => {
   return (
     <section id="voice" className="space-y-20">
       {/* Hero statement */}
-      <p className="text-xl md:text-2xl text-foreground max-w-2xl">
+      <p className="text-lg md:text-xl text-foreground max-w-2xl">
         Our reader skips to the specification table. We put it first.
       </p>
 

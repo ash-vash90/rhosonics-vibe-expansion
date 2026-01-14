@@ -60,7 +60,7 @@ const VisualSystemOverview = () => {
       </p>
 
       {/* Three layers - distinct visual treatment per layer */}
-      <div ref={layersRef} className="grid md:grid-cols-3 gap-0 -mx-6">
+      <div ref={layersRef} className="grid md:grid-cols-3 gap-0 rounded-lg overflow-hidden border border-border">
         {/* Foundations - solid, grounded */}
         <div className="p-8 bg-slate-900 text-white">
           <Layers className="w-8 h-8 text-white/60 mb-6" />

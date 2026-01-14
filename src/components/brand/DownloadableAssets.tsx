@@ -70,9 +70,9 @@ export const DownloadableAssets = () => {
   };
 
   return (
-    <section id="downloads" className="mb-32">
+    <section id="downloads" className="space-y-16">
       {/* Two-column layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-border mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
         {/* Logo Preview */}
         <div className="bg-slate-50 p-8">
           <h3 className="label-tech text-muted-foreground mb-6">LOGO VARIANTS</h3>
@@ -155,7 +155,7 @@ export const DownloadableAssets = () => {
       </div>
 
       {/* All-in-one download */}
-      <div className="flex items-start gap-4 p-6 bg-slate-50 border-l-4 border-primary">
+      <div className="flex items-start gap-4 p-6 bg-muted/50 border-l-4 border-primary rounded-r-lg">
         <Package className="w-6 h-6 text-primary flex-shrink-0" />
         <div className="flex-1">
           <h4 className="font-ui font-bold text-foreground mb-1">Complete Brand Package</h4>

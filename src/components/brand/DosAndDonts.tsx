@@ -25,10 +25,11 @@ const ExampleCard = ({ type, title, children }: ExampleCardProps) => (
 
 export const DosAndDonts = () => {
   return (
-    <section id="dos-donts" className="mb-32">
+    <section id="dos-donts" className="space-y-16 pt-16">
       {/* Logo Usage - Horizontal specimens */}
-      <h3 className="label-tech text-muted-foreground mb-6">LOGO USAGE</h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-border mb-16">
+      <div>
+        <h3 className="label-tech text-muted-foreground mb-6">LOGO USAGE</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-border rounded-lg overflow-hidden">
         <div className="bg-background p-6">
           <ExampleCard type="do" title="Proper spacing">
             <div className="h-24 flex items-center justify-center bg-slate-50 rounded border border-border">
@@ -78,11 +79,13 @@ export const DosAndDonts = () => {
             </div>
           </ExampleCard>
         </div>
+        </div>
       </div>
 
       {/* Typography - Side by side */}
-      <h3 className="label-tech text-muted-foreground mb-6">TYPOGRAPHY</h3>
-      <div className="grid md:grid-cols-2 gap-px bg-border mb-16">
+      <div>
+        <h3 className="label-tech text-muted-foreground mb-6">TYPOGRAPHY</h3>
+        <div className="grid md:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
         <div className="bg-background p-8">
           <div className="flex items-center gap-2 mb-6">
             <Check className="w-5 h-5 text-primary" />
@@ -126,6 +129,7 @@ export const DosAndDonts = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 export const ImageryGuidelines = () => {
   return (
-    <section id="imagery" className="mb-32">
+    <section id="imagery" className="space-y-16">
       {/* Hero Statement */}
       <div className="mb-16">
         <p className="text-2xl md:text-3xl font-ui text-foreground leading-relaxed max-w-4xl">
@@ -10,7 +10,7 @@ export const ImageryGuidelines = () => {
       </div>
 
       {/* Full-width Context Specimens */}
-      <div className="grid md:grid-cols-2 gap-px bg-border mb-16">
+      <div className="grid md:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
         {/* Field Context */}
         <div className="bg-rho-obsidian relative overflow-hidden">
           <div className="absolute inset-0 opacity-40 bg-pattern-minerals grayscale"></div>
@@ -38,7 +38,7 @@ export const ImageryGuidelines = () => {
       </div>
 
       {/* Field Image Rule - inline callout */}
-      <div className="flex items-start gap-4 p-6 bg-slate-50 border-l-4 border-primary mb-16">
+      <div className="flex items-start gap-4 p-6 bg-muted/50 border-l-4 border-primary rounded-r-lg">
         <div className="w-8 h-8 bg-primary text-primary-foreground rounded flex items-center justify-center font-data text-sm flex-shrink-0">!</div>
         <div>
           <h4 className="font-ui font-bold text-foreground mb-1">Field Image Rule</h4>

@@ -65,19 +65,19 @@ const ExportSection = () => {
   };
 
   return (
-    <section id="export" className="mb-32 pt-16 border-t border-border">
+    <section id="export" className="space-y-12 pt-16 border-t border-border">
       {/* Hero Statement */}
-      <div className="mb-12">
-        <h2 className="font-ui font-bold text-3xl md:text-4xl text-foreground mb-4">Export Guidelines</h2>
+      <div>
+        <h2 className="font-ui font-bold text-2xl md:text-3xl text-foreground mb-4">Export Guidelines</h2>
         <p className="text-muted-foreground text-lg max-w-2xl">
           Download the complete brand system for offline use or print distribution.
         </p>
       </div>
 
       {/* Export options - Side by side */}
-      <div className="grid md:grid-cols-2 gap-px bg-border">
+      <div className="grid md:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
         {/* HTML Export */}
-        <div className="bg-background p-8 group hover:bg-slate-50 transition-colors">
+        <div className="bg-background p-8 group hover:bg-muted/30 transition-colors">
           <div className="flex items-start gap-4 mb-6">
             <div className="w-12 h-12 rounded-lg bg-slate-100 border border-border flex items-center justify-center text-slate-600 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
               <FileCode className="w-6 h-6" />
@@ -118,7 +118,7 @@ const ExportSection = () => {
         </div>
 
         {/* PDF Export */}
-        <div className="bg-background p-8 group hover:bg-slate-50 transition-colors">
+        <div className="bg-background p-8 group hover:bg-muted/30 transition-colors">
           <div className="flex items-start gap-4 mb-6">
             <div className="w-12 h-12 rounded-lg bg-slate-100 border border-border flex items-center justify-center text-slate-600 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
               <FileText className="w-6 h-6" />

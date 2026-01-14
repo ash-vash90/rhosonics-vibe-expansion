@@ -5,7 +5,7 @@ const AboutThisSystem = () => {
     <section className="space-y-16">
       {/* Hero statement - full width, no boxes */}
       <div className="max-w-3xl">
-        <p className="text-xl md:text-2xl text-foreground leading-relaxed mb-8">
+        <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8">
           A system of decisions designed to ensure clarity, consistency, and credibility 
           wherever the Rhosonics brand appears.
         </p>

@@ -2,7 +2,7 @@ import { Beaker, Cpu, Anchor, Recycle } from "lucide-react";
 
 export const IndustryApplications = () => {
   return (
-    <section id="industries" className="mb-32">
+    <section id="industries" className="space-y-16">
       {/* Hero Statement */}
       <div className="mb-16">
         <p className="text-2xl md:text-3xl font-ui text-foreground leading-relaxed max-w-4xl">
@@ -12,7 +12,7 @@ export const IndustryApplications = () => {
       </div>
 
       {/* Industry Cards - Full width specimens */}
-      <div className="grid md:grid-cols-3 gap-px bg-border mb-16">
+      <div className="grid md:grid-cols-3 gap-px bg-border rounded-lg overflow-hidden">
         {/* Mineral Processing */}
         <div className="relative overflow-hidden bg-rho-obsidian">
           <div className="absolute inset-0 bg-terrain-ore" />
@@ -92,7 +92,8 @@ export const IndustryApplications = () => {
       </div>
 
       {/* Pattern Examples - Horizontal strip */}
-      <h3 className="label-tech text-muted-foreground mb-6">INDUSTRY PATTERNS</h3>
+      <div>
+        <h3 className="label-tech text-muted-foreground mb-6">INDUSTRY PATTERNS</h3>
       <p className="text-muted-foreground mb-8 max-w-2xl">
         Patterns are contextual, not expressive. They help users orient themselves, not brand the interface.
       </p>
@@ -113,10 +114,11 @@ export const IndustryApplications = () => {
             </div>
           </div>
         ))}
+        </div>
       </div>
 
       {/* Callout */}
-      <div className="mt-16 flex items-start gap-4 p-6 bg-slate-50 border-l-4 border-primary">
+      <div className="flex items-start gap-4 p-6 bg-muted/50 border-l-4 border-primary rounded-r-lg">
         <div className="w-8 h-8 bg-primary text-primary-foreground rounded flex items-center justify-center font-data text-sm flex-shrink-0">!</div>
         <div>
           <h4 className="font-ui font-bold text-foreground mb-1">Why This Matters</h4>
