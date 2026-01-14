@@ -117,143 +117,187 @@ const Index = () => {
   useEffect(() => {
     const hero = heroContentRef.current;
     if (!hero) return;
+
     const ctx = gsap.context(() => {
-      // Set initial states - hide everything including logo container
-      gsap.set('.hero-logo', {
-        opacity: 0
+      // Set initial states
+      gsap.set(".hero-logo", {
+        autoAlpha: 0,
       });
-      gsap.set('.wordmark-char', {
+      gsap.set(".wordmark-char", {
         opacity: 0,
         x: -20,
-        filter: 'blur(8px)'
+        filter: "blur(8px)",
       });
-      gsap.set('.hero-version', {
+      gsap.set(".hero-version", {
         opacity: 0,
-        y: -10
+        y: -10,
       });
-      gsap.set('.hero-title', {
+      gsap.set(".hero-title", {
         opacity: 0,
         y: 40,
-        filter: 'blur(8px)'
+        filter: "blur(8px)",
       });
-      gsap.set('.hero-subtitle', {
+      gsap.set(".hero-subtitle", {
         opacity: 0,
-        y: 30
+        y: 30,
       });
-      gsap.set('.hero-scroll', {
-        opacity: 0
-      });
-
-      // Show logo container then trigger wave animation
-      gsap.to('.hero-logo', {
-        opacity: 1,
-        duration: 0.1,
-        delay: 0.1,
-        onComplete: () => {
-          heroLogoRef.current?.play();
-        }
+      gsap.set(".hero-scroll", {
+        opacity: 0,
       });
 
-      // Create timeline for text animations - starts AFTER wave animation completes
-      // Wave animation: 3 arcs × 0.15s stagger + 0.65s duration = ~1s total
-      const tl = gsap.timeline({
+      // Text timeline (starts only when the wave animation reports completion)
+      const textTl = gsap.timeline({
+        paused: true,
         defaults: {
-          ease: 'power3.out'
+          ease: "power3.out",
         },
-        delay: 1.1 // Start after wave animation finishes
       });
-      
-      // Wordmark fades in from left to right with stagger
-      tl.to('.wordmark-char', {
-        opacity: 1,
-        x: 0,
-        filter: 'blur(0px)',
-        duration: 0.5,
-        stagger: 0.05,
-        ease: 'power2.out'
-      }).to('.hero-version', {
-        opacity: 1,
-        y: 0,
-        duration: 0.6
-      }, '-=0.2').to('.hero-title', {
-        opacity: 1,
-        y: 0,
-        filter: 'blur(0px)',
-        duration: 0.8
-      }, '-=0.3').to('.hero-subtitle', {
-        opacity: 1,
-        y: 0,
-        duration: 0.6
-      }, '-=0.4').to('.hero-scroll', {
-        opacity: 1,
-        duration: 0.8
-      }, '-=0.2');
+
+      textTl
+        .to(".wordmark-char", {
+          opacity: 1,
+          x: 0,
+          filter: "blur(0px)",
+          duration: 0.5,
+          stagger: 0.05,
+          ease: "power2.out",
+        })
+        .to(
+          ".hero-version",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+          },
+          "-=0.2"
+        )
+        .to(
+          ".hero-title",
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.8,
+          },
+          "-=0.3"
+        )
+        .to(
+          ".hero-subtitle",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+          },
+          "-=0.4"
+        )
+        .to(
+          ".hero-scroll",
+          {
+            opacity: 1,
+            duration: 0.8,
+          },
+          "-=0.2"
+        );
+
+      const startText = () => textTl.play(0);
+
+      // Show logo container, trigger wave; then start text AFTER wave completes
+      gsap.to(".hero-logo", {
+        autoAlpha: 1,
+        duration: 0.12,
+        delay: 0.1,
+        onStart: () => {
+          const logo = heroLogoRef.current;
+          if (!logo) {
+            // Fallback: if the ref isn't ready, don't block the hero.
+            gsap.delayedCall(1, startText);
+            return;
+          }
+          logo.play({
+            onComplete: startText,
+          });
+        },
+      });
     }, hero);
+
     return () => ctx.revert();
   }, []);
+
   const scrollToContent = () => {
-    document.getElementById('about')?.scrollIntoView({
-      behavior: 'smooth'
+    document.getElementById("about")?.scrollIntoView({
+      behavior: "smooth",
     });
   };
-  return <div className="min-h-screen bg-background flex">
+
+  return (
+    <div className="min-h-screen bg-background flex">
       {/* Left Navigation Sidebar */}
       <Navigation />
-      
+
       {/* Main Content Area */}
       <div className="flex-1 min-w-0">
-      
-      {/* ═══════════════════════════════════════════════════════════════
-          HERO — BRAND SYSTEM INTRODUCTION
-       ═══════════════════════════════════════════════════════════════ */}
-      <section className="min-h-[70vh] flex flex-col justify-center relative bg-slate-950 overflow-hidden">
-        {/* Layered backgrounds */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900/95 to-slate-950" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,hsl(125_50%_40%/0.06),transparent)]" />
-        
-        {/* Subtle grid overlay */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: `linear-gradient(hsl(125 50% 40%) 1px, transparent 1px), linear-gradient(90deg, hsl(125 50% 40%) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
-        }} />
-        
-        {/* Content */}
-        <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Logo + Wordmark */}
-            {/* Logo lockup: 64/45px (Marketing UI) */}
-            <div className="hero-logo flex items-center justify-center gap-4 mb-8">
-              <div style={{ width: 64, height: 64 }}>
-                <AnimatedLogo ref={heroLogoRef} variant="gradient" />
+        {/* ═══════════════════════════════════════════════════════════════
+            HERO — BRAND SYSTEM INTRODUCTION
+         ═══════════════════════════════════════════════════════════════ */}
+        <section className="min-h-[70vh] flex flex-col justify-center relative bg-slate-950 overflow-hidden">
+          {/* Layered backgrounds */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900/95 to-slate-950" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,hsl(125_50%_40%/0.06),transparent)]" />
+
+          {/* Subtle grid overlay */}
+          <div
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `linear-gradient(hsl(125 50% 40%) 1px, transparent 1px), linear-gradient(90deg, hsl(125 50% 40%) 1px, transparent 1px)`,
+              backgroundSize: "60px 60px",
+            }}
+          />
+
+          {/* Content */}
+          <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
+            <div className="max-w-4xl mx-auto text-center">
+              {/* Logo + Wordmark */}
+              {/* Logo lockup: 64/45px (Marketing UI) */}
+              <div className="hero-logo flex items-center justify-center gap-4 mb-8">
+                <div style={{ width: 64, height: 64 }}>
+                  <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden />
+                </div>
+                <span
+                  className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden"
+                  style={{ fontSize: 45 }}
+                >
+                  {"RHOSONICS".split("").map((char, i) => (
+                    <span key={i} className="wordmark-char inline-block">
+                      {char}
+                    </span>
+                  ))}
+                </span>
               </div>
-              <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden" style={{ fontSize: 45 }}>
-                {'RHOSONICS'.split('').map((char, i) => (
-                  <span key={i} className="wordmark-char inline-block">{char}</span>
-                ))}
-              </span>
+
+              {/* Main title */}
+              <h1 className="hero-title font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                Brand System
+              </h1>
+
+              {/* Subtitle */}
+              <p className="hero-subtitle text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                A system of decisions designed to ensure clarity, consistency, and credibility wherever the brand appears.
+              </p>
             </div>
-            
-            {/* Main title */}
-            <h1 className="hero-title font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Brand System
-            </h1>
-            
-            {/* Subtitle */}
-            <p className="hero-subtitle text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              A system of decisions designed to ensure clarity, consistency, 
-              and credibility wherever the brand appears.
-            </p>
           </div>
-        </div>
-        
-        {/* Scroll indicator */}
-        <button onClick={scrollToContent} className="hero-scroll absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-500 hover:text-primary transition-colors cursor-pointer group" aria-label="Scroll to content">
-          <div className="flex flex-col items-center gap-2">
-            <span className="font-data text-[10px] tracking-widest opacity-60">SCROLL</span>
-            <div className="w-px h-8 bg-gradient-to-b from-slate-500 to-transparent" />
-          </div>
-        </button>
-      </section>
+
+          {/* Scroll indicator */}
+          <button
+            onClick={scrollToContent}
+            className="hero-scroll absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-500 hover:text-primary transition-colors cursor-pointer group"
+            aria-label="Scroll to content"
+          >
+            <div className="flex flex-col items-center gap-2">
+              <span className="font-data text-[10px] tracking-widest opacity-60">SCROLL</span>
+              <div className="w-px h-8 bg-gradient-to-b from-slate-500 to-transparent" />
+            </div>
+          </button>
+        </section>
 
       {/* ═══════════════════════════════════════════════════════════════
           MAIN CONTENT
