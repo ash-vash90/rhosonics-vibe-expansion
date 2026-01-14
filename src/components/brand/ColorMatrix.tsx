@@ -231,50 +231,54 @@ export const ColorMatrix = () => {
           Reserved for hero elements and primary CTAs.
         </p>
         
-        {/* Full-width gradient bands */}
-        <div className="space-y-4">
-          <div className="flex items-stretch -mx-4">
-            <div className="w-full h-16 bg-brand-gradient" />
-          </div>
-          <div className="flex justify-between text-sm">
+        {/* 2x2 Gradient Grid */}
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Primary Gradient */}
+          <div className="space-y-3">
+            <div className="h-20 bg-brand-gradient rounded-lg" />
             <div>
-              <span className="font-ui font-semibold text-foreground">Primary Gradient</span>
-              <span className="text-muted-foreground ml-3">Hero CTAs, featured content</span>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="font-ui font-semibold text-foreground">Primary Gradient</span>
+                <span className="text-sm text-muted-foreground">Hero CTAs, featured content</span>
+              </div>
+              <span className="font-data text-xs text-muted-foreground">linear-gradient(135deg, #73B82E 0%, #33993C 100%)</span>
             </div>
-            <span className="font-data text-xs text-muted-foreground">linear-gradient(135deg, #73B82E 0%, #33993C 100%)</span>
           </div>
-          
-          <div className="flex items-stretch -mx-4 mt-8">
-            <div className="w-full h-16" style={{ background: 'linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%)' }} />
-          </div>
-          <div className="flex justify-between text-sm">
+
+          {/* Slate Gradient */}
+          <div className="space-y-3">
+            <div className="h-20 rounded-lg border border-border" style={{ background: 'linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%)' }} />
             <div>
-              <span className="font-ui font-semibold text-foreground">Slate Gradient</span>
-              <span className="text-muted-foreground ml-3">Light panels, subtle depth</span>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="font-ui font-semibold text-foreground">Slate Gradient</span>
+                <span className="text-sm text-muted-foreground">Light panels, subtle depth</span>
+              </div>
+              <span className="font-data text-xs text-muted-foreground">linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%)</span>
             </div>
-            <span className="font-data text-xs text-muted-foreground">linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%)</span>
           </div>
-          
-          <div className="flex items-stretch -mx-4 mt-8">
-            <div className="w-full h-16 bg-obsidian-gradient" />
-          </div>
-          <div className="flex justify-between text-sm">
+
+          {/* Obsidian Gradient */}
+          <div className="space-y-3">
+            <div className="h-20 bg-obsidian-gradient rounded-lg" />
             <div>
-              <span className="font-ui font-semibold text-foreground">Obsidian Gradient</span>
-              <span className="text-muted-foreground ml-3">Dark panels, hardware UI</span>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="font-ui font-semibold text-foreground">Obsidian Gradient</span>
+                <span className="text-sm text-muted-foreground">Dark panels, hardware UI</span>
+              </div>
+              <span className="font-data text-xs text-muted-foreground">linear-gradient(180deg, #1E2433 0%, #111522 100%)</span>
             </div>
-            <span className="font-data text-xs text-muted-foreground">linear-gradient(180deg, #1E2433 0%, #111522 100%)</span>
           </div>
-          
-          <div className="flex items-stretch -mx-4 mt-8">
-            <div className="w-full h-16 rounded-none" style={{ background: 'linear-gradient(145deg, #9A9573 0%, #848058 100%)' }} />
-          </div>
-          <div className="flex justify-between text-sm">
+
+          {/* Mineral Gradient */}
+          <div className="space-y-3">
+            <div className="h-20 rounded-lg" style={{ background: 'linear-gradient(145deg, #9A9573 0%, #848058 100%)' }} />
             <div>
-              <span className="font-ui font-semibold text-foreground">Mineral Gradient</span>
-              <span className="text-muted-foreground ml-3">Field contexts only</span>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="font-ui font-semibold text-foreground">Mineral Gradient</span>
+                <span className="text-sm text-muted-foreground">Field contexts only</span>
+              </div>
+              <span className="font-data text-xs text-muted-foreground">linear-gradient(145deg, #9A9573 0%, #848058 100%)</span>
             </div>
-            <span className="font-data text-xs text-muted-foreground">linear-gradient(145deg, #9A9573 0%, #848058 100%)</span>
           </div>
         </div>
       </div>
