@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useRef } from "react";
+import { AnimatedLogo, AnimatedLogoRef } from "@/components/AnimatedLogo";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
 import { Navigation } from "@/components/brand/Navigation";
@@ -110,6 +111,7 @@ const SectionHeader = ({
 };
 const Index = () => {
   const heroContentRef = useRef<HTMLDivElement>(null);
+  const heroLogoRef = useRef<AnimatedLogoRef>(null);
 
   // Hero entrance animations
   useEffect(() => {
@@ -117,15 +119,10 @@ const Index = () => {
     if (!hero) return;
     const ctx = gsap.context(() => {
       // Set initial states
-      gsap.set('.hero-logo > div:first-child', {
-        opacity: 0,
-        scale: 0.8,
-        filter: 'blur(10px)'
-      });
       gsap.set('.wordmark-char', {
         opacity: 0,
-        y: 20,
-        rotateX: -90
+        x: -20,
+        filter: 'blur(8px)'
       });
       gsap.set('.hero-version', {
         opacity: 0,
@@ -144,25 +141,28 @@ const Index = () => {
         opacity: 0
       });
 
-      // Create timeline
+      // Trigger logo wave animation after a short delay
+      setTimeout(() => {
+        heroLogoRef.current?.play();
+      }, 200);
+
+      // Create timeline for text animations
       const tl = gsap.timeline({
         defaults: {
           ease: 'power3.out'
-        }
+        },
+        delay: 0.3 // Start after logo begins animating
       });
-      tl.to('.hero-logo > div:first-child', {
+      
+      // Wordmark fades in from left to right with stagger
+      tl.to('.wordmark-char', {
         opacity: 1,
-        scale: 1,
+        x: 0,
         filter: 'blur(0px)',
-        duration: 0.8
-      }).to('.wordmark-char', {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        duration: 0.4,
-        stagger: 0.04,
+        duration: 0.5,
+        stagger: 0.05,
         ease: 'power2.out'
-      }, '-=0.5').to('.hero-version', {
+      }).to('.hero-version', {
         opacity: 1,
         y: 0,
         duration: 0.6
@@ -212,12 +212,12 @@ const Index = () => {
         <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
             {/* Logo + Wordmark */}
-            {/* Logo lockup: 64/45px (Marketing UI) on mobile, 80/55px (Page headers) on desktop */}
+            {/* Logo lockup: 64/45px (Marketing UI) */}
             <div className="hero-logo flex items-center justify-center gap-4 mb-8">
-              <div className="w-16 h-16 md:w-20 md:h-20">
-                <RhosonicsLogo variant="gradient" />
+              <div style={{ width: 64, height: 64 }}>
+                <AnimatedLogo ref={heroLogoRef} variant="gradient" />
               </div>
-              <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden" style={{ fontSize: 'clamp(45px, 5vw, 55px)' }}>
+              <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden" style={{ fontSize: 45 }}>
                 {'RHOSONICS'.split('').map((char, i) => (
                   <span key={i} className="wordmark-char inline-block">{char}</span>
                 ))}
