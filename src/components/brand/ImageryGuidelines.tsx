@@ -12,15 +12,15 @@ export const ImageryGuidelines = () => {
       </div>
 
       {/* Full-width Context Specimens */}
-      <div className="grid md:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
         {/* Field Context */}
         <div className="bg-rho-obsidian relative overflow-hidden">
           <div className="absolute inset-0 opacity-40 bg-pattern-minerals grayscale"></div>
           <div className="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
-          <div className="relative p-10 md:p-16 flex flex-col justify-end min-h-[320px]">
-            <span className="label-tech text-primary mb-3">01 — FIELD CONTEXT</span>
-            <h3 className="font-ui text-3xl md:text-4xl font-bold text-slate-100 mb-4">Real & Gritty</h3>
-            <p className="text-slate-400 text-lg max-w-md">
+          <div className="relative p-6 md:p-10 lg:p-16 flex flex-col justify-end min-h-[240px] md:min-h-[320px]">
+            <span className="label-tech text-primary mb-2 md:mb-3 text-[10px] md:text-xs">01 — FIELD CONTEXT</span>
+            <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-2 md:mb-4">Real & Gritty</h3>
+            <p className="text-slate-400 text-sm md:text-base lg:text-lg max-w-md">
               Authenticity, case studies, proving durability. High contrast, desaturated, selective green accent.
             </p>
           </div>
@@ -29,10 +29,10 @@ export const ImageryGuidelines = () => {
         {/* Engineering Context */}
         <div className="bg-card relative overflow-hidden">
           <div className="absolute inset-0 bg-pattern-semicon opacity-50"></div>
-          <div className="relative p-10 md:p-16 flex flex-col justify-end min-h-[320px]">
-            <span className="label-tech text-primary mb-3">02 — ENGINEERING CONTEXT</span>
-            <h3 className="font-ui text-3xl md:text-4xl font-bold text-foreground mb-4">Abstract & Precise</h3>
-            <p className="text-muted-foreground text-lg max-w-md">
+          <div className="relative p-6 md:p-10 lg:p-16 flex flex-col justify-end min-h-[240px] md:min-h-[320px]">
+            <span className="label-tech text-primary mb-2 md:mb-3 text-[10px] md:text-xs">02 — ENGINEERING CONTEXT</span>
+            <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2 md:mb-4">Abstract & Precise</h3>
+            <p className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-md">
               Concepts, technology explainers, "smart" features. Clean lines, perfect lighting, geometric patterns.
             </p>
           </div>
@@ -46,8 +46,8 @@ export const ImageryGuidelines = () => {
       </BrandCallout>
 
       {/* Do's and Don'ts - Side by side comparison */}
-      <div className="grid md:grid-cols-2 gap-0 border border-border rounded-lg overflow-hidden">
-        <div className="p-8 bg-eco-surface border-r border-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-border rounded-lg overflow-hidden">
+        <div className="p-5 md:p-8 bg-eco-surface md:border-r border-b md:border-b-0 border-border">
           <div className="flex items-center gap-3 mb-6">
             <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg">✓</span>
             <h4 className="font-ui font-bold text-xl text-foreground">Do Use</h4>
@@ -68,7 +68,7 @@ export const ImageryGuidelines = () => {
           </ul>
         </div>
 
-        <div className="p-8 bg-error-surface">
+        <div className="p-5 md:p-8 bg-error-surface">
           <div className="flex items-center gap-3 mb-6">
             <span className="w-8 h-8 bg-error text-white rounded-full flex items-center justify-center text-lg">✕</span>
             <h4 className="font-ui font-bold text-xl text-foreground">Don't Use</h4>

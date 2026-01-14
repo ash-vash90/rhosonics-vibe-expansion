@@ -23,7 +23,7 @@ export const VoiceTone = () => {
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
           {[
             { num: "01", title: "Direct", desc: "Lead with the point. Respect the reader's time." },
             { num: "02", title: "Educational", desc: "Explain how and why, not just what. Knowledge builds trust." },
@@ -32,11 +32,11 @@ export const VoiceTone = () => {
           ].map((pillar, i) => (
             <div 
               key={pillar.num} 
-              className={`p-6 ${i > 0 ? 'border-l border-border' : ''} hover:bg-muted/30 transition-colors`}
+              className={`p-4 md:p-6 ${i > 0 ? 'sm:border-l border-border' : ''} ${i >= 2 ? 'border-t lg:border-t-0' : ''} ${i === 1 ? 'border-t sm:border-t-0' : ''} hover:bg-muted/30 transition-colors`}
             >
-              <span className="font-data text-2xl text-primary/40">{pillar.num}</span>
-              <h3 className="font-ui font-bold text-xl mt-3 mb-2 text-foreground">{pillar.title}</h3>
-              <p className="text-sm text-muted-foreground">{pillar.desc}</p>
+              <span className="font-data text-xl md:text-2xl text-primary/40">{pillar.num}</span>
+              <h3 className="font-ui font-bold text-lg md:text-xl mt-2 md:mt-3 mb-1 md:mb-2 text-foreground">{pillar.title}</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">{pillar.desc}</p>
             </div>
           ))}
         </div>
@@ -49,7 +49,7 @@ export const VoiceTone = () => {
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {[
             ["Cutting-edge", "Ultrasonic measurement"],
             ["Revolutionary", "Proven"],
@@ -60,10 +60,10 @@ export const VoiceTone = () => {
             ["Premium", "Long-term performance"],
             ["World-class", "40+ years experience"],
           ].map(([avoid, prefer]) => (
-            <div key={avoid} className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground line-through flex-1">{avoid}</span>
-              <span className="text-foreground">→</span>
-              <span className="text-sm text-foreground font-medium flex-1">{prefer}</span>
+            <div key={avoid} className="flex items-center gap-2 md:gap-4">
+              <span className="text-xs md:text-sm text-muted-foreground line-through flex-1">{avoid}</span>
+              <span className="text-foreground text-sm">→</span>
+              <span className="text-xs md:text-sm text-foreground font-medium flex-1">{prefer}</span>
             </div>
           ))}
         </div>
@@ -76,15 +76,15 @@ export const VoiceTone = () => {
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           {toneContexts.map((item) => (
-            <div key={item.context} className="group p-6 rounded-lg hover:bg-muted/30 transition-colors">
-              <div className="flex items-center gap-3 mb-5">
-                <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                <span className="font-ui font-semibold text-sm text-foreground">{item.context}</span>
+            <div key={item.context} className="group p-4 md:p-6 rounded-lg hover:bg-muted/30 transition-colors">
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-5">
+                <item.icon className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
+                <span className="font-ui font-semibold text-xs md:text-sm text-foreground">{item.context}</span>
               </div>
-              <span className="font-data text-xs text-primary uppercase tracking-wider block mb-4">{item.tone}</span>
-              <p className="text-sm text-muted-foreground italic border-l-2 border-border pl-4 py-2">"{item.example}"</p>
+              <span className="font-data text-[10px] md:text-xs text-primary uppercase tracking-wider block mb-2 md:mb-4">{item.tone}</span>
+              <p className="text-xs md:text-sm text-muted-foreground italic border-l-2 border-border pl-3 md:pl-4 py-1 md:py-2">"{item.example}"</p>
             </div>
           ))}
         </div>

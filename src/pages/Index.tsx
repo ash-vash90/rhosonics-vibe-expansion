@@ -121,13 +121,13 @@ const SectionHeader = ({
     }, header);
     return () => ctx.revert();
   }, []);
-  return <div ref={headerRef} id={id} className="mb-16 md:mb-20 scroll-mt-24">
-      <div className="flex items-baseline gap-6 mb-6">
-        <span className="section-num font-data text-sm text-muted-foreground">{number}</span>
-        <div className="h-px flex-1 bg-border max-w-24" />
+  return <div ref={headerRef} id={id} className="mb-10 md:mb-16 lg:mb-20 scroll-mt-20 md:scroll-mt-24">
+      <div className="flex items-baseline gap-4 md:gap-6 mb-4 md:mb-6">
+        <span className="section-num font-data text-xs md:text-sm text-muted-foreground">{number}</span>
+        <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
       </div>
-      <h2 className="section-title font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">{title}</h2>
-      <p className="section-subtitle text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">{subtitle}</p>
+      <h2 className="section-title font-ui text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 md:mb-6 tracking-tight">{title}</h2>
+      <p className="section-subtitle text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-2xl">{subtitle}</p>
     </div>;
 };
 const Index = () => {
@@ -275,17 +275,15 @@ const Index = () => {
           />
 
           {/* Content */}
-          <div ref={heroContentRef} className="relative z-10 px-6 md:px-12 lg:px-20 py-16 md:py-20">
+          <div ref={heroContentRef} className="relative z-10 px-4 md:px-12 lg:px-20 py-12 md:py-16 lg:py-20">
             <div className="max-w-4xl mx-auto text-center">
-              {/* Logo + Wordmark */}
-              {/* Logo lockup: 64/45px (Marketing UI) */}
-              <div className="hero-logo flex items-center justify-center gap-4 mb-8">
-                <div style={{ width: 64, height: 64 }}>
+              {/* Logo + Wordmark - responsive sizing */}
+              <div className="hero-logo flex items-center justify-center gap-2 md:gap-4 mb-6 md:mb-8">
+                <div className="w-12 h-12 md:w-16 md:h-16" style={{ minWidth: 48, minHeight: 48 }}>
                   <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden />
                 </div>
                 <span
-                  className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden"
-                  style={{ fontSize: 45 }}
+                  className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-2xl md:text-4xl lg:text-[45px]"
                 >
                   {"RHOSONICS".split("").map((char, i) => (
                     <span key={i} className="wordmark-char inline-block">
@@ -296,12 +294,12 @@ const Index = () => {
               </div>
 
               {/* Main title */}
-              <h1 className="hero-title font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              <h1 className="hero-title font-ui text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-6">
                 Brand System
               </h1>
 
               {/* Subtitle */}
-              <p className="hero-subtitle text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              <p className="hero-subtitle text-base md:text-lg lg:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed px-2">
                 A system of decisions designed to ensure clarity, consistency, and credibility wherever the brand appears.
               </p>
             </div>
@@ -323,7 +321,7 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════════
           MAIN CONTENT
        ═══════════════════════════════════════════════════════════════ */}
-      <main className="px-6 md:px-12 lg:px-20 max-w-[1400px] mx-auto">
+      <main className="px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1400px] mx-auto">
         
         {/* ─────────────────────────────────────────────────────────────
             SECTION 00: ABOUT THIS SYSTEM
