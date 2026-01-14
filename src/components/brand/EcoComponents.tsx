@@ -19,7 +19,7 @@ export const EcoComponents = () => {
       {/* Main Metrics - Full width split */}
       <div className="grid lg:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
         {/* Resource Recovery */}
-        <div className="bg-card p-10 relative overflow-hidden">
+        <div className="bg-eco-surface p-10 relative overflow-hidden">
           <div className="absolute inset-0 bg-pattern-topo opacity-30"></div>
           <div className="relative">
             <div className="flex justify-between items-start mb-8">
@@ -45,7 +45,7 @@ export const EcoComponents = () => {
         </div>
 
         {/* Carbon Reduction */}
-        <div className="bg-background p-10 flex flex-col">
+        <div className="bg-eco-surface/50 p-10 flex flex-col">
           <div className="flex justify-between items-start mb-8">
             <div>
               <span className="label-tech text-primary block mb-2">CARBON IMPACT</span>
