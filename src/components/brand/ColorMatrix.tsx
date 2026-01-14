@@ -141,6 +141,15 @@ export const ColorMatrix = () => {
             <ColorSpecimen name="Success Green" hex="#16A34A" rgb="22, 163, 74" hsl="142 72% 36%" bg="bg-green-600" use="Confirmations" textLight />
           </div>
 
+          {/* State: Info */}
+          <div>
+            <h4 className="font-data text-xs text-info uppercase tracking-wider mb-6">State — Info</h4>
+            <div className="space-y-0">
+              <ColorSpecimen name="Info Blue" hex="#2D8CF0" rgb="45, 140, 240" hsl="210 80% 55%" bg="bg-info" use="Informational callouts" textLight />
+              <ColorSpecimen name="Info Surface" hex="#EBF5FF" rgb="235, 245, 255" hsl="210 80% 96%" bg="bg-info-surface" use="Info backgrounds" border="border-info-border" />
+            </div>
+          </div>
+
           {/* State: Negative */}
           <div>
             <h4 className="font-data text-xs text-red-600 uppercase tracking-wider mb-6">State — Negative</h4>

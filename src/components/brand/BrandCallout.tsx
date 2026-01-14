@@ -1,7 +1,7 @@
-import { AlertTriangle, CheckCircle2, Info } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Info, Lightbulb } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type CalloutVariant = "rule" | "note" | "avoid";
+type CalloutVariant = "rule" | "note" | "avoid" | "info";
 
 interface BrandCalloutProps {
   variant?: CalloutVariant;
@@ -12,23 +12,36 @@ interface BrandCalloutProps {
 
 const variantStyles: Record<CalloutVariant, {
   container: string;
-  icon: React.ElementType;
+  iconBg: string;
   iconColor: string;
+  icon: React.ElementType;
+  iconSymbol?: string;
 }> = {
   rule: {
-    container: "bg-primary/5 border-primary/20 border-l-primary",
+    container: "bg-muted/50 border-l-4 border-primary",
+    iconBg: "bg-primary",
+    iconColor: "text-primary-foreground",
     icon: CheckCircle2,
-    iconColor: "text-primary",
+    iconSymbol: "✓",
   },
   note: {
-    container: "bg-slate-100 border-slate-200 border-l-slate-400",
+    container: "bg-muted/50 border-l-4 border-muted-foreground",
+    iconBg: "bg-muted-foreground",
+    iconColor: "text-background",
     icon: Info,
-    iconColor: "text-slate-500",
   },
   avoid: {
-    container: "bg-amber-50 border-amber-200 border-l-amber-500",
+    container: "bg-amber-50 border-l-4 border-amber-500",
+    iconBg: "bg-amber-500",
+    iconColor: "text-white",
     icon: AlertTriangle,
-    iconColor: "text-amber-600",
+    iconSymbol: "!",
+  },
+  info: {
+    container: "bg-info-surface border-l-4 border-info",
+    iconBg: "bg-info",
+    iconColor: "text-white",
+    icon: Lightbulb,
   },
 };
 
@@ -44,21 +57,29 @@ export const BrandCallout = ({
   return (
     <div 
       className={cn(
-        "p-5 border border-l-4 rounded-lg max-w-[600px]",
+        "flex items-start gap-4 p-6 rounded-r-lg",
         styles.container,
         className
       )}
     >
-      <div className="flex items-start gap-3">
-        <Icon className={cn("w-4 h-4 mt-0.5 shrink-0", styles.iconColor)} />
-        <div className="flex-1 min-w-0">
-          <h4 className="font-ui font-semibold text-sm text-foreground mb-1">
-            {title}
-          </h4>
-          <div className="text-sm text-muted-foreground leading-relaxed">
-            {children}
-          </div>
-        </div>
+      <div className={cn(
+        "w-8 h-8 rounded flex items-center justify-center flex-shrink-0",
+        styles.iconBg,
+        styles.iconColor
+      )}>
+        {styles.iconSymbol ? (
+          <span className="font-data text-sm font-bold">{styles.iconSymbol}</span>
+        ) : (
+          <Icon className="w-4 h-4" />
+        )}
+      </div>
+      <div className="flex-1 min-w-0">
+        <h4 className="font-ui font-bold text-foreground mb-1">
+          {title}
+        </h4>
+        <p className="text-muted-foreground leading-relaxed">
+          {children}
+        </p>
       </div>
     </div>
   );

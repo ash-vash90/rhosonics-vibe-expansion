@@ -1,4 +1,5 @@
 import { Beaker, Cpu, Anchor, Recycle } from "lucide-react";
+import { BrandCallout } from "./BrandCallout";
 
 export const IndustryApplications = () => {
   return (
@@ -94,41 +95,35 @@ export const IndustryApplications = () => {
       {/* Pattern Examples - Horizontal strip */}
       <div>
         <h3 className="label-tech text-muted-foreground mb-6">INDUSTRY PATTERNS</h3>
-      <p className="text-muted-foreground mb-8 max-w-2xl">
-        Patterns are contextual, not expressive. They help users orient themselves, not brand the interface.
-      </p>
-      
-      <div className="flex items-stretch border-t border-b border-border">
-        {[
-          { pattern: "bg-pattern-minerals", name: "Minerals", desc: "Crystal lattice / field ops", borderColor: "border-mineral-neutral/50" },
-          { pattern: "bg-pattern-semicon", name: "Semiconductor", desc: "Circuit / precision tech", borderColor: "border-border" },
-          { pattern: "bg-pattern-dredging", name: "Dredging", desc: "Fluid waves / flow", borderColor: "border-border" },
-        ].map((item, idx) => (
-          <div key={idx} className="flex-1 py-8 px-6 border-r border-border last:border-r-0 group hover:bg-slate-50/50 transition-colors">
-            <div className="flex items-center gap-4">
-              <div className={`w-16 h-16 ${item.pattern} rounded-lg border ${item.borderColor} flex-shrink-0`}></div>
-              <div>
-                <div className="font-ui font-medium text-foreground">{item.name}</div>
-                <div className="text-sm text-muted-foreground">{item.desc}</div>
+        <p className="text-muted-foreground mb-8 max-w-2xl">
+          Patterns are contextual, not expressive. They help users orient themselves, not brand the interface.
+        </p>
+        
+        <div className="flex items-stretch border-t border-b border-border">
+          {[
+            { pattern: "bg-pattern-minerals", name: "Minerals", desc: "Crystal lattice / field ops", borderColor: "border-mineral-neutral/50" },
+            { pattern: "bg-pattern-semicon", name: "Semiconductor", desc: "Circuit / precision tech", borderColor: "border-border" },
+            { pattern: "bg-pattern-dredging", name: "Dredging", desc: "Fluid waves / flow", borderColor: "border-border" },
+          ].map((item, idx) => (
+            <div key={idx} className="flex-1 py-8 px-6 border-r border-border last:border-r-0 group hover:bg-muted/30 transition-colors">
+              <div className="flex items-center gap-4">
+                <div className={`w-16 h-16 ${item.pattern} rounded-lg border ${item.borderColor} flex-shrink-0`}></div>
+                <div>
+                  <div className="font-ui font-medium text-foreground">{item.name}</div>
+                  <div className="text-sm text-muted-foreground">{item.desc}</div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
       </div>
 
       {/* Callout */}
-      <div className="flex items-start gap-4 p-6 bg-muted/50 border-l-4 border-primary rounded-r-lg">
-        <div className="w-8 h-8 bg-primary text-primary-foreground rounded flex items-center justify-center font-data text-sm flex-shrink-0">!</div>
-        <div>
-          <h4 className="font-ui font-bold text-foreground mb-1">Why This Matters</h4>
-          <p className="text-muted-foreground">
-            Industry-specific patterns create instant recognition and reduce cognitive load. 
-            An operator should know they're looking at a minerals interface before reading any text.
-            The underlying data model and measurement principles remain constant across all industries.
-          </p>
-        </div>
-      </div>
+      <BrandCallout variant="info" title="Why This Matters">
+        Industry-specific patterns create instant recognition and reduce cognitive load. 
+        An operator should know they're looking at a minerals interface before reading any text.
+        The underlying data model and measurement principles remain constant across all industries.
+      </BrandCallout>
     </section>
   );
 };
