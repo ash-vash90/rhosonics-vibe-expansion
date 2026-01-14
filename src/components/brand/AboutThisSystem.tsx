@@ -1,64 +1,108 @@
-import { Palette, Code, Megaphone, Users } from "lucide-react";
+import { Palette, Code, Megaphone, Users, ArrowRight } from "lucide-react";
 
 const AboutThisSystem = () => {
   return (
-    <section className="space-y-20 md:space-y-28">
-      {/* Hero statement - full width, no boxes */}
+    <section className="space-y-24 md:space-y-32">
+      {/* Hero statement - elegant intro */}
       <div className="max-w-3xl">
-        <p className="text-lg md:text-xl text-foreground leading-relaxed mb-10">
-          A system of decisions designed to ensure clarity, consistency, and credibility 
+        <p className="text-xl md:text-2xl text-foreground leading-relaxed mb-12 font-light">
+          A system of decisions designed to ensure{" "}
+          <span className="font-semibold text-primary">clarity</span>,{" "}
+          <span className="font-semibold text-primary">consistency</span>, and{" "}
+          <span className="font-semibold text-primary">credibility</span>{" "}
           wherever the Rhosonics brand appears.
         </p>
         
-        {/* The tension - inline statement, no card */}
-        <div className="border-l-4 border-primary pl-6 py-2">
-          <p className="text-muted-foreground mb-5">The system resolves a fundamental tension:</p>
-          <div className="space-y-3">
-            <p className="text-foreground">
-              <strong>Industrial environments</strong> — precision and reliability are non-negotiable
+        {/* The tension - refined callout */}
+        <div className="relative">
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-primary/60 to-transparent rounded-full" />
+          <div className="pl-8 py-4">
+            <p className="text-sm font-data uppercase tracking-wider text-muted-foreground mb-6">
+              The Core Tension
             </p>
-            <p className="text-foreground">
-              <strong>Technical communication</strong> — data and insight require clarity
-            </p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 group">
+                <div className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
+                <p className="text-lg text-foreground">
+                  <strong className="font-semibold">Industrial environments</strong>
+                  <span className="text-muted-foreground ml-2">— precision and reliability are non-negotiable</span>
+                </p>
+              </div>
+              <div className="flex items-center gap-4 group">
+                <div className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
+                <p className="text-lg text-foreground">
+                  <strong className="font-semibold">Technical communication</strong>
+                  <span className="text-muted-foreground ml-2">— data and insight require clarity</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* How to use - simple numbered steps, no box */}
+      {/* Two-column content with refined styling */}
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-        <div>
-          <h3 className="font-ui text-lg font-semibold text-foreground mb-8">How to use this</h3>
-          <div className="space-y-5">
+        {/* How to use - numbered with subtle lines */}
+        <div className="relative">
+          <div className="absolute -left-4 top-0 bottom-0 w-px bg-gradient-to-b from-border via-border to-transparent hidden lg:block" />
+          
+          <h3 className="font-data text-xs uppercase tracking-widest text-primary mb-10">
+            How to use this
+          </h3>
+          
+          <div className="space-y-8">
             {[
-              "Each section explains what exists and why",
-              "Usage guidelines clarify how elements should be applied",
-              "Constraints define where elements should not be used",
-              "The goal is shared understanding, so decisions can be made confidently"
+              { text: "Each section explains what exists and why", emphasis: "what exists" },
+              { text: "Usage guidelines clarify how elements should be applied", emphasis: "how elements" },
+              { text: "Constraints define where elements should not be used", emphasis: "should not" },
+              { text: "The goal is shared understanding, so decisions can be made confidently", emphasis: "confidently" }
             ].map((step, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <span className="font-data text-sm text-primary w-6 flex-shrink-0">{String(i + 1).padStart(2, '0')}</span>
-                <p className="text-muted-foreground">{step}</p>
+              <div key={i} className="flex items-start gap-6 group">
+                <div className="relative">
+                  <span className="font-data text-2xl font-light text-primary/30 group-hover:text-primary transition-colors">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className="pt-1">
+                  <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
+                    {step.text}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Who this is for - inline icon list, no boxes */}
+        {/* Who this is for - elegant cards */}
         <div>
-          <h3 className="font-ui text-lg font-semibold text-foreground mb-8">Who this is for</h3>
-          <div className="space-y-7">
+          <h3 className="font-data text-xs uppercase tracking-widest text-primary mb-10">
+            Who this is for
+          </h3>
+          
+          <div className="grid gap-4">
             {[
-              { icon: Palette, title: "Designers", desc: "Interfaces, dashboards, tools" },
-              { icon: Megaphone, title: "Marketers", desc: "Campaigns, presentations" },
-              { icon: Code, title: "Engineers", desc: "Technical documentation" },
-              { icon: Users, title: "Partners", desc: "External brand representation" },
+              { icon: Palette, title: "Designers", desc: "Interfaces, dashboards, tools", color: "from-violet-500/10 to-transparent" },
+              { icon: Megaphone, title: "Marketers", desc: "Campaigns, presentations", color: "from-amber-500/10 to-transparent" },
+              { icon: Code, title: "Engineers", desc: "Technical documentation", color: "from-primary/10 to-transparent" },
+              { icon: Users, title: "Partners", desc: "External brand representation", color: "from-sky-500/10 to-transparent" },
             ].map((item) => (
-              <div key={item.title} className="flex items-center gap-4 group">
-                <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                <div className="flex items-baseline gap-3">
-                  <span className="font-ui font-semibold text-foreground">{item.title}</span>
+              <div 
+                key={item.title} 
+                className="group relative flex items-center gap-5 p-5 rounded-xl border border-transparent hover:border-border hover:bg-muted/30 transition-all duration-300 cursor-default"
+              >
+                {/* Subtle gradient background on hover */}
+                <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                
+                <div className="relative z-10 w-11 h-11 rounded-lg bg-muted/50 group-hover:bg-background flex items-center justify-center transition-colors">
+                  <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+                
+                <div className="relative z-10 flex-1">
+                  <span className="font-ui font-semibold text-foreground block">{item.title}</span>
                   <span className="text-sm text-muted-foreground">{item.desc}</span>
                 </div>
+                
+                <ArrowRight className="relative z-10 w-4 h-4 text-muted-foreground/0 group-hover:text-primary group-hover:translate-x-1 transition-all" />
               </div>
             ))}
           </div>
