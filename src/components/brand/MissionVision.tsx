@@ -17,7 +17,7 @@ export const MissionVision = () => {
             </div>
             <h3 className="font-ui font-bold text-3xl md:text-4xl text-foreground mb-4">Measure What Matters</h3>
             <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
-              We build ultrasonic measurement systems. Industries use them to optimize processes and reduce waste.
+              We build ultrasonic measurement systems in partnership with the industries that rely on them. Better measurement leads to better decisions.
             </p>
           </div>
         </div>
@@ -32,9 +32,9 @@ export const MissionVision = () => {
               </div>
               <span className="label-tech text-primary">VISION</span>
             </div>
-            <h3 className="font-ui font-bold text-3xl md:text-4xl text-slate-100 mb-4">Every Process Optimized</h3>
+            <h3 className="font-ui font-bold text-3xl md:text-4xl text-slate-100 mb-4">Progress That Matters</h3>
             <p className="text-slate-400 text-lg leading-relaxed max-w-md">
-              Precision measurement as the foundation of sustainability. From mining to semiconductors.
+              Every process optimized, every industry more sustainable. Through partnership, expertise, and measurable impact.
             </p>
           </div>
         </div>

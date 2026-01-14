@@ -43,9 +43,9 @@ export const VoiceTone = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0">
           {[
             { num: "01", title: "Direct", desc: "Lead with the point. Respect the reader's time." },
-            { num: "02", title: "Technical", desc: "Precise terminology. Our audience appreciates specificity." },
-            { num: "03", title: "Confident", desc: "40+ years of expertise. We measure, we know, we deliver." },
-            { num: "04", title: "Practical", desc: "Focus on ROI. Abstract claims are meaningless without context." },
+            { num: "02", title: "Educational", desc: "Explain how and why, not just what. Knowledge builds trust." },
+            { num: "03", title: "Evidence-Based", desc: "Measurable impact over abstract claims. Show the data." },
+            { num: "04", title: "Partnership-First", desc: "The reader's success is our success. Write for long-term relationships." },
           ].map((pillar, i) => (
             <div 
               key={pillar.num} 
@@ -72,6 +72,10 @@ export const VoiceTone = () => {
             ["Revolutionary", "Proven"],
             ["Solution", "System / Sensor"],
             ["Best-in-class", "[Cite specific metric]"],
+            ["Relationship", "Partnership"],
+            ["Results", "Measurable impact"],
+            ["Premium", "Long-term performance"],
+            ["World-class", "40+ years experience"],
           ].map(([avoid, prefer]) => (
             <div key={avoid} className="flex items-center gap-4">
               <span className="text-sm text-muted-foreground line-through flex-1">{avoid}</span>
