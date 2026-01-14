@@ -1,8 +1,74 @@
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { BrandCallout } from "./BrandCallout";
-import { Download } from "lucide-react";
+import { Download, FileImage, FileCode } from "lucide-react";
+import { 
+  logoVariants, 
+  generateLockupSVG, 
+  generateIconOnlySVG,
+  downloadSVG, 
+  downloadPNG 
+} from "@/lib/logoExport";
+import { useState } from "react";
 
 export const LogoAssets = () => {
+  const [downloading, setDownloading] = useState<string | null>(null);
+
+  const handleDownloadSVG = (variantId: string) => {
+    const variant = logoVariants.find(v => v.id === variantId);
+    if (!variant) return;
+    
+    const svg = variant.hasText ? generateLockupSVG(variant) : generateIconOnlySVG(variant);
+    downloadSVG(svg, `rhosonics-${variantId}`);
+  };
+
+  const handleDownloadPNG = async (variantId: string) => {
+    const variant = logoVariants.find(v => v.id === variantId);
+    if (!variant) return;
+    
+    setDownloading(variantId);
+    try {
+      const svg = variant.hasText ? generateLockupSVG(variant) : generateIconOnlySVG(variant);
+      await downloadPNG(svg, `rhosonics-${variantId}`, 2);
+    } finally {
+      setDownloading(null);
+    }
+  };
+
+  // Render a preview of the logo variant
+  const renderVariantPreview = (variant: typeof logoVariants[0]) => {
+    const bgClass = variant.background 
+      ? variant.background.includes("#73B82E") 
+        ? "bg-gradient-to-br from-primary to-primary-dark" 
+        : "bg-gradient-to-br from-slate-800 to-slate-950"
+      : variant.textColor === "#ffffff" 
+        ? "bg-slate-900" 
+        : "bg-white border border-border";
+
+    return (
+      <div className={`${bgClass} rounded-lg p-8 flex items-center justify-center min-h-[120px]`}>
+        {variant.hasText ? (
+          <div className="flex items-center gap-4">
+            <RhosonicsLogo 
+              variant={variant.iconFill === "white" ? "white" : "gradient"} 
+              className="w-12 h-12" 
+            />
+            <span 
+              className="font-data text-lg font-bold tracking-wider"
+              style={{ color: variant.textColor }}
+            >
+              RHOSONICS
+            </span>
+          </div>
+        ) : (
+          <RhosonicsLogo 
+            variant={variant.iconFill === "white" ? "white" : "gradient"} 
+            className="w-16 h-16" 
+          />
+        )}
+      </div>
+    );
+  };
+
   return (
     <section id="logo-assets" className="space-y-20">
       {/* Intro */}
@@ -15,6 +81,49 @@ export const LogoAssets = () => {
         <BrandCallout variant="avoid" title="Misuse Warning">
           If the logo draws attention to itself, it is being misused.
         </BrandCallout>
+      </div>
+
+      {/* Logo Lockups - MAIN DOWNLOAD SECTION */}
+      <div>
+        <div className="flex items-center gap-4 mb-10">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Logo Lockups</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {logoVariants.map((variant) => (
+            <div key={variant.id} className="group">
+              {/* Preview */}
+              {renderVariantPreview(variant)}
+              
+              {/* Info & Downloads */}
+              <div className="mt-4 space-y-3">
+                <div>
+                  <h4 className="font-ui font-semibold text-sm text-foreground">{variant.name}</h4>
+                  <p className="text-xs text-muted-foreground">{variant.description}</p>
+                </div>
+                
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleDownloadSVG(variant.id)}
+                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors"
+                  >
+                    <FileCode className="w-3.5 h-3.5" />
+                    SVG
+                  </button>
+                  <button
+                    onClick={() => handleDownloadPNG(variant.id)}
+                    disabled={downloading === variant.id}
+                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors disabled:opacity-50"
+                  >
+                    <FileImage className="w-3.5 h-3.5" />
+                    {downloading === variant.id ? "..." : "PNG @2x"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Usage Rules - inline list, no cards */}
@@ -42,7 +151,7 @@ export const LogoAssets = () => {
       {/* Logo Variants - HORIZONTAL STRIP */}
       <div>
         <div className="flex items-center gap-4 mb-8">
-          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Approved Variants</h3>
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Quick Reference</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         
