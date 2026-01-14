@@ -158,8 +158,8 @@ const Index = () => {
           opacity: 1,
           x: 0,
           filter: "blur(0px)",
-          duration: 0.5,
-          stagger: 0.05,
+          duration: 0.3,
+          stagger: 0.03,
           ease: "power2.out",
         })
         .to(
@@ -167,9 +167,9 @@ const Index = () => {
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.35,
           },
-          "-=0.2"
+          "-=0.15"
         )
         .to(
           ".hero-title",
@@ -177,26 +177,26 @@ const Index = () => {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.8,
+            duration: 0.45,
           },
-          "-=0.3"
+          "-=0.2"
         )
         .to(
           ".hero-subtitle",
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.35,
           },
-          "-=0.4"
+          "-=0.25"
         )
         .to(
           ".hero-scroll",
           {
             opacity: 1,
-            duration: 0.8,
+            duration: 0.4,
           },
-          "-=0.2"
+          "-=0.15"
         );
 
       const startText = () => textTl.play(0);
