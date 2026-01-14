@@ -82,10 +82,10 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           {
             opacity: 1,
             scale: 1,
-            duration: 0.6 + i * 0.05,
+            duration: 0.35 + i * 0.03,
             ease: "sine.out",
           },
-          i * 0.15
+          i * 0.1
         );
       });
 
