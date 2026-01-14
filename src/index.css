@@ -34,6 +34,11 @@
     --info-surface: 210 80% 96%;
     --info-border: 210 70% 88%;
     
+    /* Warning Amber */
+    --warning: 32 95% 44%;
+    --warning-surface: 48 96% 89%;
+    --warning-border: 48 90% 80%;
+    
     /* Slate Scale - WCAG AA compliant (4.5:1 against --slate-50 background) */
     --slate-50: 210 40% 98%;
     --slate-100: 210 40% 96%;
