@@ -65,6 +65,34 @@ export const MasterLockup = () => {
         </div>
       </div>
 
+      {/* Sizing Ratio Rule */}
+      <div className="bg-slate-50 border border-border rounded-lg p-8 mb-16">
+        <div className="flex flex-col md:flex-row md:items-center gap-8">
+          <div className="flex-shrink-0">
+            <div className="flex items-center gap-4 bg-white rounded-lg p-6 border border-border">
+              <div className="relative">
+                <div className="w-[55px] h-[55px]"><RhosonicsLogo variant="gradient" /></div>
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 font-data text-[10px] text-primary whitespace-nowrap">137.5%</div>
+              </div>
+              <div className="relative">
+                <span className="font-logo text-[40px] text-foreground tracking-wide uppercase leading-none">RHOSONICS</span>
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 font-data text-[10px] text-muted-foreground">100%</div>
+              </div>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="label-tech text-primary mb-3">ICON-TO-TEXT RATIO</h3>
+            <p className="text-muted-foreground mb-4">
+              The logo icon must always be <span className="font-data text-foreground">37.5%</span> larger than the text height. 
+              This ratio ensures visual balance between the geometric mark and the wordmark.
+            </p>
+            <div className="font-data text-xs text-muted-foreground bg-slate-100 rounded px-3 py-2 inline-block">
+              icon_size = text_size × 1.375
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Usage Rules */}
       <div className="grid md:grid-cols-2 gap-px bg-border mb-16">
         <div className="bg-background p-8">
@@ -72,6 +100,7 @@ export const MasterLockup = () => {
           <ul className="space-y-4">
             {[
               "Use as provided. No modifications.",
+              "Icon must be 37.5% larger than text height.",
               "Maintain clear space equal to smallest arc height.",
               "Minimum size: 40px digital, 10mm print.",
               "Below minimum, use icon-only mark."
@@ -89,6 +118,7 @@ export const MasterLockup = () => {
           <ul className="space-y-4">
             {[
               "Stretch or distort proportions",
+              "Change the icon-to-text ratio",
               "Rotate or skew the lockup",
               "Add shadows, glows, or effects",
               "Place on busy or conflicting backgrounds"
