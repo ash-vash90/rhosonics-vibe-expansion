@@ -42,110 +42,122 @@ export const IconGuidelines = () => {
   ];
 
   const iconStates = [
-    { icon: CheckCircle, state: "Success", color: "text-green-500", bg: "bg-green-500/10" },
-    { icon: AlertTriangle, state: "Warning", color: "text-amber-500", bg: "bg-amber-500/10" },
-    { icon: XCircle, state: "Error", color: "text-red-500", bg: "bg-red-500/10" },
-    { icon: Info, state: "Info", color: "text-blue-500", bg: "bg-blue-500/10" },
+    { icon: CheckCircle, state: "Success", color: "text-green-600", bg: "bg-green-600" },
+    { icon: AlertTriangle, state: "Warning", color: "text-amber-500", bg: "bg-amber-500" },
+    { icon: XCircle, state: "Error", color: "text-red-500", bg: "bg-red-500" },
+    { icon: Info, state: "Info", color: "text-blue-500", bg: "bg-blue-500" },
   ];
 
   return (
-    <section id="icons" className="mb-32">
-      <h2 className="section-header">Icon System</h2>
-      
-      {/* Two-column: Content + Callout */}
-      <div className="grid lg:grid-cols-3 gap-8 mb-12">
-        <div className="lg:col-span-2">
-          <p className="text-muted-foreground text-lg mb-6">
+    <section id="icons" className="space-y-20 mt-20">
+      {/* Intro + Rules */}
+      <div className="grid lg:grid-cols-5 gap-12">
+        <div className="lg:col-span-3">
+          <p className="text-muted-foreground text-lg mb-8">
             Icons support recognition and scanning — not decoration. 
             Simple, geometric, purposeful. Every icon should feel like it belongs in a control room.
           </p>
 
-          {/* Design Rules */}
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            <ul className="space-y-2 text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Simple geometric forms, consistent stroke weight</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Design for clarity at small sizes</span>
-              </li>
-            </ul>
-            <ul className="space-y-2 text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>No decorative or expressive styling</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Icons reinforce text — never compete with it</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Icon Sizes */}
-          <div className="card-base p-6">
-            <h3 className="label-tech text-slate-500 mb-6">ICON SIZES</h3>
-            <div className="flex flex-wrap items-end gap-8">
-              {iconSizes.map((size) => (
-                <div key={size.name} className="flex flex-col items-center gap-2">
-                  <Activity className="text-primary" style={{ width: size.size, height: size.size }} />
-                  <span className="font-data text-xs text-muted-foreground">{size.size}px</span>
-                  <span className="text-xs text-slate-400">{size.use}</span>
-                </div>
-              ))}
-            </div>
+          {/* Design Rules - inline */}
+          <div className="flex flex-wrap gap-x-8 gap-y-3">
+            {[
+              "Simple geometric forms, consistent stroke weight",
+              "Design for clarity at small sizes",
+              "No decorative or expressive styling",
+              "Icons reinforce text — never compete"
+            ].map((rule, i) => (
+              <span key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="w-1 h-1 bg-primary rounded-full" />
+                {rule}
+              </span>
+            ))}
           </div>
         </div>
 
-        {/* Sidebar */}
-        <div>
+        <div className="lg:col-span-2">
           <BrandCallout variant="avoid" title="Icon Failure Test">
             If an icon needs explanation, it has failed.
           </BrandCallout>
         </div>
       </div>
 
-      {/* Icon Categories - full width */}
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
-        {iconCategories.map((category) => (
-          <div key={category.name} className="card-base p-6">
-            <h4 className="label-tech text-slate-500 mb-4">{category.name.toUpperCase()}</h4>
-            <div className="flex flex-wrap gap-4">
-              {category.icons.map((item) => (
-                <div key={item.label} className="flex flex-col items-center gap-1">
-                  <div className="w-12 h-12 rounded-lg bg-muted/50 flex items-center justify-center">
-                    <item.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">{item.label}</span>
-                </div>
-              ))}
+      {/* Icon Sizes - INLINE SPECIMENS */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Icon Sizes</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        {/* Horizontal inline specimen strip */}
+        <div className="flex items-end gap-0 -mx-6 border-y border-border">
+          {iconSizes.map((size, i) => (
+            <div 
+              key={size.name} 
+              className={`flex-1 py-8 flex flex-col items-center gap-4 ${i > 0 ? 'border-l border-border' : ''}`}
+            >
+              <Activity className="text-primary" style={{ width: size.size, height: size.size }} />
+              <div className="text-center">
+                <span className="font-data text-sm text-foreground block">{size.size}px</span>
+                <span className="text-xs text-muted-foreground">{size.use}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* State Indicators - full width */}
-      <div className="grid lg:grid-cols-2 gap-8">
-        <div className="card-base p-6">
-          <h3 className="label-tech text-slate-500 mb-6">STATE INDICATORS</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {iconStates.map((item) => (
-              <div key={item.state} className={`p-4 rounded-lg ${item.bg} flex items-center gap-3`}>
+      {/* Icon Categories - inline strips per category */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Categories</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="space-y-6">
+          {iconCategories.map((category) => (
+            <div key={category.name} className="flex items-center gap-6 py-4 border-b border-border/50">
+              <span className="font-data text-xs text-muted-foreground uppercase w-28 flex-shrink-0">{category.name}</span>
+              <div className="flex gap-8">
+                {category.icons.map((item) => (
+                  <div key={item.label} className="flex items-center gap-2 group">
+                    <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* State Indicators - horizontal strip */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">State Indicators</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid lg:grid-cols-5 gap-8">
+          {/* State colors strip */}
+          <div className="lg:col-span-3 flex gap-0 border border-border overflow-hidden rounded-lg">
+            {iconStates.map((item, i) => (
+              <div 
+                key={item.state} 
+                className={`flex-1 py-6 flex flex-col items-center gap-3 ${i > 0 ? 'border-l border-border' : ''}`}
+              >
+                <div className={`w-3 h-3 ${item.bg} rounded-full`} />
                 <item.icon className={`w-5 h-5 ${item.color}`} />
-                <span className={`text-sm font-medium ${item.color}`}>{item.state}</span>
+                <span className="text-xs text-muted-foreground">{item.state}</span>
               </div>
             ))}
           </div>
-        </div>
-        
-        <div className="p-6 bg-slate-50 border border-slate-200 rounded-lg">
-          <h4 className="font-ui font-semibold text-foreground mb-3">Color communicates state</h4>
-          <p className="text-muted-foreground text-sm">
-            State colors are functional, not decorative. Green = success, Amber = warning, 
-            Red = error, Blue = informational. Never use these colors outside their semantic meaning.
-          </p>
+          
+          {/* Explanation */}
+          <div className="lg:col-span-2 border-l-2 border-border pl-6">
+            <p className="text-muted-foreground text-sm">
+              State colors are functional, not decorative. Green = success, Amber = warning, 
+              Red = error, Blue = informational. Never use these colors outside their semantic meaning.
+            </p>
+          </div>
         </div>
       </div>
     </section>

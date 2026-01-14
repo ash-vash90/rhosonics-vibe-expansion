@@ -27,97 +27,115 @@ export const VoiceTone = () => {
   ];
 
   return (
-    <section id="voice" className="mb-32">
-      <h2 className="section-header">Voice & Tone</h2>
-      
-      {/* Two-column: Pillars + Terminology */}
-      <div className="grid lg:grid-cols-3 gap-8 mb-12">
-        <div className="lg:col-span-2">
-          <p className="text-muted-foreground text-lg mb-8">
-            Our reader skips to the specification table. We put it first.
-          </p>
+    <section id="voice" className="space-y-20">
+      {/* Hero statement */}
+      <p className="text-xl md:text-2xl text-foreground max-w-2xl">
+        Our reader skips to the specification table. We put it first.
+      </p>
 
-          {/* Voice Pillars */}
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { num: "01", title: "Direct", desc: "Lead with the point. Respect the reader's time." },
-              { num: "02", title: "Technical", desc: "Precise terminology. Our audience appreciates specificity." },
-              { num: "03", title: "Confident", desc: "40+ years of expertise. We measure, we know, we deliver." },
-              { num: "04", title: "Practical", desc: "Focus on ROI. Abstract claims are meaningless without context." },
-            ].map((pillar) => (
-              <div key={pillar.num} className="card-base p-5">
-                <span className="font-logo text-lg text-primary">{pillar.num}</span>
-                <h3 className="font-ui font-bold text-lg mt-2 mb-1">{pillar.title}</h3>
-                <p className="text-sm text-muted-foreground">{pillar.desc}</p>
-              </div>
-            ))}
-          </div>
+      {/* Voice Pillars - numbered list, no cards */}
+      <div>
+        <div className="flex items-center gap-4 mb-10">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Voice Pillars</h3>
+          <div className="h-px flex-1 bg-border" />
         </div>
-
-        {/* Sidebar: Terminology */}
-        <div className="card-base p-0 overflow-hidden h-fit">
-          <div className="p-4 bg-slate-50 border-b border-border">
-            <h3 className="label-tech text-slate-500">PREFERRED TERMINOLOGY</h3>
-          </div>
-          <table className="w-full">
-            <tbody>
-              {[
-                ["Cutting-edge", "Ultrasonic measurement"],
-                ["Revolutionary", "Proven"],
-                ["Solution", "System / Sensor"],
-                ["Best-in-class", "[Cite specific metric]"],
-              ].map(([avoid, prefer], i) => (
-                <tr key={i} className="border-b border-slate-100 last:border-0">
-                  <td className="px-4 py-2 text-sm text-muted-foreground line-through">{avoid}</td>
-                  <td className="px-4 py-2 text-sm text-foreground font-medium">{prefer}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Tone by Context - full width */}
-      <h3 className="label-tech text-slate-500 mb-4">TONE BY CONTEXT</h3>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-        {toneContexts.map((item, i) => (
-          <div key={i} className="card-base p-5">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <item.icon className="w-5 h-5 text-primary" />
-              </div>
+        
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0">
+          {[
+            { num: "01", title: "Direct", desc: "Lead with the point. Respect the reader's time." },
+            { num: "02", title: "Technical", desc: "Precise terminology. Our audience appreciates specificity." },
+            { num: "03", title: "Confident", desc: "40+ years of expertise. We measure, we know, we deliver." },
+            { num: "04", title: "Practical", desc: "Focus on ROI. Abstract claims are meaningless without context." },
+          ].map((pillar, i) => (
+            <div 
+              key={pillar.num} 
+              className={`p-6 ${i > 0 ? 'border-l border-border' : ''} hover:bg-muted/30 transition-colors`}
+            >
+              <span className="font-data text-2xl text-primary/40">{pillar.num}</span>
+              <h3 className="font-ui font-bold text-xl mt-3 mb-2 text-foreground">{pillar.title}</h3>
+              <p className="text-sm text-muted-foreground">{pillar.desc}</p>
             </div>
-            <h4 className="font-ui font-semibold text-sm mb-1">{item.context}</h4>
-            <span className="text-xs text-primary block mb-2">{item.tone}</span>
-            <p className="text-sm text-muted-foreground italic">"{item.example}"</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* Voice Examples - full width */}
-      <h3 className="label-tech text-slate-500 mb-4">VOICE IN PRACTICE</h3>
-      <div className="space-y-4">
-        {voiceExamples.map((example, i) => (
-          <div key={i} className="card-base p-6">
-            <div className="label-tech text-muted-foreground mb-4">{example.context}</div>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-red-50 rounded-lg border border-red-100">
-                <div className="flex items-center gap-2 mb-2">
+      {/* Terminology - clean table */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Preferred Terminology</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            ["Cutting-edge", "Ultrasonic measurement"],
+            ["Revolutionary", "Proven"],
+            ["Solution", "System / Sensor"],
+            ["Best-in-class", "[Cite specific metric]"],
+          ].map(([avoid, prefer]) => (
+            <div key={avoid} className="flex items-center gap-4">
+              <span className="text-sm text-muted-foreground line-through flex-1">{avoid}</span>
+              <span className="text-foreground">→</span>
+              <span className="text-sm text-foreground font-medium flex-1">{prefer}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Tone by Context - horizontal timeline */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Tone by Context</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {toneContexts.map((item) => (
+            <div key={item.context} className="group">
+              <div className="flex items-center gap-3 mb-4">
+                <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                <span className="font-ui font-semibold text-sm text-foreground">{item.context}</span>
+              </div>
+              <span className="font-data text-xs text-primary uppercase tracking-wider block mb-3">{item.tone}</span>
+              <p className="text-sm text-muted-foreground italic border-l-2 border-border pl-3">"{item.example}"</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Voice Examples - SIDE BY SIDE COMPARISON */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Voice in Practice</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="space-y-0">
+          {voiceExamples.map((example, i) => (
+            <div 
+              key={i} 
+              className="grid md:grid-cols-2 gap-0 border-b border-border last:border-b-0"
+            >
+              {/* Don't side */}
+              <div className="p-6 bg-red-50/50 border-l-4 border-red-300">
+                <div className="flex items-center gap-2 mb-3">
                   <XCircle className="w-4 h-4 text-destructive" />
-                  <span className="font-ui font-medium text-destructive">Don't</span>
+                  <span className="font-data text-xs text-destructive uppercase tracking-wider">{example.context} — Don't</span>
                 </div>
-                <p className="text-sm text-muted-foreground italic">"{example.dont}"</p>
+                <p className="text-muted-foreground italic">"{example.dont}"</p>
               </div>
-              <div className="p-4 bg-eco-surface rounded-lg border border-eco-border">
-                <div className="flex items-center gap-2 mb-2">
+              
+              {/* Do side */}
+              <div className="p-6 bg-eco-surface border-l-4 border-primary">
+                <div className="flex items-center gap-2 mb-3">
                   <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span className="font-ui font-medium text-primary">Do</span>
+                  <span className="font-data text-xs text-primary uppercase tracking-wider">{example.context} — Do</span>
                 </div>
-                <p className="text-sm text-muted-foreground">"{example.do}"</p>
+                <p className="text-foreground">"{example.do}"</p>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
