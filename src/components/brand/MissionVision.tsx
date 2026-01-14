@@ -1,63 +1,60 @@
-import { Target, Eye, Zap } from "lucide-react";
+import { Target, Eye } from "lucide-react";
 
 export const MissionVision = () => {
   return (
-    <section id="mission" className="mb-16">
-      {/* Three-column layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section id="mission" className="mb-32">
+      {/* Two-column: Mission + Vision */}
+      <div className="grid md:grid-cols-2 gap-px bg-border mb-16">
         {/* Mission */}
-        <div className="card-eco p-6 bg-pattern-topo">
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-card border border-eco-border flex items-center justify-center">
+        <div className="bg-card p-10 md:p-16 relative overflow-hidden">
+          <div className="absolute inset-0 bg-pattern-topo opacity-30"></div>
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <Target className="w-5 h-5 text-primary" />
               </div>
               <span className="label-tech text-primary">MISSION</span>
             </div>
-            <h3 className="font-ui font-bold text-xl text-foreground mb-2">Measure What Matters</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <h3 className="font-ui font-bold text-3xl md:text-4xl text-foreground mb-4">Measure What Matters</h3>
+            <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
               We build ultrasonic measurement systems. Industries use them to optimize processes and reduce waste.
             </p>
           </div>
         </div>
 
         {/* Vision */}
-        <div className="card-obsidian p-6 bg-pattern-topo-dark">
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-4">
+        <div className="bg-rho-obsidian p-10 md:p-16 relative overflow-hidden">
+          <div className="absolute inset-0 bg-pattern-topo-dark opacity-30"></div>
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
                 <Eye className="w-5 h-5 text-primary" />
               </div>
               <span className="label-tech text-primary">VISION</span>
             </div>
-            <h3 className="font-ui font-bold text-xl text-slate-100 mb-2">Every Process Optimized</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <h3 className="font-ui font-bold text-3xl md:text-4xl text-slate-100 mb-4">Every Process Optimized</h3>
+            <p className="text-slate-400 text-lg leading-relaxed max-w-md">
               Precision measurement as the foundation of sustainability. From mining to semiconductors.
             </p>
           </div>
         </div>
+      </div>
 
-        {/* Value Stats */}
-        <div className="card-base p-6 flex flex-col justify-between">
-          <div className="flex items-center gap-2 mb-4">
-            <Zap className="w-5 h-5 text-primary" />
-            <span className="label-tech text-foreground">VALUE</span>
+      {/* Value Stats - Horizontal strip */}
+      <div className="flex items-stretch border-t border-b border-border">
+        {[
+          { value: "40+", label: "Years Experience" },
+          { value: "98%", label: "Uptime Guarantee" },
+          { value: "-35%", label: "Average Waste Reduction" },
+        ].map((stat, idx) => (
+          <div 
+            key={idx} 
+            className="flex-1 py-8 px-6 border-r border-border last:border-r-0 text-center group hover:bg-slate-50 transition-colors"
+          >
+            <div className="font-data text-4xl md:text-5xl text-primary mb-2">{stat.value}</div>
+            <div className="text-sm text-muted-foreground">{stat.label}</div>
           </div>
-          <div className="space-y-4">
-            <div>
-              <div className="text-3xl font-ui font-bold text-primary">40+</div>
-              <div className="text-sm text-muted-foreground">Years Experience</div>
-            </div>
-            <div>
-              <div className="text-3xl font-ui font-bold text-primary">98%</div>
-              <div className="text-sm text-muted-foreground">Uptime Guarantee</div>
-            </div>
-            <div>
-              <div className="text-3xl font-ui font-bold text-primary">-35%</div>
-              <div className="text-sm text-muted-foreground">Average Waste Reduction</div>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
