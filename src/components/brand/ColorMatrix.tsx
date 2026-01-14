@@ -139,8 +139,8 @@ export const ColorMatrix = () => {
           <div>
             <h4 className="font-data text-xs text-success uppercase tracking-wider mb-6">State — Success</h4>
             <div className="space-y-0">
-              <ColorSpecimen name="Success Green" hex="#16A34A" rgb="22, 163, 74" hsl="142 72% 36%" bg="bg-success" use="Confirmations, badges" textLight />
-              <ColorSpecimen name="Success Surface" hex="#DCFCE7" rgb="220, 252, 231" hsl="142 76% 92%" bg="bg-success-surface" use="Success callout backgrounds" border="border-success-border" />
+              <ColorSpecimen name="Success Green" hex="#33993C" rgb="51, 153, 60" hsl="125 50% 40%" bg="bg-success" use="Confirmations, badges" textLight />
+              <ColorSpecimen name="Success Surface" hex="#F2FBF3" rgb="242, 251, 243" hsl="125 50% 97%" bg="bg-success-surface" use="Success callout backgrounds" border="border-success-border" />
             </div>
           </div>
 
@@ -149,7 +149,7 @@ export const ColorMatrix = () => {
             <h4 className="font-data text-xs text-info uppercase tracking-wider mb-6">State — Info</h4>
             <div className="space-y-0">
               <ColorSpecimen name="Info Blue" hex="#2D8CF0" rgb="45, 140, 240" hsl="210 80% 55%" bg="bg-info" use="Informational callouts, badges" textLight />
-              <ColorSpecimen name="Info Surface" hex="#EBF5FF" rgb="235, 245, 255" hsl="210 80% 96%" bg="bg-info-surface" use="Info callout backgrounds" border="border-info-border" />
+              <ColorSpecimen name="Info Surface" hex="#F0F7FF" rgb="240, 247, 255" hsl="210 80% 97%" bg="bg-info-surface" use="Info callout backgrounds" border="border-info-border" />
             </div>
           </div>
 
@@ -158,7 +158,7 @@ export const ColorMatrix = () => {
             <h4 className="font-data text-xs text-warning uppercase tracking-wider mb-6">State — Warning</h4>
             <div className="space-y-0">
               <ColorSpecimen name="Warning Amber" hex="#D97706" rgb="217, 119, 6" hsl="32 95% 44%" bg="bg-warning" use="Cautions, badges" textLight />
-              <ColorSpecimen name="Warning Surface" hex="#FEF3C7" rgb="254, 243, 199" hsl="48 96% 89%" bg="bg-warning-surface" use="Warning callout backgrounds" border="border-warning-border" />
+              <ColorSpecimen name="Warning Surface" hex="#FFFEF5" rgb="255, 254, 245" hsl="48 96% 97%" bg="bg-warning-surface" use="Warning callout backgrounds" border="border-warning-border" />
             </div>
           </div>
 
@@ -167,7 +167,7 @@ export const ColorMatrix = () => {
             <h4 className="font-data text-xs text-error uppercase tracking-wider mb-6">State — Error</h4>
             <div className="space-y-0">
               <ColorSpecimen name="Error Red" hex="#DC2626" rgb="220, 38, 38" hsl="0 84% 51%" bg="bg-error" use="Failures, critical" textLight />
-              <ColorSpecimen name="Error Surface" hex="#FEE2E2" rgb="254, 226, 226" hsl="0 93% 94%" bg="bg-error-surface" use="Error callout backgrounds" border="border-error-border" />
+              <ColorSpecimen name="Error Surface" hex="#FFF5F5" rgb="255, 245, 245" hsl="0 93% 97%" bg="bg-error-surface" use="Error callout backgrounds" border="border-error-border" />
             </div>
           </div>
         </div>
