@@ -16,40 +16,40 @@ export const TypographyScale = () => {
         
         <div className="space-y-0">
           {/* Each scale level as a full-width dramatic line */}
-          <div className="group flex items-baseline gap-8 py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-6 px-6">
-            <span className="font-data text-xs text-muted-foreground w-16 flex-shrink-0">48px</span>
-            <span className="font-ui font-bold text-5xl text-foreground flex-1 tracking-tight">Display Hero</span>
-            <span className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">Headlines, hero sections</span>
+          <div className="group flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 lg:gap-8 py-4 md:py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-4 md:-mx-6 px-4 md:px-6">
+            <span className="font-data text-xs text-muted-foreground w-12 md:w-16 flex-shrink-0">48px</span>
+            <span className="font-ui font-bold text-3xl md:text-4xl lg:text-5xl text-foreground flex-1 tracking-tight">Display Hero</span>
+            <span className="text-xs md:text-sm text-muted-foreground md:opacity-0 md:group-hover:opacity-100 transition-opacity">Headlines, hero sections</span>
           </div>
           
-          <div className="group flex items-baseline gap-8 py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-6 px-6">
-            <span className="font-data text-xs text-muted-foreground w-16 flex-shrink-0">36px</span>
-            <span className="font-ui font-bold text-4xl text-foreground flex-1 tracking-tight">Section Title</span>
-            <span className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">Major sections</span>
+          <div className="group flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 lg:gap-8 py-4 md:py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-4 md:-mx-6 px-4 md:px-6">
+            <span className="font-data text-xs text-muted-foreground w-12 md:w-16 flex-shrink-0">36px</span>
+            <span className="font-ui font-bold text-2xl md:text-3xl lg:text-4xl text-foreground flex-1 tracking-tight">Section Title</span>
+            <span className="text-xs md:text-sm text-muted-foreground md:opacity-0 md:group-hover:opacity-100 transition-opacity">Major sections</span>
           </div>
           
-          <div className="group flex items-baseline gap-8 py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-6 px-6">
-            <span className="font-data text-xs text-muted-foreground w-16 flex-shrink-0">24px</span>
-            <span className="font-ui font-semibold text-2xl text-foreground flex-1">Card Title</span>
-            <span className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">Cards, subsections</span>
+          <div className="group flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 lg:gap-8 py-4 md:py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-4 md:-mx-6 px-4 md:px-6">
+            <span className="font-data text-xs text-muted-foreground w-12 md:w-16 flex-shrink-0">24px</span>
+            <span className="font-ui font-semibold text-xl md:text-2xl text-foreground flex-1">Card Title</span>
+            <span className="text-xs md:text-sm text-muted-foreground md:opacity-0 md:group-hover:opacity-100 transition-opacity">Cards, subsections</span>
           </div>
           
-          <div className="group flex items-baseline gap-8 py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-6 px-6">
-            <span className="font-data text-xs text-muted-foreground w-16 flex-shrink-0">16px</span>
-            <span className="font-ui text-base text-foreground flex-1">Body Copy — Optimized density measurement reduced fresh water intake by 40%.</span>
-            <span className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">Paragraphs</span>
+          <div className="group flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 lg:gap-8 py-4 md:py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-4 md:-mx-6 px-4 md:px-6">
+            <span className="font-data text-xs text-muted-foreground w-12 md:w-16 flex-shrink-0">16px</span>
+            <span className="font-ui text-sm md:text-base text-foreground flex-1">Body Copy — Optimized density measurement reduced fresh water intake by 40%.</span>
+            <span className="text-xs md:text-sm text-muted-foreground md:opacity-0 md:group-hover:opacity-100 transition-opacity">Paragraphs</span>
           </div>
           
-          <div className="group flex items-baseline gap-8 py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-6 px-6">
-            <span className="font-data text-xs text-muted-foreground w-16 flex-shrink-0">14px</span>
+          <div className="group flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 lg:gap-8 py-4 md:py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-4 md:-mx-6 px-4 md:px-6">
+            <span className="font-data text-xs text-muted-foreground w-12 md:w-16 flex-shrink-0">14px</span>
             <span className="font-ui text-sm text-muted-foreground flex-1">Caption — Supporting information and metadata</span>
-            <span className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">Captions, hints</span>
+            <span className="text-xs md:text-sm text-muted-foreground md:opacity-0 md:group-hover:opacity-100 transition-opacity">Captions, hints</span>
           </div>
           
-          <div className="group flex items-baseline gap-8 py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-6 px-6">
-            <span className="font-data text-xs text-muted-foreground w-16 flex-shrink-0">12px</span>
+          <div className="group flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 lg:gap-8 py-4 md:py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-4 md:-mx-6 px-4 md:px-6">
+            <span className="font-data text-xs text-muted-foreground w-12 md:w-16 flex-shrink-0">12px</span>
             <span className="font-data text-xs text-foreground uppercase tracking-wider flex-1">LABEL • STATUS • MEASUREMENT</span>
-            <span className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">Technical labels</span>
+            <span className="text-xs md:text-sm text-muted-foreground md:opacity-0 md:group-hover:opacity-100 transition-opacity">Technical labels</span>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@ export const TypographyScale = () => {
       </div>
 
       {/* ═══ JETBRAINS MONO RULES - INLINE ═══ */}
-      <div className="grid lg:grid-cols-5 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
         <div className="lg:col-span-3">
           <h3 className="font-ui text-lg font-semibold text-foreground mb-4">JetBrains Mono Usage</h3>
           <div className="grid sm:grid-cols-2 gap-8">

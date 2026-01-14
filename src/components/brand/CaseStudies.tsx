@@ -69,7 +69,7 @@ export const CaseStudies = () => {
               <div className="absolute inset-0 bg-pattern-minerals opacity-20"></div>
             )}
             
-            <div className="relative p-8 min-h-[400px] flex flex-col">
+            <div className="relative p-5 md:p-8 min-h-[320px] md:min-h-[400px] flex flex-col">
               <div className="flex items-center justify-between mb-6">
                 <span className={`label-tech ${
                   study.variant === 'dark' ? 'text-slate-400' : 
@@ -85,8 +85,8 @@ export const CaseStudies = () => {
                 </div>
               </div>
 
-              <div className="mb-6">
-                <div className={`font-data text-5xl md:text-6xl mb-2 ${
+              <div className="mb-4 md:mb-6">
+                <div className={`font-data text-4xl md:text-5xl lg:text-6xl mb-1 md:mb-2 ${
                   study.variant === 'dark' ? 'text-primary' : 
                   study.variant === 'mineral' ? 'text-mineral-deep' : 'text-primary'
                 }`}>
@@ -145,17 +145,17 @@ export const CaseStudies = () => {
         ))}
       </div>
 
-      {/* Stats bar - Horizontal strip */}
-      <div className="flex items-stretch border-t border-b border-border">
+      {/* Stats bar - Responsive grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 border border-border rounded-lg overflow-hidden">
         {[
           { value: "500+", label: "Installations worldwide" },
           { value: "35+", label: "Years of expertise" },
           { value: "99.7%", label: "Average uptime" },
           { value: "< 2yr", label: "Typical payback" },
         ].map((stat, idx) => (
-          <div key={idx} className="flex-1 py-8 px-4 border-r border-border last:border-r-0 text-center group hover:bg-muted/30 transition-colors">
-            <div className="font-data text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
-            <div className="font-data text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+          <div key={idx} className={`py-5 md:py-8 px-3 md:px-4 text-center group hover:bg-muted/30 transition-colors ${idx % 2 !== 0 ? 'border-l border-border' : ''} ${idx >= 2 ? 'border-t md:border-t-0 md:border-l' : ''}`}>
+            <div className="font-data text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
+            <div className="font-data text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
           </div>
         ))}
       </div>

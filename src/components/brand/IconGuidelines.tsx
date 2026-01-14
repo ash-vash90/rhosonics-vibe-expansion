@@ -83,22 +83,22 @@ export const IconGuidelines = () => {
 
       {/* Icon Sizes - INLINE SPECIMENS */}
       <div>
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4 mb-6 md:mb-8">
           <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Icon Sizes</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        {/* Horizontal inline specimen strip */}
-        <div className="flex items-end gap-0 -mx-6 border-y border-border">
+        {/* Responsive grid - 2x2 on mobile, 4 across on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 -mx-4 md:-mx-6 border-y border-border">
           {iconSizes.map((size, i) => (
             <div 
               key={size.name} 
-              className={`flex-1 py-8 flex flex-col items-center gap-4 ${i > 0 ? 'border-l border-border' : ''}`}
+              className={`py-6 md:py-8 flex flex-col items-center gap-3 md:gap-4 ${i % 2 !== 0 ? 'border-l border-border' : ''} ${i >= 2 ? 'md:border-l' : ''} ${i >= 2 ? 'border-t md:border-t-0' : ''}`}
             >
               <Activity className="text-primary" style={{ width: size.size, height: size.size }} />
               <div className="text-center">
-                <span className="font-data text-sm text-foreground block">{size.size}px</span>
-                <span className="text-xs text-muted-foreground">{size.use}</span>
+                <span className="font-data text-xs md:text-sm text-foreground block">{size.size}px</span>
+                <span className="text-[10px] md:text-xs text-muted-foreground">{size.use}</span>
               </div>
             </div>
           ))}
@@ -107,20 +107,20 @@ export const IconGuidelines = () => {
 
       {/* Icon Categories - inline strips per category */}
       <div>
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4 mb-6 md:mb-8">
           <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Categories</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {iconCategories.map((category) => (
-            <div key={category.name} className="flex items-center gap-6 py-4 border-b border-border/50">
-              <span className="font-data text-xs text-muted-foreground uppercase w-28 flex-shrink-0">{category.name}</span>
-              <div className="flex gap-8">
+            <div key={category.name} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 py-3 md:py-4 border-b border-border/50">
+              <span className="font-data text-xs text-muted-foreground uppercase w-full sm:w-28 flex-shrink-0">{category.name}</span>
+              <div className="flex flex-wrap gap-4 md:gap-8">
                 {category.icons.map((item) => (
                   <div key={item.label} className="flex items-center gap-2 group">
-                    <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                    <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{item.label}</span>
+                    <item.icon className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <span className="text-xs md:text-sm text-muted-foreground group-hover:text-foreground transition-colors">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -131,29 +131,29 @@ export const IconGuidelines = () => {
 
       {/* State Indicators - horizontal strip */}
       <div>
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4 mb-6 md:mb-8">
           <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">State Indicators</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        <div className="grid lg:grid-cols-5 gap-8">
-          {/* State colors strip */}
-          <div className="lg:col-span-3 flex gap-0 border border-border overflow-hidden rounded-lg">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8">
+          {/* State colors strip - 2x2 grid on mobile */}
+          <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-0 border border-border overflow-hidden rounded-lg">
             {iconStates.map((item, i) => (
               <div 
                 key={item.state} 
-                className={`flex-1 py-6 flex flex-col items-center gap-3 ${i > 0 ? 'border-l border-border' : ''}`}
+                className={`py-4 md:py-6 flex flex-col items-center gap-2 md:gap-3 ${i % 2 !== 0 ? 'border-l border-border' : ''} ${i >= 2 ? 'border-t md:border-t-0 md:border-l' : ''}`}
               >
-                <div className={`w-3 h-3 ${item.bg} rounded-full`} />
-                <item.icon className={`w-5 h-5 ${item.color}`} />
-                <span className="text-xs text-muted-foreground">{item.state}</span>
+                <div className={`w-2.5 h-2.5 md:w-3 md:h-3 ${item.bg} rounded-full`} />
+                <item.icon className={`w-4 h-4 md:w-5 md:h-5 ${item.color}`} />
+                <span className="text-[10px] md:text-xs text-muted-foreground">{item.state}</span>
               </div>
             ))}
           </div>
           
           {/* Explanation */}
-          <div className="lg:col-span-2 border-l-2 border-border pl-6">
-            <p className="text-muted-foreground text-sm">
+          <div className="lg:col-span-2 border-l-2 border-border pl-4 md:pl-6">
+            <p className="text-muted-foreground text-xs md:text-sm">
               State colors are functional, not decorative. Green = success, Amber = warning, 
               Red = error, Blue = informational. Never use these colors outside their semantic meaning.
             </p>

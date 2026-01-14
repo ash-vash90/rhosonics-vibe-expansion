@@ -157,7 +157,7 @@ export const LogoAssets = () => {
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 md:gap-x-12 gap-y-3 md:gap-y-4">
           {[
             "Use the logo as provided — no modifications",
             "Maintain clear space (height of 'R' on all sides)",
@@ -172,30 +172,30 @@ export const LogoAssets = () => {
         </div>
       </div>
 
-      {/* Logo Variants - HORIZONTAL STRIP */}
+      {/* Logo Variants - RESPONSIVE GRID */}
       <div>
         <div className="flex items-center gap-4 mb-8">
           <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Quick Reference</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        {/* Full-width horizontal strip */}
-        <div className="flex -mx-6">
-          <div className="flex-1 p-8 bg-white border-y border-l border-border flex flex-col items-center justify-center gap-4">
-            <RhosonicsLogo variant="gradient" className="w-14 h-14" />
-            <span className="font-data text-xs text-muted-foreground">Gradient on Light</span>
+        {/* Responsive grid - 2x2 on mobile, 4 across on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 -mx-4 md:-mx-6">
+          <div className="p-6 md:p-8 bg-white border border-border flex flex-col items-center justify-center gap-3 md:gap-4">
+            <RhosonicsLogo variant="gradient" className="w-10 h-10 md:w-14 md:h-14" />
+            <span className="font-data text-[10px] md:text-xs text-muted-foreground text-center">Gradient on Light</span>
           </div>
-          <div className="flex-1 p-8 bg-slate-900 border-y border-slate-800 flex flex-col items-center justify-center gap-4">
-            <RhosonicsLogo variant="white" className="w-14 h-14" />
-            <span className="font-data text-xs text-slate-500">White on Dark</span>
+          <div className="p-6 md:p-8 bg-slate-900 border border-slate-800 flex flex-col items-center justify-center gap-3 md:gap-4">
+            <RhosonicsLogo variant="white" className="w-10 h-10 md:w-14 md:h-14" />
+            <span className="font-data text-[10px] md:text-xs text-slate-500 text-center">White on Dark</span>
           </div>
-          <div className="flex-1 p-8 bg-primary border-y flex flex-col items-center justify-center gap-4">
-            <RhosonicsLogo variant="white" className="w-14 h-14" />
-            <span className="font-data text-xs text-white/70">White on Brand</span>
+          <div className="p-6 md:p-8 bg-primary border border-primary flex flex-col items-center justify-center gap-3 md:gap-4">
+            <RhosonicsLogo variant="white" className="w-10 h-10 md:w-14 md:h-14" />
+            <span className="font-data text-[10px] md:text-xs text-white/70 text-center">White on Brand</span>
           </div>
-          <div className="flex-1 p-8 bg-white border-y border-r border-border flex flex-col items-center justify-center gap-4">
-            <RhosonicsLogo variant="dark" className="w-14 h-14" />
-            <span className="font-data text-xs text-muted-foreground">Dark on Light</span>
+          <div className="p-6 md:p-8 bg-white border border-border flex flex-col items-center justify-center gap-3 md:gap-4">
+            <RhosonicsLogo variant="dark" className="w-10 h-10 md:w-14 md:h-14" />
+            <span className="font-data text-[10px] md:text-xs text-muted-foreground text-center">Dark on Light</span>
           </div>
         </div>
       </div>

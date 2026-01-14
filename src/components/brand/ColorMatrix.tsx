@@ -25,22 +25,22 @@ const ColorSpecimen = ({
   textLight?: boolean;
   border?: string;
 }) => (
-  <div className="group flex items-stretch gap-0 hover:bg-muted/30 transition-colors -mx-4 px-4">
-    {/* Color swatch - square, no rounded corners for specimens */}
-    <div className={`w-20 h-20 ${bg} ${border} border flex-shrink-0 flex items-end justify-start p-2`}>
+  <div className="group flex flex-col sm:flex-row sm:items-stretch gap-0 hover:bg-muted/30 transition-colors -mx-2 md:-mx-4 px-2 md:px-4">
+    {/* Color swatch - responsive sizing */}
+    <div className={`w-full sm:w-16 md:w-20 h-16 sm:h-16 md:h-20 ${bg} ${border} border flex-shrink-0 flex items-end justify-start p-2`}>
       {textLight && <span className="font-data text-[10px] text-white/60">{hex}</span>}
       {!textLight && <span className="font-data text-[10px] text-foreground/40">{hex}</span>}
     </div>
     {/* Specs inline */}
-    <div className="flex-1 flex items-center py-4 pl-6 border-b border-border/30">
-      <div className="flex-1">
-        <div className="flex items-baseline gap-3 mb-1">
-          <span className="font-ui font-semibold text-foreground">{name}</span>
-          <span className="text-sm text-muted-foreground">{use}</span>
+    <div className="flex-1 flex items-center py-3 sm:py-4 sm:pl-4 md:pl-6 border-b border-border/30">
+      <div className="flex-1 min-w-0">
+        <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-1">
+          <span className="font-ui font-semibold text-foreground text-sm md:text-base">{name}</span>
+          <span className="text-xs md:text-sm text-muted-foreground">{use}</span>
         </div>
-        <div className="font-data text-xs text-muted-foreground flex gap-4">
+        <div className="font-data text-[10px] md:text-xs text-muted-foreground flex flex-wrap gap-2 md:gap-4">
           <span>rgb({rgb})</span>
-          <span className="text-border">|</span>
+          <span className="text-border hidden sm:inline">|</span>
           <span>hsl({hsl})</span>
         </div>
       </div>

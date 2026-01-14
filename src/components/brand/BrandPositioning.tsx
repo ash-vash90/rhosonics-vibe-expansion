@@ -73,17 +73,17 @@ const BrandPositioning = () => {
           ].map((pillar, i) => (
             <div 
               key={pillar.title} 
-              className="pillar-item group flex items-baseline gap-6 py-8 border-b border-border/50 first:border-t hover:bg-muted/30 transition-colors -mx-6 px-6"
+              className="pillar-item group flex items-start md:items-baseline gap-4 md:gap-6 py-6 md:py-8 border-b border-border/50 first:border-t hover:bg-muted/30 transition-colors -mx-4 md:-mx-6 px-4 md:px-6"
             >
-              <span className="font-data text-sm text-muted-foreground w-8">0{i + 1}</span>
-              <div className="flex-1">
-                <div className="flex items-center gap-4 mb-2">
-                  <pillar.icon className="w-5 h-5 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
-                  <h4 className="font-ui text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+              <span className="font-data text-xs md:text-sm text-muted-foreground w-6 md:w-8 flex-shrink-0 pt-1 md:pt-0">0{i + 1}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 md:gap-4 mb-1 md:mb-2">
+                  <pillar.icon className="w-4 h-4 md:w-5 md:h-5 text-primary opacity-60 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+                  <h4 className="font-ui text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground tracking-tight">
                     {pillar.title}
                   </h4>
                 </div>
-                <p className="text-lg text-muted-foreground ml-9">{pillar.desc}</p>
+                <p className="text-sm md:text-base lg:text-lg text-muted-foreground ml-6 md:ml-9">{pillar.desc}</p>
               </div>
             </div>
           ))}
@@ -185,24 +185,24 @@ const BrandPositioning = () => {
       </div>
 
       {/* Expression + Heuristic - SPLIT CANVAS */}
-      <div ref={splitRef} className="grid lg:grid-cols-5 gap-12">
+      <div ref={splitRef} className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
         {/* Expression - 3 cols */}
         <div className="lg:col-span-3">
-          <h3 className="font-ui text-lg font-semibold text-foreground mb-4">How this shapes expression</h3>
-          <p className="text-muted-foreground mb-6">
+          <h3 className="font-ui text-base md:text-lg font-semibold text-foreground mb-3 md:mb-4">How this shapes expression</h3>
+          <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
             Expression is <strong className="text-foreground">purposeful rather than decorative</strong>.
           </p>
-          <div className="flex flex-wrap gap-x-8 gap-y-2 text-muted-foreground">
+          <div className="flex flex-wrap gap-x-4 md:gap-x-8 gap-y-2 text-sm md:text-base text-muted-foreground">
             <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+              <span className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
               Clear visual hierarchy
             </span>
             <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+              <span className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
               Color signals meaning
             </span>
             <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+              <span className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
               Typography prioritizes legibility
             </span>
           </div>
@@ -210,9 +210,9 @@ const BrandPositioning = () => {
         
         {/* Decision heuristic - 2 cols - HERO STATEMENT style */}
         <div className="lg:col-span-2 flex items-center">
-          <div className="p-8 bg-foreground text-background rounded-lg">
-            <span className="font-data text-xs text-primary-foreground/60 uppercase tracking-wider">Decision Heuristic</span>
-            <p className="font-ui text-xl font-medium leading-relaxed mt-3">
+          <div className="p-5 md:p-8 bg-foreground text-background rounded-lg w-full">
+            <span className="font-data text-[10px] md:text-xs text-primary-foreground/60 uppercase tracking-wider">Decision Heuristic</span>
+            <p className="font-ui text-base md:text-lg lg:text-xl font-medium leading-relaxed mt-2 md:mt-3">
               When choosing between two valid options, prefer the one that deepens understanding, 
               supports long-term performance, or delivers measurable impact.
             </p>

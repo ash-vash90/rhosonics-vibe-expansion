@@ -40,23 +40,26 @@ const BrandPrinciples = () => {
         {principles.map((principle, i) => (
           <div 
             key={principle.title} 
-            className="group grid grid-cols-12 gap-6 py-10 border-b border-border/50 first:border-t hover:bg-muted/20 transition-colors -mx-6 px-6"
+            className="group py-6 md:py-10 border-b border-border/50 first:border-t hover:bg-muted/20 transition-colors -mx-4 md:-mx-6 px-4 md:px-6"
           >
-            {/* Number + Icon */}
-            <div className="col-span-1 flex flex-col items-start gap-3">
-              <span className="font-data text-2xl text-primary/40 group-hover:text-primary transition-colors">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <principle.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-            </div>
-            
-            {/* Content */}
-            <div className="col-span-11 lg:col-span-8">
-              <h4 className="font-ui text-xl md:text-2xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-                {principle.title}
-              </h4>
-              <p className="text-foreground mb-4 text-lg">{principle.meaning}</p>
-              <p className="text-muted-foreground">{principle.practice}</p>
+            {/* Mobile: Stack number/icon with content */}
+            <div className="flex items-start gap-4 md:gap-6">
+              {/* Number + Icon */}
+              <div className="flex flex-col items-start gap-2 md:gap-3 flex-shrink-0">
+                <span className="font-data text-xl md:text-2xl text-primary/40 group-hover:text-primary transition-colors">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <principle.icon className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <h4 className="font-ui text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-2 md:mb-3 group-hover:text-primary transition-colors">
+                  {principle.title}
+                </h4>
+                <p className="text-foreground mb-2 md:mb-4 text-base md:text-lg">{principle.meaning}</p>
+                <p className="text-muted-foreground text-sm md:text-base">{principle.practice}</p>
+              </div>
             </div>
           </div>
         ))}
