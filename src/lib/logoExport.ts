@@ -1,4 +1,5 @@
 // Logo SVG generation and export utilities
+import { WORDMARK_PATHS, getWordmarkScale, getWordmarkDimensions } from "@/assets/brand/rhosonics-wordmark-paths";
 
 // Brand gradient colors
 const GRADIENT_START = "#73B82E";
@@ -110,15 +111,19 @@ export const logoVariants: LogoVariant[] = [
 
 // Generate full lockup SVG using optical scaling conventions
 // Icon 80px = text 55px (ratio 0.69) per size bands table
-// RHOSONICS at 55px with 0.025em tracking ≈ 440px wide
+// Uses path-outlined wordmark for guaranteed typography
 export const generateLockupSVG = (variant: LogoVariant): string => {
   const iconSize = 80;
-  const textSize = 55; // Per size bands: 80px icon = 55px text (0.69 ratio)
+  const textHeight = 55; // Per size bands: 80px icon = 55px text (0.69 ratio)
   const gap = 20;
-  const textWidth = variant.hasText ? 460 : 0; // Measured width for RHOSONICS at 55px
-  const padding = variant.background ? 32 : 16; // Add padding even without background to prevent clipping
   
-  const totalWidth = iconSize + (variant.hasText ? gap + textWidth : 0) + (padding * 2);
+  // Get wordmark dimensions scaled to target height
+  const wordmarkDims = getWordmarkDimensions(textHeight);
+  const wordmarkScale = getWordmarkScale(textHeight);
+  
+  const padding = variant.background ? 32 : 16;
+  
+  const totalWidth = iconSize + (variant.hasText ? gap + wordmarkDims.width : 0) + (padding * 2);
   const totalHeight = iconSize + (padding * 2);
   
   const gradientId = `grad-${variant.id}`;
@@ -156,34 +161,25 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
     }
   }
   
-  const fill = `url(#${gradientId})`;
+  const iconFill = `url(#${gradientId})`;
   
   const iconGroup = `<g transform="translate(${padding}, ${padding})">
-    ${ARC_PATHS.map(d => `<path d="${d}" fill="${fill}"/>`).join("\n    ")}
+    ${ARC_PATHS.map(d => `<path d="${d}" fill="${iconFill}"/>`).join("\n    ")}
   </g>`;
   
-  // Unbounded font embedded via Google Fonts CSS2 API with proper encoding
-  // Vertically centered with icon
-  const textX = padding + iconSize + gap;
-  const textY = padding + (iconSize / 2) + (textSize * 0.32); // Optical vertical centering
+  // Position wordmark: after icon + gap, vertically centered
+  const wordmarkX = padding + iconSize + gap;
+  const wordmarkY = padding + (iconSize - textHeight) / 2; // Vertically center with icon
   
-  // Use embedded font with proper CSS - note: for PNG export we need to load font first
-  const fontStyle = `
-    @font-face {
-      font-family: 'Unbounded';
-      font-style: normal;
-      font-weight: 600;
-      src: url(https://fonts.gstatic.com/s/unbounded/v7/Yq6F-LOTXCb04q32xlpat-6uR42XTqtG65jEzNjPFCk.woff2) format('woff2');
-    }
-  `;
-  
+  // Use path-outlined wordmark (no font dependency)
   const textGroup = variant.hasText 
-    ? `<text x="${textX}" y="${textY}" font-family="Unbounded, system-ui, sans-serif" font-size="${textSize}" font-weight="600" letter-spacing="0.025em" fill="${variant.textColor}">RHOSONICS</text>` 
+    ? `<g transform="translate(${wordmarkX}, ${wordmarkY}) scale(${wordmarkScale})">
+        <path d="${WORDMARK_PATHS.fullPath}" fill="${variant.textColor}"/>
+      </g>` 
     : "";
   
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalWidth} ${totalHeight}" width="${totalWidth}" height="${totalHeight}">
   <defs>
-    <style>${fontStyle}</style>
     ${gradientDef}
     ${bgGradientDef}
   </defs>
@@ -261,31 +257,9 @@ export const downloadSVG = (svg: string, filename: string) => {
   URL.revokeObjectURL(url);
 };
 
-// Preload font for PNG rendering
-const preloadFont = async (): Promise<void> => {
-  const font = new FontFace(
-    'Unbounded',
-    'url(https://fonts.gstatic.com/s/unbounded/v7/Yq6F-LOTXCb04q32xlpat-6uR42XTqtG65jEzNjPFCk.woff2)',
-    { weight: '600' }
-  );
-  
-  try {
-    const loadedFont = await font.load();
-    document.fonts.add(loadedFont);
-  } catch (e) {
-    console.warn('Could not load Unbounded font for PNG export:', e);
-  }
-};
-
 // Convert SVG to PNG and download
+// No font preloading needed - wordmark uses path outlines
 export const downloadPNG = async (svg: string, filename: string, scale = 2) => {
-  // Preload font if SVG contains text
-  if (svg.includes('RHOSONICS')) {
-    await preloadFont();
-    // Give font time to register
-    await new Promise(resolve => setTimeout(resolve, 100));
-  }
-  
   return new Promise<void>((resolve, reject) => {
     const img = new Image();
     const svgBlob = new Blob([svg], { type: "image/svg+xml" });
