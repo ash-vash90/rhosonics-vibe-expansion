@@ -24,8 +24,8 @@ const variantStyles: Record<CalloutVariant, {
     icon: Info,
   },
   avoid: {
-    container: "bg-amber-50 border-l-4 border-amber-500",
-    iconBg: "bg-amber-500",
+    container: "bg-warning-surface border-l-4 border-warning",
+    iconBg: "bg-warning",
     iconColor: "text-white",
     icon: AlertTriangle,
     iconSymbol: "!",
