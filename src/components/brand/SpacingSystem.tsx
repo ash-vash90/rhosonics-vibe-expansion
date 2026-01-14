@@ -11,17 +11,18 @@ export const SpacingSystem = () => {
   const maxPx = 64;
 
   return (
-    <section id="spacing" className="mb-32">
-      <h2 className="section-header">Spacing System</h2>
-      
+    <section id="spacing" className="space-y-16 pt-16">
       {/* Hero Statement */}
-      <p className="text-xl text-muted-foreground max-w-3xl mb-16 leading-relaxed">
-        Spacing communicates meaning. If two elements feel related, spacing reinforces 
-        that relationship. If they feel separate, spacing makes that obvious.
-      </p>
+      <div>
+        <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-6">Spacing System</h2>
+        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+          Spacing communicates meaning. If two elements feel related, spacing reinforces 
+          that relationship. If they feel separate, spacing makes that obvious.
+        </p>
+      </div>
 
       {/* Visual Ruler Scale */}
-      <div className="mb-20">
+      <div>
         <div className="flex items-center gap-4 mb-8">
           <span className="font-data text-sm text-primary uppercase tracking-wider">01</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Scale</h3>
@@ -32,7 +33,7 @@ export const SpacingSystem = () => {
           {spacingScale.map((space) => (
             <div 
               key={space.name} 
-              className="group flex items-stretch border-b border-slate-100 hover:bg-slate-50/50 transition-colors"
+              className="group flex items-stretch border-b border-border hover:bg-muted/30 transition-colors"
             >
               {/* Token Name */}
               <div className="w-20 py-6 flex items-center">
@@ -61,7 +62,7 @@ export const SpacingSystem = () => {
 
               {/* Pixel Value */}
               <div className="w-20 py-6 flex items-center justify-end">
-                <span className="font-data text-sm text-slate-500">{space.px}px</span>
+                <span className="font-data text-sm text-muted-foreground">{space.px}px</span>
               </div>
 
               {/* Usage */}
@@ -115,7 +116,7 @@ export const SpacingSystem = () => {
                 <div className={`w-16 h-16 bg-primary ${radius.class}`} />
                 <div className="text-center">
                   <span className="font-data text-xs text-foreground block">{radius.name}</span>
-                  <span className="font-data text-xs text-slate-400">{radius.value}</span>
+                  <span className="font-data text-xs text-muted-foreground">{radius.value}</span>
                 </div>
               </div>
             ))}

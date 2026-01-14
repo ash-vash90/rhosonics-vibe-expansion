@@ -2,22 +2,22 @@ import { Leaf, Recycle, Droplets } from "lucide-react";
 
 export const EcoComponents = () => {
   return (
-    <section id="eco" className="mb-32">
+    <section id="eco" className="space-y-16 pt-16">
       {/* Hero Statement */}
-      <div className="mb-16">
+      <div>
         <div className="flex items-center gap-3 mb-6">
           <span className="label-tech text-primary bg-eco-surface px-3 py-1.5 rounded border border-eco-border">
             ECO_PACK
           </span>
         </div>
-        <p className="text-2xl md:text-3xl font-ui text-foreground leading-relaxed max-w-4xl">
+        <p className="text-lg md:text-xl font-ui text-foreground leading-relaxed max-w-4xl">
           Sustainability metrics are operational outcomes
           <span className="text-muted-foreground">, not marketing claims. Every 0.1% accuracy improvement is waste prevented.</span>
         </p>
       </div>
 
       {/* Main Metrics - Full width split */}
-      <div className="grid lg:grid-cols-2 gap-px bg-border mb-16">
+      <div className="grid lg:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
         {/* Resource Recovery */}
         <div className="bg-card p-10 relative overflow-hidden">
           <div className="absolute inset-0 bg-pattern-topo opacity-30"></div>
@@ -55,7 +55,7 @@ export const EcoComponents = () => {
 
           <div className="flex-1 flex items-center justify-center">
             <div className="relative w-40 h-40 flex items-center justify-center">
-              <svg className="absolute inset-0 w-full h-full text-slate-200" viewBox="0 0 80 80">
+              <svg className="absolute inset-0 w-full h-full text-border" viewBox="0 0 80 80">
                 <circle cx="40" cy="40" r="35" stroke="currentColor" strokeWidth="6" fill="none" />
               </svg>
               <svg
@@ -85,47 +85,51 @@ export const EcoComponents = () => {
       </div>
 
       {/* Eco Metrics - Horizontal strip */}
-      <h3 className="label-tech text-muted-foreground mb-6">ECO METRIC PATTERNS</h3>
-      <div className="flex items-stretch border-t border-b border-border mb-16">
-        {[
-          { icon: Droplets, label: "WATER SAVED", period: "Today", value: "12.4K", unit: "Liters" },
-          { icon: Recycle, label: "WASTE REDUCED", period: "This Week", value: "-28%", unit: "vs Baseline" },
-          { icon: Leaf, label: "CARBON OFFSET", period: "YTD", value: "847", unit: "Tons CO2e" },
-        ].map((metric, idx) => (
-          <div key={idx} className="flex-1 py-8 px-6 border-r border-border last:border-r-0 group hover:bg-eco-surface/30 transition-colors">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-eco-surface border border-eco-border flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                <metric.icon className="w-5 h-5" />
+      <div>
+        <h3 className="label-tech text-muted-foreground mb-6">ECO METRIC PATTERNS</h3>
+        <div className="flex items-stretch border-t border-b border-border">
+          {[
+            { icon: Droplets, label: "WATER SAVED", period: "Today", value: "12.4K", unit: "Liters" },
+            { icon: Recycle, label: "WASTE REDUCED", period: "This Week", value: "-28%", unit: "vs Baseline" },
+            { icon: Leaf, label: "CARBON OFFSET", period: "YTD", value: "847", unit: "Tons CO2e" },
+          ].map((metric, idx) => (
+            <div key={idx} className="flex-1 py-8 px-6 border-r border-border last:border-r-0 group hover:bg-eco-surface/30 transition-colors">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-eco-surface border border-eco-border flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                  <metric.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="label-tech text-muted-foreground">{metric.label}</div>
+                  <div className="font-ui text-sm font-medium text-foreground">{metric.period}</div>
+                </div>
               </div>
-              <div>
-                <div className="label-tech text-muted-foreground">{metric.label}</div>
-                <div className="font-ui text-sm font-medium text-foreground">{metric.period}</div>
+              <div className="flex items-baseline gap-2">
+                <span className="font-data text-4xl md:text-5xl text-primary">{metric.value}</span>
+                <span className="font-data text-sm text-muted-foreground">{metric.unit}</span>
               </div>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-data text-4xl md:text-5xl text-primary">{metric.value}</span>
-              <span className="font-data text-sm text-muted-foreground">{metric.unit}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Eco Design Principles - Numbered list */}
-      <h3 className="label-tech text-muted-foreground mb-6">DESIGN PRINCIPLES</h3>
-      <div className="space-y-0 border-t border-border">
-        {[
-          { num: "01", title: "Subtle by Default", desc: "Integrated naturally. No 'greenwashing' with over-the-top eco imagery." },
-          { num: "02", title: "Data First", desc: "Every claim tied to measurable data. Show numbers, not sentiment." },
-          { num: "03", title: "Contextual", desc: "Topographic patterns used exclusively on eco components." },
-        ].map((principle, idx) => (
-          <div key={idx} className="flex items-start gap-6 py-6 border-b border-border group hover:bg-slate-50 transition-colors px-4 -mx-4">
-            <span className="font-data text-2xl text-primary">{principle.num}</span>
-            <div>
-              <h4 className="font-ui font-bold text-lg text-foreground mb-1">{principle.title}</h4>
-              <p className="text-muted-foreground">{principle.desc}</p>
+      <div>
+        <h3 className="label-tech text-muted-foreground mb-6">DESIGN PRINCIPLES</h3>
+        <div className="space-y-0 border-t border-border">
+          {[
+            { num: "01", title: "Subtle by Default", desc: "Integrated naturally. No 'greenwashing' with over-the-top eco imagery." },
+            { num: "02", title: "Data First", desc: "Every claim tied to measurable data. Show numbers, not sentiment." },
+            { num: "03", title: "Contextual", desc: "Topographic patterns used exclusively on eco components." },
+          ].map((principle, idx) => (
+            <div key={idx} className="flex items-start gap-6 py-6 border-b border-border group hover:bg-muted/30 transition-colors px-4 -mx-4">
+              <span className="font-data text-2xl text-primary">{principle.num}</span>
+              <div>
+                <h4 className="font-ui font-bold text-lg text-foreground mb-1">{principle.title}</h4>
+                <p className="text-muted-foreground">{principle.desc}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

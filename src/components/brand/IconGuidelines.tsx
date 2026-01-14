@@ -49,7 +49,7 @@ export const IconGuidelines = () => {
   ];
 
   return (
-    <section id="icons" className="space-y-20 mt-20">
+    <section id="icons" className="space-y-20 pt-16">
       {/* Intro + Rules */}
       <div className="grid lg:grid-cols-5 gap-12">
         <div className="lg:col-span-3">

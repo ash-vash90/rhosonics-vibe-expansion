@@ -52,10 +52,10 @@ export const BrandCallout = ({
       <div className="flex items-start gap-3">
         <Icon className={cn("w-4 h-4 mt-0.5 shrink-0", styles.iconColor)} />
         <div className="flex-1 min-w-0">
-          <h4 className="font-ui font-semibold text-sm text-slate-700 mb-1">
+          <h4 className="font-ui font-semibold text-sm text-foreground mb-1">
             {title}
           </h4>
-          <div className="text-sm text-slate-600 leading-relaxed">
+          <div className="text-sm text-muted-foreground leading-relaxed">
             {children}
           </div>
         </div>

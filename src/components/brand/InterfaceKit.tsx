@@ -4,18 +4,19 @@ import { Button } from "@/components/ui/button";
 
 export const InterfaceKit = () => {
   return (
-    <section id="components" className="mb-32">
-      <h2 className="section-header">Interface Kit</h2>
-      
+    <section id="components" className="space-y-16 pt-16">
       {/* Hero Statement */}
-      <p className="text-xl text-muted-foreground max-w-3xl mb-16 leading-relaxed">
-        Functional building blocks for decision-making and control. 
-        Every component prioritizes clarity over decoration — the primary measurement 
-        must be readable at a glance, from a distance.
-      </p>
+      <div>
+        <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-6">Interface Kit</h2>
+        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+          Functional building blocks for decision-making and control. 
+          Every component prioritizes clarity over decoration — the primary measurement 
+          must be readable at a glance, from a distance.
+        </p>
+      </div>
 
       {/* Buttons Showcase */}
-      <div className="mb-20">
+      <div>
         <div className="flex items-center gap-4 mb-8">
           <span className="font-data text-sm text-primary uppercase tracking-wider">01</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Buttons</h3>
@@ -23,7 +24,7 @@ export const InterfaceKit = () => {
         
         <div className="space-y-12">
           {/* Standard Buttons */}
-          <div className="flex flex-col md:flex-row md:items-center gap-6 pb-8 border-b border-slate-100">
+          <div className="flex flex-col md:flex-row md:items-center gap-6 pb-8 border-b border-border">
             <div className="md:w-40 shrink-0">
               <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Standard</span>
             </div>
@@ -36,10 +37,10 @@ export const InterfaceKit = () => {
           </div>
 
           {/* Chamfered Buttons */}
-          <div className="flex flex-col md:flex-row md:items-center gap-6 pb-8 border-b border-slate-100">
+          <div className="flex flex-col md:flex-row md:items-center gap-6 pb-8 border-b border-border">
             <div className="md:w-40 shrink-0">
               <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Chamfered</span>
-              <p className="text-xs text-slate-400 mt-1">Industrial aesthetic</p>
+              <p className="text-xs text-muted-foreground mt-1">Industrial aesthetic</p>
             </div>
             <div className="flex flex-wrap gap-4">
               <Button variant="chamfer" size="chamfer-default">
@@ -59,7 +60,7 @@ export const InterfaceKit = () => {
           <div className="flex flex-col md:flex-row md:items-center gap-6">
             <div className="md:w-40 shrink-0">
               <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Hero CTA</span>
-              <p className="text-xs text-slate-400 mt-1">Large format</p>
+              <p className="text-xs text-muted-foreground mt-1">Large format</p>
             </div>
             <div>
               <Button variant="chamfer" size="chamfer-lg">
@@ -72,7 +73,7 @@ export const InterfaceKit = () => {
       </div>
 
       {/* Data Cards Showcase */}
-      <div className="mb-20">
+      <div>
         <div className="flex items-center gap-4 mb-8">
           <span className="font-data text-sm text-primary uppercase tracking-wider">02</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Data Cards</h3>

@@ -151,12 +151,12 @@ const galleryItems = [
 
 export const BrandGallery = () => {
   return (
-    <section id="gallery" className="mb-32">
+    <section id="gallery" className="space-y-12">
       {/* Full-width category strips */}
       {galleryItems.map((category, catIdx) => (
-        <div key={catIdx} className="mb-12 last:mb-0">
+        <div key={catIdx}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+            <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
               <category.icon className="w-4 h-4" />
             </div>
             <h3 className="font-ui font-semibold text-foreground">{category.category}</h3>
