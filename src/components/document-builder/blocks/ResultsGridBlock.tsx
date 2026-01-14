@@ -164,8 +164,8 @@ export function ResultsGridBlock({
                 className={cn(
                   "opacity-0 group-hover:opacity-100 p-1 rounded-full transition-all flex-shrink-0",
                   isDark 
-                    ? "hover:bg-red-500/20 text-white/40 hover:text-red-400" 
-                    : "hover:bg-red-100 text-slate-300 hover:text-red-500"
+                    ? "hover:bg-error/20 text-white/40 hover:text-error" 
+                    : "hover:bg-error-surface text-slate-300 hover:text-error"
                 )}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -185,8 +185,8 @@ export function ResultsGridBlock({
           className={cn(
             "w-full mt-3 py-2 rounded-lg border-2 border-dashed flex items-center justify-center gap-2 transition-colors",
             isDark 
-              ? "border-white/10 text-white/40 hover:border-rho-green/40 hover:text-rho-green" 
-              : "border-slate-200 text-slate-400 hover:border-green-300 hover:text-green-600"
+              ? "border-white/10 text-white/40 hover:border-primary/40 hover:text-primary" 
+              : "border-slate-200 text-slate-400 hover:border-success-border hover:text-success"
           )}
           onClick={addResult}
         >

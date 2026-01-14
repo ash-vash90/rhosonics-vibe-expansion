@@ -161,8 +161,8 @@ export function SpecTableBlock({
                         className={cn(
                           "p-1 rounded transition-colors",
                           isDark 
-                            ? "hover:bg-red-500/20 text-red-400/60 disabled:text-white/10" 
-                            : "hover:bg-red-50 text-red-400 disabled:text-slate-200"
+                            ? "hover:bg-error/20 text-error/60 disabled:text-white/10" 
+                            : "hover:bg-error-surface text-error/60 disabled:text-slate-200"
                         )}
                       >
                         <Trash2 className="w-3 h-3" />

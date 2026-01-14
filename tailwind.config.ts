@@ -83,6 +83,16 @@ export default {
           surface: "hsl(var(--warning-surface))",
           border: "hsl(var(--warning-border))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          surface: "hsl(var(--success-surface))",
+          border: "hsl(var(--success-border))",
+        },
+        error: {
+          DEFAULT: "hsl(var(--error))",
+          surface: "hsl(var(--error-surface))",
+          border: "hsl(var(--error-border))",
+        },
         mineral: {
           neutral: "hsl(var(--mineral-neutral))",
           surface: "hsl(var(--mineral-surface))",

@@ -155,10 +155,10 @@ export const InterfaceKit = () => {
           <span className="px-3 py-1.5 bg-slate-100 text-muted-foreground font-data text-xs uppercase tracking-wide rounded-full border border-border">
             Standby
           </span>
-          <span className="px-3 py-1.5 bg-amber-50 text-amber-700 font-data text-xs uppercase tracking-wide rounded-full border border-amber-200">
+          <span className="px-3 py-1.5 bg-warning-surface text-warning font-data text-xs uppercase tracking-wide rounded-full border border-warning-border">
             Calibrating
           </span>
-          <span className="px-3 py-1.5 bg-red-50 text-destructive font-data text-xs uppercase tracking-wide rounded-full border border-red-200">
+          <span className="px-3 py-1.5 bg-error-surface text-error font-data text-xs uppercase tracking-wide rounded-full border border-error-border">
             Error
           </span>
         </div>

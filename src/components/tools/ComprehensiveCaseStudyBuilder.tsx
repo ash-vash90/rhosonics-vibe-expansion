@@ -817,10 +817,10 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
             </div>
             <div className="space-y-4">
               <h4 className="font-ui text-sm font-semibold text-foreground flex items-center gap-2">
-                <Zap className="w-4 h-4 text-lime-500" />
+                <Zap className="w-4 h-4 text-rho-green-accent" />
                 Operational & Business Impact
               </h4>
-              <div className="p-4 bg-lime-500/5 border border-lime-500/20 rounded-lg">
+              <div className="p-4 bg-eco-surface border border-eco-border rounded-lg">
                 <p className="font-ui text-xs text-muted-foreground">
                   This is the upgrade your current case studies lack. If you cannot quantify, say what changed in daily operation.
                 </p>
@@ -1187,12 +1187,12 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
               {generatedContent.technicalResults.responseTime && <div><span className="text-muted-foreground">Response:</span> <span className="font-medium text-foreground">{generatedContent.technicalResults.responseTime}</span></div>}
             </div>
           </div>
-          <div className="p-4 bg-lime-500/5 border border-lime-500/20 rounded-lg">
-            <h4 className="label-tech text-lime-600 dark:text-lime-400 mb-3">Business Impact</h4>
+          <div className="p-4 bg-eco-surface border border-eco-border rounded-lg">
+            <h4 className="label-tech text-primary mb-3">Business Impact</h4>
             <ul className="space-y-1 text-sm">
               {generatedContent.businessImpact.impacts.filter(i => i).map((impact, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-lime-500 mt-0.5 shrink-0" />
+                  <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <span className="text-foreground">{impact}</span>
                 </li>
               ))}
@@ -1220,7 +1220,7 @@ export const ComprehensiveCaseStudyBuilder = ({ onOpenImageGenerator }: Comprehe
         </div>
 
         {/* What's Next */}
-        <div className="p-4 bg-gradient-to-r from-primary/10 to-lime-500/10 rounded-lg">
+        <div className="p-4 bg-gradient-to-r from-primary/10 to-rho-green-accent/10 rounded-lg">
           <h4 className="label-tech text-foreground/70 mb-2">What's Next</h4>
           <p className="text-sm text-foreground">{generatedContent.whatsNext.futureIntent}</p>
           {generatedContent.whatsNext.callToAction && (

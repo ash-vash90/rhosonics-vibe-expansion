@@ -68,9 +68,9 @@ export const ImageryGuidelines = () => {
           </ul>
         </div>
 
-        <div className="p-8 bg-red-50/50">
+        <div className="p-8 bg-error-surface">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-8 h-8 bg-destructive text-white rounded-full flex items-center justify-center text-lg">✕</span>
+            <span className="w-8 h-8 bg-error text-white rounded-full flex items-center justify-center text-lg">✕</span>
             <h4 className="font-ui font-bold text-xl text-foreground">Don't Use</h4>
           </div>
           <ul className="space-y-3">

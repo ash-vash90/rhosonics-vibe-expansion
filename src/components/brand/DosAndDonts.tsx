@@ -117,13 +117,13 @@ export const DosAndDonts = () => {
           <div className="space-y-6">
             <div>
               <div className="label-tech text-muted-foreground mb-2">UNBOUNDED FOR HEADINGS</div>
-              <div className="p-4 bg-red-50/50 rounded border border-red-100">
+              <div className="p-4 bg-error-surface rounded border border-error-border">
                 <span className="font-logo text-xl">Product Features</span>
               </div>
             </div>
             <div>
               <div className="label-tech text-muted-foreground mb-2">SYSTEM FONTS FOR DATA</div>
-              <div className="p-4 bg-red-50/50 rounded border border-red-100">
+              <div className="p-4 bg-error-surface rounded border border-error-border">
                 <span className="font-sans text-2xl text-foreground">1.4502</span>
                 <span className="text-sm text-muted-foreground ml-2">g/L</span>
               </div>
@@ -157,9 +157,9 @@ export const DosAndDonts = () => {
           </ul>
         </div>
 
-        <div className="p-8 bg-red-50/50">
+        <div className="p-8 bg-error-surface">
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-8 h-8 bg-destructive text-white rounded-full flex items-center justify-center">
+            <span className="w-8 h-8 bg-error text-white rounded-full flex items-center justify-center">
               <X className="w-4 h-4" />
             </span>
             <h4 className="font-ui font-bold text-xl text-foreground">Never</h4>

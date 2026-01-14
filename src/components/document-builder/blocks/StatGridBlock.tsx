@@ -158,8 +158,8 @@ export function StatGridBlock({
                 {stat.trend && (
                   <Icon className={cn(
                     "w-4 h-4",
-                    stat.trend === "up" && "text-rho-green",
-                    stat.trend === "down" && "text-red-500"
+                    stat.trend === "up" && "text-success",
+                    stat.trend === "down" && "text-error"
                   )} />
                 )}
               </div>
