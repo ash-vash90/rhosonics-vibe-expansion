@@ -68,21 +68,37 @@ export const CaseStudies = () => {
             }`}
           >
             {/* Hero Image */}
-            <div className="relative h-40 overflow-hidden">
-              <img 
-                src={study.image} 
-                alt={study.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform backface-hidden"
-              />
-              <div className={`absolute inset-0 ${
-                study.variant === 'dark' ? 'bg-gradient-to-t from-rho-obsidian via-rho-obsidian/60 to-transparent' : 
-                study.variant === 'mineral' ? 'bg-gradient-to-t from-mineral-surface via-mineral-surface/60 to-transparent' : 
-                'bg-gradient-to-t from-card via-card/60 to-transparent'
-              }`} />
-              
+            <div
+              className={`relative h-40 overflow-hidden ${
+                study.variant === "dark"
+                  ? "bg-rho-obsidian"
+                  : study.variant === "mineral"
+                    ? "bg-mineral-surface"
+                    : "bg-card"
+              }`}
+            >
+              {/* Image + overlay are composited as a single GPU layer to prevent edge flashing */}
+              <div className="absolute inset-0 transform-gpu will-change-transform transition-transform duration-500 group-hover:scale-105 [backface-visibility:hidden]">
+                <img
+                  src={study.image}
+                  alt={study.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  draggable={false}
+                />
+                <div
+                  className={`absolute inset-0 pointer-events-none ${
+                    study.variant === "dark"
+                      ? "bg-gradient-to-t from-rho-obsidian via-rho-obsidian/60 to-transparent"
+                      : study.variant === "mineral"
+                        ? "bg-gradient-to-t from-mineral-surface via-mineral-surface/60 to-transparent"
+                        : "bg-gradient-to-t from-card via-card/60 to-transparent"
+                  }`}
+                />
+              </div>
+
               {/* Industry badge - JetBrains Mono with transparency */}
               <div className="absolute top-3 left-3">
-                <span className="font-data text-[11px] tracking-wider px-2.5 py-1 rounded bg-black/60 text-white backdrop-blur-sm">
+                <span className="font-data text-[11px] tracking-wider px-2.5 py-1 rounded bg-rho-obsidian/60 text-primary-foreground backdrop-blur-sm border border-border/30">
                   {study.industry}
                 </span>
               </div>
