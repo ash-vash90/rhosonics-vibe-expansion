@@ -51,14 +51,14 @@ const caseStudies = [
 export const CaseStudies = () => {
   return (
     <section id="cases" className="space-y-16">
-      {/* Case Study Cards - Full width grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-border rounded-lg overflow-hidden">
+      {/* Case Study Cards - Separated card grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {caseStudies.map((study) => (
           <article 
             key={study.id}
-            className={`group relative overflow-hidden transition-all duration-300 ${
-              study.variant === 'dark' ? 'bg-rho-obsidian' : 
-              study.variant === 'mineral' ? 'bg-mineral-surface' : 'bg-background'
+            className={`group relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border ${
+              study.variant === 'dark' ? 'bg-rho-obsidian border-border/30' : 
+              study.variant === 'mineral' ? 'bg-mineral-surface border-mineral-neutral/30' : 'bg-card border-border/50 hover:border-primary/40'
             }`}
           >
             {/* Background patterns */}
@@ -69,7 +69,7 @@ export const CaseStudies = () => {
               <div className="absolute inset-0 bg-pattern-minerals opacity-20"></div>
             )}
             
-            <div className="relative p-5 md:p-8 min-h-[320px] md:min-h-[400px] flex flex-col">
+            <div className="relative p-6 md:p-8 min-h-[320px] md:min-h-[400px] flex flex-col">
                 <div className="flex items-center justify-between mb-6">
                 <span className={`label-tech ${
                   study.variant === 'dark' ? 'text-slate-400' : 
@@ -79,7 +79,7 @@ export const CaseStudies = () => {
                 </span>
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                   study.variant === 'dark' ? 'bg-primary/20 text-primary' : 
-                  study.variant === 'mineral' ? 'bg-mineral-neutral/20 text-mineral-deep' : 'bg-slate-100 text-slate-600'
+                  study.variant === 'mineral' ? 'bg-mineral-neutral/20 text-mineral-deep' : 'bg-muted text-muted-foreground'
                 }`}>
                   <study.icon className="w-5 h-5" />
                 </div>
@@ -101,7 +101,7 @@ export const CaseStudies = () => {
               </div>
 
               <h3 className={`text-xl font-semibold font-ui mb-3 ${
-                study.variant === 'dark' ? 'text-slate-100' : 'text-foreground'
+                study.variant === 'dark' ? 'text-slate-100' : 'text-card-foreground'
               }`}>
                 {study.title}
               </h3>
@@ -112,20 +112,20 @@ export const CaseStudies = () => {
                 {study.description}
               </p>
 
-              <div className={`grid grid-cols-3 gap-2 p-4 rounded-lg mt-6 ${
+              <div className={`grid grid-cols-3 gap-2 p-4 rounded-xl mt-6 ${
                 study.variant === 'dark' ? 'bg-slate-800/50' : 
-                study.variant === 'mineral' ? 'bg-mineral-neutral/10' : 'bg-slate-50'
+                study.variant === 'mineral' ? 'bg-mineral-neutral/10' : 'bg-muted/50'
               }`}>
                 {study.metrics.map((metric) => (
                   <div key={metric.label} className="text-center">
-                    <div className={`font-data text-xs uppercase tracking-wider mb-1 ${
+                    <div className={`font-data text-[10px] uppercase tracking-wider mb-1 ${
                       study.variant === 'dark' ? 'text-slate-500' : 
                       study.variant === 'mineral' ? 'text-mineral-neutral' : 'text-muted-foreground'
                     }`}>
                       {metric.label}
                     </div>
                     <div className={`text-sm font-semibold font-ui ${
-                      study.variant === 'dark' ? 'text-slate-100' : 'text-foreground'
+                      study.variant === 'dark' ? 'text-slate-100' : 'text-card-foreground'
                     }`}>
                       {metric.value}
                     </div>
