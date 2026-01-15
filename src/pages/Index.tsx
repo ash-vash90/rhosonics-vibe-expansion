@@ -409,7 +409,15 @@ const Index = () => {
           
           <Suspense fallback={<SectionLoader />}>
             <LogoAssets />
-            <div id="icon-guidelines" className="scroll-mt-20 md:scroll-mt-24">
+            <div id="icon-guidelines" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
+              <div className="mb-8 md:mb-12">
+                <div className="flex items-baseline gap-3 mb-3">
+                  <span className="font-data text-xs text-muted-foreground">06.1</span>
+                  <div className="h-px flex-1 bg-border max-w-12" />
+                </div>
+                <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Icon Guidelines</h3>
+                <p className="text-base text-muted-foreground">Geometric symbols engineered for clarity.</p>
+              </div>
               <IconGuidelines />
             </div>
           </Suspense>
@@ -439,7 +447,15 @@ const Index = () => {
           
           <Suspense fallback={<SectionLoader />}>
             <ImageryGuidelines />
-            <div id="motion-design" className="scroll-mt-20 md:scroll-mt-24">
+            <div id="motion-design" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
+              <div className="mb-8 md:mb-12">
+                <div className="flex items-baseline gap-3 mb-3">
+                  <span className="font-data text-xs text-muted-foreground">08.1</span>
+                  <div className="h-px flex-1 bg-border max-w-12" />
+                </div>
+                <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Motion Design</h3>
+                <p className="text-base text-muted-foreground">Animation that communicates cause and effect.</p>
+              </div>
               <MotionDesign />
             </div>
           </Suspense>
