@@ -140,8 +140,8 @@ export const CaseStudies = () => {
                   ))}
                 </div>
 
-                {/* CTA - Always green */}
-                <button className={`mt-5 pt-4 flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors border-t ${
+                {/* CTA - Always green, full width */}
+                <button className={`mt-5 pt-4 w-full flex items-center justify-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors border-t ${
                   study.variant === 'dark' ? 'border-slate-700' : 
                   study.variant === 'mineral' ? 'border-mineral-deep/20' : 'border-border'
                 }`}>
