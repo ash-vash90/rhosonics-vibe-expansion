@@ -141,7 +141,7 @@ export const CaseStudies = () => {
                 </div>
 
                 {/* CTA - Always green */}
-                <button className="mt-4 flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+                <button className="mt-6 flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
                   <span className="font-ui">Read full study</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
