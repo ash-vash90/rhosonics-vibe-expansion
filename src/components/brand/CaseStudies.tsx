@@ -1,4 +1,7 @@
 import { TrendingUp, Droplets, Gauge, ArrowRight } from "lucide-react";
+import dredgingHero from "@/assets/case-studies/dredging-hero.jpg";
+import miningHero from "@/assets/case-studies/mining-hero.jpg";
+import wastewaterHero from "@/assets/case-studies/wastewater-hero.jpg";
 
 const caseStudies = [
   {
@@ -14,7 +17,9 @@ const caseStudies = [
       { label: "ROI", value: "8 mo" },
     ],
     icon: Droplets,
+    // Dark variant: Maritime/offshore environments with harsh conditions
     variant: "dark" as const,
+    image: dredgingHero,
   },
   {
     id: "mining",
@@ -29,7 +34,9 @@ const caseStudies = [
       { label: "Maintenance", value: "< 4h/yr" },
     ],
     icon: Gauge,
+    // Mineral variant: Arid/earth-tone environments
     variant: "mineral" as const,
+    image: miningHero,
   },
   {
     id: "wastewater",
@@ -44,7 +51,9 @@ const caseStudies = [
       { label: "Compliance", value: "100%" },
     ],
     icon: TrendingUp,
+    // Light variant: Clean industrial/indoor facilities
     variant: "light" as const,
+    image: wastewaterHero,
   },
 ];
 
@@ -61,35 +70,42 @@ export const CaseStudies = () => {
               study.variant === 'mineral' ? 'bg-mineral-surface border-mineral-deep/20' : 'bg-card border-border hover:border-primary/40'
             }`}
           >
-            {/* Background patterns */}
-            {study.variant === 'dark' && (
-              <div className="absolute inset-0 bg-pattern-dredging opacity-20"></div>
-            )}
-            {study.variant === 'mineral' && (
-              <div className="absolute inset-0 bg-pattern-minerals opacity-10"></div>
-            )}
-            
-            <div className="relative p-6 md:p-8 min-h-[320px] md:min-h-[400px] flex flex-col">
-                <div className="flex items-center justify-between mb-6">
-                <span className={`label-tech ${
-                  study.variant === 'dark' ? 'text-slate-300' : 
-                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-slate-600'
+            {/* Hero Image */}
+            <div className="relative h-40 overflow-hidden">
+              <img 
+                src={study.image} 
+                alt={study.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className={`absolute inset-0 ${
+                study.variant === 'dark' ? 'bg-gradient-to-t from-rho-obsidian via-rho-obsidian/60 to-transparent' : 
+                study.variant === 'mineral' ? 'bg-gradient-to-t from-mineral-surface via-mineral-surface/60 to-transparent' : 
+                'bg-gradient-to-t from-card via-card/60 to-transparent'
+              }`} />
+              
+              {/* Industry badge */}
+              <div className="absolute top-3 left-3">
+                <span className={`px-2 py-1 text-xs font-medium rounded ${
+                  study.variant === 'dark' ? 'bg-slate-800/80 text-slate-200' : 
+                  study.variant === 'mineral' ? 'bg-mineral-deep/20 text-mineral-deep' : 'bg-white/80 text-slate-700'
                 }`}>
                   {study.industry}
                 </span>
-                <div className={`w-10 h-10 rounded-md flex items-center justify-center ${
-                  study.variant === 'dark' ? 'bg-primary/20 text-primary' : 
-                  study.variant === 'mineral' ? 'bg-mineral-deep/10 text-mineral-deep' : 'bg-muted text-slate-600'
-                }`}>
-                  <study.icon className="w-5 h-5" />
-                </div>
               </div>
-
-              <div className="mb-4 md:mb-6">
-                <div className={`font-data text-4xl md:text-5xl lg:text-6xl mb-1 md:mb-2 ${
-                  study.variant === 'dark' ? 'text-primary' : 
-                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-primary'
-                }`}>
+              
+              {/* Icon */}
+              <div className={`absolute top-3 right-3 w-9 h-9 rounded-md flex items-center justify-center ${
+                study.variant === 'dark' ? 'bg-slate-800/80 text-primary' : 
+                study.variant === 'mineral' ? 'bg-mineral-deep/20 text-primary' : 'bg-white/80 text-primary'
+              }`}>
+                <study.icon className="w-4 h-4" />
+              </div>
+            </div>
+            
+            <div className="relative p-6 flex flex-col">
+              {/* KPI - Always green */}
+              <div className="mb-4">
+                <div className="font-data text-4xl md:text-5xl mb-1 text-primary">
                   {study.stat}
                 </div>
                 <div className={`text-sm font-medium ${
@@ -100,26 +116,26 @@ export const CaseStudies = () => {
                 </div>
               </div>
 
-              <h3 className={`text-xl font-semibold font-ui mb-3 ${
+              <h3 className={`text-lg font-semibold font-ui mb-2 ${
                 study.variant === 'dark' ? 'text-white' : 
                 study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
               }`}>
                 {study.title}
               </h3>
-              <p className={`text-sm leading-relaxed mb-auto ${
+              <p className={`text-sm leading-relaxed mb-4 ${
                 study.variant === 'dark' ? 'text-slate-300' : 
                 study.variant === 'mineral' ? 'text-mineral-deep/90' : 'text-slate-600'
               }`}>
                 {study.description}
               </p>
 
-              <div className={`grid grid-cols-3 gap-2 p-4 rounded-md mt-6 ${
+              <div className={`grid grid-cols-3 gap-2 p-3 rounded-md ${
                 study.variant === 'dark' ? 'bg-slate-800/60' : 
                 study.variant === 'mineral' ? 'bg-mineral-deep/10' : 'bg-muted'
               }`}>
                 {study.metrics.map((metric) => (
                   <div key={metric.label} className="text-center">
-                    <div className={`font-data text-[10px] uppercase tracking-wider mb-1 ${
+                    <div className={`font-data text-[10px] uppercase tracking-wider mb-0.5 ${
                       study.variant === 'dark' ? 'text-slate-400' : 
                       study.variant === 'mineral' ? 'text-mineral-deep/70' : 'text-slate-500'
                     }`}>
@@ -135,10 +151,8 @@ export const CaseStudies = () => {
                 ))}
               </div>
 
-              <button className={`mt-6 flex items-center gap-2 text-sm font-medium transition-colors ${
-                study.variant === 'dark' ? 'text-primary hover:text-primary/80' : 
-                study.variant === 'mineral' ? 'text-mineral-deep hover:text-mineral-deep/70' : 'text-primary hover:text-primary/80'
-              }`}>
+              {/* CTA - Always green */}
+              <button className="mt-5 flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
                 <span className="font-ui">Read full study</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
