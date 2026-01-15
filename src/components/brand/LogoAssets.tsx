@@ -1,6 +1,6 @@
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { BrandCallout } from "./BrandCallout";
-import { Download, FileImage, FileCode } from "lucide-react";
+import { Download, FileCode, ChevronDown } from "lucide-react";
 import { 
   logoVariants, 
   generateLockupSVG, 
@@ -9,6 +9,12 @@ import {
   downloadPNG 
 } from "@/lib/logoExport";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const LogoAssets = () => {
   const [downloading, setDownloading] = useState<string | null>(null);
@@ -119,30 +125,30 @@ export const LogoAssets = () => {
                     <FileCode className="w-3.5 h-3.5" />
                     SVG
                   </button>
-                  <button
-                    onClick={() => handleDownloadPNG(variant.id, 2)}
-                    disabled={downloading === `${variant.id}-2x`}
-                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors disabled:opacity-50"
-                  >
-                    <FileImage className="w-3.5 h-3.5" />
-                    {downloading === `${variant.id}-2x` ? "..." : "@2x"}
-                  </button>
-                  <button
-                    onClick={() => handleDownloadPNG(variant.id, 4)}
-                    disabled={downloading === `${variant.id}-4x`}
-                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors disabled:opacity-50"
-                  >
-                    <FileImage className="w-3.5 h-3.5" />
-                    {downloading === `${variant.id}-4x` ? "..." : "@4x"}
-                  </button>
-                  <button
-                    onClick={() => handleDownloadPNG(variant.id, 8)}
-                    disabled={downloading === `${variant.id}-8x`}
-                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors disabled:opacity-50"
-                  >
-                    <FileImage className="w-3.5 h-3.5" />
-                    {downloading === `${variant.id}-8x` ? "..." : "@8x"}
-                  </button>
+                  
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        PNG
+                        <ChevronDown className="w-3 h-3 opacity-60" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="min-w-[120px]">
+                      {[2, 4, 8].map((scale) => (
+                        <DropdownMenuItem
+                          key={scale}
+                          onClick={() => handleDownloadPNG(variant.id, scale)}
+                          disabled={downloading === `${variant.id}-${scale}x`}
+                          className="font-data text-xs"
+                        >
+                          {downloading === `${variant.id}-${scale}x` ? "Downloading..." : `@${scale}x PNG`}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </div>
             </div>
@@ -172,34 +178,6 @@ export const LogoAssets = () => {
         </div>
       </div>
 
-      {/* Logo Variants - RESPONSIVE GRID */}
-      <div>
-        <div className="flex items-center gap-4 mb-8">
-          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Quick Reference</h3>
-          <div className="h-px flex-1 bg-border" />
-        </div>
-        
-        {/* Responsive grid - 2x2 on mobile, 4 across on desktop */}
-        <div className="grid grid-cols-2 md:grid-cols-4 -mx-4 md:-mx-6">
-          <div className="p-6 md:p-8 bg-white border border-border flex flex-col items-center justify-center gap-3 md:gap-4">
-            <RhosonicsLogo variant="gradient" className="w-10 h-10 md:w-14 md:h-14" />
-            <span className="font-data text-[10px] md:text-xs text-muted-foreground text-center">Gradient on Light</span>
-          </div>
-          <div className="p-6 md:p-8 bg-slate-900 border border-slate-800 flex flex-col items-center justify-center gap-3 md:gap-4">
-            <RhosonicsLogo variant="white" className="w-10 h-10 md:w-14 md:h-14" />
-            <span className="font-data text-[10px] md:text-xs text-slate-500 text-center">White on Dark</span>
-          </div>
-          <div className="p-6 md:p-8 bg-gradient-to-br from-[hsl(88_60%_45%)] to-[hsl(125_50%_40%)] border border-primary flex flex-col items-center justify-center gap-3 md:gap-4">
-            <RhosonicsLogo variant="white" className="w-10 h-10 md:w-14 md:h-14" />
-            <span className="font-data text-[10px] md:text-xs text-white/70 text-center">White on Brand</span>
-          </div>
-          <div className="p-6 md:p-8 bg-white border border-border flex flex-col items-center justify-center gap-3 md:gap-4">
-            <RhosonicsLogo variant="dark" className="w-10 h-10 md:w-14 md:h-14" />
-            <span className="font-data text-[10px] md:text-xs text-muted-foreground text-center">Dark on Light</span>
-          </div>
-        </div>
-      </div>
-
       {/* Logo Contexts - inline badges */}
       <div>
         <div className="flex items-center gap-4 mb-6">
@@ -216,34 +194,6 @@ export const LogoAssets = () => {
             <div key={ctx.label} className="flex items-center gap-3">
               <span className="font-data text-xs bg-primary text-white px-2 py-1">{ctx.label}</span>
               <span className="text-sm text-muted-foreground">{ctx.desc}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* File Formats - horizontal table style */}
-      <div>
-        <div className="flex items-center gap-4 mb-8">
-          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Available Formats</h3>
-          <div className="h-px flex-1 bg-border" />
-        </div>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border border-border overflow-hidden rounded-lg">
-          {[
-            { format: "SVG", use: "Web, UI, scalable" },
-            { format: "PNG", use: "Digital, presentations" },
-            { format: "PDF", use: "Print, documents" },
-            { format: "EPS", use: "Professional print" },
-          ].map((file, i) => (
-            <div 
-              key={file.format} 
-              className={`p-6 flex items-center gap-4 hover:bg-muted/30 transition-colors ${i > 0 ? 'border-l border-border' : ''}`}
-            >
-              <Download className="w-4 h-4 text-primary flex-shrink-0" />
-              <div>
-                <span className="font-data text-sm text-foreground block">{file.format}</span>
-                <span className="text-xs text-muted-foreground">{file.use}</span>
-              </div>
             </div>
           ))}
         </div>
