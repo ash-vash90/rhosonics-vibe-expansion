@@ -1,6 +1,78 @@
+import { Download, Copy, Check } from "lucide-react";
 import { BrandCallout } from "./BrandCallout";
+import { useState } from "react";
+
+const fontKitCSS = `/* Rhosonics Font Kit */
+/* Google Fonts Import - Add to <head> or CSS */
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+/* Font Family Classes */
+.font-logo {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 500;
+}
+
+.font-ui {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 400;
+}
+
+.font-ui-medium {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+}
+
+.font-ui-semibold {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+}
+
+.font-ui-bold {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 700;
+}
+
+.font-data {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+}`;
+
+const fontKitHTML = `<!-- Rhosonics Font Kit -->
+<!-- Add this to your HTML <head> section -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">`;
+
+const fontKitTailwind = `// Rhosonics Tailwind Font Config
+// Add to your tailwind.config.js theme.extend section
+
+fontFamily: {
+  logo: ['Unbounded', 'sans-serif'],
+  ui: ['Instrument Sans', 'sans-serif'],
+  data: ['JetBrains Mono', 'monospace'],
+},`;
+
+const downloadFile = (content: string, filename: string, type: string) => {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
 
 export const TypographyScale = () => {
+  const [copiedSnippet, setCopiedSnippet] = useState<string | null>(null);
+
+  const copyToClipboard = (content: string, id: string) => {
+    navigator.clipboard.writeText(content);
+    setCopiedSnippet(id);
+    setTimeout(() => setCopiedSnippet(null), 2000);
+  };
+
   return (
     <section id="typography" className="space-y-20">
       <p className="text-muted-foreground text-lg max-w-2xl">
@@ -255,6 +327,125 @@ export const TypographyScale = () => {
           In data-dense environments, typographic consistency reduces cognitive load. 
           Engineers and operators scan faster when visual patterns are predictable.
         </p>
+      </div>
+
+      {/* ═══ FONT KIT DOWNLOAD ═══ */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Font Kit</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* CSS Snippet */}
+          <div className="bg-muted/30 border border-border rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/50">
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider">CSS</span>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => copyToClipboard(fontKitCSS, 'css')}
+                  className="p-1.5 hover:bg-muted rounded transition-colors"
+                  title="Copy to clipboard"
+                >
+                  {copiedSnippet === 'css' ? (
+                    <Check className="w-3.5 h-3.5 text-success" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+                  )}
+                </button>
+                <button
+                  onClick={() => downloadFile(fontKitCSS, 'rhosonics-fonts.css', 'text/css')}
+                  className="p-1.5 hover:bg-muted rounded transition-colors"
+                  title="Download file"
+                >
+                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
+                </button>
+              </div>
+            </div>
+            <pre className="p-4 text-xs font-data text-muted-foreground overflow-x-auto max-h-48">
+              <code>{fontKitCSS}</code>
+            </pre>
+          </div>
+
+          {/* HTML Snippet */}
+          <div className="bg-muted/30 border border-border rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/50">
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider">HTML</span>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => copyToClipboard(fontKitHTML, 'html')}
+                  className="p-1.5 hover:bg-muted rounded transition-colors"
+                  title="Copy to clipboard"
+                >
+                  {copiedSnippet === 'html' ? (
+                    <Check className="w-3.5 h-3.5 text-success" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+                  )}
+                </button>
+                <button
+                  onClick={() => downloadFile(fontKitHTML, 'rhosonics-fonts.html', 'text/html')}
+                  className="p-1.5 hover:bg-muted rounded transition-colors"
+                  title="Download file"
+                >
+                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
+                </button>
+              </div>
+            </div>
+            <pre className="p-4 text-xs font-data text-muted-foreground overflow-x-auto max-h-48">
+              <code>{fontKitHTML}</code>
+            </pre>
+          </div>
+
+          {/* Tailwind Snippet */}
+          <div className="bg-muted/30 border border-border rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/50">
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider">Tailwind</span>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => copyToClipboard(fontKitTailwind, 'tailwind')}
+                  className="p-1.5 hover:bg-muted rounded transition-colors"
+                  title="Copy to clipboard"
+                >
+                  {copiedSnippet === 'tailwind' ? (
+                    <Check className="w-3.5 h-3.5 text-success" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+                  )}
+                </button>
+                <button
+                  onClick={() => downloadFile(fontKitTailwind, 'rhosonics-tailwind-fonts.js', 'text/javascript')}
+                  className="p-1.5 hover:bg-muted rounded transition-colors"
+                  title="Download file"
+                >
+                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
+                </button>
+              </div>
+            </div>
+            <pre className="p-4 text-xs font-data text-muted-foreground overflow-x-auto max-h-48">
+              <code>{fontKitTailwind}</code>
+            </pre>
+          </div>
+        </div>
+
+        {/* Font weights summary */}
+        <div className="mt-8 p-6 bg-muted/30 border border-border rounded-lg">
+          <h4 className="font-ui font-semibold text-foreground mb-4">Required Font Weights</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <span className="font-logo text-lg tracking-wide">Unbounded</span>
+              <p className="font-data text-xs text-muted-foreground mt-1">500 only</p>
+            </div>
+            <div>
+              <span className="font-ui text-lg">Instrument Sans</span>
+              <p className="font-data text-xs text-muted-foreground mt-1">400, 500, 600, 700</p>
+            </div>
+            <div>
+              <span className="font-data text-lg">JetBrains Mono</span>
+              <p className="font-data text-xs text-muted-foreground mt-1">500 only</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

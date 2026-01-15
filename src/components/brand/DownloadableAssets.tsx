@@ -25,13 +25,11 @@ module.exports = {
 }`;
 
 const generateFontCSS = () => `/* Rhosonics Typography */
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
-.font-logo { font-family: 'Unbounded', sans-serif; }
+.font-logo { font-family: 'Unbounded', sans-serif; font-weight: 500; }
 .font-ui { font-family: 'Instrument Sans', sans-serif; }
-.font-data { font-family: 'JetBrains Mono', monospace; }`;
+.font-data { font-family: 'JetBrains Mono', monospace; font-weight: 500; }`;
 
 const downloadFile = (content: string, filename: string, type: string) => {
   const blob = new Blob([content], { type });
