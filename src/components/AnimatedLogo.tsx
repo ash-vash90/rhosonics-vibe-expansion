@@ -1,6 +1,7 @@
 import { useEffect, useId, useImperativeHandle, useLayoutEffect, useRef, forwardRef } from "react";
 import gsap from "gsap";
 import { cn } from "@/lib/utils";
+import { cleanReactId } from "@/lib/constants";
 
 interface AnimatedLogoProps {
   variant?: "gradient" | "white" | "dark";
@@ -31,7 +32,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
 
     // Avoid global SVG id collisions when multiple logos are on the page.
     const rawId = useId();
-    const uid = rawId.replace(/:/g, "");
+    const uid = cleanReactId(rawId);
     const brandGradientId = `brandGradient-${uid}`;
     const whiteGradientId = `whiteGradient-${uid}`;
 

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from "react";
 import bb, { bar, line, area, radar, pie, scatter } from "billboard.js";
 import "billboard.js/dist/billboard.css";
+import { MULTI_SERIES_CHART_TYPES } from "@/lib/constants";
 
 export interface DataPoint {
   name: string;
@@ -51,7 +52,7 @@ export const BrandChart = forwardRef<BrandChartRef, BrandChartProps>(({
   const tooltipBorder = isLightBg ? "hsl(214, 32%, 85%)" : "hsl(215, 19%, 25%)";
   const tooltipText = isLightBg ? "hsl(226, 33%, 10%)" : "hsl(210, 40%, 96%)";
 
-  const isMultiSeries = ["grouped-bar", "stacked-bar", "multi-line", "stacked-area", "composed", "radar"].includes(chartType);
+  const isMultiSeries = MULTI_SERIES_CHART_TYPES.has(chartType);
 
   const buildColumns = useCallback((multiplier: number = 1) => {
     const values = data.map(d => Math.round(d.value * multiplier));

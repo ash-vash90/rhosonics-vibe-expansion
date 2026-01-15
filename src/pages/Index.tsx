@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useRef } from "react";
 import { AnimatedLogo, AnimatedLogoRef } from "@/components/AnimatedLogo";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { LazySection } from "@/components/LazySection";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navigation } from "@/components/brand/Navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -328,9 +329,11 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="about" number="00" title="About This System" subtitle="What this is, who it's for, and how to use it." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <AboutThisSystem />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <AboutThisSystem />
+            </Suspense>
+          </ErrorBoundary>
         </section>
 
         <SectionDivider />
@@ -341,9 +344,11 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <BrandPositioning />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <BrandPositioning />
+            </Suspense>
+          </ErrorBoundary>
         </section>
 
         <SectionDivider />
@@ -354,9 +359,11 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="principles" number="02" title="Brand Principles" subtitle="Decision-making tools for resolving design ambiguity." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <BrandPrinciples />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <BrandPrinciples />
+            </Suspense>
+          </ErrorBoundary>
         </section>
 
         <SectionDivider />
@@ -367,9 +374,11 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="visual-system" number="03" title="The Visual System" subtitle="How the system is structured in layers." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <VisualSystemOverview />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <VisualSystemOverview />
+            </Suspense>
+          </ErrorBoundary>
         </section>
 
         <SectionDivider />
@@ -380,9 +389,11 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="colors" number="04" title="Color Roles" subtitle="How color functions inside the system." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <ColorMatrix />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <ColorMatrix />
+            </Suspense>
+          </ErrorBoundary>
         </section>
 
         <SectionDivider />
@@ -393,10 +404,16 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="typography" number="05" title="Typography" subtitle="Clarity, measurement, and trust." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <TypographyScale />
-            <SpacingSystem />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <TypographyScale />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <SpacingSystem />
+            </Suspense>
+          </ErrorBoundary>
         </section>
 
         <SectionDivider />
@@ -407,20 +424,26 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="logo-assets" number="06" title="Logo & Assets" subtitle="Logo system, icons, and brand marks." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <LogoAssets />
-            <div id="icon-guidelines" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
-              <div className="mb-8 md:mb-12">
-                <div className="flex items-baseline gap-3 mb-3">
-                  <span className="font-data text-xs text-muted-foreground">06.1</span>
-                  <div className="h-px flex-1 bg-border max-w-12" />
-                </div>
-                <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Icon Guidelines</h3>
-                <p className="text-base text-muted-foreground">Geometric symbols engineered for clarity.</p>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <LogoAssets />
+            </Suspense>
+          </ErrorBoundary>
+          <div id="icon-guidelines" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
+            <div className="mb-8 md:mb-12">
+              <div className="flex items-baseline gap-3 mb-3">
+                <span className="font-data text-xs text-muted-foreground">06.1</span>
+                <div className="h-px flex-1 bg-border max-w-12" />
               </div>
-              <IconGuidelines />
+              <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Icon Guidelines</h3>
+              <p className="text-base text-muted-foreground">Geometric symbols engineered for clarity.</p>
             </div>
-          </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <IconGuidelines />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
         </section>
 
         <SectionDivider />
@@ -431,10 +454,16 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="voice" number="07" title="Voice & Tone" subtitle="Direct. Technical. Confident. No fluff, no hedging." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <VoiceTone />
-            <DosAndDonts />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <VoiceTone />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <DosAndDonts />
+            </Suspense>
+          </ErrorBoundary>
         </section>
 
         <SectionDivider />
@@ -445,20 +474,26 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="imagery" number="08" title="Imagery & Motion" subtitle="Photography, illustration, and animation guidelines." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <ImageryGuidelines />
-            <div id="motion-design" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
-              <div className="mb-8 md:mb-12">
-                <div className="flex items-baseline gap-3 mb-3">
-                  <span className="font-data text-xs text-muted-foreground">08.1</span>
-                  <div className="h-px flex-1 bg-border max-w-12" />
-                </div>
-                <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Motion Design</h3>
-                <p className="text-base text-muted-foreground">Animation that communicates cause and effect.</p>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <ImageryGuidelines />
+            </Suspense>
+          </ErrorBoundary>
+          <div id="motion-design" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
+            <div className="mb-8 md:mb-12">
+              <div className="flex items-baseline gap-3 mb-3">
+                <span className="font-data text-xs text-muted-foreground">08.1</span>
+                <div className="h-px flex-1 bg-border max-w-12" />
               </div>
-              <MotionDesign />
+              <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Motion Design</h3>
+              <p className="text-base text-muted-foreground">Animation that communicates cause and effect.</p>
             </div>
-          </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <MotionDesign />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
         </section>
 
         <SectionDivider />
@@ -469,11 +504,21 @@ const Index = () => {
         <section className="py-16 md:py-24">
           <SectionHeader id="applications" number="09" title="Applications" subtitle="Industry use cases, components, and interface patterns." />
           
-          <Suspense fallback={<SectionLoader />}>
-            <IndustryApplications />
-            <EcoComponents />
-            <InterfaceKit />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <IndustryApplications />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <EcoComponents />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <InterfaceKit />
+            </Suspense>
+          </ErrorBoundary>
         </section>
 
         <SectionDivider />
@@ -486,14 +531,18 @@ const Index = () => {
           <div className="relative">
             <SectionHeader id="proof" number="10" title="Proof & Examples" subtitle="Technology comparisons, case studies, and brand gallery." />
             
-            <LazySection fallback={<SectionLoader />} rootMargin="400px">
+            <ErrorBoundary>
+              <LazySection fallback={<SectionLoader />} rootMargin="400px">
+                <Suspense fallback={<SectionLoader />}>
+                  <TechComparison />
+                </Suspense>
+              </LazySection>
+            </ErrorBoundary>
+            <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
-                <TechComparison />
+                <CaseStudies />
               </Suspense>
-            </LazySection>
-            <Suspense fallback={<SectionLoader />}>
-              <CaseStudies />
-            </Suspense>
+            </ErrorBoundary>
           </div>
         </section>
 

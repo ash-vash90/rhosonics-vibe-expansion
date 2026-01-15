@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Loader2, Mail, Lock, ArrowLeft } from "@/lib/icons";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
+import { isValidEmail } from "@/lib/constants";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ const Auth = () => {
       toast.error("Please enter your email");
       return false;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!isValidEmail(email)) {
       toast.error("Please enter a valid email address");
       return false;
     }
