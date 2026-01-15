@@ -261,15 +261,23 @@ const Index = () => {
             HERO — BRAND SYSTEM INTRODUCTION
          ═══════════════════════════════════════════════════════════════ */}
         <section className="relative bg-rho-obsidian text-slate-100 overflow-hidden">
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-10">
+          {/* Subtle gradient overlay */}
+          <div 
+            className="absolute inset-0 opacity-[0.08]"
+            style={{
+              background: 'linear-gradient(135deg, transparent 0%, transparent 60%, hsl(125 50% 40% / 0.4) 100%)'
+            }}
+          />
+          
+          {/* Background pattern - very subtle */}
+          <div className="absolute inset-0 opacity-[0.04]">
             <div className="absolute inset-0" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333993c' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333993c' fill-opacity='0.5'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
             }} />
           </div>
           
-          {/* Gradient orb */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+          {/* Gradient orb - more subtle */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[120px]" />
           
           <div ref={heroContentRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 md:pt-32 md:pb-24">
             <div className="max-w-3xl">
