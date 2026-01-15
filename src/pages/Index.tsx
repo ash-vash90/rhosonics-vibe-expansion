@@ -260,31 +260,25 @@ const Index = () => {
         {/* ═══════════════════════════════════════════════════════════════
             HERO — BRAND SYSTEM INTRODUCTION
          ═══════════════════════════════════════════════════════════════ */}
-        <section className="min-h-[calc(100vh-56px)] md:min-h-[70vh] flex flex-col justify-center relative bg-slate-950 overflow-hidden">
-          {/* Layered backgrounds */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900/95 to-slate-950" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,hsl(125_50%_40%/0.06),transparent)]" />
-
-          {/* Subtle grid overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.02]"
-            style={{
-              backgroundImage: `linear-gradient(hsl(125 50% 40%) 1px, transparent 1px), linear-gradient(90deg, hsl(125 50% 40%) 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
-
-          {/* Content */}
-          <div ref={heroContentRef} className="relative z-10 px-4 md:px-12 lg:px-20 py-12 md:py-16 lg:py-20">
-            <div className="max-w-4xl mx-auto text-center">
-              {/* Logo + Wordmark - responsive sizing */}
-              <div className="hero-logo flex items-center justify-center gap-2 md:gap-4 mb-6 md:mb-8">
-                <div className="w-12 h-12 md:w-16 md:h-16" style={{ minWidth: 48, minHeight: 48 }}>
+        <section className="relative bg-rho-obsidian text-slate-100 overflow-hidden">
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333993c' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+            }} />
+          </div>
+          
+          {/* Gradient orb */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+          
+          <div ref={heroContentRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            <div className="max-w-3xl">
+              {/* Logo + Wordmark */}
+              <div className="hero-logo flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 md:w-12 md:h-12" style={{ minWidth: 40, minHeight: 40 }}>
                   <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden />
                 </div>
-                <span
-                  className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-2xl md:text-4xl lg:text-[45px]"
-                >
+                <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl">
                   {"RHOSONICS".split("").map((char, i) => (
                     <span key={i} className="wordmark-char inline-block">
                       {char}
@@ -292,19 +286,39 @@ const Index = () => {
                   ))}
                 </span>
               </div>
-
-              {/* Main title */}
-              <h1 className="hero-title font-ui text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-6">
-                Brand System
+              
+              <div className="hero-version label-tech text-primary mb-4">
+                <span className="text-slate-400">2025</span>
+                <span className="mx-2">/</span>
+                BRAND SYSTEM
+              </div>
+              
+              <h1 className="hero-title font-ui font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6">
+                Brand Guidelines
               </h1>
-
-              {/* Subtitle */}
-              <p className="hero-subtitle text-base md:text-lg lg:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed px-2">
+              
+              <p className="hero-subtitle text-xl text-slate-300 leading-relaxed max-w-2xl">
                 A system of decisions designed to ensure clarity, consistency, and credibility wherever the brand appears.
               </p>
+              
+              {/* Stats row */}
+              <div className="flex flex-wrap gap-8 mt-10 pt-8 border-t border-slate-700/50">
+                <div>
+                  <div className="font-data text-3xl text-primary">40+</div>
+                  <div className="label-tech-sm text-slate-400 mt-1">Years Experience</div>
+                </div>
+                <div>
+                  <div className="font-data text-3xl text-primary">6</div>
+                  <div className="label-tech-sm text-slate-400 mt-1">Continents</div>
+                </div>
+                <div>
+                  <div className="font-data text-3xl text-primary">1000+</div>
+                  <div className="label-tech-sm text-slate-400 mt-1">Installations</div>
+                </div>
+              </div>
             </div>
           </div>
-
+          
           {/* Scroll indicator */}
           <button
             onClick={scrollToContent}
