@@ -11,6 +11,7 @@ import html2canvas from "html2canvas";
 import GIF from "gif.js";
 import gifWorkerUrl from "gif.js/dist/gif.worker.js?url";
 import { BrandChart, BrandChartRef, DataPoint } from "./BrandChart";
+import { MULTI_SERIES_CHART_TYPES, LIGHT_BG_GRADIENTS, slugify } from "@/lib/constants";
 
 const CHART_TYPES = [
   { value: "bar", label: "Bar Chart" },
@@ -133,8 +134,8 @@ export const ChartGenerator = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const brandChartRef = useRef<BrandChartRef>(null);
 
-  const isMultiSeries = ["grouped-bar", "stacked-bar", "multi-line", "stacked-area", "composed", "radar"].includes(chartType);
-  const isLightBg = ["metal-light", "field", "eco"].includes(bgGradient);
+  const isMultiSeries = MULTI_SERIES_CHART_TYPES.has(chartType);
+  const isLightBg = LIGHT_BG_GRADIENTS.has(bgGradient);
   const chartHeight = ASPECT_RATIOS.find(r => r.value === aspectRatio)?.height || 320;
   const currentAnimation = ANIMATION_PRESETS.find(a => a.value === animationPreset) || ANIMATION_PRESETS[0];
 
@@ -271,7 +272,7 @@ export const ChartGenerator = () => {
       const url = URL.createObjectURL(blob);
 
       const link = document.createElement("a");
-      link.download = `${title.toLowerCase().replace(/\s+/g, "-") || "chart"}-chart.svg`;
+      link.download = `${slugify(title) || "chart"}-chart.svg`;
       link.href = url;
       link.click();
 

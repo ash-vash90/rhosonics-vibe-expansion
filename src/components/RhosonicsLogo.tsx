@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { cn } from "@/lib/utils";
+import { cleanReactId } from "@/lib/constants";
 
 interface RhosonicsLogoProps {
   variant?: "gradient" | "white" | "dark";
@@ -10,7 +11,7 @@ interface RhosonicsLogoProps {
 export const RhosonicsLogo = ({ variant = "gradient", className, animated = false }: RhosonicsLogoProps) => {
   // Avoid global SVG id collisions when multiple logos are on the page.
   const rawId = useId();
-  const uid = rawId.replace(/:/g, "");
+  const uid = cleanReactId(rawId);
   const brandGradientId = `brandGradient-${uid}`;
   const whiteGradientId = `whiteGradient-${uid}`;
 

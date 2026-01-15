@@ -3,7 +3,7 @@
  * with all styles inlined directly on elements - no CSS dependencies
  */
 
-const ELEMENTS_TO_SKIP = ['SCRIPT', 'NOSCRIPT', 'STYLE', 'LINK'];
+import { ELEMENTS_TO_SKIP_SET } from "@/lib/constants";
 
 const getInlineStyles = (element: Element): string => {
   const computed = window.getComputedStyle(element);
@@ -45,7 +45,7 @@ const getInlineStyles = (element: Element): string => {
 
 const processElement = (original: Element, clone: Element): void => {
   // Skip excluded elements
-  if (ELEMENTS_TO_SKIP.includes(original.tagName)) return;
+  if (ELEMENTS_TO_SKIP_SET.has(original.tagName)) return;
   
   // Skip elements marked for export exclusion
   if (original.hasAttribute('data-export-exclude')) {
