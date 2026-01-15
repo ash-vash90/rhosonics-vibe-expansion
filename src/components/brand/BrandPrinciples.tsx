@@ -1,6 +1,4 @@
 import { Focus, Sparkles, Wrench, Link2 } from "lucide-react";
-import { PRINCIPLE_VALUE_MAPPING } from "@/data/brand-values";
-import { ValueBadge } from "./ValueBadge";
 
 const BrandPrinciples = () => {
   const principles = [
@@ -9,28 +7,24 @@ const BrandPrinciples = () => {
       title: "Precision before decoration",
       meaning: "Information clarity always takes priority over visual flourish.",
       practice: "Data and key messages are visually dominant. Decorative elements are secondary.",
-      valueId: PRINCIPLE_VALUE_MAPPING.precisionBeforeDecoration,
     },
     {
       icon: Sparkles,
       title: "Expression with intent",
       meaning: "The system allows for expressive elements — but only where they serve a clear role.",
       practice: "Color signals state. Gradients add depth, not distraction. Expressive elements are contextual.",
-      valueId: PRINCIPLE_VALUE_MAPPING.expressionWithIntent,
     },
     {
       icon: Wrench,
       title: "Engineered, not styled",
       meaning: "The brand should feel designed with purpose, not styled for effect.",
       practice: "Layouts follow structural logic. Spacing is systematic. Motion communicates feedback.",
-      valueId: PRINCIPLE_VALUE_MAPPING.engineeredNotStyled,
     },
     {
       icon: Link2,
       title: "Consistency enables flexibility",
       meaning: "A strong core system allows variation without fragmentation.",
       practice: "Core elements remain stable. Contextual variations are defined. No sub-brands.",
-      valueId: PRINCIPLE_VALUE_MAPPING.consistencyEnablesFlexibility,
     }
   ];
 
@@ -60,12 +54,9 @@ const BrandPrinciples = () => {
               
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2 md:mb-3">
-                  <h4 className="font-ui text-lg md:text-xl lg:text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                    {principle.title}
-                  </h4>
-                  <ValueBadge valueId={principle.valueId} showIcon className="self-start sm:self-auto" />
-                </div>
+                <h4 className="font-ui text-lg md:text-xl lg:text-2xl font-semibold text-foreground group-hover:text-primary transition-colors mb-2 md:mb-3">
+                  {principle.title}
+                </h4>
                 <p className="text-foreground mb-2 md:mb-4 text-base md:text-lg">{principle.meaning}</p>
                 <p className="text-muted-foreground text-sm md:text-base">{principle.practice}</p>
               </div>
