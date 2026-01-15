@@ -189,7 +189,7 @@ export const LogoAssets = () => {
             <RhosonicsLogo variant="white" className="w-10 h-10 md:w-14 md:h-14" />
             <span className="font-data text-[10px] md:text-xs text-slate-500 text-center">White on Dark</span>
           </div>
-          <div className="p-6 md:p-8 bg-primary border border-primary flex flex-col items-center justify-center gap-3 md:gap-4">
+          <div className="p-6 md:p-8 bg-gradient-to-br from-[hsl(88_60%_45%)] to-[hsl(125_50%_40%)] border border-primary flex flex-col items-center justify-center gap-3 md:gap-4">
             <RhosonicsLogo variant="white" className="w-10 h-10 md:w-14 md:h-14" />
             <span className="font-data text-[10px] md:text-xs text-white/70 text-center">White on Brand</span>
           </div>
