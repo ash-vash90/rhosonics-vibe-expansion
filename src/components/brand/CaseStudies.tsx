@@ -80,12 +80,9 @@ export const CaseStudies = () => {
                 'bg-gradient-to-t from-card via-card/60 to-transparent'
               }`} />
               
-              {/* Industry badge - JetBrains Mono, more visible */}
+              {/* Industry badge - JetBrains Mono with transparency */}
               <div className="absolute top-3 left-3">
-                <span className={`font-data text-[11px] tracking-wider px-2.5 py-1 rounded ${
-                  study.variant === 'dark' ? 'bg-slate-900/90 text-white border border-slate-700' : 
-                  study.variant === 'mineral' ? 'bg-mineral-deep text-white' : 'bg-slate-800 text-white'
-                }`}>
+                <span className="font-data text-[11px] tracking-wider px-2.5 py-1 rounded bg-black/60 text-white backdrop-blur-sm">
                   {study.industry}
                 </span>
               </div>
@@ -118,31 +115,25 @@ export const CaseStudies = () => {
                 {study.description}
               </p>
 
-              {/* Metrics - Horizontal inline layout */}
-              <div className={`flex items-center justify-between gap-1 px-3 py-2.5 rounded-md text-center ${
-                study.variant === 'dark' ? 'bg-slate-800/60' : 
-                study.variant === 'mineral' ? 'bg-mineral-deep/10' : 'bg-muted'
+              {/* Metrics - Clean grid layout */}
+              <div className={`grid grid-cols-3 divide-x rounded-md overflow-hidden ${
+                study.variant === 'dark' ? 'bg-slate-800/60 divide-slate-700' : 
+                study.variant === 'mineral' ? 'bg-mineral-deep/10 divide-mineral-deep/20' : 'bg-muted divide-border'
               }`}>
-                {study.metrics.map((metric, idx) => (
-                  <div key={metric.label} className="flex items-center gap-1.5">
-                    <span className={`font-data text-[10px] tracking-wide ${
+                {study.metrics.map((metric) => (
+                  <div key={metric.label} className="py-2.5 px-2 text-center">
+                    <div className={`font-data text-[9px] tracking-wider mb-0.5 ${
                       study.variant === 'dark' ? 'text-slate-400' : 
                       study.variant === 'mineral' ? 'text-mineral-deep/60' : 'text-slate-500'
                     }`}>
                       {metric.label}
-                    </span>
-                    <span className={`font-data text-xs font-medium ${
+                    </div>
+                    <div className={`font-data text-xs ${
                       study.variant === 'dark' ? 'text-white' : 
                       study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
                     }`}>
                       {metric.value}
-                    </span>
-                    {idx < study.metrics.length - 1 && (
-                      <span className={`mx-1 ${
-                        study.variant === 'dark' ? 'text-slate-600' : 
-                        study.variant === 'mineral' ? 'text-mineral-deep/30' : 'text-slate-300'
-                      }`}>·</span>
-                    )}
+                    </div>
                   </div>
                 ))}
               </div>
