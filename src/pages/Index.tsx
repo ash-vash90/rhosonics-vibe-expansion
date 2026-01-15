@@ -271,7 +271,7 @@ const Index = () => {
           {/* Gradient orb */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
           
-          <div ref={heroContentRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+          <div ref={heroContentRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 md:pt-32 md:pb-24">
             <div className="max-w-3xl">
               {/* Logo + Wordmark */}
               <div className="hero-logo flex items-center gap-3 mb-8">
