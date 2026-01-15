@@ -111,48 +111,141 @@ export const TypographyScale = () => {
         </div>
       </div>
 
-      {/* ═══ JETBRAINS MONO RULES - INLINE ═══ */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
-        <div className="lg:col-span-3">
-          <h3 className="font-ui text-lg font-semibold text-foreground mb-4">JetBrains Mono Usage</h3>
-          <div className="grid sm:grid-cols-2 gap-8">
-            <div>
-              <span className="font-data text-xs text-primary uppercase tracking-wider block mb-3">Use for</span>
-              <ul className="space-y-2 text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
-                  Data values and measurements
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
-                  Badges and status chips
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
-                  Labels and table headers
-                </li>
-              </ul>
-            </div>
-            <div>
-              <span className="font-data text-xs text-destructive uppercase tracking-wider block mb-3">Never for</span>
-              <ul className="space-y-2 text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
-                  Body copy or paragraphs
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
-                  Headings or titles
-                </li>
-              </ul>
+      {/* ═══ FONT USAGE GUIDELINES ═══ */}
+      <div className="space-y-12">
+        {/* Unbounded */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+          <div className="lg:col-span-3">
+            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">Unbounded Usage</h3>
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div>
+                <span className="font-data text-xs text-primary uppercase tracking-wider block mb-3">Use for</span>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    Logo wordmark only
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <span className="font-data text-xs text-destructive uppercase tracking-wider block mb-3">Never for</span>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
+                    Headings or titles
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
+                    Body copy or UI text
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
+                    Buttons or labels
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+          
+          <div className="lg:col-span-2">
+            <BrandCallout variant="avoid" title="Logo Only">
+              Unbounded is reserved exclusively for the RHOSONICS wordmark. Using it elsewhere dilutes brand recognition.
+            </BrandCallout>
+          </div>
         </div>
-        
-        <div className="lg:col-span-2">
-          <BrandCallout variant="avoid" title="The Paragraph Test">
-            If text can be read as a paragraph, it must never be set in JetBrains Mono.
-          </BrandCallout>
+
+        {/* Instrument Sans */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+          <div className="lg:col-span-3">
+            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">Instrument Sans Usage</h3>
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div>
+                <span className="font-data text-xs text-primary uppercase tracking-wider block mb-3">Use for</span>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    All headings and titles
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    Body copy and paragraphs
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    Buttons and navigation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    UI elements and forms
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <span className="font-data text-xs text-destructive uppercase tracking-wider block mb-3">Never for</span>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
+                    Data values or measurements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
+                    Technical labels or codes
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="lg:col-span-2">
+            <BrandCallout variant="best" title="The Workhorse">
+              Instrument Sans handles 90% of all text. If you're unsure which font to use, it's almost always Instrument Sans.
+            </BrandCallout>
+          </div>
+        </div>
+
+        {/* JetBrains Mono */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+          <div className="lg:col-span-3">
+            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">JetBrains Mono Usage</h3>
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div>
+                <span className="font-data text-xs text-primary uppercase tracking-wider block mb-3">Use for</span>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    Data values and measurements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    Badges and status chips
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    Labels and table headers
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <span className="font-data text-xs text-destructive uppercase tracking-wider block mb-3">Never for</span>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
+                    Body copy or paragraphs
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-destructive rounded-full mt-2 flex-shrink-0" />
+                    Headings or titles
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="lg:col-span-2">
+            <BrandCallout variant="avoid" title="The Paragraph Test">
+              If text can be read as a paragraph, it must never be set in JetBrains Mono.
+            </BrandCallout>
+          </div>
         </div>
       </div>
 

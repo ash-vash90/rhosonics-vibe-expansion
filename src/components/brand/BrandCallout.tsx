@@ -1,7 +1,7 @@
-import { AlertTriangle, Info, Lightbulb } from "lucide-react";
+import { AlertTriangle, CheckCircle, Info, Lightbulb } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type CalloutVariant = "note" | "avoid" | "info";
+type CalloutVariant = "note" | "avoid" | "info" | "best";
 
 interface BrandCalloutProps {
   variant?: CalloutVariant;
@@ -35,6 +35,12 @@ const variantStyles: Record<CalloutVariant, {
     iconBg: "bg-info",
     iconColor: "text-white",
     icon: Lightbulb,
+  },
+  best: {
+    container: "bg-success-surface border-l-4 border-success",
+    iconBg: "bg-success",
+    iconColor: "text-white",
+    icon: CheckCircle,
   },
 };
 
