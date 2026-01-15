@@ -1,4 +1,4 @@
-import { Palette, Code, Megaphone, Users, ArrowRight } from "lucide-react";
+import { Palette, Code, Megaphone, Users, ArrowRight } from "@/lib/icons";
 
 const AboutThisSystem = () => {
   return (

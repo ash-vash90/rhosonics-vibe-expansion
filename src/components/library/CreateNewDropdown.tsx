@@ -1,4 +1,4 @@
-import { Plus, FileText, Presentation } from "lucide-react";
+import { Plus, FileText, Presentation } from "@/lib/icons";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {

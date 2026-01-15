@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle, Info, Lightbulb } from "lucide-react";
+import { AlertTriangle, CheckCircle, Info, Lightbulb } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
 type CalloutVariant = "note" | "avoid" | "info" | "best";

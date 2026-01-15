@@ -1,4 +1,4 @@
-import { Download, Copy, Check } from "lucide-react";
+import { Download, Copy, Check } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 import { useState } from "react";
 

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BlockContent, BlockStyle } from "@/types/document";
 import { cn } from "@/lib/utils";
-import { TrendingUp, TrendingDown, Minus, Plus } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Plus } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 
 interface StatGridBlockProps {

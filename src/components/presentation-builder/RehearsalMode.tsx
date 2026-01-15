@@ -12,7 +12,7 @@ import {
   AlertCircle,
   CheckCircle,
   Target
-} from "lucide-react";
+} from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { RehearsalSummary } from "./RehearsalSummary";
 

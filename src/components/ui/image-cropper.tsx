@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, RotateCw, Maximize2 } from "lucide-react";
+import { Loader2, RotateCw, Maximize2 } from "@/lib/icons";
 
 interface ImageCropperProps {
   open: boolean;

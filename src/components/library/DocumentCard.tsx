@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heart, Trash2, MoreVertical, FileText, Presentation, Clock, Copy, Pencil } from "lucide-react";
+import { Heart, Trash2, MoreVertical, FileText, Presentation, Clock, Copy, Pencil } from "@/lib/icons";
 import { Input } from "@/components/ui/input";
 import {
   Dialog,

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BlockContent, BlockStyle, IdentityCardContent, INDUSTRY_OPTIONS, PRODUCT_OPTIONS } from "@/types/document";
 import { cn } from "@/lib/utils";
-import { Building2, MapPin, Factory, Package } from "lucide-react";
+import { Building2, MapPin, Factory, Package } from "@/lib/icons";
 
 interface IdentityCardBlockProps {
   content: BlockContent;

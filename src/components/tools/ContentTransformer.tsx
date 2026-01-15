@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Copy, Loader2, RefreshCw, Check, ArrowRight, Upload, FileText, X } from "lucide-react";
+import { Copy, Loader2, RefreshCw, Check, ArrowRight, Upload, FileText, X } from "@/lib/icons";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 

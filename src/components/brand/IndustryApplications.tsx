@@ -1,4 +1,4 @@
-import { Beaker, Cpu, Anchor, Recycle } from "lucide-react";
+import { Beaker, Cpu, Anchor, Recycle } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 
 export const IndustryApplications = () => {

@@ -1,4 +1,4 @@
-import { Target, Shield, Lightbulb } from "lucide-react";
+import { Target, Shield, Lightbulb } from "@/lib/icons";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
