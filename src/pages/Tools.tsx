@@ -8,18 +8,37 @@ import { ContentTransformer } from "@/components/tools/ContentTransformer";
 import { ComprehensiveCaseStudyBuilder } from "@/components/tools/ComprehensiveCaseStudyBuilder";
 import { TemplateGenerator } from "@/components/tools/TemplateGenerator";
 import { Type, Image, BarChart3, ArrowLeft, Sparkles, Sun, Moon, RefreshCw, FileText, FileStack } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+const VALID_TABS = ["text", "image", "chart", "transform", "casestudy", "templates"];
+
 const Tools = () => {
-  const [activeTab, setActiveTab] = useState("text");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabFromUrl = searchParams.get("tab");
+  const initialTab = tabFromUrl && VALID_TABS.includes(tabFromUrl) ? tabFromUrl : "text";
+  
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [isDark, setIsDark] = useState(true);
   const [prefilledImagePrompt, setPrefilledImagePrompt] = useState("");
 
+  // Sync URL when tab changes
+  const handleTabChange = useCallback((value: string) => {
+    setActiveTab(value);
+    setSearchParams({ tab: value }, { replace: true });
+  }, [setSearchParams]);
+
+  // Sync tab when URL changes (e.g., browser back/forward)
+  useEffect(() => {
+    if (tabFromUrl && VALID_TABS.includes(tabFromUrl) && tabFromUrl !== activeTab) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [tabFromUrl, activeTab]);
+
   const handleOpenImageGenerator = useCallback((prompt: string) => {
     setPrefilledImagePrompt(prompt);
-    setActiveTab("image");
-  }, []);
+    handleTabChange("image");
+  }, [handleTabChange]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -119,7 +138,7 @@ const Tools = () => {
           </p>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-4 sm:space-y-6">
           <TabsList className="bg-muted border border-border p-1 sm:p-1.5 w-full grid grid-cols-6 rounded-lg h-auto overflow-x-auto">
             {tabs.map((tab) => {
               const Icon = tab.icon;
