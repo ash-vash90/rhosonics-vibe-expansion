@@ -8,7 +8,6 @@ const chapters = [
   { id: "the-voice", num: "05", label: "Voice" },
   { id: "the-application", num: "06", label: "Application" },
   { id: "the-proof", num: "07", label: "Proof" },
-  { id: "the-resources", num: "08", label: "Resources" },
 ];
 
 export const QuickNav = () => {

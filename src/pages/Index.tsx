@@ -18,7 +18,6 @@ const SpacingSystem = lazy(() => import("@/components/brand/SpacingSystem"));
 const LogoAssets = lazy(() => import("@/components/brand/LogoAssets"));
 const IconGuidelines = lazy(() => import("@/components/brand/IconGuidelines"));
 const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
-const DownloadableAssets = lazy(() => import("@/components/brand/DownloadableAssets"));
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
 const IndustryApplications = lazy(() => import("@/components/brand/IndustryApplications"));
 const ImageryGuidelines = lazy(() => import("@/components/brand/ImageryGuidelines"));
@@ -28,7 +27,7 @@ const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
 const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
 
-const ExportSection = lazy(() => import("@/components/brand/ExportSection"));
+
 const SectionLoader = () => <div className="py-16 flex justify-center">
     <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
   </div>;
@@ -478,19 +477,6 @@ const Index = () => {
           </div>
         </section>
 
-        <SectionDivider />
-
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 11: RESOURCES
-         ───────────────────────────────────────────────────────────── */}
-        <section className="py-16 md:py-24">
-          <SectionHeader id="resources" number="11" title="Resources" subtitle="Download assets. Export guidelines. Deploy the brand." />
-          
-          <Suspense fallback={<SectionLoader />}>
-            <DownloadableAssets />
-            <ExportSection />
-          </Suspense>
-        </section>
 
         {/* ═══════════════════════════════════════════════════════════════
             FOOTER
