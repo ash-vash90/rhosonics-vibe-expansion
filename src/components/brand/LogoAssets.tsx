@@ -41,7 +41,7 @@ export const LogoAssets = () => {
     
     if (variant.background) {
       if (variant.backgroundType === "primary") {
-        bgClass = "bg-gradient-to-br from-primary to-primary-dark";
+        bgClass = "bg-gradient-to-br from-[hsl(88_60%_45%)] to-[hsl(125_50%_40%)]";
       } else if (variant.backgroundType === "obsidian") {
         bgClass = "bg-gradient-to-br from-slate-800 to-slate-950";
       } else if (variant.backgroundType === "white") {
