@@ -1,4 +1,4 @@
-import { TrendingUp, Droplets, Gauge, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import dredgingHero from "@/assets/case-studies/dredging-hero.jpg";
 import miningHero from "@/assets/case-studies/mining-hero.jpg";
 import wastewaterHero from "@/assets/case-studies/wastewater-hero.jpg";
@@ -6,51 +6,48 @@ import wastewaterHero from "@/assets/case-studies/wastewater-hero.jpg";
 const caseStudies = [
   {
     id: "dredging",
-    industry: "Dredging",
+    industry: "DREDGING",
     title: "North Sea Sediment Monitoring",
     stat: "42%",
     statLabel: "Efficiency increase",
     description: "Real-time slurry density monitoring enabled precise dredging operations.",
     metrics: [
-      { label: "Accuracy", value: "±0.5%" },
-      { label: "Uptime", value: "99.8%" },
+      { label: "ACCURACY", value: "±0.5%" },
+      { label: "UPTIME", value: "99.8%" },
       { label: "ROI", value: "8 mo" },
     ],
-    icon: Droplets,
     // Dark variant: Maritime/offshore environments with harsh conditions
     variant: "dark" as const,
     image: dredgingHero,
   },
   {
     id: "mining",
-    industry: "Mining",
+    industry: "MINING",
     title: "Copper Tailings Optimization",
     stat: "31%",
     statLabel: "Water savings",
     description: "Continuous density measurement improved water recovery.",
     metrics: [
-      { label: "Flow Rate", value: "850 m³/h" },
-      { label: "Temp Range", value: "-10 to 65°C" },
-      { label: "Maintenance", value: "< 4h/yr" },
+      { label: "FLOW", value: "850 m³/h" },
+      { label: "TEMP", value: "-10–65°C" },
+      { label: "MAINT", value: "<4h/yr" },
     ],
-    icon: Gauge,
     // Mineral variant: Arid/earth-tone environments
     variant: "mineral" as const,
     image: miningHero,
   },
   {
     id: "wastewater",
-    industry: "Wastewater",
+    industry: "WASTEWATER",
     title: "Municipal Sludge Processing",
     stat: "28%",
     statLabel: "Cost reduction",
     description: "Automated density-based dosing optimized polymer usage.",
     metrics: [
-      { label: "Throughput", value: "120 t/day" },
-      { label: "Energy", value: "-15%" },
-      { label: "Compliance", value: "100%" },
+      { label: "OUTPUT", value: "120 t/d" },
+      { label: "ENERGY", value: "-15%" },
+      { label: "COMPLY", value: "100%" },
     ],
-    icon: TrendingUp,
     // Light variant: Clean industrial/indoor facilities
     variant: "light" as const,
     image: wastewaterHero,
@@ -65,7 +62,7 @@ export const CaseStudies = () => {
         {caseStudies.map((study) => (
           <article 
             key={study.id}
-            className={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border ${
+            className={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border flex flex-col ${
               study.variant === 'dark' ? 'bg-rho-obsidian border-border/30' : 
               study.variant === 'mineral' ? 'bg-mineral-surface border-mineral-deep/20' : 'bg-card border-border hover:border-primary/40'
             }`}
@@ -83,26 +80,18 @@ export const CaseStudies = () => {
                 'bg-gradient-to-t from-card via-card/60 to-transparent'
               }`} />
               
-              {/* Industry badge */}
+              {/* Industry badge - JetBrains Mono, more visible */}
               <div className="absolute top-3 left-3">
-                <span className={`px-2 py-1 text-xs font-medium rounded ${
-                  study.variant === 'dark' ? 'bg-slate-800/80 text-slate-200' : 
-                  study.variant === 'mineral' ? 'bg-mineral-deep/20 text-mineral-deep' : 'bg-white/80 text-slate-700'
+                <span className={`font-data text-[11px] tracking-wider px-2.5 py-1 rounded ${
+                  study.variant === 'dark' ? 'bg-slate-900/90 text-white border border-slate-700' : 
+                  study.variant === 'mineral' ? 'bg-mineral-deep text-white' : 'bg-slate-800 text-white'
                 }`}>
                   {study.industry}
                 </span>
               </div>
-              
-              {/* Icon */}
-              <div className={`absolute top-3 right-3 w-9 h-9 rounded-md flex items-center justify-center ${
-                study.variant === 'dark' ? 'bg-slate-800/80 text-primary' : 
-                study.variant === 'mineral' ? 'bg-mineral-deep/20 text-primary' : 'bg-white/80 text-primary'
-              }`}>
-                <study.icon className="w-4 h-4" />
-              </div>
             </div>
             
-            <div className="relative p-6 flex flex-col">
+            <div className="relative p-6 flex flex-col flex-1">
               {/* KPI - Always green */}
               <div className="mb-4">
                 <div className="font-data text-4xl md:text-5xl mb-1 text-primary">
@@ -129,30 +118,37 @@ export const CaseStudies = () => {
                 {study.description}
               </p>
 
-              <div className={`grid grid-cols-3 gap-2 p-3 rounded-md ${
+              {/* Metrics - Horizontal inline layout */}
+              <div className={`flex items-center justify-between gap-1 px-3 py-2.5 rounded-md text-center ${
                 study.variant === 'dark' ? 'bg-slate-800/60' : 
                 study.variant === 'mineral' ? 'bg-mineral-deep/10' : 'bg-muted'
               }`}>
-                {study.metrics.map((metric) => (
-                  <div key={metric.label} className="text-center">
-                    <div className={`font-data text-[10px] uppercase tracking-wider mb-0.5 ${
+                {study.metrics.map((metric, idx) => (
+                  <div key={metric.label} className="flex items-center gap-1.5">
+                    <span className={`font-data text-[10px] tracking-wide ${
                       study.variant === 'dark' ? 'text-slate-400' : 
-                      study.variant === 'mineral' ? 'text-mineral-deep/70' : 'text-slate-500'
+                      study.variant === 'mineral' ? 'text-mineral-deep/60' : 'text-slate-500'
                     }`}>
                       {metric.label}
-                    </div>
-                    <div className={`text-sm font-semibold font-ui ${
+                    </span>
+                    <span className={`font-data text-xs font-medium ${
                       study.variant === 'dark' ? 'text-white' : 
                       study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
                     }`}>
                       {metric.value}
-                    </div>
+                    </span>
+                    {idx < study.metrics.length - 1 && (
+                      <span className={`mx-1 ${
+                        study.variant === 'dark' ? 'text-slate-600' : 
+                        study.variant === 'mineral' ? 'text-mineral-deep/30' : 'text-slate-300'
+                      }`}>·</span>
+                    )}
                   </div>
                 ))}
               </div>
 
-              {/* CTA - Always green */}
-              <button className="mt-5 flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+              {/* CTA - Always green, pinned to bottom */}
+              <button className="mt-auto pt-5 flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
                 <span className="font-ui">Read full study</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
