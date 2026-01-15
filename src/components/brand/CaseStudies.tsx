@@ -108,41 +108,44 @@ export const CaseStudies = () => {
               }`}>
                 {study.title}
               </h3>
-              <p className={`text-sm leading-relaxed mb-4 ${
+              <p className={`text-sm leading-relaxed flex-1 ${
                 study.variant === 'dark' ? 'text-slate-300' : 
                 study.variant === 'mineral' ? 'text-mineral-deep/90' : 'text-slate-600'
               }`}>
                 {study.description}
               </p>
 
-              {/* Metrics - Clean grid layout */}
-              <div className={`grid grid-cols-3 divide-x rounded-md overflow-hidden ${
-                study.variant === 'dark' ? 'bg-slate-800/60 divide-slate-700' : 
-                study.variant === 'mineral' ? 'bg-mineral-deep/10 divide-mineral-deep/20' : 'bg-muted divide-border'
-              }`}>
-                {study.metrics.map((metric) => (
-                  <div key={metric.label} className="py-2.5 px-2 text-center">
-                    <div className={`font-data text-[9px] tracking-wider mb-0.5 ${
-                      study.variant === 'dark' ? 'text-slate-400' : 
-                      study.variant === 'mineral' ? 'text-mineral-deep/60' : 'text-slate-500'
-                    }`}>
-                      {metric.label}
+              {/* Metrics and CTA wrapper - pushed to bottom */}
+              <div className="mt-auto pt-4">
+                {/* Metrics - Clean grid layout */}
+                <div className={`grid grid-cols-3 divide-x rounded-md overflow-hidden ${
+                  study.variant === 'dark' ? 'bg-slate-800/60 divide-slate-700' : 
+                  study.variant === 'mineral' ? 'bg-mineral-deep/10 divide-mineral-deep/20' : 'bg-muted divide-border'
+                }`}>
+                  {study.metrics.map((metric) => (
+                    <div key={metric.label} className="py-2.5 px-2 text-center">
+                      <div className={`font-data text-[9px] tracking-wider mb-0.5 ${
+                        study.variant === 'dark' ? 'text-slate-400' : 
+                        study.variant === 'mineral' ? 'text-mineral-deep/60' : 'text-slate-500'
+                      }`}>
+                        {metric.label}
+                      </div>
+                      <div className={`font-data text-xs ${
+                        study.variant === 'dark' ? 'text-white' : 
+                        study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
+                      }`}>
+                        {metric.value}
+                      </div>
                     </div>
-                    <div className={`font-data text-xs ${
-                      study.variant === 'dark' ? 'text-white' : 
-                      study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
-                    }`}>
-                      {metric.value}
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              {/* CTA - Always green, pinned to bottom */}
-              <button className="mt-auto pt-5 flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
-                <span className="font-ui">Read full study</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+                {/* CTA - Always green */}
+                <button className="mt-4 flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+                  <span className="font-ui">Read full study</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
             </div>
           </article>
         ))}
