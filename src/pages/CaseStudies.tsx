@@ -249,12 +249,6 @@ const CaseStudies = () => {
                   </Button>
                 </div>
               )}
-              <Link 
-                to="/tools" 
-                className="text-sm text-slate-400 hover:text-primary transition-colors"
-              >
-                AI Tools
-              </Link>
               <a 
                 href="https://rhosonics.com" 
                 target="_blank" 

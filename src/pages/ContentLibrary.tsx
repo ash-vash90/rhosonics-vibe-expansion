@@ -5,7 +5,6 @@ import {
   Presentation,
   ScrollText,
   ChevronRight,
-  Sparkles,
   FolderOpen,
 } from "@/lib/icons";
 import { useEffect, useState } from "react";
@@ -241,13 +240,6 @@ const ContentLibrary = () => {
             Quick Actions
           </h3>
           <div className="flex flex-wrap gap-3">
-            <Link
-              to="/tools"
-              className="flex items-center gap-2 text-sm px-4 py-2 rounded-lg border border-border/60 bg-card/50 hover:bg-card hover:border-primary/40 text-muted-foreground hover:text-primary transition-all"
-            >
-              <Sparkles className="w-4 h-4" />
-              AI Tools
-            </Link>
             <Link
               to="/case-studies"
               className="text-sm px-4 py-2 rounded-lg border border-border/60 bg-card/50 hover:bg-card hover:border-primary/40 text-muted-foreground hover:text-primary transition-all"

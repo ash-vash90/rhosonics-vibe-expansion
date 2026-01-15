@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown, FileText, FileImage, BarChart3, Type, RefreshCw, Presentation, FileEdit } from "@/lib/icons";
+import { Menu, X, Zap, ChevronRight, ChevronDown, FileText, Presentation, FileEdit } from "@/lib/icons";
 import { exportDesignSystemPDF } from "@/lib/designSystemExport";
 
 interface NavSection {
@@ -285,12 +285,12 @@ export const Navigation = () => {
             );
           })}
 
-          {/* Tools Section */}
+          {/* Builders Section */}
           <div className="pt-4 border-t border-slate-800/50">
             <div className="label-tech text-slate-400 mb-3">
               <span className="text-primary">11</span>
               <span className="mx-2 text-slate-600">/</span>
-              TOOLS
+              BUILDERS
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Link
@@ -306,34 +306,6 @@ export const Navigation = () => {
               >
                 <Presentation className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
                 <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Presentation</span>
-              </Link>
-              <Link
-                to="/tools?tab=text"
-                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
-              >
-                <Type className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
-                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Text Gen</span>
-              </Link>
-              <Link
-                to="/tools?tab=image"
-                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
-              >
-                <FileImage className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
-                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Image Gen</span>
-              </Link>
-              <Link
-                to="/tools?tab=chart"
-                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
-              >
-                <BarChart3 className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
-                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Chart Gen</span>
-              </Link>
-              <Link
-                to="/tools?tab=transform"
-                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
-              >
-                <RefreshCw className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
-                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Transform</span>
               </Link>
             </div>
           </div>
@@ -374,13 +346,6 @@ export const Navigation = () => {
           <span className="font-data text-xs text-slate-400 tracking-widest">BRAND SYSTEM</span>
         </button>
         <div className="flex items-center gap-2">
-          <Link
-            to="/tools"
-            className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-md text-primary hover:bg-primary/20 transition-colors touch-manipulation"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium hidden sm:inline">AI Tools</span>
-          </Link>
           <button
             className="p-2 text-slate-400 hover:text-primary transition-colors touch-manipulation"
             onClick={() => setIsOpen(true)}

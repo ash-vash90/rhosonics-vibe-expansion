@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const Index = lazy(() => import("./pages/Index"));
-const Tools = lazy(() => import("./pages/Tools"));
 const Auth = lazy(() => import("./pages/Auth"));
 const ContentLibrary = lazy(() => import("./pages/ContentLibrary"));
 const CaseStudyLibrary = lazy(() => import("./pages/CaseStudyLibrary"));
@@ -36,7 +35,6 @@ const App = () => (
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/tools" element={<Tools />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/library" element={<ContentLibrary />} />
           <Route path="/library/case-studies" element={<CaseStudyLibrary />} />

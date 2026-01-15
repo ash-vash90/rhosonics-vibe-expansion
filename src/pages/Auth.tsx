@@ -20,14 +20,14 @@ const Auth = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         if (session?.user) {
-          navigate("/tools");
+          navigate("/");
         }
       }
     );
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
-        navigate("/tools");
+        navigate("/");
       }
     });
 
@@ -66,7 +66,7 @@ const Auth = () => {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/tools`,
+            emailRedirectTo: `${window.location.origin}/`,
           },
         });
         if (error) {
