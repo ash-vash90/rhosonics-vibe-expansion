@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown, Download, FileText } from "lucide-react";
+import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown, FileText, FileImage, BarChart3, Type, RefreshCw, Presentation, FileEdit } from "lucide-react";
 import { exportDesignSystemPDF } from "@/lib/designSystemExport";
 
 interface NavSection {
@@ -97,16 +97,6 @@ const navSections: NavSection[] = [
     items: [
       { id: "proof", label: "Evidence & Data" },
       { id: "case-studies-page", label: "Full Case Studies →", highlight: true },
-    ],
-  },
-  {
-    id: "11",
-    label: "RESOURCES",
-    items: [
-      { id: "resources", label: "Downloads & Tools" },
-      { id: "content-library", label: "Content Library", highlight: true },
-      { id: "presentations-page", label: "Presentations →", highlight: true },
-      { id: "ai-tools-page", label: "All AI Tools →", highlight: true },
     ],
   },
 ];
@@ -343,6 +333,59 @@ export const Navigation = () => {
             );
           })}
 
+          {/* Tools Section */}
+          <div className="pt-4 border-t border-slate-800/50">
+            <div className="label-tech text-slate-400 mb-3">
+              <span className="text-primary">11</span>
+              <span className="mx-2 text-slate-600">/</span>
+              TOOLS
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                to="/case-studies/builder"
+                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
+              >
+                <FileEdit className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Case Study</span>
+              </Link>
+              <Link
+                to="/presentations/builder"
+                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
+              >
+                <Presentation className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Presentation</span>
+              </Link>
+              <Link
+                to="/tools?tab=text"
+                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
+              >
+                <Type className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Text Gen</span>
+              </Link>
+              <Link
+                to="/tools?tab=image"
+                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
+              >
+                <FileImage className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Image Gen</span>
+              </Link>
+              <Link
+                to="/tools?tab=chart"
+                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
+              >
+                <BarChart3 className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Chart Gen</span>
+              </Link>
+              <Link
+                to="/tools?tab=transform"
+                className="flex flex-col items-center gap-1.5 p-3 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
+              >
+                <RefreshCw className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-xs text-slate-400 group-hover:text-slate-300 text-center">Transform</span>
+              </Link>
+            </div>
+          </div>
+
           {/* Export Actions */}
           <div className="pt-4 space-y-2">
             <button
@@ -353,21 +396,6 @@ export const Navigation = () => {
               <div className="text-left">
                 <span className="text-sm text-slate-300 font-medium block">Export PDF</span>
                 <span className="label-tech-sm text-slate-500">Full design system</span>
-              </div>
-            </button>
-            <button
-              onClick={() => {
-                const downloadsSection = document.getElementById('resources');
-                if (downloadsSection) {
-                  downloadsSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="w-full flex items-center gap-3 px-3 py-2.5 bg-slate-800/50 hover:bg-slate-800 rounded-md transition-colors group"
-            >
-              <Download className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
-              <div className="text-left">
-                <span className="text-sm text-slate-300 font-medium block">Download Assets</span>
-                <span className="label-tech-sm text-slate-500">Logos, colors, fonts</span>
               </div>
             </button>
           </div>
