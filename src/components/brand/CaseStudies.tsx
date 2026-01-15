@@ -56,30 +56,30 @@ export const CaseStudies = () => {
         {caseStudies.map((study) => (
           <article 
             key={study.id}
-            className={`group relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border ${
+            className={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border ${
               study.variant === 'dark' ? 'bg-rho-obsidian border-border/30' : 
-              study.variant === 'mineral' ? 'bg-mineral-surface border-mineral-neutral/30' : 'bg-card border-border/50 hover:border-primary/40'
+              study.variant === 'mineral' ? 'bg-mineral-surface border-mineral-deep/20' : 'bg-card border-border hover:border-primary/40'
             }`}
           >
             {/* Background patterns */}
             {study.variant === 'dark' && (
-              <div className="absolute inset-0 bg-pattern-dredging opacity-30"></div>
+              <div className="absolute inset-0 bg-pattern-dredging opacity-20"></div>
             )}
             {study.variant === 'mineral' && (
-              <div className="absolute inset-0 bg-pattern-minerals opacity-20"></div>
+              <div className="absolute inset-0 bg-pattern-minerals opacity-10"></div>
             )}
             
             <div className="relative p-6 md:p-8 min-h-[320px] md:min-h-[400px] flex flex-col">
                 <div className="flex items-center justify-between mb-6">
                 <span className={`label-tech ${
-                  study.variant === 'dark' ? 'text-slate-400' : 
-                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-muted-foreground'
+                  study.variant === 'dark' ? 'text-slate-300' : 
+                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-slate-600'
                 }`}>
                   {study.industry}
                 </span>
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                <div className={`w-10 h-10 rounded-md flex items-center justify-center ${
                   study.variant === 'dark' ? 'bg-primary/20 text-primary' : 
-                  study.variant === 'mineral' ? 'bg-mineral-neutral/20 text-mineral-deep' : 'bg-muted text-muted-foreground'
+                  study.variant === 'mineral' ? 'bg-mineral-deep/10 text-mineral-deep' : 'bg-muted text-slate-600'
                 }`}>
                   <study.icon className="w-5 h-5" />
                 </div>
@@ -92,40 +92,42 @@ export const CaseStudies = () => {
                 }`}>
                   {study.stat}
                 </div>
-                <div className={`text-sm ${
-                  study.variant === 'dark' ? 'text-slate-400' : 
-                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-muted-foreground'
+                <div className={`text-sm font-medium ${
+                  study.variant === 'dark' ? 'text-slate-300' : 
+                  study.variant === 'mineral' ? 'text-mineral-deep/80' : 'text-slate-600'
                 }`}>
                   {study.statLabel}
                 </div>
               </div>
 
               <h3 className={`text-xl font-semibold font-ui mb-3 ${
-                study.variant === 'dark' ? 'text-slate-100' : 'text-card-foreground'
+                study.variant === 'dark' ? 'text-white' : 
+                study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
               }`}>
                 {study.title}
               </h3>
               <p className={`text-sm leading-relaxed mb-auto ${
-                study.variant === 'dark' ? 'text-slate-400' : 
-                study.variant === 'mineral' ? 'text-mineral-deep' : 'text-muted-foreground'
+                study.variant === 'dark' ? 'text-slate-300' : 
+                study.variant === 'mineral' ? 'text-mineral-deep/90' : 'text-slate-600'
               }`}>
                 {study.description}
               </p>
 
-              <div className={`grid grid-cols-3 gap-2 p-4 rounded-xl mt-6 ${
-                study.variant === 'dark' ? 'bg-slate-800/50' : 
-                study.variant === 'mineral' ? 'bg-mineral-neutral/10' : 'bg-muted/50'
+              <div className={`grid grid-cols-3 gap-2 p-4 rounded-md mt-6 ${
+                study.variant === 'dark' ? 'bg-slate-800/60' : 
+                study.variant === 'mineral' ? 'bg-mineral-deep/10' : 'bg-muted'
               }`}>
                 {study.metrics.map((metric) => (
                   <div key={metric.label} className="text-center">
                     <div className={`font-data text-[10px] uppercase tracking-wider mb-1 ${
-                      study.variant === 'dark' ? 'text-slate-500' : 
-                      study.variant === 'mineral' ? 'text-mineral-neutral' : 'text-muted-foreground'
+                      study.variant === 'dark' ? 'text-slate-400' : 
+                      study.variant === 'mineral' ? 'text-mineral-deep/70' : 'text-slate-500'
                     }`}>
                       {metric.label}
                     </div>
                     <div className={`text-sm font-semibold font-ui ${
-                      study.variant === 'dark' ? 'text-slate-100' : 'text-card-foreground'
+                      study.variant === 'dark' ? 'text-white' : 
+                      study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
                     }`}>
                       {metric.value}
                     </div>
@@ -133,10 +135,10 @@ export const CaseStudies = () => {
                 ))}
               </div>
 
-              <button className={`mt-6 flex items-center gap-2 text-sm font-medium ${
-                study.variant === 'dark' ? 'text-primary hover:text-lime-400' : 
-                study.variant === 'mineral' ? 'text-mineral-deep hover:text-mineral-neutral' : 'text-primary hover:text-primary/80'
-              } transition-colors`}>
+              <button className={`mt-6 flex items-center gap-2 text-sm font-medium transition-colors ${
+                study.variant === 'dark' ? 'text-primary hover:text-primary/80' : 
+                study.variant === 'mineral' ? 'text-mineral-deep hover:text-mineral-deep/70' : 'text-primary hover:text-primary/80'
+              }`}>
                 <span className="font-ui">Read full study</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
