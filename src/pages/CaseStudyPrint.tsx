@@ -167,18 +167,16 @@ const CaseStudyPrint = () => {
   // Fix #1: Correctly typed readiness barrier
   async function waitForReadiness(): Promise<void> {
     try {
-      // 1. Fonts with 5s timeout
-      const fontsReady = document.fonts?.ready;
-      if (fontsReady) {
-        await Promise.race([
-          fontsReady,
-          new Promise<void>((r) => setTimeout(r, 5000))
-        ]);
-      }
+      // Prepare readiness checks
+      const fontsReadyPromise = document.fonts?.ready 
+        ? Promise.race([
+            document.fonts.ready,
+            new Promise<void>((r) => setTimeout(r, 5000))
+          ])
+        : Promise.resolve();
 
-      // 2. Images with 10s timeout
       const images = Array.from(document.images);
-      await Promise.race([
+      const imagesReadyPromise = Promise.race([
         Promise.all(
           images.map((img) =>
             img.complete
@@ -191,6 +189,9 @@ const CaseStudyPrint = () => {
         ),
         new Promise<void>((r) => setTimeout(r, 10000))
       ]);
+
+      // Wait for fonts and images in parallel
+      await Promise.all([fontsReadyPromise, imagesReadyPromise]);
 
       // 3. Decode images where supported
       for (const img of images) {

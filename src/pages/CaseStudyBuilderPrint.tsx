@@ -51,15 +51,14 @@ const CaseStudyBuilderPrint = () => {
 
   async function waitForReadiness(): Promise<void> {
     try {
-      // Wait for fonts
-      await Promise.race([
+      // Prepare readiness checks
+      const fontsReadyPromise = Promise.race([
         window.document.fonts.ready,
-        new Promise((_, reject) => setTimeout(() => reject(new Error("Font timeout")), 5000))
-      ]);
+        new Promise<FontFaceSet>((_, reject) => setTimeout(() => reject(new Error("Font timeout")), 5000))
+      ]).catch(() => {}); // Swallow font timeout errors
       
-      // Wait for all images
       const images = Array.from(window.document.querySelectorAll("img"));
-      await Promise.all(
+      const imagesReadyPromise = Promise.all(
         images.map((img) =>
           img.complete
             ? Promise.resolve()
@@ -70,6 +69,9 @@ const CaseStudyBuilderPrint = () => {
               })
         )
       );
+      
+      // Wait for fonts and images in parallel
+      await Promise.all([fontsReadyPromise, imagesReadyPromise]);
       
       // Force layout reflow
       window.document.body.offsetHeight;
