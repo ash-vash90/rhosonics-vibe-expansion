@@ -75,27 +75,30 @@ const processElement = (original: Element, clone: Element): void => {
 };
 
 const convertImagesToBase64 = async (container: HTMLElement): Promise<void> => {
-  const images = container.querySelectorAll('img');
+  const images = Array.from(container.querySelectorAll('img'));
   
-  for (const img of images) {
-    const src = img.getAttribute('src');
-    if (!src || src.startsWith('data:')) continue;
-    
-    try {
-      // Try to convert to base64
-      const response = await fetch(src);
-      const blob = await response.blob();
-      const base64 = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.readAsDataURL(blob);
-      });
-      img.setAttribute('src', base64);
-    } catch (e) {
-      // Keep original src if conversion fails
-      console.warn('Could not convert image:', src);
-    }
-  }
+  // Process all images in parallel for better performance
+  await Promise.all(
+    images.map(async (img) => {
+      const src = img.getAttribute('src');
+      if (!src || src.startsWith('data:')) return;
+      
+      try {
+        // Convert to base64
+        const response = await fetch(src);
+        const blob = await response.blob();
+        const base64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(blob);
+        });
+        img.setAttribute('src', base64);
+      } catch (e) {
+        // Keep original src if conversion fails
+        console.warn('Could not convert image:', src);
+      }
+    })
+  );
 };
 
 const processSVGs = (container: HTMLElement): void => {

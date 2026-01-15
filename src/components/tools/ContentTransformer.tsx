@@ -78,7 +78,11 @@ export const ContentTransformer = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const { data: { session } } = await supabase.auth.getSession();
+      // Prepare session and fetch in parallel - session is needed for auth header
+      const sessionPromise = supabase.auth.getSession();
+      
+      // Wait for session first since we need it for the request
+      const { data: { session } } = await sessionPromise;
       
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/parse-document`,
