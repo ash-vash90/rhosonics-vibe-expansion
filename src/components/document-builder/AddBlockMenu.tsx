@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { 
   Type, AlignLeft, List, TrendingUp, LayoutGrid, Image, 
   BarChart3, Table, Quote, AlertCircle, Minus, MousePointer 
-} from "lucide-react";
+} from "@/lib/icons";
 
 interface AddBlockMenuProps {
   isDark?: boolean;

@@ -7,7 +7,7 @@ import {
   ChevronRight,
   Sparkles,
   FolderOpen,
-} from "lucide-react";
+} from "@/lib/icons";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";

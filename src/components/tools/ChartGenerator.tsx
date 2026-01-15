@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown, Film, RotateCcw, Search, CheckCircle2, XCircle } from "lucide-react";
+import { Copy, Download, Loader2, BarChart3, Plus, Trash2, Palette, FileDown, Film, RotateCcw, Search, CheckCircle2, XCircle } from "@/lib/icons";
 import { toast } from "sonner";
 import html2canvas from "html2canvas";
 import GIF from "gif.js";

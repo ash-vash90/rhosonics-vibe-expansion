@@ -1,4 +1,4 @@
-import { Focus, Sparkles, Wrench, Link2 } from "lucide-react";
+import { Focus, Sparkles, Wrench, Link2 } from "@/lib/icons";
 
 const BrandPrinciples = () => {
   const principles = [

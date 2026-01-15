@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Download, Loader2, Image as ImageIcon, Upload, X, History, Trash2, Plus } from "lucide-react";
+import { Download, Loader2, Image as ImageIcon, Upload, X, History, Trash2, Plus } from "@/lib/icons";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";

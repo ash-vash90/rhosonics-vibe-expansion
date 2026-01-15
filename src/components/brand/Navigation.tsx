@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown, FileText, FileImage, BarChart3, Type, RefreshCw, Presentation, FileEdit } from "lucide-react";
+import { Menu, X, Zap, ChevronRight, Sparkles, ChevronDown, FileText, FileImage, BarChart3, Type, RefreshCw, Presentation, FileEdit } from "@/lib/icons";
 import { exportDesignSystemPDF } from "@/lib/designSystemExport";
 
 interface NavSection {

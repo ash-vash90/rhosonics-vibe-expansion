@@ -1,4 +1,4 @@
-import { Leaf, Recycle, Droplets } from "lucide-react";
+import { Leaf, Recycle, Droplets } from "@/lib/icons";
 
 export const EcoComponents = () => {
   return (

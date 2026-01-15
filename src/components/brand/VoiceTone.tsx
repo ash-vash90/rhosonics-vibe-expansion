@@ -1,4 +1,4 @@
-import { MessageSquare, FileText, Headphones, Megaphone } from "lucide-react";
+import { MessageSquare, FileText, Headphones, Megaphone } from "@/lib/icons";
 import { VOICE_VALUE_MAPPING } from "@/data/brand-values";
 import { ValueBadge } from "./ValueBadge";
 

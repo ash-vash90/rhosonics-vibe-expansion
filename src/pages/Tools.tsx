@@ -7,7 +7,7 @@ import { ChartGenerator } from "@/components/tools/ChartGenerator";
 import { ContentTransformer } from "@/components/tools/ContentTransformer";
 import { ComprehensiveCaseStudyBuilder } from "@/components/tools/ComprehensiveCaseStudyBuilder";
 import { TemplateGenerator } from "@/components/tools/TemplateGenerator";
-import { Type, Image, BarChart3, ArrowLeft, Sparkles, Sun, Moon, RefreshCw, FileText, FileStack } from "lucide-react";
+import { Type, Image, BarChart3, ArrowLeft, Sparkles, Sun, Moon, RefreshCw, FileText, FileStack } from "@/lib/icons";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 

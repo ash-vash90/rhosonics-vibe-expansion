@@ -1,6 +1,6 @@
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { BrandCallout } from "./BrandCallout";
-import { Download, FileCode, ChevronDown } from "lucide-react";
+import { Download, FileCode, ChevronDown } from "@/lib/icons";
 import { 
   logoVariants, 
   generateLockupSVG, 

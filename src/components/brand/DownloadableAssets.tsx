@@ -1,4 +1,4 @@
-import { Download, FileImage, Palette, Type } from "lucide-react";
+import { Download, FileImage, Palette, Type } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 import { RhosonicsLogo } from "../RhosonicsLogo";
 

@@ -1,4 +1,5 @@
-import { Users, Wrench, BookOpen, TrendingUp, LucideIcon } from "lucide-react";
+import { Users, Wrench, BookOpen, TrendingUp } from "@/lib/icons";
+import type { LucideIcon } from "@/lib/icons";
 
 /**
  * Core Brand Values - Single Source of Truth

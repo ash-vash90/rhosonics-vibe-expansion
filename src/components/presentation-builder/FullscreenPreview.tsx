@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Presentation, Slide, Block, SlideTransition } from "@/types/presentation";
 import { cn } from "@/lib/utils";
-import { X, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Pause, Play } from "@/lib/icons";
 
 interface FullscreenPreviewProps {
   presentation: Presentation;

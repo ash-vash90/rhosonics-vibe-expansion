@@ -11,7 +11,7 @@ import {
   Save, Star, Trash2, History, Download, Lightbulb, AlertCircle,
   Building2, MapPin, Target, Settings, Beaker, Trophy, Quote,
   Zap, ArrowRight, Plus, X
-} from "lucide-react";
+} from "@/lib/icons";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { exportComprehensiveCaseStudyToPDF, exportComprehensiveCaseStudyToWord } from "@/lib/comprehensiveCaseStudyExport";

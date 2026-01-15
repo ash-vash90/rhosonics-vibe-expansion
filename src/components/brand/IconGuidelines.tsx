@@ -2,7 +2,7 @@ import {
   Activity, Droplets, Gauge, Waves, Leaf, Recycle,
   Factory, Ship, Pickaxe, FlaskConical, CheckCircle, AlertTriangle,
   XCircle, Info
-} from "lucide-react";
+} from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 
 export const IconGuidelines = () => {

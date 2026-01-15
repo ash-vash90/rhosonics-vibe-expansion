@@ -1,6 +1,6 @@
 import { useRef, useState, useCallback } from "react";
 import { BlockContent, BlockStyle } from "@/types/document";
-import { Upload, ImageIcon, Loader2, Crop } from "lucide-react";
+import { Upload, Image as ImageIcon, Loader2, Crop } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";

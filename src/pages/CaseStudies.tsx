@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Eye, Plus, LogIn, LogOut } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, FileText, Download, Eye, Plus, LogIn, LogOut } from "@/lib/icons";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { CaseStudyDocument } from "@/components/case-studies/CaseStudyDocument";
 import { CaseStudySelector } from "@/components/case-studies/CaseStudySelector";

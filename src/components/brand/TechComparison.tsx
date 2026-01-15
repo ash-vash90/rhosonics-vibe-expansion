@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Zap, Droplets, Gauge, Leaf, Clock, DollarSign } from "lucide-react";
+import { Zap, Droplets, Gauge, Leaf, Clock, DollarSign } from "@/lib/icons";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import bb, { bar, radar } from "billboard.js";

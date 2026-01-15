@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, Loader2, Sparkles, Check } from "lucide-react";
+import { Copy, Loader2, Sparkles, Check } from "@/lib/icons";
 import { toast } from "sonner";
 
 const CONTEXT_OPTIONS = [
