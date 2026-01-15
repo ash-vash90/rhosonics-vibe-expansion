@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BarChart3, Upload, Sparkles, Loader2, ArrowRight, TrendingUp, Settings2 } from "lucide-react";
+import { BarChart3, Upload, TrendingUp, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,9 +9,6 @@ import { Switch } from "@/components/ui/switch";
 import { ImageUploader } from "./ImageUploader";
 import { TimeSeriesDataInput } from "./TimeSeriesDataInput";
 import { ChartBuilderData } from "@/types/visualCaseStudy";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-
 interface ChartSectionProps {
   chartImage: string | null;
   chartData?: ChartBuilderData;
@@ -36,9 +33,7 @@ export const ChartSection = ({
   onChartDataChange,
 }: ChartSectionProps) => {
   const [mode, setMode] = useState<"generate" | "upload">(chartData ? "generate" : "upload");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const { toast } = useToast();
 
   const isTimeSeries = chartData?.type === "timeseries" || chartData?.type === "timeseries-comparison";
   const isMultiSeries = chartData?.type === "grouped-bar" || chartData?.type === "timeseries-comparison";
@@ -117,62 +112,6 @@ export const ChartSection = ({
       ...chartData,
       dataPoints: chartData.dataPoints.filter((_, i) => i !== index),
     });
-  };
-
-  const analyzeAndConvert = async () => {
-    if (!chartImage) return;
-
-    setIsAnalyzing(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("analyze-chart-image", {
-        body: { imageBase64: chartImage },
-      });
-
-      if (error) throw error;
-      if (data.error) throw new Error(data.error);
-
-      // Determine if this is a time-series chart
-      const isTimeSeriesChart = data.type === "line" && data.dataPoints?.length > 10;
-      const hasMultipleSeries = data.dataPoints?.some((p: any) => p.value2 !== undefined);
-
-      const extractedData: ChartBuilderData = {
-        type: isTimeSeriesChart 
-          ? (hasMultipleSeries ? "timeseries-comparison" : "timeseries")
-          : (data.type || "bar"),
-        title: data.title || "Extracted Chart",
-        dataPoints: data.dataPoints || [],
-        colors: {
-          primary: "#33993c",
-          secondary: "#D4C84A",
-        },
-        labels: data.labels || (hasMultipleSeries ? {
-          series1: "Rhosonics SDM ECO",
-          series2: "Reference Measurement",
-          yAxis: "Value",
-        } : undefined),
-        background: "dark",
-        dualAxis: hasMultipleSeries,
-        lineSmoothing: true,
-      };
-
-      onChartDataChange(extractedData);
-      onChartImageChange(null);
-      setMode("generate");
-
-      toast({
-        title: "Chart Analyzed",
-        description: `Extracted ${extractedData.dataPoints.length} data points as a ${extractedData.type} chart.`,
-      });
-    } catch (err) {
-      console.error("Chart analysis failed:", err);
-      toast({
-        title: "Analysis Failed",
-        description: err instanceof Error ? err.message : "Could not analyze the chart image.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsAnalyzing(false);
-    }
   };
 
   return (
@@ -432,33 +371,9 @@ export const ChartSection = ({
             className="min-h-[120px]"
           />
           
-          {chartImage && (
-            <Button
-              variant="default"
-              className="w-full gap-2"
-              onClick={analyzeAndConvert}
-              disabled={isAnalyzing}
-            >
-              {isAnalyzing ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Analyzing Chart...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-4 h-4" />
-                  AI Convert to Billboard.js
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </Button>
-          )}
           
           <p className="text-xs text-muted-foreground">
-            {chartImage 
-              ? "Click above to extract data and convert to a branded Billboard.js chart. Works with time-series comparisons!"
-              : "Upload an existing chart image. AI can analyze complex time-series charts and recreate them with Rhosonics branding."
-            }
+            Upload an existing chart image to display in your case study.
           </p>
         </TabsContent>
       </Tabs>
