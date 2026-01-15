@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MapPin, CheckCircle2, Gauge, Quote, Phone, Mail, Globe, ImageIcon, BarChart3, Upload, Plus, X } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
-import { BrandChart } from "@/components/tools/BrandChart";
+import { BrandChart } from "@/components/charts/BrandChart";
 import { TimeSeriesChartPreview } from "@/components/case-study-builder/TimeSeriesChartPreview";
 import { ImageCropper } from "@/components/ui/image-cropper";
 import { supabase } from "@/integrations/supabase/client";

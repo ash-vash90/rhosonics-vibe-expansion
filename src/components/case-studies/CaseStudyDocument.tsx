@@ -1,7 +1,7 @@
 import { MapPin, CheckCircle2, Gauge, Quote, Phone, Mail, Globe, ImageIcon, BarChart3 } from "lucide-react";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { TechnologyComparisonChart } from "@/components/charts/TechnologyComparisonChart";
-import { BrandChart } from "@/components/tools/BrandChart";
+import { BrandChart } from "@/components/charts/BrandChart";
 import { TimeSeriesChartPreview } from "@/components/case-study-builder/TimeSeriesChartPreview";
 import { ChartBuilderData } from "@/types/visualCaseStudy";
 

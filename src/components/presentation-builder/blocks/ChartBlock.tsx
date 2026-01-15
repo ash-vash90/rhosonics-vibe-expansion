@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { BlockContent, BlockStyle } from "@/types/presentation";
-import { BrandChart, DataPoint } from "@/components/tools/BrandChart";
+import { BrandChart, DataPoint } from "@/components/charts/BrandChart";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

@@ -4,7 +4,7 @@ import { Loader2, Printer, AlertTriangle, ArrowLeft, CheckCircle2, Quote, Phone,
 import { Button } from "@/components/ui/button";
 import { DocumentBase, Page, Block } from "@/types/document";
 import { cn } from "@/lib/utils";
-import { BrandChart } from "@/components/tools/BrandChart";
+import { BrandChart } from "@/components/charts/BrandChart";
 import { AnimatedLogo } from "@/components/AnimatedLogo";
 
 type PrintStatus = "preparing" | "ready" | "printing" | "done" | "error";

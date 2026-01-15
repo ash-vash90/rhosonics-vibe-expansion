@@ -8,7 +8,6 @@ import { PresentationConverter } from "@/components/presentation-builder/Present
 import { FullscreenPreview } from "@/components/presentation-builder/FullscreenPreview";
 import { PresenterView } from "@/components/presentation-builder/PresenterView";
 import { RehearsalMode } from "@/components/presentation-builder/RehearsalMode";
-import { AISlideSuggestions } from "@/components/presentation-builder/AISlideSuggestions";
 import { SpeakerNotesPanel } from "@/components/presentation-builder/SpeakerNotesPanel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -527,15 +526,6 @@ export default function PresentationBuilder() {
           </div>
         )}
 
-        {/* AI Suggestions Sidebar */}
-        {showAISidebar && currentSlide && (
-          <AISlideSuggestions
-            presentation={presentation}
-            currentSlide={currentSlide}
-            currentSlideIndex={currentSlideIndex}
-            onApplySuggestion={(block) => addBlock(currentSlide.id, block)}
-          />
-        )}
       </div>
 
       {/* Import Dialog */}
