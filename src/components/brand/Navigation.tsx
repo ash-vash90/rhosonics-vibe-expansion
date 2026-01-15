@@ -15,8 +15,6 @@ const navSections: NavSection[] = [
     label: "ABOUT",
     items: [
       { id: "about", label: "About This System" },
-      { id: "who-for", label: "Who It's For" },
-      { id: "how-to-use", label: "How to Use" },
     ],
   },
   {
@@ -24,8 +22,6 @@ const navSections: NavSection[] = [
     label: "POSITIONING",
     items: [
       { id: "positioning", label: "Brand Positioning" },
-      { id: "what-we-communicate", label: "Core Attributes" },
-      { id: "audience", label: "Audience Reality" },
     ],
   },
   {
@@ -33,20 +29,13 @@ const navSections: NavSection[] = [
     label: "PRINCIPLES",
     items: [
       { id: "principles", label: "Brand Principles" },
-      { id: "precision-decoration", label: "Precision First" },
-      { id: "expression-intent", label: "Expression with Intent" },
-      { id: "engineered", label: "Engineered, Not Styled" },
-      { id: "consistency", label: "Consistency Enables Flexibility" },
     ],
   },
   {
     id: "03",
-    label: "SYSTEM OVERVIEW",
+    label: "VISUAL SYSTEM",
     items: [
       { id: "visual-system", label: "System Structure" },
-      { id: "foundations", label: "Foundations Layer" },
-      { id: "signals", label: "Signals Layer" },
-      { id: "contextual", label: "Contextual Layer" },
     ],
   },
   {
@@ -68,6 +57,7 @@ const navSections: NavSection[] = [
     label: "LOGO & ASSETS",
     items: [
       { id: "logo-assets", label: "Logo System" },
+      { id: "icon-guidelines", label: "Icon Guidelines" },
     ],
   },
   {
@@ -81,7 +71,8 @@ const navSections: NavSection[] = [
     id: "08",
     label: "IMAGERY & MOTION",
     items: [
-      { id: "imagery", label: "Imagery & Motion" },
+      { id: "imagery", label: "Imagery Guidelines" },
+      { id: "motion-design", label: "Motion Design" },
     ],
   },
   {
@@ -262,45 +253,6 @@ export const Navigation = () => {
                       <Link
                         key={item.id}
                         to="/case-studies"
-                        className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
-                      >
-                        <span>{item.label}</span>
-                        <ChevronRight className="w-3 h-3 opacity-100" />
-                      </Link>
-                    );
-                  }
-                  
-                  if (item.id === 'content-library') {
-                    return (
-                      <Link
-                        key={item.id}
-                        to="/library"
-                        className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
-                      >
-                        <span>{item.label}</span>
-                        <ChevronRight className="w-3 h-3 opacity-100" />
-                      </Link>
-                    );
-                  }
-                  
-                  if (item.id === 'presentations-page') {
-                    return (
-                      <Link
-                        key={item.id}
-                        to="/presentations/builder"
-                        className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
-                      >
-                        <span>{item.label}</span>
-                        <ChevronRight className="w-3 h-3 opacity-100" />
-                      </Link>
-                    );
-                  }
-                  
-                  if (item.id === 'ai-tools-page') {
-                    return (
-                      <Link
-                        key={item.id}
-                        to="/tools"
                         className="nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors text-primary/70 font-medium hover:text-primary hover:bg-primary/10"
                       >
                         <span>{item.label}</span>

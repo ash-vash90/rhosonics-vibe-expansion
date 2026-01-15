@@ -409,7 +409,9 @@ const Index = () => {
           
           <Suspense fallback={<SectionLoader />}>
             <LogoAssets />
-            <IconGuidelines />
+            <div id="icon-guidelines" className="scroll-mt-20 md:scroll-mt-24">
+              <IconGuidelines />
+            </div>
           </Suspense>
         </section>
 
@@ -437,7 +439,9 @@ const Index = () => {
           
           <Suspense fallback={<SectionLoader />}>
             <ImageryGuidelines />
-            <MotionDesign />
+            <div id="motion-design" className="scroll-mt-20 md:scroll-mt-24">
+              <MotionDesign />
+            </div>
           </Suspense>
         </section>
 
