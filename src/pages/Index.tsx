@@ -300,22 +300,6 @@ const Index = () => {
               <p className="hero-subtitle text-xl text-slate-300 leading-relaxed max-w-2xl">
                 A system of decisions designed to ensure clarity, consistency, and credibility wherever the brand appears.
               </p>
-              
-              {/* Stats row */}
-              <div className="flex flex-wrap gap-8 mt-10 pt-8 border-t border-slate-700/50">
-                <div>
-                  <div className="font-data text-3xl text-primary">40+</div>
-                  <div className="label-tech-sm text-slate-400 mt-1">Years Experience</div>
-                </div>
-                <div>
-                  <div className="font-data text-3xl text-primary">6</div>
-                  <div className="label-tech-sm text-slate-400 mt-1">Continents</div>
-                </div>
-                <div>
-                  <div className="font-data text-3xl text-primary">1000+</div>
-                  <div className="label-tech-sm text-slate-400 mt-1">Installations</div>
-                </div>
-              </div>
             </div>
           </div>
           
