@@ -259,7 +259,7 @@ const Index = () => {
         {/* ═══════════════════════════════════════════════════════════════
             HERO — BRAND SYSTEM INTRODUCTION
          ═══════════════════════════════════════════════════════════════ */}
-        <section className="min-h-[70vh] flex flex-col justify-center relative bg-slate-950 overflow-hidden">
+        <section className="min-h-[calc(100vh-56px)] md:min-h-[70vh] flex flex-col justify-center relative bg-slate-950 overflow-hidden">
           {/* Layered backgrounds */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900/95 to-slate-950" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,hsl(125_50%_40%/0.06),transparent)]" />
