@@ -3,7 +3,6 @@ import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
 import { BrandCallout } from "./BrandCallout";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ValueBadge } from "./ValueBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,10 +65,7 @@ export const MotionDesign = () => {
 
       {/* Signature Animations */}
       <div>
-        <div className="flex items-center gap-4 mb-2">
-          <h3 className="label-tech text-muted-foreground">SIGNATURE ANIMATIONS</h3>
-          <ValueBadge valueId="expertise" showIcon />
-        </div>
+        <h3 className="label-tech text-muted-foreground mb-2">SIGNATURE ANIMATIONS</h3>
         <p className="text-muted-foreground mb-8">
           Signature animations are rare by design. If everything animates, nothing feels important.
         </p>

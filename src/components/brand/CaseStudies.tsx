@@ -1,6 +1,4 @@
 import { TrendingUp, Droplets, Gauge, ArrowRight } from "lucide-react";
-import { INDUSTRY_VALUE_MAPPING } from "@/data/brand-values";
-import { ValueBadge } from "./ValueBadge";
 
 const caseStudies = [
   {
@@ -17,7 +15,6 @@ const caseStudies = [
     ],
     icon: Droplets,
     variant: "dark" as const,
-    valueId: INDUSTRY_VALUE_MAPPING.dredging,
   },
   {
     id: "mining",
@@ -33,7 +30,6 @@ const caseStudies = [
     ],
     icon: Gauge,
     variant: "mineral" as const,
-    valueId: INDUSTRY_VALUE_MAPPING.mining,
   },
   {
     id: "wastewater",
@@ -49,7 +45,6 @@ const caseStudies = [
     ],
     icon: TrendingUp,
     variant: "light" as const,
-    valueId: INDUSTRY_VALUE_MAPPING.wastewater,
   },
 ];
 
@@ -75,23 +70,13 @@ export const CaseStudies = () => {
             )}
             
             <div className="relative p-5 md:p-8 min-h-[320px] md:min-h-[400px] flex flex-col">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex flex-col gap-1">
-                  <span className={`label-tech ${
-                    study.variant === 'dark' ? 'text-slate-400' : 
-                    study.variant === 'mineral' ? 'text-mineral-deep' : 'text-muted-foreground'
-                  }`}>
-                    {study.industry}
-                  </span>
-                  <ValueBadge 
-                    valueId={study.valueId} 
-                    showIcon 
-                    className={`${
-                      study.variant === 'dark' ? 'text-slate-500' : 
-                      study.variant === 'mineral' ? 'text-mineral-neutral' : 'text-muted-foreground'
-                    }`}
-                  />
-                </div>
+                <div className="flex items-center justify-between mb-6">
+                <span className={`label-tech ${
+                  study.variant === 'dark' ? 'text-slate-400' : 
+                  study.variant === 'mineral' ? 'text-mineral-deep' : 'text-muted-foreground'
+                }`}>
+                  {study.industry}
+                </span>
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                   study.variant === 'dark' ? 'bg-primary/20 text-primary' : 
                   study.variant === 'mineral' ? 'bg-mineral-neutral/20 text-mineral-deep' : 'bg-slate-100 text-slate-600'

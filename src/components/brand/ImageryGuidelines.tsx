@@ -1,6 +1,4 @@
 import { BrandCallout } from "./BrandCallout";
-import { IMAGERY_VALUE_MAPPING } from "@/data/brand-values";
-import { ValueBadge } from "./ValueBadge";
 
 export const ImageryGuidelines = () => {
   return (
@@ -20,10 +18,7 @@ export const ImageryGuidelines = () => {
           <div className="absolute inset-0 opacity-40 bg-pattern-minerals grayscale"></div>
           <div className="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
           <div className="relative p-6 md:p-10 lg:p-16 flex flex-col justify-end min-h-[240px] md:min-h-[320px]">
-            <div className="flex items-center gap-3 mb-2 md:mb-3">
-              <span className="label-tech text-primary text-[10px] md:text-xs">01 — FIELD CONTEXT</span>
-              <ValueBadge valueId={IMAGERY_VALUE_MAPPING.fieldContext} showIcon className="text-primary/60" />
-            </div>
+            <span className="label-tech text-primary text-[10px] md:text-xs mb-2 md:mb-3 block">01 — FIELD CONTEXT</span>
             <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-2 md:mb-4">Real & Gritty</h3>
             <p className="text-slate-400 text-sm md:text-base lg:text-lg max-w-md">
               Authenticity, case studies, proving durability. High contrast, desaturated, selective green accent.
@@ -35,10 +30,7 @@ export const ImageryGuidelines = () => {
         <div className="bg-card relative overflow-hidden">
           <div className="absolute inset-0 bg-pattern-semicon opacity-50"></div>
           <div className="relative p-6 md:p-10 lg:p-16 flex flex-col justify-end min-h-[240px] md:min-h-[320px]">
-            <div className="flex items-center gap-3 mb-2 md:mb-3">
-              <span className="label-tech text-primary text-[10px] md:text-xs">02 — ENGINEERING CONTEXT</span>
-              <ValueBadge valueId={IMAGERY_VALUE_MAPPING.engineeringContext} showIcon className="text-primary/60" />
-            </div>
+            <span className="label-tech text-primary text-[10px] md:text-xs mb-2 md:mb-3 block">02 — ENGINEERING CONTEXT</span>
             <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2 md:mb-4">Abstract & Precise</h3>
             <p className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-md">
               Concepts, technology explainers, "smart" features. Clean lines, perfect lighting, geometric patterns.

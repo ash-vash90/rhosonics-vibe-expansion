@@ -1,7 +1,5 @@
 import { Beaker, Cpu, Anchor, Recycle } from "lucide-react";
 import { BrandCallout } from "./BrandCallout";
-import { INDUSTRY_VALUE_MAPPING } from "@/data/brand-values";
-import { ValueBadge } from "./ValueBadge";
 
 export const IndustryApplications = () => {
 
@@ -24,10 +22,7 @@ export const IndustryApplications = () => {
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-mineral-neutral to-mineral-deep" />
           <div className="relative p-8 min-h-[320px] flex flex-col">
             <div className="flex justify-between items-center mb-auto">
-              <div className="flex items-center gap-2">
-                <span className="label-tech text-mineral-neutral">MINERALS</span>
-                <ValueBadge valueId={INDUSTRY_VALUE_MAPPING.minerals} className="text-mineral-neutral/60" />
-              </div>
+              <span className="label-tech text-mineral-neutral">MINERALS</span>
               <Beaker className="w-5 h-5 text-slate-400" />
             </div>
             <div className="text-slate-100 mt-8">
@@ -51,10 +46,7 @@ export const IndustryApplications = () => {
           <div className="absolute inset-0 bg-pattern-semicon opacity-50"></div>
           <div className="relative p-8 min-h-[320px] flex flex-col">
             <div className="flex justify-between items-center mb-auto">
-              <div className="flex items-center gap-2">
-                <span className="label-tech text-foreground">SEMICONDUCTOR</span>
-                <ValueBadge valueId={INDUSTRY_VALUE_MAPPING.semiconductor} className="text-muted-foreground" />
-              </div>
+              <span className="label-tech text-foreground">SEMICONDUCTOR</span>
               <Cpu className="w-5 h-5 text-slate-400" />
             </div>
             <div className="mt-8">
@@ -80,10 +72,7 @@ export const IndustryApplications = () => {
           <div className="absolute inset-0 bg-pattern-dredging opacity-50"></div>
           <div className="relative p-8 min-h-[320px] flex flex-col">
             <div className="flex justify-between items-center mb-auto">
-              <div className="flex items-center gap-2">
-                <span className="label-tech text-muted-foreground">DREDGING</span>
-                <ValueBadge valueId={INDUSTRY_VALUE_MAPPING.dredging} className="text-muted-foreground" />
-              </div>
+              <span className="label-tech text-muted-foreground">DREDGING</span>
               <Anchor className="w-5 h-5 text-slate-400" />
             </div>
             <div className="mt-8">

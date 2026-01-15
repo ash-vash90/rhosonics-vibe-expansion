@@ -2,8 +2,6 @@ import { Zap, MapPin, Layers } from "lucide-react";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { VISUAL_LAYER_VALUE_MAPPING } from "@/data/brand-values";
-import { ValueBadge } from "./ValueBadge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,7 +59,6 @@ const VisualSystemOverview = () => {
       tag: "CONSTANT",
       desc: "The constant base of the brand:",
       items: ["Primary neutrals", "Core typography", "Spacing", "Layout rules"],
-      valueId: VISUAL_LAYER_VALUE_MAPPING.foundations,
       bgClass: "bg-slate-900 text-white",
       tagClass: "bg-white/20",
       itemClass: "bg-white/10 text-white/80",
@@ -73,7 +70,6 @@ const VisualSystemOverview = () => {
       tag: "INTENTIONAL",
       desc: "Communicates action, state, or emphasis:",
       items: ["Action colors", "Status indicators", "Interactive highlights"],
-      valueId: VISUAL_LAYER_VALUE_MAPPING.signals,
       bgClass: "bg-primary text-white",
       tagClass: "bg-white/20",
       itemClass: "bg-white/20 text-white",
@@ -85,7 +81,6 @@ const VisualSystemOverview = () => {
       tag: "SITUATIONAL",
       desc: "Provides situational relevance:",
       items: ["Field neutrals", "Eco indicators", "Textures"],
-      valueId: VISUAL_LAYER_VALUE_MAPPING.contextual,
       bgClass: "bg-mineral-surface border-y border-r border-mineral-neutral/30",
       tagClass: "bg-mineral-neutral text-white",
       itemClass: "bg-white/80 text-mineral-deep",
@@ -108,12 +103,9 @@ const VisualSystemOverview = () => {
         {layers.map((layer) => (
           <div key={layer.id} className={`p-8 ${layer.bgClass}`}>
             <layer.icon className={`w-8 h-8 mb-6 ${layer.iconClass || 'text-white/60'}`} />
-            <div className="flex flex-col gap-2 mb-4">
-              <div className="flex items-center gap-3">
-                <h4 className={`font-ui text-xl font-bold ${layer.titleClass || ''}`}>{layer.title}</h4>
-                <span className={`font-data text-[10px] px-2 py-0.5 ${layer.tagClass}`}>{layer.tag}</span>
-              </div>
-              <ValueBadge valueId={layer.valueId} showIcon className={layer.id === 'contextual' ? 'text-mineral-deep/60' : 'text-white/60'} />
+            <div className="flex items-center gap-3 mb-4">
+              <h4 className={`font-ui text-xl font-bold ${layer.titleClass || ''}`}>{layer.title}</h4>
+              <span className={`font-data text-[10px] px-2 py-0.5 ${layer.tagClass}`}>{layer.tag}</span>
             </div>
             <p className={`mb-6 ${layer.descClass || 'text-white/70'}`}>{layer.desc}</p>
             <div className="flex flex-wrap gap-2">
