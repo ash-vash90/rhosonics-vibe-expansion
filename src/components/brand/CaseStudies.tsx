@@ -72,7 +72,7 @@ export const CaseStudies = () => {
               <img 
                 src={study.image} 
                 alt={study.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform backface-hidden"
               />
               <div className={`absolute inset-0 ${
                 study.variant === 'dark' ? 'bg-gradient-to-t from-rho-obsidian via-rho-obsidian/60 to-transparent' : 
@@ -140,10 +140,10 @@ export const CaseStudies = () => {
                   ))}
                 </div>
 
-                {/* CTA - Always green, full width */}
-                <button className={`mt-5 pt-4 w-full flex items-center justify-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors border-t ${
-                  study.variant === 'dark' ? 'border-slate-700' : 
-                  study.variant === 'mineral' ? 'border-mineral-deep/20' : 'border-border'
+                {/* CTA - Always green, full width with hover */}
+                <button className={`-mx-6 -mb-6 mt-5 px-6 py-4 w-[calc(100%+3rem)] flex items-center justify-center gap-2 text-sm font-medium text-primary transition-colors border-t ${
+                  study.variant === 'dark' ? 'border-slate-700 hover:bg-slate-800/40' : 
+                  study.variant === 'mineral' ? 'border-mineral-deep/20 hover:bg-mineral-deep/5' : 'border-border hover:bg-muted/50'
                 }`}>
                   <span className="font-ui">Read full study</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
