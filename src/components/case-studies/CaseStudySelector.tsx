@@ -21,12 +21,12 @@ interface CaseStudySelectorProps {
 
 export const CaseStudySelector = ({ caseStudies, onSelect }: CaseStudySelectorProps) => {
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {caseStudies.map((study, index) => (
         <button
           key={study.id}
           onClick={() => onSelect(study.id)}
-          className="group text-left bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-slate-200 hover:border-primary/30"
+          className="group text-left bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/40"
         >
           {/* Image */}
           <div className="relative h-48 overflow-hidden">
@@ -38,8 +38,8 @@ export const CaseStudySelector = ({ caseStudies, onSelect }: CaseStudySelectorPr
             <div className="absolute inset-0 bg-gradient-to-t from-rho-obsidian/80 via-rho-obsidian/20 to-transparent" />
             
             {/* Number badge */}
-            <div className="absolute top-4 left-4 w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-              <span className="font-data text-white font-bold">
+            <div className="absolute top-4 left-4 w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-lg">
+              <span className="font-data text-primary-foreground font-bold">
                 {String(index + 1).padStart(2, '0')}
               </span>
             </div>
@@ -62,21 +62,21 @@ export const CaseStudySelector = ({ caseStudies, onSelect }: CaseStudySelectorPr
           </div>
 
           {/* Content */}
-          <div className="p-5">
+          <div className="p-6">
             <div className="flex flex-wrap gap-2 mb-3">
-              <span className="px-2 py-0.5 bg-primary/10 text-primary label-tech-sm rounded">
+              <span className="px-2.5 py-1 bg-primary/10 text-primary text-xs font-medium rounded-md">
                 {study.industry}
               </span>
-              <span className="px-2 py-0.5 bg-slate-100 text-slate-600 label-tech-sm rounded">
+              <span className="px-2.5 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
                 {study.product}
               </span>
             </div>
 
-            <h3 className="font-ui font-bold text-xl text-foreground mb-2 group-hover:text-primary transition-colors">
+            <h3 className="font-ui font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
               {study.company}
             </h3>
 
-            <p className="text-sm text-slate-600 line-clamp-2 mb-4">
+            <p className="text-sm text-muted-foreground line-clamp-2 mb-5">
               {study.tagline}
             </p>
 
