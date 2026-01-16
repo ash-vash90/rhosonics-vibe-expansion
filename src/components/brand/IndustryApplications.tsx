@@ -93,32 +93,6 @@ export const IndustryApplications = () => {
         </div>
       </div>
 
-      {/* Pattern Examples - Horizontal strip */}
-      <div>
-        <h3 className="label-tech text-muted-foreground mb-6">INDUSTRY PATTERNS</h3>
-        <p className="text-muted-foreground mb-8 max-w-2xl">
-          Patterns are contextual, not expressive. They help users orient themselves, not brand the interface.
-        </p>
-        
-        <div className="flex items-stretch border-t border-b border-border">
-          {[
-            { pattern: "bg-pattern-minerals", name: "Minerals", desc: "Crystal lattice / field ops", borderColor: "border-mineral-neutral/50" },
-            { pattern: "bg-pattern-semicon", name: "Semiconductor", desc: "Circuit / precision tech", borderColor: "border-border" },
-            { pattern: "bg-pattern-dredging", name: "Dredging", desc: "Fluid waves / flow", borderColor: "border-border" },
-          ].map((item, idx) => (
-            <div key={idx} className="flex-1 py-8 px-6 border-r border-border last:border-r-0 group hover:bg-muted/30 transition-colors">
-              <div className="flex items-center gap-4">
-                <div className={`w-16 h-16 ${item.pattern} rounded-lg border ${item.borderColor} flex-shrink-0`}></div>
-                <div>
-                  <div className="font-ui font-medium text-foreground">{item.name}</div>
-                  <div className="text-sm text-muted-foreground">{item.desc}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Callout */}
       <BrandCallout variant="info" title="Why This Matters">
         Industry-specific patterns create instant recognition and reduce cognitive load. 

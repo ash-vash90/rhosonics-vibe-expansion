@@ -9,6 +9,7 @@ const textures = [
     pattern: `url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 0v6h2V0h-2zm0 26v6h2v-6h-2zM0 15v2h6v-2H0zm26 0v2h6v-2h-6z' fill='%2333993c' fill-opacity='.12'/%3E%3C/svg%3E")`,
     bgClass: "bg-rho-obsidian",
     opacity: "opacity-100",
+    category: "brand",
   },
   {
     name: "Ultrasonic Pulse",
@@ -17,6 +18,7 @@ const textures = [
     pattern: `url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2333993c'%3E%3Ccircle cx='32' cy='32' r='8' stroke-opacity='.08' stroke-width='.5'/%3E%3Ccircle cx='32' cy='32' r='16' stroke-opacity='.1' stroke-width='.5'/%3E%3Ccircle cx='32' cy='32' r='24' stroke-opacity='.06' stroke-width='.5'/%3E%3Ccircle cx='32' cy='32' r='31' stroke-opacity='.04' stroke-width='.5'/%3E%3Ccircle cx='32' cy='32' r='2' fill='%2333993c' fill-opacity='.15' stroke='none'/%3E%3C/g%3E%3C/svg%3E")`,
     bgClass: "bg-rho-obsidian",
     opacity: "opacity-100",
+    category: "brand",
   },
   {
     name: "Engineering Grid",
@@ -25,6 +27,7 @@ const textures = [
     pattern: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpath d='M0 0h40v40H0z' stroke='%2333993c' stroke-opacity='.05' stroke-width='.5'/%3E%3Cpath d='M20 0v40M0 20h40' stroke='%2333993c' stroke-opacity='.03' stroke-width='.5'/%3E%3Ccircle cx='20' cy='20' r='1' fill='%2333993c' fill-opacity='.1'/%3E%3Ccircle cx='0' cy='0' r='.75' fill='%2333993c' fill-opacity='.08'/%3E%3Ccircle cx='40' cy='0' r='.75' fill='%2333993c' fill-opacity='.08'/%3E%3Ccircle cx='0' cy='40' r='.75' fill='%2333993c' fill-opacity='.08'/%3E%3Ccircle cx='40' cy='40' r='.75' fill='%2333993c' fill-opacity='.08'/%3E%3C/g%3E%3C/svg%3E")`,
     bgClass: "bg-slate-900",
     opacity: "opacity-100",
+    category: "brand",
   },
   {
     name: "Topographic",
@@ -33,6 +36,7 @@ const textures = [
     pattern: `url("data:image/svg+xml,%3Csvg width='80' height='40' viewBox='0 0 80 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2373B82E' stroke-width='.5' stroke-linecap='round'%3E%3Cpath d='M-10 30 Q10 25 30 30 Q50 35 70 30 Q90 25 110 30' stroke-opacity='.08'/%3E%3Cpath d='M-10 20 Q10 15 30 20 Q50 25 70 20 Q90 15 110 20' stroke-opacity='.12'/%3E%3Cpath d='M-10 10 Q10 5 30 10 Q50 15 70 10 Q90 5 110 10' stroke-opacity='.06'/%3E%3C/g%3E%3C/svg%3E")`,
     bgClass: "bg-mineral-deep",
     opacity: "opacity-100",
+    category: "brand",
   },
   {
     name: "Isometric",
@@ -41,6 +45,7 @@ const textures = [
     pattern: `url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 0l14 14-14 14L0 14z' fill='none' stroke='%2333993c' stroke-opacity='.08' stroke-width='.5'/%3E%3Ccircle cx='14' cy='14' r='.75' fill='%2333993c' fill-opacity='.1'/%3E%3C/svg%3E")`,
     bgClass: "bg-rho-obsidian",
     opacity: "opacity-100",
+    category: "brand",
   },
   {
     name: "Flow Dynamics",
@@ -49,8 +54,50 @@ const textures = [
     pattern: `url("data:image/svg+xml,%3Csvg width='60' height='30' viewBox='0 0 60 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2333993c' stroke-width='.5' stroke-linecap='round'%3E%3Cpath d='M0 7.5 Q15 5 30 7.5 T60 7.5' stroke-opacity='.06'/%3E%3Cpath d='M0 15 Q15 12 30 15 T60 15' stroke-opacity='.1'/%3E%3Cpath d='M0 22.5 Q15 20 30 22.5 T60 22.5' stroke-opacity='.06'/%3E%3C/g%3E%3Ccircle cx='45' cy='15' r='1' fill='%2333993c' fill-opacity='.08'/%3E%3Ccircle cx='15' cy='15' r='.75' fill='%2333993c' fill-opacity='.06'/%3E%3C/svg%3E")`,
     bgClass: "bg-slate-800",
     opacity: "opacity-100",
+    category: "brand",
+  },
+  // Industry-specific textures
+  {
+    name: "Minerals / Mining",
+    description: "Crystal lattice pattern with ore-like geometry. Field operations aesthetic.",
+    usage: "Mining dashboards, thickener interfaces, mineral processing",
+    pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23ffffff' stroke-width='1' opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M60 20L30 50L0 20M30 0v10M30 60V50' stroke-dasharray='4,4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+    bgClass: "bg-rho-obsidian",
+    opacity: "opacity-100",
+    category: "industry",
+  },
+  {
+    name: "Semiconductor",
+    description: "Circuit-inspired precision grid. Clean room technology aesthetic.",
+    usage: "CMP slurry monitoring, semiconductor process control, precision tech",
+    pattern: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h80v80H0V0zm10 10v60h60V10H10zm5 5h50v50H15V15zm5 5v40h40V20H20z' fill='%2333993c' fill-opacity='0.02'/%3E%3Cpath d='M40 0v10M0 40h10M40 80V70M80 40H70' stroke='%2333993c' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='40' cy='40' r='2' fill='%2333993c' opacity='0.1'/%3E%3C/svg%3E")`,
+    bgClass: "bg-background",
+    opacity: "opacity-100",
+    category: "industry",
+  },
+  {
+    name: "Dredging / Marine",
+    description: "Fluid wave pattern suggesting water movement and sediment flow.",
+    usage: "Dredging operations, suction density, marine applications",
+    pattern: `url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%2394a3b8' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+    bgClass: "bg-slate-100",
+    opacity: "opacity-100",
+    category: "industry",
+  },
+  {
+    name: "Terrain Ore",
+    description: "Rough polygonal shapes suggesting rock strata and ore deposits.",
+    usage: "Mining hero sections, geological contexts, field operations",
+    pattern: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%238B8F88' stroke-width='0.5' opacity='0.15'%3E%3Cpolygon points='30,10 45,25 35,40 15,35 10,20'/%3E%3Cpolygon points='80,30 100,40 95,60 75,65 65,50'/%3E%3Cpolygon points='40,70 55,75 60,95 45,105 30,90'/%3E%3Cpolygon points='90,80 110,85 105,105 85,110 80,95'/%3E%3C/g%3E%3Cg fill='%238B8F88' opacity='0.08'%3E%3Ccircle cx='25' cy='25' r='2'/%3E%3Ccircle cx='85' cy='48' r='1.5'/%3E%3Ccircle cx='48' cy='85' r='2.5'/%3E%3Ccircle cx='95' cy='95' r='1.8'/%3E%3C/g%3E%3C/svg%3E")`,
+    bgClass: "bg-rho-obsidian",
+    opacity: "opacity-100",
+    category: "industry",
   },
 ];
+
+// Group textures by category
+const brandTextures = textures.filter(t => t.category === "brand");
+const industryTextures = textures.filter(t => t.category === "industry");
 
 export const ImageryGuidelines = () => {
   return (
@@ -110,37 +157,60 @@ export const ImageryGuidelines = () => {
           Subtle patterns that reinforce our industrial and technical identity. Use sparingly at low opacity to add depth without competing with content.
         </p>
 
-        {/* Texture Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {textures.map((texture) => (
-            <div key={texture.name} className="group border border-border rounded-lg overflow-hidden">
-              {/* Texture Preview */}
-              <div 
-                className={`${texture.bgClass} relative h-40 md:h-48`}
-              >
-                <div 
-                  className={`absolute inset-0 ${texture.opacity}`}
-                  style={{ backgroundImage: texture.pattern }}
-                />
-                {/* Hover overlay with name */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                  <span className="font-ui font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity text-lg">
-                    {texture.name}
-                  </span>
+        {/* Brand Textures */}
+        <div className="mb-8">
+          <h4 className="label-tech text-primary mb-4">BRAND PATTERNS</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {brandTextures.map((texture) => (
+              <div key={texture.name} className="group border border-border rounded-lg overflow-hidden">
+                <div className={`${texture.bgClass} relative h-40 md:h-48`}>
+                  <div 
+                    className={`absolute inset-0 ${texture.opacity}`}
+                    style={{ backgroundImage: texture.pattern }}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <span className="font-ui font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity text-lg">
+                      {texture.name}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-4 bg-card">
+                  <h4 className="font-ui font-semibold text-foreground mb-1">{texture.name}</h4>
+                  <p className="text-muted-foreground text-sm mb-3">{texture.description}</p>
+                  <div className="flex items-start gap-2">
+                    <span className="label-tech-sm text-primary shrink-0">USE FOR:</span>
+                    <span className="text-xs text-muted-foreground">{texture.usage}</span>
+                  </div>
                 </div>
               </div>
-              
-              {/* Texture Info */}
-              <div className="p-4 bg-card">
-                <h4 className="font-ui font-semibold text-foreground mb-1">{texture.name}</h4>
-                <p className="text-muted-foreground text-sm mb-3">{texture.description}</p>
-                <div className="flex items-start gap-2">
-                  <span className="label-tech-sm text-primary shrink-0">USE FOR:</span>
-                  <span className="text-xs text-muted-foreground">{texture.usage}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Industry Textures */}
+        <div>
+          <h4 className="label-tech text-muted-foreground mb-4">INDUSTRY-SPECIFIC PATTERNS</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {industryTextures.map((texture) => (
+              <div key={texture.name} className="group border border-border rounded-lg overflow-hidden">
+                <div className={`${texture.bgClass} relative h-32 md:h-36`}>
+                  <div 
+                    className={`absolute inset-0 ${texture.opacity}`}
+                    style={{ backgroundImage: texture.pattern }}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <span className="font-ui font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm">
+                      {texture.name}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-3 bg-card">
+                  <h4 className="font-ui font-semibold text-foreground text-sm mb-1">{texture.name}</h4>
+                  <p className="text-muted-foreground text-xs">{texture.description}</p>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Texture Usage Rules */}
