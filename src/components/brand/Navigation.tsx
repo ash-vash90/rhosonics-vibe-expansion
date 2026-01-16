@@ -106,8 +106,7 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(["00"]);
   const [activeSection, setActiveSection] = useState<string | null>("about");
-  const [isVisible, setIsVisible] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLElement | null>(null);
   const navRef = useRef<HTMLElement | null>(null);
 
   // Scroll-triggered fade in effect for sidebar
@@ -115,15 +114,14 @@ export const Navigation = () => {
     const nav = navRef.current;
     if (!nav) return;
 
-    // Set initial state - hidden off-screen
-    gsap.set(nav, { x: -100, opacity: 0 });
+    // Set initial state - hidden
+    gsap.set(nav, { opacity: 0, x: -20 });
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: document.body,
         start: "top -80%", // After scrolling past ~80vh (the hero)
         onEnter: () => {
-          setIsVisible(true);
           gsap.to(nav, {
             x: 0,
             opacity: 1,
@@ -132,9 +130,8 @@ export const Navigation = () => {
           });
         },
         onLeaveBack: () => {
-          setIsVisible(false);
           gsap.to(nav, {
-            x: -100,
+            x: -20,
             opacity: 0,
             duration: 0.3,
             ease: "power2.in",
@@ -228,18 +225,17 @@ export const Navigation = () => {
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Navigation Sidebar - Desktop only */}
+      {/* Navigation Sidebar - Desktop sticky, Mobile overlay */}
       <nav 
         ref={(el) => {
           navRef.current = el;
-          if (menuRef.current !== el) menuRef.current = el as HTMLDivElement;
+          menuRef.current = el;
         }}
         className={`
-          fixed xl:fixed top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100 
+          fixed xl:sticky top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100 
           z-50 flex-shrink-0 overflow-y-auto
-          transform transition-transform duration-300 ease-out
+          transition-transform duration-300 ease-out
           ${isOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}
-          ${!isVisible && !isOpen ? "xl:pointer-events-none" : ""}
         `}
       >
         
