@@ -8,7 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const MotionDesign = () => {
   const logoRef = useRef<AnimatedLogoRef>(null);
-  const bootGlowRef = useRef<HTMLDivElement>(null);
   const lockupLogoRef = useRef<AnimatedLogoRef>(null);
   const lockupWordmarkRef = useRef<HTMLSpanElement>(null);
   const waveBarsRef = useRef<HTMLDivElement>(null);
@@ -19,27 +18,6 @@ export const MotionDesign = () => {
   const rippleContainerRef = useRef<HTMLDivElement>(null);
 
   const playBootAnimation = () => {
-    const glow = bootGlowRef.current;
-    if (glow) {
-      // Animate glow: pulse up during animation, then settle
-      gsap.fromTo(glow,
-        { opacity: 0, scale: 0.8 },
-        { 
-          opacity: 0.6, 
-          scale: 1.1, 
-          duration: 0.4, 
-          ease: "power2.out",
-          onComplete: () => {
-            gsap.to(glow, {
-              opacity: 0.15,
-              scale: 1,
-              duration: 0.5,
-              ease: "power2.inOut"
-            });
-          }
-        }
-      );
-    }
     logoRef.current?.play();
   };
 
@@ -224,18 +202,9 @@ export const MotionDesign = () => {
               PLAY
             </button>
           </div>
-          <div className="h-40 bg-muted/50 rounded-lg flex items-center justify-center border border-border relative overflow-hidden">
-            {/* Lime inner glow */}
-            <div 
-              ref={bootGlowRef}
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: 'radial-gradient(circle at center, hsl(88 60% 50% / 0.4) 0%, transparent 60%)',
-                opacity: 0.15
-              }}
-            />
-            <div className="w-20 h-20 relative z-10">
-              <AnimatedLogo ref={logoRef} variant="gradient" />
+          <div className="h-40 bg-muted/50 rounded-lg flex items-center justify-center border border-border">
+            <div className="w-20 h-20">
+              <AnimatedLogo ref={logoRef} variant="gradient" withGlow />
             </div>
           </div>
         </div>

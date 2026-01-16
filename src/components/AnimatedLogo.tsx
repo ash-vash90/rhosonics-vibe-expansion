@@ -12,6 +12,10 @@ interface AnimatedLogoProps {
    * Useful when you trigger play() manually and want to prevent any color/gradient flash.
    */
   startHidden?: boolean;
+  /**
+   * If true, adds an energy glow effect during animation that settles afterward.
+   */
+  withGlow?: boolean;
 }
 
 export interface AnimatedLogoPlayOptions {
@@ -23,11 +27,12 @@ export interface AnimatedLogoRef {
 }
 
 export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
-  ({ variant = "gradient", className, autoPlay = false, startHidden = false }, ref) => {
+  ({ variant = "gradient", className, autoPlay = false, startHidden = false, withGlow = false }, ref) => {
     const svgRef = useRef<SVGSVGElement>(null);
     const arc1Ref = useRef<SVGPathElement>(null);
     const arc2Ref = useRef<SVGPathElement>(null);
     const arc3Ref = useRef<SVGPathElement>(null);
+    const glowRef = useRef<SVGGElement>(null);
     const tlRef = useRef<gsap.core.Timeline | null>(null);
 
     // Avoid global SVG id collisions when multiple logos are on the page.
@@ -35,6 +40,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
     const uid = cleanReactId(rawId);
     const brandGradientId = `brandGradient-${uid}`;
     const whiteGradientId = `whiteGradient-${uid}`;
+    const glowFilterId = `glowFilter-${uid}`;
 
     const getGradientId = () => {
       switch (variant) {
@@ -56,6 +62,10 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           clearProps: "filter",
         });
       });
+      // Reset glow
+      if (withGlow && glowRef.current) {
+        gsap.set(glowRef.current, { opacity: 0 });
+      }
     };
 
     const playAnimation = (options?: AnimatedLogoPlayOptions) => {
@@ -75,6 +85,21 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
       const tl = gsap.timeline({
         onComplete: () => options?.onComplete?.(),
       });
+
+      // Glow animation - pulse up then settle
+      if (withGlow && glowRef.current) {
+        tl.fromTo(
+          glowRef.current,
+          { opacity: 0 },
+          { opacity: 0.8, duration: 0.3, ease: "power2.out" },
+          0
+        );
+        tl.to(
+          glowRef.current,
+          { opacity: 0.25, duration: 0.6, ease: "power2.inOut" },
+          0.4
+        );
+      }
 
       // Wave propagation — inner arc → middle → outer
       arcs.forEach((arc, i) => {
@@ -121,6 +146,15 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
             <stop offset="0%" stopColor="#ffffff" />
             <stop offset="100%" stopColor="#f1f5f9" />
           </linearGradient>
+          {withGlow && (
+            <filter id={glowFilterId} x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          )}
         </defs>
 
         {/* Arc 1 — innermost */}
@@ -143,6 +177,24 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           d="M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z"
           fill={`url(#${getGradientId()})`}
         />
+
+        {/* Energy glow layer - rendered on top */}
+        {withGlow && (
+          <g ref={glowRef} style={{ opacity: 0 }} filter={`url(#${glowFilterId})`}>
+            <path
+              d="M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z"
+              fill="#a3e635"
+            />
+            <path
+              d="M 80 34 L 80 21 A 59 59 0 0 0 21 80 L 34 80 A 46 46 0 0 1 80 34 Z"
+              fill="#a3e635"
+            />
+            <path
+              d="M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z"
+              fill="#a3e635"
+            />
+          </g>
+        )}
       </svg>
     );
   }
