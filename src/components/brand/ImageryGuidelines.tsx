@@ -16,6 +16,17 @@ const approvedBackgrounds = [
   { name: "Eco Surface", value: "#f0faf1", textLight: false },
 ];
 
+// Rhosonics approved texture/pattern colors
+const approvedTextureColors = [
+  { name: "Rhosonics Green", value: "#33993c" },
+  { name: "Lime Accent", value: "#73B82E" },
+  { name: "Slate 400", value: "#94a3b8" },
+  { name: "Slate 500", value: "#64748b" },
+  { name: "White", value: "#ffffff" },
+  { name: "Obsidian", value: "#111522" },
+  { name: "Mineral", value: "#7a7a5c" },
+];
+
 // Texture pattern definitions - all patterns tile seamlessly with refined, professional designs
 const textures = [
   {
@@ -131,16 +142,24 @@ const TexturePreview = () => {
   const [opacity, setOpacity] = useState([0.12]);
   const [scale, setScale] = useState([1]);
   const [bgColor, setBgColor] = useState(approvedBackgrounds[0]);
+  const [textureColor, setTextureColor] = useState(approvedTextureColors[0]);
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<"preview" | "tiling">("preview");
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
-  const generateSvgWithOpacity = (rawSvg: string, op: number) => {
-    return rawSvg.replace(/OPACITY_PLACEHOLDER/g, op.toString());
+  const generateSvgWithOpacityAndColor = (rawSvg: string, op: number, color: string) => {
+    // Replace opacity placeholder
+    let result = rawSvg.replace(/OPACITY_PLACEHOLDER/g, op.toString());
+    // Replace all color references (both stroke and fill colors)
+    result = result.replace(/#33993c/gi, color);
+    result = result.replace(/#73B82E/gi, color);
+    result = result.replace(/#94a3b8/gi, color);
+    result = result.replace(/#ffffff/gi, color);
+    return result;
   };
 
   const handleDownload = () => {
-    const svgContent = generateSvgWithOpacity(selectedTexture.rawSvg, opacity[0]);
+    const svgContent = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value);
     const blob = new Blob([svgContent], { type: "image/svg+xml" });
     const url = URL.createObjectURL(blob);
     
@@ -153,21 +172,21 @@ const TexturePreview = () => {
   };
 
   const handleCopySvg = () => {
-    const svgContent = generateSvgWithOpacity(selectedTexture.rawSvg, opacity[0]);
+    const svgContent = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value);
     navigator.clipboard.writeText(svgContent);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const getPatternWithOpacity = (rawSvg: string, op: number) => {
-    const svgWithOpacity = generateSvgWithOpacity(rawSvg, op);
-    const encoded = encodeURIComponent(svgWithOpacity);
+  const getPatternWithOpacityAndColor = (rawSvg: string, op: number, color: string) => {
+    const svgWithMods = generateSvgWithOpacityAndColor(rawSvg, op, color);
+    const encoded = encodeURIComponent(svgWithMods);
     return `url("data:image/svg+xml,${encoded}")`;
   };
 
-  // Scale multipliers for pattern sizing
-  const scaleLabels = ["0.5×", "0.75×", "1×", "1.5×", "2×", "3×"];
-  const scaleValues = [0.5, 0.75, 1, 1.5, 2, 3];
+  // Scale multipliers for pattern sizing - now includes denser options
+  const scaleLabels = ["0.1×", "0.25×", "0.5×", "0.75×", "1×", "1.5×", "2×", "3×"];
+  const scaleValues = [0.1, 0.25, 0.5, 0.75, 1, 1.5, 2, 3];
   const currentScaleLabel = scaleLabels[scaleValues.indexOf(scale[0])] || `${scale[0]}×`;
 
   return (
@@ -216,7 +235,7 @@ const TexturePreview = () => {
             <div 
               className="absolute inset-0 transition-opacity duration-300"
               style={{ 
-                backgroundImage: getPatternWithOpacity(selectedTexture.rawSvg, opacity[0]),
+                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value),
                 backgroundSize: `${scale[0] * 100}%`
               }}
             />
@@ -236,7 +255,7 @@ const TexturePreview = () => {
             <div 
               className="absolute inset-0 transition-opacity duration-300"
               style={{ 
-                backgroundImage: getPatternWithOpacity(selectedTexture.rawSvg, opacity[0]),
+                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value),
                 backgroundSize: `${scale[0] * 100}%`
               }}
             />
@@ -329,6 +348,27 @@ const TexturePreview = () => {
             <p className="text-xs text-muted-foreground mt-2">
               Smaller scales create denser patterns; larger scales create more open textures.
             </p>
+          </div>
+
+          {/* Texture Color Selection */}
+          <div>
+            <span className="label-tech-sm text-primary block mb-3">TEXTURE COLOR</span>
+            <div className="flex flex-wrap gap-2">
+              {approvedTextureColors.map((tc) => (
+                <button
+                  key={tc.name}
+                  onClick={() => setTextureColor(tc)}
+                  className={`w-8 h-8 rounded border-2 transition-all ${
+                    textureColor.name === tc.name
+                      ? "border-primary scale-110 ring-2 ring-primary/30"
+                      : "border-border hover:scale-105"
+                  }`}
+                  style={{ backgroundColor: tc.value }}
+                  title={tc.name}
+                />
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">Selected: {textureColor.name}</p>
           </div>
 
           {/* Background Color Selection */}
