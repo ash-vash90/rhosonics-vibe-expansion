@@ -375,11 +375,11 @@ const Index = () => {
         
         <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Logo + Wordmark */}
-          <div className="hero-logo flex items-center justify-center gap-4 lg:gap-6 mb-10 lg:mb-14">
-            <div className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-24 xl:h-24" style={{ minWidth: 48, minHeight: 48 }}>
+          <div className="hero-logo flex items-center justify-center gap-3 lg:gap-5 mb-10 lg:mb-12">
+            <div className="w-11 h-11 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18" style={{ minWidth: 44, minHeight: 44 }}>
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden />
             </div>
-            <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
+            <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl xl:text-4xl">
               {"RHOSONICS".split("").map((char, i) => (
                 <span key={i} className="wordmark-char inline-block">
                   {char}
@@ -388,17 +388,17 @@ const Index = () => {
             </span>
           </div>
           
-          <div className="hero-version label-tech text-primary mb-6 lg:mb-8 text-sm lg:text-base">
+          <div className="hero-version label-tech text-primary mb-5 lg:mb-6">
             <span className="text-slate-400">2025</span>
-            <span className="mx-2 lg:mx-3">/</span>
+            <span className="mx-2">/</span>
             BRAND SYSTEM
           </div>
           
-          <h1 className="hero-title font-ui font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight mb-8 lg:mb-10">
+          <h1 className="hero-title font-ui font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight mb-6 lg:mb-8">
             Brand Guidelines
           </h1>
           
-          <p className="hero-subtitle text-xl md:text-2xl lg:text-2xl xl:text-3xl text-slate-300 leading-relaxed max-w-3xl lg:max-w-4xl mx-auto">
+          <p className="hero-subtitle text-lg md:text-xl lg:text-2xl text-slate-300 leading-relaxed max-w-2xl lg:max-w-3xl mx-auto">
             A system of decisions designed to ensure clarity, consistency, and credibility wherever the brand appears.
           </p>
         </div>
