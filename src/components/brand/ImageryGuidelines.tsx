@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { BrandCallout } from "./BrandCallout";
 import { Slider } from "@/components/ui/slider";
-import { Download, Check } from "lucide-react";
+import { Download, Check, Grid3X3, Maximize2 } from "lucide-react";
 
 // Rhosonics approved background colors for texture preview
 const approvedBackgrounds = [
@@ -129,8 +129,10 @@ const industryTextures = textures.filter(t => t.category === "industry");
 const TexturePreview = () => {
   const [selectedTexture, setSelectedTexture] = useState(textures[0]);
   const [opacity, setOpacity] = useState([0.12]);
+  const [scale, setScale] = useState([1]);
   const [bgColor, setBgColor] = useState(approvedBackgrounds[0]);
   const [copied, setCopied] = useState(false);
+  const [viewMode, setViewMode] = useState<"preview" | "tiling">("preview");
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
   const generateSvgWithOpacity = (rawSvg: string, op: number) => {
@@ -163,29 +165,103 @@ const TexturePreview = () => {
     return `url("data:image/svg+xml,${encoded}")`;
   };
 
+  // Scale multipliers for pattern sizing
+  const scaleLabels = ["0.5×", "0.75×", "1×", "1.5×", "2×", "3×"];
+  const scaleValues = [0.5, 0.75, 1, 1.5, 2, 3];
+  const currentScaleLabel = scaleLabels[scaleValues.indexOf(scale[0])] || `${scale[0]}×`;
+
   return (
     <div className="mt-12 border border-border rounded-lg overflow-hidden">
       <div className="p-4 md:p-6 bg-card border-b border-border">
-        <h4 className="font-ui font-bold text-foreground mb-1">Interactive Texture Preview</h4>
-        <p className="text-muted-foreground text-sm">Customize opacity and background, then download as SVG.</p>
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h4 className="font-ui font-bold text-foreground mb-1">Interactive Texture Preview</h4>
+            <p className="text-muted-foreground text-sm">Customize opacity, scale and background, then download as SVG.</p>
+          </div>
+          {/* View Mode Toggle */}
+          <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
+            <button
+              onClick={() => setViewMode("preview")}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded text-sm font-ui transition-colors ${
+                viewMode === "preview"
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Grid3X3 className="w-4 h-4" />
+              Preview
+            </button>
+            <button
+              onClick={() => setViewMode("tiling")}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded text-sm font-ui transition-colors ${
+                viewMode === "tiling"
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Maximize2 className="w-4 h-4" />
+              Tiling
+            </button>
+          </div>
+        </div>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
         {/* Preview Panel */}
-        <div 
-          className="relative h-64 md:h-80 lg:h-96 transition-colors duration-300"
-          style={{ backgroundColor: bgColor.value }}
-        >
+        {viewMode === "preview" ? (
           <div 
-            className="absolute inset-0 transition-opacity duration-300"
-            style={{ backgroundImage: getPatternWithOpacity(selectedTexture.rawSvg, opacity[0]) }}
-          />
-          <div className="absolute bottom-4 left-4 right-4">
-            <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
-              {selectedTexture.name} @ {Math.round(opacity[0] * 100)}% opacity
+            className="relative h-64 md:h-80 lg:h-96 transition-colors duration-300"
+            style={{ backgroundColor: bgColor.value }}
+          >
+            <div 
+              className="absolute inset-0 transition-opacity duration-300"
+              style={{ 
+                backgroundImage: getPatternWithOpacity(selectedTexture.rawSvg, opacity[0]),
+                backgroundSize: `${scale[0] * 100}%`
+              }}
+            />
+            <div className="absolute bottom-4 left-4 right-4">
+              <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
+                {selectedTexture.name} @ {Math.round(opacity[0] * 100)}% opacity, {currentScaleLabel} scale
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          /* Tiling View - Larger area to show pattern repeat */
+          <div 
+            className="relative h-80 md:h-96 lg:h-[480px] transition-colors duration-300 overflow-hidden"
+            style={{ backgroundColor: bgColor.value }}
+          >
+            {/* Grid overlay to show tile boundaries */}
+            <div 
+              className="absolute inset-0 transition-opacity duration-300"
+              style={{ 
+                backgroundImage: getPatternWithOpacity(selectedTexture.rawSvg, opacity[0]),
+                backgroundSize: `${scale[0] * 100}%`
+              }}
+            />
+            {/* Tile grid indicator */}
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `linear-gradient(to right, ${bgColor.textLight ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'} 1px, transparent 1px),
+                                  linear-gradient(to bottom, ${bgColor.textLight ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'} 1px, transparent 1px)`,
+                backgroundSize: `${scale[0] * 100}% ${scale[0] * 100}%`
+              }}
+            />
+            {/* Info overlay */}
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+              <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
+                Tiling Preview — Shows how pattern repeats across surfaces
+              </div>
+            </div>
+            <div className="absolute bottom-4 left-4 right-4">
+              <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
+                {selectedTexture.name} @ {Math.round(opacity[0] * 100)}% opacity, {currentScaleLabel} scale
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Controls Panel */}
         <div className="p-4 md:p-6 bg-muted/30 space-y-6">
@@ -227,6 +303,32 @@ const TexturePreview = () => {
               <span className="text-xs text-muted-foreground">2%</span>
               <span className="text-xs text-muted-foreground">40%</span>
             </div>
+          </div>
+
+          {/* Scale Control */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="label-tech-sm text-primary">PATTERN SCALE</span>
+              <span className="font-data text-sm text-foreground">{currentScaleLabel}</span>
+            </div>
+            <div className="flex gap-2">
+              {scaleValues.map((s, idx) => (
+                <button
+                  key={s}
+                  onClick={() => setScale([s])}
+                  className={`flex-1 py-2 rounded border text-xs font-data transition-all ${
+                    scale[0] === s
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border bg-card text-muted-foreground hover:border-primary/50"
+                  }`}
+                >
+                  {scaleLabels[idx]}
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              Smaller scales create denser patterns; larger scales create more open textures.
+            </p>
           </div>
 
           {/* Background Color Selection */}
