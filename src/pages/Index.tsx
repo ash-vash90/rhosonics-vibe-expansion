@@ -131,8 +131,10 @@ const SectionHeader = ({
     </div>;
 };
 const Index = () => {
+  const heroRef = useRef<HTMLElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
   const heroLogoRef = useRef<AnimatedLogoRef>(null);
+  const mainContentRef = useRef<HTMLDivElement>(null);
 
   // Hero entrance animations
   useEffect(() => {
@@ -244,6 +246,51 @@ const Index = () => {
     return () => ctx.revert();
   }, []);
 
+  // Scroll-triggered fade transition from hero to main content
+  useEffect(() => {
+    const heroSection = heroRef.current;
+    const mainContent = mainContentRef.current;
+    if (!heroSection || !mainContent) return;
+
+    const ctx = gsap.context(() => {
+      // Hero fades out and moves up slightly as you scroll past it
+      gsap.to(heroSection, {
+        opacity: 0.3,
+        y: -50,
+        scale: 0.98,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroSection,
+          start: "bottom bottom",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+      });
+
+      // Main content fades in as hero exits
+      gsap.fromTo(
+        mainContent,
+        {
+          opacity: 0,
+          y: 60,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: mainContent,
+            start: "top 95%",
+            end: "top 60%",
+            scrub: 0.3,
+          },
+        }
+      );
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const scrollToContent = () => {
     document.getElementById("about")?.scrollIntoView({
       behavior: "smooth",
@@ -255,7 +302,7 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════════
           HERO — BRAND SYSTEM INTRODUCTION (Full-width, centered)
        ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-[80vh] flex items-center justify-center">
+      <section ref={heroRef} className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-[80vh] flex items-center justify-center">
         {/* Subtle gradient overlay */}
         <div 
           className="absolute inset-0 opacity-[0.08]"
@@ -320,7 +367,7 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════════
           MAIN CONTENT WITH SIDEBAR
        ═══════════════════════════════════════════════════════════════ */}
-      <div className="flex">
+      <div ref={mainContentRef} className="flex">
         {/* Left Navigation Sidebar */}
         <Navigation />
 
