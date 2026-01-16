@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const MotionDesign = () => {
   const logoRef = useRef<AnimatedLogoRef>(null);
-  const textRevealRef = useRef<HTMLSpanElement>(null);
+  const logoWhiteRef = useRef<AnimatedLogoRef>(null);
   const waveBarsRef = useRef<HTMLDivElement>(null);
   const dataPulseRef = useRef<HTMLDivElement>(null);
   const staggerCardsRef = useRef<HTMLDivElement>(null);
@@ -20,13 +20,8 @@ export const MotionDesign = () => {
     logoRef.current?.play();
   };
 
-  const playTextReveal = () => {
-    const el = textRevealRef.current;
-    if (!el) return;
-    gsap.fromTo(el,
-      { opacity: 0, filter: "blur(8px)", y: 10 },
-      { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.8, ease: "power3.out" }
-    );
+  const playWhiteLogoAnimation = () => {
+    logoWhiteRef.current?.play();
   };
 
   const playWavePropagation = () => {
@@ -193,28 +188,25 @@ export const MotionDesign = () => {
           </div>
         </div>
 
-        {/* Text Reveal */}
+        {/* White Logo Variant */}
         <div className="bg-background p-8">
           <div className="flex justify-between items-start mb-8">
             <div>
               <span className="label-tech text-primary mb-2 block">02</span>
-              <h4 className="font-ui font-bold text-xl text-foreground">Text Reveal</h4>
-              <p className="text-sm text-muted-foreground">Blur to clear transition</p>
+              <h4 className="font-ui font-bold text-xl text-foreground">Boot Sequence (White)</h4>
+              <p className="text-sm text-muted-foreground">Logo on dark backgrounds</p>
             </div>
             <button 
-              onClick={playTextReveal}
+              onClick={playWhiteLogoAnimation}
               className="label-tech text-primary hover:underline border border-primary/30 px-3 py-1.5 rounded hover:bg-primary/5 transition-colors"
             >
               PLAY
             </button>
           </div>
-          <div className="h-40 bg-muted/50 rounded-lg flex items-center justify-center border border-border">
-            <span 
-              ref={textRevealRef}
-              className="font-logo text-4xl text-foreground"
-            >
-              Rhosonics
-            </span>
+          <div className="h-40 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center border border-border">
+            <div className="w-20 h-20">
+              <AnimatedLogo ref={logoWhiteRef} variant="white" startHidden />
+            </div>
           </div>
         </div>
       </div>
