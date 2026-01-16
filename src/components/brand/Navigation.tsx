@@ -106,41 +106,47 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(["00"]);
   const [activeSection, setActiveSection] = useState<string | null>("about");
-  const menuRef = useRef<HTMLElement | null>(null);
-  const navRef = useRef<HTMLElement | null>(null);
 
-  // Scroll-triggered fade in effect for sidebar
+  const mobileMenuRef = useRef<HTMLElement | null>(null);
+  const desktopNavRef = useRef<HTMLElement | null>(null);
+  const mobileNavRef = useRef<HTMLElement | null>(null);
+
+  // Scroll-triggered fade in effect for DESKTOP sidebar only (keeps layout space)
   useEffect(() => {
-    const nav = navRef.current;
+    const nav = desktopNavRef.current;
     if (!nav) return;
 
-    // Set initial state - hidden
-    gsap.set(nav, { opacity: 0, x: -20 });
+    const mm = gsap.matchMedia();
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
+    mm.add("(min-width: 1280px)", () => {
+      // Hidden (but still reserving space) before the hero is passed
+      gsap.set(nav, { autoAlpha: 0, x: -18 });
+
+      const st = ScrollTrigger.create({
         trigger: document.body,
-        start: "top -80%", // After scrolling past ~80vh (the hero)
+        start: "top -80%", // after ~80vh scroll (past hero)
         onEnter: () => {
           gsap.to(nav, {
             x: 0,
-            opacity: 1,
+            autoAlpha: 1,
             duration: 0.5,
             ease: "power3.out",
           });
         },
         onLeaveBack: () => {
           gsap.to(nav, {
-            x: -20,
-            opacity: 0,
+            x: -18,
+            autoAlpha: 0,
             duration: 0.3,
             ease: "power2.in",
           });
         },
       });
+
+      return () => st.kill();
     });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   // Scroll spy effect
@@ -180,7 +186,7 @@ export const Navigation = () => {
   // Close menu on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -225,17 +231,17 @@ export const Navigation = () => {
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Navigation Sidebar - Desktop sticky, Mobile overlay */}
+      {/* Navigation Sidebar — Mobile/Tablet drawer */}
       <nav 
         ref={(el) => {
-          navRef.current = el;
-          menuRef.current = el;
+          mobileNavRef.current = el;
+          mobileMenuRef.current = el;
         }}
         className={`
-          fixed xl:sticky top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100 
+          fixed xl:hidden top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100 
           z-50 flex-shrink-0 overflow-y-auto
-          transition-transform duration-300 ease-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}
+          transform transition-transform duration-300 ease-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         
@@ -248,10 +254,94 @@ export const Navigation = () => {
             <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
           </button>
           <button
-            className="xl:hidden text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors touch-manipulation"
+            className="text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors touch-manipulation"
             onClick={() => setIsOpen(false)}
           >
             <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Navigation Links - Collapsible sections */}
+        <div className="p-4 sm:p-6 space-y-2 overflow-y-auto">
+          {navSections.map((section) => {
+            const sectionHasActive = section.items.some(item => item.id === activeSection);
+            return (
+            <div key={section.id} className="border-b border-slate-800/50 last:border-b-0">
+              <button
+                onClick={() => toggleSection(section.id)}
+                className={`w-full flex items-center justify-between py-2.5 text-left hover:text-primary transition-colors group ${
+                  sectionHasActive ? 'text-primary' : ''
+                }`}
+              >
+                <div className={`label-tech transition-colors ${
+                  sectionHasActive ? 'text-primary' : 'text-slate-400 group-hover:text-primary'
+                }`}>
+                  <span className="text-primary">{section.id}</span>
+                  <span className="mx-2 text-slate-600">/</span>
+                  {section.label}
+                </div>
+                <ChevronDown 
+                  className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
+                    expandedSections.includes(section.id) ? "rotate-180" : ""
+                  }`} 
+                />
+              </button>
+              <div className={`overflow-hidden transition-all duration-200 ${
+                expandedSections.includes(section.id) ? "max-h-96 pb-2" : "max-h-0"
+              }`}>
+                {section.items.map((item) => {
+                  const isActive = activeSection === item.id;
+                  
+                  return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors ${
+                      isActive 
+                        ? 'text-primary bg-primary/10 border-l-2 border-primary' 
+                        : item.highlight 
+                          ? 'text-primary/70 font-medium hover:text-primary' 
+                          : 'hover:text-primary'
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight className={`w-3 h-3 transition-opacity ${
+                      isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`} />
+                  </button>
+                  );
+                })}
+              </div>
+            </div>
+            );
+          })}
+
+          {/* Version Badge */}
+          <div className="pt-4">
+            <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 rounded-md">
+              <Zap className="w-4 h-4 text-primary" />
+              <div>
+                <span className="label-tech-sm text-slate-500 block">STATUS</span>
+                <span className="text-sm text-slate-300 font-medium">System Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Navigation Sidebar — Desktop (in-flow, sticky, preserves space) */}
+      <nav
+        ref={desktopNavRef}
+        className="hidden xl:block sticky top-0 h-screen w-72 bg-rho-obsidian text-slate-100 z-20 flex-shrink-0 overflow-y-auto"
+      >
+        
+        {/* Header */}
+        <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
+          <button 
+            onClick={() => scrollToSection('about')}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          >
+            <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
           </button>
         </div>
 
