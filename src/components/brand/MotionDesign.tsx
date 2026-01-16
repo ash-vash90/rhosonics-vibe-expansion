@@ -224,13 +224,13 @@ export const MotionDesign = () => {
               PLAY
             </button>
           </div>
-          <div className="h-40 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center gap-3 border border-border">
+          <div className="h-40 bg-muted/50 rounded-lg flex items-center justify-center gap-3 border border-border">
             <div className="w-12 h-12">
-              <AnimatedLogo ref={lockupLogoRef} variant="white" startHidden />
+              <AnimatedLogo ref={lockupLogoRef} variant="gradient" startHidden />
             </div>
             <span 
               ref={lockupWordmarkRef}
-              className="font-logo text-2xl text-white tracking-wide uppercase overflow-hidden"
+              className="font-logo text-2xl text-foreground tracking-wide uppercase overflow-hidden"
             >
               {"RHOSONICS".split("").map((char, i) => (
                 <span key={i} className="lockup-char inline-block" style={{ opacity: 0 }}>
