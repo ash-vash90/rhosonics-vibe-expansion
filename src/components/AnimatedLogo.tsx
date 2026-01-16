@@ -32,7 +32,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
     const arc1Ref = useRef<SVGPathElement>(null);
     const arc2Ref = useRef<SVGPathElement>(null);
     const arc3Ref = useRef<SVGPathElement>(null);
-    const glowRef = useRef<SVGGElement>(null);
+    
     const tlRef = useRef<gsap.core.Timeline | null>(null);
 
     // Avoid global SVG id collisions when multiple logos are on the page.
@@ -59,13 +59,8 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           opacity: 0,
           scale: 0.3,
           transformOrigin: "100% 100%", // bottom-right origin
-          clearProps: "filter",
         });
       });
-      // Reset glow
-      if (withGlow && glowRef.current) {
-        gsap.set(glowRef.current, { opacity: 0 });
-      }
     };
 
     const playAnimation = (options?: AnimatedLogoPlayOptions) => {
@@ -86,23 +81,14 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
         onComplete: () => options?.onComplete?.(),
       });
 
-      // Glow animation - pulse up then settle
-      if (withGlow && glowRef.current) {
-        tl.fromTo(
-          glowRef.current,
-          { opacity: 0 },
-          { opacity: 0.8, duration: 0.3, ease: "power2.out" },
-          0
-        );
-        tl.to(
-          glowRef.current,
-          { opacity: 0.25, duration: 0.6, ease: "power2.inOut" },
-          0.4
-        );
-      }
-
       // Wave propagation — inner arc → middle → outer
+      // With glow: arcs animate in with filter, then filter fades out
       arcs.forEach((arc, i) => {
+        if (withGlow) {
+          // Apply glow filter at start of arc animation
+          gsap.set(arc, { filter: `url(#${glowFilterId})` });
+        }
+        
         tl.to(
           arc,
           {
@@ -114,6 +100,19 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           i * 0.1
         );
       });
+
+      // After wave animation completes, fade out the glow effect
+      if (withGlow) {
+        tl.add(() => {
+          arcs.forEach((arc) => {
+            gsap.to(arc, {
+              filter: "none",
+              duration: 0.5,
+              ease: "power2.inOut",
+            });
+          });
+        }, 0.5);
+      }
 
       tlRef.current = tl;
     };
@@ -178,23 +177,6 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           fill={`url(#${getGradientId()})`}
         />
 
-        {/* Energy glow layer - rendered on top */}
-        {withGlow && (
-          <g ref={glowRef} style={{ opacity: 0 }} filter={`url(#${glowFilterId})`}>
-            <path
-              d="M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z"
-              fill="#a3e635"
-            />
-            <path
-              d="M 80 34 L 80 21 A 59 59 0 0 0 21 80 L 34 80 A 46 46 0 0 1 80 34 Z"
-              fill="#a3e635"
-            />
-            <path
-              d="M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z"
-              fill="#a3e635"
-            />
-          </g>
-        )}
       </svg>
     );
   }
