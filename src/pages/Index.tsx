@@ -246,17 +246,63 @@ const Index = () => {
     return () => ctx.revert();
   }, []);
 
-  // Scroll-triggered fade transition from hero to main content
+  // Scroll-triggered fade transition and parallax effects
   useEffect(() => {
     const heroSection = heroRef.current;
     const mainContent = mainContentRef.current;
     if (!heroSection || !mainContent) return;
 
     const ctx = gsap.context(() => {
+      // Parallax effect on background elements
+      gsap.to(".hero-gradient-overlay", {
+        y: 100,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroSection,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      gsap.to(".hero-pattern", {
+        y: 150,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroSection,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      gsap.to(".hero-orb", {
+        y: 200,
+        scale: 1.2,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroSection,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      // Hero content moves slower for depth
+      gsap.to(".hero-content", {
+        y: 80,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroSection,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
       // Hero fades out and moves up slightly as you scroll past it
       gsap.to(heroSection, {
         opacity: 0.3,
-        y: -50,
         scale: 0.98,
         ease: "none",
         scrollTrigger: {
@@ -302,26 +348,26 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════════
           HERO — BRAND SYSTEM INTRODUCTION (Full-width, centered)
        ═══════════════════════════════════════════════════════════════ */}
-      <section ref={heroRef} className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-[80vh] flex items-center justify-center">
+      <section ref={heroRef} className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-screen flex items-center justify-center">
         {/* Subtle gradient overlay */}
         <div 
-          className="absolute inset-0 opacity-[0.08]"
+          className="hero-gradient-overlay absolute inset-0 opacity-[0.08]"
           style={{
             background: 'linear-gradient(135deg, transparent 0%, transparent 60%, hsl(125 50% 40% / 0.4) 100%)'
           }}
         />
         
         {/* Background pattern - very subtle */}
-        <div className="absolute inset-0 opacity-[0.04]">
+        <div className="hero-pattern absolute inset-0 opacity-[0.04]">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333993c' fill-opacity='0.5'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
           }} />
         </div>
         
         {/* Gradient orb - more subtle */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[120px]" />
+        <div className="hero-orb absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[120px]" />
         
-        <div ref={heroContentRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Logo + Wordmark */}
           <div className="hero-logo flex items-center justify-center gap-3 mb-8">
             <div className="w-10 h-10 md:w-12 md:h-12" style={{ minWidth: 40, minHeight: 40 }}>
