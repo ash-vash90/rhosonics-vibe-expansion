@@ -8,7 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const MotionDesign = () => {
   const logoRef = useRef<AnimatedLogoRef>(null);
-  const logoWhiteRef = useRef<AnimatedLogoRef>(null);
+  const lockupLogoRef = useRef<AnimatedLogoRef>(null);
+  const lockupWordmarkRef = useRef<HTMLSpanElement>(null);
   const waveBarsRef = useRef<HTMLDivElement>(null);
   const dataPulseRef = useRef<HTMLDivElement>(null);
   const staggerCardsRef = useRef<HTMLDivElement>(null);
@@ -20,8 +21,28 @@ export const MotionDesign = () => {
     logoRef.current?.play();
   };
 
-  const playWhiteLogoAnimation = () => {
-    logoWhiteRef.current?.play();
+  const playLockupAnimation = () => {
+    const wordmark = lockupWordmarkRef.current;
+    if (!wordmark) return;
+    
+    const chars = wordmark.querySelectorAll(".lockup-char");
+    
+    // Reset states
+    gsap.set(chars, { opacity: 0, x: -20, filter: "blur(8px)" });
+    
+    // Play logo first, then wordmark on complete
+    lockupLogoRef.current?.play({
+      onComplete: () => {
+        gsap.to(chars, {
+          opacity: 1,
+          x: 0,
+          filter: "blur(0px)",
+          duration: 0.3,
+          stagger: 0.03,
+          ease: "power2.out",
+        });
+      },
+    });
   };
 
   const playWavePropagation = () => {
@@ -188,25 +209,35 @@ export const MotionDesign = () => {
           </div>
         </div>
 
-        {/* White Logo Variant */}
+        {/* Lockup Sequence */}
         <div className="bg-background p-8">
           <div className="flex justify-between items-start mb-8">
             <div>
               <span className="label-tech text-primary mb-2 block">02</span>
-              <h4 className="font-ui font-bold text-xl text-foreground">Boot Sequence (White)</h4>
-              <p className="text-sm text-muted-foreground">Logo on dark backgrounds</p>
+              <h4 className="font-ui font-bold text-xl text-foreground">Lockup Sequence</h4>
+              <p className="text-sm text-muted-foreground">Logo + wordmark cascade</p>
             </div>
             <button 
-              onClick={playWhiteLogoAnimation}
+              onClick={playLockupAnimation}
               className="label-tech text-primary hover:underline border border-primary/30 px-3 py-1.5 rounded hover:bg-primary/5 transition-colors"
             >
               PLAY
             </button>
           </div>
-          <div className="h-40 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center border border-border">
-            <div className="w-20 h-20">
-              <AnimatedLogo ref={logoWhiteRef} variant="white" startHidden />
+          <div className="h-40 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center gap-3 border border-border">
+            <div className="w-12 h-12">
+              <AnimatedLogo ref={lockupLogoRef} variant="white" startHidden />
             </div>
+            <span 
+              ref={lockupWordmarkRef}
+              className="font-logo text-2xl text-white tracking-wide uppercase overflow-hidden"
+            >
+              {"RHOSONICS".split("").map((char, i) => (
+                <span key={i} className="lockup-char inline-block" style={{ opacity: 0 }}>
+                  {char}
+                </span>
+              ))}
+            </span>
           </div>
         </div>
       </div>
