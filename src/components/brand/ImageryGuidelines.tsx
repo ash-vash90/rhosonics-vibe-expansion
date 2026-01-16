@@ -1,4 +1,20 @@
+import { useState, useRef } from "react";
 import { BrandCallout } from "./BrandCallout";
+import { Slider } from "@/components/ui/slider";
+import { Download, Check } from "lucide-react";
+
+// Rhosonics approved background colors for texture preview
+const approvedBackgrounds = [
+  { name: "Obsidian", value: "#111522", textLight: true },
+  { name: "Slate 900", value: "#0f172a", textLight: true },
+  { name: "Slate 800", value: "#1e293b", textLight: true },
+  { name: "Slate 700", value: "#334155", textLight: true },
+  { name: "White", value: "#ffffff", textLight: false },
+  { name: "Slate 50", value: "#f8fafc", textLight: false },
+  { name: "Slate 100", value: "#f1f5f9", textLight: false },
+  { name: "Mineral Surface", value: "#eae8de", textLight: false },
+  { name: "Eco Surface", value: "#f0faf1", textLight: false },
+];
 
 // Texture pattern definitions - all patterns tile seamlessly with refined, professional designs
 const textures = [
@@ -7,6 +23,7 @@ const textures = [
     description: "Primary brand pattern. Structured crosses evoke precision calibration points.",
     usage: "Hero backgrounds, section headers, marketing materials",
     pattern: `url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 0v6h2V0h-2zm0 26v6h2v-6h-2zM0 15v2h6v-2H0zm26 0v2h6v-2h-6z' fill='%2333993c' fill-opacity='.12'/%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M15 0v6h2V0h-2zm0 26v6h2v-6h-2zM0 15v2h6v-2H0zm26 0v2h6v-2h-6z" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/></svg>`,
     bgClass: "bg-rho-obsidian",
     opacity: "opacity-100",
     category: "brand",
@@ -16,6 +33,7 @@ const textures = [
     description: "Concentric rings representing SDM wave propagation. Our core technology signature.",
     usage: "Product pages, technology sections, SDM feature highlights",
     pattern: `url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2333993c'%3E%3Ccircle cx='32' cy='32' r='8' stroke-opacity='.08' stroke-width='.5'/%3E%3Ccircle cx='32' cy='32' r='16' stroke-opacity='.1' stroke-width='.5'/%3E%3Ccircle cx='32' cy='32' r='24' stroke-opacity='.06' stroke-width='.5'/%3E%3Ccircle cx='32' cy='32' r='31' stroke-opacity='.04' stroke-width='.5'/%3E%3Ccircle cx='32' cy='32' r='2' fill='%2333993c' fill-opacity='.15' stroke='none'/%3E%3C/g%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#33993c"><circle cx="32" cy="32" r="8" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><circle cx="32" cy="32" r="16" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><circle cx="32" cy="32" r="24" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><circle cx="32" cy="32" r="31" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><circle cx="32" cy="32" r="2" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER" stroke="none"/></g></svg>`,
     bgClass: "bg-rho-obsidian",
     opacity: "opacity-100",
     category: "brand",
@@ -25,6 +43,7 @@ const textures = [
     description: "Technical measurement grid with intersection markers. Precision and systematic order.",
     usage: "Data displays, specifications, interface backgrounds",
     pattern: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpath d='M0 0h40v40H0z' stroke='%2333993c' stroke-opacity='.05' stroke-width='.5'/%3E%3Cpath d='M20 0v40M0 20h40' stroke='%2333993c' stroke-opacity='.03' stroke-width='.5'/%3E%3Ccircle cx='20' cy='20' r='1' fill='%2333993c' fill-opacity='.1'/%3E%3Ccircle cx='0' cy='0' r='.75' fill='%2333993c' fill-opacity='.08'/%3E%3Ccircle cx='40' cy='0' r='.75' fill='%2333993c' fill-opacity='.08'/%3E%3Ccircle cx='0' cy='40' r='.75' fill='%2333993c' fill-opacity='.08'/%3E%3Ccircle cx='40' cy='40' r='.75' fill='%2333993c' fill-opacity='.08'/%3E%3C/g%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M0 0h40v40H0z" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><path d="M20 0v40M0 20h40" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><circle cx="20" cy="20" r="1" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/><circle cx="0" cy="0" r=".75" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/><circle cx="40" cy="0" r=".75" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/><circle cx="0" cy="40" r=".75" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/><circle cx="40" cy="40" r=".75" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/></g></svg>`,
     bgClass: "bg-slate-900",
     opacity: "opacity-100",
     category: "brand",
@@ -34,6 +53,7 @@ const textures = [
     description: "Flowing contour lines suggesting depth mapping and geological survey data.",
     usage: "Mining applications, depth measurement, geological contexts",
     pattern: `url("data:image/svg+xml,%3Csvg width='80' height='40' viewBox='0 0 80 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2373B82E' stroke-width='.5' stroke-linecap='round'%3E%3Cpath d='M-10 30 Q10 25 30 30 Q50 35 70 30 Q90 25 110 30' stroke-opacity='.08'/%3E%3Cpath d='M-10 20 Q10 15 30 20 Q50 25 70 20 Q90 15 110 20' stroke-opacity='.12'/%3E%3Cpath d='M-10 10 Q10 5 30 10 Q50 15 70 10 Q90 5 110 10' stroke-opacity='.06'/%3E%3C/g%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="80" height="40" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#73B82E" stroke-width=".5" stroke-linecap="round"><path d="M-10 30 Q10 25 30 30 Q50 35 70 30 Q90 25 110 30" stroke-opacity="OPACITY_PLACEHOLDER"/><path d="M-10 20 Q10 15 30 20 Q50 25 70 20 Q90 15 110 20" stroke-opacity="OPACITY_PLACEHOLDER"/><path d="M-10 10 Q10 5 30 10 Q50 15 70 10 Q90 5 110 10" stroke-opacity="OPACITY_PLACEHOLDER"/></g></svg>`,
     bgClass: "bg-mineral-deep",
     opacity: "opacity-100",
     category: "brand",
@@ -43,6 +63,7 @@ const textures = [
     description: "Diamond mesh evoking 3D structural analysis and engineered frameworks.",
     usage: "Case studies, equipment diagrams, structural contexts",
     pattern: `url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 0l14 14-14 14L0 14z' fill='none' stroke='%2333993c' stroke-opacity='.08' stroke-width='.5'/%3E%3Ccircle cx='14' cy='14' r='.75' fill='%2333993c' fill-opacity='.1'/%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><path d="M14 0l14 14-14 14L0 14z" fill="none" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><circle cx="14" cy="14" r=".75" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/></svg>`,
     bgClass: "bg-rho-obsidian",
     opacity: "opacity-100",
     category: "brand",
@@ -52,6 +73,7 @@ const textures = [
     description: "Parallel curves suggesting fluid movement and slurry flow measurement.",
     usage: "Wastewater applications, flow measurement, process contexts",
     pattern: `url("data:image/svg+xml,%3Csvg width='60' height='30' viewBox='0 0 60 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2333993c' stroke-width='.5' stroke-linecap='round'%3E%3Cpath d='M0 7.5 Q15 5 30 7.5 T60 7.5' stroke-opacity='.06'/%3E%3Cpath d='M0 15 Q15 12 30 15 T60 15' stroke-opacity='.1'/%3E%3Cpath d='M0 22.5 Q15 20 30 22.5 T60 22.5' stroke-opacity='.06'/%3E%3C/g%3E%3Ccircle cx='45' cy='15' r='1' fill='%2333993c' fill-opacity='.08'/%3E%3Ccircle cx='15' cy='15' r='.75' fill='%2333993c' fill-opacity='.06'/%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="60" height="30" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#33993c" stroke-width=".5" stroke-linecap="round"><path d="M0 7.5 Q15 5 30 7.5 T60 7.5" stroke-opacity="OPACITY_PLACEHOLDER"/><path d="M0 15 Q15 12 30 15 T60 15" stroke-opacity="OPACITY_PLACEHOLDER"/><path d="M0 22.5 Q15 20 30 22.5 T60 22.5" stroke-opacity="OPACITY_PLACEHOLDER"/></g><circle cx="45" cy="15" r="1" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/><circle cx="15" cy="15" r=".75" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/></svg>`,
     bgClass: "bg-slate-800",
     opacity: "opacity-100",
     category: "brand",
@@ -62,6 +84,7 @@ const textures = [
     description: "Crystal lattice pattern with ore-like geometry. Field operations aesthetic.",
     usage: "Mining dashboards, thickener interfaces, mineral processing",
     pattern: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23ffffff' stroke-width='1' opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M60 20L30 50L0 20M30 0v10M30 60V50' stroke-dasharray='4,4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g stroke="#ffffff" stroke-width="1" opacity="OPACITY_PLACEHOLDER"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/><path d="M60 20L30 50L0 20M30 0v10M30 60V50" stroke-dasharray="4,4"/></g></g></svg>`,
     bgClass: "bg-rho-obsidian",
     opacity: "opacity-100",
     category: "industry",
@@ -71,6 +94,7 @@ const textures = [
     description: "Circuit-inspired precision grid. Clean room technology aesthetic.",
     usage: "CMP slurry monitoring, semiconductor process control, precision tech",
     pattern: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h80v80H0V0zm10 10v60h60V10H10zm5 5h50v50H15V15zm5 5v40h40V20H20z' fill='%2333993c' fill-opacity='0.02'/%3E%3Cpath d='M40 0v10M0 40h10M40 80V70M80 40H70' stroke='%2333993c' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='40' cy='40' r='2' fill='%2333993c' opacity='0.1'/%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h80v80H0V0zm10 10v60h60V10H10zm5 5h50v50H15V15zm5 5v40h40V20H20z" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/><path d="M40 0v10M0 40h10M40 80V70M80 40H70" stroke="#33993c" stroke-width="1" opacity="OPACITY_PLACEHOLDER"/><circle cx="40" cy="40" r="2" fill="#33993c" opacity="OPACITY_PLACEHOLDER"/></svg>`,
     bgClass: "bg-background",
     opacity: "opacity-100",
     category: "industry",
@@ -80,15 +104,17 @@ const textures = [
     description: "Fluid wave pattern suggesting water movement and sediment flow.",
     usage: "Dredging operations, suction density, marine applications",
     pattern: `url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%2394a3b8' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="100" height="20" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg"><path d="M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z" fill="#94a3b8" fill-opacity="OPACITY_PLACEHOLDER" fill-rule="evenodd"/></svg>`,
     bgClass: "bg-slate-100",
     opacity: "opacity-100",
     category: "industry",
   },
   {
-    name: "Terrain Ore",
-    description: "Rough polygonal shapes suggesting rock strata and ore deposits.",
-    usage: "Mining hero sections, geological contexts, field operations",
-    pattern: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%238B8F88' stroke-width='0.5' opacity='0.15'%3E%3Cpolygon points='30,10 45,25 35,40 15,35 10,20'/%3E%3Cpolygon points='80,30 100,40 95,60 75,65 65,50'/%3E%3Cpolygon points='40,70 55,75 60,95 45,105 30,90'/%3E%3Cpolygon points='90,80 110,85 105,105 85,110 80,95'/%3E%3C/g%3E%3Cg fill='%238B8F88' opacity='0.08'%3E%3Ccircle cx='25' cy='25' r='2'/%3E%3Ccircle cx='85' cy='48' r='1.5'/%3E%3Ccircle cx='48' cy='85' r='2.5'/%3E%3Ccircle cx='95' cy='95' r='1.8'/%3E%3C/g%3E%3C/svg%3E")`,
+    name: "Flat Panel Display",
+    description: "Pixel grid matrix suggesting LCD/LED display technology and precision monitoring.",
+    usage: "HMI interfaces, display dashboards, control room applications",
+    pattern: `url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Crect x='2' y='2' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.08' stroke-width='.5'/%3E%3Crect x='18' y='2' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.06' stroke-width='.5'/%3E%3Crect x='34' y='2' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.08' stroke-width='.5'/%3E%3Crect x='2' y='18' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.06' stroke-width='.5'/%3E%3Crect x='18' y='18' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.1' stroke-width='.5'/%3E%3Crect x='34' y='18' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.06' stroke-width='.5'/%3E%3Crect x='2' y='34' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.08' stroke-width='.5'/%3E%3Crect x='18' y='34' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.06' stroke-width='.5'/%3E%3Crect x='34' y='34' width='10' height='10' rx='1' stroke='%2333993c' stroke-opacity='.08' stroke-width='.5'/%3E%3Ccircle cx='7' cy='7' r='2' fill='%2333993c' fill-opacity='.06'/%3E%3Ccircle cx='23' cy='23' r='2.5' fill='%2333993c' fill-opacity='.1'/%3E%3Ccircle cx='39' cy='39' r='2' fill='%2333993c' fill-opacity='.06'/%3E%3C/g%3E%3C/svg%3E")`,
+    rawSvg: `<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none"><rect x="2" y="2" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><rect x="18" y="2" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><rect x="34" y="2" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><rect x="2" y="18" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><rect x="18" y="18" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><rect x="34" y="18" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><rect x="2" y="34" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><rect x="18" y="34" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><rect x="34" y="34" width="10" height="10" rx="1" stroke="#33993c" stroke-opacity="OPACITY_PLACEHOLDER" stroke-width=".5"/><circle cx="7" cy="7" r="2" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/><circle cx="23" cy="23" r="2.5" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/><circle cx="39" cy="39" r="2" fill="#33993c" fill-opacity="OPACITY_PLACEHOLDER"/></g></svg>`,
     bgClass: "bg-rho-obsidian",
     opacity: "opacity-100",
     category: "industry",
@@ -98,6 +124,154 @@ const textures = [
 // Group textures by category
 const brandTextures = textures.filter(t => t.category === "brand");
 const industryTextures = textures.filter(t => t.category === "industry");
+
+// Interactive Texture Preview Component
+const TexturePreview = () => {
+  const [selectedTexture, setSelectedTexture] = useState(textures[0]);
+  const [opacity, setOpacity] = useState([0.12]);
+  const [bgColor, setBgColor] = useState(approvedBackgrounds[0]);
+  const [copied, setCopied] = useState(false);
+  const downloadRef = useRef<HTMLAnchorElement>(null);
+
+  const generateSvgWithOpacity = (rawSvg: string, op: number) => {
+    return rawSvg.replace(/OPACITY_PLACEHOLDER/g, op.toString());
+  };
+
+  const handleDownload = () => {
+    const svgContent = generateSvgWithOpacity(selectedTexture.rawSvg, opacity[0]);
+    const blob = new Blob([svgContent], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    
+    if (downloadRef.current) {
+      downloadRef.current.href = url;
+      downloadRef.current.download = `${selectedTexture.name.toLowerCase().replace(/\s+/g, "-")}-pattern.svg`;
+      downloadRef.current.click();
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  const handleCopySvg = () => {
+    const svgContent = generateSvgWithOpacity(selectedTexture.rawSvg, opacity[0]);
+    navigator.clipboard.writeText(svgContent);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const getPatternWithOpacity = (rawSvg: string, op: number) => {
+    const svgWithOpacity = generateSvgWithOpacity(rawSvg, op);
+    const encoded = encodeURIComponent(svgWithOpacity);
+    return `url("data:image/svg+xml,${encoded}")`;
+  };
+
+  return (
+    <div className="mt-12 border border-border rounded-lg overflow-hidden">
+      <div className="p-4 md:p-6 bg-card border-b border-border">
+        <h4 className="font-ui font-bold text-foreground mb-1">Interactive Texture Preview</h4>
+        <p className="text-muted-foreground text-sm">Customize opacity and background, then download as SVG.</p>
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+        {/* Preview Panel */}
+        <div 
+          className="relative h-64 md:h-80 lg:h-96 transition-colors duration-300"
+          style={{ backgroundColor: bgColor.value }}
+        >
+          <div 
+            className="absolute inset-0 transition-opacity duration-300"
+            style={{ backgroundImage: getPatternWithOpacity(selectedTexture.rawSvg, opacity[0]) }}
+          />
+          <div className="absolute bottom-4 left-4 right-4">
+            <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
+              {selectedTexture.name} @ {Math.round(opacity[0] * 100)}% opacity
+            </div>
+          </div>
+        </div>
+
+        {/* Controls Panel */}
+        <div className="p-4 md:p-6 bg-muted/30 space-y-6">
+          {/* Texture Selection */}
+          <div>
+            <span className="label-tech-sm text-primary block mb-3">SELECT TEXTURE</span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {textures.map((texture) => (
+                <button
+                  key={texture.name}
+                  onClick={() => setSelectedTexture(texture)}
+                  className={`p-2 text-left rounded border transition-all text-xs font-ui ${
+                    selectedTexture.name === texture.name
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border bg-card text-muted-foreground hover:border-primary/50"
+                  }`}
+                >
+                  {texture.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Opacity Control */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="label-tech-sm text-primary">OPACITY</span>
+              <span className="font-data text-sm text-foreground">{Math.round(opacity[0] * 100)}%</span>
+            </div>
+            <Slider
+              value={opacity}
+              onValueChange={setOpacity}
+              min={0.02}
+              max={0.4}
+              step={0.01}
+              className="w-full"
+            />
+            <div className="flex justify-between mt-1">
+              <span className="text-xs text-muted-foreground">2%</span>
+              <span className="text-xs text-muted-foreground">40%</span>
+            </div>
+          </div>
+
+          {/* Background Color Selection */}
+          <div>
+            <span className="label-tech-sm text-primary block mb-3">BACKGROUND COLOR</span>
+            <div className="flex flex-wrap gap-2">
+              {approvedBackgrounds.map((bg) => (
+                <button
+                  key={bg.name}
+                  onClick={() => setBgColor(bg)}
+                  className={`w-8 h-8 rounded border-2 transition-all ${
+                    bgColor.name === bg.name
+                      ? "border-primary scale-110 ring-2 ring-primary/30"
+                      : "border-transparent hover:scale-105"
+                  }`}
+                  style={{ backgroundColor: bg.value }}
+                  title={bg.name}
+                />
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">Selected: {bgColor.name}</p>
+          </div>
+
+          {/* Download Actions */}
+          <div className="flex gap-3 pt-2">
+            <button
+              onClick={handleDownload}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded font-ui text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              Download SVG
+            </button>
+            <button
+              onClick={handleCopySvg}
+              className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border bg-card text-foreground rounded font-ui text-sm font-medium hover:bg-muted transition-colors"
+            >
+              {copied ? <Check className="w-4 h-4 text-primary" /> : "Copy SVG"}
+            </button>
+            <a ref={downloadRef} className="hidden" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const ImageryGuidelines = () => {
   return (
@@ -243,6 +417,9 @@ export const ImageryGuidelines = () => {
             </div>
           </div>
         </div>
+
+        {/* Interactive Texture Preview */}
+        <TexturePreview />
       </div>
 
       {/* Do's and Don'ts - Side by side comparison */}
