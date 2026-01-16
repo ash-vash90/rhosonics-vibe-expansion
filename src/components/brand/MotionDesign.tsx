@@ -84,18 +84,15 @@ export const MotionDesign = () => {
   const playCounterAnimation = () => {
     const el = counterRef.current;
     if (!el) return;
-    gsap.fromTo(el,
-      { innerText: 0 },
-      { 
-        innerText: 98.7, 
-        duration: 1.5, 
-        ease: "power2.out",
-        snap: { innerText: 0.1 },
-        onUpdate: function() {
-          el.textContent = this.targets()[0].innerText.toFixed(1);
-        }
+    const obj = { value: 0 };
+    gsap.to(obj, {
+      value: 98.7,
+      duration: 1.5,
+      ease: "power2.out",
+      onUpdate: () => {
+        el.textContent = obj.value.toFixed(1);
       }
-    );
+    });
   };
 
   const playProgressBar = () => {
