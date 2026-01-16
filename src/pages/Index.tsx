@@ -27,6 +27,7 @@ const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
 const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
 const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
+const HeroParticles = lazy(() => import("@/components/brand/HeroParticles"));
 
 
 const SectionLoader = () => <div className="py-16 flex justify-center">
@@ -349,6 +350,11 @@ const Index = () => {
           HERO — BRAND SYSTEM INTRODUCTION (Full-width, centered)
        ═══════════════════════════════════════════════════════════════ */}
       <section ref={heroRef} className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-screen flex items-center justify-center">
+        {/* Floating particles */}
+        <Suspense fallback={null}>
+          <HeroParticles />
+        </Suspense>
+        
         {/* Subtle gradient overlay */}
         <div 
           className="hero-gradient-overlay absolute inset-0 opacity-[0.08]"
