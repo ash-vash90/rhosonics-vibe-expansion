@@ -224,8 +224,9 @@ export const MotionDesign = () => {
               PLAY
             </button>
           </div>
+          {/* 150% ratio: text-2xl (24px) → 36px icon */}
           <div className="h-40 bg-muted/50 rounded-lg flex items-center justify-center gap-3 border border-border">
-            <div className="w-12 h-12">
+            <div className="w-9 h-9">
               <AnimatedLogo ref={lockupLogoRef} variant="gradient" startHidden withGlow />
             </div>
             <span 
