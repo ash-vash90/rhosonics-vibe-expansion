@@ -255,7 +255,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* ═══════════════════════════════════════════════════════════════
           HERO — BRAND SYSTEM INTRODUCTION (Full-width, centered)
        ═══════════════════════════════════════════════════════════════ */}
@@ -334,7 +334,7 @@ const Index = () => {
         <Navigation />
 
         {/* Main Content Area */}
-        <main className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1400px] mx-auto">
+        <main className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1400px] mx-auto overflow-x-hidden">
         
         {/* ─────────────────────────────────────────────────────────────
             SECTION 00: ABOUT THIS SYSTEM
