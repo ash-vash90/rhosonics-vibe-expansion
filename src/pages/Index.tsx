@@ -287,7 +287,7 @@ const Index = () => {
           {/* Logo + Wordmark */}
           <div className="hero-logo flex items-center justify-center gap-3 lg:gap-5 mb-10 lg:mb-12">
             <div className="w-11 h-11 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18" style={{ minWidth: 44, minHeight: 44 }}>
-              <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden />
+              <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
             <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl xl:text-4xl">
               {"RHOSONICS".split("").map((char, i) => (
