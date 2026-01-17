@@ -285,10 +285,9 @@ const Index = () => {
         <div className="hero-orb absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[120px]" />
         
         <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Logo + Wordmark - Icon is 220% of text cap-height */}
-          <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-10 lg:mb-12">
-            {/* Icon sizes: text-xl(20px)→31px, text-2xl(24px)→37px, text-3xl(30px)→46px, text-4xl(36px)→55px */}
-            <div className="w-[31px] h-[31px] md:w-[37px] md:h-[37px] lg:w-[46px] lg:h-[46px] xl:w-[55px] xl:h-[55px]">
+          {/* Logo + Wordmark - Icon is 220% of text cap-height using CSS cap unit */}
+          <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-10 lg:mb-12 text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+            <div style={{ width: '2.2cap', height: '2.2cap' }}>
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
             <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl xl:text-4xl">
