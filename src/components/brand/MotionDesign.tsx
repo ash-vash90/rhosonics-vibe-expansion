@@ -226,7 +226,7 @@ export const MotionDesign = () => {
           </div>
           <div className="h-40 bg-muted/50 rounded-lg flex items-center justify-center gap-3 border border-border">
             <div className="w-12 h-12">
-              <AnimatedLogo ref={lockupLogoRef} variant="gradient" startHidden />
+              <AnimatedLogo ref={lockupLogoRef} variant="gradient" startHidden withGlow />
             </div>
             <span 
               ref={lockupWordmarkRef}
