@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X, Zap, ChevronRight, ChevronDown } from "@/lib/icons";
+import { RhosonicsLogo } from "../RhosonicsLogo";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -251,6 +252,10 @@ export const Navigation = () => {
             onClick={() => scrollToSection('about')}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
+            {/* 150% ratio: text-xs(12px)→18px icon */}
+            <div className="w-[18px] h-[18px]">
+              <RhosonicsLogo variant="gradient" />
+            </div>
             <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
           </button>
           <button
@@ -341,6 +346,10 @@ export const Navigation = () => {
             onClick={() => scrollToSection('about')}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
+            {/* 150% ratio: text-xs(12px)→18px icon */}
+            <div className="w-[18px] h-[18px]">
+              <RhosonicsLogo variant="gradient" />
+            </div>
             <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
           </button>
         </div>
@@ -419,6 +428,10 @@ export const Navigation = () => {
           onClick={() => scrollToSection('about')}
           className="flex items-center gap-2 touch-manipulation"
         >
+          {/* 150% ratio: text-xs(12px)→18px icon */}
+          <div className="w-[18px] h-[18px]">
+            <RhosonicsLogo variant="gradient" />
+          </div>
           <span className="font-data text-xs text-slate-400 tracking-widest">BRAND SYSTEM</span>
         </button>
         <div className="flex items-center gap-2">

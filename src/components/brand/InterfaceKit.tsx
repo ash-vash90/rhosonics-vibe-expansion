@@ -112,13 +112,13 @@ export const InterfaceKit = () => {
               Branded Interface
             </span>
             <div className="overflow-hidden rounded-lg shadow-elevated border border-border">
-              {/* Logo lockup: 24/18px (Small UI, nav) */}
+              {/* Logo lockup: 150% ratio - text-lg(18px)→27px icon */}
               <div className="bg-rho-obsidian text-slate-100 p-4 flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <div style={{ width: 24, height: 24 }}>
+                  <div className="w-[27px] h-[27px]">
                     <RhosonicsLogo variant="white" />
                   </div>
-                  <span className="font-logo tracking-wide uppercase pt-0.5" style={{ fontSize: 18 }}>RHOSONICS</span>
+                  <span className="font-logo tracking-wide uppercase text-lg pt-0.5">RHOSONICS</span>
                 </div>
                 <Menu className="w-5 h-5 text-slate-400" />
               </div>
