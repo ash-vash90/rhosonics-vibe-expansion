@@ -285,10 +285,10 @@ const Index = () => {
         <div className="hero-orb absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[120px]" />
         
         <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Logo + Wordmark - Icon is 130% of text cap-height */}
+          {/* Logo + Wordmark - Icon is 160% of text cap-height */}
           <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-10 lg:mb-12">
-            {/* Icon sizes: text-xl(20px)→18px, text-2xl(24px)→22px, text-3xl(30px)→27px, text-4xl(36px)→33px */}
-            <div className="w-[18px] h-[18px] md:w-[22px] md:h-[22px] lg:w-[27px] lg:h-[27px] xl:w-[33px] xl:h-[33px]">
+            {/* Icon sizes: text-xl(20px)→22px, text-2xl(24px)→27px, text-3xl(30px)→34px, text-4xl(36px)→40px */}
+            <div className="w-[22px] h-[22px] md:w-[27px] md:h-[27px] lg:w-[34px] lg:h-[34px] xl:w-[40px] xl:h-[40px]">
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
             <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl xl:text-4xl">
