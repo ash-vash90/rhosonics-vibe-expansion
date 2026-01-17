@@ -162,19 +162,9 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           </linearGradient>
           {withGlow && (
             <filter id={glowFilterId} x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="5" result="blur" />
-              <feColorMatrix
-                in="blur"
-                type="matrix"
-                values="1 0 0 0 0.2
-                        0 1 0 0 0.4
-                        0 0 1 0 0
-                        0 0 0 1.5 0"
-                result="glow"
-              />
+              <feGaussianBlur stdDeviation="3" result="blur" />
               <feMerge>
-                <feMergeNode in="glow" />
-                <feMergeNode in="glow" />
+                <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
