@@ -89,16 +89,31 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           gsap.set(arc, { filter: `url(#${glowFilterId})` });
         }
         
+        const isOutermost = i === arcs.length - 1;
+        
         tl.to(
           arc,
           {
             opacity: 1,
-            scale: 1,
+            scale: isOutermost && withGlow ? 1.08 : 1, // Overshoot on final wave
             duration: 0.35 + i * 0.03,
             ease: "sine.out",
           },
           i * 0.1
         );
+        
+        // Final wave energy burst - scale back and remove glow with punch
+        if (isOutermost && withGlow) {
+          tl.to(
+            arc,
+            {
+              scale: 1,
+              duration: 0.25,
+              ease: "back.out(2)",
+            },
+            0.45
+          );
+        }
       });
 
       // After wave animation completes, fade out the glow effect
@@ -111,7 +126,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
               ease: "power2.inOut",
             });
           });
-        }, 0.5);
+        }, 0.55);
       }
 
       tlRef.current = tl;
