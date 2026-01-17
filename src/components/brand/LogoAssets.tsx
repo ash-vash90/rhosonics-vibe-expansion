@@ -57,14 +57,14 @@ export const LogoAssets = () => {
       bgClass = "bg-slate-900";
     }
 
-    // Optical sizing: 44px icon = 32px text (0.73 ratio for base/default preview)
+    // Optical sizing: 150% ratio - text-2xl(24px) → 36px icon
     return (
       <div className={`${bgClass} rounded-lg p-8 flex items-center justify-center min-h-[120px] aspect-square`}>
         {variant.hasText ? (
           <div className="flex items-center gap-3">
             <RhosonicsLogo 
               variant={variant.iconFill === "white" ? "white" : "gradient"} 
-              className="w-11 h-11" 
+              className="w-9 h-9" 
             />
             <span 
               className="font-logo text-2xl font-semibold tracking-wide"
