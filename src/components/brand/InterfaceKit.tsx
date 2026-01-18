@@ -3,6 +3,7 @@ import { ArrowRight, Menu, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandCallout } from "./BrandCallout";
 import { SDMEcoDevice } from "./SDMEcoDevice";
+import { ChamferedTabs, ChamferedTabsList, ChamferedTabsTrigger } from "@/components/ui/chamfered-tabs";
 
 export const InterfaceKit = () => {
   return (
@@ -124,10 +125,71 @@ export const InterfaceKit = () => {
         </div>
       </div>
 
-      {/* Data Cards Showcase */}
+      {/* Segmented Controls Showcase */}
       <div>
         <div className="flex items-center gap-4 mb-8">
           <span className="font-data text-sm text-primary uppercase tracking-wider">02</span>
+          <h3 className="font-ui text-2xl font-semibold text-foreground">Segmented Controls</h3>
+        </div>
+        
+        <div className="space-y-12">
+          {/* Obsidian Variant */}
+          <div className="flex flex-col md:flex-row md:items-center gap-6 pb-8 border-b border-border">
+            <div className="md:w-40 shrink-0">
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Obsidian</span>
+              <p className="text-xs text-muted-foreground mt-1">Dark industrial</p>
+            </div>
+            <ChamferedTabs variant="obsidian" defaultValue="live">
+              <ChamferedTabsList>
+                <ChamferedTabsTrigger value="live">Live</ChamferedTabsTrigger>
+                <ChamferedTabsTrigger value="historical">Historical</ChamferedTabsTrigger>
+                <ChamferedTabsTrigger value="settings">Settings</ChamferedTabsTrigger>
+              </ChamferedTabsList>
+            </ChamferedTabs>
+          </div>
+
+          {/* Primary Variant */}
+          <div className="flex flex-col md:flex-row md:items-center gap-6 pb-8 border-b border-border">
+            <div className="md:w-40 shrink-0">
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Primary</span>
+              <p className="text-xs text-muted-foreground mt-1">Brand accent</p>
+            </div>
+            <ChamferedTabs variant="primary" defaultValue="density">
+              <ChamferedTabsList>
+                <ChamferedTabsTrigger value="density">Density</ChamferedTabsTrigger>
+                <ChamferedTabsTrigger value="velocity">Velocity</ChamferedTabsTrigger>
+                <ChamferedTabsTrigger value="temperature">Temp</ChamferedTabsTrigger>
+              </ChamferedTabsList>
+            </ChamferedTabs>
+          </div>
+
+          {/* Outline Variant */}
+          <div className="flex flex-col md:flex-row md:items-center gap-6">
+            <div className="md:w-40 shrink-0">
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Outline</span>
+              <p className="text-xs text-muted-foreground mt-1">Minimal border</p>
+            </div>
+            <ChamferedTabs variant="outline" defaultValue="day">
+              <ChamferedTabsList>
+                <ChamferedTabsTrigger value="hour">1H</ChamferedTabsTrigger>
+                <ChamferedTabsTrigger value="day">24H</ChamferedTabsTrigger>
+                <ChamferedTabsTrigger value="week">7D</ChamferedTabsTrigger>
+                <ChamferedTabsTrigger value="month">30D</ChamferedTabsTrigger>
+              </ChamferedTabsList>
+            </ChamferedTabs>
+          </div>
+        </div>
+
+        <p className="text-muted-foreground max-w-xl mt-8">
+          Industrial segmented controls for mode switching. Uses JetBrains Mono uppercase 
+          with chamfered edges matching the button system.
+        </p>
+      </div>
+
+      {/* Data Cards Showcase */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <span className="font-data text-sm text-primary uppercase tracking-wider">03</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Data Cards</h3>
         </div>
         
@@ -194,7 +256,7 @@ export const InterfaceKit = () => {
       {/* Badges Showcase */}
       <div>
         <div className="flex items-center gap-4 mb-8">
-          <span className="font-data text-sm text-primary uppercase tracking-wider">03</span>
+          <span className="font-data text-sm text-primary uppercase tracking-wider">04</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Status Badges</h3>
         </div>
 
@@ -225,7 +287,7 @@ export const InterfaceKit = () => {
       {/* Callouts Showcase */}
       <div>
         <div className="flex items-center gap-4 mb-8">
-          <span className="font-data text-sm text-primary uppercase tracking-wider">04</span>
+          <span className="font-data text-sm text-primary uppercase tracking-wider">05</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Callouts</h3>
         </div>
 
