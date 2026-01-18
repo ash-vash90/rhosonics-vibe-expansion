@@ -2,6 +2,8 @@ import { RhosonicsLogo } from "../RhosonicsLogo";
 import { ArrowRight, Menu, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandCallout } from "./BrandCallout";
+import { SDMEcoDevice } from "./SDMEcoDevice";
+
 export const InterfaceKit = () => {
   return (
     <section id="components" className="space-y-16 pt-16">
@@ -13,6 +15,56 @@ export const InterfaceKit = () => {
           Every component prioritizes clarity over decoration — the primary measurement 
           must be readable at a glance, from a distance.
         </p>
+      </div>
+
+      {/* SDM ECO Device Showcase */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <span className="font-data text-sm text-primary uppercase tracking-wider">00</span>
+          <h3 className="font-ui text-2xl font-semibold text-foreground">SDM ECO Device</h3>
+        </div>
+        
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <SDMEcoDevice />
+          </div>
+          <div className="space-y-6">
+            <p className="text-muted-foreground leading-relaxed">
+              The SDM ECO hardware interface demonstrates our core design principles in physical form. 
+              The display prioritizes <span className="text-foreground font-medium">data legibility</span> with 
+              clear hierarchy between primary and secondary measurements.
+            </p>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-1">
+                  <span className="font-data text-xs text-primary">01</span>
+                </div>
+                <div>
+                  <h4 className="font-ui font-semibold text-foreground mb-1">Status Bar</h4>
+                  <p className="text-sm text-muted-foreground">Brand gradient with timestamp and menu access</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-1">
+                  <span className="font-data text-xs text-primary">02</span>
+                </div>
+                <div>
+                  <h4 className="font-ui font-semibold text-foreground mb-1">Data Display</h4>
+                  <p className="text-sm text-muted-foreground">Large numerals readable from distance, JetBrains Mono for precision</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-1">
+                  <span className="font-data text-xs text-primary">03</span>
+                </div>
+                <div>
+                  <h4 className="font-ui font-semibold text-foreground mb-1">Physical Controls</h4>
+                  <p className="text-sm text-muted-foreground">Tactile buttons with clear directional hierarchy and confirm action</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Buttons Showcase */}
