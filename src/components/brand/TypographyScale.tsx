@@ -321,6 +321,60 @@ export const TypographyScale = () => {
         </div>
       </div>
 
+      {/* Typography Usage Examples - Visual Do/Don't */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Typography Usage</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
+          <div className="bg-background p-8">
+            <div className="flex items-center gap-2 mb-6">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs bg-primary">✓</span>
+              <span className="font-ui font-bold text-lg text-primary">Correct Usage</span>
+            </div>
+            <div className="space-y-6">
+              <div>
+                <div className="label-tech text-muted-foreground mb-2">UNBOUNDED FOR LOGO</div>
+                <div className="flex items-center gap-2 p-4 bg-slate-50 rounded border border-border">
+                  <span className="font-logo text-xl tracking-wide uppercase">RHOSONICS</span>
+                </div>
+              </div>
+              <div>
+                <div className="label-tech text-muted-foreground mb-2">JETBRAINS MONO FOR DATA</div>
+                <div className="p-4 bg-slate-50 rounded border border-border">
+                  <span className="font-data text-2xl text-foreground">1.4502</span>
+                  <span className="font-data text-sm text-muted-foreground ml-2">g/L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-background p-8">
+            <div className="flex items-center gap-2 mb-6">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs bg-destructive">✕</span>
+              <span className="font-ui font-bold text-lg text-destructive">Incorrect Usage</span>
+            </div>
+            <div className="space-y-6">
+              <div>
+                <div className="label-tech text-muted-foreground mb-2">UNBOUNDED FOR HEADINGS</div>
+                <div className="p-4 bg-error-surface rounded border border-error-border">
+                  <span className="font-logo text-xl">Product Features</span>
+                </div>
+              </div>
+              <div>
+                <div className="label-tech text-muted-foreground mb-2">SYSTEM FONTS FOR DATA</div>
+                <div className="p-4 bg-error-surface rounded border border-error-border">
+                  <span className="font-sans text-2xl text-foreground">1.4502</span>
+                  <span className="text-sm text-muted-foreground ml-2">g/L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Why this matters - subtle */}
       <div className="border-l-2 border-border pl-6 max-w-2xl">
         <p className="text-muted-foreground">
