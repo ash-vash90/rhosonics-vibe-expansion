@@ -61,6 +61,7 @@ const navSections: NavSection[] = [
     items: [
       { id: "logo-assets", label: "Logo System" },
       { id: "icon-guidelines", label: "Icon Guidelines" },
+      { id: "dos-donts", label: "Dos & Don'ts" },
     ],
   },
   {
