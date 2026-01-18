@@ -780,21 +780,44 @@ export const ImageryGuidelines = () => {
             </p>
           </div>
 
-          {/* Interactive Before / After Comparison */}
-          <div className="space-y-4">
-            <BeforeAfterSlider
-              sourceImage={treatmentBefore}
-              beforeLabel="ORIGINAL"
-              afterLabel="TREATED"
-              imageAlt="Industrial mining site field photography"
-              desaturation={0.45}
-              contrast={1.2}
-              brightness={0.95}
-            />
-            <p className="text-sm text-muted-foreground text-center">
-              Drag the slider to see the brand treatment applied in real-time
-            </p>
+          {/* Interactive Before / After Comparisons */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <BeforeAfterSlider
+                sourceImage={treatmentBefore}
+                beforeLabel="ORIGINAL"
+                afterLabel="TREATED"
+                imageAlt="Industrial mining site field photography"
+                desaturation={0.45}
+                contrast={1.2}
+                brightness={0.95}
+              />
+              <div className="flex items-center justify-between">
+                <span className="label-tech-sm text-primary">MINING</span>
+                <span className="text-xs text-muted-foreground">Warm earth tones → desaturated industrial</span>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              <BeforeAfterSlider
+                sourceImage={fieldWastewater}
+                beforeLabel="ORIGINAL"
+                afterLabel="TREATED"
+                imageAlt="Wastewater treatment facility"
+                desaturation={0.45}
+                contrast={1.2}
+                brightness={0.95}
+              />
+              <div className="flex items-center justify-between">
+                <span className="label-tech-sm text-primary">WASTEWATER</span>
+                <span className="text-xs text-muted-foreground">Cool blues → unified brand palette</span>
+              </div>
+            </div>
           </div>
+          
+          <p className="text-sm text-muted-foreground text-center">
+            Drag each slider to see the brand treatment applied in real-time — same settings, consistent results
+          </p>
 
           {/* Treatment Details Grid */}
           <div className="grid md:grid-cols-2 gap-6">
