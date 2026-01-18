@@ -224,6 +224,96 @@ const PrintedMaterials = () => {
             </div>
           </div>
         </div>
+
+        {/* Letterhead */}
+        <div className="space-y-4">
+          <div className="flex items-baseline gap-2">
+            <span className="font-data text-xs text-muted-foreground">LETTERHEAD</span>
+            <span className="font-data text-[10px] text-muted-foreground/60">A4 Portrait</span>
+          </div>
+          <div className="flex justify-center p-6 bg-muted/30 rounded-lg border border-border">
+            <div 
+              className="w-40 aspect-[210/297] bg-white rounded-sm shadow-2xl flex flex-col justify-between p-4 relative overflow-hidden"
+              style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.2)' }}
+            >
+              {/* Green top accent bar */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-brand" />
+              
+              {/* Header with logo */}
+              <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-4 h-4">
+                    <RhosonicsLogo variant="dark" />
+                  </div>
+                  <span className="font-logo tracking-wide text-slate-800 text-[7px]">RHOSONICS</span>
+                </div>
+              </div>
+              
+              {/* Body text placeholder lines */}
+              <div className="flex-1 py-6 space-y-2">
+                <div className="w-1/3 h-1 bg-slate-200 rounded-full" />
+                <div className="h-3" />
+                <div className="w-full h-0.5 bg-slate-100 rounded-full" />
+                <div className="w-full h-0.5 bg-slate-100 rounded-full" />
+                <div className="w-4/5 h-0.5 bg-slate-100 rounded-full" />
+                <div className="h-2" />
+                <div className="w-full h-0.5 bg-slate-100 rounded-full" />
+                <div className="w-full h-0.5 bg-slate-100 rounded-full" />
+                <div className="w-3/5 h-0.5 bg-slate-100 rounded-full" />
+              </div>
+              
+              {/* Footer */}
+              <div className="border-t border-slate-100 pt-2 flex justify-between items-end">
+                <div className="space-y-0.5">
+                  <p className="font-data text-[4px] text-slate-400">Rhosonics B.V.</p>
+                  <p className="font-data text-[4px] text-slate-400">Putten, Netherlands</p>
+                </div>
+                <div className="text-right space-y-0.5">
+                  <p className="font-data text-[4px] text-slate-400">info@rhosonics.com</p>
+                  <p className="font-data text-[4px] text-slate-400">rhosonics.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Envelope */}
+        <div className="space-y-4">
+          <div className="flex items-baseline gap-2">
+            <span className="font-data text-xs text-muted-foreground">ENVELOPE</span>
+            <span className="font-data text-[10px] text-muted-foreground/60">DL (220 × 110 mm)</span>
+          </div>
+          <div className="flex justify-center p-6 bg-muted/30 rounded-lg border border-border">
+            <div 
+              className="w-64 aspect-[220/110] bg-white rounded-sm shadow-2xl flex flex-col justify-between p-4 relative overflow-hidden"
+              style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.2)' }}
+            >
+              {/* Green left edge accent */}
+              <div className="absolute top-0 left-0 bottom-0 w-1 bg-brand" />
+              
+              {/* Envelope flap texture hint */}
+              <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-slate-50 to-transparent" />
+              
+              {/* Logo top left */}
+              <div className="flex items-center gap-1.5 pl-2 relative z-10">
+                <div className="w-4 h-4">
+                  <RhosonicsLogo variant="dark" />
+                </div>
+                <span className="font-logo tracking-wide text-slate-800 text-[7px]">RHOSONICS</span>
+              </div>
+              
+              {/* Address placeholder */}
+              <div className="pl-2 space-y-1 mt-auto">
+                <div className="w-20 h-0.5 bg-slate-200 rounded-full" />
+                <div className="w-24 h-0.5 bg-slate-200 rounded-full" />
+                <div className="w-16 h-0.5 bg-slate-200 rounded-full" />
+              </div>
+              
+              {/* Stamp placeholder */}
+              <div className="absolute top-4 right-4 w-6 h-7 border border-dashed border-slate-200 rounded-sm" />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Print Production Guidelines */}
