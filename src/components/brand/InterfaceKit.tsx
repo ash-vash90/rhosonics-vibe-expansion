@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { BrandCallout } from "./BrandCallout";
 import { SDMEcoDevice } from "./SDMEcoDevice";
 import { ChamferedTabs, ChamferedTabsList, ChamferedTabsTrigger } from "@/components/ui/chamfered-tabs";
+import { MetricTile } from "@/components/ui/metric-tile";
 
 export const InterfaceKit = () => {
   return (
@@ -253,10 +254,107 @@ export const InterfaceKit = () => {
         </div>
       </div>
 
-      {/* Badges Showcase */}
+      {/* Metric Tiles Showcase */}
       <div>
         <div className="flex items-center gap-4 mb-8">
           <span className="font-data text-sm text-primary uppercase tracking-wider">04</span>
+          <h3 className="font-ui text-2xl font-semibold text-foreground">Metric Tiles</h3>
+        </div>
+        
+        <div className="space-y-12">
+          {/* Obsidian Variant */}
+          <div className="flex flex-col gap-6 pb-8 border-b border-border">
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Obsidian</span>
+              <p className="text-xs text-muted-foreground mt-1">Dark industrial for dashboards</p>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <MetricTile 
+                variant="obsidian" 
+                value="1.4502" 
+                unit="g/L" 
+                label="Density" 
+                status="live" 
+              />
+              <MetricTile 
+                variant="obsidian" 
+                value="12.4" 
+                unit="%" 
+                label="Solids" 
+                status="stable" 
+              />
+              <MetricTile 
+                variant="obsidian" 
+                value="23.8" 
+                unit="°C" 
+                label="Temp" 
+              />
+            </div>
+          </div>
+
+          {/* Primary Variant */}
+          <div className="flex flex-col gap-6 pb-8 border-b border-border">
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Primary</span>
+              <p className="text-xs text-muted-foreground mt-1">Brand accent for highlights</p>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <MetricTile 
+                variant="primary" 
+                value="98.2" 
+                unit="%" 
+                label="Efficiency" 
+                status="stable" 
+              />
+              <MetricTile 
+                variant="primary" 
+                value="847" 
+                unit="m³/h" 
+                label="Flow Rate" 
+              />
+            </div>
+          </div>
+
+          {/* Outline Variant */}
+          <div className="flex flex-col gap-6">
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Outline</span>
+              <p className="text-xs text-muted-foreground mt-1">Subtle for dense layouts</p>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <MetricTile 
+                variant="outline" 
+                value="4.2" 
+                unit="bar" 
+                label="Pressure" 
+                status="warning" 
+              />
+              <MetricTile 
+                variant="outline" 
+                value="1,247" 
+                label="Cycles" 
+              />
+              <MetricTile 
+                variant="outline" 
+                value="0.02" 
+                unit="%" 
+                label="Variance" 
+                status="error" 
+              />
+            </div>
+          </div>
+        </div>
+
+        <p className="text-muted-foreground max-w-xl mt-8">
+          Compact chamfered tiles for dashboard grids. Large numerals ensure readability, 
+          optional status indicators provide at-a-glance operational context.
+        </p>
+      </div>
+
+      {/* Badges Showcase */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <span className="font-data text-sm text-primary uppercase tracking-wider">05</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Status Badges</h3>
         </div>
 
@@ -287,7 +385,7 @@ export const InterfaceKit = () => {
       {/* Callouts Showcase */}
       <div>
         <div className="flex items-center gap-4 mb-8">
-          <span className="font-data text-sm text-primary uppercase tracking-wider">05</span>
+          <span className="font-data text-sm text-primary uppercase tracking-wider">06</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Callouts</h3>
         </div>
 
