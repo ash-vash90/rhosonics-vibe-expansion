@@ -444,6 +444,7 @@ const Index = () => {
               <LogoAssets />
             </Suspense>
           </ErrorBoundary>
+
           <div id="icon-guidelines" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
             <div className="mb-8 md:mb-12">
               <div className="flex items-baseline gap-3 mb-3">
@@ -456,6 +457,22 @@ const Index = () => {
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
                 <IconGuidelines />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+
+          <div className="mt-16 md:mt-24">
+            <div className="mb-8 md:mb-12">
+              <div className="flex items-baseline gap-3 mb-3">
+                <span className="font-data text-xs text-muted-foreground">06.2</span>
+                <div className="h-px flex-1 bg-border max-w-12" />
+              </div>
+              <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Dos & Don’ts</h3>
+              <p className="text-base text-muted-foreground">Non-negotiables for consistent execution.</p>
+            </div>
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <DosAndDonts />
               </Suspense>
             </ErrorBoundary>
           </div>
@@ -472,11 +489,6 @@ const Index = () => {
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <VoiceTone />
-            </Suspense>
-          </ErrorBoundary>
-          <ErrorBoundary>
-            <Suspense fallback={<SectionLoader />}>
-              <DosAndDonts />
             </Suspense>
           </ErrorBoundary>
         </ScrollSection>
