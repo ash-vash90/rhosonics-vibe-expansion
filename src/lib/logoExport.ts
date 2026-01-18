@@ -14,15 +14,8 @@ const ARC_PATHS = [
   "M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z",
 ];
 
-// Optical size bands table (for reference)
-// Icon Size | Text Size | Ratio | Usage Context
-// 24px      | 18px      | 0.75  | Small UI, nav
-// 32px      | 23px      | 0.72  | UI headers
-// 44px      | 32px      | 0.73  | Base / default
-// 64px      | 45px      | 0.70  | Marketing UI
-// 80px      | 55px      | 0.69  | Page headers
-// 96px      | 64px      | 0.67  | Large layouts
-// 128px     | 84px      | 0.66  | Hero / signage
+// Logo lockup layout types
+export type LogoLayout = "horizontal" | "vertical" | "icon-only";
 
 // Logo lockup configurations
 export interface LogoVariant {
@@ -34,9 +27,11 @@ export interface LogoVariant {
   background?: string;
   backgroundType?: "primary" | "obsidian" | "white";
   hasText: boolean;
+  layout: LogoLayout;
 }
 
 export const logoVariants: LogoVariant[] = [
+  // Horizontal lockups
   {
     id: "gradient-dark-text",
     name: "Gradient + Dark Text",
@@ -44,6 +39,7 @@ export const logoVariants: LogoVariant[] = [
     iconFill: "gradient",
     textColor: "#1e293b",
     hasText: true,
+    layout: "horizontal",
   },
   {
     id: "gradient-white-text",
@@ -52,6 +48,7 @@ export const logoVariants: LogoVariant[] = [
     iconFill: "gradient",
     textColor: "#ffffff",
     hasText: true,
+    layout: "horizontal",
   },
   {
     id: "white-white-text",
@@ -60,7 +57,37 @@ export const logoVariants: LogoVariant[] = [
     iconFill: "white",
     textColor: "#ffffff",
     hasText: true,
+    layout: "horizontal",
   },
+  // Vertical/stacked lockups
+  {
+    id: "vertical-gradient-dark",
+    name: "Stacked Gradient + Dark",
+    description: "Vertical lockup for light backgrounds",
+    iconFill: "gradient",
+    textColor: "#1e293b",
+    hasText: true,
+    layout: "vertical",
+  },
+  {
+    id: "vertical-gradient-white",
+    name: "Stacked Gradient + White",
+    description: "Vertical lockup for dark backgrounds",
+    iconFill: "gradient",
+    textColor: "#ffffff",
+    hasText: true,
+    layout: "vertical",
+  },
+  {
+    id: "vertical-white-white",
+    name: "Stacked White + White",
+    description: "Vertical monochrome for brand",
+    iconFill: "white",
+    textColor: "#ffffff",
+    hasText: true,
+    layout: "vertical",
+  },
+  // Icon-only variants
   {
     id: "gradient-icon-only",
     name: "Gradient Icon",
@@ -68,6 +95,7 @@ export const logoVariants: LogoVariant[] = [
     iconFill: "gradient",
     textColor: "",
     hasText: false,
+    layout: "icon-only",
   },
   {
     id: "gradient-icon-white-bg",
@@ -78,6 +106,7 @@ export const logoVariants: LogoVariant[] = [
     background: "#ffffff",
     backgroundType: "white",
     hasText: false,
+    layout: "icon-only",
   },
   {
     id: "white-icon-only",
@@ -86,6 +115,7 @@ export const logoVariants: LogoVariant[] = [
     iconFill: "white",
     textColor: "",
     hasText: false,
+    layout: "icon-only",
   },
   {
     id: "white-icon-primary-bg",
@@ -96,6 +126,7 @@ export const logoVariants: LogoVariant[] = [
     background: `linear-gradient(135deg, ${GRADIENT_START}, ${GRADIENT_END})`,
     backgroundType: "primary",
     hasText: false,
+    layout: "icon-only",
   },
   {
     id: "white-icon-obsidian-bg",
@@ -106,6 +137,7 @@ export const logoVariants: LogoVariant[] = [
     background: `linear-gradient(135deg, ${OBSIDIAN_START}, ${OBSIDIAN_END})`,
     backgroundType: "obsidian",
     hasText: false,
+    layout: "icon-only",
   },
 ];
 
@@ -172,6 +204,86 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
   const wordmarkY = padding + (iconSize - textHeight) / 2; // Vertically center with icon
   
   // Use path-outlined wordmark (no font dependency)
+  const textGroup = variant.hasText 
+    ? `<g transform="translate(${wordmarkX}, ${wordmarkY}) scale(${wordmarkScale})">
+        <path d="${WORDMARK_PATHS.fullPath}" fill="${variant.textColor}"/>
+      </g>` 
+    : "";
+  
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalWidth} ${totalHeight}" width="${totalWidth}" height="${totalHeight}">
+  <defs>
+    ${gradientDef}
+    ${bgGradientDef}
+  </defs>
+  ${bgRect}
+  ${iconGroup}
+  ${textGroup}
+</svg>`;
+};
+
+// Generate vertical/stacked lockup SVG
+export const generateVerticalLockupSVG = (variant: LogoVariant): string => {
+  const iconSize = 80;
+  const textHeight = 32; // Smaller text for stacked layout
+  const gap = 16;
+  
+  // Get wordmark dimensions scaled to target height
+  const wordmarkDims = getWordmarkDimensions(textHeight);
+  const wordmarkScale = getWordmarkScale(textHeight);
+  
+  const padding = variant.background ? 32 : 16;
+  
+  const totalWidth = Math.max(iconSize, wordmarkDims.width) + (padding * 2);
+  const totalHeight = iconSize + gap + textHeight + (padding * 2);
+  
+  const gradientId = `grad-${variant.id}`;
+  
+  let gradientDef = "";
+  if (variant.iconFill === "gradient") {
+    gradientDef = `<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="${GRADIENT_START}"/>
+      <stop offset="100%" stop-color="${GRADIENT_END}"/>
+    </linearGradient>`;
+  } else if (variant.iconFill === "white") {
+    gradientDef = `<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>`;
+  }
+  
+  let bgGradientDef = "";
+  let bgRect = "";
+  if (variant.background) {
+    if (variant.backgroundType === "primary") {
+      bgGradientDef = `<linearGradient id="bg-${variant.id}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${GRADIENT_START}"/>
+        <stop offset="100%" stop-color="${GRADIENT_END}"/>
+      </linearGradient>`;
+      bgRect = `<rect width="${totalWidth}" height="${totalHeight}" fill="url(#bg-${variant.id})" rx="8"/>`;
+    } else if (variant.backgroundType === "obsidian") {
+      bgGradientDef = `<linearGradient id="bg-${variant.id}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${OBSIDIAN_START}"/>
+        <stop offset="100%" stop-color="${OBSIDIAN_END}"/>
+      </linearGradient>`;
+      bgRect = `<rect width="${totalWidth}" height="${totalHeight}" fill="url(#bg-${variant.id})" rx="8"/>`;
+    } else if (variant.backgroundType === "white") {
+      bgRect = `<rect width="${totalWidth}" height="${totalHeight}" fill="#ffffff" rx="8"/>`;
+    }
+  }
+  
+  const iconFill = `url(#${gradientId})`;
+  
+  // Center icon horizontally
+  const iconX = padding + (Math.max(iconSize, wordmarkDims.width) - iconSize) / 2;
+  
+  const iconGroup = `<g transform="translate(${iconX}, ${padding})">
+    ${ARC_PATHS.map(d => `<path d="${d}" fill="${iconFill}"/>`).join("\n    ")}
+  </g>`;
+  
+  // Center wordmark horizontally below icon
+  const wordmarkX = padding + (Math.max(iconSize, wordmarkDims.width) - wordmarkDims.width) / 2;
+  const wordmarkY = padding + iconSize + gap;
+  
   const textGroup = variant.hasText 
     ? `<g transform="translate(${wordmarkX}, ${wordmarkY}) scale(${wordmarkScale})">
         <path d="${WORDMARK_PATHS.fullPath}" fill="${variant.textColor}"/>

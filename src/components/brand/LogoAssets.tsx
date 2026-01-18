@@ -4,6 +4,7 @@ import { Download, FileCode, ChevronDown } from "@/lib/icons";
 import { 
   logoVariants, 
   generateLockupSVG, 
+  generateVerticalLockupSVG,
   generateIconOnlySVG,
   downloadSVG, 
   downloadPNG 
@@ -23,7 +24,14 @@ export const LogoAssets = () => {
     const variant = logoVariants.find(v => v.id === variantId);
     if (!variant) return;
     
-    const svg = variant.hasText ? generateLockupSVG(variant) : generateIconOnlySVG(variant);
+    let svg: string;
+    if (variant.layout === "vertical") {
+      svg = generateVerticalLockupSVG(variant);
+    } else if (variant.layout === "horizontal") {
+      svg = generateLockupSVG(variant);
+    } else {
+      svg = generateIconOnlySVG(variant);
+    }
     downloadSVG(svg, `rhosonics-${variantId}`);
   };
 
@@ -33,7 +41,14 @@ export const LogoAssets = () => {
     
     setDownloading(`${variantId}-${scale}x`);
     try {
-      const svg = variant.hasText ? generateLockupSVG(variant) : generateIconOnlySVG(variant);
+      let svg: string;
+      if (variant.layout === "vertical") {
+        svg = generateVerticalLockupSVG(variant);
+      } else if (variant.layout === "horizontal") {
+        svg = generateLockupSVG(variant);
+      } else {
+        svg = generateIconOnlySVG(variant);
+      }
       await downloadPNG(svg, `rhosonics-${variantId}`, scale);
     } finally {
       setDownloading(null);
@@ -58,9 +73,12 @@ export const LogoAssets = () => {
     }
 
     // Optical sizing: 150% ratio - text-2xl(24px) → 36px icon
+    // Vertical layout uses smaller text with icon stacked above
+    const isVertical = variant.layout === "vertical";
+    
     return (
-      <div className={`${bgClass} rounded-lg p-8 flex items-center justify-center min-h-[120px] aspect-square`}>
-        {variant.hasText ? (
+      <div className={`${bgClass} rounded-lg p-8 flex items-center justify-center min-h-[120px] ${isVertical ? '' : 'aspect-square'}`}>
+        {variant.layout === "horizontal" ? (
           <div className="flex items-center gap-3">
             <RhosonicsLogo 
               variant={variant.iconFill === "white" ? "white" : "gradient"} 
@@ -68,6 +86,19 @@ export const LogoAssets = () => {
             />
             <span 
               className="font-logo text-2xl font-semibold tracking-wide"
+              style={{ color: variant.textColor }}
+            >
+              RHOSONICS
+            </span>
+          </div>
+        ) : variant.layout === "vertical" ? (
+          <div className="flex flex-col items-center gap-3">
+            <RhosonicsLogo 
+              variant={variant.iconFill === "white" ? "white" : "gradient"} 
+              className="w-12 h-12" 
+            />
+            <span 
+              className="font-logo text-lg font-semibold tracking-wide"
               style={{ color: variant.textColor }}
             >
               RHOSONICS
