@@ -1,7 +1,13 @@
 import { useState, useRef } from "react";
 import { BrandCallout } from "./BrandCallout";
 import { Slider } from "@/components/ui/slider";
-import { Download, Check, Grid3X3, Maximize2 } from "lucide-react";
+import { Download, Check, Grid3X3, Maximize2, CheckCircle2, XCircle } from "lucide-react";
+
+// Image style examples - AI generated
+import fieldMining from "@/assets/brand/imagery-field-mining.jpg";
+import fieldDredging from "@/assets/brand/imagery-field-dredging.jpg";
+import abstractWaves from "@/assets/brand/imagery-abstract-waves.jpg";
+import abstractSensor from "@/assets/brand/imagery-abstract-sensor.jpg";
 
 // Rhosonics approved background colors for texture preview
 const approvedBackgrounds = [
@@ -459,6 +465,274 @@ export const ImageryGuidelines = () => {
         Field images must show evidence of use: wear, scale, context, or operation.
         Pristine environments without signs of real work reduce credibility.
       </BrandCallout>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          IMAGE STYLE GUIDE WITH EXAMPLES
+       ═══════════════════════════════════════════════════════════════ */}
+      <div className="space-y-12">
+        <div>
+          <div className="flex items-baseline gap-4 md:gap-6 mb-6">
+            <span className="font-data text-xs md:text-sm text-muted-foreground">STYLE GUIDE</span>
+            <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
+          </div>
+          <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-3">When to Use Each Style</h3>
+          <p className="text-muted-foreground text-base md:text-lg max-w-3xl mb-10">
+            Choose imagery based on communication intent. Field photography builds trust through authenticity; abstract visuals clarify complex concepts.
+          </p>
+        </div>
+
+        {/* Real & Gritty Section */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 rounded-full bg-mineral" />
+            <h4 className="font-ui text-xl font-bold text-foreground">Real & Gritty</h4>
+            <span className="label-tech text-muted-foreground ml-2">FIELD PHOTOGRAPHY</span>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="aspect-video rounded-lg overflow-hidden border border-border">
+                <img 
+                  src={fieldMining} 
+                  alt="Mining thickener with measurement equipment" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="label-tech-sm text-primary">MINING</span>
+                <span className="text-muted-foreground text-sm">Thickener installation, visible wear</span>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="aspect-video rounded-lg overflow-hidden border border-border">
+                <img 
+                  src={fieldDredging} 
+                  alt="Dredging vessel with pipe systems" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="label-tech-sm text-primary">DREDGING</span>
+                <span className="text-muted-foreground text-sm">Maritime environment, operational context</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-muted/30 rounded-lg p-6 border border-border">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  <span className="font-ui font-semibold text-foreground">Characteristics</span>
+                </div>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>High contrast, desaturated color palette</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Visible wear, scale, and operational context</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Selective green accent on indicators/displays</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Documentary-style, not overly polished</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="font-ui font-semibold text-foreground">Use For</span>
+                </div>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">→</span>
+                    <span>Case studies and customer stories</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">→</span>
+                    <span>Industry-specific landing pages</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">→</span>
+                    <span>Installation and deployment documentation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">→</span>
+                    <span>Building credibility with technical audiences</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Abstract & Precise Section */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 rounded-full bg-primary" />
+            <h4 className="font-ui text-xl font-bold text-foreground">Abstract & Precise</h4>
+            <span className="label-tech text-muted-foreground ml-2">TECHNICAL VISUALIZATION</span>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="aspect-video rounded-lg overflow-hidden border border-border bg-rho-obsidian">
+                <img 
+                  src={abstractWaves} 
+                  alt="Ultrasonic wave propagation visualization" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="label-tech-sm text-primary">TECHNOLOGY</span>
+                <span className="text-muted-foreground text-sm">SDM wave propagation concept</span>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="aspect-video rounded-lg overflow-hidden border border-border bg-slate-50">
+                <img 
+                  src={abstractSensor} 
+                  alt="Sensor cross-section technical diagram" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="label-tech-sm text-primary">PRODUCT</span>
+                <span className="text-muted-foreground text-sm">Sensor cutaway, precision engineering</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-muted/30 rounded-lg p-6 border border-border">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  <span className="font-ui font-semibold text-foreground">Characteristics</span>
+                </div>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Clean lines and geometric precision</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Perfect studio or CGI lighting</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Brand green as primary accent</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Minimal backgrounds (white, dark, gradient)</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="font-ui font-semibold text-foreground">Use For</span>
+                </div>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">→</span>
+                    <span>Technology explainers and how-it-works</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">→</span>
+                    <span>Product detail pages and specifications</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">→</span>
+                    <span>Marketing hero sections and presentations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">→</span>
+                    <span>Conceptual diagrams and process flows</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Decision Matrix */}
+        <div className="bg-card rounded-lg border border-border overflow-hidden">
+          <div className="p-6 border-b border-border">
+            <h4 className="font-ui font-bold text-foreground">Quick Decision Matrix</h4>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left p-4 font-data text-xs uppercase tracking-wider text-muted-foreground">Context</th>
+                  <th className="text-left p-4 font-data text-xs uppercase tracking-wider text-muted-foreground">Style</th>
+                  <th className="text-left p-4 font-data text-xs uppercase tracking-wider text-muted-foreground">Why</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                <tr>
+                  <td className="p-4 font-ui text-foreground">Case study</td>
+                  <td className="p-4"><span className="px-2 py-1 bg-mineral/20 text-mineral-deep rounded text-xs font-data">FIELD</span></td>
+                  <td className="p-4 text-muted-foreground">Proves real-world results</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-ui text-foreground">Product page hero</td>
+                  <td className="p-4"><span className="px-2 py-1 bg-primary/20 text-primary rounded text-xs font-data">ABSTRACT</span></td>
+                  <td className="p-4 text-muted-foreground">Highlights precision engineering</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-ui text-foreground">Technical documentation</td>
+                  <td className="p-4"><span className="px-2 py-1 bg-primary/20 text-primary rounded text-xs font-data">ABSTRACT</span></td>
+                  <td className="p-4 text-muted-foreground">Clarifies concepts without distraction</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-ui text-foreground">Industry landing page</td>
+                  <td className="p-4"><span className="px-2 py-1 bg-mineral/20 text-mineral-deep rounded text-xs font-data">FIELD</span></td>
+                  <td className="p-4 text-muted-foreground">Shows domain expertise</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-ui text-foreground">How SDM works</td>
+                  <td className="p-4"><span className="px-2 py-1 bg-primary/20 text-primary rounded text-xs font-data">ABSTRACT</span></td>
+                  <td className="p-4 text-muted-foreground">Visualizes invisible process</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-ui text-foreground">Customer testimonial</td>
+                  <td className="p-4"><span className="px-2 py-1 bg-mineral/20 text-mineral-deep rounded text-xs font-data">FIELD</span></td>
+                  <td className="p-4 text-muted-foreground">Authentic environment builds trust</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Avoid Section */}
+        <div className="bg-destructive/5 rounded-lg p-6 border border-destructive/20">
+          <div className="flex items-center gap-2 mb-4">
+            <XCircle className="w-5 h-5 text-destructive" />
+            <h4 className="font-ui font-bold text-foreground">Image Types to Avoid</h4>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4 text-sm">
+            <div>
+              <span className="font-ui font-semibold text-foreground block mb-2">Generic Stock</span>
+              <p className="text-muted-foreground">Smiling engineers in hard hats, hands shaking, abstract blue technology backgrounds</p>
+            </div>
+            <div>
+              <span className="font-ui font-semibold text-foreground block mb-2">Over-Polished Field</span>
+              <p className="text-muted-foreground">Industrial settings that look too clean, new, or staged</p>
+            </div>
+            <div>
+              <span className="font-ui font-semibold text-foreground block mb-2">Mixed Messaging</span>
+              <p className="text-muted-foreground">Combining field grit with abstract overlays or effects</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* ═══════════════════════════════════════════════════════════════
           TEXTURES SECTION
