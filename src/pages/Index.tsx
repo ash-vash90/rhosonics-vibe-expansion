@@ -22,6 +22,7 @@ const IconGuidelines = lazy(() => import("@/components/brand/IconGuidelines"));
 const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
 const IndustryApplications = lazy(() => import("@/components/brand/IndustryApplications"));
+const PrintedMaterials = lazy(() => import("@/components/brand/PrintedMaterials"));
 const ImageryGuidelines = lazy(() => import("@/components/brand/ImageryGuidelines"));
 const VoiceTone = lazy(() => import("@/components/brand/VoiceTone"));
 const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
@@ -546,6 +547,13 @@ const Index = () => {
               <InterfaceKit />
             </Suspense>
           </ErrorBoundary>
+          <div id="printed-materials" className="scroll-mt-20 md:scroll-mt-24">
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <PrintedMaterials />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
         </ScrollSection>
 
         <SectionDivider />
