@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 // Linear Progress Bar
 const linearProgressVariants = cva(
-  "relative h-3 w-full overflow-hidden [clip-path:var(--chamfer-btn)]",
+  "relative h-3 w-full overflow-hidden rounded-full",
   {
     variants: {
       variant: {
@@ -20,7 +20,7 @@ const linearProgressVariants = cva(
 );
 
 const linearProgressFillVariants = cva(
-  "h-full transition-all duration-500 ease-out [clip-path:var(--chamfer-btn)]",
+  "h-full transition-all duration-500 ease-out rounded-full",
   {
     variants: {
       variant: {
