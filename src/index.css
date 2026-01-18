@@ -29,10 +29,10 @@
     --eco-surface: 125 43% 95%;
     --eco-border: 125 50% 90%;
     
-    /* Info Blue */
-    --info: 210 80% 55%;
-    --info-surface: 210 80% 97%;
-    --info-border: 210 70% 88%;
+    /* Info (Slate-based) */
+    --info: 215 19% 35%;
+    --info-surface: 210 40% 97%;
+    --info-border: 214 32% 85%;
     
     /* Warning Amber */
     --warning: 32 95% 44%;

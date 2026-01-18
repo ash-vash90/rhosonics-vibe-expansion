@@ -154,10 +154,10 @@ export const ColorMatrix = () => {
 
           {/* State: Info */}
           <div>
-            <h4 className="font-data text-xs text-info uppercase tracking-wider mb-6">State — Info</h4>
+            <h4 className="font-data text-xs text-slate-600 uppercase tracking-wider mb-6">State — Info</h4>
             <div className="space-y-0">
-              <ColorSpecimen name="Info Blue" hex="#2D8CF0" rgb="45, 140, 240" hsl="210 80% 55%" bg="bg-info" use="Informational callouts, badges" textLight />
-              <ColorSpecimen name="Info Surface" hex="#F0F7FF" rgb="240, 247, 255" hsl="210 80% 97%" bg="bg-info-surface" use="Info callout backgrounds" border="border-info-border" />
+              <ColorSpecimen name="Info Slate" hex="#475569" rgb="71, 85, 105" hsl="215 19% 35%" bg="bg-slate-600" use="Informational callouts, badges" textLight />
+              <ColorSpecimen name="Info Surface" hex="#F8FAFC" rgb="248, 250, 252" hsl="210 40% 97%" bg="bg-info-surface" use="Info callout backgrounds" border="border-info-border" />
             </div>
           </div>
 

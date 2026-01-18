@@ -31,8 +31,8 @@ const variantStyles: Record<CalloutVariant, {
     iconSymbol: "!",
   },
   info: {
-    container: "bg-info-surface border-l-4 border-info",
-    iconBg: "bg-info",
+    container: "bg-info-surface border-l-4 border-slate-500",
+    iconBg: "bg-slate-600",
     iconColor: "text-white",
     icon: Lightbulb,
   },
