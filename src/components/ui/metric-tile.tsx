@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const metricTileVariants = cva(
-  "flex flex-col p-4 transition-all duration-200 [clip-path:var(--chamfer-md)]",
+  "flex flex-col p-4 transition-all duration-200 rounded-lg",
   {
     variants: {
       variant: {

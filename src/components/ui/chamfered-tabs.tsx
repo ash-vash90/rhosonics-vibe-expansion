@@ -4,13 +4,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const chamferedTabsListVariants = cva(
-  "inline-flex items-center justify-center p-1 gap-1",
+  "inline-flex items-center justify-center p-1 gap-1 rounded-lg",
   {
     variants: {
       variant: {
-        obsidian: "bg-rho-obsidian [clip-path:var(--chamfer-sm)]",
-        primary: "bg-muted [clip-path:var(--chamfer-sm)]",
-        outline: "border border-border [clip-path:var(--chamfer-sm)] bg-transparent",
+        obsidian: "bg-rho-obsidian",
+        primary: "bg-muted",
+        outline: "border border-border bg-transparent",
       },
     },
     defaultVariants: {
@@ -20,16 +20,16 @@ const chamferedTabsListVariants = cva(
 );
 
 const chamferedTabsTriggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap px-4 py-2 font-data text-xs uppercase tracking-wider transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap px-4 py-2 font-data text-xs uppercase tracking-wider transition-all duration-200 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         obsidian: 
-          "text-slate-400 hover:text-slate-200 data-[state=active]:bg-slate-100 data-[state=active]:text-rho-obsidian data-[state=active]:[clip-path:var(--chamfer-btn)]",
+          "text-slate-400 hover:text-slate-200 data-[state=active]:bg-slate-100 data-[state=active]:text-rho-obsidian",
         primary:
-          "text-muted-foreground hover:text-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:[clip-path:var(--chamfer-btn)]",
+          "text-muted-foreground hover:text-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
         outline:
-          "text-muted-foreground hover:text-foreground data-[state=active]:border-2 data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:[clip-path:var(--chamfer-btn)] data-[state=active]:bg-primary/5",
+          "text-muted-foreground hover:text-foreground data-[state=active]:border-2 data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-primary/5",
       },
     },
     defaultVariants: {
