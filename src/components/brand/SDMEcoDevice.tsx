@@ -1,4 +1,4 @@
-import sdmEcoBranded from "@/assets/brand/sdm-eco-branded-v3.png";
+import sdmEcoBranded from "@/assets/brand/sdm-eco-branded-v4.png";
 
 export const SDMEcoDevice = () => {
   return (
