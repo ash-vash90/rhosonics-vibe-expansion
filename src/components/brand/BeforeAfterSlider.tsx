@@ -1,29 +1,38 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 
 interface BeforeAfterSliderProps {
-  beforeImage: string;
-  afterImage: string;
+  /** Single source image - treatment will be applied in real-time */
+  sourceImage: string;
   beforeLabel?: string;
   afterLabel?: string;
-  beforeAlt?: string;
-  afterAlt?: string;
+  imageAlt?: string;
   className?: string;
+  /** Desaturation amount (0-1, default 0.5 = 50% desaturation) */
+  desaturation?: number;
+  /** Contrast boost (1 = normal, 1.2 = 20% increase) */
+  contrast?: number;
+  /** Brightness adjustment */
+  brightness?: number;
 }
 
 const BeforeAfterSlider = ({
-  beforeImage,
-  afterImage,
+  sourceImage,
   beforeLabel = "BEFORE",
   afterLabel = "AFTER",
-  beforeAlt = "Before treatment",
-  afterAlt = "After treatment",
+  imageAlt = "Image comparison",
   className = "",
+  desaturation = 0.45,
+  contrast = 1.2,
+  brightness = 0.95,
 }: BeforeAfterSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [showHint, setShowHint] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // CSS filter string for the "after" treatment
+  const treatmentFilter = `saturate(${desaturation}) contrast(${contrast}) brightness(${brightness})`;
 
   // Auto-hide hint after delay if no interaction
   useEffect(() => {
@@ -125,22 +134,39 @@ const BeforeAfterSlider = ({
         }
       }}
     >
-      {/* After Image (Full width, behind) */}
-      <img
-        src={afterImage}
-        alt={afterAlt}
-        className="absolute inset-0 w-full h-full object-cover"
-        draggable={false}
-      />
+      {/* AFTER: Treated Image (Full width, with CSS filters applied) */}
+      <div className="absolute inset-0">
+        <img
+          src={sourceImage}
+          alt={`${imageAlt} - with brand treatment`}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: treatmentFilter }}
+          draggable={false}
+        />
+        {/* Green accent overlay - simulates selective green color grading */}
+        <div 
+          className="absolute inset-0 mix-blend-color pointer-events-none"
+          style={{ 
+            background: "radial-gradient(ellipse at 30% 60%, hsl(var(--primary) / 0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 40%, hsl(var(--primary) / 0.1) 0%, transparent 40%)"
+          }}
+        />
+        {/* Cool tone overlay */}
+        <div 
+          className="absolute inset-0 mix-blend-overlay pointer-events-none opacity-20"
+          style={{ 
+            background: "linear-gradient(180deg, hsl(210 30% 20% / 0.3) 0%, hsl(200 20% 15% / 0.2) 100%)"
+          }}
+        />
+      </div>
 
-      {/* Before Image (Clipped) */}
+      {/* BEFORE: Original Image (Clipped, no filters) */}
       <div
         className="absolute inset-0 overflow-hidden"
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
         <img
-          src={beforeImage}
-          alt={beforeAlt}
+          src={sourceImage}
+          alt={`${imageAlt} - original`}
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
         />
@@ -200,6 +226,14 @@ const BeforeAfterSlider = ({
         style={{ opacity: sliderPosition < 85 ? 1 : 0 }}
       >
         {afterLabel}
+      </div>
+
+      {/* Filter specs indicator */}
+      <div 
+        className="absolute bottom-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm rounded text-[10px] font-data text-white/80 transition-opacity"
+        style={{ opacity: sliderPosition < 85 ? 1 : 0 }}
+      >
+        SAT {Math.round(desaturation * 100)}% · CON +{Math.round((contrast - 1) * 100)}%
       </div>
 
       {/* Animated Touch Hint Overlay */}
