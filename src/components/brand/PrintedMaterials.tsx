@@ -11,7 +11,7 @@ const PrintedMaterials = () => {
           <div className="h-px flex-1 bg-border max-w-12" />
         </div>
         <div className="flex items-center gap-3 mb-2">
-          <Printer className="w-6 h-6 text-brand" />
+          <Printer className="w-6 h-6 text-primary" />
           <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground">Printed Materials</h3>
         </div>
         <p className="text-base text-muted-foreground max-w-2xl">
@@ -37,12 +37,12 @@ const PrintedMaterials = () => {
               
               {/* Banner */}
               <div 
-                className="w-32 h-80 bg-obsidian rounded-t-sm shadow-2xl flex flex-col items-center justify-between py-8 px-4 relative overflow-hidden"
+                className="w-32 h-80 bg-rho-obsidian rounded-t-sm shadow-2xl flex flex-col items-center justify-between py-8 px-4 relative overflow-hidden"
                 style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}
               >
                 {/* Wave pattern accent */}
                 <div className="absolute top-1/3 left-0 right-0">
-                  <svg viewBox="0 0 100 20" className="w-full h-8 text-brand opacity-40">
+                  <svg viewBox="0 0 100 20" className="w-full h-8 text-primary opacity-40">
                     <path 
                       d="M0 10 Q 12.5 0, 25 10 T 50 10 T 75 10 T 100 10" 
                       fill="none" 
@@ -75,7 +75,7 @@ const PrintedMaterials = () => {
                 </div>
                 
                 {/* Green accent bar at bottom */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-brand" />
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary" />
               </div>
             </div>
           </div>
@@ -91,17 +91,17 @@ const PrintedMaterials = () => {
             <div className="relative">
               {/* Back card (offset) */}
               <div 
-                className="absolute top-4 left-4 w-56 h-32 bg-obsidian rounded-lg shadow-xl"
+                className="absolute top-4 left-4 w-56 h-32 bg-rho-obsidian rounded-lg shadow-xl"
                 style={{ transform: 'rotate(-6deg)' }}
               />
               
               {/* Front card */}
               <div 
-                className="relative w-56 h-32 bg-obsidian rounded-lg shadow-2xl flex flex-col justify-between p-4 overflow-hidden"
+                className="relative w-56 h-32 bg-rho-obsidian rounded-lg shadow-2xl flex flex-col justify-between p-4 overflow-hidden"
                 style={{ transform: 'rotate(3deg)' }}
               >
                 {/* Green edge accent */}
-                <div className="absolute top-0 left-0 w-1 h-full bg-brand" />
+                <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
                 
                 {/* Logo and name */}
                 <div className="flex items-start gap-2 pl-2">
@@ -135,12 +135,12 @@ const PrintedMaterials = () => {
           </div>
           <div className="flex justify-center p-6 bg-muted/30 rounded-lg border border-border">
             <div 
-              className="w-full max-w-md aspect-[4/3] bg-obsidian rounded-sm shadow-2xl flex flex-col items-center justify-center relative overflow-hidden"
+              className="w-full max-w-md aspect-[4/3] bg-rho-obsidian rounded-sm shadow-2xl flex flex-col items-center justify-center relative overflow-hidden"
               style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)' }}
             >
               {/* Wave pattern */}
               <div className="absolute inset-0 flex items-center">
-                <svg viewBox="0 0 400 100" className="w-full h-24 text-brand opacity-30">
+                <svg viewBox="0 0 400 100" className="w-full h-24 text-primary opacity-30">
                   <path 
                     d="M0 50 Q 25 20, 50 50 T 100 50 T 150 50 T 200 50 T 250 50 T 300 50 T 350 50 T 400 50" 
                     fill="none" 
@@ -176,7 +176,7 @@ const PrintedMaterials = () => {
               </div>
               
               {/* Bottom accent */}
-              <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand/0 via-brand to-brand/0" />
+              <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary/0 via-primary to-primary/0" />
             </div>
           </div>
         </div>
@@ -189,12 +189,12 @@ const PrintedMaterials = () => {
           </div>
           <div className="flex justify-center p-6 bg-muted/30 rounded-lg border border-border">
             <div 
-              className="w-40 aspect-[210/297] bg-obsidian rounded-sm shadow-2xl flex flex-col justify-between p-5 relative overflow-hidden"
+              className="w-40 aspect-[210/297] bg-rho-obsidian rounded-sm shadow-2xl flex flex-col justify-between p-5 relative overflow-hidden"
               style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)' }}
             >
               {/* Diagonal accent */}
               <div 
-                className="absolute -bottom-20 -right-20 w-40 h-40 bg-brand/10"
+                className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10"
                 style={{ transform: 'rotate(45deg)' }}
               />
               
@@ -214,7 +214,7 @@ const PrintedMaterials = () => {
                 <p className="font-ui text-[7px] text-white/70 mt-1">
                   Slurry Density Meter
                 </p>
-                <div className="w-8 h-0.5 bg-brand mt-2" />
+                <div className="w-8 h-0.5 bg-primary mt-2" />
               </div>
               
               {/* Footer */}
@@ -237,7 +237,7 @@ const PrintedMaterials = () => {
               style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.2)' }}
             >
               {/* Green top accent bar */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-brand" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
               
               {/* Header with logo */}
               <div className="flex items-center justify-between pt-2">
@@ -289,7 +289,7 @@ const PrintedMaterials = () => {
               style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.2)' }}
             >
               {/* Green left edge accent */}
-              <div className="absolute top-0 left-0 bottom-0 w-1 bg-brand" />
+              <div className="absolute top-0 left-0 bottom-0 w-1 bg-primary" />
               
               {/* Envelope flap texture hint */}
               <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-slate-50 to-transparent" />
@@ -319,7 +319,7 @@ const PrintedMaterials = () => {
       {/* Print Production Guidelines */}
       <div className="p-6 rounded-lg border border-border bg-muted/30">
         <div className="flex items-center gap-2 mb-4">
-          <FileText className="w-5 h-5 text-brand" />
+          <FileText className="w-5 h-5 text-primary" />
           <h4 className="font-ui text-lg font-semibold text-foreground">Print Production Guidelines</h4>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -330,7 +330,7 @@ const PrintedMaterials = () => {
             "Convert fonts to outlines before final submission",
           ].map((guideline, idx) => (
             <div key={idx} className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-brand mt-0.5 flex-shrink-0" />
+              <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
               <span className="text-sm text-muted-foreground">{guideline}</span>
             </div>
           ))}
@@ -338,7 +338,7 @@ const PrintedMaterials = () => {
       </div>
 
       {/* Color Reference Note */}
-      <div className="mt-6 p-4 rounded-lg bg-brand/5 border border-brand/20">
+      <div className="mt-6 p-4 rounded-lg bg-primary/5 border border-primary/20">
         <p className="text-sm text-foreground">
           <strong className="font-semibold">CMYK Reference:</strong>{" "}
           <span className="text-muted-foreground">
