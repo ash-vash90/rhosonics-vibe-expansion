@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { BrandCallout } from "./BrandCallout";
 import { Slider } from "@/components/ui/slider";
 import { Download, Check, Grid3X3, Maximize2, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
+import BeforeAfterSlider from "./BeforeAfterSlider";
 
 // Image style examples - AI generated
 import fieldMining from "@/assets/brand/imagery-field-mining.jpg";
@@ -780,50 +781,71 @@ export const ImageryGuidelines = () => {
             </p>
           </div>
 
-          {/* Before / After Comparison */}
+          {/* Interactive Before / After Comparison */}
+          <div className="space-y-4">
+            <BeforeAfterSlider
+              beforeImage={treatmentBefore}
+              afterImage={treatmentAfter}
+              beforeLabel="BEFORE"
+              afterLabel="AFTER"
+              beforeAlt="Raw field photography - before brand treatment"
+              afterAlt="Brand-treated field photography with desaturation and green accent"
+            />
+            <p className="text-sm text-muted-foreground text-center">
+              Drag the slider to compare raw capture vs brand treatment
+            </p>
+          </div>
+
+          {/* Treatment Details Grid */}
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="relative aspect-video rounded-lg overflow-hidden border border-border">
-                <img 
-                  src={treatmentBefore} 
-                  alt="Raw field photography - before treatment" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-3 left-3 px-3 py-1 bg-warning-surface border border-warning-border rounded text-xs font-data text-warning">
-                  BEFORE
-                </div>
+            <div className="p-5 bg-muted/30 rounded-lg border border-border">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-3 h-3 rounded-full bg-warning" />
+                <span className="font-ui font-semibold text-foreground">Raw Capture</span>
               </div>
-              <div className="p-4 bg-muted/30 rounded-lg border border-border">
-                <span className="font-ui font-semibold text-foreground block mb-2">Raw Capture</span>
-                <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>• Full color saturation</li>
-                  <li>• Warm, vibrant earth tones</li>
-                  <li>• Standard contrast levels</li>
-                  <li>• No brand color integration</li>
-                </ul>
-              </div>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-muted-foreground mt-1">•</span>
+                  <span>Full color saturation</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-muted-foreground mt-1">•</span>
+                  <span>Warm, vibrant earth tones</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-muted-foreground mt-1">•</span>
+                  <span>Standard contrast levels</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-muted-foreground mt-1">•</span>
+                  <span>No brand color integration</span>
+                </li>
+              </ul>
             </div>
             
-            <div className="space-y-4">
-              <div className="relative aspect-video rounded-lg overflow-hidden border border-primary/30">
-                <img 
-                  src={treatmentAfter} 
-                  alt="Brand-treated field photography - after" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-3 left-3 px-3 py-1 bg-success-surface border border-success-border rounded text-xs font-data text-success">
-                  AFTER
-                </div>
+            <div className="p-5 bg-primary/5 rounded-lg border border-primary/20">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-3 h-3 rounded-full bg-primary" />
+                <span className="font-ui font-semibold text-foreground">Brand Treatment</span>
               </div>
-              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-                <span className="font-ui font-semibold text-foreground block mb-2">Brand Treatment</span>
-                <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>• Desaturated 40–60%</li>
-                  <li>• Cool gray color grading</li>
-                  <li>• Increased contrast +15–25%</li>
-                  <li>• Selective green accent on displays/LEDs</li>
-                </ul>
-              </div>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Desaturated 40–60%</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Cool gray color grading</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Increased contrast +15–25%</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Selective green accent on displays/LEDs</span>
+                </li>
+              </ul>
             </div>
           </div>
 
