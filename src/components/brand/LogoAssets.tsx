@@ -128,26 +128,22 @@ export const LogoAssets = () => {
         </BrandCallout>
       </div>
 
-      {/* Logo Lockups - MAIN DOWNLOAD SECTION */}
+      {/* Horizontal Lockups */}
       <div>
-        <div className="flex items-center gap-4 mb-10">
-          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Logo Lockups</h3>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Horizontal Lockups</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {logoVariants.map((variant) => (
+          {logoVariants.filter(v => v.layout === "horizontal").map((variant) => (
             <div key={variant.id} className="group">
-              {/* Preview */}
               {renderVariantPreview(variant)}
-              
-              {/* Info & Downloads */}
               <div className="mt-4 space-y-3">
                 <div>
                   <h4 className="font-ui font-semibold text-sm text-foreground">{variant.name}</h4>
                   <p className="text-xs text-muted-foreground">{variant.description}</p>
                 </div>
-                
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleDownloadSVG(variant.id)}
@@ -156,12 +152,113 @@ export const LogoAssets = () => {
                     <FileCode className="w-3.5 h-3.5" />
                     SVG
                   </button>
-                  
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors"
-                      >
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors">
+                        <Download className="w-3.5 h-3.5" />
+                        PNG
+                        <ChevronDown className="w-3 h-3 opacity-60" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="min-w-[120px]">
+                      {[2, 4, 8].map((scale) => (
+                        <DropdownMenuItem
+                          key={scale}
+                          onClick={() => handleDownloadPNG(variant.id, scale)}
+                          disabled={downloading === `${variant.id}-${scale}x`}
+                          className="font-data text-xs"
+                        >
+                          {downloading === `${variant.id}-${scale}x` ? "Downloading..." : `@${scale}x PNG`}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Vertical/Stacked Lockups */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Vertical Lockups</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {logoVariants.filter(v => v.layout === "vertical").map((variant) => (
+            <div key={variant.id} className="group">
+              {renderVariantPreview(variant)}
+              <div className="mt-4 space-y-3">
+                <div>
+                  <h4 className="font-ui font-semibold text-sm text-foreground">{variant.name}</h4>
+                  <p className="text-xs text-muted-foreground">{variant.description}</p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => handleDownloadSVG(variant.id)}
+                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors"
+                  >
+                    <FileCode className="w-3.5 h-3.5" />
+                    SVG
+                  </button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors">
+                        <Download className="w-3.5 h-3.5" />
+                        PNG
+                        <ChevronDown className="w-3 h-3 opacity-60" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="min-w-[120px]">
+                      {[2, 4, 8].map((scale) => (
+                        <DropdownMenuItem
+                          key={scale}
+                          onClick={() => handleDownloadPNG(variant.id, scale)}
+                          disabled={downloading === `${variant.id}-${scale}x`}
+                          className="font-data text-xs"
+                        >
+                          {downloading === `${variant.id}-${scale}x` ? "Downloading..." : `@${scale}x PNG`}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Icon-Only Marks */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Icon Marks</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          {logoVariants.filter(v => v.layout === "icon-only").map((variant) => (
+            <div key={variant.id} className="group">
+              {renderVariantPreview(variant)}
+              <div className="mt-4 space-y-3">
+                <div>
+                  <h4 className="font-ui font-semibold text-sm text-foreground">{variant.name}</h4>
+                  <p className="text-xs text-muted-foreground">{variant.description}</p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => handleDownloadSVG(variant.id)}
+                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors"
+                  >
+                    <FileCode className="w-3.5 h-3.5" />
+                    SVG
+                  </button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-data bg-muted hover:bg-muted/80 rounded transition-colors">
                         <Download className="w-3.5 h-3.5" />
                         PNG
                         <ChevronDown className="w-3 h-3 opacity-60" />
