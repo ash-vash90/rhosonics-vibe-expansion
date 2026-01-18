@@ -303,10 +303,14 @@ export const InterfaceKit = () => {
           <BrandCallout variant="best" title="Best Practice">
             Success callouts highlight recommended approaches and proven patterns that lead to optimal outcomes.
           </BrandCallout>
+
+          <BrandCallout variant="error" title="Critical Error">
+            Error callouts communicate system failures, critical issues, or blocking conditions that require immediate attention.
+          </BrandCallout>
         </div>
 
         <p className="text-muted-foreground max-w-xl mt-8">
-          Three variants map to clear intent: neutral guidance (info), explicit warnings (avoid), and recommendations (best).
+          Four variants map to clear intent: neutral guidance (info), explicit warnings (avoid), recommendations (best), and critical errors (error).
         </p>
       </div>
     </section>

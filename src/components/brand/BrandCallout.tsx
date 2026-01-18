@@ -1,7 +1,7 @@
-import { AlertTriangle, CheckCircle, Lightbulb } from "@/lib/icons";
+import { AlertTriangle, CheckCircle, Lightbulb, XCircle } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
-type CalloutVariant = "info" | "avoid" | "best";
+type CalloutVariant = "info" | "avoid" | "best" | "error";
 
 interface BrandCalloutProps {
   variant?: CalloutVariant;
@@ -35,6 +35,12 @@ const variantStyles: Record<CalloutVariant, {
     iconBg: "bg-success",
     iconColor: "text-white",
     icon: CheckCircle,
+  },
+  error: {
+    container: "bg-error-surface border-l-4 border-error",
+    iconBg: "bg-error",
+    iconColor: "text-white",
+    icon: XCircle,
   },
 };
 
