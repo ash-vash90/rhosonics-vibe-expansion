@@ -1,13 +1,19 @@
 import { useState, useRef } from "react";
 import { BrandCallout } from "./BrandCallout";
 import { Slider } from "@/components/ui/slider";
-import { Download, Check, Grid3X3, Maximize2, CheckCircle2, XCircle } from "lucide-react";
+import { Download, Check, Grid3X3, Maximize2, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
 
 // Image style examples - AI generated
 import fieldMining from "@/assets/brand/imagery-field-mining.jpg";
 import fieldDredging from "@/assets/brand/imagery-field-dredging.jpg";
+import fieldWastewater from "@/assets/brand/imagery-field-wastewater.jpg";
+import fieldSemiconductor from "@/assets/brand/imagery-field-semiconductor.jpg";
 import abstractWaves from "@/assets/brand/imagery-abstract-waves.jpg";
 import abstractSensor from "@/assets/brand/imagery-abstract-sensor.jpg";
+
+// Before/after treatment examples
+import treatmentBefore from "@/assets/brand/imagery-treatment-before.jpg";
+import treatmentAfter from "@/assets/brand/imagery-treatment-after.jpg";
 
 // Rhosonics approved background colors for texture preview
 const approvedBackgrounds = [
@@ -489,8 +495,8 @@ export const ImageryGuidelines = () => {
             <span className="label-tech text-muted-foreground ml-2">FIELD PHOTOGRAPHY</span>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="space-y-3">
               <div className="aspect-video rounded-lg overflow-hidden border border-border">
                 <img 
                   src={fieldMining} 
@@ -500,10 +506,10 @@ export const ImageryGuidelines = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="label-tech-sm text-primary">MINING</span>
-                <span className="text-muted-foreground text-sm">Thickener installation, visible wear</span>
+                <span className="text-muted-foreground text-xs">Thickener installation</span>
               </div>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div className="aspect-video rounded-lg overflow-hidden border border-border">
                 <img 
                   src={fieldDredging} 
@@ -513,7 +519,33 @@ export const ImageryGuidelines = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="label-tech-sm text-primary">DREDGING</span>
-                <span className="text-muted-foreground text-sm">Maritime environment, operational context</span>
+                <span className="text-muted-foreground text-xs">Maritime environment</span>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="aspect-video rounded-lg overflow-hidden border border-border">
+                <img 
+                  src={fieldWastewater} 
+                  alt="Wastewater treatment settling tanks" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="label-tech-sm text-primary">WASTEWATER</span>
+                <span className="text-muted-foreground text-xs">Treatment facility</span>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="aspect-video rounded-lg overflow-hidden border border-border">
+                <img 
+                  src={fieldSemiconductor} 
+                  alt="Semiconductor clean room equipment" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="label-tech-sm text-primary">SEMICONDUCTOR</span>
+                <span className="text-muted-foreground text-xs">Clean room precision</span>
               </div>
             </div>
           </div>
@@ -729,6 +761,146 @@ export const ImageryGuidelines = () => {
             <div>
               <span className="font-ui font-semibold text-foreground block mb-2">Mixed Messaging</span>
               <p className="text-muted-foreground">Combining field grit with abstract overlays or effects</p>
+            </div>
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════════
+            PHOTOGRAPHY TREATMENT
+         ═══════════════════════════════════════════════════════════════ */}
+        <div className="space-y-8 pt-8 border-t border-border">
+          <div>
+            <div className="flex items-baseline gap-4 md:gap-6 mb-6">
+              <span className="font-data text-xs md:text-sm text-muted-foreground">COLOR GRADING</span>
+              <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
+            </div>
+            <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-3">Photography Treatment</h3>
+            <p className="text-muted-foreground text-base md:text-lg max-w-3xl">
+              Transform raw field photography into brand-consistent imagery using this color grading process.
+            </p>
+          </div>
+
+          {/* Before / After Comparison */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-border">
+                <img 
+                  src={treatmentBefore} 
+                  alt="Raw field photography - before treatment" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-3 left-3 px-3 py-1 bg-warning-surface border border-warning-border rounded text-xs font-data text-warning">
+                  BEFORE
+                </div>
+              </div>
+              <div className="p-4 bg-muted/30 rounded-lg border border-border">
+                <span className="font-ui font-semibold text-foreground block mb-2">Raw Capture</span>
+                <ul className="space-y-1 text-sm text-muted-foreground">
+                  <li>• Full color saturation</li>
+                  <li>• Warm, vibrant earth tones</li>
+                  <li>• Standard contrast levels</li>
+                  <li>• No brand color integration</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="relative aspect-video rounded-lg overflow-hidden border border-primary/30">
+                <img 
+                  src={treatmentAfter} 
+                  alt="Brand-treated field photography - after" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-3 left-3 px-3 py-1 bg-success-surface border border-success-border rounded text-xs font-data text-success">
+                  AFTER
+                </div>
+              </div>
+              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+                <span className="font-ui font-semibold text-foreground block mb-2">Brand Treatment</span>
+                <ul className="space-y-1 text-sm text-muted-foreground">
+                  <li>• Desaturated 40–60%</li>
+                  <li>• Cool gray color grading</li>
+                  <li>• Increased contrast +15–25%</li>
+                  <li>• Selective green accent on displays/LEDs</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Treatment Steps */}
+          <div className="bg-card rounded-lg border border-border overflow-hidden">
+            <div className="p-6 border-b border-border">
+              <h4 className="font-ui font-bold text-foreground">Color Grading Process</h4>
+            </div>
+            <div className="p-6">
+              <div className="grid md:grid-cols-4 gap-6">
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="font-data text-sm font-semibold text-primary">01</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground hidden md:block absolute -right-3" />
+                  </div>
+                  <span className="font-ui font-semibold text-foreground block mb-2">Desaturate</span>
+                  <p className="text-sm text-muted-foreground">
+                    Reduce saturation by 40–60%. Pull warmth out of earth tones to create neutral gray-brown base.
+                  </p>
+                </div>
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="font-data text-sm font-semibold text-primary">02</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground hidden md:block absolute -right-3" />
+                  </div>
+                  <span className="font-ui font-semibold text-foreground block mb-2">Cool Shift</span>
+                  <p className="text-sm text-muted-foreground">
+                    Add slight blue/teal to shadows. Creates industrial, technical atmosphere.
+                  </p>
+                </div>
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="font-data text-sm font-semibold text-primary">03</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground hidden md:block absolute -right-3" />
+                  </div>
+                  <span className="font-ui font-semibold text-foreground block mb-2">Contrast</span>
+                  <p className="text-sm text-muted-foreground">
+                    Increase contrast +15–25%. Deepen shadows, preserve midtone detail.
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                      <span className="font-data text-sm font-semibold text-primary-foreground">04</span>
+                    </div>
+                  </div>
+                  <span className="font-ui font-semibold text-foreground block mb-2">Green Accent</span>
+                  <p className="text-sm text-muted-foreground">
+                    Selectively boost green in displays, LEDs, and indicators using HSL targeting or masking.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Technical Specs */}
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="p-4 bg-muted/30 rounded-lg border border-border">
+              <span className="label-tech-sm text-primary block mb-2">SATURATION</span>
+              <span className="font-data text-2xl font-light text-foreground">-40% to -60%</span>
+              <p className="text-sm text-muted-foreground mt-1">Global desaturation from original</p>
+            </div>
+            <div className="p-4 bg-muted/30 rounded-lg border border-border">
+              <span className="label-tech-sm text-primary block mb-2">CONTRAST</span>
+              <span className="font-data text-2xl font-light text-foreground">+15% to +25%</span>
+              <p className="text-sm text-muted-foreground mt-1">Increased from baseline</p>
+            </div>
+            <div className="p-4 bg-muted/30 rounded-lg border border-border">
+              <span className="label-tech-sm text-primary block mb-2">GREEN ACCENT</span>
+              <span className="font-data text-2xl font-light text-foreground">#33993C</span>
+              <p className="text-sm text-muted-foreground mt-1">HSL: 124° 50% 40%</p>
             </div>
           </div>
         </div>
