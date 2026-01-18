@@ -206,6 +206,78 @@ export const LogoAssets = () => {
         </div>
       </div>
 
+      {/* Logo Usage Examples - Visual Do/Don't Grid */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Logo Usage</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-border rounded-lg overflow-hidden">
+          <div className="bg-background p-6">
+            <div className="h-24 flex items-center justify-center bg-slate-50 rounded border border-border mb-3">
+              <div className="border-2 border-dashed border-primary/30 p-3">
+                <div className="w-10 h-10"><RhosonicsLogo variant="gradient" /></div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs bg-primary">✓</span>
+              <span className="font-ui text-sm font-medium text-primary">Proper spacing</span>
+            </div>
+          </div>
+
+          <div className="bg-background p-6">
+            <div className="h-24 flex items-center justify-center bg-rho-obsidian rounded mb-3">
+              <div className="w-10 h-10"><RhosonicsLogo variant="white" /></div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs bg-primary">✓</span>
+              <span className="font-ui text-sm font-medium text-primary">Approved colors</span>
+            </div>
+          </div>
+
+          <div className="bg-background p-6">
+            <div className="h-24 flex items-center justify-center bg-slate-50 rounded border border-border mb-3">
+              <div className="w-10 h-10 rotate-45"><RhosonicsLogo variant="gradient" /></div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs bg-destructive">✕</span>
+              <span className="font-ui text-sm font-medium text-destructive">Rotate</span>
+            </div>
+          </div>
+
+          <div className="bg-background p-6">
+            <div className="h-24 flex items-center justify-center bg-slate-50 rounded border border-border mb-3">
+              <div className="w-16 h-8"><RhosonicsLogo variant="gradient" /></div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs bg-destructive">✕</span>
+              <span className="font-ui text-sm font-medium text-destructive">Distort</span>
+            </div>
+          </div>
+
+          <div className="bg-background p-6">
+            <div className="h-24 flex items-center justify-center bg-slate-50 rounded border border-border mb-3">
+              <div className="w-10 h-10 drop-shadow-[0_0_10px_rgba(51,153,60,0.8)]"><RhosonicsLogo variant="gradient" /></div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs bg-destructive">✕</span>
+              <span className="font-ui text-sm font-medium text-destructive">Add effects</span>
+            </div>
+          </div>
+
+          <div className="bg-background p-6">
+            <div className="h-24 flex items-center justify-center bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded mb-3">
+              <div className="w-10 h-10"><RhosonicsLogo variant="white" /></div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs bg-destructive">✕</span>
+              <span className="font-ui text-sm font-medium text-destructive">Busy backgrounds</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Usage Rules - inline list, no cards */}
       <div>
         <div className="flex items-center gap-4 mb-8">
