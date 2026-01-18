@@ -12,9 +12,8 @@ import fieldSemiconductor from "@/assets/brand/imagery-field-semiconductor.jpg";
 import abstractWaves from "@/assets/brand/imagery-abstract-waves.jpg";
 import abstractSensor from "@/assets/brand/imagery-abstract-sensor.jpg";
 
-// Before/after treatment examples
+// Before/after treatment example (single source - treatment applied via CSS)
 import treatmentBefore from "@/assets/brand/imagery-treatment-before.jpg";
-import treatmentAfter from "@/assets/brand/imagery-treatment-after.jpg";
 
 // Rhosonics approved background colors for texture preview
 const approvedBackgrounds = [
@@ -784,15 +783,16 @@ export const ImageryGuidelines = () => {
           {/* Interactive Before / After Comparison */}
           <div className="space-y-4">
             <BeforeAfterSlider
-              beforeImage={treatmentBefore}
-              afterImage={treatmentAfter}
-              beforeLabel="BEFORE"
-              afterLabel="AFTER"
-              beforeAlt="Raw field photography - before brand treatment"
-              afterAlt="Brand-treated field photography with desaturation and green accent"
+              sourceImage={treatmentBefore}
+              beforeLabel="ORIGINAL"
+              afterLabel="TREATED"
+              imageAlt="Industrial mining site field photography"
+              desaturation={0.45}
+              contrast={1.2}
+              brightness={0.95}
             />
             <p className="text-sm text-muted-foreground text-center">
-              Drag the slider to compare raw capture vs brand treatment
+              Drag the slider to see the brand treatment applied in real-time
             </p>
           </div>
 
