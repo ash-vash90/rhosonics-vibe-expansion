@@ -45,7 +45,7 @@ export const IconGuidelines = () => {
     { icon: CheckCircle, state: "Success", color: "text-success", bg: "bg-success" },
     { icon: AlertTriangle, state: "Warning", color: "text-warning", bg: "bg-warning" },
     { icon: XCircle, state: "Error", color: "text-error", bg: "bg-error" },
-    { icon: Info, state: "Info", color: "text-info", bg: "bg-info" },
+    { icon: Info, state: "Info", color: "text-slate-600", bg: "bg-slate-600" },
   ];
 
   return (
