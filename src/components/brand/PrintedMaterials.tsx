@@ -59,9 +59,9 @@ const PrintedMaterials = () => {
                   </svg>
                 </div>
                 
-                {/* Logo at top */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10">
+                {/* Logo at top - 140% ratio: 8px text → 11.2px icon (using 12px/w-3) */}
+                <div className="flex flex-col items-center gap-1.5">
+                  <div className="w-3 h-3">
                     <RhosonicsLogo variant="gradient" />
                   </div>
                   <span className="font-logo tracking-wide text-white text-[8px]">RHOSONICS</span>
@@ -164,9 +164,9 @@ const PrintedMaterials = () => {
                 </svg>
               </div>
               
-              {/* Logo lockup */}
-              <div className="relative z-10 flex items-center gap-3">
-                <div className="w-12 h-12">
+              {/* Logo lockup - 140% ratio: text-lg (18px) → 25.2px icon (using 28px/w-7) */}
+              <div className="relative z-10 flex items-center gap-2">
+                <div className="w-7 h-7">
                   <RhosonicsLogo variant="gradient" />
                 </div>
                 <div>
