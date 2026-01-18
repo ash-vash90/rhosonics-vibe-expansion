@@ -84,7 +84,6 @@ const navSections: NavSection[] = [
     label: "APPLICATIONS",
     items: [
       { id: "applications", label: "Industry Applications" },
-      { id: "printed-materials", label: "Printed Materials" },
     ],
   },
   {
