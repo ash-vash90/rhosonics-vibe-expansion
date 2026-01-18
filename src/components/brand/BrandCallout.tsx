@@ -1,7 +1,7 @@
-import { AlertTriangle, CheckCircle, Info, Lightbulb } from "@/lib/icons";
+import { AlertTriangle, CheckCircle, Lightbulb } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
-type CalloutVariant = "note" | "avoid" | "info" | "best";
+type CalloutVariant = "info" | "avoid" | "best";
 
 interface BrandCalloutProps {
   variant?: CalloutVariant;
@@ -17,11 +17,11 @@ const variantStyles: Record<CalloutVariant, {
   icon: React.ElementType;
   iconSymbol?: string;
 }> = {
-  note: {
-    container: "bg-muted/50 border-l-4 border-muted-foreground",
-    iconBg: "bg-muted-foreground",
-    iconColor: "text-background",
-    icon: Info,
+  info: {
+    container: "bg-info-surface border-l-4 border-slate-500",
+    iconBg: "bg-slate-600",
+    iconColor: "text-white",
+    icon: Lightbulb,
   },
   avoid: {
     container: "bg-warning-surface border-l-4 border-warning",
@@ -29,12 +29,6 @@ const variantStyles: Record<CalloutVariant, {
     iconColor: "text-white",
     icon: AlertTriangle,
     iconSymbol: "!",
-  },
-  info: {
-    container: "bg-info-surface border-l-4 border-slate-500",
-    iconBg: "bg-slate-600",
-    iconColor: "text-white",
-    icon: Lightbulb,
   },
   best: {
     container: "bg-success-surface border-l-4 border-success",
@@ -45,7 +39,7 @@ const variantStyles: Record<CalloutVariant, {
 };
 
 export const BrandCallout = ({ 
-  variant = "note", 
+  variant = "info", 
   title, 
   children, 
   className 

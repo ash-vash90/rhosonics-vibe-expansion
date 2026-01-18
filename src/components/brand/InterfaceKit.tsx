@@ -230,22 +230,21 @@ export const InterfaceKit = () => {
         </div>
 
         <div className="space-y-6">
-          <BrandCallout variant="note" title="Guidance Note">
-            Use notes for general guidance, tips, or neutral information that helps users understand a concept or process.
-          </BrandCallout>
-
-          <BrandCallout variant="info" title="Contextual Information">
-            Info callouts highlight important details that require attention — best practices, key insights, or recommendations.
+          <BrandCallout variant="info" title="Guidance & Context">
+            Use info callouts for general guidance, tips, best practices, or key insights that help users understand a concept or process.
           </BrandCallout>
 
           <BrandCallout variant="avoid" title="Avoid This Pattern">
             Warning callouts signal what not to do. Always pair with a clear rationale so users understand why it matters.
           </BrandCallout>
+
+          <BrandCallout variant="best" title="Best Practice">
+            Success callouts highlight recommended approaches and proven patterns that lead to optimal outcomes.
+          </BrandCallout>
         </div>
 
         <p className="text-muted-foreground max-w-xl mt-8">
-          Callouts communicate critical insights with clear visual hierarchy. 
-          Each variant maps to a specific intent: neutral guidance, helpful context, or explicit warnings.
+          Three variants map to clear intent: neutral guidance (info), explicit warnings (avoid), and recommendations (best).
         </p>
       </div>
     </section>
