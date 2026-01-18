@@ -5,6 +5,7 @@ import { BrandCallout } from "./BrandCallout";
 import { SDMEcoDevice } from "./SDMEcoDevice";
 import { ChamferedTabs, ChamferedTabsList, ChamferedTabsTrigger } from "@/components/ui/chamfered-tabs";
 import { MetricTile } from "@/components/ui/metric-tile";
+import { LinearProgress, RadialGauge } from "@/components/ui/chamfered-progress";
 
 export const InterfaceKit = () => {
   return (
@@ -351,10 +352,68 @@ export const InterfaceKit = () => {
         </p>
       </div>
 
-      {/* Badges Showcase */}
+      {/* Progress Indicators Showcase */}
       <div>
         <div className="flex items-center gap-4 mb-8">
           <span className="font-data text-sm text-primary uppercase tracking-wider">05</span>
+          <h3 className="font-ui text-2xl font-semibold text-foreground">Progress Indicators</h3>
+        </div>
+        
+        <div className="space-y-12">
+          {/* Linear Progress */}
+          <div className="flex flex-col gap-6 pb-8 border-b border-border">
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Linear Bars</span>
+              <p className="text-xs text-muted-foreground mt-1">Chamfered ends for industrial aesthetic</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <LinearProgress 
+                variant="obsidian" 
+                value={72} 
+                label="Density" 
+                showValue 
+              />
+              <LinearProgress 
+                variant="primary" 
+                value={45} 
+                label="Capacity" 
+                showValue 
+              />
+              <LinearProgress 
+                variant="outline" 
+                value={88} 
+                label="Efficiency" 
+                showValue 
+              />
+            </div>
+          </div>
+
+          {/* Radial Gauges */}
+          <div className="flex flex-col gap-6">
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Radial Gauges</span>
+              <p className="text-xs text-muted-foreground mt-1">Compact circular indicators</p>
+            </div>
+            <div className="flex flex-wrap gap-6 items-end">
+              <RadialGauge variant="obsidian" value={85} label="%" size="lg" />
+              <RadialGauge variant="obsidian" value={62} label="%" />
+              <RadialGauge variant="primary" value={94} label="%" />
+              <RadialGauge variant="outline" value={38} label="%" />
+              <RadialGauge variant="outline" value={71} label="%" size="sm" />
+            </div>
+          </div>
+        </div>
+
+        <p className="text-muted-foreground max-w-xl mt-8">
+          Chamfered linear bars and radial gauges for operational dashboards. 
+          All variants support animated value transitions.
+        </p>
+      </div>
+
+      {/* Badges Showcase */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <span className="font-data text-sm text-primary uppercase tracking-wider">06</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Status Badges</h3>
         </div>
 
@@ -385,7 +444,7 @@ export const InterfaceKit = () => {
       {/* Callouts Showcase */}
       <div>
         <div className="flex items-center gap-4 mb-8">
-          <span className="font-data text-sm text-primary uppercase tracking-wider">06</span>
+          <span className="font-data text-sm text-primary uppercase tracking-wider">07</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Callouts</h3>
         </div>
 
