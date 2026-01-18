@@ -103,9 +103,9 @@ const PrintedMaterials = () => {
                 {/* Green edge accent */}
                 <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
                 
-                {/* Logo and name */}
-                <div className="flex items-start gap-2 pl-2">
-                  <div className="w-5 h-5 mt-0.5">
+                {/* Logo and name - 140% ratio: text-[10px] → 14px icon (w-3.5) */}
+                <div className="flex items-start gap-1.5 pl-2">
+                  <div className="w-3.5 h-3.5 mt-0.5">
                     <RhosonicsLogo variant="gradient" />
                   </div>
                   <div>
@@ -198,9 +198,9 @@ const PrintedMaterials = () => {
                 style={{ transform: 'rotate(45deg)' }}
               />
               
-              {/* Logo */}
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6">
+              {/* Logo - 140% ratio: text-[9px] → 12.6px icon (w-3) */}
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3">
                   <RhosonicsLogo variant="gradient" />
                 </div>
                 <span className="font-logo tracking-wide text-white text-[9px]">RHOSONICS</span>
@@ -239,10 +239,10 @@ const PrintedMaterials = () => {
               {/* Green top accent bar */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
               
-              {/* Header with logo */}
+              {/* Header with logo - 140% ratio: text-[7px] → 9.8px icon (w-2.5) */}
               <div className="flex items-center justify-between pt-2">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-4 h-4">
+                <div className="flex items-center gap-1">
+                  <div className="w-2.5 h-2.5">
                     <RhosonicsLogo variant="dark" />
                   </div>
                   <span className="font-logo tracking-wide text-slate-800 text-[7px]">RHOSONICS</span>
@@ -294,9 +294,9 @@ const PrintedMaterials = () => {
               {/* Envelope flap texture hint */}
               <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-slate-50 to-transparent" />
               
-              {/* Logo top left */}
-              <div className="flex items-center gap-1.5 pl-2 relative z-10">
-                <div className="w-4 h-4">
+              {/* Logo top left - 140% ratio: text-[7px] → 9.8px icon (w-2.5) */}
+              <div className="flex items-center gap-1 pl-2 relative z-10">
+                <div className="w-2.5 h-2.5">
                   <RhosonicsLogo variant="dark" />
                 </div>
                 <span className="font-logo tracking-wide text-slate-800 text-[7px]">RHOSONICS</span>
