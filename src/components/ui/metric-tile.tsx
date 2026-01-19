@@ -180,7 +180,7 @@ const MetricTile = React.forwardRef<HTMLDivElement, MetricTileProps>(
                 )}
               </div>
               <span className={cn(
-                "font-ui text-xs",
+                "font-ui text-xs font-medium",
                 trend === "up" && "text-success",
                 trend === "down" && "text-error",
                 trend === "neutral" && (isDark ? "text-current/60" : "text-muted-foreground")
