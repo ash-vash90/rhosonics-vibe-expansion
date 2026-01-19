@@ -286,25 +286,27 @@ export const InterfaceKit = () => {
             </div>
           </div>
 
-          {/* Glass Variant */}
+          {/* Glass Variant - Expanded Showcase */}
           <div className="flex flex-col gap-6">
             <div>
               <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Glass</span>
-              <p className="text-xs text-muted-foreground mt-1">Frosted glass for overlay contexts</p>
+              <p className="text-xs text-muted-foreground mt-1">Frosted glass for overlay contexts and immersive dashboards</p>
             </div>
-            <div className="relative p-8 rounded-xl overflow-hidden">
-              {/* Background for glass demo */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800" />
-              <div className="absolute inset-0 opacity-30" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 0v3h1V0H7zm0 13v3h1v-3H7zM0 7v1h3V7H0zm13 0v1h3V7h-3z' fill='%2333993c' fill-opacity='.15'/%3E%3C/svg%3E")`
-              }} />
-              <div className="relative flex flex-wrap gap-5">
+            
+            {/* Primary gradient background */}
+            <div className="relative p-10 rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary via-green-600 to-emerald-700" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent" />
+              <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <MetricTile 
                   variant="glass" 
                   value="94.7" 
                   unit="%" 
                   label="Uptime" 
                   status="live"
+                  trend="up"
+                  trendValue="+0.3% this week"
                 />
                 <MetricTile 
                   variant="glass" 
@@ -312,7 +314,99 @@ export const InterfaceKit = () => {
                   unit="ms" 
                   label="Latency"
                   trend="down"
-                  trendValue="-12%"
+                  trendValue="-12% improved"
+                />
+                <MetricTile 
+                  variant="glass" 
+                  value="1.4M" 
+                  label="Samples" 
+                  status="stable"
+                />
+                <MetricTile 
+                  variant="glass" 
+                  value="847" 
+                  unit="m³/h" 
+                  label="Throughput"
+                  trend="neutral"
+                  trendValue="Within range"
+                />
+              </div>
+            </div>
+
+            {/* Dark slate gradient background */}
+            <div className="relative p-10 rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
+              <div className="absolute inset-0 opacity-20" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23ffffff' fill-opacity='.08'/%3E%3C/svg%3E")`
+              }} />
+              <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <MetricTile 
+                  variant="glass" 
+                  value="23.8" 
+                  unit="°C" 
+                  label="Process Temp"
+                  status="stable"
+                  trend="up"
+                  trendValue="+1.2°C"
+                />
+                <MetricTile 
+                  variant="glass" 
+                  value="4.21" 
+                  unit="bar" 
+                  label="Pressure"
+                  status="warning"
+                  trend="down"
+                  trendValue="-0.4 bar"
+                />
+                <MetricTile 
+                  variant="glass" 
+                  value="99.2" 
+                  unit="%" 
+                  label="Purity"
+                  status="live"
+                />
+              </div>
+            </div>
+
+            {/* Mixed gradient with mesh effect */}
+            <div className="relative p-10 rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-tr from-slate-900 via-emerald-900/50 to-slate-800" />
+              <div className="absolute inset-0 bg-[conic-gradient(from_180deg_at_50%_50%,_var(--tw-gradient-stops))] from-transparent via-primary/5 to-transparent" />
+              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl" />
+              <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <MetricTile 
+                  variant="glass" 
+                  value="12.4" 
+                  unit="%" 
+                  label="Solids Content"
+                  status="stable"
+                />
+                <MetricTile 
+                  variant="glass" 
+                  value="1.502" 
+                  unit="g/L" 
+                  label="Density"
+                  status="live"
+                  trend="up"
+                  trendValue="+0.8%"
+                />
+                <MetricTile 
+                  variant="glass" 
+                  value="2,847" 
+                  label="Active Sensors"
+                  trend="up"
+                  trendValue="+12 online"
+                />
+                <MetricTile 
+                  variant="glass" 
+                  value="0.02" 
+                  unit="%" 
+                  label="Error Rate"
+                  status="stable"
+                  trend="down"
+                  trendValue="-0.01%"
                 />
               </div>
             </div>
