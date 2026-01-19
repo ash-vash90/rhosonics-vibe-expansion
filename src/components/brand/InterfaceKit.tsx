@@ -1,10 +1,11 @@
-import { ArrowRight, Zap } from "lucide-react";
+import { ArrowRight, Zap, Activity, Bell, ChevronRight, Gauge, Radio, Settings, Shield, Waves } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandCallout } from "./BrandCallout";
 import { SDMEcoDevice } from "./SDMEcoDevice";
 import { ChamferedTabs, ChamferedTabsList, ChamferedTabsTrigger } from "@/components/ui/chamfered-tabs";
 import { MetricTile } from "@/components/ui/metric-tile";
 import { LinearProgress } from "@/components/ui/chamfered-progress";
+
 
 export const InterfaceKit = () => {
   return (
@@ -521,6 +522,243 @@ export const InterfaceKit = () => {
 
         <p className="text-muted-foreground max-w-xl mt-8">
           Four variants map to clear intent: neutral guidance (info), explicit warnings (avoid), recommendations (best), and critical errors (error).
+        </p>
+      </div>
+
+      {/* Glass & Gradient Elements */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <span className="font-data text-sm text-primary uppercase tracking-wider">08</span>
+          <h3 className="font-ui text-2xl font-semibold text-foreground">Glass & Gradient Elements</h3>
+        </div>
+        
+        <p className="text-muted-foreground max-w-3xl mb-12">
+          Premium glass-morphism and gradient components for immersive, modern interfaces. 
+          These elements create depth and visual hierarchy through transparency and layered effects.
+        </p>
+
+        {/* Full showcase with gradient background */}
+        <div className="relative rounded-2xl overflow-hidden">
+          {/* Rich gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/30 via-emerald-900/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px]" />
+          <div className="absolute top-20 right-20 w-[300px] h-[300px] bg-emerald-500/10 rounded-full blur-[80px]" />
+          
+          <div className="relative p-8 md:p-12 space-y-12">
+            
+            {/* Glass Cards Row */}
+            <div>
+              <span className="font-data text-xs text-white/60 uppercase tracking-wide mb-6 block">Glass Cards</span>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Feature Card */}
+                <div className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center mb-4 shadow-lg shadow-primary/20">
+                      <Waves className="w-6 h-6 text-white" />
+                    </div>
+                    <h4 className="font-ui text-lg font-semibold text-white mb-2">Ultrasonic Sensing</h4>
+                    <p className="text-sm text-white/60 leading-relaxed">Non-invasive measurement through pipe walls with zero process contact.</p>
+                  </div>
+                </div>
+
+                {/* Stats Card */}
+                <div className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent rounded-xl" />
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-data text-xs text-white/50 uppercase tracking-wide">System Health</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                        <span className="font-data text-xs text-primary uppercase">Online</span>
+                      </div>
+                    </div>
+                    <div className="text-4xl font-ui font-bold text-white mb-1">98.7%</div>
+                    <p className="text-sm text-white/50">Operational efficiency</p>
+                    <div className="mt-4 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full w-[98.7%] bg-gradient-to-r from-primary to-emerald-400 rounded-full" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Card */}
+                <div className="group relative bg-gradient-to-br from-primary/20 to-emerald-600/20 backdrop-blur-xl border border-primary/30 rounded-xl p-6 hover:from-primary/30 hover:to-emerald-600/30 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center mb-4">
+                      <Settings className="w-6 h-6 text-white" />
+                    </div>
+                    <h4 className="font-ui text-lg font-semibold text-white mb-2">Configure System</h4>
+                    <p className="text-sm text-white/60 leading-relaxed mb-4">Adjust sensor parameters and calibration settings.</p>
+                    <div className="flex items-center gap-2 text-primary font-ui text-sm font-medium group-hover:gap-3 transition-all">
+                      Open Settings <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Glass Buttons & Inputs */}
+            <div>
+              <span className="font-data text-xs text-white/60 uppercase tracking-wide mb-6 block">Glass Buttons & Controls</span>
+              <div className="flex flex-wrap gap-4">
+                {/* Primary Glass Button */}
+                <button className="px-6 py-3 bg-gradient-to-r from-primary to-emerald-600 text-white font-ui font-medium rounded-lg shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300">
+                  Primary Action
+                </button>
+                
+                {/* Glass Button */}
+                <button className="px-6 py-3 bg-white/10 backdrop-blur-md text-white font-ui font-medium rounded-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300">
+                  Glass Button
+                </button>
+                
+                {/* Outline Glass */}
+                <button className="px-6 py-3 bg-transparent text-white font-ui font-medium rounded-lg border border-white/30 hover:bg-white/10 hover:border-white/50 transition-all duration-300">
+                  Outline
+                </button>
+
+                {/* Icon Button */}
+                <button className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 flex items-center justify-center hover:bg-white/20 hover:border-white/30 transition-all duration-300">
+                  <Bell className="w-5 h-5 text-white" />
+                </button>
+                
+                {/* Icon Button with badge */}
+                <button className="relative w-12 h-12 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 flex items-center justify-center hover:bg-white/20 hover:border-white/30 transition-all duration-300">
+                  <Activity className="w-5 h-5 text-white" />
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+                    <span className="font-data text-[10px] text-white">3</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Glass Input Fields */}
+            <div>
+              <span className="font-data text-xs text-white/60 uppercase tracking-wide mb-6 block">Glass Inputs</span>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Text Input */}
+                <div className="space-y-2">
+                  <label className="font-data text-xs text-white/50 uppercase tracking-wide">Sensor ID</label>
+                  <input 
+                    type="text" 
+                    placeholder="Enter sensor ID..."
+                    className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg text-white placeholder:text-white/30 font-ui focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all"
+                  />
+                </div>
+                
+                {/* Select-like Input */}
+                <div className="space-y-2">
+                  <label className="font-data text-xs text-white/50 uppercase tracking-wide">Measurement Type</label>
+                  <div className="relative">
+                    <div className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg text-white font-ui flex items-center justify-between cursor-pointer hover:bg-white/10 hover:border-white/20 transition-all">
+                      <span>Density</span>
+                      <ChevronRight className="w-4 h-4 text-white/50 rotate-90" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Search Input */}
+                <div className="space-y-2">
+                  <label className="font-data text-xs text-white/50 uppercase tracking-wide">Search</label>
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      placeholder="Search sensors..."
+                      className="w-full pl-4 pr-12 py-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg text-white placeholder:text-white/30 font-ui focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all"
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary/20 rounded flex items-center justify-center">
+                      <Radio className="w-4 h-4 text-primary" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Glass Tags & Badges */}
+            <div>
+              <span className="font-data text-xs text-white/60 uppercase tracking-wide mb-6 block">Glass Tags & Indicators</span>
+              <div className="flex flex-wrap gap-3">
+                <span className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/10 rounded-full font-data text-xs text-white uppercase tracking-wide">
+                  Ultrasonic
+                </span>
+                <span className="px-4 py-2 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full font-data text-xs text-primary uppercase tracking-wide">
+                  Active
+                </span>
+                <span className="px-4 py-2 bg-gradient-to-r from-primary/20 to-emerald-500/20 backdrop-blur-md border border-primary/20 rounded-full font-data text-xs text-white uppercase tracking-wide flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                  Live Data
+                </span>
+                <span className="px-4 py-2 bg-warning/20 backdrop-blur-md border border-warning/30 rounded-full font-data text-xs text-warning uppercase tracking-wide">
+                  Calibrating
+                </span>
+                <span className="px-4 py-2 bg-white/5 backdrop-blur-md border border-white/20 rounded-full font-ui text-sm text-white flex items-center gap-2">
+                  <Shield className="w-3.5 h-3.5 text-primary" />
+                  Verified
+                </span>
+                <span className="px-4 py-2 bg-white/5 backdrop-blur-md border border-white/20 rounded-full font-ui text-sm text-white flex items-center gap-2">
+                  <Gauge className="w-3.5 h-3.5 text-emerald-400" />
+                  847 m³/h
+                </span>
+              </div>
+            </div>
+
+            {/* Glass Navigation Pills */}
+            <div>
+              <span className="font-data text-xs text-white/60 uppercase tracking-wide mb-6 block">Glass Navigation</span>
+              <div className="inline-flex bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-1.5">
+                <button className="px-5 py-2.5 bg-gradient-to-r from-primary to-emerald-600 text-white font-ui text-sm font-medium rounded-lg shadow-lg shadow-primary/20">
+                  Overview
+                </button>
+                <button className="px-5 py-2.5 text-white/60 font-ui text-sm font-medium rounded-lg hover:text-white hover:bg-white/5 transition-all">
+                  Analytics
+                </button>
+                <button className="px-5 py-2.5 text-white/60 font-ui text-sm font-medium rounded-lg hover:text-white hover:bg-white/5 transition-all">
+                  Reports
+                </button>
+                <button className="px-5 py-2.5 text-white/60 font-ui text-sm font-medium rounded-lg hover:text-white hover:bg-white/5 transition-all">
+                  Settings
+                </button>
+              </div>
+            </div>
+
+            {/* Glass Alert/Notification */}
+            <div>
+              <span className="font-data text-xs text-white/60 uppercase tracking-wide mb-6 block">Glass Notifications</span>
+              <div className="space-y-4 max-w-2xl">
+                {/* Success notification */}
+                <div className="flex items-start gap-4 p-4 bg-primary/10 backdrop-blur-md border border-primary/20 rounded-xl">
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                    <Zap className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-ui font-semibold text-white mb-1">Calibration Complete</h4>
+                    <p className="text-sm text-white/60">Sensor SDM-004 has been successfully calibrated. All readings are within tolerance.</p>
+                  </div>
+                  <button className="text-white/40 hover:text-white transition-colors">×</button>
+                </div>
+
+                {/* Info notification */}
+                <div className="flex items-start gap-4 p-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl">
+                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                    <Activity className="w-5 h-5 text-white/80" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-ui font-semibold text-white mb-1">System Update Available</h4>
+                    <p className="text-sm text-white/60">Version 2.4.1 is ready to install. Includes performance improvements.</p>
+                  </div>
+                  <button className="px-4 py-1.5 bg-white/10 text-white font-ui text-sm rounded-lg hover:bg-white/20 transition-all">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <p className="text-muted-foreground max-w-xl mt-8">
+          Glass elements work best on rich gradient or image backgrounds. Use backdrop blur and subtle borders 
+          to create depth without competing with content.
         </p>
       </div>
     </section>
