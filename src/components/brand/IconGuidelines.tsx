@@ -7,6 +7,7 @@ import {
   Fuel, BatteryCharging, Power, Earth
 } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
+import { IconPicker } from "./IconPicker";
 
 export const IconGuidelines = () => {
   const iconSizes = [
@@ -213,6 +214,16 @@ export const IconGuidelines = () => {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Icon Picker - Full Library */}
+      <div>
+        <div className="flex items-center gap-4 mb-6 md:mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Icon Library</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <IconPicker />
       </div>
     </section>
   );
