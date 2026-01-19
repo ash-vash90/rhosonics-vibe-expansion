@@ -332,7 +332,7 @@ const Index = () => {
       {/* ═══════════════════════════════════════════════════════════════
           MAIN CONTENT WITH SIDEBAR
        ═══════════════════════════════════════════════════════════════ */}
-      <div ref={mainContentRef} className="flex">
+      <div ref={mainContentRef} className="flex min-h-screen">
         {/* Left Navigation Sidebar */}
         <Navigation />
 
