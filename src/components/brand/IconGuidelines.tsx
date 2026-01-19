@@ -1,7 +1,10 @@
 import { 
-  Activity, Droplets, Gauge, Waves, Leaf, Recycle,
+  Activity, Droplets, Gauge, Waves, Leaf, Recycle, TreePine,
   Factory, Ship, Pickaxe, FlaskConical, CheckCircle, AlertTriangle,
-  XCircle, Info
+  XCircle, Info, Mountain, Gem, HardHat, Anchor, Sailboat, Container,
+  Cpu, Microchip, CircuitBoard, Plug, Cylinder, Filter, Wind, CloudRain,
+  Thermometer, Scale, Pipette, Radar, Award, BadgeCheck, ShieldCheck,
+  Fuel, BatteryCharging, Power, Earth
 } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 
@@ -21,6 +24,55 @@ export const IconGuidelines = () => {
         { icon: Activity, label: "Flow" },
         { icon: Gauge, label: "Pressure" },
         { icon: Droplets, label: "Liquid" },
+        { icon: Thermometer, label: "Temp" },
+        { icon: Scale, label: "Weight" },
+        { icon: Pipette, label: "Sample" },
+        { icon: Radar, label: "Sensor" },
+      ]
+    },
+    {
+      name: "Mining",
+      icons: [
+        { icon: Pickaxe, label: "Mining" },
+        { icon: Mountain, label: "Minerals" },
+        { icon: Gem, label: "Ore" },
+        { icon: HardHat, label: "Safety" },
+      ]
+    },
+    {
+      name: "Dredging",
+      icons: [
+        { icon: Ship, label: "Vessel" },
+        { icon: Anchor, label: "Marine" },
+        { icon: Sailboat, label: "Nautical" },
+        { icon: Container, label: "Cargo" },
+      ]
+    },
+    {
+      name: "Semiconductor",
+      icons: [
+        { icon: Cpu, label: "Processor" },
+        { icon: Microchip, label: "Chip" },
+        { icon: CircuitBoard, label: "Circuit" },
+        { icon: Plug, label: "Connect" },
+      ]
+    },
+    {
+      name: "Wastewater",
+      icons: [
+        { icon: Cylinder, label: "Tank" },
+        { icon: Filter, label: "Filter" },
+        { icon: Wind, label: "Aeration" },
+        { icon: CloudRain, label: "Effluent" },
+      ]
+    },
+    {
+      name: "Energy",
+      icons: [
+        { icon: Fuel, label: "Fuel" },
+        { icon: BatteryCharging, label: "Battery" },
+        { icon: Power, label: "Power" },
+        { icon: Factory, label: "Plant" },
       ]
     },
     {
@@ -28,15 +80,17 @@ export const IconGuidelines = () => {
       icons: [
         { icon: Leaf, label: "Eco" },
         { icon: Recycle, label: "Recycle" },
+        { icon: TreePine, label: "Nature" },
+        { icon: Earth, label: "Planet" },
       ]
     },
     {
-      name: "Industries",
+      name: "Badges",
       icons: [
-        { icon: Factory, label: "Industrial" },
-        { icon: Ship, label: "Marine" },
-        { icon: Pickaxe, label: "Mining" },
-        { icon: FlaskConical, label: "Chemical" },
+        { icon: Award, label: "Award" },
+        { icon: BadgeCheck, label: "Verified" },
+        { icon: ShieldCheck, label: "Secure" },
+        { icon: FlaskConical, label: "Lab" },
       ]
     },
   ];
