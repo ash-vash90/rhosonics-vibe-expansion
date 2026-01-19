@@ -2,6 +2,12 @@ import { useState, useMemo, useCallback } from "react";
 import { Search, Copy, Check, X } from "@/lib/icons";
 import type { LucideIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 // Import all icons for the picker
 import {
@@ -496,35 +502,53 @@ export const IconPicker = ({ onSelect, className }: IconPickerProps) => {
                   
                   <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
                     {category.icons.map(({ name, icon: Icon }) => (
-                      <button
-                        key={name}
-                        onClick={() => handleSelectIcon(name, Icon)}
-                        className={cn(
-                          "group relative aspect-square flex flex-col items-center justify-center gap-1 p-2 rounded-lg border border-transparent",
-                          "hover:border-primary hover:bg-primary/5 transition-all",
-                          "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
-                          copiedIcon === name && "border-primary bg-primary/10"
-                        )}
-                        title={`${name} - Click to copy import`}
-                        aria-label={`${name} icon`}
-                      >
-                        <Icon className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
-                        <span className="text-[10px] text-muted-foreground truncate w-full text-center group-hover:text-primary transition-colors">
-                          {name}
-                        </span>
-                        
-                        {/* Copy indicator */}
-                        {copiedIcon === name && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-primary/90 rounded-lg">
-                            <Check className="w-4 h-4 text-white" />
-                          </div>
-                        )}
-                        
-                        {/* Hover copy icon */}
-                        <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Copy className="w-3 h-3 text-muted-foreground" />
-                        </div>
-                      </button>
+                      <TooltipProvider key={name} delayDuration={300}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              onClick={() => handleSelectIcon(name, Icon)}
+                              className={cn(
+                                "group relative aspect-square flex flex-col items-center justify-center gap-1 p-2 rounded-lg border border-transparent",
+                                "hover:border-primary hover:bg-primary/5 transition-all",
+                                "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
+                                copiedIcon === name && "border-primary bg-primary/10"
+                              )}
+                              aria-label={`${name} icon`}
+                            >
+                              <Icon className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
+                              <span className="text-[10px] text-muted-foreground truncate w-full text-center group-hover:text-primary transition-colors">
+                                {name}
+                              </span>
+                              
+                              {/* Copy indicator */}
+                              {copiedIcon === name && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-primary/90 rounded-lg">
+                                  <Check className="w-4 h-4 text-white" />
+                                </div>
+                              )}
+                              
+                              {/* Hover copy icon */}
+                              <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Copy className="w-3 h-3 text-muted-foreground" />
+                              </div>
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent 
+                            side="top" 
+                            className="p-3 bg-rho-obsidian border-rho-obsidian/50"
+                          >
+                            <div className="flex flex-col items-center gap-2">
+                              <div className="p-3 bg-white/10 rounded-lg">
+                                <Icon className="w-8 h-8 text-white" />
+                              </div>
+                              <div className="text-center">
+                                <p className="font-ui font-semibold text-white text-sm">{name}</p>
+                                <p className="text-[10px] text-white/60 mt-1">Click to copy SVG</p>
+                              </div>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     ))}
                   </div>
                 </div>
@@ -537,12 +561,9 @@ export const IconPicker = ({ onSelect, className }: IconPickerProps) => {
       {/* Usage Instructions */}
       <div className="bg-muted/50 rounded-lg p-4 border border-border">
         <h4 className="font-ui font-semibold text-sm text-foreground mb-2">Usage</h4>
-        <p className="text-xs text-muted-foreground mb-3">
-          Click any icon to copy its import statement. All icons are sourced from the centralized icon library.
+        <p className="text-xs text-muted-foreground">
+          Hover over any icon to see a preview. Click to copy the SVG markup to your clipboard.
         </p>
-        <code className="block bg-rho-obsidian text-slate-100 text-xs p-3 rounded font-mono">
-          import {'{ IconName }'} from "@/lib/icons";
-        </code>
       </div>
     </div>
   );
