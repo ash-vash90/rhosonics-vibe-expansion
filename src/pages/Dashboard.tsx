@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { 
   Activity, 
   AlertTriangle, 
@@ -18,28 +19,42 @@ import { Link } from "react-router-dom";
 import { MetricTile } from "@/components/ui/metric-tile";
 import { Button } from "@/components/ui/button";
 import { ChamferedTabs, ChamferedTabsList, ChamferedTabsTrigger } from "@/components/ui/chamfered-tabs";
+import { GlassChart } from "@/components/ui/glass-chart";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const Dashboard = () => {
+  const [isDark, setIsDark] = useState(true);
+
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-slate-950' : 'bg-slate-100'}`}>
       {/* Gradient Background Layer */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/15 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-emerald-900/20 via-transparent to-transparent" />
-        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-emerald-600/10 rounded-full blur-[120px]" />
+      <div className="fixed inset-0 pointer-events-none transition-opacity duration-500">
+        {isDark ? (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/15 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-emerald-900/20 via-transparent to-transparent" />
+            <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[150px]" />
+            <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-emerald-600/10 rounded-full blur-[120px]" />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-white via-slate-50 to-white" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+            <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
+          </>
+        )}
         {/* Industrial grid pattern */}
         <div 
-          className="absolute inset-0 opacity-[0.03]" 
+          className={`absolute inset-0 ${isDark ? 'opacity-[0.03]' : 'opacity-[0.02]'}`}
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h60v60H0V0zm1 1v58h58V1H1z' fill='%23ffffff' fill-opacity='1'/%3E%3C/svg%3E")`
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h60v60H0V0zm1 1v58h58V1H1z' fill='${isDark ? '%23ffffff' : '%23000000'}' fill-opacity='1'/%3E%3C/svg%3E")`
           }} 
         />
       </div>
 
       {/* Header */}
-      <header className="relative z-10 border-b border-white/10">
+      <header className={`relative z-10 border-b transition-colors duration-500 ${isDark ? 'border-white/10' : 'border-slate-200'}`}>
         <div className="max-w-[1600px] mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
@@ -47,16 +62,18 @@ const Dashboard = () => {
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center shadow-lg shadow-primary/30">
                   <Waves className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-logo text-lg text-white tracking-tight">RHOSONICS</span>
+                <span className={`font-logo text-lg tracking-tight transition-colors ${isDark ? 'text-white' : 'text-slate-900'}`}>RHOSONICS</span>
               </Link>
-              <div className="hidden md:flex items-center gap-1 px-3 py-1.5 bg-white/5 rounded-full border border-white/10">
+              <div className={`hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full border transition-colors ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200'}`}>
                 <LayoutDashboard className="w-4 h-4 text-primary" />
-                <span className="font-data text-xs text-white/70 uppercase tracking-wide">Control Center</span>
+                <span className={`font-data text-xs uppercase tracking-wide ${isDark ? 'text-white/70' : 'text-slate-600'}`}>Control Center</span>
               </div>
             </div>
 
             <div className="flex items-center gap-4">
-              <ChamferedTabs variant="obsidian" defaultValue="live" className="hidden lg:block">
+              <ThemeToggle isDark={isDark} onToggle={() => setIsDark(!isDark)} />
+              
+              <ChamferedTabs variant={isDark ? "obsidian" : "outline"} defaultValue="live" className="hidden lg:block">
                 <ChamferedTabsList>
                   <ChamferedTabsTrigger value="live">Live</ChamferedTabsTrigger>
                   <ChamferedTabsTrigger value="historical">Historical</ChamferedTabsTrigger>
@@ -64,15 +81,15 @@ const Dashboard = () => {
                 </ChamferedTabsList>
               </ChamferedTabs>
 
-              <button className="relative w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-all">
-                <Bell className="w-5 h-5 text-white/70" />
+              <button className={`relative w-10 h-10 backdrop-blur-md rounded-lg border flex items-center justify-center transition-all ${isDark ? 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20' : 'bg-white border-slate-200 hover:bg-slate-50'}`}>
+                <Bell className={`w-5 h-5 ${isDark ? 'text-white/70' : 'text-slate-600'}`} />
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
                   <span className="font-data text-[10px] text-white">2</span>
                 </span>
               </button>
               
-              <button className="w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-all">
-                <Settings className="w-5 h-5 text-white/70" />
+              <button className={`w-10 h-10 backdrop-blur-md rounded-lg border flex items-center justify-center transition-all ${isDark ? 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20' : 'bg-white border-slate-200 hover:bg-slate-50'}`}>
+                <Settings className={`w-5 h-5 ${isDark ? 'text-white/70' : 'text-slate-600'}`} />
               </button>
             </div>
           </div>
@@ -305,6 +322,9 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+
+            {/* Historical Trends Chart */}
+            <GlassChart title="Historical Sensor Data" isDark={isDark} />
           </div>
 
           {/* Right Column - System Status */}
