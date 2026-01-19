@@ -191,7 +191,7 @@ export const InterfaceKit = () => {
       {/* Metric Tiles Showcase */}
       <div>
         <div className="flex items-center gap-4 mb-8">
-          <span className="font-data text-sm text-primary uppercase tracking-wider">04</span>
+          <span className="font-data text-sm text-primary uppercase tracking-wider">03</span>
           <h3 className="font-ui text-2xl font-semibold text-foreground">Metric Tiles</h3>
         </div>
         
@@ -200,15 +200,17 @@ export const InterfaceKit = () => {
           <div className="flex flex-col gap-6 pb-8 border-b border-border">
             <div>
               <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Obsidian</span>
-              <p className="text-xs text-muted-foreground mt-1">Dark industrial for dashboards</p>
+              <p className="text-xs text-muted-foreground mt-1">Premium dark variant for control room dashboards</p>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-5">
               <MetricTile 
                 variant="obsidian" 
                 value="1.4502" 
                 unit="g/L" 
                 label="Density" 
-                status="live" 
+                status="live"
+                trend="up"
+                trendValue="+2.3% from avg"
               />
               <MetricTile 
                 variant="obsidian" 
@@ -221,7 +223,9 @@ export const InterfaceKit = () => {
                 variant="obsidian" 
                 value="23.8" 
                 unit="°C" 
-                label="Temp" 
+                label="Temp"
+                trend="neutral"
+                trendValue="Stable"
               />
             </div>
           </div>
@@ -230,15 +234,17 @@ export const InterfaceKit = () => {
           <div className="flex flex-col gap-6 pb-8 border-b border-border">
             <div>
               <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Primary</span>
-              <p className="text-xs text-muted-foreground mt-1">Brand accent for highlights</p>
+              <p className="text-xs text-muted-foreground mt-1">Brand accent for key performance indicators</p>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-5">
               <MetricTile 
                 variant="primary" 
                 value="98.2" 
                 unit="%" 
                 label="Efficiency" 
-                status="stable" 
+                status="stable"
+                trend="up"
+                trendValue="+5.1%"
               />
               <MetricTile 
                 variant="primary" 
@@ -250,18 +256,20 @@ export const InterfaceKit = () => {
           </div>
 
           {/* Outline Variant */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 pb-8 border-b border-border">
             <div>
               <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Outline</span>
-              <p className="text-xs text-muted-foreground mt-1">Subtle for dense layouts</p>
+              <p className="text-xs text-muted-foreground mt-1">Subtle variant for dense data layouts</p>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-5">
               <MetricTile 
                 variant="outline" 
                 value="4.2" 
                 unit="bar" 
                 label="Pressure" 
-                status="warning" 
+                status="warning"
+                trend="down"
+                trendValue="-0.8 bar"
               />
               <MetricTile 
                 variant="outline" 
@@ -277,11 +285,43 @@ export const InterfaceKit = () => {
               />
             </div>
           </div>
+
+          {/* Glass Variant */}
+          <div className="flex flex-col gap-6">
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Glass</span>
+              <p className="text-xs text-muted-foreground mt-1">Frosted glass for overlay contexts</p>
+            </div>
+            <div className="relative p-8 rounded-xl overflow-hidden">
+              {/* Background for glass demo */}
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800" />
+              <div className="absolute inset-0 opacity-30" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 0v3h1V0H7zm0 13v3h1v-3H7zM0 7v1h3V7H0zm13 0v1h3V7h-3z' fill='%2333993c' fill-opacity='.15'/%3E%3C/svg%3E")`
+              }} />
+              <div className="relative flex flex-wrap gap-5">
+                <MetricTile 
+                  variant="glass" 
+                  value="94.7" 
+                  unit="%" 
+                  label="Uptime" 
+                  status="live"
+                />
+                <MetricTile 
+                  variant="glass" 
+                  value="3.2" 
+                  unit="ms" 
+                  label="Latency"
+                  trend="down"
+                  trendValue="-12%"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
         <p className="text-muted-foreground max-w-xl mt-8">
-          Compact chamfered tiles for dashboard grids. Large numerals ensure readability, 
-          optional status indicators provide at-a-glance operational context.
+          Premium metric tiles with gradient depth, status glow effects, and optional trend indicators. 
+          Designed for instant readability at any distance.
         </p>
       </div>
 
