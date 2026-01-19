@@ -196,64 +196,7 @@ export const IconGuidelines = () => {
                 Use muted colors for secondary/decorative icon usage
               </li>
             </ul>
-      </div>
-
-      {/* Icon + Text Pairings */}
-      <div>
-        <div className="flex items-center gap-4 mb-6 md:mb-8">
-          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Icon + Text Pairings</h3>
-          <div className="h-px flex-1 bg-border" />
-        </div>
-        
-        <p className="text-muted-foreground text-sm mb-6">
-          Icons should always be paired with descriptive text labels. The icon accelerates recognition; the text ensures clarity.
-        </p>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {iconPairings.map((category) => (
-            <div key={category.category} className="space-y-4">
-              <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider">{category.category}</h4>
-              <div className="space-y-3">
-                {category.pairs.map((pair) => (
-                  <div key={pair.label} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg border border-border/50 group hover:border-primary/30 transition-colors">
-                    <pair.icon className="w-5 h-5 text-primary flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <span className="text-sm font-medium block">{pair.label}</span>
-                      <span className="text-[10px] text-muted-foreground">{pair.context}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-8 grid md:grid-cols-2 gap-6">
-          <div className="border border-success/30 bg-success/5 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <CheckCircle className="w-4 h-4 text-success" />
-              <span className="text-xs font-medium text-success uppercase tracking-wider">Correct Pairing</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-background rounded border border-border">
-              <Download className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium">Export Report</span>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">Icon supports the label, sized proportionally</p>
           </div>
-
-          <div className="border border-error/30 bg-error/5 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <XCircle className="w-4 h-4 text-error" />
-              <span className="text-xs font-medium text-error uppercase tracking-wider">Incorrect Pairing</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-background rounded border border-border">
-              <Download className="w-8 h-8 text-primary" />
-              <span className="text-xs">Export</span>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">Icon dominates, text is too small and vague</p>
-          </div>
-        </div>
-      </div>
 
           {/* Don'ts */}
           <div className="border border-error/30 bg-error/5 rounded-lg p-6">
@@ -283,6 +226,58 @@ export const IconGuidelines = () => {
                 Rely on icons alone for critical actions or information
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Icon + Text Pairings */}
+      <div>
+        <div className="flex items-center gap-4 mb-6 md:mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Icon + Text Pairings</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <p className="text-muted-foreground text-sm mb-6">
+          Icons accelerate recognition; text ensures clarity. Always pair icons with descriptive labels.
+        </p>
+
+        {/* Inline horizontal pairings strip */}
+        <div className="border border-border rounded-lg overflow-hidden">
+          {iconPairings.map((category, catIdx) => (
+            <div 
+              key={category.category} 
+              className={`flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 p-4 ${catIdx > 0 ? 'border-t border-border' : ''}`}
+            >
+              <span className="font-data text-xs text-muted-foreground uppercase w-24 flex-shrink-0">{category.category}</span>
+              <div className="flex flex-wrap gap-6">
+                {category.pairs.map((pair) => (
+                  <div key={pair.label} className="flex items-center gap-2 text-sm">
+                    <pair.icon className="w-4 h-4 text-primary" />
+                    <span className="text-foreground">{pair.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Correct vs Incorrect - compact inline */}
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
+          <div className="flex items-center gap-4 p-4 border border-success/30 bg-success/5 rounded-lg">
+            <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+            <div className="flex items-center gap-2 px-3 py-2 bg-background rounded border border-border">
+              <Download className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium">Export Report</span>
+            </div>
+            <span className="text-xs text-muted-foreground">Proportional sizing</span>
+          </div>
+          <div className="flex items-center gap-4 p-4 border border-error/30 bg-error/5 rounded-lg">
+            <XCircle className="w-4 h-4 text-error flex-shrink-0" />
+            <div className="flex items-center gap-2 px-3 py-2 bg-background rounded border border-border">
+              <Download className="w-7 h-7 text-primary" />
+              <span className="text-xs">Export</span>
+            </div>
+            <span className="text-xs text-muted-foreground">Icon dominates</span>
           </div>
         </div>
       </div>
