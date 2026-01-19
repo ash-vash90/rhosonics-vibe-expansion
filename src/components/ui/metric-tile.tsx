@@ -101,7 +101,7 @@ const MetricTile = React.forwardRef<HTMLDivElement, MetricTileProps>(
           {/* Label row with optional status */}
           <div className="flex items-center justify-between gap-3 mb-3">
             <span className={cn(
-              "font-ui text-[11px] uppercase tracking-[0.1em] font-medium",
+              "font-data text-[11px] uppercase tracking-[0.15em] font-medium",
               isDark ? "text-current/60" : "text-muted-foreground"
             )}>
               {label}
@@ -124,7 +124,7 @@ const MetricTile = React.forwardRef<HTMLDivElement, MetricTileProps>(
                   )} />
                 </div>
                 <span className={cn(
-                  "font-ui text-[10px] uppercase tracking-wide font-medium",
+                  "font-data text-[10px] uppercase tracking-wide font-medium",
                   isOutline ? statusConfig[status].text : "text-current/80"
                 )}>
                   {status}
@@ -136,7 +136,7 @@ const MetricTile = React.forwardRef<HTMLDivElement, MetricTileProps>(
           {/* Value display */}
           <div className="flex items-baseline gap-1.5">
             <span className={cn(
-              "font-data font-medium text-4xl tracking-tight leading-none",
+              "font-ui font-semibold text-4xl tracking-tight leading-none",
               isDark ? "text-current" : "text-foreground"
             )}>
               {value}
