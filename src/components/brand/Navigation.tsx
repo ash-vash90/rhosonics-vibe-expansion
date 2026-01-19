@@ -336,92 +336,94 @@ export const Navigation = () => {
       </nav>
 
       {/* Navigation Sidebar — Desktop (in-flow, sticky, preserves space) */}
-      <nav
-        ref={desktopNavRef}
-        className="hidden xl:block sticky top-0 h-screen w-72 bg-rho-obsidian text-slate-100 z-20 flex-shrink-0 overflow-y-auto"
-      >
-        
-        {/* Header */}
-        <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
-          <button 
-            onClick={() => scrollToSection('about')}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-          >
-            {/* 150% ratio: text-xs(12px)→18px icon */}
-            <div className="w-[18px] h-[18px]">
-              <RhosonicsLogo variant="gradient" />
-            </div>
-            <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
-          </button>
-        </div>
-
-        {/* Navigation Links - Collapsible sections */}
-        <div className="p-4 sm:p-6 space-y-2 overflow-y-auto">
-          {navSections.map((section) => {
-            const sectionHasActive = section.items.some(item => item.id === activeSection);
-            return (
-            <div key={section.id} className="border-b border-slate-800/50 last:border-b-0">
-              <button
-                onClick={() => toggleSection(section.id)}
-                className={`w-full flex items-center justify-between py-2.5 text-left hover:text-primary transition-colors group ${
-                  sectionHasActive ? 'text-primary' : ''
-                }`}
-              >
-                <div className={`label-tech transition-colors ${
-                  sectionHasActive ? 'text-primary' : 'text-slate-400 group-hover:text-primary'
-                }`}>
-                  <span className="text-primary">{section.id}</span>
-                  <span className="mx-2 text-slate-600">/</span>
-                  {section.label}
-                </div>
-                <ChevronDown 
-                  className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
-                    expandedSections.includes(section.id) ? "rotate-180" : ""
-                  }`} 
-                />
-              </button>
-              <div className={`overflow-hidden transition-all duration-200 ${
-                expandedSections.includes(section.id) ? "max-h-96 pb-2" : "max-h-0"
-              }`}>
-                {section.items.map((item) => {
-                  const isActive = activeSection === item.id;
-                  
-                  return (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors ${
-                      isActive 
-                        ? 'text-primary bg-primary/10 border-l-2 border-primary' 
-                        : item.highlight 
-                          ? 'text-primary/70 font-medium hover:text-primary' 
-                          : 'hover:text-primary'
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    <ChevronRight className={`w-3 h-3 transition-opacity ${
-                      isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                    }`} />
-                  </button>
-                  );
-                })}
+      <div className="hidden xl:block sticky top-0 h-screen w-72 z-20 flex-shrink-0">
+        <nav
+          ref={desktopNavRef}
+          className="h-full w-full bg-rho-obsidian text-slate-100 overflow-y-auto"
+        >
+          
+          {/* Header */}
+          <div className="p-4 sm:p-6 border-b border-slate-800/80 flex justify-between items-center">
+            <button 
+              onClick={() => scrollToSection('about')}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
+              {/* 150% ratio: text-xs(12px)→18px icon */}
+              <div className="w-[18px] h-[18px]">
+                <RhosonicsLogo variant="gradient" />
               </div>
-            </div>
-            );
-          })}
+              <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
+            </button>
+          </div>
 
-          {/* Version Badge */}
-          <div className="pt-4">
-            <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 rounded-md">
-              <Zap className="w-4 h-4 text-primary" />
-              <div>
-                <span className="label-tech-sm text-slate-500 block">STATUS</span>
-                <span className="text-sm text-slate-300 font-medium">System Active</span>
+          {/* Navigation Links - Collapsible sections */}
+          <div className="p-4 sm:p-6 space-y-2 overflow-y-auto">
+            {navSections.map((section) => {
+              const sectionHasActive = section.items.some(item => item.id === activeSection);
+              return (
+              <div key={section.id} className="border-b border-slate-800/50 last:border-b-0">
+                <button
+                  onClick={() => toggleSection(section.id)}
+                  className={`w-full flex items-center justify-between py-2.5 text-left hover:text-primary transition-colors group ${
+                    sectionHasActive ? 'text-primary' : ''
+                  }`}
+                >
+                  <div className={`label-tech transition-colors ${
+                    sectionHasActive ? 'text-primary' : 'text-slate-400 group-hover:text-primary'
+                  }`}>
+                    <span className="text-primary">{section.id}</span>
+                    <span className="mx-2 text-slate-600">/</span>
+                    {section.label}
+                  </div>
+                  <ChevronDown 
+                    className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
+                      expandedSections.includes(section.id) ? "rotate-180" : ""
+                    }`} 
+                  />
+                </button>
+                <div className={`overflow-hidden transition-all duration-200 ${
+                  expandedSections.includes(section.id) ? "max-h-96 pb-2" : "max-h-0"
+                }`}>
+                  {section.items.map((item) => {
+                    const isActive = activeSection === item.id;
+                    
+                    return (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors ${
+                        isActive 
+                          ? 'text-primary bg-primary/10 border-l-2 border-primary' 
+                          : item.highlight 
+                            ? 'text-primary/70 font-medium hover:text-primary' 
+                            : 'hover:text-primary'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <ChevronRight className={`w-3 h-3 transition-opacity ${
+                        isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                      }`} />
+                    </button>
+                    );
+                  })}
+                </div>
+              </div>
+              );
+            })}
+
+            {/* Version Badge */}
+            <div className="pt-4">
+              <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 rounded-md">
+                <Zap className="w-4 h-4 text-primary" />
+                <div>
+                  <span className="label-tech-sm text-slate-500 block">STATUS</span>
+                  <span className="text-sm text-slate-300 font-medium">System Active</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* Top Header Bar - Mobile & Tablet */}
       <div className="fixed top-0 left-0 right-0 h-14 bg-rho-obsidian/95 backdrop-blur-sm border-b border-slate-800/80 flex items-center justify-between px-4 z-30 xl:hidden">
