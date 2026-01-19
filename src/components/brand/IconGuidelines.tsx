@@ -1,4 +1,9 @@
-import { Activity, Factory, CheckCircle, AlertTriangle, XCircle, Info } from "@/lib/icons";
+import { 
+  Activity, Factory, CheckCircle, AlertTriangle, XCircle, Info,
+  Download, Upload, Settings, Search, Plus, Trash2, Save,
+  Play, Pause, RefreshCw, Filter, ChevronRight,
+  Waves, Gauge, Droplets, Zap
+} from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 import { IconPicker } from "./IconPicker";
 
@@ -10,12 +15,50 @@ export const IconGuidelines = () => {
     { name: "xl", size: 32, use: "Hero elements" },
   ];
 
-
   const iconStates = [
     { icon: CheckCircle, state: "Success", color: "text-success", bg: "bg-success" },
     { icon: AlertTriangle, state: "Warning", color: "text-warning", bg: "bg-warning" },
     { icon: XCircle, state: "Error", color: "text-error", bg: "bg-error" },
     { icon: Info, state: "Info", color: "text-slate-600", bg: "bg-slate-600" },
+  ];
+
+  const iconPairings = [
+    { 
+      category: "Actions",
+      pairs: [
+        { icon: Download, label: "Export Data", context: "Primary buttons" },
+        { icon: Upload, label: "Import File", context: "Primary buttons" },
+        { icon: Save, label: "Save Changes", context: "Form actions" },
+        { icon: Trash2, label: "Delete", context: "Destructive actions" },
+      ]
+    },
+    {
+      category: "Navigation",
+      pairs: [
+        { icon: Settings, label: "Settings", context: "Menu items" },
+        { icon: Search, label: "Search", context: "Input fields" },
+        { icon: Filter, label: "Filters", context: "Data controls" },
+        { icon: ChevronRight, label: "View Details", context: "List items" },
+      ]
+    },
+    {
+      category: "Controls",
+      pairs: [
+        { icon: Play, label: "Start Process", context: "System controls" },
+        { icon: Pause, label: "Pause", context: "System controls" },
+        { icon: RefreshCw, label: "Refresh", context: "Data refresh" },
+        { icon: Plus, label: "Add New", context: "Creation actions" },
+      ]
+    },
+    {
+      category: "Measurements",
+      pairs: [
+        { icon: Waves, label: "Density", context: "Sensor data" },
+        { icon: Gauge, label: "Pressure", context: "Sensor data" },
+        { icon: Droplets, label: "Flow Rate", context: "Sensor data" },
+        { icon: Zap, label: "Power", context: "Sensor data" },
+      ]
+    },
   ];
 
   return (
@@ -153,7 +196,64 @@ export const IconGuidelines = () => {
                 Use muted colors for secondary/decorative icon usage
               </li>
             </ul>
+      </div>
+
+      {/* Icon + Text Pairings */}
+      <div>
+        <div className="flex items-center gap-4 mb-6 md:mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Icon + Text Pairings</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <p className="text-muted-foreground text-sm mb-6">
+          Icons should always be paired with descriptive text labels. The icon accelerates recognition; the text ensures clarity.
+        </p>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {iconPairings.map((category) => (
+            <div key={category.category} className="space-y-4">
+              <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider">{category.category}</h4>
+              <div className="space-y-3">
+                {category.pairs.map((pair) => (
+                  <div key={pair.label} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg border border-border/50 group hover:border-primary/30 transition-colors">
+                    <pair.icon className="w-5 h-5 text-primary flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <span className="text-sm font-medium block">{pair.label}</span>
+                      <span className="text-[10px] text-muted-foreground">{pair.context}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 grid md:grid-cols-2 gap-6">
+          <div className="border border-success/30 bg-success/5 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <CheckCircle className="w-4 h-4 text-success" />
+              <span className="text-xs font-medium text-success uppercase tracking-wider">Correct Pairing</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-background rounded border border-border">
+              <Download className="w-5 h-5 text-primary" />
+              <span className="text-sm font-medium">Export Report</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">Icon supports the label, sized proportionally</p>
           </div>
+
+          <div className="border border-error/30 bg-error/5 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <XCircle className="w-4 h-4 text-error" />
+              <span className="text-xs font-medium text-error uppercase tracking-wider">Incorrect Pairing</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-background rounded border border-border">
+              <Download className="w-8 h-8 text-primary" />
+              <span className="text-xs">Export</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">Icon dominates, text is too small and vague</p>
+          </div>
+        </div>
+      </div>
 
           {/* Don'ts */}
           <div className="border border-error/30 bg-error/5 rounded-lg p-6">
