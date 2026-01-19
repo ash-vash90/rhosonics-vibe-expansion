@@ -26,7 +26,6 @@ const IndustryApplications = lazy(() => import("@/components/brand/IndustryAppli
 const ImageryGuidelines = lazy(() => import("@/components/brand/ImageryGuidelines"));
 const VoiceTone = lazy(() => import("@/components/brand/VoiceTone"));
 const MotionDesign = lazy(() => import("@/components/brand/MotionDesign"));
-const DosAndDonts = lazy(() => import("@/components/brand/DosAndDonts"));
 const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
 const HeroParticles = lazy(() => import("@/components/brand/HeroParticles"));
@@ -458,22 +457,6 @@ const Index = () => {
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
                 <IconGuidelines />
-              </Suspense>
-            </ErrorBoundary>
-          </div>
-
-          <div className="mt-16 md:mt-24">
-            <div className="mb-8 md:mb-12">
-              <div className="flex items-baseline gap-3 mb-3">
-                <span className="font-data text-xs text-muted-foreground">06.2</span>
-                <div className="h-px flex-1 bg-border max-w-12" />
-              </div>
-              <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Dos & Don’ts</h3>
-              <p className="text-base text-muted-foreground">Non-negotiables for consistent execution.</p>
-            </div>
-            <ErrorBoundary>
-              <Suspense fallback={<SectionLoader />}>
-                <DosAndDonts />
               </Suspense>
             </ErrorBoundary>
           </div>

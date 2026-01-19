@@ -1,6 +1,7 @@
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { BrandCallout } from "./BrandCallout";
 import { LogoDownloadButtons } from "./LogoDownloadButtons";
+import { Check, X } from "lucide-react";
 import { 
   logoVariants, 
   generateLockupSVG, 
@@ -318,6 +319,64 @@ export const LogoAssets = () => {
               <span className="text-sm text-muted-foreground">{ctx.desc}</span>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Dos & Don'ts */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Dos & Don'ts</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-0 border border-border rounded-lg overflow-hidden">
+          <div className="p-8 bg-eco-surface border-r border-border">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center">
+                <Check className="w-4 h-4" />
+              </span>
+              <h4 className="font-ui font-bold text-xl text-foreground">Always</h4>
+            </div>
+            <ul className="space-y-3">
+              {[
+                "Maintain minimum clear space around the logo",
+                "Use high contrast for data displays",
+                "Include units with all measurements",
+                "Use chamfered button shape for CTAs",
+                "Apply brand colors from approved palette",
+                "Use semantic font roles consistently"
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3 text-muted-foreground">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="p-8 bg-error-surface">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-8 h-8 bg-error text-white rounded-full flex items-center justify-center">
+                <X className="w-4 h-4" />
+              </span>
+              <h4 className="font-ui font-bold text-xl text-foreground">Never</h4>
+            </div>
+            <ul className="space-y-3">
+              {[
+                "Add drop shadows or glows to the logo",
+                "Use decorative or script fonts",
+                "Apply gradient to body text",
+                "Use Lime Accent as a standalone color",
+                "Rotate or distort the logo",
+                "Use Unbounded for anything except the wordmark"
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3 text-muted-foreground">
+                  <span className="w-1.5 h-1.5 bg-destructive rounded-full mt-2 flex-shrink-0"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
