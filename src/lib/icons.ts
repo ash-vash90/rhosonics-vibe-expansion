@@ -123,8 +123,16 @@ export { Waves } from "lucide-react";
 export { Droplets } from "lucide-react";
 export { Beaker } from "lucide-react";
 export { FlaskConical } from "lucide-react";
+export { Thermometer } from "lucide-react";
+export { Scale } from "lucide-react";
+export { Ruler } from "lucide-react";
+export { Pipette } from "lucide-react";
+export { TestTube2 } from "lucide-react";
+export { Atom } from "lucide-react";
+export { CircleDot } from "lucide-react";
+export { Radar } from "lucide-react";
 
-// Industry
+// Industry - Core
 export { Factory } from "lucide-react";
 export { Ship } from "lucide-react";
 export { Anchor } from "lucide-react";
@@ -134,26 +142,120 @@ export { Wrench } from "lucide-react";
 export { Settings } from "lucide-react";
 export { Package } from "lucide-react";
 
+// Industry - Mining & Minerals
+export { Mountain } from "lucide-react";
+export { Gem } from "lucide-react";
+export { Shovel } from "lucide-react";
+export { HardHat } from "lucide-react";
+
+// Industry - Dredging & Marine
+export { Sailboat } from "lucide-react";
+export { Container } from "lucide-react";
+export { Truck } from "lucide-react";
+
+// Industry - Semiconductor & Tech
+export { Microchip } from "lucide-react";
+export { CircuitBoard } from "lucide-react";
+export { Plug } from "lucide-react";
+export { Cable } from "lucide-react";
+export { Wifi } from "lucide-react";
+export { Radio } from "lucide-react";
+
+// Industry - Wastewater & Treatment
+export { Cylinder } from "lucide-react";
+export { Filter } from "lucide-react";
+export { Wind } from "lucide-react";
+export { CloudRain } from "lucide-react";
+
+// Industry - Energy & Power
+export { Fuel } from "lucide-react";
+export { BatteryCharging } from "lucide-react";
+export { Power } from "lucide-react";
+export { PlugZap } from "lucide-react";
+
 // Sustainability
 export { Leaf } from "lucide-react";
 export { Recycle } from "lucide-react";
+export { TreePine } from "lucide-react";
+export { Sprout } from "lucide-react";
+export { Earth } from "lucide-react";
 
 // Location & Organization
 export { Building2 } from "lucide-react";
 export { MapPin } from "lucide-react";
 export { Globe } from "lucide-react";
+export { Warehouse } from "lucide-react";
+export { Landmark } from "lucide-react";
+export { Building } from "lucide-react";
+export { Map } from "lucide-react";
+export { Navigation2 } from "lucide-react";
+export { Compass } from "lucide-react";
 
-// Finance
+// Finance & Business
 export { DollarSign } from "lucide-react";
 export { Trophy } from "lucide-react";
+export { Coins } from "lucide-react";
+export { CreditCard } from "lucide-react";
+export { Receipt } from "lucide-react";
+export { PiggyBank } from "lucide-react";
+export { Briefcase } from "lucide-react";
+export { HandCoins } from "lucide-react";
 
-// Design Principles
+// Cards & Badges
+export { Award } from "lucide-react";
+export { Medal } from "lucide-react";
+export { Crown } from "lucide-react";
+export { BadgeCheck } from "lucide-react";
+export { Verified } from "lucide-react";
+export { ShieldCheck } from "lucide-react";
+export { CircleCheck } from "lucide-react";
+
+// Communication & Contact
+export { Phone } from "lucide-react";
+export { AtSign } from "lucide-react";
+export { Send } from "lucide-react";
+export { MessageCircle } from "lucide-react";
+export { Bell } from "lucide-react";
+export { BellRing } from "lucide-react";
+export { Inbox } from "lucide-react";
+
+// Arrows & Direction
+export { ArrowUp } from "lucide-react";
+export { ArrowDown } from "lucide-react";
+export { ArrowUpRight } from "lucide-react";
+export { ArrowDownRight } from "lucide-react";
+export { MoveUp } from "lucide-react";
+export { MoveDown } from "lucide-react";
+export { Minus as TrendingFlat } from "lucide-react";
+
+// Design & Creative
 export { Focus } from "lucide-react";
 export { Link2 } from "lucide-react";
 export { Shield } from "lucide-react";
 export { Code } from "lucide-react";
 export { Eye } from "lucide-react";
 export { MoreVertical } from "lucide-react";
+export { Layers } from "lucide-react";
+export { Grid3X3 } from "lucide-react";
+export { Box } from "lucide-react";
+export { Hexagon } from "lucide-react";
+export { Square } from "lucide-react";
+export { Triangle } from "lucide-react";
+export { Shapes } from "lucide-react";
+
+// Utility & Misc
+export { Hash } from "lucide-react";
+export { Tag } from "lucide-react";
+export { Tags } from "lucide-react";
+export { Bookmark } from "lucide-react";
+export { Flag } from "lucide-react";
+export { Pin } from "lucide-react";
+export { Paperclip } from "lucide-react";
+export { Link } from "lucide-react";
+export { Unlink } from "lucide-react";
+export { QrCode } from "lucide-react";
+export { Scan } from "lucide-react";
+export { ScanLine } from "lucide-react";
 
 // Re-export LucideIcon type for type annotations
 export type { LucideIcon, LucideProps } from "lucide-react";
