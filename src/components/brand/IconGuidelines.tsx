@@ -1,11 +1,4 @@
-import { 
-  Activity, Droplets, Gauge, Waves, Leaf, Recycle, TreePine,
-  Factory, Ship, Pickaxe, FlaskConical, CheckCircle, AlertTriangle,
-  XCircle, Info, Mountain, Gem, HardHat, Anchor, Sailboat, Container,
-  Cpu, Microchip, CircuitBoard, Plug, Cylinder, Filter, Wind, CloudRain,
-  Thermometer, Scale, Pipette, Radar, Award, BadgeCheck, ShieldCheck,
-  Fuel, BatteryCharging, Power, Earth
-} from "@/lib/icons";
+import { Activity, Factory, CheckCircle, AlertTriangle, XCircle, Info } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 import { IconPicker } from "./IconPicker";
 
@@ -17,84 +10,6 @@ export const IconGuidelines = () => {
     { name: "xl", size: 32, use: "Hero elements" },
   ];
 
-  const iconCategories = [
-    {
-      name: "Measurement",
-      icons: [
-        { icon: Waves, label: "Density" },
-        { icon: Activity, label: "Flow" },
-        { icon: Gauge, label: "Pressure" },
-        { icon: Droplets, label: "Liquid" },
-        { icon: Thermometer, label: "Temp" },
-        { icon: Scale, label: "Weight" },
-        { icon: Pipette, label: "Sample" },
-        { icon: Radar, label: "Sensor" },
-      ]
-    },
-    {
-      name: "Mining",
-      icons: [
-        { icon: Pickaxe, label: "Mining" },
-        { icon: Mountain, label: "Minerals" },
-        { icon: Gem, label: "Ore" },
-        { icon: HardHat, label: "Safety" },
-      ]
-    },
-    {
-      name: "Dredging",
-      icons: [
-        { icon: Ship, label: "Vessel" },
-        { icon: Anchor, label: "Marine" },
-        { icon: Sailboat, label: "Nautical" },
-        { icon: Container, label: "Cargo" },
-      ]
-    },
-    {
-      name: "Semiconductor",
-      icons: [
-        { icon: Cpu, label: "Processor" },
-        { icon: Microchip, label: "Chip" },
-        { icon: CircuitBoard, label: "Circuit" },
-        { icon: Plug, label: "Connect" },
-      ]
-    },
-    {
-      name: "Wastewater",
-      icons: [
-        { icon: Cylinder, label: "Tank" },
-        { icon: Filter, label: "Filter" },
-        { icon: Wind, label: "Aeration" },
-        { icon: CloudRain, label: "Effluent" },
-      ]
-    },
-    {
-      name: "Energy",
-      icons: [
-        { icon: Fuel, label: "Fuel" },
-        { icon: BatteryCharging, label: "Battery" },
-        { icon: Power, label: "Power" },
-        { icon: Factory, label: "Plant" },
-      ]
-    },
-    {
-      name: "Sustainability",
-      icons: [
-        { icon: Leaf, label: "Eco" },
-        { icon: Recycle, label: "Recycle" },
-        { icon: TreePine, label: "Nature" },
-        { icon: Earth, label: "Planet" },
-      ]
-    },
-    {
-      name: "Badges",
-      icons: [
-        { icon: Award, label: "Award" },
-        { icon: BadgeCheck, label: "Verified" },
-        { icon: ShieldCheck, label: "Secure" },
-        { icon: FlaskConical, label: "Lab" },
-      ]
-    },
-  ];
 
   const iconStates = [
     { icon: CheckCircle, state: "Success", color: "text-success", bg: "bg-success" },
@@ -105,7 +20,7 @@ export const IconGuidelines = () => {
 
   return (
     <section id="icons" className="space-y-20 pt-16">
-      {/* Intro + Rules */}
+      {/* Intro + Core Principles */}
       <div className="grid lg:grid-cols-5 gap-12">
         <div className="lg:col-span-3">
           <p className="text-muted-foreground text-lg mb-8">
@@ -136,14 +51,56 @@ export const IconGuidelines = () => {
         </div>
       </div>
 
-      {/* Icon Sizes - INLINE SPECIMENS */}
+      {/* When to Use Icons */}
+      <div>
+        <div className="flex items-center gap-4 mb-6 md:mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">When to Use</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { 
+              icon: CheckCircle, 
+              title: "Navigation & Actions", 
+              desc: "Guide users through interface flows and indicate clickable elements",
+              color: "text-success"
+            },
+            { 
+              icon: Activity, 
+              title: "Data Visualization", 
+              desc: "Represent measurement types, units, and sensor categories in dashboards",
+              color: "text-primary"
+            },
+            { 
+              icon: AlertTriangle, 
+              title: "Status & Alerts", 
+              desc: "Communicate system states, warnings, and operational status at a glance",
+              color: "text-warning"
+            },
+            { 
+              icon: Factory, 
+              title: "Industry Context", 
+              desc: "Identify application sectors: mining, dredging, wastewater, semiconductor",
+              color: "text-muted-foreground"
+            },
+          ].map((item) => (
+            <div key={item.title} className="border border-border rounded-lg p-5">
+              <item.icon className={`w-6 h-6 ${item.color} mb-3`} />
+              <h4 className="font-medium text-sm mb-2">{item.title}</h4>
+              <p className="text-xs text-muted-foreground">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Icon Sizes */}
       <div>
         <div className="flex items-center gap-4 mb-6 md:mb-8">
           <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Icon Sizes</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        {/* Responsive grid - 2x2 on mobile, 4 across on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-0 -mx-4 md:-mx-6 border-y border-border">
           {iconSizes.map((size, i) => (
             <div 
@@ -160,31 +117,77 @@ export const IconGuidelines = () => {
         </div>
       </div>
 
-      {/* Icon Categories - inline strips per category */}
+      {/* Do's and Don'ts */}
       <div>
         <div className="flex items-center gap-4 mb-6 md:mb-8">
-          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Categories</h3>
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Usage Guidelines</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         
-        <div className="space-y-4 md:space-y-6">
-          {iconCategories.map((category) => (
-            <div key={category.name} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 py-3 md:py-4 border-b border-border/50">
-              <span className="font-data text-xs text-muted-foreground uppercase w-full sm:w-28 flex-shrink-0">{category.name}</span>
-              <div className="flex flex-wrap gap-4 md:gap-8">
-                {category.icons.map((item) => (
-                  <div key={item.label} className="flex items-center gap-2 group">
-                    <item.icon className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                    <span className="text-xs md:text-sm text-muted-foreground group-hover:text-foreground transition-colors">{item.label}</span>
-                  </div>
-                ))}
-              </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Do's */}
+          <div className="border border-success/30 bg-success/5 rounded-lg p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <CheckCircle className="w-5 h-5 text-success" />
+              <span className="font-medium text-success">Do</span>
             </div>
-          ))}
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" />
+                Use icons to support and clarify text labels, not replace them
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" />
+                Maintain consistent sizing within the same UI context
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" />
+                Use semantic colors for status icons (green=success, amber=warning, red=error)
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" />
+                Keep stroke weight at 2px for visual consistency
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" />
+                Use muted colors for secondary/decorative icon usage
+              </li>
+            </ul>
+          </div>
+
+          {/* Don'ts */}
+          <div className="border border-error/30 bg-error/5 rounded-lg p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <XCircle className="w-5 h-5 text-error" />
+              <span className="font-medium text-error">Don't</span>
+            </div>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-error rounded-full mt-2 flex-shrink-0" />
+                Use icons as decoration without functional purpose
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-error rounded-full mt-2 flex-shrink-0" />
+                Mix different icon styles or stroke weights
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-error rounded-full mt-2 flex-shrink-0" />
+                Use status colors for non-status purposes
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-error rounded-full mt-2 flex-shrink-0" />
+                Scale icons beyond intended size ranges (distorts stroke)
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1 h-1 bg-error rounded-full mt-2 flex-shrink-0" />
+                Rely on icons alone for critical actions or information
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      {/* State Indicators - horizontal strip */}
+      {/* State Indicators */}
       <div>
         <div className="flex items-center gap-4 mb-6 md:mb-8">
           <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">State Indicators</h3>
@@ -192,7 +195,6 @@ export const IconGuidelines = () => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8">
-          {/* State colors strip - 2x2 grid on mobile */}
           <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-0 border border-border overflow-hidden rounded-lg">
             {iconStates.map((item, i) => (
               <div 
@@ -206,7 +208,6 @@ export const IconGuidelines = () => {
             ))}
           </div>
           
-          {/* Explanation */}
           <div className="lg:col-span-2 border-l-2 border-border pl-4 md:pl-6">
             <p className="text-muted-foreground text-xs md:text-sm">
               State colors are functional, not decorative. Green = success, Amber = warning, 
