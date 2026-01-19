@@ -359,16 +359,20 @@ export const IconPicker = ({ onSelect, className }: IconPickerProps) => {
     return filteredCategories.reduce((sum, cat) => sum + cat.icons.length, 0);
   }, [filteredCategories]);
 
-  const handleCopyImport = useCallback((iconName: string) => {
-    navigator.clipboard.writeText(`import { ${iconName} } from "@/lib/icons";`);
-    setCopiedIcon(iconName);
-    setTimeout(() => setCopiedIcon(null), 2000);
+  const handleCopySvg = useCallback((iconName: string, Icon: LucideIcon) => {
+    // Use ReactDOMServer to render the icon and get its SVG markup
+    import('react-dom/server').then(({ renderToStaticMarkup }) => {
+      const iconMarkup = renderToStaticMarkup(<Icon />);
+      navigator.clipboard.writeText(iconMarkup);
+      setCopiedIcon(iconName);
+      setTimeout(() => setCopiedIcon(null), 2000);
+    });
   }, []);
 
   const handleSelectIcon = useCallback((iconName: string, Icon: LucideIcon) => {
     onSelect?.(iconName, Icon);
-    handleCopyImport(iconName);
-  }, [onSelect, handleCopyImport]);
+    handleCopySvg(iconName, Icon);
+  }, [onSelect, handleCopySvg]);
 
   return (
     <div className={cn("space-y-6", className)}>
