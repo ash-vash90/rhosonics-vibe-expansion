@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const metricTileVariants = cva(
-  "relative flex flex-col p-5 rounded-xl overflow-hidden group cursor-default transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]",
+  "relative flex flex-col p-6 rounded-xl overflow-hidden group cursor-default transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]",
   {
     variants: {
       variant: {
@@ -13,9 +13,9 @@ const metricTileVariants = cva(
         glass: "bg-white/5 backdrop-blur-md text-white border border-white/10 shadow-lg hover:shadow-xl hover:bg-white/10 hover:border-white/20 hover:shadow-white/10",
       },
       size: {
-        default: "min-w-[160px]",
-        compact: "min-w-[130px] p-4",
-        wide: "min-w-[200px] p-6",
+        default: "min-w-[200px]",
+        compact: "min-w-[160px] p-5",
+        wide: "min-w-[260px] p-8",
       },
     },
     defaultVariants: {
@@ -134,16 +134,16 @@ const MetricTile = React.forwardRef<HTMLDivElement, MetricTileProps>(
           </div>
           
           {/* Value display */}
-          <div className="flex items-baseline gap-1.5">
+          <div className="flex items-baseline gap-2">
             <span className={cn(
-              "font-ui font-semibold text-4xl tracking-tight leading-none",
+              "font-ui font-semibold text-5xl tracking-tight leading-none",
               isDark ? "text-current" : "text-foreground"
             )}>
               {value}
             </span>
             {unit && (
               <span className={cn(
-                "font-data text-base font-medium",
+                "font-data text-lg font-medium",
                 isDark ? "text-current/50" : "text-muted-foreground"
               )}>
                 {unit}
