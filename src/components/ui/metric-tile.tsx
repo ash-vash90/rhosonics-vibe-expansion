@@ -3,14 +3,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const metricTileVariants = cva(
-  "relative flex flex-col p-5 transition-all duration-300 rounded-xl overflow-hidden group",
+  "relative flex flex-col p-5 rounded-xl overflow-hidden group cursor-default transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]",
   {
     variants: {
       variant: {
-        obsidian: "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 shadow-lg shadow-black/20 border border-slate-700/50",
-        primary: "bg-gradient-to-br from-primary via-primary to-green-700 text-primary-foreground shadow-lg shadow-primary/20 border border-primary/30",
-        outline: "bg-gradient-to-br from-card via-card to-muted/30 border border-border text-foreground shadow-sm hover:shadow-md hover:border-primary/30",
-        glass: "bg-white/5 backdrop-blur-md text-white border border-white/10 shadow-lg",
+        obsidian: "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 shadow-lg shadow-black/20 border border-slate-700/50 hover:shadow-xl hover:shadow-black/30 hover:border-slate-600/70",
+        primary: "bg-gradient-to-br from-primary via-primary to-green-700 text-primary-foreground shadow-lg shadow-primary/20 border border-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:border-primary/50",
+        outline: "bg-gradient-to-br from-card via-card to-muted/30 border border-border text-foreground shadow-sm hover:shadow-lg hover:border-primary/40 hover:bg-gradient-to-br hover:from-card hover:via-card hover:to-primary/5",
+        glass: "bg-white/5 backdrop-blur-md text-white border border-white/10 shadow-lg hover:shadow-xl hover:bg-white/10 hover:border-white/20 hover:shadow-white/10",
       },
       size: {
         default: "min-w-[160px]",
