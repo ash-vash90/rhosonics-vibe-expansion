@@ -761,6 +761,302 @@ export const InterfaceKit = () => {
           to create depth without competing with content.
         </p>
       </div>
+
+      {/* Combining Glass Elements - Guide */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <span className="font-data text-sm text-primary uppercase tracking-wider">09</span>
+          <h3 className="font-ui text-2xl font-semibold text-foreground">Combining Glass Elements</h3>
+        </div>
+        
+        <p className="text-muted-foreground max-w-3xl mb-12 leading-relaxed">
+          Glass elements work best when layered on rich, colorful backgrounds. The key is creating 
+          <span className="text-foreground font-medium"> depth through contrast</span> — 
+          frosted transparency reads clearly against vibrant gradients and textured surfaces.
+        </p>
+
+        <div className="space-y-16">
+
+          {/* Principle 1: Gradient Foundations */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="font-data text-xs text-primary">01</span>
+              </span>
+              <h4 className="font-ui text-lg font-semibold text-foreground">Start with Rich Gradient Foundations</h4>
+            </div>
+            
+            <p className="text-sm text-muted-foreground max-w-2xl">
+              Glass elements need color behind them to look impactful. Layer gradients with blur orbs and subtle patterns to create depth before placing glass components.
+            </p>
+
+            {/* Demo: Different gradient bases */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Primary Green */}
+              <div className="relative rounded-xl overflow-hidden h-64">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary via-green-600 to-emerald-800" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent" />
+                <div className="relative h-full p-5 flex flex-col justify-between">
+                  <span className="font-data text-xs text-white/70 uppercase tracking-wide">Brand Primary</span>
+                  <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white font-ui text-sm">Flow Rate</span>
+                      <span className="font-data text-2xl text-white font-bold">847</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Slate Dark */}
+              <div className="relative rounded-xl overflow-hidden h-64">
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-[60px]" />
+                <div className="relative h-full p-5 flex flex-col justify-between">
+                  <span className="font-data text-xs text-white/70 uppercase tracking-wide">Obsidian + Accent</span>
+                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white font-ui text-sm">Pressure</span>
+                      <span className="font-data text-2xl text-white font-bold">4.2</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mixed Gradient */}
+              <div className="relative rounded-xl overflow-hidden h-64">
+                <div className="absolute inset-0 bg-gradient-to-tr from-slate-900 via-emerald-950 to-primary/30" />
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-emerald-500/30 rounded-full blur-[80px]" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/30 rounded-full blur-[40px]" />
+                <div className="relative h-full p-5 flex flex-col justify-between">
+                  <span className="font-data text-xs text-white/70 uppercase tracking-wide">Mesh Gradient</span>
+                  <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white font-ui text-sm">Efficiency</span>
+                      <span className="font-data text-2xl text-white font-bold">98%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Principle 2: Layered Hierarchy */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="font-data text-xs text-primary">02</span>
+              </span>
+              <h4 className="font-ui text-lg font-semibold text-foreground">Create Layered Hierarchy</h4>
+            </div>
+            
+            <p className="text-sm text-muted-foreground max-w-2xl">
+              Stack multiple glass layers with varying opacity to create depth. Inner elements should be more opaque, outer containers more transparent.
+            </p>
+
+            {/* Demo: Layered composition */}
+            <div className="relative rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+              <div className="absolute inset-0 bg-[conic-gradient(from_45deg_at_70%_30%,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-emerald-500/10" />
+              <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-primary/15 rounded-full blur-[100px]" />
+              <div className="absolute -top-10 -right-10 w-60 h-60 bg-emerald-500/15 rounded-full blur-[80px]" />
+              
+              <div className="relative p-8 md:p-12">
+                {/* Outer glass container */}
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 md:p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h5 className="text-white font-ui font-semibold text-lg">System Dashboard</h5>
+                      <p className="text-white/50 text-sm mt-1">Real-time monitoring overview</p>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/20 rounded-full border border-primary/30">
+                      <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                      <span className="font-data text-xs text-primary uppercase">Live</span>
+                    </div>
+                  </div>
+                  
+                  {/* Inner glass cards - more opaque */}
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4 hover:bg-white/15 transition-colors">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Activity className="w-4 h-4 text-primary" />
+                        <span className="font-data text-xs text-white/60 uppercase">Throughput</span>
+                      </div>
+                      <div className="font-data text-3xl text-white font-bold">2.4K</div>
+                      <div className="text-white/40 text-sm mt-1">m³/hour</div>
+                    </div>
+                    
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4 hover:bg-white/15 transition-colors">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Gauge className="w-4 h-4 text-emerald-400" />
+                        <span className="font-data text-xs text-white/60 uppercase">Efficiency</span>
+                      </div>
+                      <div className="font-data text-3xl text-white font-bold">98.7</div>
+                      <div className="text-white/40 text-sm mt-1">percent</div>
+                    </div>
+                    
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4 hover:bg-white/15 transition-colors">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Zap className="w-4 h-4 text-yellow-400" />
+                        <span className="font-data text-xs text-white/60 uppercase">Power</span>
+                      </div>
+                      <div className="font-data text-3xl text-white font-bold">47.2</div>
+                      <div className="text-white/40 text-sm mt-1">kW/h</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Principle 3: Mix Solid & Glass */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="font-data text-xs text-primary">03</span>
+              </span>
+              <h4 className="font-ui text-lg font-semibold text-foreground">Mix Solid & Glass Elements</h4>
+            </div>
+            
+            <p className="text-sm text-muted-foreground max-w-2xl">
+              Balance glass with solid elements for visual weight. Primary actions and key data points can use solid fills, while supporting elements remain transparent.
+            </p>
+
+            {/* Demo: Mixed composition */}
+            <div className="relative rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-green-700 to-emerald-900" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-black/20" />
+              
+              <div className="relative p-8 md:p-10">
+                <div className="flex flex-col md:flex-row gap-6 md:items-center">
+                  {/* Solid accent card */}
+                  <div className="bg-white rounded-xl p-6 shadow-2xl shadow-black/30 md:w-72 shrink-0">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center">
+                        <Waves className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h5 className="font-ui font-semibold text-slate-900">SDM ECO</h5>
+                        <p className="text-xs text-slate-500">Density Meter</p>
+                      </div>
+                    </div>
+                    <div className="font-data text-4xl font-bold text-slate-900 mb-1">1.4502</div>
+                    <div className="text-sm text-slate-500">g/L density reading</div>
+                    <div className="mt-4 flex items-center gap-2 text-primary text-sm font-medium">
+                      <span>View details</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                  
+                  {/* Glass supporting info */}
+                  <div className="flex-1 grid grid-cols-2 gap-4">
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4">
+                      <span className="font-data text-xs text-white/60 uppercase tracking-wide block mb-2">Temperature</span>
+                      <div className="font-data text-2xl text-white font-bold">23.8°C</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4">
+                      <span className="font-data text-xs text-white/60 uppercase tracking-wide block mb-2">Flow Rate</span>
+                      <div className="font-data text-2xl text-white font-bold">847 m³/h</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4">
+                      <span className="font-data text-xs text-white/60 uppercase tracking-wide block mb-2">Solids</span>
+                      <div className="font-data text-2xl text-white font-bold">12.4%</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4">
+                      <span className="font-data text-xs text-white/60 uppercase tracking-wide block mb-2">Uptime</span>
+                      <div className="font-data text-2xl text-white font-bold">99.2%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Principle 4: Color Temperature */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="font-data text-xs text-primary">04</span>
+              </span>
+              <h4 className="font-ui text-lg font-semibold text-foreground">Respect Color Temperature</h4>
+            </div>
+            
+            <p className="text-sm text-muted-foreground max-w-2xl">
+              Use warm accents (green, emerald) on cool backgrounds (slate, dark blue) for contrast. 
+              Glass elements pick up the underlying colors, so plan your gradients intentionally.
+            </p>
+
+            {/* Demo: Color harmony examples */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Cool bg + warm accent */}
+              <div className="relative rounded-xl overflow-hidden h-56">
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950/50 to-slate-900" />
+                <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/25 rounded-full blur-[80px]" />
+                <div className="relative h-full p-6 flex flex-col justify-between">
+                  <div>
+                    <span className="font-data text-xs text-white/50 uppercase tracking-wide">Cool + Warm</span>
+                    <p className="text-white/70 text-sm mt-2">Slate base with green accents creates depth and visual interest.</p>
+                  </div>
+                  <div className="flex gap-3">
+                    <button className="px-4 py-2 bg-gradient-to-r from-primary to-emerald-600 text-white font-ui text-sm rounded-lg shadow-lg shadow-primary/30">
+                      Primary
+                    </button>
+                    <button className="px-4 py-2 bg-white/10 backdrop-blur-md text-white font-ui text-sm rounded-lg border border-white/20">
+                      Glass
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Monochrome green */}
+              <div className="relative rounded-xl overflow-hidden h-56">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-emerald-950" />
+                <div className="absolute top-0 left-0 w-40 h-40 bg-primary/30 rounded-full blur-[60px]" />
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-emerald-400/20 rounded-full blur-[50px]" />
+                <div className="relative h-full p-6 flex flex-col justify-between">
+                  <div>
+                    <span className="font-data text-xs text-white/50 uppercase tracking-wide">Monochrome</span>
+                    <p className="text-white/70 text-sm mt-2">Same color family creates harmony and a cohesive brand feel.</p>
+                  </div>
+                  <div className="flex gap-3">
+                    <button className="px-4 py-2 bg-white text-emerald-900 font-ui text-sm font-medium rounded-lg shadow-lg">
+                      Solid
+                    </button>
+                    <button className="px-4 py-2 bg-white/15 backdrop-blur-md text-white font-ui text-sm rounded-lg border border-white/25">
+                      Glass
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Reference */}
+          <div className="bg-slate-50 rounded-xl p-6 md:p-8 border border-border">
+            <h4 className="font-ui font-semibold text-foreground mb-4">Quick Reference</h4>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div>
+                <h5 className="font-data text-xs text-primary uppercase tracking-wide mb-2">Glass Background</h5>
+                <code className="font-data text-xs text-muted-foreground">bg-white/5 to bg-white/15</code>
+              </div>
+              <div>
+                <h5 className="font-data text-xs text-primary uppercase tracking-wide mb-2">Blur Amount</h5>
+                <code className="font-data text-xs text-muted-foreground">backdrop-blur-md to xl</code>
+              </div>
+              <div>
+                <h5 className="font-data text-xs text-primary uppercase tracking-wide mb-2">Border</h5>
+                <code className="font-data text-xs text-muted-foreground">border-white/10 to /30</code>
+              </div>
+              <div>
+                <h5 className="font-data text-xs text-primary uppercase tracking-wide mb-2">Hover State</h5>
+                <code className="font-data text-xs text-muted-foreground">+5-10% opacity</code>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </section>
   );
 };
