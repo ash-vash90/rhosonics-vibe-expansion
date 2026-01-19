@@ -152,7 +152,7 @@ const industryTextures = textures.filter(t => t.category === "industry");
 const TexturePreview = () => {
   const [selectedTexture, setSelectedTexture] = useState(textures[0]);
   const [opacity, setOpacity] = useState([0.12]);
-  const [scale, setScale] = useState([0.5]);
+  const [scale, setScale] = useState([0.25]);
   const [bgColor, setBgColor] = useState(approvedBackgrounds[0]);
   const [textureColor, setTextureColor] = useState(approvedTextureColors[0]);
   const [copied, setCopied] = useState(false);
@@ -196,9 +196,9 @@ const TexturePreview = () => {
     return `url("data:image/svg+xml,${encoded}")`;
   };
 
-  // Scale multipliers for pattern sizing - 1× is the base (formerly 0.5×), scaling up to 2×
+  // Scale multipliers for pattern sizing - 1× is the base, scaling up to 2×
   const scaleLabels = ["0.5×", "0.75×", "1×", "1.25×", "1.5×", "2×"];
-  const scaleValues = [0.25, 0.375, 0.5, 0.625, 0.75, 1];
+  const scaleValues = [0.125, 0.1875, 0.25, 0.3125, 0.375, 0.5];
   const currentScaleLabel = scaleLabels[scaleValues.indexOf(scale[0])] || `${scale[0]}×`;
 
   return (
