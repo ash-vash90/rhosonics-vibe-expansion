@@ -1,11 +1,10 @@
-import { RhosonicsLogo } from "../RhosonicsLogo";
-import { ArrowRight, Menu, Zap } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandCallout } from "./BrandCallout";
 import { SDMEcoDevice } from "./SDMEcoDevice";
 import { ChamferedTabs, ChamferedTabsList, ChamferedTabsTrigger } from "@/components/ui/chamfered-tabs";
 import { MetricTile } from "@/components/ui/metric-tile";
-import { LinearProgress, RadialGauge } from "@/components/ui/chamfered-progress";
+import { LinearProgress } from "@/components/ui/chamfered-progress";
 
 export const InterfaceKit = () => {
   return (
@@ -188,72 +187,6 @@ export const InterfaceKit = () => {
         </p>
       </div>
 
-      {/* Data Cards Showcase */}
-      <div>
-        <div className="flex items-center gap-4 mb-8">
-          <span className="font-data text-sm text-primary uppercase tracking-wider">03</span>
-          <h3 className="font-ui text-2xl font-semibold text-foreground">Data Cards</h3>
-        </div>
-        
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Primary Measurement Card */}
-          <div>
-            <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-4">
-              Primary Measurement
-            </span>
-            <div className="bg-card border border-border rounded-lg p-8 shadow-elevated">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Reading</span>
-                  <div className="font-ui font-bold text-xl text-foreground mt-1">Slurry Density</div>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1 bg-slate-50 border border-border rounded-full">
-                  <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></div>
-                  <span className="font-data text-xs text-primary uppercase">Live</span>
-                </div>
-              </div>
-              <div className="flex items-baseline gap-3 mt-2 mb-6">
-                <span className="font-ui text-6xl font-medium text-foreground tracking-tight">1.4502</span>
-                <span className="font-data text-lg text-muted-foreground">g/L</span>
-              </div>
-              <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div className="bg-brand-gradient h-full w-[65%] rounded-full"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Branded Card */}
-          <div>
-            <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-4">
-              Branded Interface
-            </span>
-            <div className="overflow-hidden rounded-lg shadow-elevated border border-border">
-              {/* Logo lockup: 150% ratio - text-lg(18px)→27px icon */}
-              <div className="bg-rho-obsidian text-slate-100 p-4 flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <div className="w-[27px] h-[27px]">
-                    <RhosonicsLogo variant="white" />
-                  </div>
-                  <span className="font-logo tracking-wide uppercase text-lg pt-0.5">RHOSONICS</span>
-                </div>
-                <Menu className="w-5 h-5 text-slate-400" />
-              </div>
-              <div className="bg-card p-8 flex flex-col justify-center items-center text-center">
-                <div className="flex items-baseline gap-1">
-                  <span className="font-ui font-medium text-4xl text-foreground">12.4</span>
-                  <span className="font-data text-xl text-muted-foreground">%</span>
-                </div>
-                <div className="font-data text-xs uppercase tracking-wide mt-2 mb-6 text-muted-foreground">
-                  Solids Concentration
-                </div>
-                <Button variant="chamfer" size="chamfer-default">
-                  View Details
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Metric Tiles Showcase */}
       <div>
@@ -388,24 +321,10 @@ export const InterfaceKit = () => {
             </div>
           </div>
 
-          {/* Radial Gauges */}
-          <div className="flex flex-col gap-6">
-            <div>
-              <span className="font-data text-xs text-muted-foreground uppercase tracking-wide">Radial Gauges</span>
-              <p className="text-xs text-muted-foreground mt-1">Compact circular indicators</p>
-            </div>
-            <div className="flex flex-wrap gap-6 items-end">
-              <RadialGauge variant="obsidian" value={85} label="%" size="lg" />
-              <RadialGauge variant="obsidian" value={62} label="%" />
-              <RadialGauge variant="primary" value={94} label="%" />
-              <RadialGauge variant="outline" value={38} label="%" />
-              <RadialGauge variant="outline" value={71} label="%" size="sm" />
-            </div>
-          </div>
         </div>
 
         <p className="text-muted-foreground max-w-xl mt-8">
-          Chamfered linear bars and radial gauges for operational dashboards. 
+          Linear progress bars for operational dashboards. 
           All variants support animated value transitions.
         </p>
       </div>
