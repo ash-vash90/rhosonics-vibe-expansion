@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Settings,
   Droplets,
@@ -17,6 +17,8 @@ import {
   TrendingUp,
 } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
+import bb, { spline } from "billboard.js";
+import "billboard.js/dist/billboard.css";
 
 // ============================================================================
 // DEVICE FRAME - Industrial tablet with light screen
@@ -68,7 +70,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => (
 );
 
 // ============================================================================
-// LIVE METRIC - Bold data display for low PPI
+// LIVE METRIC - Compact for waveform layout
 // ============================================================================
 const LiveMetric = ({
   value,
@@ -83,24 +85,24 @@ const LiveMetric = ({
   trend?: string;
   highlight?: boolean;
 }) => (
-  <div className={`relative p-6 rounded-2xl border-2 ${
+  <div className={`relative p-4 rounded-xl border-2 ${
     highlight 
       ? "bg-primary/5 border-primary/20" 
       : "bg-white border-slate-200"
   }`}>
-    <span className="font-ui text-base text-slate-500 font-medium mb-2 block">{label}</span>
+    <span className="font-ui text-sm text-slate-500 font-medium mb-1 block">{label}</span>
     
-    <div className="flex items-baseline gap-3">
-      <span className="font-data text-6xl lg:text-7xl text-slate-900 tabular-nums tracking-tight font-medium">
+    <div className="flex items-baseline gap-2">
+      <span className="font-data text-4xl text-slate-900 tabular-nums tracking-tight font-medium">
         {value}
       </span>
-      <span className="font-data text-2xl text-slate-400 uppercase font-medium">{unit}</span>
+      <span className="font-data text-lg text-slate-400 uppercase font-medium">{unit}</span>
     </div>
     
     {trend && (
-      <div className="mt-4 flex items-center gap-2">
-        <TrendingUp className="w-5 h-5 text-primary" />
-        <span className="font-data text-sm text-primary uppercase tracking-wide font-medium">{trend}</span>
+      <div className="mt-2 flex items-center gap-1.5">
+        <TrendingUp className="w-4 h-4 text-primary" />
+        <span className="font-data text-xs text-primary uppercase tracking-wide font-medium">{trend}</span>
       </div>
     )}
   </div>
@@ -137,6 +139,116 @@ const IconNavItem = ({
 );
 
 // ============================================================================
+// WAVEFORM CHART - Live sensor oscillation
+// ============================================================================
+const LiveWaveform = () => {
+  const chartRef = useRef<HTMLDivElement>(null);
+  const chartInstance = useRef<ReturnType<typeof bb.generate> | null>(null);
+  
+  useEffect(() => {
+    if (!chartRef.current) return;
+    
+    // Generate initial waveform data
+    const generateWaveData = (offset: number) => {
+      const points = 50;
+      return Array.from({ length: points }, (_, i) => {
+        const x = (i / points) * Math.PI * 4;
+        const wave1 = Math.sin(x + offset) * 0.3;
+        const wave2 = Math.sin(x * 2.5 + offset * 1.3) * 0.15;
+        const noise = (Math.random() - 0.5) * 0.05;
+        return 1.0 + wave1 + wave2 + noise;
+      });
+    };
+    
+    let offset = 0;
+    const densityData = generateWaveData(offset);
+    
+    chartInstance.current = bb.generate({
+      bindto: chartRef.current,
+      data: {
+        columns: [["DENSITY", ...densityData]],
+        type: spline(),
+        colors: {
+          DENSITY: "hsl(88 60% 45%)",
+        },
+      },
+      spline: {
+        interpolation: { type: "cardinal" },
+      },
+      point: { show: false },
+      axis: {
+        x: { show: false },
+        y: {
+          show: true,
+          min: 0.5,
+          max: 1.5,
+          tick: {
+            values: [0.6, 0.8, 1.0, 1.2, 1.4],
+            format: (d: number) => d.toFixed(1),
+          },
+        },
+      },
+      grid: {
+        y: {
+          lines: [{ value: 1.0, class: "reference-line" }],
+        },
+      },
+      legend: { show: false },
+      tooltip: { show: false },
+      transition: { duration: 100 },
+      padding: { left: 40, right: 10, top: 10, bottom: 10 },
+      size: { height: 100 },
+    });
+    
+    // Animate the waveform
+    const interval = setInterval(() => {
+      offset += 0.15;
+      const newData = generateWaveData(offset);
+      chartInstance.current?.load({
+        columns: [["DENSITY", ...newData]],
+      });
+    }, 100);
+    
+    return () => {
+      clearInterval(interval);
+      chartInstance.current?.destroy();
+    };
+  }, []);
+  
+  return (
+    <div className="bg-white rounded-xl border-2 border-slate-200 p-4">
+      <div className="flex items-center justify-between mb-2">
+        <span className="font-ui text-base text-slate-500 font-medium">Signal waveform</span>
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <span className="font-data text-xs text-primary uppercase tracking-wide">LIVE</span>
+        </div>
+      </div>
+      <div ref={chartRef} className="sdm-waveform" />
+      <style>{`
+        .sdm-waveform .bb-axis-y .tick text {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          fill: hsl(215 16% 47%);
+        }
+        .sdm-waveform .bb-axis-y .domain,
+        .sdm-waveform .bb-axis-y .tick line {
+          stroke: hsl(214 32% 91%);
+        }
+        .sdm-waveform .bb-grid .reference-line line {
+          stroke: hsl(88 60% 45%);
+          stroke-width: 2;
+          stroke-dasharray: 4 4;
+        }
+        .sdm-waveform .bb-line {
+          stroke-width: 3;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+// ============================================================================
 // MEASUREMENTS SCREEN
 // ============================================================================
 const MeasurementsScreen = () => (
@@ -148,19 +260,19 @@ const MeasurementsScreen = () => (
       <IconNavItem icon={Settings} />
     </IconNav>
 
-    <div className="flex-1 p-6 flex flex-col">
+    <div className="flex-1 p-5 flex flex-col gap-4">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="font-ui text-2xl text-slate-900 font-semibold">Measurements</h2>
-        <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-slate-100 border-2 border-slate-200">
-          <Droplets className="w-5 h-5 text-primary" />
-          <span className="font-ui text-base text-slate-700 font-medium">Super profile</span>
-          <Zap className="w-4 h-4 text-primary" />
+      <div className="flex items-center justify-between">
+        <h2 className="font-ui text-xl text-slate-900 font-semibold">Measurements</h2>
+        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 border-2 border-slate-200">
+          <Droplets className="w-4 h-4 text-primary" />
+          <span className="font-ui text-sm text-slate-700 font-medium">Super profile</span>
+          <Zap className="w-3 h-3 text-primary" />
         </div>
       </div>
 
       {/* Metrics */}
-      <div className="grid grid-cols-2 gap-5 flex-1">
+      <div className="grid grid-cols-2 gap-4">
         <LiveMetric 
           value="1.00" 
           unit="SG" 
@@ -175,6 +287,9 @@ const MeasurementsScreen = () => (
           trend="STABLE"
         />
       </div>
+      
+      {/* Waveform */}
+      <LiveWaveform />
     </div>
   </div>
 );
