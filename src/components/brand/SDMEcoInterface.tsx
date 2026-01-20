@@ -834,7 +834,7 @@ const ScreenSwitcher = ({
   activeScreen: string;
   onScreenChange: (screen: string) => void;
 }) => (
-  <div className="flex flex-wrap justify-center gap-2 mb-10">
+  <div className="flex flex-wrap justify-center gap-2 mb-10 relative z-10">
     {[
       { id: "measurements", icon: Gauge, label: "Dashboard" },
       { id: "profiles", icon: Droplets, label: "Profiles" },
