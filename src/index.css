@@ -184,21 +184,30 @@
 
   /* ============================================
      Billboard.js Rhosonics Brand Theme
+     
+     Typography:
+     - Instrument Sans: Legends, general UI text
+     - JetBrains Mono: Axis labels, ticks, tooltips, data values
      ============================================ */
   
-  .bb {
-    font-family: 'Instrument Sans', sans-serif;
+  /* Base container font */
+  .bb,
+  .bb svg,
+  .bb text {
+    font-family: 'Instrument Sans', sans-serif !important;
   }
 
   .bb svg {
     overflow: visible;
   }
 
-  /* Axis Styling */
-  .bb-axis {
-    font-family: 'JetBrains Mono', monospace !important;
-  }
-
+  /* ---- Axis Styling (JetBrains Mono) ---- */
+  .bb .bb-axis,
+  .bb .bb-axis text,
+  .bb .bb-axis-x text,
+  .bb .bb-axis-y text,
+  .bb .bb-axis-y2 text,
+  .bb .tick text,
   .bb-axis text,
   .bb-axis-x text,
   .bb-axis-y text {
@@ -208,6 +217,10 @@
     fill: hsl(215, 19%, 35%) !important;
   }
 
+  /* Axis Labels */
+  .bb .bb-axis-x-label,
+  .bb .bb-axis-y-label,
+  .bb .bb-axis-y2-label,
   .bb-axis-x-label,
   .bb-axis-y-label {
     font-family: 'JetBrains Mono', monospace !important;
@@ -218,45 +231,55 @@
     letter-spacing: 0.05em;
   }
 
+  /* Axis lines */
   .bb-axis line,
-  .bb-axis .domain {
+  .bb-axis .domain,
+  .bb .bb-axis line,
+  .bb .bb-axis .domain {
     stroke: hsl(214, 32%, 91%) !important;
   }
 
-  /* Grid Lines */
-  .bb-grid line {
-    stroke: hsl(214, 32%, 91%) !important;
-    stroke-dasharray: 3 3;
-  }
-
+  /* ---- Grid Lines ---- */
+  .bb-grid line,
+  .bb .bb-grid line,
   .bb-xgrid,
   .bb-ygrid {
     stroke: hsl(214, 32%, 91%) !important;
     stroke-dasharray: 3 3;
   }
 
-  /* Legend */
-  .bb-legend {
-    font-family: 'Instrument Sans', sans-serif !important;
-  }
-
-  .bb-legend-item text {
+  /* ---- Legend (Instrument Sans) ---- */
+  .bb-legend,
+  .bb .bb-legend,
+  .bb-legend text,
+  .bb .bb-legend text,
+  .bb-legend-item,
+  .bb .bb-legend-item,
+  .bb-legend-item text,
+  .bb .bb-legend-item text {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 11px !important;
     font-weight: 500 !important;
+  }
+
+  .bb-legend-item text,
+  .bb .bb-legend-item text {
     fill: hsl(215, 19%, 35%) !important;
   }
 
-  .bb-legend-item-hidden text {
+  .bb-legend-item-hidden text,
+  .bb .bb-legend-item-hidden text {
     fill: hsl(213, 27%, 84%) !important;
   }
 
-  /* Tooltip */
+  /* ---- Tooltip (JetBrains Mono) ---- */
   .bb-tooltip-container {
     z-index: 100;
+    font-family: 'JetBrains Mono', monospace !important;
   }
 
-  .bb-tooltip {
+  .bb-tooltip,
+  .bb .bb-tooltip {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 11px !important;
     background: hsl(226, 33%, 10%) !important;
@@ -267,7 +290,9 @@
     overflow: hidden;
   }
 
-  .bb-tooltip th {
+  .bb-tooltip th,
+  .bb .bb-tooltip th {
+    font-family: 'JetBrains Mono', monospace !important;
     background: hsl(225, 25%, 15%) !important;
     color: hsl(210, 40%, 96%) !important;
     font-weight: 600 !important;
@@ -278,25 +303,30 @@
     font-size: 10px !important;
   }
 
-  .bb-tooltip td {
+  .bb-tooltip td,
+  .bb .bb-tooltip td {
+    font-family: 'JetBrains Mono', monospace !important;
     padding: 6px 12px !important;
     border-bottom: 1px solid hsl(225, 20%, 18%) !important;
   }
 
-  .bb-tooltip tr:last-child td {
+  .bb-tooltip tr:last-child td,
+  .bb .bb-tooltip tr:last-child td {
     border-bottom: none !important;
   }
 
-  .bb-tooltip td.name {
+  .bb-tooltip td.name,
+  .bb .bb-tooltip td.name {
     color: hsl(213, 27%, 84%) !important;
   }
 
-  .bb-tooltip td.value {
+  .bb-tooltip td.value,
+  .bb .bb-tooltip td.value {
     font-weight: 600 !important;
     text-align: right !important;
   }
 
-  /* Chart Elements */
+  /* ---- Chart Elements ---- */
   .bb-line {
     stroke-width: 2.5px;
   }
@@ -324,73 +354,106 @@
     stroke-width: 2px;
   }
 
-  /* Radar Chart */
-  .bb-chart-radar {
+  /* ---- Radar Chart (JetBrains Mono for axis) ---- */
+  .bb-chart-radar,
+  .bb .bb-chart-radar {
     font-family: 'JetBrains Mono', monospace !important;
   }
 
-  .bb-radar-chart .bb-levels polygon {
+  .bb-radar-chart .bb-levels polygon,
+  .bb .bb-radar-chart .bb-levels polygon {
     stroke: hsl(214, 32%, 91%) !important;
     stroke-dasharray: 3 3;
     fill: none !important;
   }
 
-  .bb-radar-chart .bb-axis text {
+  .bb-radar-chart .bb-axis text,
+  .bb .bb-radar-chart .bb-axis text,
+  .bb-radar-chart text,
+  .bb .bb-radar-chart text {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 9px !important;
+    font-weight: 500 !important;
     fill: hsl(215, 19%, 35%) !important;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
 
-  .bb-radar-chart .bb-shapes polygon {
+  .bb-radar-chart .bb-shapes polygon,
+  .bb .bb-radar-chart .bb-shapes polygon {
     fill-opacity: 0.2 !important;
     stroke-width: 2px !important;
   }
 
-  /* Gauge Chart */
+  /* ---- Gauge Chart (JetBrains Mono) ---- */
   .bb-chart-arcs .bb-chart-arcs-gauge-min,
-  .bb-chart-arcs .bb-chart-arcs-gauge-max {
+  .bb-chart-arcs .bb-chart-arcs-gauge-max,
+  .bb .bb-chart-arcs .bb-chart-arcs-gauge-min,
+  .bb .bb-chart-arcs .bb-chart-arcs-gauge-max {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 10px !important;
+    font-weight: 500 !important;
     fill: hsl(215, 19%, 35%) !important;
   }
 
-  .bb-chart-arcs .bb-chart-arcs-title {
+  .bb-chart-arcs .bb-chart-arcs-title,
+  .bb .bb-chart-arcs .bb-chart-arcs-title {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 24px !important;
     font-weight: 600 !important;
     fill: hsl(226, 33%, 10%) !important;
   }
 
-  .bb-chart-arcs .bb-chart-arcs-background {
+  .bb-chart-arcs .bb-chart-arcs-background,
+  .bb .bb-chart-arcs .bb-chart-arcs-background {
     fill: hsl(210, 40%, 96%) !important;
     stroke: none !important;
   }
 
-  /* Arc/Donut Charts */
-  .bb-chart-arcs text {
+  /* ---- Arc/Donut/Pie Charts (JetBrains Mono) ---- */
+  .bb-chart-arcs text,
+  .bb .bb-chart-arcs text {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 11px !important;
-    fill: hsl(0, 0%, 100%) !important;
     font-weight: 600 !important;
+    fill: hsl(0, 0%, 100%) !important;
   }
 
-  /* Event Rectangles - Interaction Areas */
+  /* ---- Text Labels on Data Points (JetBrains Mono) ---- */
+  .bb-text,
+  .bb .bb-text,
+  .bb-texts text,
+  .bb .bb-texts text {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+  }
+
+  /* ---- Event Rectangles - Interaction Areas ---- */
   .bb-event-rect {
     cursor: crosshair;
   }
 
-  /* Brush Selection */
-  .bb-brush .selection {
+  /* ---- Brush Selection ---- */
+  .bb-brush .selection,
+  .bb .bb-brush .selection {
     fill: hsl(125, 50%, 40%) !important;
     fill-opacity: 0.15 !important;
     stroke: hsl(125, 50%, 40%) !important;
   }
 
-  /* Loading State */
-  .bb .bb-chart-arcs .bb-empty {
+  /* ---- Loading/Empty State ---- */
+  .bb .bb-chart-arcs .bb-empty,
+  .bb-chart-arcs .bb-empty {
     fill: hsl(214, 32%, 91%) !important;
+  }
+
+  /* ---- Empty Message ---- */
+  .bb .bb-empty,
+  .bb-empty {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    fill: hsl(215, 19%, 35%) !important;
   }
 
   /* Selection highlight */
