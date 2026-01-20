@@ -98,26 +98,26 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <div ref={frameRef} className="relative" style={{ opacity: 0 }}>
-      {/* Ambient glow */}
-      <div className="absolute -inset-20 bg-gradient-radial from-primary/25 via-primary/8 to-transparent rounded-[6rem] blur-3xl" />
+    <div ref={frameRef} className="relative w-full max-w-4xl mx-auto px-2 sm:px-0" style={{ opacity: 0 }}>
+      {/* Ambient glow - reduced on mobile */}
+      <div className="absolute -inset-8 sm:-inset-20 bg-gradient-radial from-primary/20 via-primary/5 to-transparent rounded-2xl sm:rounded-[4rem] blur-2xl sm:blur-3xl" />
       
-      {/* Device shell */}
-      <div className="relative rounded-[2rem] overflow-hidden" style={{
+      {/* Device shell - sharper corners */}
+      <div className="relative rounded-lg sm:rounded-xl overflow-hidden" style={{
         background: 'linear-gradient(165deg, hsl(220 12% 22%) 0%, hsl(220 15% 8%) 100%)',
         boxShadow: `
-          0 120px 240px -50px hsl(0 0% 0% / 0.7),
-          0 60px 100px -30px hsl(0 0% 0% / 0.5),
-          0 30px 50px -15px hsl(0 0% 0% / 0.4),
-          inset 0 2px 0 hsl(220 12% 30%),
-          inset 0 -4px 0 hsl(220 15% 5%)
+          0 60px 120px -30px hsl(0 0% 0% / 0.6),
+          0 30px 60px -20px hsl(0 0% 0% / 0.4),
+          0 15px 30px -10px hsl(0 0% 0% / 0.3),
+          inset 0 1px 0 hsl(220 12% 30%),
+          inset 0 -2px 0 hsl(220 15% 5%)
         `
       }}>
         {/* Glass highlight on bezel */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none rounded-[2rem]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none rounded-lg sm:rounded-xl" />
         
-        {/* Top bezel */}
-        <div className="relative flex items-center justify-between px-8 py-5" style={{
+        {/* Top bezel - compact on mobile */}
+        <div className="relative flex items-center justify-between px-4 sm:px-8 py-3 sm:py-5" style={{
           background: 'linear-gradient(180deg, hsl(220 12% 18%) 0%, hsl(220 12% 14%) 100%)'
         }}>
           {/* Subtle bezel texture */}
@@ -126,19 +126,19 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
             backgroundSize: '4px 4px'
           }} />
           
-          <div className="relative flex items-center gap-4">
+          <div className="relative flex items-center gap-2 sm:gap-4">
             <div className="relative">
-              <div className="w-4 h-4 rounded-full bg-primary shadow-lg shadow-primary/60" />
-              <div className="absolute inset-0 w-4 h-4 rounded-full bg-primary animate-ping opacity-30" />
+              <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary shadow-lg shadow-primary/60" />
+              <div className="absolute inset-0 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary animate-ping opacity-30" />
             </div>
-            <span className="font-data text-sm text-primary uppercase tracking-widest font-medium">ONLINE</span>
+            <span className="font-data text-xs sm:text-sm text-primary uppercase tracking-widest font-medium">ONLINE</span>
           </div>
-          <div className="relative flex items-center gap-8 text-slate-400">
-            <div className="flex items-center gap-3">
+          <div className="relative flex items-center gap-4 sm:gap-8 text-slate-400">
+            <div className="hidden sm:flex items-center gap-3">
               <Usb className="w-4 h-4 text-primary" />
               <span className="font-data text-sm uppercase tracking-wide">USB</span>
             </div>
-            <span className="font-data text-lg tabular-nums font-medium text-slate-300">14:32</span>
+            <span className="font-data text-sm sm:text-lg tabular-nums font-medium text-slate-300">14:32</span>
           </div>
         </div>
         
@@ -152,7 +152,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
             {children}
             
             {/* Screen edge shadow */}
-            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_30px_rgba(0,0,0,0.08)]" />
+            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.06)] sm:shadow-[inset_0_0_30px_rgba(0,0,0,0.08)]" />
           </div>
           
           {/* Reflection sweep overlay */}
@@ -171,20 +171,20 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
           }} />
         </div>
         
-        {/* Bottom bezel */}
-        <div className="h-4 relative" style={{
+        {/* Bottom bezel - thinner on mobile */}
+        <div className="h-2 sm:h-4 relative" style={{
           background: 'linear-gradient(180deg, hsl(220 12% 12%) 0%, hsl(220 15% 6%) 100%)'
         }}>
           {/* Center indicator */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-1 rounded-full bg-slate-700/50" />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 sm:w-16 h-0.5 sm:h-1 rounded-full bg-slate-700/50" />
         </div>
       </div>
       
-      {/* Device label */}
-      <div className="mt-12 flex justify-center">
-        <div className="flex items-center gap-5 px-8 py-4 rounded-2xl bg-gradient-to-r from-muted/70 to-muted/40 border border-border/50 backdrop-blur-sm shadow-lg">
-          <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse shadow-lg shadow-primary/50" />
-          <span className="font-data text-sm text-muted-foreground uppercase tracking-[0.2em]">SDM ECO · 800×480</span>
+      {/* Device label - smaller on mobile */}
+      <div className="mt-6 sm:mt-12 flex justify-center">
+        <div className="flex items-center gap-3 sm:gap-5 px-4 sm:px-8 py-2 sm:py-4 rounded-lg sm:rounded-2xl bg-gradient-to-r from-muted/70 to-muted/40 border border-border/50 backdrop-blur-sm shadow-lg">
+          <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-primary animate-pulse shadow-lg shadow-primary/50" />
+          <span className="font-data text-xs sm:text-sm text-muted-foreground uppercase tracking-[0.15em] sm:tracking-[0.2em]">SDM ECO · 800×480</span>
         </div>
       </div>
     </div>
