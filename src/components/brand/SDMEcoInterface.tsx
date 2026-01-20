@@ -583,51 +583,87 @@ const ProfilesScreen = () => (
       <IconNavItem icon={Droplets} active />
     </IconNav>
 
-    <div className="flex-1 p-5">
-      <h2 className="font-ui text-xl text-slate-900 font-semibold mb-5">Liquid profiles</h2>
+    <div className="flex-1 p-5 flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="font-ui text-xl text-slate-900 font-semibold">Liquid profiles</h2>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100">
+          <span className="font-data text-xs text-slate-500 uppercase">4 profiles</span>
+        </div>
+      </div>
 
-      <div className="space-y-3">
+      {/* Profile List */}
+      <div className="flex-1 space-y-2 overflow-auto">
         {[
-          { name: "Water", desc: "Base calibration", active: false, locked: true },
-          { name: "Super profile", desc: "Clay 5%, 10%, 20%, 30%", active: true, locked: false },
-          { name: "Liquid #0", desc: "Clay 5%", active: false, locked: false },
-          { name: "Liquid #1", desc: "Clay 10%", active: false, locked: false },
+          { name: "Water", desc: "Base calibration", active: false, locked: true, points: 1 },
+          { name: "Super profile", desc: "Clay 5%, 10%, 20%, 30%", active: true, locked: false, points: 4 },
+          { name: "Liquid #0", desc: "Clay 5%", active: false, locked: false, points: 2 },
+          { name: "Liquid #1", desc: "Clay 10%", active: false, locked: false, points: 3 },
         ].map((profile) => (
           <div
             key={profile.name}
-            className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
+            className={`group flex items-center gap-3 p-3 rounded-xl border-2 transition-all cursor-pointer ${
               profile.active
-                ? "bg-gradient-to-r from-primary/10 to-transparent border-primary/30"
-                : "bg-white border-slate-200 hover:border-slate-300"
+                ? "bg-gradient-to-r from-primary/12 via-primary/6 to-transparent border-primary/40 shadow-sm shadow-primary/10"
+                : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-sm"
             }`}
           >
-            <div className={`w-1.5 h-12 rounded-full ${profile.active ? "bg-primary" : "bg-slate-300"}`} />
+            {/* Status indicator */}
+            <div className={`w-1 h-14 rounded-full transition-all ${
+              profile.active ? "bg-primary shadow-lg shadow-primary/50" : "bg-slate-200 group-hover:bg-slate-300"
+            }`} />
+            
+            {/* Profile icon */}
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
+              profile.active 
+                ? "bg-primary/15 border border-primary/25" 
+                : "bg-slate-50 border border-slate-200"
+            }`}>
+              {profile.locked ? (
+                <Lock className={`w-5 h-5 ${profile.active ? "text-primary" : "text-slate-400"}`} />
+              ) : (
+                <Droplets className={`w-5 h-5 ${profile.active ? "text-primary" : "text-slate-400"}`} />
+              )}
+            </div>
+            
+            {/* Content */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-ui text-base text-slate-900 font-semibold">{profile.name}</h3>
-                {profile.locked && <Lock className="w-3.5 h-3.5 text-slate-400" />}
+                <h3 className={`font-ui text-base font-semibold truncate ${
+                  profile.active ? "text-primary" : "text-slate-900"
+                }`}>{profile.name}</h3>
+                {profile.active && (
+                  <span className="px-2 py-0.5 rounded-md bg-primary/20 text-primary font-data text-[10px] uppercase tracking-wide">
+                    Active
+                  </span>
+                )}
               </div>
-              <span className="font-ui text-sm text-slate-500">{profile.desc}</span>
+              <div className="flex items-center gap-3 mt-0.5">
+                <span className="font-ui text-sm text-slate-500 truncate">{profile.desc}</span>
+                <span className="font-data text-xs text-slate-400 uppercase shrink-0">{profile.points} pts</span>
+              </div>
             </div>
-            {profile.active && (
-              <div className="w-3 h-3 rounded-full bg-primary shadow-lg shadow-primary/50" />
-            )}
-            <button className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
-              <Pencil className="w-4 h-4 text-primary" />
-            </button>
-            {!profile.locked && (
-              <button className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-red-50 transition-colors">
-                <Trash2 className="w-4 h-4 text-destructive" />
+            
+            {/* Actions */}
+            <div className="flex gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
+              <button className="w-9 h-9 rounded-lg flex items-center justify-center bg-slate-100 hover:bg-primary/10 hover:text-primary transition-colors">
+                <Pencil className="w-4 h-4" />
               </button>
-            )}
+              {!profile.locked && (
+                <button className="w-9 h-9 rounded-lg flex items-center justify-center bg-slate-100 hover:bg-destructive/10 hover:text-destructive transition-colors">
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              )}
+            </div>
           </div>
         ))}
-        
-        <button className="w-full py-4 rounded-xl border-2 border-dashed border-slate-300 text-slate-600 font-ui text-sm font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2">
-          <Plus className="w-4 h-4" />
-          Create new profile
-        </button>
       </div>
+      
+      {/* Add button */}
+      <button className="mt-3 w-full py-3.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 font-ui text-sm font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group">
+        <Plus className="w-4 h-4 transition-transform group-hover:scale-110" />
+        Create new profile
+      </button>
     </div>
   </div>
 );
@@ -643,61 +679,115 @@ const CalibrationScreen = () => (
       <IconNavItem icon={Droplets} />
     </IconNav>
 
-    <div className="flex-1 p-5">
-      <div className="flex items-center justify-between mb-5">
+    <div className="flex-1 p-5 flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="font-ui text-xl text-slate-900 font-semibold">Calibration points</h2>
-          <p className="font-ui text-sm text-slate-500 mt-1">Clay 10% profile</p>
+          <div className="flex items-center gap-2 mt-1">
+            <Droplets className="w-3.5 h-3.5 text-primary" />
+            <span className="font-ui text-sm text-slate-500">Clay 10% profile</span>
+          </div>
         </div>
-        <button className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
-          <X className="w-5 h-5 text-slate-500" />
+        <button className="w-9 h-9 rounded-lg flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
+          <X className="w-4 h-4 text-slate-500" />
         </button>
       </div>
 
-      <div className="space-y-3">
+      {/* Progress bar */}
+      <div className="mb-4 p-3 rounded-xl bg-slate-50 border border-slate-200">
+        <div className="flex items-center justify-between mb-2">
+          <span className="font-ui text-xs text-slate-500 font-medium">Calibration progress</span>
+          <span className="font-data text-xs text-primary uppercase">1/2 complete</span>
+        </div>
+        <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+          <div className="h-full w-1/2 bg-gradient-to-r from-primary to-primary/80 rounded-full" />
+        </div>
+      </div>
+
+      {/* Calibration Points */}
+      <div className="flex-1 space-y-2 overflow-auto">
         {[
           { id: 0, status: "Done", temp: "26.03", density: "1035.00", done: true },
           { id: 1, status: "Ready to sample", temp: "38.02", density: null, done: false },
         ].map((point) => (
           <div
             key={point.id}
-            className={`flex items-center gap-4 p-4 rounded-xl border-2 ${
+            className={`group flex items-center gap-3 p-3 rounded-xl border-2 transition-all ${
               point.done 
-                ? "bg-gradient-to-r from-primary/10 to-transparent border-primary/25" 
-                : "bg-gradient-to-r from-amber-50 to-transparent border-amber-200"
+                ? "bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-primary/30" 
+                : "bg-gradient-to-r from-amber-50 via-amber-25 to-transparent border-amber-300 animate-pulse"
             }`}
           >
-            <div className={`w-1.5 h-12 rounded-full ${point.done ? "bg-primary" : "bg-amber-400"}`} />
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white border border-slate-200">
-              <span className="font-data text-lg text-slate-700 font-medium">#{point.id}</span>
+            {/* Status bar */}
+            <div className={`w-1 h-16 rounded-full ${point.done ? "bg-primary" : "bg-amber-400"}`} />
+            
+            {/* Point number */}
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 font-data text-base font-medium ${
+              point.done 
+                ? "bg-primary/15 border border-primary/25 text-primary" 
+                : "bg-amber-100 border border-amber-300 text-amber-700"
+            }`}>
+              #{point.id}
             </div>
+            
+            {/* Content */}
             <div className="flex-1 min-w-0">
-              <span className="font-ui text-base text-slate-900 font-semibold block">{point.status}</span>
-              <div className="flex gap-4 mt-1">
-                <span className="font-data text-sm text-slate-500 uppercase">T: {point.temp}°C</span>
+              <div className="flex items-center gap-2">
+                <span className={`font-ui text-base font-semibold ${point.done ? "text-slate-900" : "text-amber-700"}`}>
+                  {point.status}
+                </span>
+                {point.done && (
+                  <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Activity className="w-3 h-3 text-primary" />
+                  </div>
+                )}
+              </div>
+              <div className="flex gap-4 mt-1.5">
+                <div className="flex items-center gap-1.5">
+                  <Thermometer className="w-3.5 h-3.5 text-slate-400" />
+                  <span className="font-data text-sm text-slate-600 uppercase">{point.temp}°C</span>
+                </div>
                 {point.density && (
-                  <span className="font-data text-sm text-slate-500 uppercase">Ρ: {point.density} KG/M³</span>
+                  <div className="flex items-center gap-1.5">
+                    <Gauge className="w-3.5 h-3.5 text-slate-400" />
+                    <span className="font-data text-sm text-slate-600 uppercase">{point.density} KG/M³</span>
+                  </div>
                 )}
               </div>
             </div>
-            <button className="w-10 h-10 rounded-xl flex items-center justify-center bg-white border border-slate-200 hover:border-primary hover:bg-primary/5 transition-colors">
-              <Pencil className="w-4 h-4 text-primary" />
-            </button>
-            <button className="w-10 h-10 rounded-xl flex items-center justify-center bg-white border border-slate-200 hover:border-destructive hover:bg-destructive/5 transition-colors">
-              <Trash2 className="w-4 h-4 text-destructive" />
-            </button>
+            
+            {/* Actions */}
+            <div className="flex gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
+              <button className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                point.done 
+                  ? "bg-white border border-slate-200 hover:border-primary hover:bg-primary/5 text-primary"
+                  : "bg-amber-100 border border-amber-200 hover:bg-amber-200 text-amber-700"
+              }`}>
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                point.done 
+                  ? "bg-white border border-slate-200 hover:border-destructive hover:bg-destructive/5 text-destructive"
+                  : "bg-amber-100 border border-amber-200 hover:bg-destructive/10 text-destructive"
+              }`}>
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         ))}
-        
-        <button className="w-full py-4 rounded-xl border-2 border-dashed border-slate-300 text-slate-600 font-ui text-sm font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2">
-          <Plus className="w-4 h-4" />
-          Add calibration point
-        </button>
       </div>
       
-      <div className="mt-5 pt-4 border-t border-slate-200 flex items-center justify-center gap-6 text-slate-500">
-        <span className="font-ui text-sm">Temperature range:</span>
-        <span className="font-data text-sm uppercase">20.00°C – 50.00°C</span>
+      {/* Add button */}
+      <button className="mt-3 w-full py-3.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 font-ui text-sm font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group">
+        <Plus className="w-4 h-4 transition-transform group-hover:scale-110" />
+        Add calibration point
+      </button>
+      
+      {/* Footer info */}
+      <div className="mt-3 py-2.5 px-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+        <span className="font-ui text-xs text-slate-500 font-medium">Temperature range</span>
+        <span className="font-data text-xs text-slate-700 uppercase">20.00°C – 50.00°C</span>
       </div>
     </div>
   </div>
