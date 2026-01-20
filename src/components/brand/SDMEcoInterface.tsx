@@ -14,49 +14,107 @@ import {
   Gauge,
   FlaskConical,
   Waves,
+  Monitor,
 } from "@/lib/icons";
-import {
-  ChamferedTabs,
-  ChamferedTabsList,
-  ChamferedTabsTrigger,
-  ChamferedTabsContent,
-} from "@/components/ui/chamfered-tabs";
 import { BrandCallout } from "./BrandCallout";
 
-// Device Frame Component
+// ============================================================================
+// DEVICE FRAME - Premium industrial tablet mockup
+// ============================================================================
 const DeviceFrame = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative mx-auto max-w-4xl">
-    {/* Outer bezel */}
-    <div className="bg-rho-obsidian rounded-2xl p-3 shadow-2xl">
-      {/* Inner screen area */}
-      <div className="bg-slate-900 rounded-lg overflow-hidden aspect-[16/10] relative">
-        {children}
+  <div className="relative">
+    {/* Ambient glow */}
+    <div className="absolute -inset-8 bg-gradient-to-b from-primary/5 via-primary/10 to-transparent rounded-[3rem] blur-3xl opacity-60" />
+    
+    {/* Device body */}
+    <div className="relative">
+      {/* Outer housing - industrial aluminum look */}
+      <div 
+        className="relative rounded-[1.5rem] p-1"
+        style={{
+          background: 'linear-gradient(145deg, hsl(220 15% 25%), hsl(220 15% 15%))',
+          boxShadow: `
+            0 50px 100px -20px hsl(0 0% 0% / 0.5),
+            0 30px 60px -15px hsl(0 0% 0% / 0.4),
+            inset 0 1px 0 hsl(220 15% 35%),
+            inset 0 -1px 0 hsl(220 15% 10%)
+          `
+        }}
+      >
+        {/* Inner bezel */}
+        <div 
+          className="rounded-[1.25rem] p-3"
+          style={{
+            background: 'linear-gradient(180deg, hsl(220 15% 12%), hsl(220 15% 8%))',
+          }}
+        >
+          {/* Screen bezel */}
+          <div 
+            className="rounded-xl overflow-hidden"
+            style={{
+              boxShadow: 'inset 0 2px 10px hsl(0 0% 0% / 0.5), 0 0 0 1px hsl(220 15% 20%)'
+            }}
+          >
+            {/* Screen content */}
+            <div className="bg-slate-950 aspect-[16/10] relative">
+              {children}
+              
+              {/* Screen glare overlay */}
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(135deg, hsl(0 0% 100% / 0.03) 0%, transparent 50%)'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        
+        {/* Status LED */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_2px] shadow-primary/50 animate-pulse" />
+        </div>
       </div>
-    </div>
-    {/* Device label */}
-    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-data text-muted-foreground tracking-widest uppercase">
-      SDM ECO · 7" Touchscreen
+      
+      {/* Device label */}
+      <div className="mt-6 text-center">
+        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-muted/50 border border-border/50">
+          <Monitor className="w-4 h-4 text-muted-foreground" />
+          <span className="font-data text-xs text-muted-foreground tracking-widest uppercase">
+            SDM ECO · 7" Industrial Touchscreen
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 );
 
-// Status Bar Component
+// ============================================================================
+// STATUS BAR - Top bar of the device screen
+// ============================================================================
 const StatusBar = ({ title }: { title: string }) => (
-  <div className="bg-gradient-to-r from-primary via-primary to-primary/90 px-4 py-3 flex items-center justify-between">
-    <h2 className="text-white font-ui font-semibold text-lg tracking-wide uppercase">
+  <div 
+    className="px-5 py-3.5 flex items-center justify-between"
+    style={{
+      background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
+    }}
+  >
+    <h2 className="text-white font-ui font-semibold text-base tracking-wide uppercase drop-shadow-sm">
       {title}
     </h2>
-    <div className="flex items-center gap-4 text-white/80">
-      <div className="flex items-center gap-1.5 text-xs font-ui">
-        <Usb className="w-4 h-4" />
-        <span>USB detected</span>
+    <div className="flex items-center gap-5 text-white/90">
+      <div className="flex items-center gap-2 text-xs font-ui bg-white/10 px-2.5 py-1 rounded-full">
+        <Usb className="w-3.5 h-3.5" />
+        <span>USB</span>
       </div>
-      <span className="font-data text-sm">14:32</span>
+      <span className="font-data text-sm tabular-nums">14:32</span>
     </div>
   </div>
 );
 
-// Sidebar Navigation Item
+// ============================================================================
+// SIDEBAR - Navigation sidebar
+// ============================================================================
 const SidebarItem = ({
   icon: Icon,
   label,
@@ -69,97 +127,118 @@ const SidebarItem = ({
   hasBack?: boolean;
 }) => (
   <div
-    className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors ${
+    className={`flex items-center gap-3 px-4 py-3.5 cursor-pointer transition-all duration-200 ${
       active
-        ? "bg-primary/10 border-l-2 border-primary"
-        : "hover:bg-slate-800/50 border-l-2 border-transparent"
+        ? "bg-primary/15 border-l-[3px] border-primary"
+        : "hover:bg-white/5 border-l-[3px] border-transparent"
     }`}
   >
     {hasBack ? (
       <ChevronLeft className="w-5 h-5 text-primary" />
     ) : Icon ? (
-      <Icon className={`w-5 h-5 ${active ? "text-primary" : "text-slate-400"}`} />
+      <Icon className={`w-5 h-5 transition-colors ${active ? "text-primary" : "text-slate-500"}`} />
     ) : null}
-    <span className={`font-ui text-sm ${active ? "text-primary" : "text-slate-300"}`}>
+    <span className={`font-ui text-sm transition-colors ${active ? "text-primary font-medium" : "text-slate-400"}`}>
       {label}
     </span>
   </div>
 );
 
-// Large Metric Display
+const Sidebar = ({ children }: { children: React.ReactNode }) => (
+  <div className="w-52 bg-slate-900/80 border-r border-slate-800/50 flex flex-col backdrop-blur-sm">
+    {children}
+  </div>
+);
+
+// ============================================================================
+// METRIC DISPLAY - Large data readouts
+// ============================================================================
 const MetricDisplay = ({
   value,
   unit,
   label,
+  size = "large",
 }: {
   value: string;
   unit: string;
   label: string;
+  size?: "large" | "medium";
 }) => (
-  <div className="text-center">
-    <div className="text-slate-400 font-ui text-sm mb-2 uppercase tracking-wide">
+  <div className="text-center group">
+    <div className="text-slate-500 font-ui text-xs mb-3 uppercase tracking-widest">
       {label}
     </div>
-    <div className="flex items-baseline justify-center gap-2">
-      <span className="text-5xl font-data text-white tracking-tight">{value}</span>
-      <span className="text-xl font-data text-slate-400">{unit}</span>
+    <div className="relative">
+      {/* Glow effect */}
+      <div className="absolute inset-0 bg-primary/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="flex items-baseline justify-center gap-2 relative">
+        <span className={`font-data text-white tracking-tight tabular-nums ${size === "large" ? "text-6xl" : "text-4xl"}`}>
+          {value}
+        </span>
+        <span className={`font-data text-slate-500 ${size === "large" ? "text-2xl" : "text-lg"}`}>
+          {unit}
+        </span>
+      </div>
     </div>
   </div>
 );
 
-// Measurements Screen
+// ============================================================================
+// SCREENS - Different device screen states
+// ============================================================================
 const MeasurementsScreen = () => (
   <div className="flex h-full">
-    {/* Sidebar */}
-    <div className="w-48 bg-slate-900 border-r border-slate-800 flex flex-col">
+    <Sidebar>
       <SidebarItem icon={Settings} label="Settings" active />
       <SidebarItem icon={FlaskConical} label="Calibration" />
       <SidebarItem icon={Activity} label="Diagnostics" />
       <SidebarItem icon={Factory} label="Factory" />
-    </div>
+    </Sidebar>
 
-    {/* Main Content */}
-    <div className="flex-1 p-8 flex flex-col justify-center">
-      <div className="grid grid-cols-2 gap-12 mb-8">
+    <div className="flex-1 flex flex-col justify-center items-center p-8 bg-gradient-to-br from-slate-950 via-slate-950 to-slate-900">
+      <div className="grid grid-cols-2 gap-16 mb-10">
         <MetricDisplay value="1.00" unit="SG" label="Density" />
         <MetricDisplay value="25.73" unit="°C" label="Temperature" />
       </div>
 
-      <div className="text-center">
-        <div className="text-slate-400 font-ui text-sm mb-2 uppercase tracking-wide">
+      <div className="flex flex-col items-center">
+        <div className="text-slate-500 font-ui text-xs mb-3 uppercase tracking-widest">
           Active Profile
         </div>
-        <div className="inline-flex items-center gap-2 bg-slate-800 px-4 py-2 rounded-lg">
+        <div className="inline-flex items-center gap-3 bg-slate-800/50 border border-slate-700/50 px-5 py-2.5 rounded-xl backdrop-blur-sm">
           <Droplets className="w-4 h-4 text-primary" />
-          <span className="font-ui text-white">Super profile</span>
+          <span className="font-ui text-white/90">Super profile</span>
+          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
         </div>
       </div>
     </div>
   </div>
 );
 
-// Liquid Profiles Screen
 const LiquidProfilesScreen = () => (
   <div className="flex h-full">
-    {/* Sidebar */}
-    <div className="w-48 bg-slate-900 border-r border-slate-800 flex flex-col">
+    <Sidebar>
       <SidebarItem hasBack label="Back" />
       <SidebarItem icon={Waves} label="Water calibration" />
       <SidebarItem icon={Droplets} label="Liquid profiles" active />
-    </div>
+    </Sidebar>
 
-    {/* Main Content */}
-    <div className="flex-1 p-8 flex flex-col items-center justify-center">
-      <div className="text-slate-400 font-ui text-sm mb-4 uppercase tracking-wide">
+    <div className="flex-1 flex flex-col items-center justify-center p-8 bg-gradient-to-br from-slate-950 via-slate-950 to-slate-900">
+      <div className="text-slate-500 font-ui text-xs mb-4 uppercase tracking-widest">
         Active Profile
       </div>
-      <div className="text-2xl font-ui text-white mb-8">Super profile</div>
+      <div className="text-3xl font-ui text-white/90 mb-10 font-medium">Super profile</div>
 
       <div className="flex gap-4">
-        <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-ui font-medium transition-colors">
+        <button 
+          className="px-7 py-3.5 rounded-xl font-ui font-medium transition-all duration-200 text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
+          style={{
+            background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
+          }}
+        >
           Select profile
         </button>
-        <button className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-lg font-ui font-medium transition-colors">
+        <button className="bg-slate-800/80 hover:bg-slate-700/80 text-white/80 hover:text-white px-7 py-3.5 rounded-xl font-ui font-medium transition-all duration-200 border border-slate-700/50">
           Edit profiles
         </button>
       </div>
@@ -167,38 +246,39 @@ const LiquidProfilesScreen = () => (
   </div>
 );
 
-// Units Screen
 const UnitsScreen = () => (
   <div className="flex h-full">
-    {/* Sidebar */}
-    <div className="w-48 bg-slate-900 border-r border-slate-800 flex flex-col">
+    <Sidebar>
       <SidebarItem hasBack label="Back" />
       <SidebarItem icon={Gauge} label="Units" active />
       <SidebarItem icon={Activity} label="Output signals" />
-    </div>
+    </Sidebar>
 
-    {/* Main Content */}
-    <div className="flex-1 p-6 overflow-auto">
-      <div className="grid grid-cols-2 gap-8">
+    <div className="flex-1 p-6 overflow-auto bg-gradient-to-br from-slate-950 via-slate-950 to-slate-900">
+      <div className="grid grid-cols-2 gap-10">
         {/* Density Units */}
         <div>
-          <h3 className="text-slate-400 font-ui text-sm mb-4 uppercase tracking-wide">
+          <h3 className="text-slate-500 font-ui text-xs mb-4 uppercase tracking-widest">
             Density Unit
           </h3>
           <div className="space-y-2">
             {["SG", "SG×1000", "kg/m³", "g/L", "lb/ft³", "Weight %"].map((unit, i) => (
               <label
                 key={unit}
-                className="flex items-center gap-3 bg-slate-800/50 px-4 py-2.5 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors"
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 border ${
+                  i === 0 
+                    ? "bg-primary/10 border-primary/30" 
+                    : "bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-700/50"
+                }`}
               >
                 <div
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                     i === 0 ? "border-primary bg-primary" : "border-slate-600"
                   }`}
                 >
                   {i === 0 && <div className="w-2 h-2 bg-white rounded-full" />}
                 </div>
-                <span className="font-data text-white">{unit}</span>
+                <span className={`font-data ${i === 0 ? "text-white" : "text-slate-400"}`}>{unit}</span>
               </label>
             ))}
           </div>
@@ -206,23 +286,27 @@ const UnitsScreen = () => (
 
         {/* Temperature Units */}
         <div>
-          <h3 className="text-slate-400 font-ui text-sm mb-4 uppercase tracking-wide">
+          <h3 className="text-slate-500 font-ui text-xs mb-4 uppercase tracking-widest">
             Temperature Unit
           </h3>
           <div className="space-y-2">
             {["Celsius", "Fahrenheit"].map((unit, i) => (
               <label
                 key={unit}
-                className="flex items-center gap-3 bg-slate-800/50 px-4 py-2.5 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors"
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 border ${
+                  i === 0 
+                    ? "bg-primary/10 border-primary/30" 
+                    : "bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-700/50"
+                }`}
               >
                 <div
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                     i === 0 ? "border-primary bg-primary" : "border-slate-600"
                   }`}
                 >
                   {i === 0 && <div className="w-2 h-2 bg-white rounded-full" />}
                 </div>
-                <span className="font-data text-white">{unit}</span>
+                <span className={`font-data ${i === 0 ? "text-white" : "text-slate-400"}`}>{unit}</span>
               </label>
             ))}
           </div>
@@ -232,116 +316,161 @@ const UnitsScreen = () => (
   </div>
 );
 
-// Modal Component
-const Modal = ({
+// ============================================================================
+// SCREEN SWITCHER - Tab-like switcher for demo
+// ============================================================================
+const ScreenSwitcher = ({
+  activeScreen,
+  onScreenChange,
+}: {
+  activeScreen: string;
+  onScreenChange: (screen: string) => void;
+}) => {
+  const screens = [
+    { id: "measurements", label: "Measurements", icon: Gauge },
+    { id: "profiles", label: "Liquid Profiles", icon: Droplets },
+    { id: "units", label: "Units", icon: Settings },
+  ];
+
+  return (
+    <div className="flex justify-center mb-8">
+      <div className="inline-flex items-center gap-1 p-1.5 rounded-2xl bg-rho-obsidian border border-slate-800">
+        {screens.map(({ id, label, icon: Icon }) => (
+          <button
+            key={id}
+            onClick={() => onScreenChange(id)}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-ui text-sm font-medium transition-all duration-300 ${
+              activeScreen === id
+                ? "bg-white text-rho-obsidian shadow-lg"
+                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+            }`}
+          >
+            <Icon className="w-4 h-4" />
+            {label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ============================================================================
+// MODAL COMPONENTS - Dialog examples
+// ============================================================================
+const ModalFrame = ({
   title,
   children,
-  className = "",
+  compact = false,
 }: {
   title: string;
   children: React.ReactNode;
-  className?: string;
+  compact?: boolean;
 }) => (
-  <div className={`bg-slate-100 rounded-lg shadow-2xl overflow-hidden ${className}`}>
-    <div className="bg-slate-800 px-4 py-3 flex items-center justify-between">
-      <h3 className="text-white font-ui font-medium">{title}</h3>
-      <button className="text-slate-400 hover:text-white transition-colors">
-        <X className="w-5 h-5" />
+  <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/20 border border-slate-200/50 bg-white">
+    <div 
+      className="px-4 py-3 flex items-center justify-between"
+      style={{
+        background: 'linear-gradient(180deg, hsl(220 15% 20%), hsl(220 15% 15%))'
+      }}
+    >
+      <h3 className="text-white font-ui font-medium text-sm">{title}</h3>
+      <button className="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
+        <X className="w-4 h-4" />
       </button>
     </div>
-    <div className="p-4">{children}</div>
+    <div className={compact ? "p-4" : "p-5"}>{children}</div>
   </div>
 );
 
-// Calibration Points Modal
 const CalibrationPointsModal = () => (
-  <Modal title="Liquid profile: Clay 10% - Calibration points" className="w-full max-w-md">
-    <div className="space-y-2">
+  <ModalFrame title="Liquid profile: Clay 10% - Calibration points">
+    <div className="space-y-2.5">
       {[
-        { id: 0, status: "Done", temp: "24.5", density: "1.10" },
-        { id: 1, status: "Ready to sample", temp: "—", density: "—" },
+        { id: 0, status: "Done", temp: "24.5", density: "1.10", statusColor: "bg-success" },
+        { id: 1, status: "Ready to sample", temp: "—", density: "—", statusColor: "bg-warning" },
       ].map((point) => (
         <div
           key={point.id}
-          className="flex items-center gap-3 bg-white rounded-lg px-3 py-3 border border-slate-200"
+          className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3.5 border border-slate-100 hover:border-slate-200 transition-colors"
         >
-          <div
-            className={`w-1 h-10 rounded-full ${
-              point.status === "Done" ? "bg-success" : "bg-warning"
-            }`}
-          />
-          <div className="flex-1">
-            <div className="font-ui text-sm text-slate-900">
+          <div className={`w-1 h-12 rounded-full ${point.statusColor}`} />
+          <div className="flex-1 min-w-0">
+            <div className="font-ui text-sm text-slate-900 font-medium">
               #{point.id} · {point.status}
             </div>
-            <div className="font-data text-xs text-slate-500">
+            <div className="font-data text-xs text-slate-500 mt-0.5">
               T: {point.temp}°C · ρ: {point.density} SG
             </div>
           </div>
-          <button className="p-2 hover:bg-slate-100 rounded transition-colors">
-            <Pencil className="w-4 h-4 text-slate-400" />
-          </button>
-          <button className="p-2 hover:bg-slate-100 rounded transition-colors">
-            <Trash2 className="w-4 h-4 text-slate-400" />
-          </button>
+          <div className="flex items-center gap-1">
+            <button className="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-slate-100 transition-colors">
+              <Pencil className="w-4 h-4 text-slate-400" />
+            </button>
+            <button className="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-slate-100 transition-colors">
+              <Trash2 className="w-4 h-4 text-slate-400" />
+            </button>
+          </div>
         </div>
       ))}
 
-      <button className="w-full flex items-center justify-center gap-2 py-3 text-primary font-ui text-sm hover:bg-primary/5 rounded-lg transition-colors">
+      <button className="w-full flex items-center justify-center gap-2 py-3.5 text-primary font-ui text-sm font-medium hover:bg-primary/5 rounded-xl transition-colors border-2 border-dashed border-slate-200 hover:border-primary/30">
         <Plus className="w-4 h-4" />
         Add a calibration point
       </button>
     </div>
-  </Modal>
+  </ModalFrame>
 );
 
-// PIN Entry Modal
 const PINEntryModal = () => (
-  <Modal title="Enter PIN" className="w-full max-w-xs">
+  <ModalFrame title="Enter PIN" compact>
     <div className="space-y-4">
-      <div className="bg-white border border-slate-200 rounded-lg px-4 py-3 text-center">
-        <span className="font-data text-2xl text-slate-900 tracking-[0.5em]">••••</span>
-        <span className="font-data text-2xl text-slate-300 animate-pulse">_</span>
+      <div className="bg-slate-100 rounded-xl px-4 py-4 text-center border border-slate-200">
+        <span className="font-data text-3xl text-slate-900 tracking-[0.5em]">••••</span>
+        <span className="font-data text-3xl text-slate-300 animate-pulse">_</span>
       </div>
 
       <div className="grid grid-cols-3 gap-2">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, "←", 0, "C"].map((key) => (
           <button
             key={key}
-            className="bg-white hover:bg-slate-50 border border-slate-200 rounded-lg py-3 font-data text-lg text-slate-900 transition-colors active:bg-slate-100"
+            className="bg-slate-50 hover:bg-slate-100 active:bg-slate-200 border border-slate-200 rounded-xl py-3.5 font-data text-xl text-slate-800 transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
           >
             {key}
           </button>
         ))}
       </div>
 
-      <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-lg font-ui font-medium transition-colors">
+      <button 
+        className="w-full py-3.5 rounded-xl font-ui font-medium text-white transition-all hover:-translate-y-0.5 shadow-lg shadow-primary/25"
+        style={{
+          background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
+        }}
+      >
         Continue
       </button>
     </div>
-  </Modal>
+  </ModalFrame>
 );
 
-// Temperature Calibration Modal
 const TemperatureCalibrationModal = () => (
-  <Modal title="Temperature Calibration" className="w-full max-w-sm">
+  <ModalFrame title="Temperature Calibration" compact>
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-slate-600 font-ui text-xs uppercase tracking-wide mb-1 block">
+          <label className="text-slate-500 font-ui text-xs uppercase tracking-wide mb-2 block">
             Measured
           </label>
-          <div className="bg-slate-200 rounded-lg px-3 py-2">
-            <span className="font-data text-lg text-slate-900">25.73</span>
+          <div className="bg-slate-100 rounded-xl px-4 py-3 border border-slate-200">
+            <span className="font-data text-xl text-slate-900">25.73</span>
             <span className="font-data text-sm text-slate-500 ml-1">°C</span>
           </div>
         </div>
         <div>
-          <label className="text-slate-600 font-ui text-xs uppercase tracking-wide mb-1 block">
+          <label className="text-slate-500 font-ui text-xs uppercase tracking-wide mb-2 block">
             Verified
           </label>
-          <div className="bg-white border-2 border-primary rounded-lg px-3 py-2">
-            <span className="font-data text-lg text-slate-900">25.50</span>
+          <div className="bg-white rounded-xl px-4 py-3 border-2 border-primary shadow-sm shadow-primary/10">
+            <span className="font-data text-xl text-slate-900">25.50</span>
             <span className="font-data text-sm text-slate-500 ml-1">°C</span>
           </div>
         </div>
@@ -351,7 +480,7 @@ const TemperatureCalibrationModal = () => (
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "←"].map((key) => (
           <button
             key={key}
-            className="bg-white hover:bg-slate-50 border border-slate-200 rounded-lg py-2.5 font-data text-lg text-slate-900 transition-colors"
+            className="bg-slate-50 hover:bg-slate-100 active:bg-slate-200 border border-slate-200 rounded-xl py-3 font-data text-lg text-slate-800 transition-all duration-150"
           >
             {key}
           </button>
@@ -359,270 +488,281 @@ const TemperatureCalibrationModal = () => (
       </div>
 
       <div className="flex gap-3">
-        <button className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-2.5 rounded-lg font-ui font-medium transition-colors">
+        <button className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-xl font-ui font-medium transition-colors">
           Default
         </button>
-        <button className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-2.5 rounded-lg font-ui font-medium transition-colors">
+        <button 
+          className="flex-1 py-3 rounded-xl font-ui font-medium text-white shadow-lg shadow-primary/25"
+          style={{
+            background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
+          }}
+        >
           Apply
         </button>
       </div>
     </div>
-  </Modal>
+  </ModalFrame>
 );
 
-// Edit Profiles Modal
 const EditProfilesModal = () => (
-  <Modal title="Edit Profiles" className="w-full max-w-sm">
+  <ModalFrame title="Edit Profiles" compact>
     <div className="space-y-2">
       {["Water", "Clay 10%", "Slurry A", "Custom Mix"].map((profile, i) => (
         <div
           key={profile}
-          className="flex items-center gap-3 bg-white rounded-lg px-3 py-3 border border-slate-200"
+          className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3.5 border border-slate-100 hover:border-slate-200 transition-colors group"
         >
-          <div className={`w-1 h-8 rounded-full ${i === 0 ? "bg-primary" : "bg-slate-300"}`} />
+          <div className={`w-1 h-10 rounded-full ${i === 0 ? "bg-primary" : "bg-slate-300"}`} />
           <span className="flex-1 font-ui text-slate-900">{profile}</span>
-          <button className="p-2 hover:bg-slate-100 rounded transition-colors">
-            <Pencil className="w-4 h-4 text-slate-400" />
-          </button>
-          {i > 0 && (
-            <button className="p-2 hover:bg-slate-100 rounded transition-colors">
-              <Trash2 className="w-4 h-4 text-slate-400" />
+          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-slate-200 transition-colors">
+              <Pencil className="w-4 h-4 text-slate-400" />
             </button>
-          )}
+            {i > 0 && (
+              <button className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-slate-200 transition-colors">
+                <Trash2 className="w-4 h-4 text-slate-400" />
+              </button>
+            )}
+          </div>
         </div>
       ))}
     </div>
-  </Modal>
+  </ModalFrame>
 );
 
-// Super Profile Modal
 const SuperProfileModal = () => (
-  <Modal title="Edit Super Profile" className="w-full max-w-sm">
-    <div className="space-y-3">
+  <ModalFrame title="Edit Super Profile" compact>
+    <div className="space-y-2.5">
       {["Water", "Clay 10%", "Slurry A", "Custom Mix"].map((profile, i) => (
         <label
           key={profile}
-          className="flex items-center gap-3 bg-white rounded-lg px-3 py-3 border border-slate-200 cursor-pointer hover:border-slate-300 transition-colors"
+          className={`flex items-center gap-3 rounded-xl px-4 py-3.5 cursor-pointer transition-all border ${
+            i < 2 
+              ? "bg-primary/5 border-primary/20" 
+              : "bg-slate-50 border-slate-100 hover:border-slate-200"
+          }`}
         >
           <div
-            className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-              i < 2 ? "border-primary bg-primary" : "border-slate-300"
+            className={`w-5 h-5 rounded flex items-center justify-center transition-all ${
+              i < 2 ? "bg-primary border-2 border-primary" : "bg-white border-2 border-slate-300"
             }`}
           >
-            {i < 2 && <Check className="w-3 h-3 text-white" />}
+            {i < 2 && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
           </div>
-          <span className="font-ui text-slate-900">{profile}</span>
+          <span className={`font-ui ${i < 2 ? "text-slate-900 font-medium" : "text-slate-600"}`}>{profile}</span>
         </label>
       ))}
 
-      <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-lg font-ui font-medium transition-colors mt-4">
+      <button 
+        className="w-full py-3.5 rounded-xl font-ui font-medium text-white mt-2 shadow-lg shadow-primary/25"
+        style={{
+          background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
+        }}
+      >
         Save Changes
       </button>
     </div>
-  </Modal>
+  </ModalFrame>
 );
 
-// Pattern Documentation Table
-const PatternTable = () => (
-  <div className="overflow-x-auto">
-    <table className="w-full text-left">
-      <thead>
-        <tr className="border-b border-border">
-          <th className="py-3 px-4 font-ui font-semibold text-foreground">Pattern</th>
-          <th className="py-3 px-4 font-ui font-semibold text-foreground">Description</th>
-          <th className="py-3 px-4 font-ui font-semibold text-foreground">Brand Tokens</th>
-        </tr>
-      </thead>
-      <tbody className="font-ui text-sm">
-        <tr className="border-b border-border/50">
-          <td className="py-3 px-4 font-medium">Header Bar</td>
-          <td className="py-3 px-4 text-muted-foreground">Brand gradient background with white title</td>
-          <td className="py-3 px-4">
-            <code className="font-data text-xs bg-muted px-2 py-1 rounded">bg-brand-gradient</code>
-          </td>
-        </tr>
-        <tr className="border-b border-border/50">
-          <td className="py-3 px-4 font-medium">Data Display</td>
-          <td className="py-3 px-4 text-muted-foreground">Large measurement values with units</td>
-          <td className="py-3 px-4">
-            <code className="font-data text-xs bg-muted px-2 py-1 rounded">font-data text-5xl</code>
-          </td>
-        </tr>
-        <tr className="border-b border-border/50">
-          <td className="py-3 px-4 font-medium">Sidebar Navigation</td>
-          <td className="py-3 px-4 text-muted-foreground">Icon + label navigation items</td>
-          <td className="py-3 px-4">
-            <code className="font-data text-xs bg-muted px-2 py-1 rounded">text-primary font-ui</code>
-          </td>
-        </tr>
-        <tr className="border-b border-border/50">
-          <td className="py-3 px-4 font-medium">Status Indicators</td>
-          <td className="py-3 px-4 text-muted-foreground">Color-coded vertical bars</td>
-          <td className="py-3 px-4">
-            <code className="font-data text-xs bg-muted px-2 py-1 rounded">bg-success / bg-warning</code>
-          </td>
-        </tr>
-        <tr>
-          <td className="py-3 px-4 font-medium">Numeric Keypad</td>
-          <td className="py-3 px-4 text-muted-foreground">Touch-optimized input grid</td>
-          <td className="py-3 px-4">
-            <code className="font-data text-xs bg-muted px-2 py-1 rounded">font-data text-lg</code>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+// ============================================================================
+// PATTERN CARDS - Design pattern documentation
+// ============================================================================
+const PatternCard = ({
+  title,
+  description,
+  token,
+}: {
+  title: string;
+  description: string;
+  token: string;
+}) => (
+  <div className="group p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
+    <h4 className="font-ui font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+      {title}
+    </h4>
+    <p className="text-sm text-muted-foreground mb-3">{description}</p>
+    <code className="inline-flex px-2.5 py-1 rounded-lg bg-muted font-data text-xs text-muted-foreground">
+      {token}
+    </code>
   </div>
 );
 
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 export default function SDMEcoInterface() {
-  const [activeTab, setActiveTab] = useState("measurements");
+  const [activeScreen, setActiveScreen] = useState("measurements");
+
+  const renderScreen = () => {
+    switch (activeScreen) {
+      case "measurements":
+        return <MeasurementsScreen />;
+      case "profiles":
+        return <LiquidProfilesScreen />;
+      case "units":
+        return <UnitsScreen />;
+      default:
+        return <MeasurementsScreen />;
+    }
+  };
 
   return (
-    <section id="sdm-interface" className="scroll-mt-24">
-      <div className="space-y-16">
-        {/* Section Intro */}
+    <section className="scroll-mt-24">
+      <div className="space-y-20">
+        {/* Hero Statement */}
         <div className="max-w-3xl">
-          <span className="label-tech text-primary mb-4 block">EMBEDDED_INTERFACE</span>
-          <h2 className="text-3xl md:text-4xl font-ui font-semibold text-foreground mb-6">
-            SDM Eco Device Interface
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            The embedded touchscreen interface translates our brand language into a robust, 
-            industrial HMI. Every screen prioritizes clarity of data and operational efficiency, 
-            using our typography system to distinguish between UI labels and measurement values.
+          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+            The embedded touchscreen translates our brand into a 
+            <span className="text-foreground font-medium"> robust industrial HMI</span>. 
+            Every screen prioritizes <span className="text-primary font-medium">data clarity</span> and 
+            <span className="text-foreground font-medium"> operational efficiency</span>.
           </p>
         </div>
 
-        {/* Device Frame with Tabbed Screens */}
-        <div className="space-y-6">
-          <ChamferedTabs value={activeTab} onValueChange={setActiveTab} variant="obsidian">
-            <ChamferedTabsList className="mx-auto">
-              <ChamferedTabsTrigger value="measurements">Measurements</ChamferedTabsTrigger>
-              <ChamferedTabsTrigger value="profiles">Liquid Profiles</ChamferedTabsTrigger>
-              <ChamferedTabsTrigger value="units">Units</ChamferedTabsTrigger>
-            </ChamferedTabsList>
-
-            <div className="mt-8">
-              <DeviceFrame>
-                <ChamferedTabsContent value="measurements" className="m-0 h-full">
-                  <StatusBar title="Measurements" />
-                  <div className="h-[calc(100%-52px)]">
-                    <MeasurementsScreen />
-                  </div>
-                </ChamferedTabsContent>
-
-                <ChamferedTabsContent value="profiles" className="m-0 h-full">
-                  <StatusBar title="Liquid Profiles" />
-                  <div className="h-[calc(100%-52px)]">
-                    <LiquidProfilesScreen />
-                  </div>
-                </ChamferedTabsContent>
-
-                <ChamferedTabsContent value="units" className="m-0 h-full">
-                  <StatusBar title="Units" />
-                  <div className="h-[calc(100%-52px)]">
-                    <UnitsScreen />
-                  </div>
-                </ChamferedTabsContent>
-              </DeviceFrame>
+        {/* Interactive Device Demo */}
+        <div className="py-8">
+          <ScreenSwitcher activeScreen={activeScreen} onScreenChange={setActiveScreen} />
+          
+          <DeviceFrame>
+            <StatusBar 
+              title={
+                activeScreen === "measurements" ? "Measurements" : 
+                activeScreen === "profiles" ? "Liquid Profiles" : 
+                "Units"
+              } 
+            />
+            <div className="h-[calc(100%-52px)]">
+              {renderScreen()}
             </div>
-          </ChamferedTabs>
+          </DeviceFrame>
         </div>
 
-        {/* Modal Examples */}
-        <div className="space-y-8">
-          <div>
-            <h3 className="text-xl font-ui font-semibold text-foreground mb-2">
+        {/* Modal Dialogs Section */}
+        <div className="space-y-10">
+          <div className="max-w-2xl">
+            <h3 className="text-2xl font-ui font-semibold text-foreground mb-3">
               Modal Dialogs
             </h3>
-            <p className="text-muted-foreground mb-8">
+            <p className="text-muted-foreground">
               Overlay dialogs for data entry, configuration, and list management follow a consistent 
               structure: dark header with close action, light content area, and clear action hierarchy.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="space-y-4">
-              <h4 className="text-sm font-ui font-medium text-muted-foreground uppercase tracking-wide">
-                Calibration Points
-              </h4>
+          {/* Modal Grid */}
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
+                List Management
+              </span>
               <CalibrationPointsModal />
             </div>
 
-            <div className="space-y-4">
-              <h4 className="text-sm font-ui font-medium text-muted-foreground uppercase tracking-wide">
-                PIN Entry
-              </h4>
+            <div className="space-y-3">
+              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
+                Secure Entry
+              </span>
               <PINEntryModal />
             </div>
 
-            <div className="space-y-4">
-              <h4 className="text-sm font-ui font-medium text-muted-foreground uppercase tracking-wide">
-                Temperature Calibration
-              </h4>
+            <div className="space-y-3">
+              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
+                Calibration
+              </span>
               <TemperatureCalibrationModal />
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h4 className="text-sm font-ui font-medium text-muted-foreground uppercase tracking-wide">
-                Profile List
-              </h4>
+            <div className="space-y-3">
+              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
+                Profile Management
+              </span>
               <EditProfilesModal />
             </div>
 
-            <div className="space-y-4">
-              <h4 className="text-sm font-ui font-medium text-muted-foreground uppercase tracking-wide">
-                Super Profile Selection
-              </h4>
+            <div className="space-y-3">
+              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
+                Multi-Select
+              </span>
               <SuperProfileModal />
             </div>
           </div>
         </div>
 
-        {/* Pattern Documentation */}
-        <div className="space-y-6">
-          <h3 className="text-xl font-ui font-semibold text-foreground">
+        {/* Interface Patterns */}
+        <div className="space-y-8">
+          <h3 className="text-2xl font-ui font-semibold text-foreground">
             Interface Patterns
           </h3>
-          <div className="bg-card border border-border rounded-lg overflow-hidden">
-            <PatternTable />
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <PatternCard 
+              title="Header Bar" 
+              description="Brand gradient background with white title text"
+              token="bg-brand-gradient"
+            />
+            <PatternCard 
+              title="Data Display" 
+              description="Large measurement values using monospace"
+              token="font-data text-6xl"
+            />
+            <PatternCard 
+              title="Sidebar Navigation" 
+              description="Icon + label with active state indicator"
+              token="text-primary font-ui"
+            />
+            <PatternCard 
+              title="Status Indicators" 
+              description="Color-coded vertical bars for state"
+              token="bg-success / bg-warning"
+            />
+            <PatternCard 
+              title="Touch Targets" 
+              description="Minimum 44px for gloved operation"
+              token="min-h-[44px] min-w-[44px]"
+            />
+            <PatternCard 
+              title="Numeric Keypad" 
+              description="Touch-optimized input grid layout"
+              token="grid-cols-3 gap-2"
+            />
           </div>
         </div>
 
-        {/* Design Principles Callout */}
+        {/* Design Principles */}
         <BrandCallout variant="info" title="Embedded UI Principles">
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-start gap-2">
-              <span className="text-primary font-bold">1.</span>
-              <span>
-                <strong>Data First:</strong> Measurement values use JetBrains Mono at large sizes 
-                for instant readability in industrial environments.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary font-bold">2.</span>
-              <span>
-                <strong>Touch Targets:</strong> All interactive elements are sized for gloved 
-                operation (minimum 44×44px touch zones).
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary font-bold">3.</span>
-              <span>
-                <strong>Status Clarity:</strong> Color-coded indicators provide immediate 
-                operational feedback without requiring text comprehension.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary font-bold">4.</span>
-              <span>
-                <strong>Consistent Navigation:</strong> Sidebar pattern persists across all 
-                screens, providing predictable wayfinding.
-              </span>
-            </li>
-          </ul>
+          <div className="grid sm:grid-cols-2 gap-4 text-sm">
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-ui font-bold text-xs">1</span>
+              <div>
+                <strong className="text-foreground">Data First</strong>
+                <p className="text-muted-foreground mt-0.5">Measurement values use JetBrains Mono at large sizes for instant readability.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-ui font-bold text-xs">2</span>
+              <div>
+                <strong className="text-foreground">Touch Targets</strong>
+                <p className="text-muted-foreground mt-0.5">All interactive elements are sized for gloved operation (min 44×44px).</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-ui font-bold text-xs">3</span>
+              <div>
+                <strong className="text-foreground">Status Clarity</strong>
+                <p className="text-muted-foreground mt-0.5">Color-coded indicators provide immediate feedback without text.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-ui font-bold text-xs">4</span>
+              <div>
+                <strong className="text-foreground">Consistent Navigation</strong>
+                <p className="text-muted-foreground mt-0.5">Sidebar pattern persists across all screens for predictable wayfinding.</p>
+              </div>
+            </div>
+          </div>
         </BrandCallout>
       </div>
     </section>

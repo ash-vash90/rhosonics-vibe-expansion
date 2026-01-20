@@ -83,6 +83,7 @@ export { FolderOpen } from "lucide-react";
 export { LayoutGrid } from "lucide-react";
 export { MousePointer } from "lucide-react";
 export { Palette } from "lucide-react";
+export { Monitor } from "lucide-react";
 
 // Data & Charts
 export { BarChart3 } from "lucide-react";
