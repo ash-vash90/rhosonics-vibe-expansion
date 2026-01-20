@@ -1,7 +1,6 @@
 import { ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandCallout } from "./BrandCallout";
-import { ChartExamples } from "./ChartExamples";
 import { ChamferedTabs, ChamferedTabsList, ChamferedTabsTrigger } from "@/components/ui/chamfered-tabs";
 import { MetricTile } from "@/components/ui/metric-tile";
 import { LinearProgress } from "@/components/ui/chamfered-progress";
@@ -18,15 +17,6 @@ export const InterfaceKit = () => {
           Every component prioritizes clarity over decoration — the primary measurement 
           must be readable at a glance, from a distance.
         </p>
-      </div>
-
-      {/* Chart Examples */}
-      <div>
-        <div className="flex items-center gap-4 mb-8">
-          <span className="font-data text-sm text-primary uppercase tracking-wider">00</span>
-          <h3 className="font-ui text-2xl font-semibold text-foreground">Data Visualization</h3>
-        </div>
-        <ChartExamples />
       </div>
 
       {/* Buttons Showcase */}
