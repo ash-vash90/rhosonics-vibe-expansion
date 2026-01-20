@@ -3,6 +3,41 @@ import { Zap, Leaf, Clock, DollarSign } from "@/lib/icons";
 import bb, { line, bar, radar, gauge } from "billboard.js";
 import "billboard.js/dist/billboard.css";
 
+// Brand color palette for charts - matches design tokens
+const chartColors = {
+  // Primary brand colors
+  primary: "hsl(125, 50%, 40%)",      // --rho-green
+  accent: "hsl(90, 60%, 45%)",        // --rho-green-accent
+  
+  // Slate scale for secondary data
+  slate700: "hsl(215, 25%, 27%)",
+  slate600: "hsl(215, 19%, 30%)",
+  slate500: "hsl(215, 19%, 35%)",
+  slate400: "hsl(215, 20%, 42%)",
+  slate300: "hsl(213, 27%, 70%)",
+  
+  // Signal colors
+  warning: "hsl(45, 80%, 50%)",       // Amber
+  error: "hsl(0, 70%, 50%)",          // Red
+  success: "hsl(125, 50%, 40%)",      // Green (same as primary)
+  
+  // Mineral tones
+  mineralBronze: "hsl(55, 20%, 38%)",
+};
+
+// Common chart configuration
+const chartConfig = {
+  padding: {
+    top: 20,
+    right: 20,
+    bottom: 30,
+    left: 40,
+  },
+  transition: {
+    duration: 500,
+  },
+};
+
 const highlights = [
   { icon: Zap, label: "Energy Use", value: "85%", desc: "less than nuclear" },
   { icon: Leaf, label: "Zero", value: "Radiation", desc: "No licensing required" },
@@ -35,18 +70,29 @@ export const TechComparison = () => {
           ],
           type: line(),
           colors: {
-            Density: "hsl(125, 50%, 40%)",
-            Velocity: "hsl(45, 80%, 50%)",
+            Density: chartColors.primary,
+            Velocity: chartColors.warning,
           },
+        },
+        point: {
+          r: 3.5,
+          focus: { expand: { r: 5.5 } },
         },
         axis: {
           x: {
-            label: "Time (s)",
-            tick: { format: (x: number) => `${x * 10}s` },
+            label: { text: "TIME (S)", position: "outer-center" },
+            tick: { format: (x: number) => `${x * 10}` },
           },
-          y: { label: "Value" },
+          y: {
+            label: { text: "VALUE", position: "outer-middle" },
+          },
+        },
+        grid: {
+          y: { show: true },
         },
         legend: { show: true },
+        padding: chartConfig.padding,
+        transition: chartConfig.transition,
         bindto: lineChartRef.current,
       });
     }
@@ -63,17 +109,26 @@ export const TechComparison = () => {
           ],
           type: bar(),
           colors: {
-            "SDM ECO": "hsl(125, 50%, 40%)",
-            Nuclear: "hsl(215, 19%, 35%)",
-            Coriolis: "hsl(215, 20%, 45%)",
-            Ultrasonic: "hsl(213, 27%, 70%)",
+            "SDM ECO": chartColors.primary,
+            Nuclear: chartColors.slate700,
+            Coriolis: chartColors.slate500,
+            Ultrasonic: chartColors.slate300,
           },
         },
+        bar: {
+          width: { ratio: 0.6 },
+          radius: 2,
+        },
         axis: {
-          x: { type: "category", categories: ["Energy (W)"] },
-          y: { max: 100 },
+          x: { type: "category", categories: ["ENERGY (W)"] },
+          y: { max: 100, padding: { top: 10 } },
+        },
+        grid: {
+          y: { show: true },
         },
         legend: { show: true },
+        padding: chartConfig.padding,
+        transition: chartConfig.transition,
         bindto: barChartRef.current,
       });
     }
@@ -89,18 +144,23 @@ export const TechComparison = () => {
           ],
           type: radar(),
           colors: {
-            "SDM ECO": "hsl(125, 50%, 40%)",
-            Nuclear: "hsl(215, 19%, 35%)",
-            Coriolis: "hsl(215, 20%, 45%)",
+            "SDM ECO": chartColors.primary,
+            Nuclear: chartColors.slate700,
+            Coriolis: chartColors.slate400,
           },
         },
         radar: {
           axis: {
             max: 100,
+            text: {
+              show: true,
+            },
           },
           level: { depth: 4 },
           direction: { clockwise: true },
         },
+        padding: { top: 10, right: 10, bottom: 10, left: 10 },
+        transition: chartConfig.transition,
         bindto: radarChartRef.current,
       });
     }
@@ -113,13 +173,20 @@ export const TechComparison = () => {
           type: gauge(),
         },
         gauge: {
-          label: { format: (value: number) => `${value}%` },
+          label: {
+            format: (value: number) => `${value}%`,
+            extents: () => "",
+          },
+          width: 20,
           max: 100,
         },
         color: {
-          pattern: ["hsl(0, 70%, 50%)", "hsl(45, 80%, 50%)", "hsl(125, 50%, 40%)"],
+          pattern: [chartColors.error, chartColors.warning, chartColors.success],
           threshold: { values: [30, 70, 100] },
         },
+        size: { height: 180 },
+        padding: { top: 0, right: 0, bottom: 0, left: 0 },
+        transition: chartConfig.transition,
         bindto: gaugeChartRef.current,
       });
     }
