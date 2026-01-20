@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 rounded-lg",
   {
     variants: {
       variant: {
@@ -15,20 +15,16 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        // Chamfered variants with industrial aesthetic
-        chamfer: "bg-primary text-primary-foreground hover:bg-primary/90 [clip-path:var(--chamfer-btn)] hover:shadow-lg",
-        "chamfer-outline": "border-2 border-primary bg-transparent text-primary hover:bg-primary/10 [clip-path:var(--chamfer-btn)]",
-        "chamfer-obsidian": "bg-rho-obsidian text-slate-100 hover:bg-rho-obsidian-light [clip-path:var(--chamfer-btn)] hover:shadow-lg",
-        "chamfer-earth": "bg-earth-ochre text-white hover:bg-earth-ochre-dark [clip-path:var(--chamfer-btn)] hover:shadow-earth",
+        // Industrial solid variants (replacing chamfered)
+        obsidian: "bg-rho-obsidian text-slate-100 hover:bg-rho-obsidian-light hover:shadow-lg",
+        "obsidian-outline": "border-2 border-rho-obsidian bg-transparent text-rho-obsidian hover:bg-rho-obsidian/10",
+        gradient: "bg-gradient-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25",
       },
       size: {
-        default: "h-10 px-4 py-2 rounded-md",
-        sm: "h-9 px-3 rounded-md",
-        lg: "h-11 px-8 rounded-md",
-        icon: "h-10 w-10 rounded-md",
-        // Chamfered sizes use clip-path instead of border-radius
-        "chamfer-default": "h-10 px-5 py-2",
-        "chamfer-lg": "h-12 px-8 py-3 text-base [clip-path:var(--chamfer-btn-lg)]",
+        default: "h-10 px-4 py-2",
+        sm: "h-9 px-3",
+        lg: "h-12 px-8 py-3 text-base",
+        icon: "h-10 w-10",
       },
     },
     defaultVariants: {

@@ -20,7 +20,7 @@ const chamferedTabsListVariants = cva(
 );
 
 const chamferedTabsTriggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap px-4 py-2 font-data text-xs uppercase tracking-wider transition-all duration-200 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap px-4 py-2 font-ui text-sm font-medium transition-all duration-200 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -33,7 +33,7 @@ const chamferedTabsTriggerVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "obsidian",
+      variant: "primary",
     },
   }
 );

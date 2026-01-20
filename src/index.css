@@ -252,6 +252,10 @@
     background: var(--gradient-brand);
   }
 
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(125 55% 35%) 100%);
+  }
+
   .bg-obsidian-gradient {
     background: var(--gradient-obsidian);
   }
