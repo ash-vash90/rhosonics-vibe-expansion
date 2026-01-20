@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Zap, Leaf, Clock, DollarSign } from "@/lib/icons";
-import bb, { line, bar, radar, gauge } from "billboard.js";
+import bb, { spline, bar, radar, gauge } from "billboard.js";
 import "billboard.js/dist/billboard.css";
 
 // Brand color palette for charts - matches design tokens
@@ -68,7 +68,7 @@ export const TechComparison = () => {
             ["Density", 1.42, 1.44, 1.43, 1.45, 1.44, 1.46, 1.45, 1.47, 1.46, 1.48],
             ["Velocity", 2.1, 2.3, 2.2, 2.4, 2.3, 2.5, 2.4, 2.6, 2.5, 2.7],
           ],
-          type: line(),
+          type: spline(),
           colors: {
             Density: chartColors.primary,
             Velocity: chartColors.warning,
