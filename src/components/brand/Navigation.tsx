@@ -83,6 +83,7 @@ const navSections: NavSection[] = [
     label: "APPLICATIONS",
     items: [
       { id: "applications", label: "Industry Applications" },
+      { id: "sdm-interface", label: "SDM Eco Interface" },
     ],
   },
   {
