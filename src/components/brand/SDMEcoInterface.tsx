@@ -36,13 +36,20 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
   const frameRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
   const reflectionRef = useRef<HTMLDivElement>(null);
-  const [booted, setBooted] = useState(false);
+  const hasBooted = useRef(false);
 
   useEffect(() => {
     const frame = frameRef.current;
     const screen = screenRef.current;
     const reflection = reflectionRef.current;
     if (!frame || !screen || !reflection) return;
+
+    // If already booted, ensure screen is visible
+    if (hasBooted.current) {
+      gsap.set(frame, { scale: 1, opacity: 1, y: 0 });
+      gsap.set(screen, { opacity: 1, filter: "brightness(1)" });
+      return;
+    }
 
     const ctx = gsap.context(() => {
       // Initial state
@@ -52,13 +59,13 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
       ScrollTrigger.create({
         trigger: frame,
         start: "top 80%",
+        once: true, // Only trigger once
         onEnter: () => {
-          if (booted) return;
+          if (hasBooted.current) return;
+          hasBooted.current = true;
           
           // Boot sequence
-          const tl = gsap.timeline({
-            onComplete: () => setBooted(true)
-          });
+          const tl = gsap.timeline();
           
           // Frame scales in
           tl.fromTo(frame, 
@@ -88,7 +95,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
     });
 
     return () => ctx.revert();
-  }, [booted]);
+  }, []);
 
   return (
     <div ref={frameRef} className="relative" style={{ opacity: 0 }}>
