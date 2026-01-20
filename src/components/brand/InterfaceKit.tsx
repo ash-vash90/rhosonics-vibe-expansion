@@ -234,7 +234,7 @@ export const InterfaceKit = () => {
           <h3 className="font-ui text-2xl font-semibold text-foreground">Callouts</h3>
         </div>
 
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <BrandCallout variant="info" title="Guidance & Context">
             Use info callouts for general guidance, tips, best practices, or key insights that help users understand a concept or process.
           </BrandCallout>
