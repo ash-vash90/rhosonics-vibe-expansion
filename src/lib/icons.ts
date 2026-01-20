@@ -58,6 +58,7 @@ export { RefreshCw } from "lucide-react";
 export { Crop } from "lucide-react";
 export { Maximize2 } from "lucide-react";
 export { Search } from "lucide-react";
+export { Usb } from "lucide-react";
 
 // Content Types
 export { FileText } from "lucide-react";

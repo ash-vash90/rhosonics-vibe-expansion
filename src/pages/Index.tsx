@@ -20,6 +20,7 @@ const SpacingSystem = lazy(() => import("@/components/brand/SpacingSystem"));
 const LogoAssets = lazy(() => import("@/components/brand/LogoAssets"));
 const IconGuidelines = lazy(() => import("@/components/brand/IconGuidelines"));
 const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
+const SDMEcoInterface = lazy(() => import("@/components/brand/SDMEcoInterface"));
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
 const IndustryApplications = lazy(() => import("@/components/brand/IndustryApplications"));
 
@@ -520,6 +521,24 @@ const Index = () => {
               <IndustryApplications />
             </Suspense>
           </ErrorBoundary>
+          
+          {/* SDM Eco Interface Subsection */}
+          <div id="sdm-interface" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
+            <div className="mb-8 md:mb-12">
+              <div className="flex items-baseline gap-3 mb-3">
+                <span className="font-data text-xs text-muted-foreground">09.1</span>
+                <div className="h-px flex-1 bg-border max-w-12" />
+              </div>
+              <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">SDM Eco Interface</h3>
+              <p className="text-base text-muted-foreground">Embedded touchscreen interface design system.</p>
+            </div>
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <SDMEcoInterface />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <EcoComponents />
