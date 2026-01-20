@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import {
   Settings,
   Droplets,
@@ -13,15 +13,17 @@ import {
   Gauge,
   FlaskConical,
   Waves,
-  Zap,
-  TrendingUp,
+  Globe,
+  Sun,
+  ArrowUpDown,
+  Users,
+  ChevronDown,
+  Delete,
 } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
-import bb, { spline } from "billboard.js";
-import "billboard.js/dist/billboard.css";
 
 // ============================================================================
-// DEVICE FRAME - Industrial tablet with light screen
+// DEVICE FRAME - Industrial tablet with status bar
 // ============================================================================
 const DeviceFrame = ({ children }: { children: React.ReactNode }) => (
   <div className="relative">
@@ -38,23 +40,19 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => (
         inset 0 -2px 0 hsl(220 20% 8%)
       `
     }}>
-      {/* Top bezel with status */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="w-3 h-3 rounded-full bg-primary shadow-lg shadow-primary/50" />
-          <span className="font-data text-sm text-primary uppercase tracking-wider">ONLINE</span>
-        </div>
-        <div className="flex items-center gap-5 text-slate-400">
+      {/* Top bezel with status - matches reference */}
+      <div className="flex items-center justify-end px-6 py-3 bg-slate-100 border-b border-slate-200">
+        <div className="flex items-center gap-6 text-slate-600">
           <div className="flex items-center gap-2">
-            <Usb className="w-4 h-4" />
-            <span className="font-data text-sm uppercase tracking-wide">USB</span>
+            <span className="font-ui text-sm font-medium">USB detected</span>
+            <Usb className="w-4 h-4 text-primary" />
           </div>
-          <span className="font-data text-base tabular-nums font-medium">14:32</span>
+          <span className="font-data text-sm tabular-nums font-medium">09:00</span>
         </div>
       </div>
       
       {/* Screen - Light mode */}
-      <div className="aspect-[5/3] bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <div className="aspect-[5/3] bg-white">
         {children}
       </div>
     </div>
@@ -70,353 +68,438 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => (
 );
 
 // ============================================================================
-// LIVE METRIC - Compact for waveform layout
+// GREEN HEADER BAR - Matches reference
 // ============================================================================
-const LiveMetric = ({
-  value,
-  unit,
-  label,
-  trend,
-  highlight = false,
-}: {
-  value: string;
-  unit: string;
-  label: string;
-  trend?: string;
-  highlight?: boolean;
+const GreenHeader = ({ 
+  title, 
+  onClose 
+}: { 
+  title: string;
+  onClose?: () => void;
 }) => (
-  <div className={`relative p-4 rounded-xl border-2 ${
-    highlight 
-      ? "bg-primary/5 border-primary/20" 
-      : "bg-white border-slate-200"
-  }`}>
-    <span className="font-ui text-sm text-slate-500 font-medium mb-1 block">{label}</span>
-    
-    <div className="flex items-baseline gap-2">
-      <span className="font-data text-4xl text-slate-900 tabular-nums tracking-tight font-medium">
-        {value}
-      </span>
-      <span className="font-data text-lg text-slate-400 uppercase font-medium">{unit}</span>
-    </div>
-    
-    {trend && (
-      <div className="mt-2 flex items-center gap-1.5">
-        <TrendingUp className="w-4 h-4 text-primary" />
-        <span className="font-data text-xs text-primary uppercase tracking-wide font-medium">{trend}</span>
-      </div>
+  <div className="bg-primary px-5 py-4 flex items-center justify-between">
+    <h2 className="font-ui text-xl text-white font-semibold">{title}</h2>
+    {onClose && (
+      <button 
+        onClick={onClose}
+        className="w-10 h-10 rounded-lg flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+      >
+        <X className="w-6 h-6" />
+      </button>
     )}
   </div>
 );
 
 // ============================================================================
-// SIDEBAR - Icon navigation for touch
+// LEFT SIDEBAR - Text menu with icons
 // ============================================================================
-const IconNav = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-24 bg-slate-100 border-r-2 border-slate-200 flex flex-col items-center py-6 gap-3">
+const SidebarMenu = ({ children }: { children: React.ReactNode }) => (
+  <div className="w-52 border-r border-slate-200 flex flex-col">
     {children}
   </div>
 );
 
-const IconNavItem = ({
+const SidebarBack = ({ onClick }: { onClick?: () => void }) => (
+  <button 
+    onClick={onClick}
+    className="flex items-center gap-2 px-4 py-4 text-primary font-ui font-medium hover:bg-slate-50 transition-colors border-b border-slate-200"
+  >
+    <ChevronLeft className="w-4 h-4" />
+    Back
+  </button>
+);
+
+const SidebarDivider = () => <div className="my-2 border-b border-slate-200" />;
+
+const SidebarItem = ({
   icon: Icon,
+  label,
   active = false,
   onClick,
+  hasSubmenu = false,
+  expanded = false,
 }: {
-  icon: React.ComponentType<{ className?: string }>;
+  icon?: React.ComponentType<{ className?: string }>;
+  label: string;
   active?: boolean;
   onClick?: () => void;
+  hasSubmenu?: boolean;
+  expanded?: boolean;
 }) => (
   <button
     onClick={onClick}
-    className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all ${
+    className={`flex items-center gap-3 px-4 py-3 text-left font-ui font-medium transition-colors ${
       active 
-        ? "bg-primary text-white shadow-lg shadow-primary/30" 
-        : "text-slate-400 hover:text-slate-600 hover:bg-slate-200"
+        ? "text-primary bg-primary/5" 
+        : "text-slate-700 hover:bg-slate-50"
     }`}
   >
-    <Icon className="w-6 h-6" />
+    {Icon && <Icon className={`w-5 h-5 ${active ? "text-primary" : "text-primary"}`} />}
+    <span className="flex-1">{label}</span>
+    {hasSubmenu && (
+      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${expanded ? "rotate-180" : ""}`} />
+    )}
   </button>
 );
 
 // ============================================================================
-// WAVEFORM CHART - Live sensor oscillation
-// ============================================================================
-const LiveWaveform = () => {
-  const chartRef = useRef<HTMLDivElement>(null);
-  const chartInstance = useRef<ReturnType<typeof bb.generate> | null>(null);
-  
-  useEffect(() => {
-    if (!chartRef.current) return;
-    
-    // Generate initial waveform data
-    const generateWaveData = (offset: number) => {
-      const points = 50;
-      return Array.from({ length: points }, (_, i) => {
-        const x = (i / points) * Math.PI * 4;
-        const wave1 = Math.sin(x + offset) * 0.3;
-        const wave2 = Math.sin(x * 2.5 + offset * 1.3) * 0.15;
-        const noise = (Math.random() - 0.5) * 0.05;
-        return 1.0 + wave1 + wave2 + noise;
-      });
-    };
-    
-    let offset = 0;
-    const densityData = generateWaveData(offset);
-    
-    chartInstance.current = bb.generate({
-      bindto: chartRef.current,
-      data: {
-        columns: [["DENSITY", ...densityData]],
-        type: spline(),
-        colors: {
-          DENSITY: "hsl(88 60% 45%)",
-        },
-      },
-      spline: {
-        interpolation: { type: "cardinal" },
-      },
-      point: { show: false },
-      axis: {
-        x: { show: false },
-        y: {
-          show: true,
-          min: 0.5,
-          max: 1.5,
-          tick: {
-            values: [0.6, 0.8, 1.0, 1.2, 1.4],
-            format: (d: number) => d.toFixed(1),
-          },
-        },
-      },
-      grid: {
-        y: {
-          lines: [{ value: 1.0, class: "reference-line" }],
-        },
-      },
-      legend: { show: false },
-      tooltip: { show: false },
-      transition: { duration: 100 },
-      padding: { left: 40, right: 10, top: 10, bottom: 10 },
-      size: { height: 100 },
-    });
-    
-    // Animate the waveform
-    const interval = setInterval(() => {
-      offset += 0.15;
-      const newData = generateWaveData(offset);
-      chartInstance.current?.load({
-        columns: [["DENSITY", ...newData]],
-      });
-    }, 100);
-    
-    return () => {
-      clearInterval(interval);
-      chartInstance.current?.destroy();
-    };
-  }, []);
-  
-  return (
-    <div className="bg-white rounded-xl border-2 border-slate-200 p-4">
-      <div className="flex items-center justify-between mb-2">
-        <span className="font-ui text-base text-slate-500 font-medium">Signal waveform</span>
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span className="font-data text-xs text-primary uppercase tracking-wide">LIVE</span>
-        </div>
-      </div>
-      <div ref={chartRef} className="sdm-waveform" />
-      <style>{`
-        .sdm-waveform .bb-axis-y .tick text {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 11px;
-          fill: hsl(215 16% 47%);
-        }
-        .sdm-waveform .bb-axis-y .domain,
-        .sdm-waveform .bb-axis-y .tick line {
-          stroke: hsl(214 32% 91%);
-        }
-        .sdm-waveform .bb-grid .reference-line line {
-          stroke: hsl(88 60% 45%);
-          stroke-width: 2;
-          stroke-dasharray: 4 4;
-        }
-        .sdm-waveform .bb-line {
-          stroke-width: 3;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-// ============================================================================
-// MEASUREMENTS SCREEN
+// MEASUREMENTS SCREEN - Main dashboard
 // ============================================================================
 const MeasurementsScreen = () => (
-  <div className="h-full flex">
-    <IconNav>
-      <IconNavItem icon={Gauge} active />
-      <IconNavItem icon={FlaskConical} />
-      <IconNavItem icon={Activity} />
-      <IconNavItem icon={Settings} />
-    </IconNav>
-
-    <div className="flex-1 p-5 flex flex-col gap-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="font-ui text-xl text-slate-900 font-semibold">Measurements</h2>
-        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 border-2 border-slate-200">
-          <Droplets className="w-4 h-4 text-primary" />
-          <span className="font-ui text-sm text-slate-700 font-medium">Super profile</span>
-          <Zap className="w-3 h-3 text-primary" />
+  <div className="h-full flex flex-col">
+    <GreenHeader title="MEASUREMENTS" />
+    <div className="flex-1 flex">
+      <SidebarMenu>
+        <SidebarBack />
+        <SidebarDivider />
+        <SidebarItem icon={Settings} label="Settings" />
+        <SidebarItem icon={Gauge} label="Calibration" />
+        <SidebarItem icon={Activity} label="Diagnostics" />
+        <SidebarItem icon={FlaskConical} label="Factory" />
+      </SidebarMenu>
+      
+      <div className="flex-1 p-5 flex flex-col">
+        {/* Metrics - right aligned like reference */}
+        <div className="flex-1 flex flex-col items-end justify-center gap-2">
+          <div>
+            <span className="font-ui text-sm text-slate-500 font-medium block text-right">Density (SG)</span>
+            <span className="font-data text-6xl text-slate-900 tabular-nums font-medium">1.00</span>
+          </div>
+          <div>
+            <span className="font-ui text-sm text-slate-500 font-medium block text-right">Temperature (°C)</span>
+            <span className="font-data text-5xl text-slate-900 tabular-nums font-medium">25.73</span>
+          </div>
+          <div className="mt-4">
+            <span className="font-ui text-sm text-slate-500 font-medium block text-right">Active profile</span>
+            <span className="font-data text-3xl text-slate-900 font-medium">Super profile</span>
+          </div>
         </div>
       </div>
-
-      {/* Metrics */}
-      <div className="grid grid-cols-2 gap-4">
-        <LiveMetric 
-          value="1.00" 
-          unit="SG" 
-          label="Density"
-          trend="+0.02 AVG"
-          highlight
-        />
-        <LiveMetric 
-          value="25.73" 
-          unit="°C" 
-          label="Temperature"
-          trend="STABLE"
-        />
-      </div>
-      
-      {/* Waveform */}
-      <LiveWaveform />
     </div>
   </div>
 );
 
 // ============================================================================
-// PROFILES SCREEN
+// LIQUID PROFILES SCREEN
 // ============================================================================
-const ProfilesScreen = () => (
-  <div className="h-full flex">
-    <IconNav>
-      <IconNavItem icon={ChevronLeft} />
-      <IconNavItem icon={Waves} />
-      <IconNavItem icon={Droplets} active />
-    </IconNav>
+const LiquidProfilesScreen = () => (
+  <div className="h-full flex flex-col">
+    <GreenHeader title="LIQUID PROFILES" />
+    <div className="flex-1 flex">
+      <SidebarMenu>
+        <SidebarBack />
+        <SidebarDivider />
+        <SidebarItem icon={Waves} label="Water calibration" />
+        <SidebarItem icon={Droplets} label="Liquid profiles" active />
+      </SidebarMenu>
+      
+      <div className="flex-1 p-6 flex flex-col items-center justify-center">
+        <span className="font-ui text-sm text-slate-500 mb-1">Active profile:</span>
+        <span className="font-data text-4xl text-slate-900 font-medium mb-8">Super profile</span>
+        
+        <div className="flex flex-col gap-3 w-48">
+          <button className="py-3 px-6 rounded-lg bg-primary hover:bg-primary/90 text-white font-ui font-semibold transition-colors">
+            Select profile
+          </button>
+          <button className="py-3 px-6 rounded-lg bg-primary hover:bg-primary/90 text-white font-ui font-semibold transition-colors">
+            Edit profiles
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
-    <div className="flex-1 p-6">
-      <h2 className="font-ui text-2xl text-slate-900 font-semibold mb-6">Liquid Profiles</h2>
+// ============================================================================
+// UNITS SCREEN
+// ============================================================================
+const UnitsScreen = () => (
+  <div className="h-full flex flex-col">
+    <GreenHeader title="UNITS" />
+    <div className="flex-1 flex">
+      <SidebarMenu>
+        <SidebarBack />
+        <SidebarDivider />
+        <SidebarItem icon={Globe} label="Language" />
+        <SidebarItem icon={Sun} label="Backlight" />
+        <SidebarItem icon={ArrowUpDown} label="Ranging" />
+        <SidebarItem icon={Gauge} label="Units" active />
+        <SidebarItem icon={Users} label="About Us" />
+        <SidebarItem hasSubmenu expanded={false} label="Down" />
+      </SidebarMenu>
+      
+      <div className="flex-1 p-6">
+        {/* Density units */}
+        <div className="mb-6">
+          <h3 className="font-ui text-lg text-slate-900 font-semibold mb-4">Density</h3>
+          <div className="grid grid-cols-3 gap-x-8 gap-y-3">
+            {[
+              { label: "SG", active: true },
+              { label: "SGx1000", active: false },
+              { label: "kg/m³", active: false },
+              { label: "g/L", active: false },
+              { label: "lb/ft³", active: false },
+              { label: "Weight %", active: false },
+            ].map((unit) => (
+              <label key={unit.label} className="flex items-center gap-3 cursor-pointer">
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                  unit.active ? "border-primary bg-primary" : "border-slate-300"
+                }`}>
+                  {unit.active && <div className="w-2 h-2 bg-white rounded-full" />}
+                </div>
+                <span className="font-ui text-base text-slate-700">{unit.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+        
+        {/* Temperature units */}
+        <div>
+          <h3 className="font-ui text-lg text-slate-900 font-semibold mb-4">Temperature</h3>
+          <div className="grid grid-cols-3 gap-x-8 gap-y-3">
+            {[
+              { label: "Celsius(°C)", active: true },
+              { label: "Fahrenheit (°F)", active: false },
+            ].map((unit) => (
+              <label key={unit.label} className="flex items-center gap-3 cursor-pointer">
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                  unit.active ? "border-primary bg-primary" : "border-slate-300"
+                }`}>
+                  {unit.active && <div className="w-2 h-2 bg-white rounded-full" />}
+                </div>
+                <span className="font-ui text-base text-slate-700">{unit.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
-      <div className="grid grid-cols-2 gap-4">
+// ============================================================================
+// ENTER PIN SCREEN - Modal as full screen
+// ============================================================================
+const EnterPinScreen = () => (
+  <div className="h-full flex flex-col">
+    <GreenHeader title="Enter PIN" onClose={() => {}} />
+    <div className="flex-1 flex items-center justify-center gap-12 p-6">
+      {/* Left side - PIN display */}
+      <div className="flex flex-col items-center">
+        <span className="font-ui text-lg text-slate-700 font-medium mb-4">Enter PIN</span>
+        <div className="px-6 py-3 rounded-lg border-2 border-primary bg-white mb-6">
+          <span className="font-data text-2xl text-slate-400 tracking-[0.3em]">_</span>
+        </div>
+        <button className="py-3 px-8 rounded-lg bg-primary hover:bg-primary/90 text-white font-ui font-semibold transition-colors">
+          Continue
+        </button>
+      </div>
+      
+      {/* Right side - Numpad */}
+      <div className="bg-slate-100 rounded-xl p-4">
+        <div className="grid grid-cols-3 gap-2">
+          {[7, 8, 9, 4, 5, 6, 1, 2, 3].map((num) => (
+            <button
+              key={num}
+              className="w-14 h-12 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 font-data text-xl text-slate-800 font-medium transition-colors"
+            >
+              {num}
+            </button>
+          ))}
+          <button className="w-14 h-12 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 font-data text-xl text-slate-800 font-medium transition-colors">
+            0
+          </button>
+          <button className="w-14 h-12 col-span-2 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 font-ui text-slate-600 font-medium transition-colors flex items-center justify-center">
+            <Delete className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ============================================================================
+// CALIBRATION POINTS SCREEN
+// ============================================================================
+const CalibrationPointsScreen = () => (
+  <div className="h-full flex flex-col">
+    <GreenHeader title="Liquid profile: Clay 10%  -  Calibration points" onClose={() => {}} />
+    <div className="flex-1 p-5 flex flex-col">
+      {/* Points list */}
+      <div className="flex-1 space-y-3">
         {[
-          { name: "Water", points: 3, active: false },
-          { name: "Clay 10%", points: 2, active: true },
-          { name: "Slurry A", points: 4, active: false },
-          { name: "Custom", points: 1, active: false },
-        ].map((profile) => (
+          { id: 0, status: "Done", sampled: "26.03°C", density: "1035.00kg/m³", done: true },
+          { id: 1, status: "Ready to sample", recommended: "38.02°C", done: false },
+        ].map((point) => (
           <div
-            key={profile.name}
-            className={`p-5 rounded-2xl border-2 transition-all cursor-pointer ${
-              profile.active
-                ? "bg-primary/5 border-primary/30"
-                : "bg-white border-slate-200 hover:border-slate-300"
-            }`}
+            key={point.id}
+            className="flex items-center gap-4 py-3 border-b border-slate-200"
           >
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <h3 className={`font-ui text-xl font-semibold ${profile.active ? "text-slate-900" : "text-slate-700"}`}>
-                  {profile.name}
-                </h3>
-                <span className="font-data text-sm text-slate-500 uppercase tracking-wide">
-                  {profile.points} POINTS
-                </span>
-              </div>
-              {profile.active && (
-                <div className="w-4 h-4 rounded-full bg-primary shadow-lg shadow-primary/50" />
-              )}
+            <div className={`w-1.5 h-12 rounded-full ${point.done ? "bg-primary" : "bg-yellow-400"}`} />
+            <span className="font-data text-base text-slate-900 font-medium w-8">#{point.id}:</span>
+            <span className="font-ui text-base text-slate-700 w-32">{point.status}</span>
+            <span className="font-ui text-base text-slate-500">
+              | {point.sampled ? `Sampled: ${point.sampled}` : `Recommended: ${point.recommended}`}
+            </span>
+            {point.density && (
+              <span className="font-ui text-base text-slate-500">| Density: {point.density}</span>
+            )}
+            <div className="flex-1" />
+            <button className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-slate-100 transition-colors">
+              <Pencil className="w-5 h-5 text-primary" />
+            </button>
+            <button className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-slate-100 transition-colors">
+              <Trash2 className="w-5 h-5 text-destructive" />
+            </button>
+          </div>
+        ))}
+        
+        <button className="flex items-center gap-2 py-3 text-slate-700 font-ui font-medium hover:text-primary transition-colors">
+          <Plus className="w-5 h-5" />
+          Add a calibration point
+        </button>
+      </div>
+      
+      {/* Footer info */}
+      <div className="pt-4 border-t border-slate-200 flex items-center justify-center gap-4 text-slate-500 font-ui text-sm">
+        <span>Included in the Super Profile</span>
+        <span>|</span>
+        <span>Temperature range: 20.00°C - 50.00°C</span>
+      </div>
+    </div>
+  </div>
+);
+
+// ============================================================================
+// TEMPERATURE CALIBRATION SCREEN
+// ============================================================================
+const TemperatureCalibrationScreen = () => (
+  <div className="h-full flex flex-col">
+    <GreenHeader title="Temperature Calibration" onClose={() => {}} />
+    <div className="flex-1 flex items-center justify-center gap-10 p-6">
+      {/* Left side - Input */}
+      <div className="flex flex-col">
+        <div className="mb-6 text-center">
+          <span className="font-ui text-base text-slate-600">Measured temperature:</span>
+          <span className="font-data text-lg text-slate-900 ml-3">26.14 °C</span>
+        </div>
+        
+        <span className="font-ui text-lg text-slate-800 font-semibold mb-4 text-center">Insert verified temperature</span>
+        
+        <div className="mb-4">
+          <label className="font-ui text-sm text-slate-500 mb-1 block">Temperature °C</label>
+          <div className="px-4 py-3 rounded-lg bg-slate-100 border border-slate-200">
+            <span className="font-data text-2xl text-slate-900">26.13</span>
+            <span className="font-data text-2xl text-slate-400 animate-pulse">_</span>
+          </div>
+        </div>
+        
+        <div className="flex flex-col gap-2">
+          <button className="py-3 px-8 rounded-lg bg-primary hover:bg-primary/90 text-white font-ui font-semibold transition-colors">
+            Apply
+          </button>
+          <button className="py-3 px-8 rounded-lg bg-primary hover:bg-primary/90 text-white font-ui font-semibold transition-colors">
+            Default
+          </button>
+        </div>
+      </div>
+      
+      {/* Right side - Numpad */}
+      <div className="bg-slate-100 rounded-xl p-4">
+        <div className="grid grid-cols-3 gap-2">
+          <button className="w-14 h-12 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 font-data text-xl text-slate-800 font-medium">.</button>
+          <button className="w-14 h-12 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 font-data text-xl text-slate-800 font-medium">+/-</button>
+          <button className="w-14 h-12 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 flex items-center justify-center">
+            <Delete className="w-5 h-5 text-slate-600" />
+          </button>
+          {[7, 8, 9, 4, 5, 6, 1, 2, 3].map((num) => (
+            <button
+              key={num}
+              className="w-14 h-12 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 font-data text-xl text-slate-800 font-medium"
+            >
+              {num}
+            </button>
+          ))}
+          <button className="w-14 h-12 col-span-3 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 font-data text-xl text-slate-800 font-medium">
+            0
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ============================================================================
+// EDIT PROFILES SCREEN
+// ============================================================================
+const EditProfilesScreen = () => (
+  <div className="h-full flex flex-col">
+    <GreenHeader title="Edit Profiles" onClose={() => {}} />
+    <div className="flex-1 p-5 flex flex-col">
+      <div className="flex-1 space-y-0">
+        {[
+          { name: "Water", desc: "Water", canDelete: false },
+          { name: "Super profile", desc: "Clay 5%, Clay 10%, Clay 20%, Clay 30%", canDelete: false },
+          { name: "Liquid #0", desc: "Clay 5%", canDelete: true },
+          { name: "Liquid #1", desc: "Clay 10%", canDelete: true },
+          { name: "Liquid #2", desc: "Clay 20%", canDelete: true },
+          { name: "Liquid #3", desc: "Clay 30%", canDelete: true },
+        ].map((profile, i) => (
+          <div key={i} className="flex items-center gap-4 py-3 border-b border-slate-200">
+            <div className="w-1.5 h-10 rounded-full bg-primary" />
+            <div className="flex-1">
+              <span className="font-ui text-base text-slate-900 font-medium">{profile.name}</span>
+              <span className="font-ui text-base text-slate-500 ml-4">| {profile.desc}</span>
             </div>
-            <div className="flex gap-2">
-              <button className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-ui text-base font-medium transition-colors">
-                Edit
-              </button>
-              <button className="py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 transition-colors">
-                <Trash2 className="w-5 h-5" />
-              </button>
+            <button className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-slate-100 transition-colors">
+              <Pencil className="w-5 h-5 text-primary" />
+            </button>
+            <button className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-slate-100 transition-colors">
+              <Trash2 className={`w-5 h-5 ${profile.canDelete ? "text-destructive" : "text-slate-300"}`} />
+            </button>
+          </div>
+        ))}
+        
+        <button className="flex items-center gap-2 py-4 text-slate-700 font-ui font-medium hover:text-primary transition-colors">
+          <Plus className="w-5 h-5" />
+          Create a liquid profile
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+// ============================================================================
+// EDIT SUPER PROFILE SCREEN
+// ============================================================================
+const EditSuperProfileScreen = () => (
+  <div className="h-full flex flex-col">
+    <GreenHeader title="Edit Super Profile" onClose={() => {}} />
+    <div className="flex-1 p-5 flex flex-col">
+      <div className="flex justify-end mb-4">
+        <div className="text-right">
+          <span className="font-ui text-sm text-slate-500 block">Temperature range</span>
+          <span className="font-data text-base text-slate-900">10.00°C - 50.00°C</span>
+        </div>
+      </div>
+      
+      <div className="flex-1 space-y-0">
+        {[
+          { name: "Water:", desc: "Water" },
+          { name: "Liquid #0:", desc: "Clay 5%" },
+          { name: "Liquid #1:", desc: "Clay 10%" },
+          { name: "Liquid #2:", desc: "Clay 20%" },
+          { name: "Liquid #3:", desc: "Clay 30%" },
+        ].map((profile, i) => (
+          <div key={i} className="flex items-center gap-4 py-3 border-b border-slate-200">
+            <div className="w-1.5 h-10 rounded-full bg-primary" />
+            <span className="font-ui text-base text-slate-900 font-medium w-24">{profile.name}</span>
+            <span className="font-ui text-base text-slate-500 flex-1">{profile.desc}</span>
+            <div className="w-8 h-8 rounded border-2 border-primary bg-white flex items-center justify-center">
+              <Check className="w-5 h-5 text-primary" />
             </div>
           </div>
         ))}
-      </div>
-    </div>
-  </div>
-);
-
-// ============================================================================
-// SETTINGS SCREEN
-// ============================================================================
-const SettingsScreen = () => (
-  <div className="h-full flex">
-    <IconNav>
-      <IconNavItem icon={ChevronLeft} />
-      <IconNavItem icon={Gauge} active />
-      <IconNavItem icon={Activity} />
-    </IconNav>
-
-    <div className="flex-1 p-6">
-      <h2 className="font-ui text-2xl text-slate-900 font-semibold mb-6">Display Units</h2>
-
-      <div className="grid grid-cols-2 gap-8">
-        {/* Density */}
-        <div>
-          <h3 className="font-ui text-base text-slate-500 font-medium mb-4">Density</h3>
-          <div className="space-y-2">
-            {["SG", "kg/m³", "g/L", "lb/ft³"].map((unit, i) => (
-              <label
-                key={unit}
-                className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all border-2 ${
-                  i === 0
-                    ? "bg-primary/5 border-primary/30"
-                    : "bg-white border-slate-200 hover:border-slate-300"
-                }`}
-              >
-                <div className={`w-6 h-6 rounded-full border-3 flex items-center justify-center ${
-                  i === 0 ? "border-primary bg-primary" : "border-slate-300"
-                }`}>
-                  {i === 0 && <div className="w-2.5 h-2.5 bg-white rounded-full" />}
-                </div>
-                <span className={`font-data text-lg uppercase font-medium ${i === 0 ? "text-slate-900" : "text-slate-500"}`}>
-                  {unit}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* Temperature */}
-        <div>
-          <h3 className="font-ui text-base text-slate-500 font-medium mb-4">Temperature</h3>
-          <div className="space-y-2">
-            {["Celsius", "Fahrenheit"].map((unit, i) => (
-              <label
-                key={unit}
-                className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all border-2 ${
-                  i === 0
-                    ? "bg-primary/5 border-primary/30"
-                    : "bg-white border-slate-200 hover:border-slate-300"
-                }`}
-              >
-                <div className={`w-6 h-6 rounded-full border-3 flex items-center justify-center ${
-                  i === 0 ? "border-primary bg-primary" : "border-slate-300"
-                }`}>
-                  {i === 0 && <div className="w-2.5 h-2.5 bg-white rounded-full" />}
-                </div>
-                <span className={`font-ui text-lg font-medium ${i === 0 ? "text-slate-900" : "text-slate-500"}`}>
-                  {unit}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -425,6 +508,17 @@ const SettingsScreen = () => (
 // ============================================================================
 // SCREEN SWITCHER
 // ============================================================================
+const screens = [
+  { id: "measurements", label: "Dashboard" },
+  { id: "profiles", label: "Profiles" },
+  { id: "units", label: "Units" },
+  { id: "pin", label: "Enter PIN" },
+  { id: "calibration", label: "Calibration" },
+  { id: "temp-cal", label: "Temp Cal" },
+  { id: "edit-profiles", label: "Edit Profiles" },
+  { id: "edit-super", label: "Edit Super" },
+];
+
 const ScreenSwitcher = ({
   activeScreen,
   onScreenChange,
@@ -432,159 +526,21 @@ const ScreenSwitcher = ({
   activeScreen: string;
   onScreenChange: (screen: string) => void;
 }) => (
-  <div className="flex justify-center gap-3 mb-10">
-    {[
-      { id: "measurements", icon: Gauge, label: "Measurements" },
-      { id: "profiles", icon: Droplets, label: "Profiles" },
-      { id: "settings", icon: Settings, label: "Settings" },
-    ].map(({ id, icon: Icon, label }) => (
+  <div className="flex flex-wrap justify-center gap-2 mb-10">
+    {screens.map(({ id, label }) => (
       <button
         key={id}
         onClick={() => onScreenChange(id)}
-        className={`flex items-center gap-3 px-6 py-3 rounded-xl font-ui text-base font-medium transition-all ${
+        className={`px-4 py-2 rounded-lg font-ui text-sm font-medium transition-all ${
           activeScreen === id
             ? "bg-primary text-white shadow-lg shadow-primary/30"
             : "bg-muted text-muted-foreground hover:bg-muted/80"
         }`}
       >
-        <Icon className="w-5 h-5" />
         {label}
       </button>
     ))}
   </div>
-);
-
-// ============================================================================
-// MODAL - Light theme matching device
-// ============================================================================
-const ModalCard = ({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) => (
-  <div className="rounded-2xl overflow-hidden bg-white shadow-2xl shadow-black/10 border-2 border-slate-200">
-    <div className="px-5 py-4 bg-slate-100 border-b-2 border-slate-200 flex items-center justify-between">
-      <h3 className="font-ui text-lg text-slate-900 font-semibold">{title}</h3>
-      <button className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-200 transition-colors">
-        <X className="w-5 h-5" />
-      </button>
-    </div>
-    <div className="p-5">{children}</div>
-  </div>
-);
-
-const CalibrationModal = () => (
-  <ModalCard title="Calibration points">
-    <div className="space-y-3">
-      {[
-        { id: 0, status: "Complete", temp: "24.5", density: "1.10", done: true },
-        { id: 1, status: "Ready", temp: "—", density: "—", done: false },
-      ].map((point) => (
-        <div
-          key={point.id}
-          className={`flex items-center gap-4 p-4 rounded-xl border-2 ${
-            point.done ? "bg-primary/5 border-primary/20" : "bg-slate-50 border-slate-200"
-          }`}
-        >
-          <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-            point.done ? "bg-primary text-white" : "bg-slate-200 text-slate-500"
-          }`}>
-            {point.done ? <Check className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
-          </div>
-          <div className="flex-1">
-            <div className="font-ui text-base text-slate-900 font-semibold">{point.status}</div>
-            <div className="font-data text-sm text-slate-500 uppercase tracking-wide mt-0.5">
-              T: {point.temp}°C · Ρ: {point.density} SG
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <button className="w-11 h-11 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
-              <Pencil className="w-5 h-5 text-slate-500" />
-            </button>
-            <button className="w-11 h-11 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
-              <Trash2 className="w-5 h-5 text-slate-500" />
-            </button>
-          </div>
-        </div>
-      ))}
-      
-      <button className="w-full py-4 rounded-xl border-2 border-dashed border-slate-300 text-primary font-ui text-base font-semibold hover:border-primary/50 hover:bg-primary/5 transition-all flex items-center justify-center gap-2">
-        <Plus className="w-5 h-5" />
-        Add point
-      </button>
-    </div>
-  </ModalCard>
-);
-
-const PinModal = () => (
-  <ModalCard title="Enter access code">
-    <div className="space-y-5">
-      <div className="py-6 rounded-xl bg-slate-100 text-center border-2 border-slate-200">
-        <span className="font-data text-4xl text-slate-900 tracking-[0.4em] font-medium">••••</span>
-        <span className="font-data text-4xl text-slate-400 animate-pulse">_</span>
-      </div>
-      
-      <div className="grid grid-cols-3 gap-3">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, "←", 0, "C"].map((key) => (
-          <button
-            key={key}
-            className="py-5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 font-data text-2xl text-slate-800 font-medium transition-all"
-          >
-            {key}
-          </button>
-        ))}
-      </div>
-      
-      <button className="w-full py-4 rounded-xl bg-primary hover:bg-primary/90 text-white font-ui text-lg font-semibold transition-all shadow-lg shadow-primary/25">
-        Continue
-      </button>
-    </div>
-  </ModalCard>
-);
-
-const TempCalModal = () => (
-  <ModalCard title="Temperature calibration">
-    <div className="space-y-5">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="font-ui text-base text-slate-500 font-medium mb-2 block">Measured</label>
-          <div className="py-4 px-5 rounded-xl bg-slate-100 border-2 border-slate-200">
-            <span className="font-data text-3xl text-slate-900 font-medium">25.73</span>
-            <span className="font-data text-lg text-slate-500 ml-2 uppercase">°C</span>
-          </div>
-        </div>
-        <div>
-          <label className="font-ui text-base text-slate-500 font-medium mb-2 block">Reference</label>
-          <div className="py-4 px-5 rounded-xl bg-white border-2 border-primary">
-            <span className="font-data text-3xl text-slate-900 font-medium">25.50</span>
-            <span className="font-data text-lg text-slate-500 ml-2 uppercase">°C</span>
-          </div>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-3 gap-2">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "←"].map((key) => (
-          <button
-            key={key}
-            className="py-4 rounded-xl bg-slate-100 hover:bg-slate-200 font-data text-xl text-slate-800 font-medium transition-all"
-          >
-            {key}
-          </button>
-        ))}
-      </div>
-      
-      <div className="flex gap-3">
-        <button className="flex-1 py-4 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-ui text-lg font-semibold transition-colors">
-          Reset
-        </button>
-        <button className="flex-1 py-4 rounded-xl bg-primary hover:bg-primary/90 text-white font-ui text-lg font-semibold transition-all shadow-lg shadow-primary/25">
-          Apply
-        </button>
-      </div>
-    </div>
-  </ModalCard>
 );
 
 // ============================================================================
@@ -594,39 +550,46 @@ const PatternShowcase = () => (
   <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
     {[
       { 
-        title: "Data hierarchy", 
-        desc: "Large bold numbers, receding units",
-        example: <span className="font-data text-4xl text-foreground font-medium">1.00 <span className="text-xl text-muted-foreground">SG</span></span>
+        title: "Green header", 
+        desc: "Consistent navigation bar with title",
+        example: <div className="w-full h-8 rounded bg-primary flex items-center px-3"><span className="text-white text-xs font-semibold">TITLE</span></div>
       },
       { 
-        title: "Status signals", 
-        desc: "Color-coded for instant recognition",
+        title: "Text sidebar", 
+        desc: "Icon + label for clear navigation",
         example: (
-          <div className="flex gap-4">
-            <div className="w-4 h-4 rounded-full bg-primary shadow-lg shadow-primary/50" />
-            <div className="w-4 h-4 rounded-full bg-warning shadow-lg shadow-warning/50" />
-            <div className="w-4 h-4 rounded-full bg-destructive shadow-lg shadow-destructive/50" />
+          <div className="flex items-center gap-2 text-primary">
+            <Settings className="w-4 h-4" />
+            <span className="font-ui text-sm font-medium">Settings</span>
           </div>
         )
       },
       { 
-        title: "Touch targets", 
-        desc: "Minimum 48px for gloves",
-        example: <div className="w-14 h-14 rounded-xl bg-primary/20 border-2 border-primary/30 border-dashed" />
+        title: "List rows", 
+        desc: "Status indicator + content + actions",
+        example: (
+          <div className="flex items-center gap-2 w-full">
+            <div className="w-1 h-6 rounded-full bg-primary" />
+            <span className="text-xs flex-1">Item name</span>
+            <Pencil className="w-3 h-3 text-primary" />
+            <Trash2 className="w-3 h-3 text-destructive" />
+          </div>
+        )
       },
       { 
-        title: "Icon navigation", 
-        desc: "Vertical sidebar, large icons",
+        title: "Numpad", 
+        desc: "Large touch targets with grid layout",
         example: (
-          <div className="flex gap-2">
-            <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center"><Gauge className="w-5 h-5 text-white" /></div>
-            <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center"><Settings className="w-5 h-5 text-muted-foreground" /></div>
+          <div className="grid grid-cols-3 gap-1">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="w-6 h-6 rounded bg-slate-200 flex items-center justify-center font-data text-xs">{n}</div>
+            ))}
           </div>
         )
       },
     ].map((pattern) => (
       <div key={pattern.title} className="p-5 rounded-2xl bg-card border border-border">
-        <div className="h-16 flex items-center justify-center mb-4">
+        <div className="h-12 flex items-center justify-center mb-4">
           {pattern.example}
         </div>
         <h4 className="font-ui font-semibold text-foreground mb-1">{pattern.title}</h4>
@@ -645,8 +608,13 @@ export default function SDMEcoInterface() {
   const renderScreen = () => {
     switch (activeScreen) {
       case "measurements": return <MeasurementsScreen />;
-      case "profiles": return <ProfilesScreen />;
-      case "settings": return <SettingsScreen />;
+      case "profiles": return <LiquidProfilesScreen />;
+      case "units": return <UnitsScreen />;
+      case "pin": return <EnterPinScreen />;
+      case "calibration": return <CalibrationPointsScreen />;
+      case "temp-cal": return <TemperatureCalibrationScreen />;
+      case "edit-profiles": return <EditProfilesScreen />;
+      case "edit-super": return <EditSuperProfileScreen />;
       default: return <MeasurementsScreen />;
     }
   };
@@ -659,7 +627,7 @@ export default function SDMEcoInterface() {
           <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
             Optimized for a 
             <span className="text-foreground font-medium"> 800×480 industrial touchscreen</span>. 
-            Bold typography, generous touch targets, and 
+            Green header bars, text-based sidebar menus, and 
             <span className="text-primary font-medium"> maximum data legibility</span> for 
             challenging field conditions.
           </p>
@@ -671,31 +639,6 @@ export default function SDMEcoInterface() {
           <DeviceFrame>
             {renderScreen()}
           </DeviceFrame>
-        </div>
-
-        {/* Dialogs */}
-        <div className="space-y-8">
-          <div>
-            <h3 className="font-ui text-2xl font-semibold text-foreground mb-2">Modal dialogs</h3>
-            <p className="font-ui text-muted-foreground max-w-2xl">
-              Large buttons, bold text, and high contrast for reliable touch input.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-6">
-            <div>
-              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-3 block">LIST MANAGEMENT</span>
-              <CalibrationModal />
-            </div>
-            <div>
-              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-3 block">SECURE ENTRY</span>
-              <PinModal />
-            </div>
-            <div>
-              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-3 block">CALIBRATION</span>
-              <TempCalModal />
-            </div>
-          </div>
         </div>
 
         {/* Patterns */}
@@ -716,12 +659,12 @@ export default function SDMEcoInterface() {
               <p className="font-ui text-sm text-muted-foreground">Light backgrounds with dark text. Avoid subtle grays that wash out in bright environments.</p>
             </div>
             <div>
-              <div className="font-ui font-semibold text-foreground mb-1">Oversized touch</div>
-              <p className="font-ui text-sm text-muted-foreground">All interactive elements exceed 48×48px for reliable gloved operation.</p>
+              <div className="font-ui font-semibold text-foreground mb-1">Consistent structure</div>
+              <p className="font-ui text-sm text-muted-foreground">Green header + left sidebar + right content area for predictable navigation.</p>
             </div>
             <div>
-              <div className="font-ui font-semibold text-foreground mb-1">Generous spacing</div>
-              <p className="font-ui text-sm text-muted-foreground">Extra padding between elements prevents accidental taps and improves scannability.</p>
+              <div className="font-ui font-semibold text-foreground mb-1">Touch-friendly lists</div>
+              <p className="font-ui text-sm text-muted-foreground">Status indicators, action buttons, and generous row heights for reliable interaction.</p>
             </div>
           </div>
         </BrandCallout>
