@@ -10,303 +10,335 @@ import {
   Plus,
   Usb,
   Check,
-  Factory,
   Gauge,
   FlaskConical,
   Waves,
-  Monitor,
+  Zap,
+  TrendingUp,
 } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 
 // ============================================================================
-// DEVICE FRAME - Premium industrial tablet mockup
+// DEVICE FRAME - Bold industrial design
 // ============================================================================
 const DeviceFrame = ({ children }: { children: React.ReactNode }) => (
   <div className="relative">
-    {/* Ambient glow */}
-    <div className="absolute -inset-8 bg-gradient-to-b from-primary/5 via-primary/10 to-transparent rounded-[3rem] blur-3xl opacity-60" />
+    {/* Dramatic glow */}
+    <div className="absolute -inset-12 bg-gradient-radial from-primary/20 via-primary/5 to-transparent rounded-[4rem] blur-3xl" />
     
-    {/* Device body */}
-    <div className="relative">
-      {/* Outer housing - industrial aluminum look */}
-      <div 
-        className="relative rounded-[1.5rem] p-1"
-        style={{
-          background: 'linear-gradient(145deg, hsl(220 15% 25%), hsl(220 15% 15%))',
-          boxShadow: `
-            0 50px 100px -20px hsl(0 0% 0% / 0.5),
-            0 30px 60px -15px hsl(0 0% 0% / 0.4),
-            inset 0 1px 0 hsl(220 15% 35%),
-            inset 0 -1px 0 hsl(220 15% 10%)
-          `
-        }}
-      >
-        {/* Inner bezel */}
-        <div 
-          className="rounded-[1.25rem] p-3"
-          style={{
-            background: 'linear-gradient(180deg, hsl(220 15% 12%), hsl(220 15% 8%))',
-          }}
-        >
-          {/* Screen bezel */}
-          <div 
-            className="rounded-xl overflow-hidden"
-            style={{
-              boxShadow: 'inset 0 2px 10px hsl(0 0% 0% / 0.5), 0 0 0 1px hsl(220 15% 20%)'
-            }}
-          >
-            {/* Screen content */}
-            <div className="bg-slate-950 aspect-[16/10] relative">
-              {children}
-              
-              {/* Screen glare overlay */}
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(135deg, hsl(0 0% 100% / 0.03) 0%, transparent 50%)'
-                }}
-              />
-            </div>
-          </div>
+    {/* Device shell */}
+    <div className="relative rounded-3xl overflow-hidden" style={{
+      background: 'linear-gradient(160deg, hsl(220 20% 18%) 0%, hsl(220 25% 8%) 100%)',
+      boxShadow: `
+        0 80px 150px -30px hsl(0 0% 0% / 0.6),
+        0 40px 60px -20px hsl(0 0% 0% / 0.5),
+        inset 0 1px 0 hsl(220 20% 25%),
+        inset 0 -2px 0 hsl(220 25% 5%)
+      `
+    }}>
+      {/* Top bar with status */}
+      <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full bg-primary shadow-lg shadow-primary/50" />
+          <span className="font-data text-xs text-primary uppercase tracking-wider">SYSTEM ONLINE</span>
         </div>
-        
-        {/* Status LED */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_2px] shadow-primary/50 animate-pulse" />
+        <div className="flex items-center gap-4 text-slate-500">
+          <div className="flex items-center gap-2">
+            <Usb className="w-4 h-4" />
+            <span className="font-data text-xs uppercase tracking-wide">USB</span>
+          </div>
+          <span className="font-data text-sm tabular-nums">14:32</span>
         </div>
       </div>
       
-      {/* Device label */}
-      <div className="mt-6 text-center">
-        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-muted/50 border border-border/50">
-          <Monitor className="w-4 h-4 text-muted-foreground" />
-          <span className="font-data text-xs text-muted-foreground tracking-widest uppercase">
-            SDM ECO · 7" Industrial Touchscreen
-          </span>
-        </div>
+      {/* Screen */}
+      <div className="aspect-[16/9] bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+        {children}
+      </div>
+    </div>
+    
+    {/* Device badge */}
+    <div className="mt-8 flex justify-center">
+      <div className="flex items-center gap-4 px-6 py-3 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-700/50">
+        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+        <span className="font-data text-sm text-slate-400 uppercase tracking-widest">SDM ECO · 7" HMI</span>
       </div>
     </div>
   </div>
 );
 
 // ============================================================================
-// STATUS BAR - Top bar of the device screen
+// LIVE METRICS - Big bold data display
 // ============================================================================
-const StatusBar = ({ title }: { title: string }) => (
-  <div 
-    className="px-5 py-3.5 flex items-center justify-between"
-    style={{
-      background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
-    }}
-  >
-    <h2 className="text-white font-ui font-semibold text-base tracking-wide uppercase drop-shadow-sm">
-      {title}
-    </h2>
-    <div className="flex items-center gap-5 text-white/90">
-      <div className="flex items-center gap-2 text-xs font-ui bg-white/10 px-2.5 py-1 rounded-full">
-        <Usb className="w-3.5 h-3.5" />
-        <span>USB</span>
-      </div>
-      <span className="font-data text-sm tabular-nums">14:32</span>
-    </div>
-  </div>
-);
-
-// ============================================================================
-// SIDEBAR - Navigation sidebar
-// ============================================================================
-const SidebarItem = ({
-  icon: Icon,
-  label,
-  active = false,
-  hasBack = false,
-}: {
-  icon?: React.ComponentType<{ className?: string }>;
-  label: string;
-  active?: boolean;
-  hasBack?: boolean;
-}) => (
-  <div
-    className={`flex items-center gap-3 px-4 py-3.5 cursor-pointer transition-all duration-200 ${
-      active
-        ? "bg-primary/15 border-l-[3px] border-primary"
-        : "hover:bg-white/5 border-l-[3px] border-transparent"
-    }`}
-  >
-    {hasBack ? (
-      <ChevronLeft className="w-5 h-5 text-primary" />
-    ) : Icon ? (
-      <Icon className={`w-5 h-5 transition-colors ${active ? "text-primary" : "text-slate-500"}`} />
-    ) : null}
-    <span className={`font-ui text-sm transition-colors ${active ? "text-primary font-medium" : "text-slate-400"}`}>
-      {label}
-    </span>
-  </div>
-);
-
-const Sidebar = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-52 bg-slate-900/80 border-r border-slate-800/50 flex flex-col backdrop-blur-sm">
-    {children}
-  </div>
-);
-
-// ============================================================================
-// METRIC DISPLAY - Large data readouts
-// ============================================================================
-const MetricDisplay = ({
+const LiveMetric = ({
   value,
   unit,
   label,
-  size = "large",
+  trend,
+  status = "normal",
 }: {
   value: string;
   unit: string;
   label: string;
-  size?: "large" | "medium";
-}) => (
-  <div className="text-center group">
-    <div className="text-slate-500 font-ui text-xs mb-3 uppercase tracking-widest">
-      {label}
-    </div>
-    <div className="relative">
-      {/* Glow effect */}
-      <div className="absolute inset-0 bg-primary/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="flex items-baseline justify-center gap-2 relative">
-        <span className={`font-data text-white tracking-tight tabular-nums ${size === "large" ? "text-6xl" : "text-4xl"}`}>
-          {value}
-        </span>
-        <span className={`font-data text-slate-500 ${size === "large" ? "text-2xl" : "text-lg"}`}>
-          {unit}
-        </span>
+  trend?: string;
+  status?: "normal" | "warning" | "success";
+}) => {
+  const statusColors = {
+    normal: "from-slate-800 to-slate-900 border-slate-700/50",
+    warning: "from-warning/10 to-warning/5 border-warning/30",
+    success: "from-primary/10 to-primary/5 border-primary/30",
+  };
+  
+  return (
+    <div className={`relative p-6 rounded-2xl bg-gradient-to-br border ${statusColors[status]} overflow-hidden group`}>
+      {/* Subtle glow on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      <div className="relative">
+        <span className="font-ui text-sm text-slate-500 mb-3 block">{label}</span>
+        
+        <div className="flex items-baseline gap-3">
+          <span className="font-data text-6xl lg:text-7xl text-white tabular-nums tracking-tight">{value}</span>
+          <span className="font-data text-2xl text-slate-500 uppercase">{unit}</span>
+        </div>
+        
+        {trend && (
+          <div className="mt-4 flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-primary" />
+            <span className="font-data text-xs text-primary uppercase tracking-wide">{trend}</span>
+          </div>
+        )}
       </div>
     </div>
-  </div>
+  );
+};
+
+// ============================================================================
+// NAV PILL - Modern navigation element
+// ============================================================================
+const NavPill = ({
+  icon: Icon,
+  label,
+  active = false,
+  onClick,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+}) => (
+  <button
+    onClick={onClick}
+    className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${
+      active
+        ? "bg-primary text-white shadow-lg shadow-primary/30"
+        : "bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white"
+    }`}
+  >
+    <Icon className="w-5 h-5" />
+    <span className="font-ui text-sm font-medium">{label}</span>
+  </button>
 );
 
 // ============================================================================
-// SCREENS - Different device screen states
+// MEASUREMENTS SCREEN - Hero data display
 // ============================================================================
 const MeasurementsScreen = () => (
-  <div className="flex h-full">
-    <Sidebar>
-      <SidebarItem icon={Settings} label="Settings" active />
-      <SidebarItem icon={FlaskConical} label="Calibration" />
-      <SidebarItem icon={Activity} label="Diagnostics" />
-      <SidebarItem icon={Factory} label="Factory" />
-    </Sidebar>
-
-    <div className="flex-1 flex flex-col justify-center items-center p-8 bg-gradient-to-br from-slate-950 via-slate-950 to-slate-900">
-      <div className="grid grid-cols-2 gap-16 mb-10">
-        <MetricDisplay value="1.00" unit="SG" label="Density" />
-        <MetricDisplay value="25.73" unit="°C" label="Temperature" />
-      </div>
-
-      <div className="flex flex-col items-center">
-        <div className="text-slate-500 font-ui text-xs mb-3 uppercase tracking-widest">
-          Active Profile
-        </div>
-        <div className="inline-flex items-center gap-3 bg-slate-800/50 border border-slate-700/50 px-5 py-2.5 rounded-xl backdrop-blur-sm">
-          <Droplets className="w-4 h-4 text-primary" />
-          <span className="font-ui text-white/90">Super profile</span>
-          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const LiquidProfilesScreen = () => (
-  <div className="flex h-full">
-    <Sidebar>
-      <SidebarItem hasBack label="Back" />
-      <SidebarItem icon={Waves} label="Water calibration" />
-      <SidebarItem icon={Droplets} label="Liquid profiles" active />
-    </Sidebar>
-
-    <div className="flex-1 flex flex-col items-center justify-center p-8 bg-gradient-to-br from-slate-950 via-slate-950 to-slate-900">
-      <div className="text-slate-500 font-ui text-xs mb-4 uppercase tracking-widest">
-        Active Profile
-      </div>
-      <div className="text-3xl font-ui text-white/90 mb-10 font-medium">Super profile</div>
-
-      <div className="flex gap-4">
-        <button 
-          className="px-7 py-3.5 rounded-xl font-ui font-medium transition-all duration-200 text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
-          style={{
-            background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
-          }}
+  <div className="h-full flex">
+    {/* Sidebar */}
+    <div className="w-20 bg-slate-900/50 border-r border-white/5 flex flex-col items-center py-6 gap-4">
+      {[
+        { icon: Gauge, active: true },
+        { icon: FlaskConical, active: false },
+        { icon: Activity, active: false },
+        { icon: Settings, active: false },
+      ].map(({ icon: Icon, active }, i) => (
+        <button
+          key={i}
+          className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${
+            active 
+              ? "bg-primary text-white shadow-lg shadow-primary/30" 
+              : "text-slate-500 hover:text-white hover:bg-white/5"
+          }`}
         >
-          Select profile
+          <Icon className="w-5 h-5" />
         </button>
-        <button className="bg-slate-800/80 hover:bg-slate-700/80 text-white/80 hover:text-white px-7 py-3.5 rounded-xl font-ui font-medium transition-all duration-200 border border-slate-700/50">
-          Edit profiles
-        </button>
+      ))}
+    </div>
+
+    {/* Main */}
+    <div className="flex-1 p-8 flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h2 className="font-ui text-2xl text-white font-semibold">Live Measurements</h2>
+          <p className="font-ui text-sm text-slate-500 mt-1">Real-time sensor data</p>
+        </div>
+        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-800/50 border border-slate-700/50">
+          <Droplets className="w-4 h-4 text-primary" />
+          <span className="font-ui text-sm text-white">Super profile</span>
+          <Zap className="w-3 h-3 text-primary" />
+        </div>
+      </div>
+
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-2 gap-6 flex-1">
+        <LiveMetric 
+          value="1.00" 
+          unit="SG" 
+          label="Density"
+          trend="+0.02 FROM AVG"
+          status="success"
+        />
+        <LiveMetric 
+          value="25.73" 
+          unit="°C" 
+          label="Temperature"
+          trend="STABLE"
+        />
       </div>
     </div>
   </div>
 );
 
-const UnitsScreen = () => (
-  <div className="flex h-full">
-    <Sidebar>
-      <SidebarItem hasBack label="Back" />
-      <SidebarItem icon={Gauge} label="Units" active />
-      <SidebarItem icon={Activity} label="Output signals" />
-    </Sidebar>
+// ============================================================================
+// PROFILES SCREEN - Profile management
+// ============================================================================
+const ProfilesScreen = () => (
+  <div className="h-full flex">
+    {/* Sidebar */}
+    <div className="w-20 bg-slate-900/50 border-r border-white/5 flex flex-col items-center py-6 gap-4">
+      <button className="w-12 h-12 rounded-xl flex items-center justify-center text-slate-500 hover:text-white hover:bg-white/5 transition-all">
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button className="w-12 h-12 rounded-xl flex items-center justify-center text-slate-500 hover:text-white hover:bg-white/5 transition-all">
+        <Waves className="w-5 h-5" />
+      </button>
+      <button className="w-12 h-12 rounded-xl flex items-center justify-center bg-primary text-white shadow-lg shadow-primary/30">
+        <Droplets className="w-5 h-5" />
+      </button>
+    </div>
 
-    <div className="flex-1 p-6 overflow-auto bg-gradient-to-br from-slate-950 via-slate-950 to-slate-900">
-      <div className="grid grid-cols-2 gap-10">
-        {/* Density Units */}
+    {/* Main */}
+    <div className="flex-1 p-8">
+      <div className="mb-8">
+        <h2 className="font-ui text-2xl text-white font-semibold">Liquid Profiles</h2>
+        <p className="font-ui text-sm text-slate-500 mt-1">Manage calibration profiles</p>
+      </div>
+
+      {/* Profile Cards */}
+      <div className="grid grid-cols-2 gap-4">
+        {[
+          { name: "Water", points: 3, active: false },
+          { name: "Clay 10%", points: 2, active: true },
+          { name: "Slurry A", points: 4, active: false },
+          { name: "Custom Mix", points: 1, active: false },
+        ].map((profile) => (
+          <div
+            key={profile.name}
+            className={`p-5 rounded-2xl border transition-all cursor-pointer ${
+              profile.active
+                ? "bg-primary/10 border-primary/30"
+                : "bg-slate-800/30 border-slate-700/30 hover:border-slate-600/50"
+            }`}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className={`font-ui text-lg font-medium ${profile.active ? "text-white" : "text-slate-300"}`}>
+                  {profile.name}
+                </h3>
+                <span className="font-data text-xs text-slate-500 uppercase tracking-wide">
+                  {profile.points} CAL POINTS
+                </span>
+              </div>
+              {profile.active && (
+                <div className="w-3 h-3 rounded-full bg-primary shadow-lg shadow-primary/50" />
+              )}
+            </div>
+            <div className="flex gap-2">
+              <button className="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 font-ui text-sm transition-colors">
+                Edit
+              </button>
+              <button className="py-2 px-3 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 transition-colors">
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+// ============================================================================
+// SETTINGS SCREEN - Configuration
+// ============================================================================
+const SettingsScreen = () => (
+  <div className="h-full flex">
+    {/* Sidebar */}
+    <div className="w-20 bg-slate-900/50 border-r border-white/5 flex flex-col items-center py-6 gap-4">
+      <button className="w-12 h-12 rounded-xl flex items-center justify-center text-slate-500 hover:text-white hover:bg-white/5 transition-all">
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button className="w-12 h-12 rounded-xl flex items-center justify-center bg-primary text-white shadow-lg shadow-primary/30">
+        <Gauge className="w-5 h-5" />
+      </button>
+      <button className="w-12 h-12 rounded-xl flex items-center justify-center text-slate-500 hover:text-white hover:bg-white/5 transition-all">
+        <Activity className="w-5 h-5" />
+      </button>
+    </div>
+
+    {/* Main */}
+    <div className="flex-1 p-8">
+      <div className="mb-8">
+        <h2 className="font-ui text-2xl text-white font-semibold">Display Units</h2>
+        <p className="font-ui text-sm text-slate-500 mt-1">Configure measurement units</p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-8">
+        {/* Density */}
         <div>
-          <h3 className="text-slate-500 font-ui text-xs mb-4 uppercase tracking-widest">
-            Density Unit
-          </h3>
+          <h3 className="font-ui text-sm text-slate-400 mb-4">Density unit</h3>
           <div className="space-y-2">
-            {["SG", "SG×1000", "kg/m³", "g/L", "lb/ft³", "Weight %"].map((unit, i) => (
+            {["SG", "kg/m³", "g/L", "lb/ft³"].map((unit, i) => (
               <label
                 key={unit}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 border ${
-                  i === 0 
-                    ? "bg-primary/10 border-primary/30" 
-                    : "bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-700/50"
+                className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all border ${
+                  i === 0
+                    ? "bg-primary/10 border-primary/30"
+                    : "bg-slate-800/30 border-slate-700/30 hover:border-slate-600/50"
                 }`}
               >
-                <div
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                    i === 0 ? "border-primary bg-primary" : "border-slate-600"
-                  }`}
-                >
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                  i === 0 ? "border-primary bg-primary" : "border-slate-600"
+                }`}>
                   {i === 0 && <div className="w-2 h-2 bg-white rounded-full" />}
                 </div>
-                <span className={`font-data ${i === 0 ? "text-white" : "text-slate-400"}`}>{unit}</span>
+                <span className={`font-data text-sm uppercase ${i === 0 ? "text-white" : "text-slate-400"}`}>{unit}</span>
               </label>
             ))}
           </div>
         </div>
 
-        {/* Temperature Units */}
+        {/* Temperature */}
         <div>
-          <h3 className="text-slate-500 font-ui text-xs mb-4 uppercase tracking-widest">
-            Temperature Unit
-          </h3>
+          <h3 className="font-ui text-sm text-slate-400 mb-4">Temperature unit</h3>
           <div className="space-y-2">
             {["Celsius", "Fahrenheit"].map((unit, i) => (
               <label
                 key={unit}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 border ${
-                  i === 0 
-                    ? "bg-primary/10 border-primary/30" 
-                    : "bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/50 hover:border-slate-700/50"
+                className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all border ${
+                  i === 0
+                    ? "bg-primary/10 border-primary/30"
+                    : "bg-slate-800/30 border-slate-700/30 hover:border-slate-600/50"
                 }`}
               >
-                <div
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                    i === 0 ? "border-primary bg-primary" : "border-slate-600"
-                  }`}
-                >
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                  i === 0 ? "border-primary bg-primary" : "border-slate-600"
+                }`}>
                   {i === 0 && <div className="w-2 h-2 bg-white rounded-full" />}
                 </div>
-                <span className={`font-data ${i === 0 ? "text-white" : "text-slate-400"}`}>{unit}</span>
+                <span className={`font-ui text-sm ${i === 0 ? "text-white" : "text-slate-400"}`}>{unit}</span>
               </label>
             ))}
           </div>
@@ -317,7 +349,7 @@ const UnitsScreen = () => (
 );
 
 // ============================================================================
-// SCREEN SWITCHER - Tab-like switcher for demo
+// SCREEN SWITCHER
 // ============================================================================
 const ScreenSwitcher = ({
   activeScreen,
@@ -325,84 +357,75 @@ const ScreenSwitcher = ({
 }: {
   activeScreen: string;
   onScreenChange: (screen: string) => void;
-}) => {
-  const screens = [
-    { id: "measurements", label: "Measurements", icon: Gauge },
-    { id: "profiles", label: "Liquid Profiles", icon: Droplets },
-    { id: "units", label: "Units", icon: Settings },
-  ];
-
-  return (
-    <div className="flex justify-center mb-8">
-      <div className="inline-flex items-center gap-1 p-1.5 rounded-2xl bg-rho-obsidian border border-slate-800">
-        {screens.map(({ id, label, icon: Icon }) => (
-          <button
-            key={id}
-            onClick={() => onScreenChange(id)}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-ui text-sm font-medium transition-all duration-300 ${
-              activeScreen === id
-                ? "bg-white text-rho-obsidian shadow-lg"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-            }`}
-          >
-            <Icon className="w-4 h-4" />
-            {label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// ============================================================================
-// MODAL COMPONENTS - Dialog examples
-// ============================================================================
-const ModalFrame = ({
-  title,
-  children,
-  compact = false,
-}: {
-  title: string;
-  children: React.ReactNode;
-  compact?: boolean;
 }) => (
-  <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/20 border border-slate-200/50 bg-white">
-    <div 
-      className="px-4 py-3 flex items-center justify-between"
-      style={{
-        background: 'linear-gradient(180deg, hsl(220 15% 20%), hsl(220 15% 15%))'
-      }}
-    >
-      <h3 className="text-white font-ui font-medium text-sm">{title}</h3>
-      <button className="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
-        <X className="w-4 h-4" />
-      </button>
-    </div>
-    <div className={compact ? "p-4" : "p-5"}>{children}</div>
+  <div className="flex justify-center gap-3 mb-10">
+    <NavPill 
+      icon={Gauge} 
+      label="Measurements" 
+      active={activeScreen === "measurements"}
+      onClick={() => onScreenChange("measurements")}
+    />
+    <NavPill 
+      icon={Droplets} 
+      label="Profiles" 
+      active={activeScreen === "profiles"}
+      onClick={() => onScreenChange("profiles")}
+    />
+    <NavPill 
+      icon={Settings} 
+      label="Settings" 
+      active={activeScreen === "settings"}
+      onClick={() => onScreenChange("settings")}
+    />
   </div>
 );
 
-const CalibrationPointsModal = () => (
-  <ModalFrame title="Liquid profile: Clay 10% - Calibration points">
-    <div className="space-y-2.5">
+// ============================================================================
+// MODAL COMPONENTS - Clean, minimal dialogs
+// ============================================================================
+const ModalCard = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <div className="rounded-2xl overflow-hidden bg-white shadow-2xl shadow-black/10">
+    <div className="px-5 py-4 bg-slate-900 flex items-center justify-between">
+      <h3 className="font-ui text-base text-white font-medium">{title}</h3>
+      <button className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
+        <X className="w-4 h-4" />
+      </button>
+    </div>
+    <div className="p-5">{children}</div>
+  </div>
+);
+
+const CalibrationModal = () => (
+  <ModalCard title="Calibration points">
+    <div className="space-y-3">
       {[
-        { id: 0, status: "Done", temp: "24.5", density: "1.10", statusColor: "bg-success" },
-        { id: 1, status: "Ready to sample", temp: "—", density: "—", statusColor: "bg-warning" },
+        { id: 0, status: "Complete", temp: "24.5", density: "1.10", done: true },
+        { id: 1, status: "Ready", temp: "—", density: "—", done: false },
       ].map((point) => (
         <div
           key={point.id}
-          className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3.5 border border-slate-100 hover:border-slate-200 transition-colors"
+          className={`flex items-center gap-4 p-4 rounded-xl border ${
+            point.done ? "bg-primary/5 border-primary/20" : "bg-slate-50 border-slate-100"
+          }`}
         >
-          <div className={`w-1 h-12 rounded-full ${point.statusColor}`} />
-          <div className="flex-1 min-w-0">
-            <div className="font-ui text-sm text-slate-900 font-medium">
-              #{point.id} · {point.status}
-            </div>
-            <div className="font-data text-xs text-slate-500 mt-0.5">
-              T: {point.temp}°C · ρ: {point.density} SG
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+            point.done ? "bg-primary text-white" : "bg-slate-200 text-slate-500"
+          }`}>
+            {point.done ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+          </div>
+          <div className="flex-1">
+            <div className="font-ui text-sm text-slate-900 font-medium">{point.status}</div>
+            <div className="font-data text-xs text-slate-500 uppercase tracking-wide mt-0.5">
+              T: {point.temp}°C · Ρ: {point.density} SG
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex gap-2">
             <button className="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-slate-100 transition-colors">
               <Pencil className="w-4 h-4 text-slate-400" />
             </button>
@@ -412,179 +435,130 @@ const CalibrationPointsModal = () => (
           </div>
         </div>
       ))}
-
-      <button className="w-full flex items-center justify-center gap-2 py-3.5 text-primary font-ui text-sm font-medium hover:bg-primary/5 rounded-xl transition-colors border-2 border-dashed border-slate-200 hover:border-primary/30">
+      
+      <button className="w-full py-4 rounded-xl border-2 border-dashed border-slate-200 text-primary font-ui text-sm font-medium hover:border-primary/50 hover:bg-primary/5 transition-all flex items-center justify-center gap-2">
         <Plus className="w-4 h-4" />
-        Add a calibration point
+        Add calibration point
       </button>
     </div>
-  </ModalFrame>
+  </ModalCard>
 );
 
-const PINEntryModal = () => (
-  <ModalFrame title="Enter PIN" compact>
-    <div className="space-y-4">
-      <div className="bg-slate-100 rounded-xl px-4 py-4 text-center border border-slate-200">
-        <span className="font-data text-3xl text-slate-900 tracking-[0.5em]">••••</span>
-        <span className="font-data text-3xl text-slate-300 animate-pulse">_</span>
+const PinModal = () => (
+  <ModalCard title="Enter access code">
+    <div className="space-y-5">
+      <div className="py-5 rounded-xl bg-slate-100 text-center">
+        <span className="font-data text-4xl text-slate-900 tracking-[0.3em]">••••</span>
+        <span className="font-data text-4xl text-slate-300 animate-pulse">_</span>
       </div>
-
+      
       <div className="grid grid-cols-3 gap-2">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, "←", 0, "C"].map((key) => (
           <button
             key={key}
-            className="bg-slate-50 hover:bg-slate-100 active:bg-slate-200 border border-slate-200 rounded-xl py-3.5 font-data text-xl text-slate-800 transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]"
+            className="py-4 rounded-xl bg-slate-50 hover:bg-slate-100 active:bg-slate-200 font-data text-xl text-slate-800 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
             {key}
           </button>
         ))}
       </div>
-
-      <button 
-        className="w-full py-3.5 rounded-xl font-ui font-medium text-white transition-all hover:-translate-y-0.5 shadow-lg shadow-primary/25"
-        style={{
-          background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
-        }}
-      >
+      
+      <button className="w-full py-4 rounded-xl bg-primary hover:bg-primary/90 text-white font-ui font-medium transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30">
         Continue
       </button>
     </div>
-  </ModalFrame>
+  </ModalCard>
 );
 
-const TemperatureCalibrationModal = () => (
-  <ModalFrame title="Temperature Calibration" compact>
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
+const TempCalModal = () => (
+  <ModalCard title="Temperature calibration">
+    <div className="space-y-5">
+      <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="text-slate-500 font-ui text-xs uppercase tracking-wide mb-2 block">
-            Measured
-          </label>
-          <div className="bg-slate-100 rounded-xl px-4 py-3 border border-slate-200">
-            <span className="font-data text-xl text-slate-900">25.73</span>
-            <span className="font-data text-sm text-slate-500 ml-1">°C</span>
+          <label className="font-ui text-xs text-slate-500 mb-2 block">Measured</label>
+          <div className="py-4 px-5 rounded-xl bg-slate-100">
+            <span className="font-data text-2xl text-slate-900">25.73</span>
+            <span className="font-data text-sm text-slate-500 ml-1 uppercase">°C</span>
           </div>
         </div>
         <div>
-          <label className="text-slate-500 font-ui text-xs uppercase tracking-wide mb-2 block">
-            Verified
-          </label>
-          <div className="bg-white rounded-xl px-4 py-3 border-2 border-primary shadow-sm shadow-primary/10">
-            <span className="font-data text-xl text-slate-900">25.50</span>
-            <span className="font-data text-sm text-slate-500 ml-1">°C</span>
+          <label className="font-ui text-xs text-slate-500 mb-2 block">Reference</label>
+          <div className="py-4 px-5 rounded-xl bg-white border-2 border-primary">
+            <span className="font-data text-2xl text-slate-900">25.50</span>
+            <span className="font-data text-sm text-slate-500 ml-1 uppercase">°C</span>
           </div>
         </div>
       </div>
-
+      
       <div className="grid grid-cols-3 gap-2">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "←"].map((key) => (
           <button
             key={key}
-            className="bg-slate-50 hover:bg-slate-100 active:bg-slate-200 border border-slate-200 rounded-xl py-3 font-data text-lg text-slate-800 transition-all duration-150"
+            className="py-3 rounded-xl bg-slate-50 hover:bg-slate-100 font-data text-lg text-slate-800 transition-all"
           >
             {key}
           </button>
         ))}
       </div>
-
+      
       <div className="flex gap-3">
-        <button className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-xl font-ui font-medium transition-colors">
-          Default
+        <button className="flex-1 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-ui font-medium transition-colors">
+          Reset
         </button>
-        <button 
-          className="flex-1 py-3 rounded-xl font-ui font-medium text-white shadow-lg shadow-primary/25"
-          style={{
-            background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
-          }}
-        >
+        <button className="flex-1 py-3.5 rounded-xl bg-primary hover:bg-primary/90 text-white font-ui font-medium transition-all shadow-lg shadow-primary/25">
           Apply
         </button>
       </div>
     </div>
-  </ModalFrame>
+  </ModalCard>
 );
 
-const EditProfilesModal = () => (
-  <ModalFrame title="Edit Profiles" compact>
-    <div className="space-y-2">
-      {["Water", "Clay 10%", "Slurry A", "Custom Mix"].map((profile, i) => (
-        <div
-          key={profile}
-          className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3.5 border border-slate-100 hover:border-slate-200 transition-colors group"
-        >
-          <div className={`w-1 h-10 rounded-full ${i === 0 ? "bg-primary" : "bg-slate-300"}`} />
-          <span className="flex-1 font-ui text-slate-900">{profile}</span>
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            <button className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-slate-200 transition-colors">
-              <Pencil className="w-4 h-4 text-slate-400" />
-            </button>
-            {i > 0 && (
-              <button className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-slate-200 transition-colors">
-                <Trash2 className="w-4 h-4 text-slate-400" />
-              </button>
-            )}
+// ============================================================================
+// PATTERN SHOWCASE
+// ============================================================================
+const PatternShowcase = () => (
+  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    {[
+      { 
+        title: "Data hierarchy", 
+        desc: "Large monospace numbers dominate, units and labels recede",
+        example: <span className="font-data text-3xl text-foreground">1.00 <span className="text-lg text-muted-foreground">SG</span></span>
+      },
+      { 
+        title: "Status indicators", 
+        desc: "Color-coded states for instant recognition",
+        example: (
+          <div className="flex gap-3">
+            <div className="w-3 h-3 rounded-full bg-primary shadow-lg shadow-primary/50" />
+            <div className="w-3 h-3 rounded-full bg-warning shadow-lg shadow-warning/50" />
+            <div className="w-3 h-3 rounded-full bg-destructive shadow-lg shadow-destructive/50" />
           </div>
+        )
+      },
+      { 
+        title: "Touch targets", 
+        desc: "Minimum 48px for industrial gloves",
+        example: <div className="w-12 h-12 rounded-xl bg-primary/20 border-2 border-primary/30 border-dashed" />
+      },
+      { 
+        title: "Navigation", 
+        desc: "Icon-only sidebar, contextual pills",
+        example: (
+          <div className="flex gap-2">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center"><Gauge className="w-4 h-4 text-white" /></div>
+            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center"><Settings className="w-4 h-4 text-muted-foreground" /></div>
+          </div>
+        )
+      },
+    ].map((pattern) => (
+      <div key={pattern.title} className="p-5 rounded-2xl bg-card border border-border">
+        <div className="h-16 flex items-center justify-center mb-4">
+          {pattern.example}
         </div>
-      ))}
-    </div>
-  </ModalFrame>
-);
-
-const SuperProfileModal = () => (
-  <ModalFrame title="Edit Super Profile" compact>
-    <div className="space-y-2.5">
-      {["Water", "Clay 10%", "Slurry A", "Custom Mix"].map((profile, i) => (
-        <label
-          key={profile}
-          className={`flex items-center gap-3 rounded-xl px-4 py-3.5 cursor-pointer transition-all border ${
-            i < 2 
-              ? "bg-primary/5 border-primary/20" 
-              : "bg-slate-50 border-slate-100 hover:border-slate-200"
-          }`}
-        >
-          <div
-            className={`w-5 h-5 rounded flex items-center justify-center transition-all ${
-              i < 2 ? "bg-primary border-2 border-primary" : "bg-white border-2 border-slate-300"
-            }`}
-          >
-            {i < 2 && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
-          </div>
-          <span className={`font-ui ${i < 2 ? "text-slate-900 font-medium" : "text-slate-600"}`}>{profile}</span>
-        </label>
-      ))}
-
-      <button 
-        className="w-full py-3.5 rounded-xl font-ui font-medium text-white mt-2 shadow-lg shadow-primary/25"
-        style={{
-          background: 'linear-gradient(135deg, hsl(88 60% 45%) 0%, hsl(125 50% 40%) 100%)'
-        }}
-      >
-        Save Changes
-      </button>
-    </div>
-  </ModalFrame>
-);
-
-// ============================================================================
-// PATTERN CARDS - Design pattern documentation
-// ============================================================================
-const PatternCard = ({
-  title,
-  description,
-  token,
-}: {
-  title: string;
-  description: string;
-  token: string;
-}) => (
-  <div className="group p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
-    <h4 className="font-ui font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-      {title}
-    </h4>
-    <p className="text-sm text-muted-foreground mb-3">{description}</p>
-    <code className="inline-flex px-2.5 py-1 rounded-lg bg-muted font-data text-xs text-muted-foreground">
-      {token}
-    </code>
+        <h4 className="font-ui font-semibold text-foreground mb-1">{pattern.title}</h4>
+        <p className="font-ui text-sm text-muted-foreground">{pattern.desc}</p>
+      </div>
+    ))}
   </div>
 );
 
@@ -596,171 +570,85 @@ export default function SDMEcoInterface() {
 
   const renderScreen = () => {
     switch (activeScreen) {
-      case "measurements":
-        return <MeasurementsScreen />;
-      case "profiles":
-        return <LiquidProfilesScreen />;
-      case "units":
-        return <UnitsScreen />;
-      default:
-        return <MeasurementsScreen />;
+      case "measurements": return <MeasurementsScreen />;
+      case "profiles": return <ProfilesScreen />;
+      case "settings": return <SettingsScreen />;
+      default: return <MeasurementsScreen />;
     }
   };
 
   return (
     <section className="scroll-mt-24">
-      <div className="space-y-20">
-        {/* Hero Statement */}
+      <div className="space-y-24">
+        {/* Hero */}
         <div className="max-w-3xl">
           <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-            The embedded touchscreen translates our brand into a 
-            <span className="text-foreground font-medium"> robust industrial HMI</span>. 
-            Every screen prioritizes <span className="text-primary font-medium">data clarity</span> and 
-            <span className="text-foreground font-medium"> operational efficiency</span>.
+            The embedded interface prioritizes 
+            <span className="text-foreground font-medium"> data legibility</span> above all. 
+            Large monospace numbers, minimal chrome, and 
+            <span className="text-primary font-medium"> color-coded status</span> for 
+            instant comprehension in challenging environments.
           </p>
         </div>
 
-        {/* Interactive Device Demo */}
-        <div className="py-8">
+        {/* Interactive Device */}
+        <div>
           <ScreenSwitcher activeScreen={activeScreen} onScreenChange={setActiveScreen} />
-          
           <DeviceFrame>
-            <StatusBar 
-              title={
-                activeScreen === "measurements" ? "Measurements" : 
-                activeScreen === "profiles" ? "Liquid Profiles" : 
-                "Units"
-              } 
-            />
-            <div className="h-[calc(100%-52px)]">
-              {renderScreen()}
-            </div>
+            {renderScreen()}
           </DeviceFrame>
         </div>
 
-        {/* Modal Dialogs Section */}
-        <div className="space-y-10">
-          <div className="max-w-2xl">
-            <h3 className="text-2xl font-ui font-semibold text-foreground mb-3">
-              Modal Dialogs
-            </h3>
-            <p className="text-muted-foreground">
-              Overlay dialogs for data entry, configuration, and list management follow a consistent 
-              structure: dark header with close action, light content area, and clear action hierarchy.
+        {/* Dialogs */}
+        <div className="space-y-8">
+          <div>
+            <h3 className="font-ui text-2xl font-semibold text-foreground mb-2">Modal dialogs</h3>
+            <p className="font-ui text-muted-foreground max-w-2xl">
+              Overlay dialogs for data entry and configuration. Dark headers, light content, 
+              clear action hierarchy.
             </p>
           </div>
 
-          {/* Modal Grid */}
           <div className="grid lg:grid-cols-3 gap-6">
-            <div className="space-y-3">
-              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
-                List Management
-              </span>
-              <CalibrationPointsModal />
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-3 block">LIST MANAGEMENT</span>
+              <CalibrationModal />
             </div>
-
-            <div className="space-y-3">
-              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
-                Secure Entry
-              </span>
-              <PINEntryModal />
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-3 block">SECURE ENTRY</span>
+              <PinModal />
             </div>
-
-            <div className="space-y-3">
-              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
-                Calibration
-              </span>
-              <TemperatureCalibrationModal />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
-                Profile Management
-              </span>
-              <EditProfilesModal />
-            </div>
-
-            <div className="space-y-3">
-              <span className="text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
-                Multi-Select
-              </span>
-              <SuperProfileModal />
+            <div>
+              <span className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-3 block">CALIBRATION</span>
+              <TempCalModal />
             </div>
           </div>
         </div>
 
-        {/* Interface Patterns */}
+        {/* Patterns */}
         <div className="space-y-8">
-          <h3 className="text-2xl font-ui font-semibold text-foreground">
-            Interface Patterns
-          </h3>
-          
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <PatternCard 
-              title="Header Bar" 
-              description="Brand gradient background with white title text"
-              token="bg-brand-gradient"
-            />
-            <PatternCard 
-              title="Data Display" 
-              description="Large measurement values using monospace"
-              token="font-data text-6xl"
-            />
-            <PatternCard 
-              title="Sidebar Navigation" 
-              description="Icon + label with active state indicator"
-              token="text-primary font-ui"
-            />
-            <PatternCard 
-              title="Status Indicators" 
-              description="Color-coded vertical bars for state"
-              token="bg-success / bg-warning"
-            />
-            <PatternCard 
-              title="Touch Targets" 
-              description="Minimum 44px for gloved operation"
-              token="min-h-[44px] min-w-[44px]"
-            />
-            <PatternCard 
-              title="Numeric Keypad" 
-              description="Touch-optimized input grid layout"
-              token="grid-cols-3 gap-2"
-            />
-          </div>
+          <h3 className="font-ui text-2xl font-semibold text-foreground">Interface patterns</h3>
+          <PatternShowcase />
         </div>
 
-        {/* Design Principles */}
-        <BrandCallout variant="info" title="Embedded UI Principles">
-          <div className="grid sm:grid-cols-2 gap-4 text-sm">
-            <div className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-ui font-bold text-xs">1</span>
-              <div>
-                <strong className="text-foreground">Data First</strong>
-                <p className="text-muted-foreground mt-0.5">Measurement values use JetBrains Mono at large sizes for instant readability.</p>
-              </div>
+        {/* Principles */}
+        <BrandCallout variant="info" title="Embedded UI principles">
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div>
+              <div className="font-ui font-semibold text-foreground mb-1">Data dominance</div>
+              <p className="font-ui text-sm text-muted-foreground">Measurement values use JetBrains Mono at maximum size. Everything else recedes.</p>
             </div>
-            <div className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-ui font-bold text-xs">2</span>
-              <div>
-                <strong className="text-foreground">Touch Targets</strong>
-                <p className="text-muted-foreground mt-0.5">All interactive elements are sized for gloved operation (min 44×44px).</p>
-              </div>
+            <div>
+              <div className="font-ui font-semibold text-foreground mb-1">Glove-ready</div>
+              <p className="font-ui text-sm text-muted-foreground">All touch targets exceed 48×48px. Generous spacing prevents mis-taps.</p>
             </div>
-            <div className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-ui font-bold text-xs">3</span>
-              <div>
-                <strong className="text-foreground">Status Clarity</strong>
-                <p className="text-muted-foreground mt-0.5">Color-coded indicators provide immediate feedback without text.</p>
-              </div>
+            <div>
+              <div className="font-ui font-semibold text-foreground mb-1">Status at a glance</div>
+              <p className="font-ui text-sm text-muted-foreground">Color-coded indicators provide immediate feedback without reading.</p>
             </div>
-            <div className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-ui font-bold text-xs">4</span>
-              <div>
-                <strong className="text-foreground">Consistent Navigation</strong>
-                <p className="text-muted-foreground mt-0.5">Sidebar pattern persists across all screens for predictable wayfinding.</p>
-              </div>
+            <div>
+              <div className="font-ui font-semibold text-foreground mb-1">Predictable navigation</div>
+              <p className="font-ui text-sm text-muted-foreground">Icon sidebar persists across all screens. Location is always clear.</p>
             </div>
           </div>
         </BrandCallout>
