@@ -182,8 +182,11 @@
     font-weight: 500;
   }
 
-  /* Billboard.js Chart Styling */
-  .bb-chart-container {
+  /* ============================================
+     Billboard.js Rhosonics Brand Theme
+     ============================================ */
+  
+  .bb {
     font-family: 'Instrument Sans', sans-serif;
   }
 
@@ -191,40 +194,115 @@
     overflow: visible;
   }
 
+  /* Axis Styling */
+  .bb-axis {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+
   .bb-axis text,
   .bb-axis-x text,
   .bb-axis-y text {
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 11px !important;
+    font-size: 10px !important;
     font-weight: 500 !important;
+    fill: hsl(215, 19%, 35%) !important;
   }
 
   .bb-axis-x-label,
   .bb-axis-y-label {
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 11px !important;
+    font-size: 10px !important;
     font-weight: 500 !important;
+    fill: hsl(215, 19%, 35%) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .bb-axis line,
+  .bb-axis .domain {
+    stroke: hsl(214, 32%, 91%) !important;
+  }
+
+  /* Grid Lines */
+  .bb-grid line {
+    stroke: hsl(214, 32%, 91%) !important;
+    stroke-dasharray: 3 3;
+  }
+
+  .bb-xgrid,
+  .bb-ygrid {
+    stroke: hsl(214, 32%, 91%) !important;
+    stroke-dasharray: 3 3;
+  }
+
+  /* Legend */
+  .bb-legend {
+    font-family: 'Instrument Sans', sans-serif !important;
   }
 
   .bb-legend-item text {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    fill: hsl(215, 19%, 35%) !important;
+  }
+
+  .bb-legend-item-hidden text {
+    fill: hsl(213, 27%, 84%) !important;
+  }
+
+  /* Tooltip */
+  .bb-tooltip-container {
+    z-index: 100;
   }
 
   .bb-tooltip {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 11px !important;
-    border-radius: 8px !important;
-    border: 1px solid hsl(215, 19%, 25%) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    background: hsl(226, 33%, 10%) !important;
+    color: hsl(210, 40%, 96%) !important;
+    border-radius: 6px !important;
+    border: 1px solid hsl(225, 20%, 20%) !important;
+    box-shadow: 0 8px 24px hsl(0, 0%, 0%, 0.25) !important;
+    overflow: hidden;
   }
 
-  .bb-tooltip-container {
-    z-index: 100;
+  .bb-tooltip th {
+    background: hsl(225, 25%, 15%) !important;
+    color: hsl(210, 40%, 96%) !important;
+    font-weight: 600 !important;
+    padding: 8px 12px !important;
+    border-bottom: 1px solid hsl(225, 20%, 20%) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 10px !important;
   }
 
-  .bb-grid line {
-    stroke-dasharray: 3 3;
+  .bb-tooltip td {
+    padding: 6px 12px !important;
+    border-bottom: 1px solid hsl(225, 20%, 18%) !important;
+  }
+
+  .bb-tooltip tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  .bb-tooltip td.name {
+    color: hsl(213, 27%, 84%) !important;
+  }
+
+  .bb-tooltip td.value {
+    font-weight: 600 !important;
+    text-align: right !important;
+  }
+
+  /* Chart Elements */
+  .bb-line {
+    stroke-width: 2.5px;
+  }
+
+  .bb-circle {
+    stroke-width: 2px;
   }
 
   .bb-bar {
@@ -232,11 +310,87 @@
   }
 
   .bb-area {
-    opacity: 0.4;
+    opacity: 0.15;
+  }
+
+  /* Focus/Hover States */
+  .bb-circle._expanded_ {
+    stroke-width: 3px !important;
+    r: 6 !important;
+  }
+
+  .bb-circles .bb-circle {
+    fill: hsl(0, 0%, 100%) !important;
+    stroke-width: 2px;
+  }
+
+  /* Radar Chart */
+  .bb-chart-radar {
+    font-family: 'JetBrains Mono', monospace !important;
   }
 
   .bb-radar-chart .bb-levels polygon {
+    stroke: hsl(214, 32%, 91%) !important;
     stroke-dasharray: 3 3;
+    fill: none !important;
+  }
+
+  .bb-radar-chart .bb-axis text {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 9px !important;
+    fill: hsl(215, 19%, 35%) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .bb-radar-chart .bb-shapes polygon {
+    fill-opacity: 0.2 !important;
+    stroke-width: 2px !important;
+  }
+
+  /* Gauge Chart */
+  .bb-chart-arcs .bb-chart-arcs-gauge-min,
+  .bb-chart-arcs .bb-chart-arcs-gauge-max {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px !important;
+    fill: hsl(215, 19%, 35%) !important;
+  }
+
+  .bb-chart-arcs .bb-chart-arcs-title {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    fill: hsl(226, 33%, 10%) !important;
+  }
+
+  .bb-chart-arcs .bb-chart-arcs-background {
+    fill: hsl(210, 40%, 96%) !important;
+    stroke: none !important;
+  }
+
+  /* Arc/Donut Charts */
+  .bb-chart-arcs text {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    fill: hsl(0, 0%, 100%) !important;
+    font-weight: 600 !important;
+  }
+
+  /* Event Rectangles - Interaction Areas */
+  .bb-event-rect {
+    cursor: crosshair;
+  }
+
+  /* Brush Selection */
+  .bb-brush .selection {
+    fill: hsl(125, 50%, 40%) !important;
+    fill-opacity: 0.15 !important;
+    stroke: hsl(125, 50%, 40%) !important;
+  }
+
+  /* Loading State */
+  .bb .bb-chart-arcs .bb-empty {
+    fill: hsl(214, 32%, 91%) !important;
   }
 
   /* Selection highlight */
