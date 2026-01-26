@@ -39,19 +39,19 @@ export const RhosonicsLogo = ({ variant = "gradient", className, animated = fals
         </linearGradient>
       </defs>
 
-      {/* Wave 1 - Propagation point (innermost, squared corner) */}
+      {/* Wave 1 - Propagation point (innermost, fills corner) */}
       <g className={cn(animated && "animate-boot opacity-0")} style={{ transformOrigin: "bottom right" }}>
-        <path d="M 80 72 L 80 62 A 18 18 0 0 0 62 80 L 72 80 A 8 8 0 0 1 80 72 Z" fill={getFill()} />
+        <path d="M 80 80 L 80 60 A 20 20 0 0 0 60 80 L 80 80 Z" fill={getFill()} />
       </g>
 
       {/* Wave 2 - Middle */}
       <g className={cn(animated && "animate-boot delay-100 opacity-0")} style={{ transformOrigin: "bottom right" }}>
-        <path d="M 80 48 L 80 36 A 44 44 0 0 0 36 80 L 48 80 A 32 32 0 0 1 80 48 Z" fill={getFill()} />
+        <path d="M 80 52 L 80 34 A 46 46 0 0 0 34 80 L 52 80 A 28 28 0 0 1 80 52 Z" fill={getFill()} />
       </g>
 
       {/* Wave 3 - Outermost */}
       <g className={cn(animated && "animate-boot delay-200 opacity-0")} style={{ transformOrigin: "bottom right" }}>
-        <path d="M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z" fill={getFill()} />
+        <path d="M 80 20 L 80 0 A 80 80 0 0 0 0 80 L 20 80 A 60 60 0 0 1 80 20 Z" fill={getFill()} />
       </g>
     </svg>
   );

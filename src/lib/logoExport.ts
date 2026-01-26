@@ -9,12 +9,12 @@ const OBSIDIAN_END = "#0f172a";
 
 // Wave paths for the logo icon (3 waves total)
 const WAVE_PATHS = [
-  // Wave 1 - Innermost (propagation point, squared corner) - thickness 10px
-  "M 80 72 L 80 62 A 18 18 0 0 0 62 80 L 72 80 A 8 8 0 0 1 80 72 Z",
-  // Wave 2 - Middle - thickness 12px
-  "M 80 48 L 80 36 A 44 44 0 0 0 36 80 L 48 80 A 32 32 0 0 1 80 48 Z",
-  // Wave 3 - Outermost - thickness 13px
-  "M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z",
+  // Wave 1 - Innermost (propagation point, fills corner) - outer R20, inner R6
+  "M 80 80 L 80 60 A 20 20 0 0 0 60 80 L 80 80 A 0 0 0 0 1 80 80 Z",
+  // Wave 2 - Middle (thicker) - outer R46, inner R28
+  "M 80 52 L 80 34 A 46 46 0 0 0 34 80 L 52 80 A 28 28 0 0 1 80 52 Z",
+  // Wave 3 - Outermost (thicker) - outer R80, inner R60
+  "M 80 20 L 80 0 A 80 80 0 0 0 0 80 L 20 80 A 60 60 0 0 1 80 20 Z",
 ];
 
 // Logo lockup layout types
