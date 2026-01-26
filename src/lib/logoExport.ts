@@ -2,8 +2,9 @@
 import { WORDMARK_PATHS, getWordmarkScale, getWordmarkDimensions } from "@/assets/brand/rhosonics-wordmark-paths";
 
 // Brand gradient colors
-const GRADIENT_START = "#73B82E";
-const GRADIENT_END = "#33993C";
+const GRADIENT_START = "#7DC42E";
+const GRADIENT_MID = "#4CAF50";
+const GRADIENT_END = "#2D8636";
 const OBSIDIAN_START = "#1e293b";
 const OBSIDIAN_END = "#0f172a";
 
@@ -167,6 +168,7 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
   if (variant.iconFill === "gradient") {
     gradientDef = `<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="${GRADIENT_START}"/>
+      <stop offset="50%" stop-color="${GRADIENT_MID}"/>
       <stop offset="100%" stop-color="${GRADIENT_END}"/>
     </linearGradient>`;
   } else if (variant.iconFill === "white") {
@@ -245,6 +247,7 @@ export const generateVerticalLockupSVG = (variant: LogoVariant): string => {
   if (variant.iconFill === "gradient") {
     gradientDef = `<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="${GRADIENT_START}"/>
+      <stop offset="50%" stop-color="${GRADIENT_MID}"/>
       <stop offset="100%" stop-color="${GRADIENT_END}"/>
     </linearGradient>`;
   } else if (variant.iconFill === "white") {
@@ -316,6 +319,7 @@ export const generateIconOnlySVG = (variant: LogoVariant): string => {
   if (variant.iconFill === "gradient") {
     gradientDef = `<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="${GRADIENT_START}"/>
+      <stop offset="50%" stop-color="${GRADIENT_MID}"/>
       <stop offset="100%" stop-color="${GRADIENT_END}"/>
     </linearGradient>`;
   } else if (variant.iconFill === "white") {
