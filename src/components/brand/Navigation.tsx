@@ -253,8 +253,8 @@ export const Navigation = () => {
             onClick={() => scrollToSection('about')}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            {/* 150% ratio: text-xs(12px)→18px icon */}
-            <div className="w-[18px] h-[18px]">
+            {/* 135% ratio: text-xs(12px)→16px icon */}
+            <div className="w-4 h-4">
               <RhosonicsLogo variant="gradient" />
             </div>
             <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
@@ -348,8 +348,8 @@ export const Navigation = () => {
               onClick={() => scrollToSection('about')}
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
-              {/* 150% ratio: text-xs(12px)→18px icon */}
-              <div className="w-[18px] h-[18px]">
+              {/* 135% ratio: text-xs(12px)→16px icon */}
+              <div className="w-4 h-4">
                 <RhosonicsLogo variant="gradient" />
               </div>
               <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
@@ -431,8 +431,8 @@ export const Navigation = () => {
           onClick={() => scrollToSection('about')}
           className="flex items-center gap-2 touch-manipulation"
         >
-          {/* 150% ratio: text-xs(12px)→18px icon */}
-          <div className="w-[18px] h-[18px]">
+          {/* 135% ratio: text-xs(12px)→16px icon */}
+          <div className="w-4 h-4">
             <RhosonicsLogo variant="gradient" />
           </div>
           <span className="font-data text-xs text-slate-400 tracking-widest">BRAND SYSTEM</span>
