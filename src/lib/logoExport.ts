@@ -9,11 +9,11 @@ const OBSIDIAN_END = "#0f172a";
 
 // Wave paths for the logo icon (3 waves total)
 const WAVE_PATHS = [
-  // Wave 1 - Innermost (propagation point, squared corner)
-  "M 80 68 L 80 60 A 20 20 0 0 0 60 80 L 68 80 A 12 12 0 0 1 80 68 Z",
-  // Wave 2 - Middle
-  "M 80 42 L 80 26 A 54 54 0 0 0 26 80 L 42 80 A 38 38 0 0 1 80 42 Z",
-  // Wave 3 - Outermost
+  // Wave 1 - Innermost (propagation point, squared corner) - thickness 10px
+  "M 80 72 L 80 62 A 18 18 0 0 0 62 80 L 72 80 A 8 8 0 0 1 80 72 Z",
+  // Wave 2 - Middle - thickness 12px
+  "M 80 48 L 80 36 A 44 44 0 0 0 36 80 L 48 80 A 32 32 0 0 1 80 48 Z",
+  // Wave 3 - Outermost - thickness 13px
   "M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z",
 ];
 
