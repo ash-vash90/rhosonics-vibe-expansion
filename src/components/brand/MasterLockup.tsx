@@ -36,11 +36,11 @@ export const MasterLockup = () => {
       >
         <div className="absolute inset-0 bg-wave-subtle opacity-40 pointer-events-none" />
         
-        {/* Logo lockup: 150% ratio - text uses clamp, icon is 1.5× */}
+        {/* Logo lockup: 135% ratio - text uses clamp, icon is 1.35× */}
         <div className="flex items-center gap-6 relative z-10 px-4">
           <div 
             className="flex-shrink-0" 
-            style={{ width: 'clamp(72px, 9vw, 96px)', height: 'clamp(72px, 9vw, 96px)' }}
+            style={{ width: 'clamp(65px, 8.1vw, 86px)', height: 'clamp(65px, 8.1vw, 86px)' }}
           >
             <AnimatedLogo ref={logoRef} variant="gradient" autoPlay />
           </div>
@@ -70,19 +70,19 @@ export const MasterLockup = () => {
       <div className="mb-16">
         {/* Core Insight */}
         <div className="bg-slate-900 text-slate-100 rounded-lg p-8 mb-8">
-          <h3 className="label-tech text-primary mb-4">THE 150% RULE</h3>
+          <h3 className="label-tech text-primary mb-4">THE 135% RULE</h3>
           <p className="text-slate-300 mb-6 max-w-2xl">
-            The logo icon is always <span className="text-primary font-semibold">150%</span> of the accompanying text's font-size.
+            The logo icon is always <span className="text-primary font-semibold">135%</span> of the accompanying text's font-size.
             This fixed ratio ensures consistent visual weight across all sizes while keeping the icon prominent but balanced.
           </p>
           <div className="flex flex-wrap gap-8 items-end">
             <div>
               <span className="font-data text-xs text-slate-500 block mb-1">FORMULA</span>
-              <div className="font-data text-2xl text-slate-100">Icon = Text × 1.5</div>
-              <div className="font-data text-lg text-slate-400">e.g., 24px text → 36px icon</div>
+              <div className="font-data text-2xl text-slate-100">Icon = Text × 1.35</div>
+              <div className="font-data text-lg text-slate-400">e.g., 24px text → 32px icon</div>
             </div>
             <div className="bg-slate-800 rounded px-4 py-3">
-              <span className="font-data text-xs text-slate-500 block mb-1">WHY 150%</span>
+              <span className="font-data text-xs text-slate-500 block mb-1">WHY 135%</span>
               <p className="text-slate-300 text-sm">Bold enough to be symbolic, restrained enough to be typographic.</p>
             </div>
           </div>
@@ -91,7 +91,7 @@ export const MasterLockup = () => {
         {/* Size Bands Table */}
         <div className="bg-background border border-border rounded-lg overflow-hidden mb-8">
           <div className="bg-slate-50 px-6 py-4 border-b border-border">
-            <h3 className="label-tech text-muted-foreground">SIZE REFERENCE (150% RATIO)</h3>
+            <h3 className="label-tech text-muted-foreground">SIZE REFERENCE (135% RATIO)</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -105,13 +105,13 @@ export const MasterLockup = () => {
               </thead>
               <tbody>
                 {[
-                  { text: 12, icon: 18, tw: "text-xs", context: "Navigation labels", highlight: false },
-                  { text: 16, icon: 24, tw: "text-base", context: "Footer, small UI", highlight: false },
-                  { text: 18, icon: 27, tw: "text-lg", context: "UI headers", highlight: false },
-                  { text: 20, icon: 30, tw: "text-xl", context: "Default / base", highlight: true },
-                  { text: 24, icon: 36, tw: "text-2xl", context: "Marketing UI", highlight: false },
-                  { text: 30, icon: 45, tw: "text-3xl", context: "Page headers", highlight: false },
-                  { text: 36, icon: 54, tw: "text-4xl", context: "Hero / signage", highlight: false },
+                  { text: 12, icon: 16, tw: "text-xs", context: "Navigation labels", highlight: false },
+                  { text: 16, icon: 22, tw: "text-base", context: "Footer, small UI", highlight: false },
+                  { text: 18, icon: 24, tw: "text-lg", context: "UI headers", highlight: false },
+                  { text: 20, icon: 27, tw: "text-xl", context: "Default / base", highlight: true },
+                  { text: 24, icon: 32, tw: "text-2xl", context: "Marketing UI", highlight: false },
+                  { text: 30, icon: 41, tw: "text-3xl", context: "Page headers", highlight: false },
+                  { text: 36, icon: 49, tw: "text-4xl", context: "Hero / signage", highlight: false },
                 ].map((band, idx) => (
                   <tr 
                     key={idx} 
@@ -131,21 +131,21 @@ export const MasterLockup = () => {
           </div>
           <div className="bg-primary/5 border-t border-primary/20 px-6 py-3">
             <p className="font-data text-xs text-primary">
-              ✓ RULE: Icon size = Text size × 1.5 — always.
+              ✓ RULE: Icon size = Text size × 1.35 — always.
             </p>
           </div>
         </div>
 
         {/* Visual Comparison Strip */}
         <div className="bg-slate-900 rounded-lg p-8 mb-8">
-          <h3 className="label-tech text-slate-500 mb-6">VISUAL COMPARISON (150% RATIO)</h3>
+          <h3 className="label-tech text-slate-500 mb-6">VISUAL COMPARISON (135% RATIO)</h3>
           <div className="flex items-end justify-around gap-4 flex-wrap">
             {[
-              { label: "XS", text: 12, icon: 18 },
-              { label: "SM", text: 16, icon: 24 },
-              { label: "BASE", text: 20, icon: 30 },
-              { label: "LG", text: 24, icon: 36 },
-              { label: "XL", text: 36, icon: 54 },
+              { label: "XS", text: 12, icon: 16 },
+              { label: "SM", text: 16, icon: 22 },
+              { label: "BASE", text: 20, icon: 27 },
+              { label: "LG", text: 24, icon: 32 },
+              { label: "XL", text: 36, icon: 49 },
             ].map((size, idx) => (
               <div key={idx} className="flex flex-col items-center gap-3">
                 <div className="flex items-center gap-2">
@@ -174,10 +174,10 @@ export const MasterLockup = () => {
             <h3 className="label-tech text-muted-foreground mb-4">HARD CONSTRAINTS</h3>
             <ul className="space-y-3">
               {[
-                "Icon is always 150% of text font-size",
+                "Icon is always 135% of text font-size",
                 "Icon aligns to text's vertical center",
                 "Gap between icon and text: 0.5em of text size",
-                "Minimum text size: 12px (icon: 18px)",
+                "Minimum text size: 12px (icon: 16px)",
               ].map((rule, idx) => (
                 <li key={idx} className="flex items-start gap-3 text-muted-foreground text-sm">
                   <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 flex-shrink-0"></span>
@@ -190,7 +190,7 @@ export const MasterLockup = () => {
           <div className="bg-slate-900 rounded-lg p-6">
             <h3 className="label-tech text-slate-500 mb-4">CSS IMPLEMENTATION</h3>
             <pre className="font-data text-xs text-slate-300 leading-relaxed">
-{`/* 150% icon-to-text ratio */
+{`/* 135% icon-to-text ratio */
 .logo-lockup {
   display: flex;
   align-items: center;
@@ -198,13 +198,13 @@ export const MasterLockup = () => {
 }
 
 .logo-icon {
-  width: 1.5em;  /* 150% of font-size */
-  height: 1.5em;
+  width: 1.35em;  /* 135% of font-size */
+  height: 1.35em;
 }
 
 /* Example: text-xl (20px) */
 .logo-lockup.text-xl .logo-icon {
-  /* 20px × 1.5 = 30px */
+  /* 20px × 1.35 = 27px */
 }`}
             </pre>
           </div>
@@ -215,7 +215,7 @@ export const MasterLockup = () => {
           <p className="text-foreground font-medium">
             "One ratio. Every size. No exceptions."
           </p>
-          <p className="text-muted-foreground text-sm mt-2">Icon = Text × 1.5</p>
+          <p className="text-muted-foreground text-sm mt-2">Icon = Text × 1.35</p>
         </div>
       </div>
 
@@ -225,11 +225,11 @@ export const MasterLockup = () => {
           <h3 className="label-tech text-muted-foreground mb-6">USAGE RULES</h3>
           <ul className="space-y-4">
             {[
-              "Always apply the 150% ratio (icon = text × 1.5)",
+              "Always apply the 135% ratio (icon = text × 1.35)",
               "Use Tailwind text classes for sizing consistency",
               "Center-align icon to text vertically",
               "Use gap-2 or gap-3 between icon and text",
-              "Minimum size: 12px text / 18px icon",
+              "Minimum size: 12px text / 16px icon",
               "Below minimum, use icon-only mark"
             ].map((rule, idx) => (
               <li key={idx} className="flex items-start gap-3 text-muted-foreground">
@@ -244,7 +244,7 @@ export const MasterLockup = () => {
           <h3 className="label-tech text-destructive mb-6">NEVER</h3>
           <ul className="space-y-4">
             {[
-              "Use a different ratio than 150%",
+              "Use a different ratio than 135%",
               "Stretch or distort proportions",
               "Adjust tracking to compensate for sizing",
               "Add shadows, glows, or effects to lockup",
@@ -262,13 +262,13 @@ export const MasterLockup = () => {
       {/* Lockup Variations - Horizontal strip */}
       <h3 className="label-tech text-muted-foreground mb-6">LOCKUP VARIATIONS</h3>
       <div className="flex items-stretch border-t border-b border-border">
-        {/* All lockup variations use 150% ratio: text-xl(20px) → 30px icon */}
+        {/* All lockup variations use 135% ratio: text-xl(20px) → 27px icon */}
         {[
           {
             label: "HORIZONTAL",
             content: (
               <div className="flex items-center gap-3">
-                <div style={{ width: 30, height: 30 }}><RhosonicsLogo variant="gradient" /></div>
+                <div style={{ width: 27, height: 27 }}><RhosonicsLogo variant="gradient" /></div>
                 <span className="font-logo text-foreground tracking-wide uppercase text-xl">RHOSONICS</span>
               </div>
             )
@@ -277,7 +277,7 @@ export const MasterLockup = () => {
             label: "STACKED",
             content: (
               <div className="flex flex-col items-center gap-2">
-                <div style={{ width: 30, height: 30 }}><RhosonicsLogo variant="gradient" /></div>
+                <div style={{ width: 27, height: 27 }}><RhosonicsLogo variant="gradient" /></div>
                 <span className="font-logo text-foreground tracking-wide uppercase text-xl">RHOSONICS</span>
               </div>
             )
@@ -285,7 +285,7 @@ export const MasterLockup = () => {
           {
             label: "ICON ONLY",
             content: (
-              <div style={{ width: 30, height: 30 }}><RhosonicsLogo variant="gradient" /></div>
+              <div style={{ width: 27, height: 27 }}><RhosonicsLogo variant="gradient" /></div>
             )
           },
         ].map((variation, idx) => (
