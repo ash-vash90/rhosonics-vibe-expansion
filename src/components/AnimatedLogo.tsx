@@ -177,7 +177,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
         {/* Wave 2 — middle */}
         <path
           ref={wave2Ref}
-          d="M 80 52 L 80 34 A 46 46 0 0 0 34 80 L 52 80 A 28 28 0 0 1 80 52 Z"
+          d="M 80 49 L 80 31 A 49 49 0 0 0 31 80 L 49 80 A 31 31 0 0 1 80 49 Z"
           fill={`url(#${getGradientId()})`}
         />
 

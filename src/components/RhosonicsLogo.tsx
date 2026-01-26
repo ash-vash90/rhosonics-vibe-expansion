@@ -46,7 +46,7 @@ export const RhosonicsLogo = ({ variant = "gradient", className, animated = fals
 
       {/* Wave 2 - Middle */}
       <g className={cn(animated && "animate-boot delay-100 opacity-0")} style={{ transformOrigin: "bottom right" }}>
-        <path d="M 80 52 L 80 34 A 46 46 0 0 0 34 80 L 52 80 A 28 28 0 0 1 80 52 Z" fill={getFill()} />
+        <path d="M 80 49 L 80 31 A 49 49 0 0 0 31 80 L 49 80 A 31 31 0 0 1 80 49 Z" fill={getFill()} />
       </g>
 
       {/* Wave 3 - Outermost */}
