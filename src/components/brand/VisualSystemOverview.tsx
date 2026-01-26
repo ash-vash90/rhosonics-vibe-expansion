@@ -77,7 +77,7 @@ const VisualSystemOverview = () => {
     {
       id: "contextual",
       icon: MapPin,
-      title: "Contextual",
+      title: "Context",
       tag: "SITUATIONAL",
       desc: "Provides situational relevance:",
       items: ["Field neutrals", "Eco indicators", "Textures"],
