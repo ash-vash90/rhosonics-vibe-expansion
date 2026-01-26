@@ -39,6 +39,9 @@ export const RhosonicsLogo = ({ variant = "gradient", className, animated = fals
         </linearGradient>
       </defs>
 
+      {/* Wave propagation point - origin of wave energy */}
+      <circle cx="73" cy="73" r="7" fill={getFill()} className={cn(animated && "animate-boot opacity-0")} />
+
       {/* Arc 1 - Innermost - positioned to fill bottom-right */}
       <g className={cn(animated && "animate-boot delay-100 opacity-0")} style={{ transformOrigin: "bottom right" }}>
         <path d="M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z" fill={getFill()} />

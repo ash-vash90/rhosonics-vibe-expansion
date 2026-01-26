@@ -29,6 +29,7 @@ export interface AnimatedLogoRef {
 export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
   ({ variant = "gradient", className, autoPlay = false, startHidden = false, withGlow = false }, ref) => {
     const svgRef = useRef<SVGSVGElement>(null);
+    const pointRef = useRef<SVGCircleElement>(null);
     const arc1Ref = useRef<SVGPathElement>(null);
     const arc2Ref = useRef<SVGPathElement>(null);
     const arc3Ref = useRef<SVGPathElement>(null);
@@ -51,7 +52,17 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
       }
     };
 
-    const setInitialArcState = () => {
+    const setInitialState = () => {
+      // Set initial state for propagation point
+      if (pointRef.current) {
+        gsap.set(pointRef.current, {
+          opacity: 0,
+          scale: 0,
+          transformOrigin: "center center",
+        });
+      }
+      
+      // Set initial state for arcs
       const arcs = [arc1Ref.current, arc2Ref.current, arc3Ref.current];
       arcs.forEach((arc) => {
         if (!arc) return;
@@ -64,9 +75,10 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
     };
 
     const playAnimation = (options?: AnimatedLogoPlayOptions) => {
+      const point = pointRef.current;
       const arcs = [arc1Ref.current, arc2Ref.current, arc3Ref.current].filter(Boolean) as SVGPathElement[];
 
-      if (arcs.length === 0) {
+      if (arcs.length === 0 && !point) {
         options?.onComplete?.();
         return;
       }
@@ -74,14 +86,33 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
       tlRef.current?.kill();
       tlRef.current = null;
 
+      if (point) gsap.killTweensOf(point);
       gsap.killTweensOf(arcs);
-      setInitialArcState();
+      setInitialState();
 
       const tl = gsap.timeline({
         onComplete: () => options?.onComplete?.(),
       });
 
-      // Wave propagation — inner arc → middle → outer
+      // Step 1: Propagation point appears first (origin of wave energy)
+      if (point) {
+        if (withGlow) {
+          gsap.set(point, { filter: `url(#${glowFilterId})` });
+        }
+        
+        tl.to(
+          point,
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.25,
+            ease: "back.out(1.5)",
+          },
+          0
+        );
+      }
+
+      // Step 2: Wave propagation — inner arc → middle → outer
       // With glow: arcs animate in with filter, then filter fades out
       arcs.forEach((arc, i) => {
         if (withGlow) {
@@ -99,7 +130,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
             duration: 0.35 + i * 0.03,
             ease: "sine.out",
           },
-          i * 0.1
+          0.15 + i * 0.1 // Start arcs after point appears
         );
         
         // Final wave energy burst - scale back and remove glow with punch
@@ -111,7 +142,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
               duration: 0.25,
               ease: "back.out(2)",
             },
-            0.45
+            0.6
           );
         }
       });
@@ -119,6 +150,13 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
       // After wave animation completes, fade out the glow effect
       if (withGlow) {
         tl.add(() => {
+          if (point) {
+            gsap.to(point, {
+              filter: "none",
+              duration: 0.5,
+              ease: "power2.inOut",
+            });
+          }
           arcs.forEach((arc) => {
             gsap.to(arc, {
               filter: "none",
@@ -126,7 +164,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
               ease: "power2.inOut",
             });
           });
-        }, 0.55);
+        }, 0.7);
       }
 
       tlRef.current = tl;
@@ -137,7 +175,7 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
     }));
 
     useLayoutEffect(() => {
-      if (autoPlay || startHidden) setInitialArcState();
+      if (autoPlay || startHidden) setInitialState();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [autoPlay, startHidden]);
 
@@ -170,6 +208,15 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
             </filter>
           )}
         </defs>
+
+        {/* Wave propagation point — origin of wave energy */}
+        <circle
+          ref={pointRef}
+          cx="73"
+          cy="73"
+          r="7"
+          fill={`url(#${getGradientId()})`}
+        />
 
         {/* Arc 1 — innermost */}
         <path

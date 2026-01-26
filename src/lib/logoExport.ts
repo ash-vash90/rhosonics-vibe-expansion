@@ -7,6 +7,9 @@ const GRADIENT_END = "#33993C";
 const OBSIDIAN_START = "#1e293b";
 const OBSIDIAN_END = "#0f172a";
 
+// Wave propagation point (origin of wave energy)
+const PROPAGATION_POINT = { cx: 73, cy: 73, r: 7 };
+
 // Arc paths for the logo icon
 const ARC_PATHS = [
   "M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z",
@@ -196,6 +199,7 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
   const iconFill = `url(#${gradientId})`;
   
   const iconGroup = `<g transform="translate(${padding}, ${padding})">
+    <circle cx="${PROPAGATION_POINT.cx}" cy="${PROPAGATION_POINT.cy}" r="${PROPAGATION_POINT.r}" fill="${iconFill}"/>
     ${ARC_PATHS.map(d => `<path d="${d}" fill="${iconFill}"/>`).join("\n    ")}
   </g>`;
   
@@ -277,6 +281,7 @@ export const generateVerticalLockupSVG = (variant: LogoVariant): string => {
   const iconX = padding + (Math.max(iconSize, wordmarkDims.width) - iconSize) / 2;
   
   const iconGroup = `<g transform="translate(${iconX}, ${padding})">
+    <circle cx="${PROPAGATION_POINT.cx}" cy="${PROPAGATION_POINT.cy}" r="${PROPAGATION_POINT.r}" fill="${iconFill}"/>
     ${ARC_PATHS.map(d => `<path d="${d}" fill="${iconFill}"/>`).join("\n    ")}
   </g>`;
   
@@ -351,6 +356,7 @@ export const generateIconOnlySVG = (variant: LogoVariant): string => {
   </defs>
   ${bgRect}
   <g transform="translate(${padding}, ${padding})">
+    <circle cx="${PROPAGATION_POINT.cx}" cy="${PROPAGATION_POINT.cy}" r="${PROPAGATION_POINT.r}" fill="${fill}"/>
     ${ARC_PATHS.map(d => `<path d="${d}" fill="${fill}"/>`).join("\n    ")}
   </g>
 </svg>`;
