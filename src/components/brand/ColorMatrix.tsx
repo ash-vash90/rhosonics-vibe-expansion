@@ -189,7 +189,7 @@ export const ColorMatrix = () => {
       <div ref={contextualRef}>
         <div className="flex items-center gap-4 mb-8">
           <div className="w-4 h-4 bg-mineral-neutral" />
-          <h3 className="font-ui text-xl font-semibold text-foreground">Contextual</h3>
+          <h3 className="font-ui text-xl font-semibold text-foreground">Context</h3>
           <span className="font-data text-[10px] bg-mineral-neutral text-white px-2 py-0.5">SITUATIONAL</span>
           <div className="h-px flex-1 bg-border" />
         </div>
