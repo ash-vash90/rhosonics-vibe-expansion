@@ -29,10 +29,9 @@ export interface AnimatedLogoRef {
 export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
   ({ variant = "gradient", className, autoPlay = false, startHidden = false, withGlow = false }, ref) => {
     const svgRef = useRef<SVGSVGElement>(null);
-    const pointRef = useRef<SVGCircleElement>(null);
-    const arc1Ref = useRef<SVGPathElement>(null);
-    const arc2Ref = useRef<SVGPathElement>(null);
-    const arc3Ref = useRef<SVGPathElement>(null);
+    const wave1Ref = useRef<SVGPathElement>(null);
+    const wave2Ref = useRef<SVGPathElement>(null);
+    const wave3Ref = useRef<SVGPathElement>(null);
     
     const tlRef = useRef<gsap.core.Timeline | null>(null);
 
@@ -53,20 +52,10 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
     };
 
     const setInitialState = () => {
-      // Set initial state for propagation point
-      if (pointRef.current) {
-        gsap.set(pointRef.current, {
-          opacity: 0,
-          scale: 0,
-          transformOrigin: "center center",
-        });
-      }
-      
-      // Set initial state for arcs
-      const arcs = [arc1Ref.current, arc2Ref.current, arc3Ref.current];
-      arcs.forEach((arc) => {
-        if (!arc) return;
-        gsap.set(arc, {
+      const waves = [wave1Ref.current, wave2Ref.current, wave3Ref.current];
+      waves.forEach((wave) => {
+        if (!wave) return;
+        gsap.set(wave, {
           opacity: 0,
           scale: 0.3,
           transformOrigin: "100% 100%", // bottom-right origin
@@ -75,10 +64,9 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
     };
 
     const playAnimation = (options?: AnimatedLogoPlayOptions) => {
-      const point = pointRef.current;
-      const arcs = [arc1Ref.current, arc2Ref.current, arc3Ref.current].filter(Boolean) as SVGPathElement[];
+      const waves = [wave1Ref.current, wave2Ref.current, wave3Ref.current].filter(Boolean) as SVGPathElement[];
 
-      if (arcs.length === 0 && !point) {
+      if (waves.length === 0) {
         options?.onComplete?.();
         return;
       }
@@ -86,85 +74,55 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
       tlRef.current?.kill();
       tlRef.current = null;
 
-      if (point) gsap.killTweensOf(point);
-      gsap.killTweensOf(arcs);
+      gsap.killTweensOf(waves);
       setInitialState();
 
       const tl = gsap.timeline({
         onComplete: () => options?.onComplete?.(),
       });
 
-      // Step 1: Propagation point appears first (origin of wave energy)
-      if (point) {
+      // Wave propagation — innermost wave → middle → outer
+      waves.forEach((wave, i) => {
         if (withGlow) {
-          gsap.set(point, { filter: `url(#${glowFilterId})` });
+          gsap.set(wave, { filter: `url(#${glowFilterId})` });
         }
         
-        tl.to(
-          point,
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 0.25,
-            ease: "back.out(1.5)",
-          },
-          0
-        );
-      }
-
-      // Step 2: Wave propagation — inner arc → middle → outer
-      // With glow: arcs animate in with filter, then filter fades out
-      arcs.forEach((arc, i) => {
-        if (withGlow) {
-          // Apply glow filter at start of arc animation
-          gsap.set(arc, { filter: `url(#${glowFilterId})` });
-        }
-        
-        const isOutermost = i === arcs.length - 1;
+        const isOutermost = i === waves.length - 1;
         
         tl.to(
-          arc,
+          wave,
           {
             opacity: 1,
-            scale: isOutermost && withGlow ? 1.08 : 1, // Overshoot on final wave
+            scale: isOutermost && withGlow ? 1.08 : 1,
             duration: 0.35 + i * 0.03,
             ease: "sine.out",
           },
-          0.15 + i * 0.1 // Start arcs after point appears
+          i * 0.1
         );
         
-        // Final wave energy burst - scale back and remove glow with punch
         if (isOutermost && withGlow) {
           tl.to(
-            arc,
+            wave,
             {
               scale: 1,
               duration: 0.25,
               ease: "back.out(2)",
             },
-            0.6
+            0.45
           );
         }
       });
 
-      // After wave animation completes, fade out the glow effect
       if (withGlow) {
         tl.add(() => {
-          if (point) {
-            gsap.to(point, {
-              filter: "none",
-              duration: 0.5,
-              ease: "power2.inOut",
-            });
-          }
-          arcs.forEach((arc) => {
-            gsap.to(arc, {
+          waves.forEach((wave) => {
+            gsap.to(wave, {
               filter: "none",
               duration: 0.5,
               ease: "power2.inOut",
             });
           });
-        }, 0.7);
+        }, 0.55);
       }
 
       tlRef.current = tl;
@@ -209,32 +167,23 @@ export const AnimatedLogo = forwardRef<AnimatedLogoRef, AnimatedLogoProps>(
           )}
         </defs>
 
-        {/* Wave propagation point — origin of wave energy */}
-        <circle
-          ref={pointRef}
-          cx="73"
-          cy="73"
-          r="7"
+        {/* Wave 1 — innermost (propagation point) */}
+        <path
+          ref={wave1Ref}
+          d="M 80 68 L 80 60 A 20 20 0 0 0 60 80 L 68 80 A 12 12 0 0 1 80 68 Z"
           fill={`url(#${getGradientId()})`}
         />
 
-        {/* Arc 1 — innermost */}
+        {/* Wave 2 — middle */}
         <path
-          ref={arc1Ref}
-          d="M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z"
+          ref={wave2Ref}
+          d="M 80 42 L 80 26 A 54 54 0 0 0 26 80 L 42 80 A 38 38 0 0 1 80 42 Z"
           fill={`url(#${getGradientId()})`}
         />
 
-        {/* Arc 2 — middle */}
+        {/* Wave 3 — outermost */}
         <path
-          ref={arc2Ref}
-          d="M 80 34 L 80 21 A 59 59 0 0 0 21 80 L 34 80 A 46 46 0 0 1 80 34 Z"
-          fill={`url(#${getGradientId()})`}
-        />
-
-        {/* Arc 3 — outermost */}
-        <path
-          ref={arc3Ref}
+          ref={wave3Ref}
           d="M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z"
           fill={`url(#${getGradientId()})`}
         />

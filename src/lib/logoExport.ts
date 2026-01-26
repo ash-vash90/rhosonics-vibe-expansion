@@ -7,13 +7,13 @@ const GRADIENT_END = "#33993C";
 const OBSIDIAN_START = "#1e293b";
 const OBSIDIAN_END = "#0f172a";
 
-// Wave propagation point (origin of wave energy)
-const PROPAGATION_POINT = { cx: 73, cy: 73, r: 7 };
-
-// Arc paths for the logo icon
-const ARC_PATHS = [
-  "M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z",
-  "M 80 34 L 80 21 A 59 59 0 0 0 21 80 L 34 80 A 46 46 0 0 1 80 34 Z",
+// Wave paths for the logo icon (3 waves total)
+const WAVE_PATHS = [
+  // Wave 1 - Innermost (propagation point, squared corner)
+  "M 80 68 L 80 60 A 20 20 0 0 0 60 80 L 68 80 A 12 12 0 0 1 80 68 Z",
+  // Wave 2 - Middle
+  "M 80 42 L 80 26 A 54 54 0 0 0 26 80 L 42 80 A 38 38 0 0 1 80 42 Z",
+  // Wave 3 - Outermost
   "M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z",
 ];
 
@@ -199,8 +199,7 @@ export const generateLockupSVG = (variant: LogoVariant): string => {
   const iconFill = `url(#${gradientId})`;
   
   const iconGroup = `<g transform="translate(${padding}, ${padding})">
-    <circle cx="${PROPAGATION_POINT.cx}" cy="${PROPAGATION_POINT.cy}" r="${PROPAGATION_POINT.r}" fill="${iconFill}"/>
-    ${ARC_PATHS.map(d => `<path d="${d}" fill="${iconFill}"/>`).join("\n    ")}
+    ${WAVE_PATHS.map(d => `<path d="${d}" fill="${iconFill}"/>`).join("\n    ")}
   </g>`;
   
   // Position wordmark: after icon + gap, vertically centered
@@ -281,8 +280,7 @@ export const generateVerticalLockupSVG = (variant: LogoVariant): string => {
   const iconX = padding + (Math.max(iconSize, wordmarkDims.width) - iconSize) / 2;
   
   const iconGroup = `<g transform="translate(${iconX}, ${padding})">
-    <circle cx="${PROPAGATION_POINT.cx}" cy="${PROPAGATION_POINT.cy}" r="${PROPAGATION_POINT.r}" fill="${iconFill}"/>
-    ${ARC_PATHS.map(d => `<path d="${d}" fill="${iconFill}"/>`).join("\n    ")}
+    ${WAVE_PATHS.map(d => `<path d="${d}" fill="${iconFill}"/>`).join("\n    ")}
   </g>`;
   
   // Center wordmark horizontally below icon
@@ -356,8 +354,7 @@ export const generateIconOnlySVG = (variant: LogoVariant): string => {
   </defs>
   ${bgRect}
   <g transform="translate(${padding}, ${padding})">
-    <circle cx="${PROPAGATION_POINT.cx}" cy="${PROPAGATION_POINT.cy}" r="${PROPAGATION_POINT.r}" fill="${fill}"/>
-    ${ARC_PATHS.map(d => `<path d="${d}" fill="${fill}"/>`).join("\n    ")}
+    ${WAVE_PATHS.map(d => `<path d="${d}" fill="${fill}"/>`).join("\n    ")}
   </g>
 </svg>`;
 };
