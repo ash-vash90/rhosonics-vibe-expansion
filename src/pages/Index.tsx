@@ -582,9 +582,9 @@ const Index = () => {
          ═══════════════════════════════════════════════════════════════ */}
         <footer className="mt-20 py-12 border-t-2 border-slate-200" role="contentinfo">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            {/* Logo lockup: 150% ratio - text-base(16px)→24px icon */}
+            {/* Logo lockup: 135% ratio - text-base(16px)→22px icon */}
             <div className="flex items-center gap-3">
-              <div className="w-6 h-6">
+              <div className="w-[22px] h-[22px]">
                 <RhosonicsLogo variant="dark" />
               </div>
               <div>
