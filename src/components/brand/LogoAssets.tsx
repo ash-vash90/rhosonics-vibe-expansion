@@ -67,7 +67,7 @@ export const LogoAssets = () => {
       bgClass = "bg-slate-900";
     }
 
-    // Optical sizing: 150% ratio - text-2xl(24px) → 36px icon
+    // Optical sizing: 135% ratio - text-2xl(24px) → 32px icon
     // Vertical layout uses smaller text with icon stacked above
     const isVertical = variant.layout === "vertical";
     
@@ -77,7 +77,7 @@ export const LogoAssets = () => {
           <div className="flex items-center gap-3">
             <RhosonicsLogo 
               variant={variant.iconFill === "white" ? "white" : "gradient"} 
-              className="w-9 h-9" 
+              className="w-8 h-8" 
             />
             <span 
               className="font-logo text-2xl font-semibold tracking-wide"
@@ -90,10 +90,10 @@ export const LogoAssets = () => {
           <div className="flex flex-col items-center gap-3">
             <RhosonicsLogo 
               variant={variant.iconFill === "white" ? "white" : "gradient"} 
-              className="w-12 h-12" 
+              className="w-10 h-10" 
             />
             <span 
-              className="font-logo text-lg font-semibold tracking-wide"
+              className="font-logo text-xl font-semibold tracking-wide"
               style={{ color: variant.textColor }}
             >
               RHOSONICS
