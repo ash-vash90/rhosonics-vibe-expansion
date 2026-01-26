@@ -7,13 +7,13 @@ const GRADIENT_END = "#33993C";
 const OBSIDIAN_START = "#1e293b";
 const OBSIDIAN_END = "#0f172a";
 
-// Wave paths for the logo icon (3 waves total)
+// Wave paths for the logo icon (3 waves total, 11px even gaps)
 const WAVE_PATHS = [
-  // Wave 1 - Innermost (propagation point, fills corner) - outer R20, inner R6
-  "M 80 80 L 80 60 A 20 20 0 0 0 60 80 L 80 80 A 0 0 0 0 1 80 80 Z",
-  // Wave 2 - Middle (thicker) - outer R46, inner R28
-  "M 80 52 L 80 34 A 46 46 0 0 0 34 80 L 52 80 A 28 28 0 0 1 80 52 Z",
-  // Wave 3 - Outermost (thicker) - outer R80, inner R60
+  // Wave 1 - Innermost (propagation point, fills corner) - R20
+  "M 80 80 L 80 60 A 20 20 0 0 0 60 80 L 80 80 Z",
+  // Wave 2 - Middle - outer R49, inner R31 (18px thick, 11px gap from wave 1)
+  "M 80 49 L 80 31 A 49 49 0 0 0 31 80 L 49 80 A 31 31 0 0 1 80 49 Z",
+  // Wave 3 - Outermost - outer R80, inner R60 (20px thick, 11px gap from wave 2)
   "M 80 20 L 80 0 A 80 80 0 0 0 0 80 L 20 80 A 60 60 0 0 1 80 20 Z",
 ];
 
