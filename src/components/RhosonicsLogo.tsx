@@ -39,21 +39,18 @@ export const RhosonicsLogo = ({ variant = "gradient", className, animated = fals
         </linearGradient>
       </defs>
 
-      {/* Wave propagation point - origin of wave energy */}
-      <circle cx="73" cy="73" r="7" fill={getFill()} className={cn(animated && "animate-boot opacity-0")} />
+      {/* Wave 1 - Propagation point (innermost, squared corner) */}
+      <g className={cn(animated && "animate-boot opacity-0")} style={{ transformOrigin: "bottom right" }}>
+        <path d="M 80 68 L 80 60 A 20 20 0 0 0 60 80 L 68 80 A 12 12 0 0 1 80 68 Z" fill={getFill()} />
+      </g>
 
-      {/* Arc 1 - Innermost - positioned to fill bottom-right */}
+      {/* Wave 2 - Middle */}
       <g className={cn(animated && "animate-boot delay-100 opacity-0")} style={{ transformOrigin: "bottom right" }}>
-        <path d="M 80 55 L 80 42 A 38 38 0 0 0 42 80 L 55 80 A 25 25 0 0 1 80 55 Z" fill={getFill()} />
+        <path d="M 80 42 L 80 26 A 54 54 0 0 0 26 80 L 42 80 A 38 38 0 0 1 80 42 Z" fill={getFill()} />
       </g>
 
-      {/* Arc 2 - Middle */}
+      {/* Wave 3 - Outermost */}
       <g className={cn(animated && "animate-boot delay-200 opacity-0")} style={{ transformOrigin: "bottom right" }}>
-        <path d="M 80 34 L 80 21 A 59 59 0 0 0 21 80 L 34 80 A 46 46 0 0 1 80 34 Z" fill={getFill()} />
-      </g>
-
-      {/* Arc 3 - Outermost */}
-      <g className={cn(animated && "animate-boot delay-300 opacity-0")} style={{ transformOrigin: "bottom right" }}>
         <path d="M 80 13 L 80 0 A 80 80 0 0 0 0 80 L 13 80 A 67 67 0 0 1 80 13 Z" fill={getFill()} />
       </g>
     </svg>
