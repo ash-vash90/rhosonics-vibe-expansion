@@ -11,10 +11,10 @@ const OBSIDIAN_END = "#0f172a";
 const WAVE_PATHS = [
   // Wave 1 - Innermost (propagation point, fills corner) - R20
   "M 80 80 L 80 60 A 20 20 0 0 0 60 80 L 80 80 Z",
-  // Wave 2 - Middle - outer R49, inner R33 (16px thick)
-  "M 80 47 L 80 31 A 49 49 0 0 0 31 80 L 47 80 A 33 33 0 0 1 80 47 Z",
-  // Wave 3 - Outermost - outer R80, inner R62 (18px thick)
-  "M 80 18 L 80 0 A 80 80 0 0 0 0 80 L 18 80 A 62 62 0 0 1 80 18 Z",
+  // Wave 2 - Middle - outer R51, inner R33 (18px thick)
+  "M 80 47 L 80 29 A 51 51 0 0 0 29 80 L 47 80 A 33 33 0 0 1 80 47 Z",
+  // Wave 3 - Outermost - outer R80, inner R64 (16px thick)
+  "M 80 16 L 80 0 A 80 80 0 0 0 0 80 L 16 80 A 64 64 0 0 1 80 16 Z",
 ];
 
 // Logo lockup layout types
