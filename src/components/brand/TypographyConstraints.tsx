@@ -58,7 +58,7 @@ export const TypographyConstraints = () => {
   ];
 
   return (
-    <section className="space-y-16 pt-16">
+    <section id="typography-constraints" className="space-y-16 pt-16">
       {/* Hero Statement */}
       <div>
         <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-6">Typography Constraints</h2>

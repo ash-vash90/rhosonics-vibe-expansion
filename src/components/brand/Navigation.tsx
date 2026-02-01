@@ -18,6 +18,7 @@ const navSections: NavSection[] = [
     label: "ABOUT",
     items: [
       { id: "about", label: "About This System" },
+      { id: "design-process", label: "Design Process" },
     ],
   },
   {
@@ -39,6 +40,7 @@ const navSections: NavSection[] = [
     label: "VISUAL SYSTEM",
     items: [
       { id: "visual-system", label: "System Structure" },
+      { id: "elevation", label: "Elevation & Depth" },
     ],
   },
   {
@@ -52,7 +54,9 @@ const navSections: NavSection[] = [
     id: "05",
     label: "TYPOGRAPHY",
     items: [
-      { id: "typography", label: "Typography" },
+      { id: "typography", label: "Type Scale & Roles" },
+      { id: "typography-constraints", label: "Constraints" },
+      { id: "spacing", label: "Spacing System" },
     ],
   },
   {
@@ -84,6 +88,8 @@ const navSections: NavSection[] = [
     items: [
       { id: "applications", label: "Industry Applications" },
       { id: "sdm-interface", label: "SDM Eco Interface" },
+      { id: "components", label: "Interface Kit" },
+      { id: "empty-states", label: "Empty States" },
     ],
   },
   {
