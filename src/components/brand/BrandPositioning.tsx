@@ -1,5 +1,6 @@
 import { Target, Shield, Lightbulb } from "@/lib/icons";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
+import { useGsapContext } from "@/hooks/useGsapCleanup";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BRAND_VALUES } from "@/data/brand-values";
@@ -16,46 +17,43 @@ const BrandPositioning = () => {
   const valuesRef = useRef<HTMLDivElement>(null);
   const splitRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Animate pillars on scroll
-      if (pillarsRef.current) {
-        const pillars = pillarsRef.current.querySelectorAll('.pillar-item');
-        gsap.fromTo(pillars, 
-          { opacity: 0, x: -30 },
-          { 
-            opacity: 1, x: 0, duration: 0.6, stagger: 0.15, ease: "power3.out",
-            scrollTrigger: { trigger: pillarsRef.current, start: "top 80%" }
-          }
-        );
-      }
+  // Use the cleanup-safe GSAP context hook
+  useGsapContext<HTMLElement>(() => {
+    // Animate pillars on scroll
+    if (pillarsRef.current) {
+      const pillars = pillarsRef.current.querySelectorAll('.pillar-item');
+      gsap.fromTo(pillars, 
+        { opacity: 0, x: -30 },
+        { 
+          opacity: 1, x: 0, duration: 0.6, stagger: 0.15, ease: "power3.out",
+          scrollTrigger: { trigger: pillarsRef.current, start: "top 80%", once: true }
+        }
+      );
+    }
 
-      // Animate value cards
-      if (valuesRef.current) {
-        const cards = valuesRef.current.querySelectorAll('.value-card');
-        gsap.fromTo(cards,
-          { opacity: 0, y: 30, scale: 0.95 },
-          {
-            opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: "power3.out",
-            scrollTrigger: { trigger: valuesRef.current, start: "top 80%" }
-          }
-        );
-      }
+    // Animate value cards
+    if (valuesRef.current) {
+      const cards = valuesRef.current.querySelectorAll('.value-card');
+      gsap.fromTo(cards,
+        { opacity: 0, y: 30, scale: 0.95 },
+        {
+          opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: "power3.out",
+          scrollTrigger: { trigger: valuesRef.current, start: "top 80%", once: true }
+        }
+      );
+    }
 
-      // Animate split section
-      if (splitRef.current) {
-        gsap.fromTo(splitRef.current,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
-            scrollTrigger: { trigger: splitRef.current, start: "top 85%" }
-          }
-        );
-      }
-    });
-
-    return () => ctx.revert();
-  }, []);
+    // Animate split section
+    if (splitRef.current) {
+      gsap.fromTo(splitRef.current,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+          scrollTrigger: { trigger: splitRef.current, start: "top 85%", once: true }
+        }
+      );
+    }
+  }, [pillarsRef, valuesRef, splitRef]);
 
   return (
     <section className="space-y-24">

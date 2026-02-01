@@ -31,7 +31,7 @@ export const useScrollReveal = (options?: gsap.TweenVars) => {
           scrollTrigger: {
             trigger: element,
             start: "top 85%",
-            toggleActions: "play none none none",
+            once: true, // Prevent race conditions with React unmounting
           },
           ...options,
         }
@@ -66,7 +66,7 @@ export const useStaggerReveal = (childSelector: string, stagger = 0.1) => {
           scrollTrigger: {
             trigger: element,
             start: "top 80%",
-            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -123,7 +123,7 @@ export const useClipReveal = (direction: 'left' | 'right' | 'up' | 'down' | 'cen
           scrollTrigger: {
             trigger: element,
             start: "top 80%",
-            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -151,6 +151,7 @@ export const useCountUp = (endValue: number, suffix = '', duration = 1.5) => {
       ScrollTrigger.create({
         trigger: element,
         start: "top 85%",
+        once: true,
         onEnter: () => {
           if (hasAnimated.current) return;
           hasAnimated.current = true;
@@ -201,6 +202,7 @@ export const useChartReveal = () => {
         ScrollTrigger.create({
           trigger: element,
           start: "top 75%",
+          once: true,
           onEnter: () => {
             gsap.to(bars, {
               scaleX: 1,
@@ -218,6 +220,7 @@ export const useChartReveal = () => {
         ScrollTrigger.create({
           trigger: element,
           start: "top 75%",
+          once: true,
           onEnter: () => {
             gsap.to(radarPaths, {
               scale: 1,
@@ -260,6 +263,7 @@ export const use3DCardReveal = () => {
       ScrollTrigger.create({
         trigger: element,
         start: "top 80%",
+        once: true,
         onEnter: () => {
           gsap.to(element, {
             rotateX: 0,
@@ -305,6 +309,7 @@ export const useSplitTextReveal = () => {
       ScrollTrigger.create({
         trigger: element,
         start: "top 85%",
+        once: true,
         onEnter: () => {
           gsap.to(innerSpans, {
             y: '0%',
@@ -426,7 +431,7 @@ export const useScaleRotateReveal = (rotation = 5) => {
           scrollTrigger: {
             trigger: element,
             start: "top 85%",
-            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -460,7 +465,7 @@ export const useDrawLine = () => {
           scrollTrigger: {
             trigger: element,
             start: "top 85%",
-            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -500,7 +505,7 @@ export const useBlurFadeIn = () => {
           scrollTrigger: {
             trigger: element,
             start: "top 85%",
-            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
