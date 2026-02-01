@@ -19,6 +19,102 @@
 
 ---
 
+## 0. Design Process (Refactoring UI Principles)
+
+Before implementing any design, internalize these process principles:
+
+### Feature-First Development
+
+Start with functionality, not layout. Design the actual feature before worrying about where it goes.
+
+1. **Build the feature in isolation** — Design a dropdown menu, profile card, or metric tile without thinking about the page
+2. **Let the design dictate layout** — Once complete, find the right place for it
+3. **Avoid layout-first thinking** — "We need a sidebar" is backwards; "We need navigation" leads to better solutions
+
+### Grayscale Validation Test
+
+Before shipping any design, convert it to grayscale. If the hierarchy is unclear:
+- Fix spacing and typography first
+- Adjust font weights and sizes
+- Add more white space between elements
+- **Never rely on color to establish hierarchy**
+
+```tsx
+// Mentally convert to grayscale to test
+// ❌ WRONG: Relies on color for hierarchy
+<div className="text-primary text-lg">Primary item</div>
+<div className="text-muted-foreground text-lg">Secondary item</div>
+
+// ✅ CORRECT: Hierarchy works without color
+<div className="text-foreground text-lg font-semibold">Primary item</div>
+<div className="text-muted-foreground text-sm">Secondary item</div>
+```
+
+### Emphasize by De-emphasizing
+
+The primary way to make something stand out is to make other things stand back.
+
+| Goal | Approach |
+|------|----------|
+| Highlight a button | Reduce contrast of surrounding elements |
+| Make a title prominent | Use smaller, lighter supporting text |
+| Draw attention to a metric | Soften the label and background |
+
+```tsx
+// ❌ WRONG: Everything competing for attention
+<div className="bg-primary p-4">
+  <h2 className="text-2xl font-bold text-white">Title</h2>
+  <p className="text-lg font-semibold text-white">Description</p>
+  <Button size="lg" variant="secondary">Action</Button>
+</div>
+
+// ✅ CORRECT: Hero element stands out, others recede
+<div className="bg-card p-6">
+  <span className="font-data text-xs uppercase tracking-wider text-muted-foreground">CATEGORY</span>
+  <h2 className="text-2xl font-semibold text-foreground mt-1">Title</h2>
+  <p className="text-sm text-muted-foreground mt-2">Description with lower contrast</p>
+  <Button className="mt-4" variant="default">Action</Button>
+</div>
+```
+
+### Iterative Building Philosophy
+
+**Be a pessimist when building. Be an optimist when polishing.**
+
+1. **Ignore details early** — Get the structure right first
+2. **Work in passes** — Layout → Content → Typography → Color → Polish
+3. **Hold back until the end** — That shadow, that gradient, that animation? Save for last
+4. **Don't polish a turd** — If the layout is wrong, no amount of polish will save it
+
+### Labels as a Last Resort
+
+Data should be self-explanatory before adding labels:
+
+| ❌ Labeled | ✅ Self-Explanatory |
+|-----------|-------------------|
+| `Name: John Smith` | `John Smith` (in a name field context) |
+| `Email: john@example.com` | `john@example.com` (format implies type) |
+| `Phone: (555) 123-4567` | `(555) 123-4567` (format implies type) |
+| `Price: $24.95` | `$24.95` (currency symbol implies type) |
+
+When labels are necessary, make them secondary:
+
+```tsx
+// ❌ Labels competing with values
+<div className="flex gap-2">
+  <span className="font-semibold">Density:</span>
+  <span className="font-semibold">1.54 g/mL</span>
+</div>
+
+// ✅ Labels recede, values dominate
+<div className="flex flex-col">
+  <span className="font-data text-xs uppercase tracking-wider text-muted-foreground">DENSITY</span>
+  <span className="font-data text-2xl text-foreground">1.54 G/ML</span>
+</div>
+```
+
+---
+
 ## 1. Brand Identity & Positioning
 
 ### Core Promise
@@ -99,6 +195,48 @@ If uncertain, choose the more restrained option.
 | Data Label | 12px | JetBrains Mono | `text-xs font-data uppercase tracking-wider` |
 | Metric Value | 32px+ | JetBrains Mono | `text-3xl font-data uppercase` |
 
+### Line Height (Proportional to Line Length)
+
+Line height should increase with line length for optimal readability:
+
+| Context | Line Length | Line Height | Tailwind |
+|---------|-------------|-------------|----------|
+| Headers, labels | Short (<30 chars) | 1.25 | `leading-tight` |
+| Cards, captions | Medium (30-60 chars) | 1.5 | `leading-normal` |
+| Body paragraphs | Long (60+ chars) | 1.75-2 | `leading-relaxed` |
+
+```tsx
+// ❌ WRONG: Same line height for all contexts
+<h1 className="text-4xl leading-relaxed">Short Title</h1>
+<p className="text-base leading-tight max-w-prose">Long paragraph text...</p>
+
+// ✅ CORRECT: Line height matches line length
+<h1 className="text-4xl leading-tight">Short Title</h1>
+<p className="text-base leading-relaxed max-w-prose">Long paragraph text...</p>
+```
+
+### Line Length Constraints
+
+Optimal reading experience requires constrained line lengths:
+
+| Context | Optimal | Maximum | Tailwind |
+|---------|---------|---------|----------|
+| Body text | 55-65 chars | 75 chars | `max-w-prose` (65ch) |
+| Short paragraphs | 40-50 chars | 55 chars | `max-w-md` |
+| Wide layouts | 65-75 chars | 85 chars | `max-w-2xl` |
+
+```tsx
+// ❌ WRONG: Unconstrained paragraph width
+<p className="text-base w-full">
+  Long paragraph that spans the entire container width...
+</p>
+
+// ✅ CORRECT: Constrained for readability
+<p className="text-base leading-relaxed max-w-prose">
+  Long paragraph with optimal line length for comfortable reading...
+</p>
+```
+
 ### Logo Wordmark Typography
 
 When rendering "RHOSONICS" as text:
@@ -141,6 +279,57 @@ Reserved for specific environmental contexts.
 |-------|-------|-------------|
 | Mineral palette | Field photography overlays | Only in imagery/environmental contexts |
 | Eco tints | Sustainability metrics | Only when showing environmental impact data |
+
+### Primary Green Scale (50-900)
+
+For UI states, hover effects, and tints:
+
+| Level | HSL | Usage | Tailwind |
+|-------|-----|-------|----------|
+| 50 | 125 50% 97% | Subtle backgrounds | `bg-primary/5` |
+| 100 | 125 45% 93% | Hover backgrounds | `bg-primary/10` |
+| 200 | 125 42% 85% | Active backgrounds | `bg-primary/20` |
+| 300 | 125 45% 72% | Borders, outlines | `border-primary/40` |
+| 400 | 125 48% 55% | Muted accent text | `text-primary/70` |
+| 500 | 125 50% 40% | **Primary (default)** | `bg-primary` |
+| 600 | 125 52% 35% | Hover state | `hover:bg-primary/90` |
+| 700 | 125 55% 28% | Active/pressed | `active:bg-primary/80` |
+| 800 | 125 58% 20% | Dark accent | — |
+| 900 | 125 60% 12% | Darkest variant | — |
+
+```tsx
+// ✅ Button with proper state colors
+<Button className="bg-primary hover:bg-primary/90 active:bg-primary/80">
+  Primary Action
+</Button>
+
+// ✅ Subtle hover background
+<div className="hover:bg-primary/10 transition-colors p-4 rounded-lg">
+  Interactive card
+</div>
+```
+
+### Dark Background Color Rules
+
+When using Obsidian or dark surfaces, reduce saturation of accent colors:
+
+| Context | Light Background | Dark Background |
+|---------|-----------------|-----------------|
+| Primary Green | Full saturation | Reduce 10-20% |
+| Accent highlights | Standard opacity | Reduce opacity 20% |
+| Borders | Slate-200 | Slate-700/50 |
+
+```tsx
+// ❌ WRONG: Full saturation on dark
+<div className="bg-rho-obsidian">
+  <span className="text-primary">Bright green on dark</span>
+</div>
+
+// ✅ CORRECT: Reduced intensity on dark
+<div className="bg-rho-obsidian">
+  <span className="text-primary/80">Balanced green on dark</span>
+</div>
+```
 
 ### ⛔ Color Violations
 
@@ -186,7 +375,88 @@ Never apply gradients to:
 
 ---
 
-## 4. Logo Usage
+## 4. Shadow & Elevation System
+
+### Light Source Principle
+
+All shadows originate from a **top-left light source** (consistent across all components):
+- Shadows fall to the bottom-right
+- Larger blur = higher elevation
+- Increased spread = softer, more ambient light
+
+### 5-Level Elevation Scale
+
+| Level | Name | Usage | Tailwind / CSS |
+|-------|------|-------|----------------|
+| 0 | **None** | Flat elements, inline content | (no shadow) |
+| 1 | **Card** | Cards, dropdowns, raised surfaces | `shadow-card` |
+| 2 | **Elevated** | Hover states, floating elements | `shadow-elevated` |
+| 3 | **Modal** | Dialogs, overlays, popovers | `shadow-lg` + custom |
+| 4 | **Glow** | Hero elements, premium focus states | Custom glow effect |
+
+```tsx
+// Level 1: Card
+<div className="shadow-card bg-card rounded-lg p-6">
+  Standard card content
+</div>
+
+// Level 2: Elevated (hover)
+<div className="shadow-card hover:shadow-elevated transition-shadow">
+  Interactive card with hover elevation
+</div>
+
+// Level 3: Modal
+<Dialog className="shadow-lg">
+  <DialogContent className="bg-background">
+    Modal content
+  </DialogContent>
+</Dialog>
+
+// Level 4: Glow (hero/premium)
+<div className="shadow-[0_0_40px_-10px_hsl(var(--primary)/0.3)]">
+  Premium hero element with brand glow
+</div>
+```
+
+### Shadows vs Borders
+
+| Use Shadows When | Use Borders When |
+|------------------|------------------|
+| Element is elevated/floating | Element is at same level |
+| Interactive feedback needed | Static separation |
+| Depth communicates hierarchy | Structure needs reinforcement |
+| Premium/hero elements | Dense UI with many elements |
+
+```tsx
+// ❌ WRONG: Border on elevated element
+<div className="border-2 shadow-lg">Competing signals</div>
+
+// ✅ CORRECT: Shadow alone for elevation
+<div className="shadow-elevated">Elevated card</div>
+
+// ✅ CORRECT: Border alone for structure
+<div className="border border-border">Grid cell</div>
+```
+
+### Colored Shadows
+
+For brand elements, use colored shadows derived from the element's color:
+
+```tsx
+// Primary button with colored shadow
+<Button className="bg-primary shadow-[0_4px_14px_0_hsl(var(--primary)/0.25)]">
+  Premium CTA
+</Button>
+
+// Hero element with brand glow
+<div className="shadow-[0_0_60px_-15px_hsl(var(--rho-green)/0.4)]">
+  Featured content
+</div>
+```
+
+---
+
+## 5. Logo Usage
 
 ### The 135% Rule
 
@@ -244,7 +514,7 @@ Maintain padding equal to the height of the "R" character on all sides.
 
 ---
 
-## 5. Spacing System
+## 6. Spacing System
 
 ### Base Unit: 4px
 
@@ -261,6 +531,47 @@ All spacing should be multiples of 4px using Tailwind's spacing scale.
 | `12` | 48px | Section padding (mobile) |
 | `16` | 64px | Section breaks (desktop) |
 | `24` | 96px | Major section dividers |
+
+### Separation Without Borders
+
+Use spacing, background shifts, and subtle depth instead of borders when possible:
+
+| ❌ Border Approach | ✅ Spacing Approach |
+|-------------------|---------------------|
+| `border-b border-border` | `pb-4 mb-4` (double spacing) |
+| `divide-y` on list | Increased gap + subtle bg shift |
+| `border border-border` | `shadow-card` or `bg-muted/50` |
+
+```tsx
+// ❌ WRONG: Border-heavy separation
+<div className="border-b border-border py-4">Item 1</div>
+<div className="border-b border-border py-4">Item 2</div>
+<div className="border-b border-border py-4">Item 3</div>
+
+// ✅ CORRECT: Spacing creates separation
+<div className="space-y-6">
+  <div className="pb-6">Item 1</div>
+  <div className="pb-6">Item 2</div>
+  <div>Item 3</div>
+</div>
+
+// ✅ ALTERNATIVE: Background shift for grouping
+<div className="bg-muted/30 rounded-lg p-4">
+  <div className="space-y-3">
+    <div>Related item 1</div>
+    <div>Related item 2</div>
+  </div>
+</div>
+```
+
+### When Borders ARE Appropriate
+
+| Context | Reason |
+|---------|--------|
+| Form inputs | User expectation, accessibility |
+| Table cells | Dense data requires structure |
+| Dense dashboards | Many items need explicit boundaries |
+| Interactive drag handles | Visual affordance |
 
 ### Grid System
 
@@ -289,7 +600,7 @@ All spacing should be multiples of 4px using Tailwind's spacing scale.
 
 ---
 
-## 6. Icon System
+## 7. Icon System
 
 ### Principles
 
@@ -322,6 +633,31 @@ import { Activity } from "lucide-react";
 | Hero elements | 32px | `w-8 h-8` |
 | Decorative/Large | 48px+ | `w-12 h-12` |
 
+### Icon Color & Weight Balance
+
+Icons should visually balance with adjacent text:
+
+| Adjacent Text Weight | Icon Treatment |
+|---------------------|----------------|
+| Regular (400) | Default stroke, `text-muted-foreground` |
+| Medium (500) | Default stroke, `text-foreground` |
+| Semibold (600) | Default stroke, `text-foreground` |
+| Bold (700) | Consider filled icon variant if available |
+
+```tsx
+// ❌ WRONG: Icon overwhelms light text
+<div className="flex items-center gap-2">
+  <AlertCircle className="w-5 h-5 text-foreground" />
+  <span className="text-sm text-muted-foreground">Info message</span>
+</div>
+
+// ✅ CORRECT: Icon matches text weight
+<div className="flex items-center gap-2">
+  <AlertCircle className="w-4 h-4 text-muted-foreground" />
+  <span className="text-sm text-muted-foreground">Info message</span>
+</div>
+```
+
 ### Stroke Weight
 
 Always use the default 2px stroke. Never modify stroke width.
@@ -343,7 +679,7 @@ Always use the default 2px stroke. Never modify stroke width.
 
 ---
 
-## 7. Voice & Tone
+## 8. Voice & Tone
 
 ### Four Pillars
 
@@ -381,7 +717,7 @@ Always use the default 2px stroke. Never modify stroke width.
 
 ---
 
-## 8. Component Patterns
+## 9. Component Patterns
 
 ### Buttons
 
@@ -455,6 +791,41 @@ import { BrandCallout } from "@/components/brand/BrandCallout";
 </BrandCallout>
 ```
 
+### Empty States
+
+First impressions matter. Every empty state needs four components:
+
+| Component | Purpose | Example |
+|-----------|---------|---------|
+| **Icon** | Visual anchor, relevant to content type | `FileText` for documents |
+| **Title** | What's missing | "No documents yet" |
+| **Description** | Why empty or how to fix | "Upload your first document to get started" |
+| **Action** | Clear next step | `<Button>Upload document</Button>` |
+
+```tsx
+// ❌ WRONG: Minimal empty state
+<div className="text-center text-muted-foreground">
+  No data
+</div>
+
+// ✅ CORRECT: Complete empty state
+<div className="flex flex-col items-center justify-center py-16 text-center">
+  <div className="rounded-full bg-muted p-4 mb-4">
+    <FileText className="w-8 h-8 text-muted-foreground" />
+  </div>
+  <h3 className="font-ui text-lg font-semibold text-foreground">
+    No documents yet
+  </h3>
+  <p className="text-sm text-muted-foreground mt-1 max-w-sm">
+    Upload your first document to start organizing your project files.
+  </p>
+  <Button className="mt-6" variant="default">
+    <Upload className="w-4 h-4 mr-2" />
+    Upload document
+  </Button>
+</div>
+```
+
 ### Badges & Labels
 
 ```tsx
@@ -489,7 +860,7 @@ import { BrandCallout } from "@/components/brand/BrandCallout";
 
 ---
 
-## 9. Motion Design
+## 10. Motion Design
 
 ### Timing Scale
 
@@ -539,7 +910,7 @@ const prefersReducedMotion = window.matchMedia(
 
 ---
 
-## 10. SDM Eco Interface (HMI)
+## 11. SDM Eco Interface (HMI)
 
 ### Display Specifications
 
@@ -584,7 +955,7 @@ const prefersReducedMotion = window.matchMedia(
 
 ---
 
-## 11. Imagery Guidelines
+## 12. Imagery Guidelines
 
 ### Two Visual Styles
 
@@ -631,7 +1002,7 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 ---
 
-## 12. Critical Constraints (Never Do List)
+## 13. Critical Constraints (Never Do List)
 
 ### Typography
 - ❌ Never use Space Grotesk font
@@ -639,6 +1010,8 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 - ❌ Never use ALL-CAPS with Instrument Sans
 - ❌ Never use sentence case with JetBrains Mono labels
 - ❌ Never use gradients on body text
+- ❌ Never use line heights below 1.25 for multi-line text
+- ❌ Never exceed 75 characters per line for body text
 
 ### Color
 - ❌ Never use pure black (#000000)
@@ -646,6 +1019,23 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 - ❌ Never use blue for info states
 - ❌ Never substitute Mineral colors for Slate in UI
 - ❌ Never use direct hex values in components (use tokens)
+- ❌ Never use full-saturation accents on dark backgrounds
+
+### Shadows & Depth
+- ❌ Never combine borders AND shadows on same element (pick one)
+- ❌ Never use shadows on inline elements
+- ❌ Never use inconsistent shadow directions
+- ❌ Never skip elevation levels (card → modal, not card → glow)
+
+### Layout
+- ❌ Never center-align body paragraphs (left-align only)
+- ❌ Never use inconsistent spacing within component groups
+- ❌ Never mix 4px-based and non-4px-based spacing
+
+### Process
+- ❌ Never ship without grayscale hierarchy validation
+- ❌ Never add decorative elements before structure is solid
+- ❌ Never use labels when data format is self-explanatory
 
 ### Logo
 - ❌ Never rotate the logo
@@ -664,7 +1054,7 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 ---
 
-## 13. File Reference Map
+## 14. File Reference Map
 
 | Purpose | File Path |
 |---------|-----------|
@@ -682,17 +1072,46 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 ---
 
-## 14. Implementation Checklist
+## 15. Implementation Checklist
 
 Before submitting any design/code change, verify:
 
+### Design Process
+- [ ] Started with feature, not layout
+- [ ] Tested hierarchy in grayscale (mentally or via filter)
+- [ ] De-emphasized secondary elements to highlight primary
+- [ ] Removed labels where data format is self-explanatory
+- [ ] Polished only after structure was solid
+
+### Typography
 - [ ] Typography uses correct font for context (UI vs Data vs Logo)
+- [ ] Line height proportional to line length
+- [ ] Body text constrained to 45-75 characters
+- [ ] No thin weights used in HMI contexts
+
+### Color & Depth
 - [ ] Colors use semantic tokens, not direct values
 - [ ] No pure black (#000) anywhere
+- [ ] Accent colors reduced on dark backgrounds
+- [ ] Shadow levels used appropriately (card → elevated → modal)
+- [ ] No competing borders + shadows on same element
+
+### Components
 - [ ] Icons imported from `@/lib/icons`
+- [ ] Icon color/weight matches adjacent text
+- [ ] Empty states have all 4 components (icon, title, description, action)
 - [ ] Logo follows 135% ratio rule
+
+### Layout & Spacing
 - [ ] Spacing uses 4px increments
+- [ ] Separation uses space/background before borders
+- [ ] Body paragraphs are left-aligned
+
+### Motion & Accessibility
 - [ ] Motion respects reduced-motion preferences
+- [ ] Touch targets minimum 48px for HMI
+
+### Content
 - [ ] Copy follows voice guidelines (direct, evidence-based)
 - [ ] No forbidden terminology used
 - [ ] Images follow treatment guidelines
@@ -700,4 +1119,4 @@ Before submitting any design/code change, verify:
 ---
 
 *Last updated: 2026-02-01*
-*Source: Rhosonics Brand Guidelines System*
+*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles*
