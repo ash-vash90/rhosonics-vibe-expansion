@@ -5,6 +5,7 @@ import { LazySection } from "@/components/LazySection";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navigation } from "@/components/brand/Navigation";
 import { ScrollSection } from "@/components/brand/ScrollSection";
+import { cleanupAllGsap } from "@/hooks/useGsapCleanup";
 
 // Defer GSAP import and registration to reduce initial main thread blocking
 let gsapInstance: typeof import("gsap").default | null = null;
@@ -118,7 +119,7 @@ const SectionHeader = ({
           scrollTrigger: {
             trigger: header,
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
+            once: true // Prevent race conditions with React unmounting
           }
         });
         gsap.fromTo(titleEl, {
@@ -132,7 +133,7 @@ const SectionHeader = ({
           scrollTrigger: {
             trigger: header,
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
+            once: true
           }
         });
         gsap.fromTo(subtitleEl, {
@@ -146,7 +147,7 @@ const SectionHeader = ({
           scrollTrigger: {
             trigger: header,
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
+            once: true
           }
         });
       }, header);
@@ -156,6 +157,10 @@ const SectionHeader = ({
     
     return () => {
       cancelled = true;
+      // Kill tweens on all animated elements
+      if (gsapInstance && header) {
+        gsapInstance.killTweensOf(header.querySelectorAll("*"));
+      }
       ctx?.revert();
     };
   }, []);
@@ -308,7 +313,12 @@ const Index = () => {
     }
   }, []);
 
-
+  // Global cleanup on unmount to prevent GSAP/React race conditions
+  useEffect(() => {
+    return () => {
+      cleanupAllGsap();
+    };
+  }, []);
   const scrollToContent = () => {
     document.getElementById("about")?.scrollIntoView({
       behavior: "smooth",

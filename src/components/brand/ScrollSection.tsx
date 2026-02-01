@@ -1,6 +1,7 @@
 import { useEffect, useRef, ReactNode, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { registerContext, unregisterContext } from "@/hooks/useGsapCleanup";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,12 +58,14 @@ export const ScrollSection = ({ children, className = "" }: ScrollSectionProps) 
             scrollTrigger: {
               trigger: section,
               start: "top 85%",
-              end: "top 50%",
-              toggleActions: "play none none reverse",
+              once: true, // Critical: only trigger once to prevent race conditions
             },
           }
         );
       }, section);
+
+      // Register for global cleanup tracking
+      registerContext(ctx);
 
       return ctx;
     };
@@ -76,7 +79,11 @@ export const ScrollSection = ({ children, className = "" }: ScrollSectionProps) 
       
       return () => {
         cancelIdleCallback(id);
-        ctx?.revert();
+        if (ctx) {
+          ctx.kill(); // Kill animations immediately
+          ctx.revert();
+          unregisterContext(ctx);
+        }
       };
     } else {
       // Fallback for Safari
@@ -86,7 +93,11 @@ export const ScrollSection = ({ children, className = "" }: ScrollSectionProps) 
       
       return () => {
         clearTimeout(timeoutId);
-        ctx?.revert();
+        if (ctx) {
+          ctx.kill(); // Kill animations immediately
+          ctx.revert();
+          unregisterContext(ctx);
+        }
       };
     }
   }, [isInView]);

@@ -1,5 +1,6 @@
 import { Zap, MapPin, Layers } from "lucide-react";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
+import { useGsapContext } from "@/hooks/useGsapCleanup";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -10,46 +11,43 @@ const VisualSystemOverview = () => {
   const comparisonRef = useRef<HTMLDivElement>(null);
   const enablesRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Animate layers
-      if (layersRef.current) {
-        const layers = layersRef.current.children;
-        gsap.fromTo(layers,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out",
-            scrollTrigger: { trigger: layersRef.current, start: "top 80%" }
-          }
-        );
-      }
+  // Use the cleanup-safe GSAP context hook
+  useGsapContext<HTMLElement>(() => {
+    // Animate layers
+    if (layersRef.current) {
+      const layers = layersRef.current.children;
+      gsap.fromTo(layers,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out",
+          scrollTrigger: { trigger: layersRef.current, start: "top 80%", once: true }
+        }
+      );
+    }
 
-      // Animate comparison
-      if (comparisonRef.current) {
-        gsap.fromTo(comparisonRef.current,
-          { opacity: 0, scale: 0.98 },
-          {
-            opacity: 1, scale: 1, duration: 0.7, ease: "power3.out",
-            scrollTrigger: { trigger: comparisonRef.current, start: "top 85%" }
-          }
-        );
-      }
+    // Animate comparison
+    if (comparisonRef.current) {
+      gsap.fromTo(comparisonRef.current,
+        { opacity: 0, scale: 0.98 },
+        {
+          opacity: 1, scale: 1, duration: 0.7, ease: "power3.out",
+          scrollTrigger: { trigger: comparisonRef.current, start: "top 85%", once: true }
+        }
+      );
+    }
 
-      // Animate enables
-      if (enablesRef.current) {
-        const items = enablesRef.current.querySelectorAll('.enable-item');
-        gsap.fromTo(items,
-          { opacity: 0, x: -20 },
-          {
-            opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out",
-            scrollTrigger: { trigger: enablesRef.current, start: "top 85%" }
-          }
-        );
-      }
-    });
-
-    return () => ctx.revert();
-  }, []);
+    // Animate enables
+    if (enablesRef.current) {
+      const items = enablesRef.current.querySelectorAll('.enable-item');
+      gsap.fromTo(items,
+        { opacity: 0, x: -20 },
+        {
+          opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: "power3.out",
+          scrollTrigger: { trigger: enablesRef.current, start: "top 85%", once: true }
+        }
+      );
+    }
+  }, [layersRef, comparisonRef, enablesRef]);
 
   const layers = [
     {
