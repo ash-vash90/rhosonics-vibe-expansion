@@ -27,15 +27,19 @@ const loadGsap = async () => {
 
 // Lazy load section components
 const AboutThisSystem = lazy(() => import("@/components/brand/AboutThisSystem"));
+const DesignProcess = lazy(() => import("@/components/brand/DesignProcess"));
 const BrandPositioning = lazy(() => import("@/components/brand/BrandPositioning"));
 const BrandPrinciples = lazy(() => import("@/components/brand/BrandPrinciples"));
 const VisualSystemOverview = lazy(() => import("@/components/brand/VisualSystemOverview"));
+const ElevationSystem = lazy(() => import("@/components/brand/ElevationSystem"));
 const ColorMatrix = lazy(() => import("@/components/brand/ColorMatrix"));
 const TypographyScale = lazy(() => import("@/components/brand/TypographyScale"));
+const TypographyConstraints = lazy(() => import("@/components/brand/TypographyConstraints"));
 const SpacingSystem = lazy(() => import("@/components/brand/SpacingSystem"));
 const LogoAssets = lazy(() => import("@/components/brand/LogoAssets"));
 const IconGuidelines = lazy(() => import("@/components/brand/IconGuidelines"));
 const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
+const EmptyStates = lazy(() => import("@/components/brand/EmptyStates"));
 const SDMEcoInterface = lazy(() => import("@/components/brand/SDMEcoInterface"));
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
 const IndustryApplications = lazy(() => import("@/components/brand/IndustryApplications"));
@@ -410,6 +414,21 @@ const Index = () => {
         <SectionDivider />
 
         {/* ─────────────────────────────────────────────────────────────
+            SECTION 00.1: DESIGN PROCESS
+         ───────────────────────────────────────────────────────────── */}
+        <ScrollSection className="py-16 md:py-24">
+          <SectionHeader id="design-process" number="00.1" title="Design Process" subtitle="How we approach design decisions, from concept to implementation." />
+          
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <DesignProcess />
+            </Suspense>
+          </ErrorBoundary>
+        </ScrollSection>
+
+        <SectionDivider />
+
+        {/* ─────────────────────────────────────────────────────────────
             SECTION 01: BRAND POSITIONING
          ───────────────────────────────────────────────────────────── */}
         <ScrollSection className="py-16 md:py-24">
@@ -455,6 +474,21 @@ const Index = () => {
         <SectionDivider />
 
         {/* ─────────────────────────────────────────────────────────────
+            SECTION 03.1: ELEVATION SYSTEM
+         ───────────────────────────────────────────────────────────── */}
+        <ScrollSection className="py-16 md:py-24">
+          <SectionHeader id="elevation" number="03.1" title="Elevation & Depth" subtitle="Shadows and layering that create visual hierarchy." />
+          
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <ElevationSystem />
+            </Suspense>
+          </ErrorBoundary>
+        </ScrollSection>
+
+        <SectionDivider />
+
+        {/* ─────────────────────────────────────────────────────────────
             SECTION 04: COLOR
          ───────────────────────────────────────────────────────────── */}
         <ScrollSection className="py-16 md:py-24">
@@ -478,6 +512,11 @@ const Index = () => {
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <TypographyScale />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <TypographyConstraints />
             </Suspense>
           </ErrorBoundary>
           <ErrorBoundary>
@@ -602,6 +641,11 @@ const Index = () => {
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <InterfaceKit />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <EmptyStates />
             </Suspense>
           </ErrorBoundary>
         </ScrollSection>
