@@ -1,212 +1,148 @@
 
 
-# Plan: Create Comprehensive AI Agent Brand Guidelines Document
+# Plan: Comprehensive Agents.md Update with Refactoring UI Principles
 
 ## Overview
 
-Create an `agents.md` file that provides super detailed guidance for AI agents to correctly implement the Rhosonics brand system. This document will serve as a single source of truth for any AI working on this codebase.
+Update the `agents.md` file to bridge the gaps identified from the Refactoring UI analysis, transforming it from a ~700 line reference document into a ~900+ line comprehensive guide that includes both brand rules AND design process principles.
 
-## Document Structure
+## Changes Summary
 
-The document will be organized into the following sections:
+### New Sections to Add
 
-### 1. Brand Identity & Positioning
-- Core brand promise: "Laboratory precision for industrial conditions"
-- Target audience: Senior engineers who skip to specifications
-- Four core values with their mappings (Partnership, Challenge, Expertise, Progress)
-- Decision heuristic for brand choices
+**Section 0: Design Process (Refactoring UI Principles)** - NEW
+- Feature-first development workflow
+- Grayscale validation test before shipping
+- Iterative building approach ("pessimist when building, optimist when polishing")
+- Emphasize by de-emphasizing technique
+- Labels as a last resort principle
 
-### 2. Typography System
-**Critical rules:**
-- **Unbounded**: Logo wordmark ONLY. Never for headings, body, or buttons
-- **Instrument Sans**: Primary UI font (90% of text). Never in ALL-CAPS. Sentence case only
-- **JetBrains Mono**: Data/metrics font. MUST be ALL-CAPS for labels and technical strings
+### Sections to Expand
 
-**Type scale:**
-- Display Hero: 48px
-- Section Title: 36px  
-- Card Title: 24px
-- Body: 16px
-- Caption: 14px
-- Labels: 12px (JetBrains Mono, uppercase)
+**Section 2: Typography System** - EXPANDED
+- Add line height proportions table (tight/normal/relaxed based on line length)
+- Add line length constraints (45-75 characters optimal, max-width classes)
+- Add code examples for both principles
 
-**Tailwind classes:**
-- `font-logo` - Unbounded (logo only)
-- `font-ui` - Instrument Sans
-- `font-data` - JetBrains Mono
+**Section 3: Color System** - EXPANDED
+- Add full Primary Green 50-900 scale for UI states
+- Add dark background color rules (reduce saturation)
+- Add opacity-based hover/active state examples
 
-### 3. Color System
+**Section 4: Shadow & Elevation System** - NEW SECTION
+- 5-level shadow scale (none → card → elevated → modal → glow)
+- Light source principles (top-left)
+- Shadows vs borders usage guidance
+- Code examples with Tailwind classes
 
-**Foundations (constant):**
-- Slate scale (50-900): Software UI neutrals
-- Obsidian (#111522): Hardware/dark UI surfaces
+**Section 6: Spacing System** - EXPANDED
+- Add "Separation Without Borders" principle
+- When to use borders vs spacing vs background shifts
+- Code examples showing the transformation
 
-**Signals (intentional):**
-- Primary Green (#33993C): Actions, CTAs, success
-- Lime Accent (#73B82E): Gradients only, never standalone
-- Warning Amber (HSL 38 92% 50%): Cautions
-- Error Red (#DC2626): Failures
-- Info: Use Slate-600, never blue
+**Section 7: Icon System** - EXPANDED
+- Add icon color & weight balance rules
+- Icons should match text visual weight
 
-**Context (situational):**
-- Mineral palette: Field environments only, never for UI
-- Eco tints: Sustainability metrics only
+**Section 9: Component Patterns** - EXPANDED
+- Add Empty States pattern with full anatomy
+- Good vs bad empty state examples
+- Four-part structure: Icon, Title, Description, Action
 
-**Critical rules:**
-- Never use pure black (#000) - use Obsidian
-- State colors communicate status only, never decoration
-- Mineral colors never substitute for Slate
-- Gradients add depth, never decoration
+**Section 13: Critical Constraints** - EXPANDED
+- Add shadows & depth violations
+- Add layout violations (center-aligned paragraphs, inconsistent spacing)
+- Add process violations (skipping grayscale test)
 
-### 4. Logo Usage
+**Section 15: Implementation Checklist** - EXPANDED
+- Add design process checkpoints
+- Add color & depth verification
+- Add component quality checks
 
-**135% Rule:**
-- Icon = Text size × 1.35 (always)
-- Example: 24px text → 32px icon
+## File Changes
 
-**Constraints:**
-- Never rotate, distort, or add effects
-- Minimum size: 40px digital, 10mm print
-- Clear space: Height of 'R' on all sides
-- Approved variants only: gradient, white, obsidian
+| File | Action | Size Change |
+|------|--------|-------------|
+| `agents.md` | Update | ~700 → ~900 lines |
 
-**Logo wordmark:**
-- Use path-outlined SVG from `src/assets/brand/rhosonics-wordmark-paths.ts` for exports
-- Tracking: 0.025em (`tracking-wide`)
+## Detailed Section Content
 
-### 5. Spacing System
+### Section 0: Design Process
 
-**Base unit: 4px increments**
-- 4px (1): Tight inline spacing
-- 8px (2): Icon gaps, button padding
-- 16px (4): Standard padding
-- 24px (6): Card padding
-- 32px (8): Large component spacing
-- 64px (16): Section breaks
+```markdown
+## 0. Design Process (Refactoring UI Principles)
 
-**Grid:** 12-column with 24px gutters
+### Feature-First Development
+Start with functionality, not layout. Design the actual feature before worrying about where it goes.
 
-**Border radius:**
-- sm: 2px
-- md: 6px
-- lg: 8px
-- full: 50%
+### Grayscale Validation Test
+Before shipping any design, convert to grayscale. If hierarchy is unclear, fix spacing and typography - don't rely on color to save it.
 
-### 6. Icon System
+### Emphasize by De-emphasizing
+The primary way to make something stand out is to make other things stand back.
+```
 
-**Principles:**
-- Engineered, not illustrated
-- If it needs explanation, it has failed
-- Icons support text, never compete
+### Shadow/Elevation Scale
 
-**Sizes:**
-- 16px: Button icons
-- 20px: Navigation
-- 24px: Feature icons
-- 32px: Hero elements
+| Level | Name | Usage |
+|-------|------|-------|
+| 0 | None | Flat elements |
+| 1 | Card | Cards, dropdowns |
+| 2 | Elevated | Hover states, raised elements |
+| 3 | Modal | Dialogs, overlays |
+| 4 | Glow | Hero elements, premium focus |
 
-**Stroke weight:** Always 2px
+### Primary Green Scale (50-900)
 
-**Import from:** `@/lib/icons` (not directly from lucide-react)
+| Level | HSL | Usage |
+|-------|-----|-------|
+| 50 | 125 50% 97% | Subtle backgrounds |
+| 100 | 125 45% 93% | Hover backgrounds |
+| 200 | 125 42% 85% | Active backgrounds |
+| 300 | 125 45% 72% | Borders |
+| 400 | 125 48% 55% | Muted accents |
+| 500 | 125 50% 40% | Primary (default) |
+| 600 | 125 52% 35% | Hover state |
+| 700 | 125 55% 28% | Active/pressed |
+| 800 | 125 58% 20% | Dark accents |
+| 900 | 125 60% 12% | Darkest variant |
 
-### 7. Voice & Tone
+### Line Height Rules
 
-**Four pillars:**
-1. Direct: Lead with the point
-2. Educational: Explain how and why
-3. Evidence-Based: Show the data
-4. Partnership-First: Long-term relationships
+| Context | Line Height | Tailwind |
+|---------|-------------|----------|
+| Short lines (labels, headers) | 1.25 | `leading-tight` |
+| Medium lines (cards, captions) | 1.5 | `leading-normal` |
+| Long lines (paragraphs) | 1.75-2 | `leading-relaxed` |
 
-**Terminology replacements:**
-- "Cutting-edge" → "Ultrasonic measurement"
-- "Revolutionary" → "Proven"
-- "Solution" → "System / Sensor"
-- "Best-in-class" → [Cite specific metric]
+### Line Length Constraints
 
-### 8. Component Patterns
+| Context | Max Width | Tailwind |
+|---------|-----------|----------|
+| Body text | 65ch | `max-w-prose` |
+| Short paragraphs | 45ch | `max-w-md` |
+| Wide content | 75ch | `max-w-2xl` |
 
-**Buttons:**
-- Primary: `variant="default"`
-- Industrial: `variant="obsidian"`, `variant="gradient"`
-- Hero CTA: `variant="gradient" size="lg"`
+### Empty States Pattern
 
-**Metric Tiles:**
-- Variants: obsidian, primary, outline, glass
-- Always show units
-- Use JetBrains Mono for values
+Four components:
+1. Icon - Relevant to missing content
+2. Title - What's missing
+3. Description - Why empty or how to fix
+4. Action - Clear next step
 
-**Callouts:**
-- info: Guidance (slate)
-- avoid: Warnings (amber)
-- best: Recommendations (green)
-- error: Critical issues (red)
+## Technical Notes
 
-**Badges:**
-- JetBrains Mono, uppercase
-- Short labels only
-- Color indicates function
+- All additions follow the existing Markdown structure
+- Code examples use consistent fencing (```tsx)
+- Tables follow existing alignment patterns
+- Adds cross-references to Refactoring UI as source
 
-### 9. Motion Design
+## Benefits
 
-**Timing scale:**
-- 200ms: Micro-interactions
-- 300ms: Transitions
-- 500ms: Emphasis
-
-**Easing:**
-- Linear: Data/mechanical
-- Ease-out: UI/natural deceleration
-
-**Signature animations:**
-- Boot sequence: Wave propagation from bottom-right
-- Value counters: Smooth numeric transitions
-
-### 10. SDM Eco Interface (HMI)
-
-**Display specs:**
-- 800×480 resolution (5:3 aspect ratio)
-- 48px+ touch targets
-- No thin text (medium/semibold only)
-
-**Typography split:**
-- Instrument Sans: UI labels (sentence case)
-- JetBrains Mono: Data values (ALL-CAPS)
-
-### 11. Imagery Guidelines
-
-**Two styles:**
-- Real & Gritty: Field photography showing wear and scale
-- Abstract & Precise: Technical visualization with brand accents
-
-**Treatment process:**
-1. Desaturate
-2. Cool shift
-3. Increase contrast
-4. Add green accent
-
-**Prohibited:** Generic stock imagery, AI-generated people
-
-### 12. Critical Constraints (Never Do List)
-
-- Never use Space Grotesk font
-- Never use Unbounded for anything except logo wordmark
-- Never use pure black (#000)
-- Never use Lime Accent as standalone color
-- Never add shadows/glows to logo
-- Never use gradients on body text
-- Never use ALL-CAPS for Instrument Sans
-- Never use sentence case for JetBrains Mono labels
-- Never substitute Mineral for Slate in UI
-
-## File Location
-
-`agents.md` in the project root directory
-
-## Technical Details
-
-- Markdown format for easy reading
-- Code examples with proper Tailwind classes
-- Reference to actual source files
-- Clear hierarchy with headers and lists
-- Practical examples for each rule
+1. **Process guidance** - AI agents now know HOW to design, not just what colors to use
+2. **Hierarchy techniques** - Explicit methods for establishing visual hierarchy
+3. **Complete color system** - Full shade scales enable proper hover/active states
+4. **Depth system** - Consistent shadow usage across all components
+5. **Better empty states** - First-impression UI gets proper attention
 
