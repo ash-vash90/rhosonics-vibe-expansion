@@ -37,7 +37,7 @@ export const EmptyStates = () => {
   ];
 
   return (
-    <section className="space-y-16 pt-16">
+    <section id="empty-states" className="space-y-16 pt-16">
       {/* Hero Statement */}
       <div>
         <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-6">Empty States</h2>
