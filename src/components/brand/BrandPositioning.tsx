@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BRAND_VALUES } from "@/data/brand-values";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 import audienceEngineer from "@/assets/brand/audience-engineer-control-room.jpg";
 import audienceOperations from "@/assets/brand/audience-operations-manager.jpg";
@@ -134,7 +135,12 @@ const BrandPositioning = () => {
         {/* Audience imagery - full width */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="relative rounded-lg overflow-hidden aspect-[16/10]">
-            <img src={audienceEngineer} alt="Process engineer in control room" className="w-full h-full object-cover" />
+            <ResponsiveImage 
+              src={audienceEngineer} 
+              alt="Process engineer in control room" 
+              className="w-full h-full object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4">
               <span className="font-data text-xs text-white/70 uppercase tracking-wider">Control Room</span>
@@ -142,7 +148,12 @@ const BrandPositioning = () => {
             </div>
           </div>
           <div className="relative rounded-lg overflow-hidden aspect-[16/10]">
-            <img src={audienceOperations} alt="Operations manager in the field" className="w-full h-full object-cover" />
+            <ResponsiveImage 
+              src={audienceOperations} 
+              alt="Operations manager in the field" 
+              className="w-full h-full object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4">
               <span className="font-data text-xs text-white/70 uppercase tracking-wider">Field Operations</span>
@@ -150,7 +161,12 @@ const BrandPositioning = () => {
             </div>
           </div>
           <div className="relative rounded-lg overflow-hidden aspect-[16/10]">
-            <img src={audienceTechnical} alt="Technical specialist with instrumentation" className="w-full h-full object-cover" />
+            <ResponsiveImage 
+              src={audienceTechnical} 
+              alt="Technical specialist with instrumentation" 
+              className="w-full h-full object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4">
               <span className="font-data text-xs text-white/70 uppercase tracking-wider">Technical Lab</span>
