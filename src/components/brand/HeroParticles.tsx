@@ -23,16 +23,32 @@ export const HeroParticles = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const resizeCanvas = () => {
-      const parent = canvas.parentElement;
-      if (parent) {
-        canvas.width = parent.offsetWidth;
-        canvas.height = parent.offsetHeight;
+    // Use ResizeObserver to avoid forced reflows from offsetWidth/offsetHeight
+    let resizeObserver: ResizeObserver | null = null;
+    
+    const updateCanvasSize = (width: number, height: number) => {
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
       }
     };
 
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    const parent = canvas.parentElement;
+    if (parent) {
+      // Use ResizeObserver for efficient resize handling without forced reflow
+      resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { width, height } = entry.contentRect;
+          // Schedule canvas resize in next animation frame to avoid layout thrashing
+          requestAnimationFrame(() => updateCanvasSize(width, height));
+        }
+      });
+      resizeObserver.observe(parent);
+      
+      // Initial size from parent's bounding rect (single read, no subsequent writes that cause reflow)
+      const rect = parent.getBoundingClientRect();
+      updateCanvasSize(rect.width, rect.height);
+    }
 
     // Initialize particles
     const particleCount = Math.min(50, Math.floor((canvas.width * canvas.height) / 25000));
@@ -121,7 +137,7 @@ export const HeroParticles = () => {
     animate();
 
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
+      resizeObserver?.disconnect();
       cancelAnimationFrame(animationRef.current);
     };
   }, []);
