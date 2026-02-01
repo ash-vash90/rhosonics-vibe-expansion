@@ -5,9 +5,25 @@ import { LazySection } from "@/components/LazySection";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navigation } from "@/components/brand/Navigation";
 import { ScrollSection } from "@/components/brand/ScrollSection";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
+
+// Defer GSAP import and registration to reduce initial main thread blocking
+let gsapInstance: typeof import("gsap").default | null = null;
+let scrollTriggerRegistered = false;
+
+const loadGsap = async () => {
+  if (!gsapInstance) {
+    const [gsap, { ScrollTrigger }] = await Promise.all([
+      import("gsap"),
+      import("gsap/ScrollTrigger")
+    ]);
+    gsapInstance = gsap.default;
+    if (!scrollTriggerRegistered) {
+      gsapInstance.registerPlugin(ScrollTrigger);
+      scrollTriggerRegistered = true;
+    }
+  }
+  return gsapInstance;
+};
 
 // Lazy load section components
 const AboutThisSystem = lazy(() => import("@/components/brand/AboutThisSystem"));
@@ -139,114 +155,138 @@ const Index = () => {
   const heroLogoRef = useRef<AnimatedLogoRef>(null);
   const mainContentRef = useRef<HTMLDivElement>(null);
 
-  // Hero entrance animations
+  // Hero entrance animations - deferred to reduce FID
   useEffect(() => {
     const hero = heroContentRef.current;
     if (!hero) return;
 
-    const ctx = gsap.context(() => {
-      // Set initial states
-      gsap.set(".hero-logo", {
-        autoAlpha: 0,
-      });
-      gsap.set(".wordmark-char", {
-        opacity: 0,
-        x: -20,
-        filter: "blur(8px)",
-      });
-      gsap.set(".hero-version", {
-        opacity: 0,
-        y: -10,
-      });
-      gsap.set(".hero-title", {
-        opacity: 0,
-        y: 40,
-        filter: "blur(8px)",
-      });
-      gsap.set(".hero-subtitle", {
-        opacity: 0,
-        y: 30,
-      });
-      gsap.set(".hero-scroll", {
-        opacity: 0,
-      });
+    let ctx: { revert: () => void } | null = null;
+    let cancelled = false;
 
-      // Text timeline (starts only when the wave animation reports completion)
-      const textTl = gsap.timeline({
-        paused: true,
-        defaults: {
-          ease: "power3.out",
-        },
-      });
+    // Use requestIdleCallback to defer animation setup and reduce main thread blocking
+    const setupAnimations = async () => {
+      const gsap = await loadGsap();
+      if (cancelled) return;
 
-      textTl
-        .to(".wordmark-char", {
-          opacity: 1,
-          x: 0,
-          filter: "blur(0px)",
-          duration: 0.3,
-          stagger: 0.03,
-          ease: "power2.out",
-        })
-        .to(
-          ".hero-version",
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.35,
+      ctx = gsap.context(() => {
+        // Set initial states
+        gsap.set(".hero-logo", {
+          autoAlpha: 0,
+        });
+        gsap.set(".wordmark-char", {
+          opacity: 0,
+          x: -20,
+          filter: "blur(8px)",
+        });
+        gsap.set(".hero-version", {
+          opacity: 0,
+          y: -10,
+        });
+        gsap.set(".hero-title", {
+          opacity: 0,
+          y: 40,
+          filter: "blur(8px)",
+        });
+        gsap.set(".hero-subtitle", {
+          opacity: 0,
+          y: 30,
+        });
+        gsap.set(".hero-scroll", {
+          opacity: 0,
+        });
+
+        // Text timeline (starts only when the wave animation reports completion)
+        const textTl = gsap.timeline({
+          paused: true,
+          defaults: {
+            ease: "power3.out",
           },
-          "-=0.15"
-        )
-        .to(
-          ".hero-title",
-          {
+        });
+
+        textTl
+          .to(".wordmark-char", {
             opacity: 1,
-            y: 0,
+            x: 0,
             filter: "blur(0px)",
-            duration: 0.45,
-          },
-          "-=0.2"
-        )
-        .to(
-          ".hero-subtitle",
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.35,
-          },
-          "-=0.25"
-        )
-        .to(
-          ".hero-scroll",
-          {
-            opacity: 1,
-            duration: 0.4,
-          },
-          "-=0.15"
-        );
+            duration: 0.3,
+            stagger: 0.03,
+            ease: "power2.out",
+          })
+          .to(
+            ".hero-version",
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.35,
+            },
+            "-=0.15"
+          )
+          .to(
+            ".hero-title",
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.45,
+            },
+            "-=0.2"
+          )
+          .to(
+            ".hero-subtitle",
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.35,
+            },
+            "-=0.25"
+          )
+          .to(
+            ".hero-scroll",
+            {
+              opacity: 1,
+              duration: 0.4,
+            },
+            "-=0.15"
+          );
 
-      const startText = () => textTl.play(0);
+        const startText = () => textTl.play(0);
 
-      // Show logo container, trigger wave; then start text AFTER wave completes
-      gsap.to(".hero-logo", {
-        autoAlpha: 1,
-        duration: 0.12,
-        delay: 0.1,
-        onStart: () => {
-          const logo = heroLogoRef.current;
-          if (!logo) {
-            // Fallback: if the ref isn't ready, don't block the hero.
-            gsap.delayedCall(1, startText);
-            return;
-          }
-          logo.play({
-            onComplete: startText,
-          });
-        },
-      });
-    }, hero);
+        // Show logo container, trigger wave; then start text AFTER wave completes
+        gsap.to(".hero-logo", {
+          autoAlpha: 1,
+          duration: 0.12,
+          delay: 0.1,
+          onStart: () => {
+            const logo = heroLogoRef.current;
+            if (!logo) {
+              // Fallback: if the ref isn't ready, don't block the hero.
+              gsap.delayedCall(1, startText);
+              return;
+            }
+            logo.play({
+              onComplete: startText,
+            });
+          },
+        });
+      }, hero);
+    };
 
-    return () => ctx.revert();
+    // Defer to idle time to reduce FID
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(() => setupAnimations(), { timeout: 150 });
+      return () => {
+        cancelled = true;
+        cancelIdleCallback(id);
+        ctx?.revert();
+      };
+    } else {
+      const timeoutId = setTimeout(() => setupAnimations(), 50);
+      return () => {
+        cancelled = true;
+        clearTimeout(timeoutId);
+        ctx?.revert();
+      };
+    }
   }, []);
 
 
