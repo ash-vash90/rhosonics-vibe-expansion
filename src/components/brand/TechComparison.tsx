@@ -1,7 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Zap, Leaf, Clock, DollarSign } from "@/lib/icons";
-import bb, { spline, bar, radar, gauge } from "billboard.js";
-import "billboard.js/dist/billboard.css";
 
 // Brand color palette for charts - matches design tokens
 const chartColors = {
@@ -52,145 +50,195 @@ const comparisonData = [
   { name: "Ultrasonic", energy: 25, accuracy: 88, maintenance: 25, cost: 45 },
 ];
 
+// Lazy load billboard.js only when needed
+const loadBillboard = async () => {
+  const [bbModule] = await Promise.all([
+    import("billboard.js"),
+    import("billboard.js/dist/billboard.css"),
+  ]);
+  return bbModule;
+};
+
 export const TechComparison = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const chartsContainerRef = useRef<HTMLDivElement>(null);
   const lineChartRef = useRef<HTMLDivElement>(null);
   const barChartRef = useRef<HTMLDivElement>(null);
   const radarChartRef = useRef<HTMLDivElement>(null);
   const gaugeChartRef = useRef<HTMLDivElement>(null);
+  const [chartsLoaded, setChartsLoaded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
+  // Use IntersectionObserver to detect when charts section enters viewport
   useEffect(() => {
-    // Line Chart - Sensor Trends
-    if (lineChartRef.current) {
-      bb.generate({
-        data: {
-          columns: [
-            ["Density", 1.42, 1.44, 1.43, 1.45, 1.44, 1.46, 1.45, 1.47, 1.46, 1.48],
-            ["Velocity", 2.1, 2.3, 2.2, 2.4, 2.3, 2.5, 2.4, 2.6, 2.5, 2.7],
-          ],
-          type: spline(),
-          colors: {
-            Density: chartColors.primary,
-            Velocity: chartColors.warning,
-          },
-        },
-        point: {
-          r: 3.5,
-          focus: { expand: { r: 5.5 } },
-        },
-        axis: {
-          x: {
-            label: { text: "TIME (S)", position: "outer-center" },
-            tick: { format: (x: number) => `${x * 10}` },
-          },
-          y: {
-            label: { text: "VALUE", position: "outer-middle" },
-          },
-        },
-        grid: {
-          y: { show: true },
-        },
-        legend: { show: true },
-        padding: chartConfig.padding,
-        transition: chartConfig.transition,
-        bindto: lineChartRef.current,
-      });
-    }
+    const container = chartsContainerRef.current;
+    if (!container) return;
 
-    // Bar Chart - Energy Consumption
-    if (barChartRef.current) {
-      bb.generate({
-        data: {
-          columns: [
-            ["SDM ECO", 15],
-            ["Nuclear", 85],
-            ["Coriolis", 45],
-            ["Ultrasonic", 25],
-          ],
-          type: bar(),
-          colors: {
-            "SDM ECO": chartColors.primary,
-            Nuclear: chartColors.slate700,
-            Coriolis: chartColors.slate500,
-            Ultrasonic: chartColors.slate300,
-          },
-        },
-        bar: {
-          width: { ratio: 0.6 },
-          radius: 2,
-        },
-        axis: {
-          x: { type: "category", categories: ["ENERGY (W)"] },
-          y: { max: 100, padding: { top: 10 } },
-        },
-        grid: {
-          y: { show: true },
-        },
-        legend: { show: true },
-        padding: chartConfig.padding,
-        transition: chartConfig.transition,
-        bindto: barChartRef.current,
-      });
-    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" } // Start loading slightly before visible
+    );
 
-    // Radar Chart - Multi-Factor Analysis
-    if (radarChartRef.current) {
-      bb.generate({
-        data: {
-          columns: [
-            ["SDM ECO", 95, 98, 95, 100, 100, 85],
-            ["Nuclear", 20, 95, 40, 70, 30, 20],
-            ["Coriolis", 60, 92, 60, 95, 75, 50],
-          ],
-          type: radar(),
-          colors: {
-            "SDM ECO": chartColors.primary,
-            Nuclear: chartColors.slate700,
-            Coriolis: chartColors.slate400,
-          },
-        },
-        radar: {
-          axis: {
-            max: 100,
-            text: {
-              show: true,
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  // Load and initialize charts only when visible
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let mounted = true;
+
+    const initCharts = async () => {
+      const { default: bb, spline, bar, radar, gauge } = await loadBillboard();
+      
+      if (!mounted) return;
+
+      // Line Chart - Sensor Trends
+      if (lineChartRef.current) {
+        bb.generate({
+          data: {
+            columns: [
+              ["Density", 1.42, 1.44, 1.43, 1.45, 1.44, 1.46, 1.45, 1.47, 1.46, 1.48],
+              ["Velocity", 2.1, 2.3, 2.2, 2.4, 2.3, 2.5, 2.4, 2.6, 2.5, 2.7],
+            ],
+            type: spline(),
+            colors: {
+              Density: chartColors.primary,
+              Velocity: chartColors.warning,
             },
           },
-          level: { depth: 4 },
-          direction: { clockwise: true },
-        },
-        padding: { top: 10, right: 10, bottom: 10, left: 10 },
-        transition: chartConfig.transition,
-        bindto: radarChartRef.current,
-      });
-    }
-
-    // Gauge Chart - System Uptime
-    if (gaugeChartRef.current) {
-      bb.generate({
-        data: {
-          columns: [["Uptime", 99.7]],
-          type: gauge(),
-        },
-        gauge: {
-          label: {
-            format: (value: number) => `${value}%`,
-            extents: () => "",
+          point: {
+            r: 3.5,
+            focus: { expand: { r: 5.5 } },
           },
-          width: 20,
-          max: 100,
-        },
-        color: {
-          pattern: [chartColors.error, chartColors.warning, chartColors.success],
-          threshold: { values: [30, 70, 100] },
-        },
-        size: { height: 180 },
-        padding: { top: 0, right: 0, bottom: 0, left: 0 },
-        transition: chartConfig.transition,
-        bindto: gaugeChartRef.current,
-      });
-    }
-  }, []);
+          axis: {
+            x: {
+              label: { text: "TIME (S)", position: "outer-center" },
+              tick: { format: (x: number) => `${x * 10}` },
+            },
+            y: {
+              label: { text: "VALUE", position: "outer-middle" },
+            },
+          },
+          grid: {
+            y: { show: true },
+          },
+          legend: { show: true },
+          padding: chartConfig.padding,
+          transition: chartConfig.transition,
+          bindto: lineChartRef.current,
+        });
+      }
+
+      // Bar Chart - Energy Consumption
+      if (barChartRef.current) {
+        bb.generate({
+          data: {
+            columns: [
+              ["SDM ECO", 15],
+              ["Nuclear", 85],
+              ["Coriolis", 45],
+              ["Ultrasonic", 25],
+            ],
+            type: bar(),
+            colors: {
+              "SDM ECO": chartColors.primary,
+              Nuclear: chartColors.slate700,
+              Coriolis: chartColors.slate500,
+              Ultrasonic: chartColors.slate300,
+            },
+          },
+          bar: {
+            width: { ratio: 0.6 },
+            radius: 2,
+          },
+          axis: {
+            x: { type: "category", categories: ["ENERGY (W)"] },
+            y: { max: 100, padding: { top: 10 } },
+          },
+          grid: {
+            y: { show: true },
+          },
+          legend: { show: true },
+          padding: chartConfig.padding,
+          transition: chartConfig.transition,
+          bindto: barChartRef.current,
+        });
+      }
+
+      // Radar Chart - Multi-Factor Analysis
+      if (radarChartRef.current) {
+        bb.generate({
+          data: {
+            columns: [
+              ["SDM ECO", 95, 98, 95, 100, 100, 85],
+              ["Nuclear", 20, 95, 40, 70, 30, 20],
+              ["Coriolis", 60, 92, 60, 95, 75, 50],
+            ],
+            type: radar(),
+            colors: {
+              "SDM ECO": chartColors.primary,
+              Nuclear: chartColors.slate700,
+              Coriolis: chartColors.slate400,
+            },
+          },
+          radar: {
+            axis: {
+              max: 100,
+              text: {
+                show: true,
+              },
+            },
+            level: { depth: 4 },
+            direction: { clockwise: true },
+          },
+          padding: { top: 10, right: 10, bottom: 10, left: 10 },
+          transition: chartConfig.transition,
+          bindto: radarChartRef.current,
+        });
+      }
+
+      // Gauge Chart - System Uptime
+      if (gaugeChartRef.current) {
+        bb.generate({
+          data: {
+            columns: [["Uptime", 99.7]],
+            type: gauge(),
+          },
+          gauge: {
+            label: {
+              format: (value: number) => `${value}%`,
+              extents: () => "",
+            },
+            width: 20,
+            max: 100,
+          },
+          color: {
+            pattern: [chartColors.error, chartColors.warning, chartColors.success],
+            threshold: { values: [30, 70, 100] },
+          },
+          size: { height: 180 },
+          padding: { top: 0, right: 0, bottom: 0, left: 0 },
+          transition: chartConfig.transition,
+          bindto: gaugeChartRef.current,
+        });
+      }
+
+      setChartsLoaded(true);
+    };
+
+    initCharts();
+
+    return () => {
+      mounted = false;
+    };
+  }, [isVisible]);
 
   return (
     <section id="comparison" className="mb-32" ref={sectionRef}>
@@ -216,33 +264,57 @@ export const TechComparison = () => {
       </div>
 
       {/* Charts Grid - 2x2 billboard.js visualizations */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
+      <div ref={chartsContainerRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
         {/* Line Chart - Sensor Trends */}
         <div className="bg-card border border-border rounded-lg p-6">
           <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Line Chart</span>
           <p className="text-sm text-muted-foreground mb-4">Sensor data trends over time</p>
-          <div ref={lineChartRef} className="h-64" />
+          <div ref={lineChartRef} className="h-64">
+            {!chartsLoaded && (
+              <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
+                <div className="animate-pulse">Loading chart...</div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Bar Chart - Energy Consumption */}
         <div className="bg-card border border-border rounded-lg p-6">
           <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Bar Chart</span>
           <p className="text-sm text-muted-foreground mb-4">Technology energy consumption</p>
-          <div ref={barChartRef} className="h-64" />
+          <div ref={barChartRef} className="h-64">
+            {!chartsLoaded && (
+              <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
+                <div className="animate-pulse">Loading chart...</div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Radar Chart - Multi-Factor Analysis */}
         <div className="bg-card border border-border rounded-lg p-6">
           <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Radar Chart</span>
           <p className="text-sm text-muted-foreground mb-4">Multi-factor performance analysis</p>
-          <div ref={radarChartRef} className="h-64" />
+          <div ref={radarChartRef} className="h-64">
+            {!chartsLoaded && (
+              <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
+                <div className="animate-pulse">Loading chart...</div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Gauge Chart - System Uptime */}
         <div className="bg-card border border-border rounded-lg p-6">
           <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Gauge Chart</span>
           <p className="text-sm text-muted-foreground mb-4">System uptime indicator</p>
-          <div ref={gaugeChartRef} className="h-64" />
+          <div ref={gaugeChartRef} className="h-64">
+            {!chartsLoaded && (
+              <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
+                <div className="animate-pulse">Loading chart...</div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
