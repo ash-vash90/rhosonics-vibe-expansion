@@ -93,52 +93,67 @@ const SectionHeader = ({
     const titleEl = header.querySelector('.section-title');
     const subtitleEl = header.querySelector('.section-subtitle');
     if (!numEl || !titleEl || !subtitleEl) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(numEl, {
-        opacity: 0,
-        x: -30,
-        filter: 'blur(10px)'
-      }, {
-        opacity: 1,
-        x: 0,
-        filter: 'blur(0px)',
-        duration: 0.6,
-        scrollTrigger: {
-          trigger: header,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
-      });
-      gsap.fromTo(titleEl, {
-        opacity: 0,
-        scale: 0.95
-      }, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.6,
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: header,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
-      });
-      gsap.fromTo(subtitleEl, {
-        opacity: 0,
-        y: 20
-      }, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        delay: 0.3,
-        scrollTrigger: {
-          trigger: header,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
-      });
-    }, header);
-    return () => ctx.revert();
+    
+    let ctx: { revert: () => void } | null = null;
+    let cancelled = false;
+    
+    const setupAnimations = async () => {
+      const gsap = await loadGsap();
+      if (cancelled) return;
+      
+      ctx = gsap.context(() => {
+        gsap.fromTo(numEl, {
+          opacity: 0,
+          x: -30,
+          filter: 'blur(10px)'
+        }, {
+          opacity: 1,
+          x: 0,
+          filter: 'blur(0px)',
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: header,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+        gsap.fromTo(titleEl, {
+          opacity: 0,
+          scale: 0.95
+        }, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          delay: 0.15,
+          scrollTrigger: {
+            trigger: header,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+        gsap.fromTo(subtitleEl, {
+          opacity: 0,
+          y: 20
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: 0.3,
+          scrollTrigger: {
+            trigger: header,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      }, header);
+    };
+    
+    setupAnimations();
+    
+    return () => {
+      cancelled = true;
+      ctx?.revert();
+    };
   }, []);
   return <div ref={headerRef} id={id} className="mb-10 md:mb-16 lg:mb-20 scroll-mt-20 md:scroll-mt-24">
       <div className="flex items-baseline gap-4 md:gap-6 mb-4 md:mb-6">
