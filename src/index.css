@@ -16,6 +16,20 @@
     --rho-obsidian: 226 33% 10%;
     --rho-obsidian-light: 226 25% 15%;
     
+    /* Primary Green Scale (50-900)
+       Full shade range for UI states: hover, active, subtle backgrounds.
+       Based on Primary Green #33993C (125 50% 40%) */
+    --primary-50: 125 45% 97%;     /* Subtle backgrounds, hover tints */
+    --primary-100: 125 42% 93%;    /* Light backgrounds, selected states */
+    --primary-200: 125 40% 85%;    /* Borders, dividers */
+    --primary-300: 125 42% 72%;    /* Muted accents, secondary elements */
+    --primary-400: 125 45% 55%;    /* De-emphasized primary elements */
+    --primary-500: 125 50% 40%;    /* PRIMARY - Default brand green */
+    --primary-600: 125 52% 35%;    /* Hover state on primary */
+    --primary-700: 125 55% 28%;    /* Active/pressed state */
+    --primary-800: 125 58% 20%;    /* Dark accents, text on light */
+    --primary-900: 125 60% 12%;    /* Darkest variant, high contrast */
+    
     /* Mineral Neutrals - Olive / Stone tones
        These are ENVIRONMENTAL colors, not UI grays.
        Slate is for software. Mineral is for field contexts.
