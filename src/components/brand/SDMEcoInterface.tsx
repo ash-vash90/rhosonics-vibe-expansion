@@ -195,7 +195,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
 // ICON SIDEBAR - Touch-optimized navigation with labels
 // ============================================================================
 const IconNav = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-36 bg-gradient-to-b from-slate-100 via-slate-50 to-white border-r border-slate-200/80 flex flex-col items-stretch py-3 gap-1 shadow-inner">
+  <div className="w-40 bg-gradient-to-b from-slate-100 via-slate-50 to-white border-r border-slate-200/80 flex flex-col items-stretch py-3 gap-1 shadow-inner">
     {children}
   </div>
 );
