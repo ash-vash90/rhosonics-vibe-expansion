@@ -244,23 +244,23 @@ const LiveMetric = ({
       ? "bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 shadow-lg shadow-primary/10" 
       : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-md"
   }`}>
-    <span className="font-ui text-sm text-slate-500 font-medium mb-2 block">{label}</span>
+    <span className="font-ui text-base text-slate-500 font-medium mb-2 block">{label}</span>
     
     <div className="flex items-baseline gap-2">
       <span className={`font-data text-slate-900 tabular-nums tracking-tight font-medium ${
-        size === "large" ? "text-6xl" : "text-5xl"
+        size === "large" ? "text-7xl" : "text-6xl"
       }`}>
         {value}
       </span>
       <span className={`font-data text-slate-400 uppercase font-medium ${
-        size === "large" ? "text-2xl" : "text-xl"
+        size === "large" ? "text-3xl" : "text-2xl"
       }`}>{unit}</span>
     </div>
     
     {trend && (
       <div className="mt-3 flex items-center gap-2">
-        <TrendingUp className="w-4 h-4 text-primary" />
-        <span className="font-data text-xs text-primary uppercase tracking-wide font-medium">{trend}</span>
+        <TrendingUp className="w-5 h-5 text-primary" />
+        <span className="font-data text-sm text-primary uppercase tracking-wide font-medium">{trend}</span>
       </div>
     )}
   </div>
@@ -333,10 +333,10 @@ const LiveWaveform = () => {
   return (
     <div className="bg-white rounded-2xl border-2 border-slate-200 p-4 shadow-sm">
       <div className="flex items-center justify-between mb-3">
-        <span className="font-ui text-sm text-slate-500 font-medium">Signal waveform</span>
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10">
-          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span className="font-data text-xs text-primary uppercase tracking-wide font-medium">LIVE</span>
+        <span className="font-ui text-base text-slate-500 font-medium">Signal waveform</span>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10">
+          <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+          <span className="font-data text-sm text-primary uppercase tracking-wide font-medium">LIVE</span>
         </div>
       </div>
       <div ref={chartRef} className="sdm-waveform" />
@@ -387,11 +387,11 @@ const AnimatedTemp = ({
   
   return (
     <div className="text-center">
-      <span className="font-ui text-sm text-slate-500 font-medium block mb-2">{label}</span>
-      <span className="font-data text-4xl text-slate-900 tabular-nums font-medium">
+      <span className="font-ui text-base text-slate-500 font-medium block mb-2">{label}</span>
+      <span className="font-data text-5xl text-slate-900 tabular-nums font-medium">
         {value.toFixed(2)}
       </span>
-      <span className="font-data text-xl text-slate-400 uppercase ml-1">°C</span>
+      <span className="font-data text-2xl text-slate-400 uppercase ml-1">°C</span>
     </div>
   );
 };
@@ -402,10 +402,10 @@ const AnimatedTemp = ({
 const SamplingProgress = ({ progress, status }: { progress: number; status: string }) => (
   <div className="flex-1">
     <div className="flex items-center justify-between mb-2">
-      <span className="font-ui text-sm text-slate-600 font-medium">{status}</span>
-      <span className="font-data text-sm text-primary uppercase">{Math.round(progress)}%</span>
+      <span className="font-ui text-base text-slate-600 font-medium">{status}</span>
+      <span className="font-data text-base text-primary uppercase">{Math.round(progress)}%</span>
     </div>
-    <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
+    <div className="h-4 bg-slate-200 rounded-full overflow-hidden">
       <div 
         className="h-full bg-gradient-to-r from-primary to-primary/80 rounded-full transition-all duration-300 ease-out"
         style={{ width: `${progress}%` }}
@@ -449,17 +449,17 @@ const SamplingScreen = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="font-ui text-lg text-slate-900 font-semibold">Calibration point #0</h2>
-            <p className="font-ui text-sm text-slate-500">Clay 10% profile</p>
+            <h2 className="font-ui text-xl text-slate-900 font-semibold">Calibration point #0</h2>
+            <p className="font-ui text-base text-slate-500">Clay 10% profile</p>
           </div>
-          <button className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
-            <X className="w-5 h-5 text-slate-500" />
+          <button className="w-12 h-12 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
+            <X className="w-6 h-6 text-slate-500" />
           </button>
         </div>
         
         {/* Instruction */}
         <div className="bg-gradient-to-r from-primary/8 to-transparent rounded-xl p-4 mb-5 border border-primary/20">
-          <p className="font-ui text-sm text-slate-700 leading-relaxed">
+          <p className="font-ui text-base text-slate-700 leading-relaxed">
             Please bring your liquid temperature to the recommended temperature, 
             and gather your sample while clicking on the 'Sample' button.
           </p>
@@ -473,25 +473,25 @@ const SamplingScreen = () => {
           <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl border-2 border-primary/25 p-4 shadow-lg shadow-primary/10">
             {isSampling ? (
               <div className="text-center">
-                <span className="font-ui text-sm text-slate-500 font-medium block mb-2">Sampled temperature</span>
+                <span className="font-ui text-base text-slate-500 font-medium block mb-2">Sampled temperature</span>
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
-                  <span className="font-ui text-lg text-primary font-medium animate-pulse">Sampling...</span>
+                  <div className="w-3.5 h-3.5 rounded-full bg-primary animate-pulse" />
+                  <span className="font-ui text-xl text-primary font-medium animate-pulse">Sampling...</span>
                 </div>
               </div>
             ) : (
               <div className="text-center">
-                <span className="font-ui text-sm text-slate-500 font-medium block mb-2">Sampled temperature</span>
-                <span className="font-data text-4xl text-primary tabular-nums font-medium">25.98</span>
-                <span className="font-data text-xl text-primary/60 uppercase ml-1">°C</span>
+                <span className="font-ui text-base text-slate-500 font-medium block mb-2">Sampled temperature</span>
+                <span className="font-data text-5xl text-primary tabular-nums font-medium">25.98</span>
+                <span className="font-data text-2xl text-primary/60 uppercase ml-1">°C</span>
               </div>
             )}
           </div>
           <div className="bg-white rounded-xl border-2 border-slate-200 p-4 shadow-sm">
             <div className="text-center">
-              <span className="font-ui text-sm text-slate-500 font-medium block mb-2">Recommended</span>
-              <span className="font-data text-4xl text-slate-900 tabular-nums font-medium">25.00</span>
-              <span className="font-data text-xl text-slate-400 uppercase ml-1">°C</span>
+              <span className="font-ui text-base text-slate-500 font-medium block mb-2">Recommended</span>
+              <span className="font-data text-5xl text-slate-900 tabular-nums font-medium">25.00</span>
+              <span className="font-data text-2xl text-slate-400 uppercase ml-1">°C</span>
             </div>
           </div>
         </div>
@@ -541,11 +541,11 @@ const MeasurementsScreen = () => (
     <div className="flex-1 p-5 flex flex-col gap-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-ui text-xl text-slate-900 font-semibold">Measurements</h2>
+        <h2 className="font-ui text-2xl text-slate-900 font-semibold">Measurements</h2>
         <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-gradient-to-r from-slate-100 to-slate-50 border border-slate-200 shadow-sm">
-          <Droplets className="w-4 h-4 text-primary" />
-          <span className="font-ui text-sm text-slate-700 font-medium">Super profile</span>
-          <Zap className="w-3.5 h-3.5 text-primary" />
+          <Droplets className="w-5 h-5 text-primary" />
+          <span className="font-ui text-base text-slate-700 font-medium">Super profile</span>
+          <Zap className="w-4 h-4 text-primary" />
         </div>
       </div>
 
@@ -586,9 +586,9 @@ const ProfilesScreen = () => (
     <div className="flex-1 p-5 flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-ui text-xl text-slate-900 font-semibold">Liquid profiles</h2>
+        <h2 className="font-ui text-2xl text-slate-900 font-semibold">Liquid profiles</h2>
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100">
-          <span className="font-data text-xs text-slate-500 uppercase">4 profiles</span>
+          <span className="font-data text-sm text-slate-500 uppercase">4 profiles</span>
         </div>
       </div>
 
@@ -629,18 +629,18 @@ const ProfilesScreen = () => (
             {/* Content */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className={`font-ui text-base font-semibold truncate ${
+                <h3 className={`font-ui text-lg font-semibold truncate ${
                   profile.active ? "text-primary" : "text-slate-900"
                 }`}>{profile.name}</h3>
                 {profile.active && (
-                  <span className="px-2 py-0.5 rounded-md bg-primary/20 text-primary font-data text-[10px] uppercase tracking-wide">
+                  <span className="px-2.5 py-0.5 rounded-md bg-primary/20 text-primary font-data text-xs uppercase tracking-wide">
                     Active
                   </span>
                 )}
               </div>
               <div className="flex items-center gap-3 mt-0.5">
-                <span className="font-ui text-sm text-slate-500 truncate">{profile.desc}</span>
-                <span className="font-data text-xs text-slate-400 uppercase shrink-0">{profile.points} pts</span>
+                <span className="font-ui text-base text-slate-500 truncate">{profile.desc}</span>
+                <span className="font-data text-sm text-slate-400 uppercase shrink-0">{profile.points} pts</span>
               </div>
             </div>
             
@@ -660,8 +660,8 @@ const ProfilesScreen = () => (
       </div>
       
       {/* Add button */}
-      <button className="mt-3 w-full py-3.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 font-ui text-sm font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group">
-        <Plus className="w-4 h-4 transition-transform group-hover:scale-110" />
+      <button className="mt-3 w-full py-3.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 font-ui text-base font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group">
+        <Plus className="w-5 h-5 transition-transform group-hover:scale-110" />
         Create new profile
       </button>
     </div>
@@ -683,24 +683,24 @@ const CalibrationScreen = () => (
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="font-ui text-xl text-slate-900 font-semibold">Calibration points</h2>
+          <h2 className="font-ui text-2xl text-slate-900 font-semibold">Calibration points</h2>
           <div className="flex items-center gap-2 mt-1">
-            <Droplets className="w-3.5 h-3.5 text-primary" />
-            <span className="font-ui text-sm text-slate-500">Clay 10% profile</span>
+            <Droplets className="w-4 h-4 text-primary" />
+            <span className="font-ui text-base text-slate-500">Clay 10% profile</span>
           </div>
         </div>
-        <button className="w-9 h-9 rounded-lg flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
-          <X className="w-4 h-4 text-slate-500" />
+        <button className="w-10 h-10 rounded-lg flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
+          <X className="w-5 h-5 text-slate-500" />
         </button>
       </div>
 
       {/* Progress bar */}
       <div className="mb-4 p-3 rounded-xl bg-slate-50 border border-slate-200">
         <div className="flex items-center justify-between mb-2">
-          <span className="font-ui text-xs text-slate-500 font-medium">Calibration progress</span>
-          <span className="font-data text-xs text-primary uppercase">1/2 complete</span>
+          <span className="font-ui text-sm text-slate-500 font-medium">Calibration progress</span>
+          <span className="font-data text-sm text-primary uppercase">1/2 complete</span>
         </div>
-        <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+        <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
           <div className="h-full w-1/2 bg-gradient-to-r from-primary to-primary/80 rounded-full" />
         </div>
       </div>
@@ -723,7 +723,7 @@ const CalibrationScreen = () => (
             <div className={`w-1 h-16 rounded-full ${point.done ? "bg-primary" : "bg-amber-400"}`} />
             
             {/* Point number */}
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 font-data text-base font-medium ${
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 font-data text-lg font-medium ${
               point.done 
                 ? "bg-primary/15 border border-primary/25 text-primary" 
                 : "bg-amber-100 border border-amber-300 text-amber-700"
@@ -734,24 +734,24 @@ const CalibrationScreen = () => (
             {/* Content */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className={`font-ui text-base font-semibold ${point.done ? "text-slate-900" : "text-amber-700"}`}>
+                <span className={`font-ui text-lg font-semibold ${point.done ? "text-slate-900" : "text-amber-700"}`}>
                   {point.status}
                 </span>
                 {point.done && (
-                  <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Activity className="w-3 h-3 text-primary" />
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Activity className="w-4 h-4 text-primary" />
                   </div>
                 )}
               </div>
               <div className="flex gap-4 mt-1.5">
                 <div className="flex items-center gap-1.5">
-                  <Thermometer className="w-3.5 h-3.5 text-slate-400" />
-                  <span className="font-data text-sm text-slate-600 uppercase">{point.temp}°C</span>
+                  <Thermometer className="w-4 h-4 text-slate-400" />
+                  <span className="font-data text-base text-slate-600 uppercase">{point.temp}°C</span>
                 </div>
                 {point.density && (
                   <div className="flex items-center gap-1.5">
-                    <Gauge className="w-3.5 h-3.5 text-slate-400" />
-                    <span className="font-data text-sm text-slate-600 uppercase">{point.density} KG/M³</span>
+                    <Gauge className="w-4 h-4 text-slate-400" />
+                    <span className="font-data text-base text-slate-600 uppercase">{point.density} KG/M³</span>
                   </div>
                 )}
               </div>
@@ -779,15 +779,15 @@ const CalibrationScreen = () => (
       </div>
       
       {/* Add button */}
-      <button className="mt-3 w-full py-3.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 font-ui text-sm font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group">
-        <Plus className="w-4 h-4 transition-transform group-hover:scale-110" />
+      <button className="mt-3 w-full py-3.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 font-ui text-base font-semibold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group">
+        <Plus className="w-5 h-5 transition-transform group-hover:scale-110" />
         Add calibration point
       </button>
       
       {/* Footer info */}
       <div className="mt-3 py-2.5 px-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-        <span className="font-ui text-xs text-slate-500 font-medium">Temperature range</span>
-        <span className="font-data text-xs text-slate-700 uppercase">20.00°C – 50.00°C</span>
+        <span className="font-ui text-sm text-slate-500 font-medium">Temperature range</span>
+        <span className="font-data text-sm text-slate-700 uppercase">20.00°C – 50.00°C</span>
       </div>
     </div>
   </div>
@@ -806,28 +806,28 @@ const SettingsScreen = () => (
     </IconNav>
 
     <div className="flex-1 p-5">
-      <h2 className="font-ui text-xl text-slate-900 font-semibold mb-5">Display units</h2>
+      <h2 className="font-ui text-2xl text-slate-900 font-semibold mb-5">Display units</h2>
 
       <div className="grid grid-cols-2 gap-8">
         {/* Density */}
         <div>
-          <h3 className="font-ui text-sm text-slate-500 font-medium mb-3 uppercase tracking-wide">Density</h3>
+          <h3 className="font-ui text-base text-slate-500 font-medium mb-3 uppercase tracking-wide">Density</h3>
           <div className="space-y-2">
             {["SG", "kg/m³", "g/L", "lb/ft³", "SGx1000", "Weight %"].map((unit, i) => (
               <label
                 key={unit}
-                className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border-2 ${
+                className={`flex items-center gap-3 p-3.5 rounded-xl cursor-pointer transition-all border-2 ${
                   i === 0
                     ? "bg-gradient-to-r from-primary/10 to-transparent border-primary/30"
                     : "bg-white border-slate-200 hover:border-slate-300"
                 }`}
               >
-                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                   i === 0 ? "border-primary bg-primary" : "border-slate-300"
                 }`}>
-                  {i === 0 && <div className="w-2 h-2 bg-white rounded-full" />}
+                  {i === 0 && <div className="w-2.5 h-2.5 bg-white rounded-full" />}
                 </div>
-                <span className={`font-ui text-base font-medium ${i === 0 ? "text-slate-900" : "text-slate-600"}`}>
+                <span className={`font-ui text-lg font-medium ${i === 0 ? "text-slate-900" : "text-slate-600"}`}>
                   {unit}
                 </span>
               </label>
@@ -837,23 +837,23 @@ const SettingsScreen = () => (
 
         {/* Temperature */}
         <div>
-          <h3 className="font-ui text-sm text-slate-500 font-medium mb-3 uppercase tracking-wide">Temperature</h3>
+          <h3 className="font-ui text-base text-slate-500 font-medium mb-3 uppercase tracking-wide">Temperature</h3>
           <div className="space-y-2">
             {["Celsius (°C)", "Fahrenheit (°F)"].map((unit, i) => (
               <label
                 key={unit}
-                className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border-2 ${
+                className={`flex items-center gap-3 p-3.5 rounded-xl cursor-pointer transition-all border-2 ${
                   i === 0
                     ? "bg-gradient-to-r from-primary/10 to-transparent border-primary/30"
                     : "bg-white border-slate-200 hover:border-slate-300"
                 }`}
               >
-                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                   i === 0 ? "border-primary bg-primary" : "border-slate-300"
                 }`}>
-                  {i === 0 && <div className="w-2 h-2 bg-white rounded-full" />}
+                  {i === 0 && <div className="w-2.5 h-2.5 bg-white rounded-full" />}
                 </div>
-                <span className={`font-ui text-base font-medium ${i === 0 ? "text-slate-900" : "text-slate-600"}`}>
+                <span className={`font-ui text-lg font-medium ${i === 0 ? "text-slate-900" : "text-slate-600"}`}>
                   {unit}
                 </span>
               </label>
@@ -879,12 +879,12 @@ const PinScreen = () => (
       <div className="flex gap-10">
         {/* PIN Display */}
         <div className="flex flex-col items-center">
-          <h2 className="font-ui text-lg text-slate-700 font-semibold mb-4">Enter access code</h2>
-          <div className="px-8 py-4 rounded-xl bg-white border-2 border-primary shadow-lg shadow-primary/10 mb-6">
-            <span className="font-data text-3xl text-slate-400 tracking-[0.4em]">••••</span>
-            <span className="font-data text-3xl text-primary animate-pulse">_</span>
+          <h2 className="font-ui text-xl text-slate-700 font-semibold mb-4">Enter access code</h2>
+          <div className="px-8 py-5 rounded-xl bg-white border-2 border-primary shadow-lg shadow-primary/10 mb-6">
+            <span className="font-data text-4xl text-slate-400 tracking-[0.4em]">••••</span>
+            <span className="font-data text-4xl text-primary animate-pulse">_</span>
           </div>
-          <button className="w-full py-3 px-8 rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-white font-ui font-semibold shadow-lg shadow-primary/30 transition-all">
+          <button className="w-full py-3.5 px-8 rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-white font-ui text-lg font-semibold shadow-lg shadow-primary/30 transition-all">
             Continue
           </button>
         </div>
@@ -895,16 +895,16 @@ const PinScreen = () => (
             {[7, 8, 9, 4, 5, 6, 1, 2, 3].map((num) => (
               <button
                 key={num}
-                className="w-14 h-12 rounded-xl bg-white hover:bg-slate-50 active:bg-slate-100 border border-slate-200 font-data text-xl text-slate-800 font-medium transition-all shadow-sm hover:shadow"
+                className="w-16 h-14 rounded-xl bg-white hover:bg-slate-50 active:bg-slate-100 border border-slate-200 font-data text-2xl text-slate-800 font-medium transition-all shadow-sm hover:shadow"
               >
                 {num}
               </button>
             ))}
-            <button className="w-14 h-12 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 font-data text-xl text-slate-800 font-medium transition-all shadow-sm">
+            <button className="w-16 h-14 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 font-data text-2xl text-slate-800 font-medium transition-all shadow-sm">
               0
             </button>
-            <button className="w-14 h-12 col-span-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 font-ui text-sm text-slate-600 font-medium transition-all shadow-sm flex items-center justify-center gap-2">
-              <ChevronLeft className="w-4 h-4" />
+            <button className="w-16 h-14 col-span-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 font-ui text-base text-slate-600 font-medium transition-all shadow-sm flex items-center justify-center gap-2">
+              <ChevronLeft className="w-5 h-5" />
               Clear
             </button>
           </div>
