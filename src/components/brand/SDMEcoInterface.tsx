@@ -117,7 +117,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none rounded-lg sm:rounded-xl" />
         
         {/* Top bezel - compact */}
-        <div className="relative flex items-center justify-between px-4 sm:px-6 py-2 sm:py-2.5" style={{
+        <div className="relative flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3" style={{
           background: 'linear-gradient(180deg, hsl(220 12% 18%) 0%, hsl(220 12% 14%) 100%)'
         }}>
           {/* Subtle bezel texture */}
@@ -195,7 +195,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
 // ICON SIDEBAR - Touch-optimized navigation with labels
 // ============================================================================
 const IconNav = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-[72px] bg-gradient-to-b from-slate-100 via-slate-50 to-white border-r border-slate-200/80 flex flex-col items-center py-3 gap-1 shadow-inner">
+  <div className="w-24 bg-gradient-to-b from-slate-100 via-slate-50 to-white border-r border-slate-200/80 flex flex-col items-stretch py-3 gap-1 shadow-inner">
     {children}
   </div>
 );
@@ -213,15 +213,15 @@ const IconNavItem = ({
 }) => (
   <button
     onClick={onClick}
-    className={`w-16 py-2 rounded-xl flex flex-col items-center justify-center gap-1 transition-all duration-200 ${
+    className={`mx-1.5 px-2 py-2.5 rounded-xl flex items-center gap-2 transition-all duration-200 ${
       active 
         ? "bg-gradient-to-br from-primary to-primary/85 text-white shadow-lg shadow-primary/40" 
         : "text-slate-400 hover:text-slate-600 hover:bg-white hover:shadow-md"
     }`}
   >
-    <Icon className="w-5 h-5" />
+    <Icon className="w-5 h-5 shrink-0" />
     {label && (
-      <span className={`font-data text-[9px] uppercase tracking-wide ${active ? "text-white/90" : "text-slate-500"}`}>
+      <span className={`font-data text-[10px] uppercase tracking-wide whitespace-nowrap ${active ? "text-white/90" : "text-slate-500"}`}>
         {label}
       </span>
     )}
