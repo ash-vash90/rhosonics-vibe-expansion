@@ -116,8 +116,8 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
         {/* Glass highlight on bezel */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none rounded-lg sm:rounded-xl" />
         
-        {/* Top bezel - compact on mobile */}
-        <div className="relative flex items-center justify-between px-4 sm:px-8 py-3 sm:py-5" style={{
+        {/* Top bezel - compact */}
+        <div className="relative flex items-center justify-between px-4 sm:px-6 py-2 sm:py-2.5" style={{
           background: 'linear-gradient(180deg, hsl(220 12% 18%) 0%, hsl(220 12% 14%) 100%)'
         }}>
           {/* Subtle bezel texture */}
@@ -126,19 +126,19 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
             backgroundSize: '4px 4px'
           }} />
           
-          <div className="relative flex items-center gap-2 sm:gap-4">
+          <div className="relative flex items-center gap-2 sm:gap-3">
             <div className="relative">
-              <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary shadow-lg shadow-primary/60" />
-              <div className="absolute inset-0 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary animate-ping opacity-30" />
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-primary shadow-lg shadow-primary/60" />
+              <div className="absolute inset-0 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-primary animate-ping opacity-30" />
             </div>
-            <span className="font-data text-xs sm:text-sm text-primary uppercase tracking-widest font-medium">ONLINE</span>
+            <span className="font-data text-[10px] sm:text-xs text-primary uppercase tracking-widest font-medium">ONLINE</span>
           </div>
-          <div className="relative flex items-center gap-4 sm:gap-8 text-slate-400">
-            <div className="hidden sm:flex items-center gap-3">
-              <Usb className="w-4 h-4 text-primary" />
-              <span className="font-data text-sm uppercase tracking-wide">USB</span>
+          <div className="relative flex items-center gap-3 sm:gap-6 text-slate-400">
+            <div className="hidden sm:flex items-center gap-2">
+              <Usb className="w-3.5 h-3.5 text-primary" />
+              <span className="font-data text-xs uppercase tracking-wide">USB</span>
             </div>
-            <span className="font-data text-sm sm:text-lg tabular-nums font-medium text-slate-300">14:32</span>
+            <span className="font-data text-xs sm:text-sm tabular-nums font-medium text-slate-300">14:32</span>
           </div>
         </div>
         
@@ -192,32 +192,39 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
 };
 
 // ============================================================================
-// ICON SIDEBAR - Touch-optimized navigation
+// ICON SIDEBAR - Touch-optimized navigation with labels
 // ============================================================================
 const IconNav = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-20 bg-gradient-to-b from-slate-100 via-slate-50 to-white border-r border-slate-200/80 flex flex-col items-center py-5 gap-2 shadow-inner">
+  <div className="w-[72px] bg-gradient-to-b from-slate-100 via-slate-50 to-white border-r border-slate-200/80 flex flex-col items-center py-3 gap-1 shadow-inner">
     {children}
   </div>
 );
 
 const IconNavItem = ({
   icon: Icon,
+  label,
   active = false,
   onClick,
 }: {
   icon: React.ComponentType<{ className?: string }>;
+  label?: string;
   active?: boolean;
   onClick?: () => void;
 }) => (
   <button
     onClick={onClick}
-    className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-200 ${
+    className={`w-16 py-2 rounded-xl flex flex-col items-center justify-center gap-1 transition-all duration-200 ${
       active 
-        ? "bg-gradient-to-br from-primary to-primary/85 text-white shadow-xl shadow-primary/40 scale-105" 
+        ? "bg-gradient-to-br from-primary to-primary/85 text-white shadow-lg shadow-primary/40" 
         : "text-slate-400 hover:text-slate-600 hover:bg-white hover:shadow-md"
     }`}
   >
-    <Icon className="w-6 h-6" />
+    <Icon className="w-5 h-5" />
+    {label && (
+      <span className={`font-data text-[9px] uppercase tracking-wide ${active ? "text-white/90" : "text-slate-500"}`}>
+        {label}
+      </span>
+    )}
   </button>
 );
 
@@ -440,9 +447,9 @@ const SamplingScreen = () => {
   return (
     <div className="h-full flex">
       <IconNav>
-        <IconNavItem icon={ChevronLeft} />
-        <IconNavItem icon={Thermometer} active />
-        <IconNavItem icon={Droplets} />
+        <IconNavItem icon={ChevronLeft} label="Back" />
+        <IconNavItem icon={Thermometer} label="Temp" active />
+        <IconNavItem icon={Droplets} label="Liquid" />
       </IconNav>
 
       <div className="flex-1 p-5 flex flex-col">
@@ -532,10 +539,10 @@ const SamplingScreen = () => {
 const MeasurementsScreen = () => (
   <div className="h-full flex">
     <IconNav>
-      <IconNavItem icon={Gauge} active />
-      <IconNavItem icon={FlaskConical} />
-      <IconNavItem icon={Activity} />
-      <IconNavItem icon={Settings} />
+      <IconNavItem icon={Gauge} label="Live" active />
+      <IconNavItem icon={FlaskConical} label="Calib" />
+      <IconNavItem icon={Activity} label="Logs" />
+      <IconNavItem icon={Settings} label="Setup" />
     </IconNav>
 
     <div className="flex-1 p-5 flex flex-col gap-4">
@@ -578,9 +585,9 @@ const MeasurementsScreen = () => (
 const ProfilesScreen = () => (
   <div className="h-full flex">
     <IconNav>
-      <IconNavItem icon={ChevronLeft} />
-      <IconNavItem icon={Waves} />
-      <IconNavItem icon={Droplets} active />
+      <IconNavItem icon={ChevronLeft} label="Back" />
+      <IconNavItem icon={Waves} label="Signal" />
+      <IconNavItem icon={Droplets} label="Profiles" active />
     </IconNav>
 
     <div className="flex-1 p-5 flex flex-col">
@@ -674,9 +681,9 @@ const ProfilesScreen = () => (
 const CalibrationScreen = () => (
   <div className="h-full flex">
     <IconNav>
-      <IconNavItem icon={ChevronLeft} />
-      <IconNavItem icon={Thermometer} active />
-      <IconNavItem icon={Droplets} />
+      <IconNavItem icon={ChevronLeft} label="Back" />
+      <IconNavItem icon={Thermometer} label="Points" active />
+      <IconNavItem icon={Droplets} label="Liquid" />
     </IconNav>
 
     <div className="flex-1 p-5 flex flex-col">
@@ -799,10 +806,10 @@ const CalibrationScreen = () => (
 const SettingsScreen = () => (
   <div className="h-full flex">
     <IconNav>
-      <IconNavItem icon={ChevronLeft} />
-      <IconNavItem icon={Globe} />
-      <IconNavItem icon={Sun} />
-      <IconNavItem icon={Gauge} active />
+      <IconNavItem icon={ChevronLeft} label="Back" />
+      <IconNavItem icon={Globe} label="Lang" />
+      <IconNavItem icon={Sun} label="Display" />
+      <IconNavItem icon={Gauge} label="Units" active />
     </IconNav>
 
     <div className="flex-1 p-5">
@@ -871,8 +878,8 @@ const SettingsScreen = () => (
 const PinScreen = () => (
   <div className="h-full flex">
     <IconNav>
-      <IconNavItem icon={ChevronLeft} />
-      <IconNavItem icon={Lock} active />
+      <IconNavItem icon={ChevronLeft} label="Back" />
+      <IconNavItem icon={Lock} label="Access" active />
     </IconNav>
 
     <div className="flex-1 p-5 flex items-center justify-center">
