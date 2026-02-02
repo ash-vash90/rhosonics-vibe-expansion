@@ -240,27 +240,39 @@ export const TechComparison = () => {
     };
   }, [isVisible]);
 
+  // Safely render icon - prevent crashes if icon component fails to load
+  const renderIcon = (IconComponent: typeof Zap, className: string) => {
+    try {
+      return <IconComponent className={className} />;
+    } catch {
+      return <div className={className} />;
+    }
+  };
+
   return (
     <section id="comparison" className="mb-32" ref={sectionRef}>
-      {/* Highlight Stats - Horizontal strip */}
-      <div className="flex items-stretch border-t border-b border-border mb-16">
-        {highlights.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex-1 py-8 px-6 border-r border-border last:border-r-0 text-center group hover:bg-slate-50 transition-colors"
-          >
-            <div className="w-10 h-10 bg-slate-100 rounded flex items-center justify-center mx-auto mb-3 text-slate-500 group-hover:bg-primary group-hover:text-white transition-all">
-              <item.icon className="w-5 h-5" />
+      {/* Highlight Stats - Responsive grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 border-t border-b border-border mb-16">
+        {highlights.map((item) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={item.label}
+              className="py-6 md:py-8 px-4 md:px-6 border-r border-border last:border-r-0 md:[&:nth-child(2)]:border-r md:[&:nth-child(4)]:border-r-0 [&:nth-child(2)]:border-r-0 [&:nth-child(1)]:border-b [&:nth-child(2)]:border-b md:[&:nth-child(1)]:border-b-0 md:[&:nth-child(2)]:border-b-0 text-center group hover:bg-muted/50 transition-colors"
+            >
+              <div className="w-9 h-9 md:w-10 md:h-10 bg-muted rounded flex items-center justify-center mx-auto mb-3 text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                {Icon && renderIcon(Icon, "w-4 h-4 md:w-5 md:h-5")}
+              </div>
+              <div className="font-data text-[10px] md:text-xs uppercase tracking-wider text-muted-foreground/70 mb-1">
+                {item.label}
+              </div>
+              <div className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground font-ui tabular-nums">
+                {item.value}
+              </div>
+              <div className="text-[10px] md:text-xs text-muted-foreground mt-1">{item.desc}</div>
             </div>
-            <div className="font-data text-xs uppercase tracking-wider text-muted-foreground mb-1">
-              {item.label}
-            </div>
-            <div className="text-2xl md:text-3xl font-bold text-foreground font-ui">
-              {item.value}
-            </div>
-            <div className="text-xs text-muted-foreground mt-1">{item.desc}</div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Charts Grid - 2x2 billboard.js visualizations */}

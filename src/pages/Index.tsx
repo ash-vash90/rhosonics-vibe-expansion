@@ -1,7 +1,6 @@
 import { Suspense, lazy, useEffect, useRef } from "react";
 import { AnimatedLogo, AnimatedLogoRef } from "@/components/AnimatedLogo";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
-import { LazySection } from "@/components/LazySection";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navigation } from "@/components/brand/Navigation";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -671,11 +670,9 @@ const Index = () => {
             <SectionHeader id="proof" number="10" title="Proof & Examples" subtitle="Technology comparisons, case studies, and brand gallery." />
             
             <ErrorBoundary>
-              <LazySection fallback={<SectionLoader />} rootMargin="400px">
-                <Suspense fallback={<SectionLoader />}>
-                  <TechComparison />
-                </Suspense>
-              </LazySection>
+              <Suspense fallback={<SectionLoader />}>
+                <TechComparison />
+              </Suspense>
             </ErrorBoundary>
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
