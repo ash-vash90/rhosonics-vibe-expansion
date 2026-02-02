@@ -195,7 +195,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
 // ICON SIDEBAR - Touch-optimized navigation with labels
 // ============================================================================
 const IconNav = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-28 bg-gradient-to-b from-slate-100 via-slate-50 to-white border-r border-slate-200/80 flex flex-col items-stretch py-3 gap-1 shadow-inner">
+  <div className="w-36 bg-gradient-to-b from-slate-100 via-slate-50 to-white border-r border-slate-200/80 flex flex-col items-stretch py-3 gap-1 shadow-inner">
     {children}
   </div>
 );
@@ -213,7 +213,7 @@ const IconNavItem = ({
 }) => (
   <button
     onClick={onClick}
-    className={`mx-1.5 px-2 py-2.5 rounded-xl flex items-center gap-2 transition-all duration-200 ${
+    className={`mx-2 px-3 py-2.5 rounded-xl flex items-center gap-2.5 transition-all duration-200 ${
       active 
         ? "bg-gradient-to-br from-primary to-primary/85 text-white shadow-lg shadow-primary/40" 
         : "text-slate-400 hover:text-slate-600 hover:bg-white hover:shadow-md"
@@ -221,7 +221,7 @@ const IconNavItem = ({
   >
     <Icon className="w-5 h-5 shrink-0" />
     {label && (
-      <span className={`font-data text-[10px] uppercase tracking-wide whitespace-nowrap ${active ? "text-white/90" : "text-slate-500"}`}>
+      <span className={`font-ui text-sm font-medium whitespace-nowrap ${active ? "text-white" : "text-slate-600"}`}>
         {label}
       </span>
     )}
@@ -449,7 +449,7 @@ const SamplingScreen = () => {
       <IconNav>
         <IconNavItem icon={ChevronLeft} label="Back" />
         <IconNavItem icon={Thermometer} label="Temp" active />
-        <IconNavItem icon={Droplets} label="Liquid" />
+        <IconNavItem icon={Droplets} label="Profiles" />
       </IconNav>
 
       <div className="flex-1 p-5 flex flex-col">
@@ -540,9 +540,9 @@ const MeasurementsScreen = () => (
   <div className="h-full flex">
     <IconNav>
       <IconNavItem icon={Gauge} label="Live" active />
-      <IconNavItem icon={FlaskConical} label="Calib" />
+      <IconNavItem icon={FlaskConical} label="Calibrate" />
       <IconNavItem icon={Activity} label="Logs" />
-      <IconNavItem icon={Settings} label="Setup" />
+      <IconNavItem icon={Settings} label="Settings" />
     </IconNav>
 
     <div className="flex-1 p-5 flex flex-col gap-4">
@@ -683,7 +683,7 @@ const CalibrationScreen = () => (
     <IconNav>
       <IconNavItem icon={ChevronLeft} label="Back" />
       <IconNavItem icon={Thermometer} label="Points" active />
-      <IconNavItem icon={Droplets} label="Liquid" />
+      <IconNavItem icon={Droplets} label="Profiles" />
     </IconNav>
 
     <div className="flex-1 p-5 flex flex-col">
@@ -807,7 +807,7 @@ const SettingsScreen = () => (
   <div className="h-full flex">
     <IconNav>
       <IconNavItem icon={ChevronLeft} label="Back" />
-      <IconNavItem icon={Globe} label="Lang" />
+      <IconNavItem icon={Globe} label="Language" />
       <IconNavItem icon={Sun} label="Display" />
       <IconNavItem icon={Gauge} label="Units" active />
     </IconNav>
