@@ -66,6 +66,7 @@ export const TechComparison = () => {
   const barChartRef = useRef<HTMLDivElement>(null);
   const radarChartRef = useRef<HTMLDivElement>(null);
   const gaugeChartRef = useRef<HTMLDivElement>(null);
+  const chartInstancesRef = useRef<any[]>([]);
   const [chartsLoaded, setChartsLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -95,148 +96,176 @@ export const TechComparison = () => {
     let mounted = true;
 
     const initCharts = async () => {
-      const { default: bb, spline, bar, radar, gauge } = await loadBillboard();
-      
-      if (!mounted) return;
+      try {
+        const { default: bb, spline, bar, radar, gauge } = await loadBillboard();
 
-      // Line Chart - Sensor Trends
-      if (lineChartRef.current) {
-        bb.generate({
-          data: {
-            columns: [
-              ["Density", 1.42, 1.44, 1.43, 1.45, 1.44, 1.46, 1.45, 1.47, 1.46, 1.48],
-              ["Velocity", 2.1, 2.3, 2.2, 2.4, 2.3, 2.5, 2.4, 2.6, 2.5, 2.7],
-            ],
-            type: spline(),
-            colors: {
-              Density: chartColors.primary,
-              Velocity: chartColors.warning,
-            },
-          },
-          point: {
-            r: 3.5,
-            focus: { expand: { r: 5.5 } },
-          },
-          axis: {
-            x: {
-              label: { text: "TIME (S)", position: "outer-center" },
-              tick: { format: (x: number) => `${x * 10}` },
-            },
-            y: {
-              label: { text: "VALUE", position: "outer-middle" },
-            },
-          },
-          grid: {
-            y: { show: true },
-          },
-          legend: { show: true },
-          padding: chartConfig.padding,
-          transition: chartConfig.transition,
-          bindto: lineChartRef.current,
+        if (!mounted) return;
+
+        // Clear any previous instances (defensive, in case of remounts)
+        chartInstancesRef.current.forEach((c) => {
+          try {
+            c?.destroy?.();
+          } catch {
+            // ignore
+          }
         });
-      }
+        chartInstancesRef.current = [];
 
-      // Bar Chart - Energy Consumption
-      if (barChartRef.current) {
-        bb.generate({
-          data: {
-            columns: [
-              ["SDM ECO", 15],
-              ["Nuclear", 85],
-              ["Coriolis", 45],
-              ["Ultrasonic", 25],
-            ],
-            type: bar(),
-            colors: {
-              "SDM ECO": chartColors.primary,
-              Nuclear: chartColors.slate700,
-              Coriolis: chartColors.slate500,
-              Ultrasonic: chartColors.slate300,
-            },
-          },
-          bar: {
-            width: { ratio: 0.6 },
-            radius: 2,
-          },
-          axis: {
-            x: { type: "category", categories: ["ENERGY (W)"] },
-            y: { max: 100, padding: { top: 10 } },
-          },
-          grid: {
-            y: { show: true },
-          },
-          legend: { show: true },
-          padding: chartConfig.padding,
-          transition: chartConfig.transition,
-          bindto: barChartRef.current,
-        });
-      }
-
-      // Radar Chart - Multi-Factor Analysis
-      if (radarChartRef.current) {
-        bb.generate({
-          data: {
-            columns: [
-              ["SDM ECO", 95, 98, 95, 100, 100, 85],
-              ["Nuclear", 20, 95, 40, 70, 30, 20],
-              ["Coriolis", 60, 92, 60, 95, 75, 50],
-            ],
-            type: radar(),
-            colors: {
-              "SDM ECO": chartColors.primary,
-              Nuclear: chartColors.slate700,
-              Coriolis: chartColors.slate400,
-            },
-          },
-          radar: {
-            axis: {
-              max: 100,
-              text: {
-                show: true,
+        // Line Chart - Sensor Trends
+        if (lineChartRef.current) {
+          const chart = bb.generate({
+            data: {
+              columns: [
+                ["Density", 1.42, 1.44, 1.43, 1.45, 1.44, 1.46, 1.45, 1.47, 1.46, 1.48],
+                ["Velocity", 2.1, 2.3, 2.2, 2.4, 2.3, 2.5, 2.4, 2.6, 2.5, 2.7],
+              ],
+              type: spline(),
+              colors: {
+                Density: chartColors.primary,
+                Velocity: chartColors.warning,
               },
             },
-            level: { depth: 4 },
-            direction: { clockwise: true },
-          },
-          padding: { top: 10, right: 10, bottom: 10, left: 10 },
-          transition: chartConfig.transition,
-          bindto: radarChartRef.current,
-        });
-      }
-
-      // Gauge Chart - System Uptime
-      if (gaugeChartRef.current) {
-        bb.generate({
-          data: {
-            columns: [["Uptime", 99.7]],
-            type: gauge(),
-          },
-          gauge: {
-            label: {
-              format: (value: number) => `${value}%`,
-              extents: () => "",
+            point: {
+              r: 3.5,
+              focus: { expand: { r: 5.5 } },
             },
-            width: 20,
-            max: 100,
-          },
-          color: {
-            pattern: [chartColors.error, chartColors.warning, chartColors.success],
-            threshold: { values: [30, 70, 100] },
-          },
-          size: { height: 180 },
-          padding: { top: 0, right: 0, bottom: 0, left: 0 },
-          transition: chartConfig.transition,
-          bindto: gaugeChartRef.current,
-        });
-      }
+            axis: {
+              x: {
+                label: { text: "TIME (S)", position: "outer-center" },
+                tick: { format: (x: number) => `${x * 10}` },
+              },
+              y: {
+                label: { text: "VALUE", position: "outer-middle" },
+              },
+            },
+            grid: {
+              y: { show: true },
+            },
+            legend: { show: true },
+            padding: chartConfig.padding,
+            transition: chartConfig.transition,
+            bindto: lineChartRef.current,
+          });
+          chartInstancesRef.current.push(chart);
+        }
 
-      setChartsLoaded(true);
+        // Bar Chart - Energy Consumption
+        if (barChartRef.current) {
+          const chart = bb.generate({
+            data: {
+              columns: [
+                ["SDM ECO", 15],
+                ["Nuclear", 85],
+                ["Coriolis", 45],
+                ["Ultrasonic", 25],
+              ],
+              type: bar(),
+              colors: {
+                "SDM ECO": chartColors.primary,
+                Nuclear: chartColors.slate700,
+                Coriolis: chartColors.slate500,
+                Ultrasonic: chartColors.slate300,
+              },
+            },
+            bar: {
+              width: { ratio: 0.6 },
+              radius: 2,
+            },
+            axis: {
+              x: { type: "category", categories: ["ENERGY (W)"] },
+              y: { max: 100, padding: { top: 10 } },
+            },
+            grid: {
+              y: { show: true },
+            },
+            legend: { show: true },
+            padding: chartConfig.padding,
+            transition: chartConfig.transition,
+            bindto: barChartRef.current,
+          });
+          chartInstancesRef.current.push(chart);
+        }
+
+        // Radar Chart - Multi-Factor Analysis
+        if (radarChartRef.current) {
+          const chart = bb.generate({
+            data: {
+              columns: [
+                ["SDM ECO", 95, 98, 95, 100, 100, 85],
+                ["Nuclear", 20, 95, 40, 70, 30, 20],
+                ["Coriolis", 60, 92, 60, 95, 75, 50],
+              ],
+              type: radar(),
+              colors: {
+                "SDM ECO": chartColors.primary,
+                Nuclear: chartColors.slate700,
+                Coriolis: chartColors.slate400,
+              },
+            },
+            radar: {
+              axis: {
+                max: 100,
+                text: {
+                  show: true,
+                },
+              },
+              level: { depth: 4 },
+              direction: { clockwise: true },
+            },
+            padding: { top: 10, right: 10, bottom: 10, left: 10 },
+            transition: chartConfig.transition,
+            bindto: radarChartRef.current,
+          });
+          chartInstancesRef.current.push(chart);
+        }
+
+        // Gauge Chart - System Uptime
+        if (gaugeChartRef.current) {
+          const chart = bb.generate({
+            data: {
+              columns: [["Uptime", 99.7]],
+              type: gauge(),
+            },
+            gauge: {
+              label: {
+                format: (value: number) => `${value}%`,
+                extents: () => "",
+              },
+              width: 20,
+              max: 100,
+            },
+            color: {
+              pattern: [chartColors.error, chartColors.warning, chartColors.success],
+              threshold: { values: [30, 70, 100] },
+            },
+            size: { height: 180 },
+            padding: { top: 0, right: 0, bottom: 0, left: 0 },
+            transition: chartConfig.transition,
+            bindto: gaugeChartRef.current,
+          });
+          chartInstancesRef.current.push(chart);
+        }
+
+        if (mounted) setChartsLoaded(true);
+      } catch (error) {
+        console.error("TechComparison charts failed to initialize", error);
+      }
     };
 
     initCharts();
 
     return () => {
       mounted = false;
+
+      // Ensure billboard instances are cleaned up before React unmounts DOM
+      chartInstancesRef.current.forEach((c) => {
+        try {
+          c?.destroy?.();
+        } catch {
+          // ignore
+        }
+      });
+      chartInstancesRef.current = [];
     };
   }, [isVisible]);
 
@@ -281,9 +310,10 @@ export const TechComparison = () => {
         <div className="bg-card border border-border rounded-lg p-6">
           <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Line Chart</span>
           <p className="text-sm text-muted-foreground mb-4">Sensor data trends over time</p>
-          <div ref={lineChartRef} className="h-64">
+          <div className="relative h-64">
+            <div ref={lineChartRef} className="h-full" />
             {!chartsLoaded && (
-              <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
+              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
                 <div className="animate-pulse">Loading chart...</div>
               </div>
             )}
@@ -294,9 +324,10 @@ export const TechComparison = () => {
         <div className="bg-card border border-border rounded-lg p-6">
           <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Bar Chart</span>
           <p className="text-sm text-muted-foreground mb-4">Technology energy consumption</p>
-          <div ref={barChartRef} className="h-64">
+          <div className="relative h-64">
+            <div ref={barChartRef} className="h-full" />
             {!chartsLoaded && (
-              <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
+              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
                 <div className="animate-pulse">Loading chart...</div>
               </div>
             )}
@@ -307,9 +338,10 @@ export const TechComparison = () => {
         <div className="bg-card border border-border rounded-lg p-6">
           <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Radar Chart</span>
           <p className="text-sm text-muted-foreground mb-4">Multi-factor performance analysis</p>
-          <div ref={radarChartRef} className="h-64">
+          <div className="relative h-64">
+            <div ref={radarChartRef} className="h-full" />
             {!chartsLoaded && (
-              <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
+              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
                 <div className="animate-pulse">Loading chart...</div>
               </div>
             )}
@@ -320,9 +352,10 @@ export const TechComparison = () => {
         <div className="bg-card border border-border rounded-lg p-6">
           <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Gauge Chart</span>
           <p className="text-sm text-muted-foreground mb-4">System uptime indicator</p>
-          <div ref={gaugeChartRef} className="h-64">
+          <div className="relative h-64">
+            <div ref={gaugeChartRef} className="h-full" />
             {!chartsLoaded && (
-              <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
+              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
                 <div className="animate-pulse">Loading chart...</div>
               </div>
             )}
