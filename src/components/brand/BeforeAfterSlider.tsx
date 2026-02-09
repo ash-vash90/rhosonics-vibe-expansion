@@ -143,25 +143,25 @@ const BeforeAfterSlider = ({
           style={{ filter: treatmentFilter }}
           draggable={false}
         />
-        {/* Green accent overlay - brand color grade via soft light blending */}
+        {/* Green accent overlay — very subtle */}
         <div 
-          className="absolute inset-0 mix-blend-soft-light pointer-events-none"
+          className="absolute inset-0 mix-blend-soft-light pointer-events-none opacity-[0.12]"
           style={{ 
-            background: "radial-gradient(ellipse at 30% 60%, hsl(var(--primary) / 0.28) 0%, transparent 55%), radial-gradient(ellipse at 70% 40%, hsl(var(--primary) / 0.20) 0%, transparent 45%)"
+            background: "radial-gradient(ellipse at 30% 60%, hsl(var(--primary) / 0.15) 0%, transparent 55%), radial-gradient(ellipse at 70% 40%, hsl(var(--primary) / 0.10) 0%, transparent 45%)"
           }}
         />
-        {/* Cool tone overlay */}
+        {/* Cool tone overlay — screen to preserve blacks */}
         <div 
-          className="absolute inset-0 mix-blend-overlay pointer-events-none opacity-18"
+          className="absolute inset-0 mix-blend-screen pointer-events-none opacity-[0.04]"
           style={{ 
             background: "linear-gradient(180deg, hsl(210 30% 20% / 0.2) 0%, hsl(190 25% 15% / 0.15) 100%)"
           }}
         />
-        {/* Cinematic vignette */}
+        {/* Minimal vignette */}
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{ 
-            background: "radial-gradient(ellipse at center, transparent 55%, hsl(220 30% 8% / 0.25) 100%)"
+            background: "radial-gradient(ellipse at center, transparent 60%, hsl(220 30% 8% / 0.12) 100%)"
           }}
         />
       </div>
