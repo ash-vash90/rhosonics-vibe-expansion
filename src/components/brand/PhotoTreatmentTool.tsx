@@ -80,26 +80,26 @@ function generatePreset(analysis: ColorAnalysis): TreatmentPreset {
   let saturation: number, contrast: number, brightness: number, label: string, reasoning: string;
 
   if (analysis.warmth === "warm") {
-    saturation = 0.85; contrast = 1.20; brightness = 0.96;
+    saturation = 0.90; contrast = 1.06; brightness = 0.98;
     label = "Warm → Industrial Cool";
-    reasoning = `Warm ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Stronger desaturation to cool the mood, high contrast for dramatic weight.`;
+    reasoning = `Warm ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Gentle desaturation to cool the mood, light contrast lift.`;
   } else if (analysis.warmth === "cool") {
-    saturation = 0.90; contrast = 1.12; brightness = 0.97;
+    saturation = 0.93; contrast = 1.04; brightness = 0.99;
     label = "Cool → Cinematic Brand";
-    reasoning = `Cool ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Gentle desaturation to preserve cool character with subtle contrast lift.`;
+    reasoning = `Cool ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Minimal desaturation to preserve cool character with subtle contrast.`;
   } else {
-    saturation = 0.88; contrast = 1.15; brightness = 0.97;
+    saturation = 0.92; contrast = 1.05; brightness = 0.98;
     label = "Neutral → Brand Standard";
-    reasoning = `Neutral tones detected (avg hue ${Math.round(analysis.avgHue)}°). Balanced desaturation and contrast for standard brand treatment.`;
+    reasoning = `Neutral tones detected (avg hue ${Math.round(analysis.avgHue)}°). Light desaturation and contrast for standard brand treatment.`;
   }
 
   if (analysis.avgSaturation < 0.25) {
-    saturation = Math.min(saturation + 0.08, 0.98);
+    saturation = Math.min(saturation + 0.05, 0.98);
     reasoning += " Source is already low-saturation — reducing desaturation to avoid washing out.";
   }
   if (analysis.contrastRatio < 0.4) {
-    contrast = Math.min(contrast + 0.1, 1.35);
-    reasoning += " Low native contrast — boosting more to compensate.";
+    contrast = Math.min(contrast + 0.04, 1.12);
+    reasoning += " Low native contrast — slight boost to compensate.";
   }
 
   return { saturation, contrast, brightness, label, reasoning };
