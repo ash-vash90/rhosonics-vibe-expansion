@@ -788,7 +788,7 @@ export const ImageryGuidelines = () => {
                 beforeLabel="ORIGINAL"
                 afterLabel="TREATED"
                 imageAlt="Industrial mining site field photography"
-                saturation={1.15}
+                saturation={0.85}
                 contrast={1.25}
                 brightness={0.93}
               />
@@ -804,7 +804,7 @@ export const ImageryGuidelines = () => {
                 beforeLabel="ORIGINAL"
                 afterLabel="TREATED"
                 imageAlt="Wastewater treatment facility"
-                saturation={1.05}
+                saturation={0.90}
                 contrast={1.15}
                 brightness={0.96}
               />
@@ -854,7 +854,7 @@ export const ImageryGuidelines = () => {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span>Saturation tuned per source (+5% to +15%)</span>
+                  <span>Gentle desaturation per source (-10% to -15%)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
@@ -888,7 +888,7 @@ export const ImageryGuidelines = () => {
                   </div>
                   <span className="font-ui font-semibold text-foreground block mb-2">Color Grade</span>
                   <p className="text-sm text-muted-foreground">
-                    Adjust saturation per source image. Warm images get cooled; cool images get subtle boosting (+5% to +15%).
+                    Gentle desaturation per source image (-10% to -15%). Enough to cool the mood without draining life.
                   </p>
                 </div>
                 <div className="relative">
@@ -934,8 +934,8 @@ export const ImageryGuidelines = () => {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-4 bg-muted/30 rounded-lg border border-border">
               <span className="label-tech-sm text-primary block mb-2">SATURATION</span>
-              <span className="font-data text-2xl font-light text-foreground">+5% to +15%</span>
-              <p className="text-sm text-muted-foreground mt-1">Per-image tuning from source baseline</p>
+              <span className="font-data text-2xl font-light text-foreground">-10% to -15%</span>
+              <p className="text-sm text-muted-foreground mt-1">Gentle per-image desaturation</p>
             </div>
             <div className="p-4 bg-muted/30 rounded-lg border border-border">
               <span className="label-tech-sm text-primary block mb-2">CONTRAST</span>
