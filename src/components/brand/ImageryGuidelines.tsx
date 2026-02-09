@@ -3,6 +3,7 @@ import { BrandCallout } from "./BrandCallout";
 import { Slider } from "@/components/ui/slider";
 import { Download, Check, Grid3X3, Maximize2, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
 import BeforeAfterSlider from "./BeforeAfterSlider";
+import PhotoTreatmentTool from "./PhotoTreatmentTool";
 
 // Image style examples - AI generated
 import fieldMining from "@/assets/brand/imagery-field-mining.jpg";
@@ -948,8 +949,11 @@ export const ImageryGuidelines = () => {
               <p className="text-sm text-muted-foreground mt-1">Soft-light blend with cinematic vignette</p>
             </div>
           </div>
+          </div>
+
+          {/* Photo Treatment Tool */}
+          <PhotoTreatmentTool />
         </div>
-      </div>
 
       {/* ═══════════════════════════════════════════════════════════════
           TEXTURES SECTION
