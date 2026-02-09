@@ -1,1 +1,4 @@
 project_id = "albeqixkyjdxinxbiuww"
+
+[functions.upscale-image]
+verify_jwt = false
