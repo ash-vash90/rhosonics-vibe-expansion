@@ -21,9 +21,9 @@ const BeforeAfterSlider = ({
   afterLabel = "AFTER",
   imageAlt = "Image comparison",
   className = "",
-  desaturation = 0.45,
-  contrast = 1.2,
-  brightness = 0.95,
+  desaturation = 0.6,
+  contrast = 1.3,
+  brightness = 0.92,
 }: BeforeAfterSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -147,14 +147,14 @@ const BeforeAfterSlider = ({
         <div 
           className="absolute inset-0 mix-blend-color pointer-events-none"
           style={{ 
-            background: "radial-gradient(ellipse at 30% 60%, hsl(var(--primary) / 0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 40%, hsl(var(--primary) / 0.1) 0%, transparent 40%)"
+            background: "radial-gradient(ellipse at 30% 60%, hsl(var(--primary) / 0.22) 0%, transparent 55%), radial-gradient(ellipse at 70% 40%, hsl(var(--primary) / 0.15) 0%, transparent 45%)"
           }}
         />
         {/* Cool tone overlay */}
         <div 
-          className="absolute inset-0 mix-blend-overlay pointer-events-none opacity-20"
+          className="absolute inset-0 mix-blend-overlay pointer-events-none opacity-30"
           style={{ 
-            background: "linear-gradient(180deg, hsl(210 30% 20% / 0.3) 0%, hsl(200 20% 15% / 0.2) 100%)"
+            background: "linear-gradient(180deg, hsl(210 30% 20% / 0.35) 0%, hsl(190 25% 15% / 0.25) 100%)"
           }}
         />
       </div>
