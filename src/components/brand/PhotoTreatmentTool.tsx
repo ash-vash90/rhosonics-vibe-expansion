@@ -1,5 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Upload, Download, RotateCcw } from "lucide-react";
+import { Upload, Download, RotateCcw, ZoomIn, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface ColorAnalysis {
   avgHue: number;
@@ -154,10 +156,12 @@ const PhotoTreatmentTool = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [upscaling, setUpscaling] = useState<number | null>(null); // 2 or 4 when in progress
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
+  const { toast } = useToast();
 
   const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -205,6 +209,43 @@ const PhotoTreatmentTool = () => {
     link.href = fullCanvas.toDataURL("image/png");
     link.click();
   }, [preset, fileName]);
+
+  const handleUpscaleDownload = useCallback(async (scale: 2 | 4) => {
+    if (!treatedDataUrl) return;
+    setUpscaling(scale);
+
+    try {
+      const response = await supabase.functions.invoke("upscale-image", {
+        body: { imageDataUrl: treatedDataUrl, scale },
+      });
+
+      if (response.error) {
+        throw new Error(response.error.message || "Upscale failed");
+      }
+
+      const { upscaledUrl, error } = response.data;
+      if (error) {
+        toast({ title: "Upscale failed", description: error, variant: "destructive" });
+        return;
+      }
+
+      if (upscaledUrl) {
+        const link = document.createElement("a");
+        link.download = `treated-${scale}x-${fileName || "image"}.png`;
+        link.href = upscaledUrl;
+        link.click();
+      }
+    } catch (e) {
+      console.error("Upscale error:", e);
+      toast({
+        title: "Upscale failed",
+        description: e instanceof Error ? e.message : "Unknown error",
+        variant: "destructive",
+      });
+    } finally {
+      setUpscaling(null);
+    }
+  }, [treatedDataUrl, fileName, toast]);
 
   const handleReset = useCallback(() => {
     setSourceDataUrl(null);
@@ -395,21 +436,54 @@ const PhotoTreatmentTool = () => {
               </div>
             )}
 
-            <div className="flex gap-3">
-              <button
-                onClick={handleDownload}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded font-ui text-sm font-medium hover:bg-primary/90 transition-colors"
-              >
-                <Download className="w-4 h-4" />
-                Download Treated Image
-              </button>
-              <button
-                onClick={handleReset}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border bg-card text-foreground rounded font-ui text-sm font-medium hover:bg-muted transition-colors"
-              >
-                <RotateCcw className="w-4 h-4" />
-                New Image
-              </button>
+            <div className="space-y-3">
+              <div className="flex gap-3">
+                <button
+                  onClick={handleDownload}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded font-ui text-sm font-medium hover:bg-primary/90 transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Download 1x
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border bg-card text-foreground rounded font-ui text-sm font-medium hover:bg-muted transition-colors"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  New Image
+                </button>
+              </div>
+
+              {/* AI Upscale Downloads */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleUpscaleDownload(2)}
+                  disabled={upscaling !== null}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 border border-primary/30 bg-primary/5 text-primary rounded font-ui text-sm font-medium hover:bg-primary/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {upscaling === 2 ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <ZoomIn className="w-4 h-4" />
+                  )}
+                  {upscaling === 2 ? "Upscaling…" : "Download 2× (AI Upscale)"}
+                </button>
+                <button
+                  onClick={() => handleUpscaleDownload(4)}
+                  disabled={upscaling !== null}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 border border-primary/30 bg-primary/5 text-primary rounded font-ui text-sm font-medium hover:bg-primary/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {upscaling === 4 ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <ZoomIn className="w-4 h-4" />
+                  )}
+                  {upscaling === 4 ? "Upscaling…" : "Download 4× (AI Upscale)"}
+                </button>
+              </div>
+              <p className="text-[11px] text-muted-foreground text-center">
+                AI upscaling enhances resolution and sharpness while preserving the brand treatment
+              </p>
             </div>
           </div>
         </div>
