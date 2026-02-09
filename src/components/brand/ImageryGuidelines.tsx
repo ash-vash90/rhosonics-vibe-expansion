@@ -790,8 +790,8 @@ export const ImageryGuidelines = () => {
                 afterLabel="TREATED"
                 imageAlt="Industrial mining site field photography"
                 saturation={0.85}
-                contrast={1.25}
-                brightness={0.93}
+                contrast={1.20}
+                brightness={0.96}
               />
               <div className="flex items-center justify-between">
                 <span className="label-tech-sm text-primary">MINING</span>
@@ -806,8 +806,8 @@ export const ImageryGuidelines = () => {
                 afterLabel="TREATED"
                 imageAlt="Wastewater treatment facility"
                 saturation={0.90}
-                contrast={1.15}
-                brightness={0.96}
+                contrast={1.12}
+                brightness={0.97}
               />
               <div className="flex items-center justify-between">
                 <span className="label-tech-sm text-primary">WASTEWATER</span>
