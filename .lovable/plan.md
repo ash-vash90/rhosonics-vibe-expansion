@@ -1,148 +1,87 @@
 
 
-# Plan: Comprehensive Agents.md Update with Refactoring UI Principles
+# Make Photo Treatment Expressive and Image-Aware
 
-## Overview
+## The Problems
 
-Update the `agents.md` file to bridge the gaps identified from the Refactoring UI analysis, transforming it from a ~700 line reference document into a ~900+ line comprehensive guide that includes both brand rules AND design process principles.
+1. **Treatment goes the wrong direction** -- the current filter desaturates (saturate 0.6 = 40% less color), making images drab. The goal should be to add vibrancy and brand character, not drain life out.
 
-## Changes Summary
+2. **One-size-fits-all values** -- Both slider instances use identical `desaturation={0.45}` / `contrast={1.2}` / `brightness={0.95}`. A warm mining photo and a cool wastewater photo need very different treatments.
 
-### New Sections to Add
+3. **Text doesn't match** -- The surrounding copy says "Desaturated 40-60%" and "Pull warmth out" which reinforces the drab approach. Needs rewriting to reflect the actual brand intent: industrial mood with selective color enhancement.
 
-**Section 0: Design Process (Refactoring UI Principles)** - NEW
-- Feature-first development workflow
-- Grayscale validation test before shipping
-- Iterative building approach ("pessimist when building, optimist when polishing")
-- Emphasize by de-emphasizing technique
-- Labels as a last resort principle
+---
 
-### Sections to Expand
+## The Fix
 
-**Section 2: Typography System** - EXPANDED
-- Add line height proportions table (tight/normal/relaxed based on line length)
-- Add line length constraints (45-75 characters optimal, max-width classes)
-- Add code examples for both principles
+### 1. Rethink the filter approach in BeforeAfterSlider
 
-**Section 3: Color System** - EXPANDED
-- Add full Primary Green 50-900 scale for UI states
-- Add dark background color rules (reduce saturation)
-- Add opacity-based hover/active state examples
+Replace `saturate(0.6)` (desaturating) with a treatment that:
+- **Keeps or slightly boosts saturation** (saturate 1.1-1.3) for richness
+- **Shifts hue toward cool tones** via the overlay (already exists, just needs tuning)
+- **Adds the green accent more boldly** as the signature brand touch
+- **Adjusts contrast per-image** rather than blanket values
 
-**Section 4: Shadow & Elevation System** - NEW SECTION
-- 5-level shadow scale (none → card → elevated → modal → glow)
-- Light source principles (top-left)
-- Shadows vs borders usage guidance
-- Code examples with Tailwind classes
+Rename the `desaturation` prop to `saturation` to make intent clear (values > 1 = more saturated).
 
-**Section 6: Spacing System** - EXPANDED
-- Add "Separation Without Borders" principle
-- When to use borders vs spacing vs background shifts
-- Code examples showing the transformation
+### 2. Per-image treatment presets
 
-**Section 7: Icon System** - EXPANDED
-- Add icon color & weight balance rules
-- Icons should match text visual weight
+Give each BeforeAfterSlider different values tuned to the source image:
 
-**Section 9: Component Patterns** - EXPANDED
-- Add Empty States pattern with full anatomy
-- Good vs bad empty state examples
-- Four-part structure: Icon, Title, Description, Action
+| Image | Saturation | Contrast | Brightness | Reasoning |
+|-------|-----------|----------|------------|-----------|
+| Mining (treatmentBefore) | 1.15 | 1.25 | 0.93 | Warm earth tones -- boost slightly, let contrast create drama |
+| Wastewater (fieldWastewater) | 1.05 | 1.15 | 0.96 | Already cool-toned -- gentle touch, preserve blues |
 
-**Section 13: Critical Constraints** - EXPANDED
-- Add shadows & depth violations
-- Add layout violations (center-aligned paragraphs, inconsistent spacing)
-- Add process violations (skipping grayscale test)
+### 3. Strengthen the green accent overlay
 
-**Section 15: Implementation Checklist** - EXPANDED
-- Add design process checkpoints
-- Add color & depth verification
-- Add component quality checks
+- Increase the green radial gradient opacity from 0.22 to ~0.28
+- Use `mix-blend-soft-light` instead of `mix-blend-color` for a more natural color grade feel
+- Add a subtle vignette (dark edges) for cinematic weight
 
-## File Changes
+### 4. Rewrite the treatment descriptions
 
-| File | Action | Size Change |
-|------|--------|-------------|
-| `agents.md` | Update | ~700 → ~900 lines |
+**Current text (wrong direction):**
+- "Desaturated 40-60%"
+- "Pull warmth out of earth tones"
+- "Reduce saturation by 40-60%"
 
-## Detailed Section Content
+**New text (correct direction):**
+- "Controlled saturation with cool color grade"
+- "Shift warmth toward industrial cool tones via overlay"
+- "Saturation adjusted per source image (+5% to +15%)"
 
-### Section 0: Design Process
+Update the 4-step process labels:
+- Step 01: "Desaturate" becomes **"Color Grade"** -- Adjust saturation per source. Warm images get cooled; cool images get subtle boosting.
+- Step 02: "Cool Shift" stays but description updated -- this is where the mood comes from
+- Step 03: "Contrast" stays -- dramatic shadows, industrial weight
+- Step 04: "Green Accent" becomes **"Brand Accent"** -- Bolder green overlay as signature touch
 
-```markdown
-## 0. Design Process (Refactoring UI Principles)
+### 5. Update the spec cards
 
-### Feature-First Development
-Start with functionality, not layout. Design the actual feature before worrying about where it goes.
+The three spec tiles at the bottom need new values:
+- SATURATION: "+5% to +15%" (was "-40% to -60%")
+- CONTRAST: "+15% to +25%" (stays)
+- GREEN ACCENT: increase description to note it's more prominent now
 
-### Grayscale Validation Test
-Before shipping any design, convert to grayscale. If hierarchy is unclear, fix spacing and typography - don't rely on color to save it.
+---
 
-### Emphasize by De-emphasizing
-The primary way to make something stand out is to make other things stand back.
-```
+## Technical Changes
 
-### Shadow/Elevation Scale
+### Files to modify
 
-| Level | Name | Usage |
-|-------|------|-------|
-| 0 | None | Flat elements |
-| 1 | Card | Cards, dropdowns |
-| 2 | Elevated | Hover states, raised elements |
-| 3 | Modal | Dialogs, overlays |
-| 4 | Glow | Hero elements, premium focus |
+**`src/components/brand/BeforeAfterSlider.tsx`**
+- Rename `desaturation` prop to `saturation` (default 1.1)
+- Update filter string to use new saturation values
+- Change green overlay to `mix-blend-soft-light` and increase opacity
+- Add subtle vignette overlay
+- Update the specs indicator text at bottom-right
 
-### Primary Green Scale (50-900)
-
-| Level | HSL | Usage |
-|-------|-----|-------|
-| 50 | 125 50% 97% | Subtle backgrounds |
-| 100 | 125 45% 93% | Hover backgrounds |
-| 200 | 125 42% 85% | Active backgrounds |
-| 300 | 125 45% 72% | Borders |
-| 400 | 125 48% 55% | Muted accents |
-| 500 | 125 50% 40% | Primary (default) |
-| 600 | 125 52% 35% | Hover state |
-| 700 | 125 55% 28% | Active/pressed |
-| 800 | 125 58% 20% | Dark accents |
-| 900 | 125 60% 12% | Darkest variant |
-
-### Line Height Rules
-
-| Context | Line Height | Tailwind |
-|---------|-------------|----------|
-| Short lines (labels, headers) | 1.25 | `leading-tight` |
-| Medium lines (cards, captions) | 1.5 | `leading-normal` |
-| Long lines (paragraphs) | 1.75-2 | `leading-relaxed` |
-
-### Line Length Constraints
-
-| Context | Max Width | Tailwind |
-|---------|-----------|----------|
-| Body text | 65ch | `max-w-prose` |
-| Short paragraphs | 45ch | `max-w-md` |
-| Wide content | 75ch | `max-w-2xl` |
-
-### Empty States Pattern
-
-Four components:
-1. Icon - Relevant to missing content
-2. Title - What's missing
-3. Description - Why empty or how to fix
-4. Action - Clear next step
-
-## Technical Notes
-
-- All additions follow the existing Markdown structure
-- Code examples use consistent fencing (```tsx)
-- Tables follow existing alignment patterns
-- Adds cross-references to Refactoring UI as source
-
-## Benefits
-
-1. **Process guidance** - AI agents now know HOW to design, not just what colors to use
-2. **Hierarchy techniques** - Explicit methods for establishing visual hierarchy
-3. **Complete color system** - Full shade scales enable proper hover/active states
-4. **Depth system** - Consistent shadow usage across all components
-5. **Better empty states** - First-impression UI gets proper attention
+**`src/components/brand/ImageryGuidelines.tsx`**
+- Update both BeforeAfterSlider instances with per-image tuned values
+- Rewrite "Raw Capture" vs "Brand Treatment" bullet points
+- Rewrite the 4-step Color Grading Process text
+- Update the three spec tiles (SATURATION, CONTRAST, GREEN ACCENT)
+- Update the descriptive text under the sliders ("Warm earth tones -> desaturated" becomes something like "Warm earth tones -> cool industrial grade")
+- Update subtitle text "same settings, consistent results" to "per-image tuning, consistent mood"
 
