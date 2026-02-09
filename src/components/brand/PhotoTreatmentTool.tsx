@@ -79,15 +79,15 @@ function generatePreset(analysis: ColorAnalysis): TreatmentPreset {
   let saturation: number, contrast: number, brightness: number, label: string, reasoning: string;
 
   if (analysis.warmth === "warm") {
-    saturation = 0.85; contrast = 1.25; brightness = 0.93;
+    saturation = 0.85; contrast = 1.20; brightness = 0.96;
     label = "Warm → Industrial Cool";
     reasoning = `Warm ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Stronger desaturation to cool the mood, high contrast for dramatic weight.`;
   } else if (analysis.warmth === "cool") {
-    saturation = 0.90; contrast = 1.15; brightness = 0.96;
+    saturation = 0.90; contrast = 1.12; brightness = 0.97;
     label = "Cool → Cinematic Brand";
     reasoning = `Cool ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Gentle desaturation to preserve cool character with subtle contrast lift.`;
   } else {
-    saturation = 0.88; contrast = 1.20; brightness = 0.94;
+    saturation = 0.88; contrast = 1.15; brightness = 0.97;
     label = "Neutral → Brand Standard";
     reasoning = `Neutral tones detected (avg hue ${Math.round(analysis.avgHue)}°). Balanced desaturation and contrast for standard brand treatment.`;
   }
@@ -128,16 +128,16 @@ function renderTreated(img: HTMLImageElement, preset: TreatmentPreset, maxDim?: 
 
   // Cool tone overlay
   ctx.globalCompositeOperation = "overlay";
-  ctx.globalAlpha = 0.25;
+  ctx.globalAlpha = 0.18;
   const coolGrd = ctx.createLinearGradient(0, 0, 0, h);
-  coolGrd.addColorStop(0, "rgba(30,50,70,0.3)"); coolGrd.addColorStop(1, "rgba(25,55,60,0.2)");
+  coolGrd.addColorStop(0, "rgba(30,50,70,0.2)"); coolGrd.addColorStop(1, "rgba(25,55,60,0.15)");
   ctx.fillStyle = coolGrd; ctx.fillRect(0, 0, w, h);
 
   // Vignette
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
   const vigGrd = ctx.createRadialGradient(w / 2, h / 2, w * 0.35, w / 2, h / 2, w * 0.75);
-  vigGrd.addColorStop(0, "transparent"); vigGrd.addColorStop(1, "rgba(15,20,35,0.35)");
+  vigGrd.addColorStop(0, "transparent"); vigGrd.addColorStop(1, "rgba(15,20,35,0.25)");
   ctx.fillStyle = vigGrd; ctx.fillRect(0, 0, w, h);
 
   ctx.globalCompositeOperation = "source-over";

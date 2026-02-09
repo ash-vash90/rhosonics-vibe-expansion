@@ -22,8 +22,8 @@ const BeforeAfterSlider = ({
   imageAlt = "Image comparison",
   className = "",
   saturation = 0.88,
-  contrast = 1.2,
-  brightness = 0.94,
+  contrast = 1.15,
+  brightness = 0.97,
 }: BeforeAfterSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -152,16 +152,16 @@ const BeforeAfterSlider = ({
         />
         {/* Cool tone overlay */}
         <div 
-          className="absolute inset-0 mix-blend-overlay pointer-events-none opacity-25"
+          className="absolute inset-0 mix-blend-overlay pointer-events-none opacity-18"
           style={{ 
-            background: "linear-gradient(180deg, hsl(210 30% 20% / 0.3) 0%, hsl(190 25% 15% / 0.2) 100%)"
+            background: "linear-gradient(180deg, hsl(210 30% 20% / 0.2) 0%, hsl(190 25% 15% / 0.15) 100%)"
           }}
         />
         {/* Cinematic vignette */}
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{ 
-            background: "radial-gradient(ellipse at center, transparent 50%, hsl(220 30% 8% / 0.35) 100%)"
+            background: "radial-gradient(ellipse at center, transparent 55%, hsl(220 30% 8% / 0.25) 100%)"
           }}
         />
       </div>
