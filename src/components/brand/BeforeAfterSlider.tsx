@@ -7,8 +7,8 @@ interface BeforeAfterSliderProps {
   afterLabel?: string;
   imageAlt?: string;
   className?: string;
-  /** Desaturation amount (0-1, default 0.5 = 50% desaturation) */
-  desaturation?: number;
+  /** Saturation multiplier (1 = unchanged, 1.15 = +15% saturation) */
+  saturation?: number;
   /** Contrast boost (1 = normal, 1.2 = 20% increase) */
   contrast?: number;
   /** Brightness adjustment */
@@ -21,9 +21,9 @@ const BeforeAfterSlider = ({
   afterLabel = "AFTER",
   imageAlt = "Image comparison",
   className = "",
-  desaturation = 0.6,
-  contrast = 1.3,
-  brightness = 0.92,
+  saturation = 1.1,
+  contrast = 1.2,
+  brightness = 0.94,
 }: BeforeAfterSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -32,7 +32,7 @@ const BeforeAfterSlider = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   // CSS filter string for the "after" treatment
-  const treatmentFilter = `saturate(${desaturation}) contrast(${contrast}) brightness(${brightness})`;
+  const treatmentFilter = `saturate(${saturation}) contrast(${contrast}) brightness(${brightness})`;
 
   // Auto-hide hint after delay if no interaction
   useEffect(() => {
@@ -143,18 +143,25 @@ const BeforeAfterSlider = ({
           style={{ filter: treatmentFilter }}
           draggable={false}
         />
-        {/* Green accent overlay - simulates selective green color grading */}
+        {/* Green accent overlay - brand color grade via soft light blending */}
         <div 
-          className="absolute inset-0 mix-blend-color pointer-events-none"
+          className="absolute inset-0 mix-blend-soft-light pointer-events-none"
           style={{ 
-            background: "radial-gradient(ellipse at 30% 60%, hsl(var(--primary) / 0.22) 0%, transparent 55%), radial-gradient(ellipse at 70% 40%, hsl(var(--primary) / 0.15) 0%, transparent 45%)"
+            background: "radial-gradient(ellipse at 30% 60%, hsl(var(--primary) / 0.28) 0%, transparent 55%), radial-gradient(ellipse at 70% 40%, hsl(var(--primary) / 0.20) 0%, transparent 45%)"
           }}
         />
         {/* Cool tone overlay */}
         <div 
-          className="absolute inset-0 mix-blend-overlay pointer-events-none opacity-30"
+          className="absolute inset-0 mix-blend-overlay pointer-events-none opacity-25"
           style={{ 
-            background: "linear-gradient(180deg, hsl(210 30% 20% / 0.35) 0%, hsl(190 25% 15% / 0.25) 100%)"
+            background: "linear-gradient(180deg, hsl(210 30% 20% / 0.3) 0%, hsl(190 25% 15% / 0.2) 100%)"
+          }}
+        />
+        {/* Cinematic vignette */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{ 
+            background: "radial-gradient(ellipse at center, transparent 50%, hsl(220 30% 8% / 0.35) 100%)"
           }}
         />
       </div>
@@ -233,7 +240,7 @@ const BeforeAfterSlider = ({
         className="absolute bottom-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm rounded text-[10px] font-data text-white/80 transition-opacity"
         style={{ opacity: sliderPosition < 85 ? 1 : 0 }}
       >
-        SAT {Math.round(desaturation * 100)}% · CON +{Math.round((contrast - 1) * 100)}%
+        SAT {saturation > 1 ? "+" : ""}{Math.round((saturation - 1) * 100)}% · CON +{Math.round((contrast - 1) * 100)}%
       </div>
 
       {/* Animated Touch Hint Overlay */}

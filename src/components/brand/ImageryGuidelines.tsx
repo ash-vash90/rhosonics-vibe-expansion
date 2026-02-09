@@ -788,13 +788,13 @@ export const ImageryGuidelines = () => {
                 beforeLabel="ORIGINAL"
                 afterLabel="TREATED"
                 imageAlt="Industrial mining site field photography"
-                desaturation={0.45}
-                contrast={1.2}
-                brightness={0.95}
+                saturation={1.15}
+                contrast={1.25}
+                brightness={0.93}
               />
               <div className="flex items-center justify-between">
                 <span className="label-tech-sm text-primary">MINING</span>
-                <span className="text-xs text-muted-foreground">Warm earth tones → desaturated industrial</span>
+                <span className="text-xs text-muted-foreground">Warm earth tones → cool industrial grade</span>
               </div>
             </div>
             
@@ -804,19 +804,19 @@ export const ImageryGuidelines = () => {
                 beforeLabel="ORIGINAL"
                 afterLabel="TREATED"
                 imageAlt="Wastewater treatment facility"
-                desaturation={0.45}
-                contrast={1.2}
-                brightness={0.95}
+                saturation={1.05}
+                contrast={1.15}
+                brightness={0.96}
               />
               <div className="flex items-center justify-between">
                 <span className="label-tech-sm text-primary">WASTEWATER</span>
-                <span className="text-xs text-muted-foreground">Cool blues → unified brand palette</span>
+                <span className="text-xs text-muted-foreground">Cool blues → cinematic brand mood</span>
               </div>
             </div>
           </div>
           
           <p className="text-sm text-muted-foreground text-center">
-            Drag each slider to see the brand treatment applied in real-time — same settings, consistent results
+            Drag each slider to see the brand treatment applied in real-time — per-image tuning, consistent mood
           </p>
 
           {/* Treatment Details Grid */}
@@ -854,19 +854,19 @@ export const ImageryGuidelines = () => {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span>Desaturated 40–60%</span>
+                  <span>Saturation tuned per source (+5% to +15%)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span>Cool gray color grading</span>
+                  <span>Cool overlay shifts warmth toward industrial tones</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span>Increased contrast +15–25%</span>
+                  <span>Increased contrast +15–25% for dramatic weight</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span>Selective green accent on displays/LEDs</span>
+                  <span>Bold green accent overlay as brand signature</span>
                 </li>
               </ul>
             </div>
@@ -886,9 +886,9 @@ export const ImageryGuidelines = () => {
                     </div>
                     <ArrowRight className="w-4 h-4 text-muted-foreground hidden md:block absolute -right-3" />
                   </div>
-                  <span className="font-ui font-semibold text-foreground block mb-2">Desaturate</span>
+                  <span className="font-ui font-semibold text-foreground block mb-2">Color Grade</span>
                   <p className="text-sm text-muted-foreground">
-                    Reduce saturation by 40–60%. Pull warmth out of earth tones to create neutral gray-brown base.
+                    Adjust saturation per source image. Warm images get cooled; cool images get subtle boosting (+5% to +15%).
                   </p>
                 </div>
                 <div className="relative">
@@ -900,7 +900,7 @@ export const ImageryGuidelines = () => {
                   </div>
                   <span className="font-ui font-semibold text-foreground block mb-2">Cool Shift</span>
                   <p className="text-sm text-muted-foreground">
-                    Add slight blue/teal to shadows. Creates industrial, technical atmosphere.
+                    Overlay cool tones into shadows and midtones. This is where the industrial mood comes from.
                   </p>
                 </div>
                 <div className="relative">
@@ -912,7 +912,7 @@ export const ImageryGuidelines = () => {
                   </div>
                   <span className="font-ui font-semibold text-foreground block mb-2">Contrast</span>
                   <p className="text-sm text-muted-foreground">
-                    Increase contrast +15–25%. Deepen shadows, preserve midtone detail.
+                    Increase contrast +15–25%. Dramatic shadows add industrial weight while preserving detail.
                   </p>
                 </div>
                 <div>
@@ -921,9 +921,9 @@ export const ImageryGuidelines = () => {
                       <span className="font-data text-sm font-semibold text-primary-foreground">04</span>
                     </div>
                   </div>
-                  <span className="font-ui font-semibold text-foreground block mb-2">Green Accent</span>
+                  <span className="font-ui font-semibold text-foreground block mb-2">Brand Accent</span>
                   <p className="text-sm text-muted-foreground">
-                    Selectively boost green in displays, LEDs, and indicators using HSL targeting or masking.
+                    Bold green overlay as brand signature via soft-light blending with cinematic vignette.
                   </p>
                 </div>
               </div>
@@ -934,18 +934,18 @@ export const ImageryGuidelines = () => {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-4 bg-muted/30 rounded-lg border border-border">
               <span className="label-tech-sm text-primary block mb-2">SATURATION</span>
-              <span className="font-data text-2xl font-light text-foreground">-40% to -60%</span>
-              <p className="text-sm text-muted-foreground mt-1">Global desaturation from original</p>
+              <span className="font-data text-2xl font-light text-foreground">+5% to +15%</span>
+              <p className="text-sm text-muted-foreground mt-1">Per-image tuning from source baseline</p>
             </div>
             <div className="p-4 bg-muted/30 rounded-lg border border-border">
               <span className="label-tech-sm text-primary block mb-2">CONTRAST</span>
               <span className="font-data text-2xl font-light text-foreground">+15% to +25%</span>
-              <p className="text-sm text-muted-foreground mt-1">Increased from baseline</p>
+              <p className="text-sm text-muted-foreground mt-1">Dramatic industrial weight</p>
             </div>
             <div className="p-4 bg-muted/30 rounded-lg border border-border">
-              <span className="label-tech-sm text-primary block mb-2">GREEN ACCENT</span>
+              <span className="label-tech-sm text-primary block mb-2">BRAND ACCENT</span>
               <span className="font-data text-2xl font-light text-foreground">#33993C</span>
-              <p className="text-sm text-muted-foreground mt-1">HSL: 124° 50% 40%</p>
+              <p className="text-sm text-muted-foreground mt-1">Soft-light blend with cinematic vignette</p>
             </div>
           </div>
         </div>
