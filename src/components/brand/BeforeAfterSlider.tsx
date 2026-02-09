@@ -7,7 +7,7 @@ interface BeforeAfterSliderProps {
   afterLabel?: string;
   imageAlt?: string;
   className?: string;
-  /** Saturation multiplier (1 = unchanged, 1.15 = +15% saturation) */
+  /** Saturation multiplier (0.85 = -15%, 1 = unchanged) */
   saturation?: number;
   /** Contrast boost (1 = normal, 1.2 = 20% increase) */
   contrast?: number;
@@ -21,7 +21,7 @@ const BeforeAfterSlider = ({
   afterLabel = "AFTER",
   imageAlt = "Image comparison",
   className = "",
-  saturation = 1.1,
+  saturation = 0.88,
   contrast = 1.2,
   brightness = 0.94,
 }: BeforeAfterSliderProps) => {
