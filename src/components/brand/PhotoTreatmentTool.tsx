@@ -116,28 +116,29 @@ function renderTreated(img: HTMLImageElement, preset: TreatmentPreset, maxDim?: 
   ctx.drawImage(img, 0, 0, w, h);
   ctx.filter = "none";
 
-  // Green accent (soft light)
+  // Green accent (soft light — reduced opacity to preserve shadows)
   ctx.globalCompositeOperation = "soft-light";
+  ctx.globalAlpha = 0.7;
   const grd1 = ctx.createRadialGradient(w * 0.3, h * 0.6, 0, w * 0.3, h * 0.6, w * 0.55);
-  grd1.addColorStop(0, "rgba(51,153,60,0.28)"); grd1.addColorStop(1, "transparent");
+  grd1.addColorStop(0, "rgba(51,153,60,0.18)"); grd1.addColorStop(1, "transparent");
   ctx.fillStyle = grd1; ctx.fillRect(0, 0, w, h);
 
   const grd2 = ctx.createRadialGradient(w * 0.7, h * 0.4, 0, w * 0.7, h * 0.4, w * 0.45);
-  grd2.addColorStop(0, "rgba(51,153,60,0.20)"); grd2.addColorStop(1, "transparent");
+  grd2.addColorStop(0, "rgba(51,153,60,0.12)"); grd2.addColorStop(1, "transparent");
   ctx.fillStyle = grd2; ctx.fillRect(0, 0, w, h);
 
-  // Cool tone overlay
-  ctx.globalCompositeOperation = "overlay";
-  ctx.globalAlpha = 0.18;
+  // Cool tone — use screen blend to avoid crushing blacks
+  ctx.globalCompositeOperation = "screen";
+  ctx.globalAlpha = 0.08;
   const coolGrd = ctx.createLinearGradient(0, 0, 0, h);
-  coolGrd.addColorStop(0, "rgba(30,50,70,0.2)"); coolGrd.addColorStop(1, "rgba(25,55,60,0.15)");
+  coolGrd.addColorStop(0, "rgba(40,60,80,1)"); coolGrd.addColorStop(1, "rgba(35,65,70,1)");
   ctx.fillStyle = coolGrd; ctx.fillRect(0, 0, w, h);
 
-  // Vignette
-  ctx.globalCompositeOperation = "source-over";
+  // Subtle vignette — lighter to preserve shadow detail
+  ctx.globalCompositeOperation = "multiply";
   ctx.globalAlpha = 1;
-  const vigGrd = ctx.createRadialGradient(w / 2, h / 2, w * 0.35, w / 2, h / 2, w * 0.75);
-  vigGrd.addColorStop(0, "transparent"); vigGrd.addColorStop(1, "rgba(15,20,35,0.25)");
+  const vigGrd = ctx.createRadialGradient(w / 2, h / 2, w * 0.4, w / 2, h / 2, w * 0.8);
+  vigGrd.addColorStop(0, "rgba(255,255,255,1)"); vigGrd.addColorStop(1, "rgba(220,220,225,1)");
   ctx.fillStyle = vigGrd; ctx.fillRect(0, 0, w, h);
 
   ctx.globalCompositeOperation = "source-over";
