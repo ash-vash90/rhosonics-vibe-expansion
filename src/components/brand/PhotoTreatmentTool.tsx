@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Upload, Download, RotateCcw, ZoomIn, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 interface ColorAnalysis {
@@ -106,6 +105,30 @@ function generatePreset(analysis: ColorAnalysis): TreatmentPreset {
   return { saturation, contrast, brightness, label, reasoning };
 }
 
+/** Canvas-based unsharp mask sharpening */
+function applyUnsharpMask(ctx: CanvasRenderingContext2D, w: number, h: number, amount: number) {
+  const imageData = ctx.getImageData(0, 0, w, h);
+  const src = imageData.data;
+  const copy = new Uint8ClampedArray(src);
+
+  const stride = w * 4;
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < stride - 4; x += 4) {
+      const idx = y * stride + x;
+      for (let c = 0; c < 3; c++) {
+        const i = idx + c;
+        const blurred = (
+          copy[i - stride - 4] + copy[i - stride] * 2 + copy[i - stride + 4] +
+          copy[i - 4] * 2 + copy[i] * 4 + copy[i + 4] * 2 +
+          copy[i + stride - 4] + copy[i + stride] * 2 + copy[i + stride + 4]
+        ) / 16;
+        src[i] = Math.min(255, Math.max(0, copy[i] + amount * (copy[i] - blurred)));
+      }
+    }
+  }
+  ctx.putImageData(imageData, 0, 0);
+}
+
 function renderTreated(img: HTMLImageElement, preset: TreatmentPreset, maxDim?: number): HTMLCanvasElement {
   const canvas = document.createElement("canvas");
   const scale = maxDim ? Math.min(maxDim / img.naturalWidth, maxDim / img.naturalHeight, 1) : 1;
@@ -118,29 +141,29 @@ function renderTreated(img: HTMLImageElement, preset: TreatmentPreset, maxDim?: 
   ctx.drawImage(img, 0, 0, w, h);
   ctx.filter = "none";
 
-  // Green accent (soft light — reduced opacity to preserve shadows)
+  // Green accent — very subtle, preserve all shadow detail
   ctx.globalCompositeOperation = "soft-light";
-  ctx.globalAlpha = 0.7;
+  ctx.globalAlpha = 0.12;
   const grd1 = ctx.createRadialGradient(w * 0.3, h * 0.6, 0, w * 0.3, h * 0.6, w * 0.55);
-  grd1.addColorStop(0, "rgba(51,153,60,0.18)"); grd1.addColorStop(1, "transparent");
+  grd1.addColorStop(0, "rgba(51,153,60,0.15)"); grd1.addColorStop(1, "transparent");
   ctx.fillStyle = grd1; ctx.fillRect(0, 0, w, h);
 
   const grd2 = ctx.createRadialGradient(w * 0.7, h * 0.4, 0, w * 0.7, h * 0.4, w * 0.45);
-  grd2.addColorStop(0, "rgba(51,153,60,0.12)"); grd2.addColorStop(1, "transparent");
+  grd2.addColorStop(0, "rgba(51,153,60,0.10)"); grd2.addColorStop(1, "transparent");
   ctx.fillStyle = grd2; ctx.fillRect(0, 0, w, h);
 
-  // Cool tone — use screen blend to avoid crushing blacks
+  // Cool tone — screen blend preserves blacks
   ctx.globalCompositeOperation = "screen";
-  ctx.globalAlpha = 0.08;
+  ctx.globalAlpha = 0.04;
   const coolGrd = ctx.createLinearGradient(0, 0, 0, h);
   coolGrd.addColorStop(0, "rgba(40,60,80,1)"); coolGrd.addColorStop(1, "rgba(35,65,70,1)");
   ctx.fillStyle = coolGrd; ctx.fillRect(0, 0, w, h);
 
-  // Subtle vignette — lighter to preserve shadow detail
+  // Very subtle vignette — barely visible to avoid darkening edges
   ctx.globalCompositeOperation = "multiply";
   ctx.globalAlpha = 1;
-  const vigGrd = ctx.createRadialGradient(w / 2, h / 2, w * 0.4, w / 2, h / 2, w * 0.8);
-  vigGrd.addColorStop(0, "rgba(255,255,255,1)"); vigGrd.addColorStop(1, "rgba(220,220,225,1)");
+  const vigGrd = ctx.createRadialGradient(w / 2, h / 2, w * 0.45, w / 2, h / 2, w * 0.85);
+  vigGrd.addColorStop(0, "rgba(255,255,255,1)"); vigGrd.addColorStop(1, "rgba(240,240,242,1)");
   ctx.fillStyle = vigGrd; ctx.fillRect(0, 0, w, h);
 
   ctx.globalCompositeOperation = "source-over";
@@ -211,30 +234,34 @@ const PhotoTreatmentTool = () => {
   }, [preset, fileName]);
 
   const handleUpscaleDownload = useCallback(async (scale: 2 | 4) => {
-    if (!treatedDataUrl) return;
+    if (!imgRef.current || !preset) return;
     setUpscaling(scale);
 
     try {
-      const response = await supabase.functions.invoke("upscale-image", {
-        body: { imageDataUrl: treatedDataUrl, scale },
-      });
+      // Render at full resolution then scale up with sharpening
+      const fullCanvas = renderTreated(imgRef.current, preset);
+      const w = fullCanvas.width * scale;
+      const h = fullCanvas.height * scale;
 
-      if (response.error) {
-        throw new Error(response.error.message || "Upscale failed");
-      }
+      const upCanvas = document.createElement("canvas");
+      upCanvas.width = w;
+      upCanvas.height = h;
+      const ctx = upCanvas.getContext("2d")!;
 
-      const { upscaledUrl, error } = response.data;
-      if (error) {
-        toast({ title: "Upscale failed", description: error, variant: "destructive" });
-        return;
-      }
+      // Use high-quality interpolation for upscale
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(fullCanvas, 0, 0, w, h);
 
-      if (upscaledUrl) {
-        const link = document.createElement("a");
-        link.download = `treated-${scale}x-${fileName || "image"}.png`;
-        link.href = upscaledUrl;
-        link.click();
-      }
+      // Apply unsharp mask for sharpening
+      applyUnsharpMask(ctx, w, h, scale === 4 ? 1.2 : 0.8);
+
+      const link = document.createElement("a");
+      link.download = `treated-${scale}x-${fileName || "image"}.png`;
+      link.href = upCanvas.toDataURL("image/png");
+      link.click();
+
+      toast({ title: `${scale}× download ready`, description: `${w}×${h}px with sharpening applied` });
     } catch (e) {
       console.error("Upscale error:", e);
       toast({
@@ -245,7 +272,7 @@ const PhotoTreatmentTool = () => {
     } finally {
       setUpscaling(null);
     }
-  }, [treatedDataUrl, fileName, toast]);
+  }, [preset, fileName, toast]);
 
   const handleReset = useCallback(() => {
     setSourceDataUrl(null);
