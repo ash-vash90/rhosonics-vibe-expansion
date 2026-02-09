@@ -80,15 +80,15 @@ function generatePreset(analysis: ColorAnalysis): TreatmentPreset {
   let saturation: number, contrast: number, brightness: number, label: string, reasoning: string;
 
   if (analysis.warmth === "warm") {
-    saturation = 0.90; contrast = 1.06; brightness = 0.98;
+    saturation = 0.90; contrast = 1.10; brightness = 0.98;
     label = "Warm → Industrial Cool";
     reasoning = `Warm ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Gentle desaturation to cool the mood, light contrast lift.`;
   } else if (analysis.warmth === "cool") {
-    saturation = 0.93; contrast = 1.04; brightness = 0.99;
+    saturation = 0.93; contrast = 1.08; brightness = 0.99;
     label = "Cool → Cinematic Brand";
     reasoning = `Cool ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Minimal desaturation to preserve cool character with subtle contrast.`;
   } else {
-    saturation = 0.92; contrast = 1.05; brightness = 0.98;
+    saturation = 0.92; contrast = 1.09; brightness = 0.98;
     label = "Neutral → Brand Standard";
     reasoning = `Neutral tones detected (avg hue ${Math.round(analysis.avgHue)}°). Light desaturation and contrast for standard brand treatment.`;
   }
@@ -141,30 +141,23 @@ function renderTreated(img: HTMLImageElement, preset: TreatmentPreset, maxDim?: 
   ctx.drawImage(img, 0, 0, w, h);
   ctx.filter = "none";
 
-  // Green accent — very subtle, preserve all shadow detail
+  // Green accent — barely perceptible tint, no detail loss
   ctx.globalCompositeOperation = "soft-light";
-  ctx.globalAlpha = 0.12;
+  ctx.globalAlpha = 0.06;
   const grd1 = ctx.createRadialGradient(w * 0.3, h * 0.6, 0, w * 0.3, h * 0.6, w * 0.55);
-  grd1.addColorStop(0, "rgba(51,153,60,0.15)"); grd1.addColorStop(1, "transparent");
+  grd1.addColorStop(0, "rgba(51,153,60,0.08)"); grd1.addColorStop(1, "transparent");
   ctx.fillStyle = grd1; ctx.fillRect(0, 0, w, h);
-
+  ctx.globalAlpha = 0.04;
   const grd2 = ctx.createRadialGradient(w * 0.7, h * 0.4, 0, w * 0.7, h * 0.4, w * 0.45);
-  grd2.addColorStop(0, "rgba(51,153,60,0.10)"); grd2.addColorStop(1, "transparent");
+  grd2.addColorStop(0, "rgba(51,153,60,0.06)"); grd2.addColorStop(1, "transparent");
   ctx.fillStyle = grd2; ctx.fillRect(0, 0, w, h);
 
-  // Cool tone — screen blend preserves blacks
+  // Cool tone — near-invisible
   ctx.globalCompositeOperation = "screen";
-  ctx.globalAlpha = 0.04;
+  ctx.globalAlpha = 0.02;
   const coolGrd = ctx.createLinearGradient(0, 0, 0, h);
   coolGrd.addColorStop(0, "rgba(40,60,80,1)"); coolGrd.addColorStop(1, "rgba(35,65,70,1)");
   ctx.fillStyle = coolGrd; ctx.fillRect(0, 0, w, h);
-
-  // Very subtle vignette — barely visible to avoid darkening edges
-  ctx.globalCompositeOperation = "multiply";
-  ctx.globalAlpha = 1;
-  const vigGrd = ctx.createRadialGradient(w / 2, h / 2, w * 0.45, w / 2, h / 2, w * 0.85);
-  vigGrd.addColorStop(0, "rgba(255,255,255,1)"); vigGrd.addColorStop(1, "rgba(240,240,242,1)");
-  ctx.fillStyle = vigGrd; ctx.fillRect(0, 0, w, h);
 
   ctx.globalCompositeOperation = "source-over";
   return canvas;
