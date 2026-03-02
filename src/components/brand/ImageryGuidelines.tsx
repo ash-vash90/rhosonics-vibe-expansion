@@ -1,7 +1,15 @@
 import { useState, useRef } from "react";
 import { BrandCallout } from "./BrandCallout";
 import { Slider } from "@/components/ui/slider";
-import { Download, Check, Grid3X3, Maximize2, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
+import { Check, Grid3X3, Maximize2, CheckCircle2, XCircle, ArrowRight, Image as ImageIcon, FileCode, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import PhotoTreatmentTool from "./PhotoTreatmentTool";
 
@@ -158,6 +166,9 @@ const TexturePreview = () => {
   const [textureColor, setTextureColor] = useState(approvedTextureColors[0]);
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<"preview" | "tiling">("preview");
+  const [pngWidth, setPngWidth] = useState(1920);
+  const [pngHeight, setPngHeight] = useState(1080);
+  const [isExporting, setIsExporting] = useState(false);
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
   const generateSvgWithOpacityAndColor = (rawSvg: string, op: number, color: string) => {
@@ -171,21 +182,77 @@ const TexturePreview = () => {
     return result;
   };
 
-  const handleDownload = () => {
-    const svgContent = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value);
+  const generateTiledSvg = (width: number, height: number) => {
+    const tileSvg = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value);
+    // Extract viewBox dimensions from the raw SVG
+    const vbMatch = tileSvg.match(/viewBox=['"](\d+)\s+(\d+)\s+(\d+)\s+(\d+)['"]/);
+    const tileW = vbMatch ? parseInt(vbMatch[3]) : 16;
+    const tileH = vbMatch ? parseInt(vbMatch[4]) : 16;
+    // Scale factor based on current scale setting (scale[0] maps 0.1 = 1x)
+    const scaleFactor = scale[0] / 0.1;
+    const patternW = tileW * scaleFactor;
+    const patternH = tileH * scaleFactor;
+    const encoded = encodeURIComponent(tileSvg);
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <defs>
+    <pattern id="tex" patternUnits="userSpaceOnUse" width="${patternW}" height="${patternH}">
+      <image href="data:image/svg+xml,${encoded}" width="${patternW}" height="${patternH}"/>
+    </pattern>
+  </defs>
+  <rect width="${width}" height="${height}" fill="${bgColor.value}"/>
+  <rect width="${width}" height="${height}" fill="url(#tex)"/>
+</svg>`;
+  };
+
+  const handleDownloadSvg = () => {
+    const svgContent = generateTiledSvg(pngWidth, pngHeight);
     const blob = new Blob([svgContent], { type: "image/svg+xml" });
     const url = URL.createObjectURL(blob);
-    
     if (downloadRef.current) {
       downloadRef.current.href = url;
-      downloadRef.current.download = `${selectedTexture.name.toLowerCase().replace(/\s+/g, "-")}-pattern.svg`;
+      downloadRef.current.download = `${selectedTexture.name.toLowerCase().replace(/\s+/g, "-")}-${pngWidth}x${pngHeight}.svg`;
       downloadRef.current.click();
       URL.revokeObjectURL(url);
     }
   };
 
+  const handleDownloadPng = async () => {
+    setIsExporting(true);
+    try {
+      const svgContent = generateTiledSvg(pngWidth, pngHeight);
+      const blob = new Blob([svgContent], { type: "image/svg+xml" });
+      const url = URL.createObjectURL(blob);
+      
+      const img = new window.Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = pngWidth;
+        canvas.height = pngHeight;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, pngWidth, pngHeight);
+        URL.revokeObjectURL(url);
+        
+        canvas.toBlob((pngBlob) => {
+          if (pngBlob && downloadRef.current) {
+            const pngUrl = URL.createObjectURL(pngBlob);
+            downloadRef.current.href = pngUrl;
+            downloadRef.current.download = `${selectedTexture.name.toLowerCase().replace(/\s+/g, "-")}-${pngWidth}x${pngHeight}.png`;
+            downloadRef.current.click();
+            URL.revokeObjectURL(pngUrl);
+          }
+          setIsExporting(false);
+        }, "image/png");
+      };
+      img.onerror = () => { setIsExporting(false); };
+      img.src = url;
+    } catch {
+      setIsExporting(false);
+    }
+  };
+
   const handleCopySvg = () => {
-    const svgContent = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value);
+    const svgContent = generateTiledSvg(pngWidth, pngHeight);
     navigator.clipboard.writeText(svgContent);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -208,7 +275,7 @@ const TexturePreview = () => {
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
             <h4 className="font-ui font-bold text-foreground mb-1">Interactive Texture Preview</h4>
-            <p className="text-muted-foreground text-sm">Customize opacity, scale and background, then download as SVG.</p>
+            <p className="text-muted-foreground text-sm">Customize opacity, scale and background, then download as SVG or PNG at any resolution.</p>
           </div>
           {/* View Mode Toggle */}
           <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
@@ -405,20 +472,88 @@ const TexturePreview = () => {
             <p className="text-xs text-muted-foreground mt-2">Selected: {bgColor.name}</p>
           </div>
 
+          {/* Output Dimensions */}
+          <div>
+            <span className="label-tech-sm text-primary block mb-3">OUTPUT DIMENSIONS</span>
+            <div className="flex gap-2 items-center mb-2">
+              <div className="flex-1">
+                <label className="text-xs text-muted-foreground mb-1 block">Width (px)</label>
+                <input
+                  type="number"
+                  value={pngWidth}
+                  onChange={(e) => setPngWidth(Math.max(1, parseInt(e.target.value) || 1))}
+                  className="w-full px-3 py-1.5 text-sm font-data bg-card border border-border rounded focus:border-primary focus:outline-none"
+                />
+              </div>
+              <span className="text-muted-foreground mt-5">×</span>
+              <div className="flex-1">
+                <label className="text-xs text-muted-foreground mb-1 block">Height (px)</label>
+                <input
+                  type="number"
+                  value={pngHeight}
+                  onChange={(e) => setPngHeight(Math.max(1, parseInt(e.target.value) || 1))}
+                  className="w-full px-3 py-1.5 text-sm font-data bg-card border border-border rounded focus:border-primary focus:outline-none"
+                />
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {[
+                { label: "1080p", w: 1920, h: 1080 },
+                { label: "4K", w: 3840, h: 2160 },
+                { label: "Square", w: 1080, h: 1080 },
+                { label: "A4", w: 2480, h: 3508 },
+              ].map((preset) => (
+                <button
+                  key={preset.label}
+                  onClick={() => { setPngWidth(preset.w); setPngHeight(preset.h); }}
+                  className={`px-2 py-1 text-xs font-data rounded border transition-colors ${
+                    pngWidth === preset.w && pngHeight === preset.h
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border bg-card text-muted-foreground hover:border-primary/50"
+                  }`}
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Download Actions */}
-          <div className="flex gap-3 pt-2">
-            <button
-              onClick={handleDownload}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded font-ui text-sm font-medium hover:bg-primary/90 transition-colors"
-            >
-              <Download className="w-4 h-4" />
-              Download SVG
-            </button>
+          <div className="space-y-2 pt-2">
+            <div className="flex gap-2">
+              <button
+                onClick={handleDownloadSvg}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 border border-border bg-card text-foreground rounded font-ui text-sm font-medium hover:bg-muted transition-colors"
+              >
+                <FileCode className="w-4 h-4" />
+                SVG
+              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded font-ui text-sm font-medium hover:bg-primary/90 transition-colors">
+                    <ImageIcon className="w-4 h-4" />
+                    PNG
+                    <ChevronDown className="w-3 h-3 opacity-60" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="min-w-[160px]">
+                  <DropdownMenuLabel className="font-data text-xs">Download as PNG</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleDownloadPng}
+                    disabled={isExporting}
+                    className="font-data text-xs"
+                  >
+                    {isExporting ? "Exporting..." : `${pngWidth}×${pngHeight} PNG`}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
             <button
               onClick={handleCopySvg}
-              className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border bg-card text-foreground rounded font-ui text-sm font-medium hover:bg-muted transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-border bg-card text-foreground rounded font-ui text-xs font-medium hover:bg-muted transition-colors"
             >
-              {copied ? <Check className="w-4 h-4 text-primary" /> : "Copy SVG"}
+              {copied ? <><Check className="w-3.5 h-3.5 text-primary" /> Copied!</> : "Copy SVG to clipboard"}
             </button>
             <a ref={downloadRef} className="hidden" />
           </div>
