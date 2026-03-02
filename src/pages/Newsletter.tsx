@@ -74,13 +74,28 @@ const Newsletter = () => {
             <li>Get a 4–20mA input such as flow rate</li>
             <li>Calculate massflow using density and flow rate</li>
             <li>Display flow rate and massflow on screen</li>
-            <li>Output through all communication ports</li>
+            <li>Output flow rate and massflow through all its communication ports</li>
           </ul>
           <p className="text-sm leading-relaxed text-foreground mt-3">
             Additionally, we developed a <strong>Cross Meter</strong> interface that will help operators in dredging and mining operate their process optimally.
           </p>
+        </Section>
+
+        <Divider />
+
+        {/* Slurry Calibration Redesign */}
+        <Section title="Slurry Calibration Redesign: Born From the Field">
+          <p className="text-sm leading-relaxed text-foreground">
+            Customer visits and multiple service cases kept revealing the same problem: our calibration methods were too complex, too fragile, and gave customers no way to verify whether their calibration was correct. When something looked wrong, they had to call Service or the distributor.
+          </p>
+          <p className="text-sm leading-relaxed text-foreground mt-3">
+            So we redesigned calibration for the SDM-ECO from the ground up. The result is two new methods: <strong>aMPC</strong> and <strong>Linear</strong>. Both are smarter, more robust, and — crucially — give the customer visual feedback of how their calibration curve fits their points. If something looks off, they can self-correct on the spot.
+          </p>
+          <p className="text-sm leading-relaxed text-foreground mt-3">
+            The <strong>Linear</strong> method provides the same proven calibration as our SDM4, now with visualization of the fit. The <strong>aMPC</strong> goes further with advanced curve fitting for demanding applications.
+          </p>
           <div className="mt-4 grid grid-cols-2 gap-3">
-            <DeptNote dept="Service" note="Expect fewer calibration support calls. Customers can see and correct on their own." />
+            <DeptNote dept="Service" note="This should be a game changer. Expect fewer calibration support calls. Customers can see and correct on their own." />
             <DeptNote dept="Sales" note="Visual calibration feedback is a strong differentiator." />
           </div>
         </Section>
@@ -130,7 +145,7 @@ const Newsletter = () => {
             />
             <ComingItem
               title="Respect the Flow"
-              text="Launching a formal handover process where R&D and Production work side by side on production candidates before they enter real production. Stronger collaboration, better products, less surprises."
+              text="Launching a formal handover process where R&D and Production work side by side on production candidates before they enter real production. Stronger collaboration, better products, less surprises. This initiative will be first applied on the new Massflow implementation, including the new PLC box that needs to be installed inside the SDM-ECO case. After this, we will move into working together to make the CCM-SMART production ready."
             />
           </div>
         </Section>
