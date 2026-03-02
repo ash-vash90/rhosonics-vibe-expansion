@@ -1,3 +1,7 @@
+import crossMeterImg from "@/assets/newsletter/cross-meter.png";
+import crossMeterSettingsImg from "@/assets/newsletter/cross-meter-settings.png";
+import ampcImg from "@/assets/newsletter/ampc-visualization.png";
+
 const Newsletter = () => {
   return (
     <div className="min-h-screen bg-slate-100 py-8 px-4 font-ui">
@@ -79,6 +83,10 @@ const Newsletter = () => {
           <p className="text-sm leading-relaxed text-foreground mt-3">
             Additionally, we developed a <strong>Cross Meter</strong> interface that will help operators in dredging and mining operate their process optimally.
           </p>
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            <img src={crossMeterImg} alt="Cross Meter visualization showing density, flow velocity, production and TDS" className="rounded border border-slate-200 w-full" />
+            <img src={crossMeterSettingsImg} alt="Cross Meter Settings screen on the SDM-ECO" className="rounded border border-slate-200 w-full" />
+          </div>
         </Section>
 
         <Divider />
@@ -94,6 +102,7 @@ const Newsletter = () => {
           <p className="text-sm leading-relaxed text-foreground mt-3">
             The <strong>Linear</strong> method provides the same proven calibration as our SDM4, now with visualization of the fit. The <strong>aMPC</strong> goes further with advanced curve fitting for demanding applications.
           </p>
+          <img src={ampcImg} alt="aMPC Visualization showing calibration curve with data points" className="mt-4 rounded border border-slate-200 w-full" />
           <div className="mt-4 grid grid-cols-2 gap-3">
             <DeptNote dept="Service" note="This should be a game changer. Expect fewer calibration support calls. Customers can see and correct on their own." />
             <DeptNote dept="Sales" note="Visual calibration feedback is a strong differentiator." />
