@@ -1,10 +1,65 @@
+import { useState } from "react";
+import { Copy, Download, Check } from "lucide-react";
 import crossMeterImg from "@/assets/newsletter/cross-meter.png";
 import crossMeterSettingsImg from "@/assets/newsletter/cross-meter-settings.png";
 import ampcImg from "@/assets/newsletter/ampc-visualization.png";
+import { generateEmailHtml } from "@/lib/newsletterEmailHtml";
+import { toast } from "sonner";
 
 const Newsletter = () => {
+  const [copying, setCopying] = useState(false);
+
+  const handleCopyHtml = async () => {
+    setCopying(true);
+    try {
+      const html = await generateEmailHtml();
+      await navigator.clipboard.writeText(html);
+      toast.success("Email HTML copied to clipboard");
+    } catch (e) {
+      toast.error("Failed to copy HTML");
+    } finally {
+      setTimeout(() => setCopying(false), 2000);
+    }
+  };
+
+  const handleDownloadHtml = async () => {
+    try {
+      const html = await generateEmailHtml();
+      const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "rhosonics-rd-newsletter-feb-2026.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("HTML file downloaded");
+    } catch (e) {
+      toast.error("Failed to download HTML");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 py-8 px-4 font-ui">
+      {/* Action buttons */}
+      <div className="mx-auto flex justify-end gap-2 mb-3" style={{ maxWidth: 640 }}>
+        <button
+          onClick={handleCopyHtml}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+        >
+          {copying ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+          {copying ? "Copied!" : "Copy HTML"}
+        </button>
+        <button
+          onClick={handleDownloadHtml}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded border border-border bg-background text-foreground hover:bg-muted transition-colors"
+        >
+          <Download className="w-3.5 h-3.5" />
+          Download .html
+        </button>
+      </div>
+
       <div
         className="mx-auto bg-white shadow-elevated"
         style={{ maxWidth: 640 }}
