@@ -1,87 +1,37 @@
 
 
-# Make Photo Treatment Expressive and Image-Aware
+## Plan: R&D Newsletter Email Template Page
 
-## The Problems
+### What we're building
+A new `/newsletter` route with a page that renders the February 2026 R&D Newsletter as a polished, email-ready HTML template. This gives you a visual preview of exactly how the email should look when sent.
 
-1. **Treatment goes the wrong direction** -- the current filter desaturates (saturate 0.6 = 40% less color), making images drab. The goal should be to add vibrancy and brand character, not drain life out.
+### Content structure (from the PDF)
+The newsletter contains these sections:
+1. **Header** — "R&D Newsletter — February 2026" with intro paragraph
+2. **Samsung Accuracy Push** — ±0.4% → ±0.04% H2O2 story
+3. **Reducing Production Risks** — MUA3 boards testing
+4. **Massflow** — PLC integration, Cross Meter interface
+5. **New Initiatives** — Oyster Project, Unified Sensor Design, Conductivity sensor
+6. **Honest Challenges** — Test engineer hire, titration equipment
+7. **What's Coming in March** — Samsung field testing, aMPC, Respect the Flow
+8. **Closing** — Team acknowledgment
 
-2. **One-size-fits-all values** -- Both slider instances use identical `desaturation={0.45}` / `contrast={1.2}` / `brightness={0.95}`. A warm mining photo and a cool wastewater photo need very different treatments.
+### Implementation
 
-3. **Text doesn't match** -- The surrounding copy says "Desaturated 40-60%" and "Pull warmth out" which reinforces the drab approach. Needs rewriting to reflect the actual brand intent: industrial mood with selective color enhancement.
+1. **Create `src/pages/Newsletter.tsx`**
+   - Single-column email template layout (max-width ~600px, centered)
+   - White background with Rhosonics brand colors (green `#33993C`, obsidian `#111522`)
+   - Sections separated by subtle dividers
+   - Uses the project's font classes (`font-ui`, `font-data`)
+   - Each major heading styled as a bold section header with a green left border accent
+   - Key stats (±0.04%, 10×, 40 boards) highlighted in green metric callouts
+   - Footer with "Reach out to Stefan" CTA
 
----
+2. **Add route in `src/App.tsx`**
+   - Add `/newsletter` route pointing to the new page
 
-## The Fix
-
-### 1. Rethink the filter approach in BeforeAfterSlider
-
-Replace `saturate(0.6)` (desaturating) with a treatment that:
-- **Keeps or slightly boosts saturation** (saturate 1.1-1.3) for richness
-- **Shifts hue toward cool tones** via the overlay (already exists, just needs tuning)
-- **Adds the green accent more boldly** as the signature brand touch
-- **Adjusts contrast per-image** rather than blanket values
-
-Rename the `desaturation` prop to `saturation` to make intent clear (values > 1 = more saturated).
-
-### 2. Per-image treatment presets
-
-Give each BeforeAfterSlider different values tuned to the source image:
-
-| Image | Saturation | Contrast | Brightness | Reasoning |
-|-------|-----------|----------|------------|-----------|
-| Mining (treatmentBefore) | 1.15 | 1.25 | 0.93 | Warm earth tones -- boost slightly, let contrast create drama |
-| Wastewater (fieldWastewater) | 1.05 | 1.15 | 0.96 | Already cool-toned -- gentle touch, preserve blues |
-
-### 3. Strengthen the green accent overlay
-
-- Increase the green radial gradient opacity from 0.22 to ~0.28
-- Use `mix-blend-soft-light` instead of `mix-blend-color` for a more natural color grade feel
-- Add a subtle vignette (dark edges) for cinematic weight
-
-### 4. Rewrite the treatment descriptions
-
-**Current text (wrong direction):**
-- "Desaturated 40-60%"
-- "Pull warmth out of earth tones"
-- "Reduce saturation by 40-60%"
-
-**New text (correct direction):**
-- "Controlled saturation with cool color grade"
-- "Shift warmth toward industrial cool tones via overlay"
-- "Saturation adjusted per source image (+5% to +15%)"
-
-Update the 4-step process labels:
-- Step 01: "Desaturate" becomes **"Color Grade"** -- Adjust saturation per source. Warm images get cooled; cool images get subtle boosting.
-- Step 02: "Cool Shift" stays but description updated -- this is where the mood comes from
-- Step 03: "Contrast" stays -- dramatic shadows, industrial weight
-- Step 04: "Green Accent" becomes **"Brand Accent"** -- Bolder green overlay as signature touch
-
-### 5. Update the spec cards
-
-The three spec tiles at the bottom need new values:
-- SATURATION: "+5% to +15%" (was "-40% to -60%")
-- CONTRAST: "+15% to +25%" (stays)
-- GREEN ACCENT: increase description to note it's more prominent now
-
----
-
-## Technical Changes
-
-### Files to modify
-
-**`src/components/brand/BeforeAfterSlider.tsx`**
-- Rename `desaturation` prop to `saturation` (default 1.1)
-- Update filter string to use new saturation values
-- Change green overlay to `mix-blend-soft-light` and increase opacity
-- Add subtle vignette overlay
-- Update the specs indicator text at bottom-right
-
-**`src/components/brand/ImageryGuidelines.tsx`**
-- Update both BeforeAfterSlider instances with per-image tuned values
-- Rewrite "Raw Capture" vs "Brand Treatment" bullet points
-- Rewrite the 4-step Color Grading Process text
-- Update the three spec tiles (SATURATION, CONTRAST, GREEN ACCENT)
-- Update the descriptive text under the sliders ("Warm earth tones -> desaturated" becomes something like "Warm earth tones -> cool industrial grade")
-- Update subtitle text "same settings, consistent results" to "per-image tuning, consistent mood"
+### Design approach
+- Styled to look like a real email template (inline-style-friendly structure)
+- Uses the existing Rhosonics brand system (colors, typography, spacing)
+- Clean, professional, scannable layout appropriate for internal company communication
 
