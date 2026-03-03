@@ -373,11 +373,10 @@ const Index = () => {
 
           {/* Logo + Wordmark - Icon is 140% of text size */}
           <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-10 lg:mb-12">
-            {/* Icon sizes: 1.4 × font-size → text-xl(20px)→28px, text-2xl(24px)→34px, text-3xl(30px)→42px, text-4xl(36px)→50px */}
-            <div className={`w-7 h-7 md:w-[34px] md:h-[34px] lg:w-[42px] lg:h-[42px] ${isAlt ? "xl:w-[54px] xl:h-[54px]" : "xl:w-[50px] xl:h-[50px]"}`}>
+            <div className="w-7 h-7 md:w-[34px] md:h-[34px] lg:w-[42px] lg:h-[42px] xl:w-[50px] xl:h-[50px]">
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
-            <span className={`hero-wordmark font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isAlt ? "xl:text-[2.5rem] tracking-normal" : "xl:text-4xl tracking-wide"}`}>
+            <span className={`hero-wordmark font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isAlt ? "xl:text-5xl tracking-normal" : "xl:text-4xl tracking-wide"}`}>
               {"RHOSONICS".split("").map((char, i) => (
                 <span key={i} className="wordmark-char inline-block">
                   {char}
