@@ -333,6 +333,19 @@ const Index = () => {
           HERO — BRAND SYSTEM INTRODUCTION (Full-width, centered)
        ═══════════════════════════════════════════════════════════════ */}
       <section ref={heroRef} className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-screen flex items-center justify-center">
+        {/* Font toggle — top right of hero, desktop only */}
+        <button
+          className={`hidden xl:flex absolute top-6 right-8 z-10 px-4 py-2 text-sm font-data uppercase tracking-wider rounded-md border transition-colors ${
+            isAlt
+              ? "border-primary text-primary bg-primary/10"
+              : "border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
+          }`}
+          onClick={toggleFontMode}
+          title={isAlt ? "Switch to Unbounded + Instrument Sans" : "Switch to Primetime + Work Sans"}
+        >
+          {isAlt ? "DEFAULT FONTS" : "ALT FONTS"}
+        </button>
+
         {/* Floating particles */}
         <Suspense fallback={null}>
           <HeroParticles />
@@ -357,18 +370,6 @@ const Index = () => {
         <div className="hero-orb absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[120px]" />
         
         <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Font toggle — top right, desktop only */}
-          <button
-            className={`hidden xl:flex absolute top-0 right-0 px-3 py-1.5 text-xs font-data uppercase tracking-wider rounded border transition-colors ${
-              isAlt
-                ? "border-primary text-primary bg-primary/10"
-                : "border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
-            }`}
-            onClick={toggleFontMode}
-            title={isAlt ? "Switch to Unbounded + Instrument Sans" : "Switch to Primetime + Work Sans"}
-          >
-            {isAlt ? "DEFAULT" : "ALT FONTS"}
-          </button>
 
           {/* Logo + Wordmark - Icon is 140% of text size */}
           <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-10 lg:mb-12">
