@@ -18,7 +18,7 @@ const FontModeContext = createContext<FontModeContextValue>({
 });
 
 export const FontModeProvider = ({ children }: { children: ReactNode }) => {
-  const [logoFont, setLogoFont] = useState<LogoFont>("unbounded");
+  const [logoFont, setLogoFont] = useState<LogoFont>("primetime");
   const [bodyFont, setBodyFont] = useState<BodyFont>("instrument");
 
   useEffect(() => {
