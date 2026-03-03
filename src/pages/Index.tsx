@@ -178,8 +178,8 @@ const Index = () => {
   const heroContentRef = useRef<HTMLDivElement>(null);
   const heroLogoRef = useRef<AnimatedLogoRef>(null);
   const mainContentRef = useRef<HTMLDivElement>(null);
-  const { fontMode, toggleFontMode } = useFontMode();
-  const isAlt = fontMode === "alt";
+  const { logoFont, bodyFont, setLogoFont, setBodyFont } = useFontMode();
+  const isPrimetime = logoFont === "primetime";
 
   // Hero entrance animations - deferred to reduce FID
   useEffect(() => {
@@ -333,18 +333,32 @@ const Index = () => {
           HERO — BRAND SYSTEM INTRODUCTION (Full-width, centered)
        ═══════════════════════════════════════════════════════════════ */}
       <section ref={heroRef} className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-screen flex items-center justify-center">
-        {/* Font toggle — top right of hero, desktop only */}
-        <button
-          className={`hidden xl:flex absolute top-6 right-8 z-10 px-4 py-2 text-sm font-data uppercase tracking-wider rounded-md border transition-colors ${
-            isAlt
-              ? "border-primary text-primary bg-primary/10"
-              : "border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
-          }`}
-          onClick={toggleFontMode}
-          title={isAlt ? "Switch to Unbounded + Instrument Sans" : "Switch to Primetime + Work Sans"}
-        >
-          {isAlt ? "DEFAULT FONTS" : "ALT FONTS"}
-        </button>
+        {/* Font selectors — top right of hero, desktop only */}
+        <div className="hidden xl:flex absolute top-6 right-8 z-10 gap-3 items-center">
+          <div className="flex items-center gap-2">
+            <span className="font-data text-[10px] uppercase tracking-wider text-slate-500">Logo</span>
+            <select
+              value={logoFont}
+              onChange={(e) => setLogoFont(e.target.value as "unbounded" | "primetime")}
+              className="bg-rho-obsidian border border-slate-700 text-slate-300 text-xs font-data uppercase tracking-wider rounded-md px-2 py-1.5 cursor-pointer hover:border-slate-500 transition-colors focus:outline-none focus:border-primary"
+            >
+              <option value="unbounded">Unbounded</option>
+              <option value="primetime">Primetime</option>
+            </select>
+          </div>
+          <div className="w-px h-5 bg-slate-700" />
+          <div className="flex items-center gap-2">
+            <span className="font-data text-[10px] uppercase tracking-wider text-slate-500">Body</span>
+            <select
+              value={bodyFont}
+              onChange={(e) => setBodyFont(e.target.value as "instrument" | "worksans")}
+              className="bg-rho-obsidian border border-slate-700 text-slate-300 text-xs font-data uppercase tracking-wider rounded-md px-2 py-1.5 cursor-pointer hover:border-slate-500 transition-colors focus:outline-none focus:border-primary"
+            >
+              <option value="instrument">Instrument Sans</option>
+              <option value="worksans">Work Sans</option>
+            </select>
+          </div>
+        </div>
 
         {/* Floating particles */}
         <Suspense fallback={null}>
@@ -376,7 +390,7 @@ const Index = () => {
             <div className="w-7 h-7 md:w-[34px] md:h-[34px] lg:w-[42px] lg:h-[42px] xl:w-[50px] xl:h-[50px]">
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
-            <span className={`hero-wordmark font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isAlt ? "xl:text-[2.35rem] tracking-normal" : "xl:text-4xl tracking-wide"}`}>
+            <span className={`hero-wordmark font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isPrimetime ? "xl:text-[2.35rem] tracking-normal" : "xl:text-4xl tracking-wide"}`}>
               {"RHOSONICS".split("").map((char, i) => (
                 <span key={i} className="wordmark-char inline-block">
                   {char}
