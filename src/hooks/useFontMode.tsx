@@ -1,30 +1,36 @@
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
-type FontMode = "default" | "alt";
+type LogoFont = "unbounded" | "primetime";
+type BodyFont = "instrument" | "worksans";
 
 interface FontModeContextValue {
-  fontMode: FontMode;
-  toggleFontMode: () => void;
+  logoFont: LogoFont;
+  bodyFont: BodyFont;
+  setLogoFont: (f: LogoFont) => void;
+  setBodyFont: (f: BodyFont) => void;
 }
 
 const FontModeContext = createContext<FontModeContextValue>({
-  fontMode: "default",
-  toggleFontMode: () => {},
+  logoFont: "unbounded",
+  bodyFont: "instrument",
+  setLogoFont: () => {},
+  setBodyFont: () => {},
 });
 
 export const FontModeProvider = ({ children }: { children: ReactNode }) => {
-  const [fontMode, setFontMode] = useState<FontMode>("default");
-
-  const toggleFontMode = useCallback(() => {
-    setFontMode((prev) => (prev === "default" ? "alt" : "default"));
-  }, []);
+  const [logoFont, setLogoFont] = useState<LogoFont>("unbounded");
+  const [bodyFont, setBodyFont] = useState<BodyFont>("instrument");
 
   useEffect(() => {
-    document.body.classList.toggle("font-alt", fontMode === "alt");
-  }, [fontMode]);
+    const body = document.body;
+    body.classList.toggle("logo-primetime", logoFont === "primetime");
+    body.classList.toggle("body-worksans", bodyFont === "worksans");
+    // Legacy class for any remaining references
+    body.classList.toggle("font-alt", logoFont === "primetime" && bodyFont === "worksans");
+  }, [logoFont, bodyFont]);
 
   return (
-    <FontModeContext.Provider value={{ fontMode, toggleFontMode }}>
+    <FontModeContext.Provider value={{ logoFont, bodyFont, setLogoFont, setBodyFont }}>
       {children}
     </FontModeContext.Provider>
   );

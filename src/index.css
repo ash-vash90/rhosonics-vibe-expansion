@@ -188,7 +188,7 @@
     font-family: 'Instrument Sans', sans-serif;
   }
 
-  body.font-alt {
+  body.body-worksans {
     font-family: 'Work Sans', sans-serif;
   }
 
@@ -199,8 +199,8 @@
     letter-spacing: -0.02em;
   }
 
-  body.font-alt .font-logo,
-  body.font-alt [class*="font-logo"] {
+  body.logo-primetime .font-logo,
+  body.logo-primetime [class*="font-logo"] {
     font-family: 'Primetime', sans-serif;
     font-weight: 300;
     letter-spacing: 0.02em;
@@ -210,8 +210,8 @@
     font-family: 'Instrument Sans', sans-serif;
   }
 
-  body.font-alt .font-ui,
-  body.font-alt [class*="font-ui"] {
+  body.body-worksans .font-ui,
+  body.body-worksans [class*="font-ui"] {
     font-family: 'Work Sans', sans-serif;
   }
 
