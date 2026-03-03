@@ -376,7 +376,7 @@ const Index = () => {
             <div className="w-7 h-7 md:w-[34px] md:h-[34px] lg:w-[42px] lg:h-[42px] xl:w-[50px] xl:h-[50px]">
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
-            <span className={`hero-wordmark font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isAlt ? "xl:text-5xl tracking-normal" : "xl:text-4xl tracking-wide"}`}>
+            <span className={`hero-wordmark font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isAlt ? "xl:text-[2.35rem] tracking-normal" : "xl:text-4xl tracking-wide"}`}>
               {"RHOSONICS".split("").map((char, i) => (
                 <span key={i} className="wordmark-char inline-block">
                   {char}
