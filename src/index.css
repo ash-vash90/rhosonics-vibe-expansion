@@ -1,5 +1,13 @@
 /* Fonts loaded via link in index.html to reduce render-blocking */
 
+@font-face {
+  font-family: 'Primetime';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/primetime-light.woff2') format('woff2');
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -180,6 +188,10 @@
     font-family: 'Instrument Sans', sans-serif;
   }
 
+  body.font-alt {
+    font-family: 'Work Sans', sans-serif;
+  }
+
   /* Typography Classes */
   .font-logo {
     font-family: 'Unbounded', sans-serif;
@@ -187,8 +199,20 @@
     letter-spacing: -0.02em;
   }
 
+  body.font-alt .font-logo,
+  body.font-alt [class*="font-logo"] {
+    font-family: 'Primetime', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
   .font-ui {
     font-family: 'Instrument Sans', sans-serif;
+  }
+
+  body.font-alt .font-ui,
+  body.font-alt [class*="font-ui"] {
+    font-family: 'Work Sans', sans-serif;
   }
 
   .font-data {
