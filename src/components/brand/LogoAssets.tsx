@@ -11,9 +11,11 @@ import {
   downloadPNG 
 } from "@/lib/logoExport";
 import { useState } from "react";
+import { useFontMode } from "@/hooks/useFontMode";
 
 export const LogoAssets = () => {
   const [downloading, setDownloading] = useState<string | null>(null);
+  const { logoFont } = useFontMode();
 
   const handleDownloadSVG = (variantId: string) => {
     const variant = logoVariants.find(v => v.id === variantId);
@@ -368,7 +370,7 @@ export const LogoAssets = () => {
                 "Apply gradient to body text",
                 "Use Lime Accent as a standalone color",
                 "Rotate or distort the logo",
-                "Use Unbounded for anything except the wordmark"
+                `Use ${logoFont === "primetime" ? "Primetime" : "Unbounded"} for anything except the wordmark`
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3 text-muted-foreground">
                   <span className="w-1.5 h-1.5 bg-destructive rounded-full mt-2 flex-shrink-0"></span>

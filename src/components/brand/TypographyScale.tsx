@@ -1,6 +1,7 @@
 import { Download, Copy, Check } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 import { useState } from "react";
+import { useFontMode } from "@/hooks/useFontMode";
 
 const fontKitCSS = `/* Rhosonics Font Kit */
 /* Google Fonts Import - Add to <head> or CSS */
@@ -66,6 +67,10 @@ const downloadFile = (content: string, filename: string, type: string) => {
 
 export const TypographyScale = () => {
   const [copiedSnippet, setCopiedSnippet] = useState<string | null>(null);
+  const { logoFont, bodyFont } = useFontMode();
+
+  const logoFontName = logoFont === "primetime" ? "Primetime" : "Unbounded";
+  const bodyFontName = bodyFont === "worksans" ? "Work Sans" : "Instrument Sans";
 
   const copyToClipboard = (content: string, id: string) => {
     navigator.clipboard.writeText(content);
@@ -87,7 +92,6 @@ export const TypographyScale = () => {
         </div>
         
         <div className="space-y-0">
-          {/* Each scale level as a full-width dramatic line */}
           <div className="group flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 lg:gap-8 py-4 md:py-6 border-b border-border/30 hover:bg-muted/20 transition-colors -mx-4 md:-mx-6 px-4 md:px-6">
             <span className="font-data text-xs text-muted-foreground w-12 md:w-16 flex-shrink-0">48px</span>
             <span className="font-ui font-bold text-3xl md:text-4xl lg:text-5xl text-foreground flex-1 tracking-tight">Display Hero</span>
@@ -148,21 +152,21 @@ export const TypographyScale = () => {
                 <td className="px-6 py-5">
                   <span className="font-logo text-2xl text-foreground tracking-wide uppercase">RHOSONICS</span>
                 </td>
-                <td className="px-6 py-5 text-right text-sm text-muted-foreground hidden md:table-cell">Unbounded</td>
+                <td className="px-6 py-5 text-right text-sm text-muted-foreground hidden md:table-cell">{logoFontName}</td>
               </tr>
               <tr className="border-t border-border/50">
                 <td className="px-6 py-5 font-data text-xs text-muted-foreground uppercase">Heading</td>
                 <td className="px-6 py-5">
                   <span className="font-ui font-bold text-2xl text-foreground">Slurry Density</span>
                 </td>
-                <td className="px-6 py-5 text-right text-sm text-muted-foreground hidden md:table-cell">Instrument Sans</td>
+                <td className="px-6 py-5 text-right text-sm text-muted-foreground hidden md:table-cell">{bodyFontName}</td>
               </tr>
               <tr className="border-t border-border/50">
                 <td className="px-6 py-5 font-data text-xs text-muted-foreground uppercase">Body</td>
                 <td className="px-6 py-5">
                   <span className="font-ui text-base text-foreground">Optimized density measurement reduced fresh water intake.</span>
                 </td>
-                <td className="px-6 py-5 text-right text-sm text-muted-foreground hidden md:table-cell">Instrument Sans</td>
+                <td className="px-6 py-5 text-right text-sm text-muted-foreground hidden md:table-cell">{bodyFontName}</td>
               </tr>
               <tr className="border-t border-border/50">
                 <td className="px-6 py-5 font-data text-xs text-muted-foreground uppercase">Data</td>
@@ -185,10 +189,10 @@ export const TypographyScale = () => {
 
       {/* ═══ FONT USAGE GUIDELINES ═══ */}
       <div className="space-y-12">
-        {/* Unbounded */}
+        {/* Logo Font */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
           <div className="lg:col-span-3">
-            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">Unbounded Usage</h3>
+            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">{logoFontName} Usage</h3>
             <div className="grid sm:grid-cols-2 gap-8">
               <div>
                 <span className="font-data text-xs text-primary uppercase tracking-wider block mb-3">Use for</span>
@@ -221,15 +225,15 @@ export const TypographyScale = () => {
           
           <div className="lg:col-span-2">
             <BrandCallout variant="avoid" title="Logo Only">
-              Unbounded is reserved exclusively for the RHOSONICS wordmark. Using it elsewhere dilutes brand recognition.
+              {logoFontName} is reserved exclusively for the RHOSONICS wordmark. Using it elsewhere dilutes brand recognition.
             </BrandCallout>
           </div>
         </div>
 
-        {/* Instrument Sans */}
+        {/* Body Font */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
           <div className="lg:col-span-3">
-            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">Instrument Sans Usage</h3>
+            <h3 className="font-ui text-lg font-semibold text-foreground mb-4">{bodyFontName} Usage</h3>
             <div className="grid sm:grid-cols-2 gap-8">
               <div>
                 <span className="font-data text-xs text-primary uppercase tracking-wider block mb-3">Use for</span>
@@ -270,7 +274,7 @@ export const TypographyScale = () => {
           
           <div className="lg:col-span-2">
             <BrandCallout variant="best" title="The Workhorse">
-              Instrument Sans handles 90% of all text. If you're unsure which font to use, it's almost always Instrument Sans.
+              {bodyFontName} handles 90% of all text. If you're unsure which font to use, it's almost always {bodyFontName}.
             </BrandCallout>
           </div>
         </div>
@@ -336,7 +340,7 @@ export const TypographyScale = () => {
             </div>
             <div className="space-y-6">
               <div>
-                <div className="label-tech text-muted-foreground mb-2">UNBOUNDED FOR LOGO</div>
+                <div className="label-tech text-muted-foreground mb-2">{logoFontName.toUpperCase()} FOR LOGO</div>
                 <div className="flex items-center gap-2 p-4 bg-slate-50 rounded border border-border">
                   <span className="font-logo text-xl tracking-wide uppercase">RHOSONICS</span>
                 </div>
@@ -358,7 +362,7 @@ export const TypographyScale = () => {
             </div>
             <div className="space-y-6">
               <div>
-                <div className="label-tech text-muted-foreground mb-2">UNBOUNDED FOR HEADINGS</div>
+                <div className="label-tech text-muted-foreground mb-2">{logoFontName.toUpperCase()} FOR HEADINGS</div>
                 <div className="p-4 bg-error-surface rounded border border-error-border">
                   <span className="font-logo text-xl">Product Features</span>
                 </div>
@@ -487,11 +491,11 @@ export const TypographyScale = () => {
           <h4 className="font-ui font-semibold text-foreground mb-4">Required Font Weights</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <span className="font-logo text-lg tracking-wide">Unbounded</span>
+              <span className="font-logo text-lg tracking-wide">{logoFontName}</span>
               <p className="font-data text-xs text-muted-foreground mt-1">500 only</p>
             </div>
             <div>
-              <span className="font-ui text-lg">Instrument Sans</span>
+              <span className="font-ui text-lg">{bodyFontName}</span>
               <p className="font-data text-xs text-muted-foreground mt-1">400, 500, 600, 700</p>
             </div>
             <div>

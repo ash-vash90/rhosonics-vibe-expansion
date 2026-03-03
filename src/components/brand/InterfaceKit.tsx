@@ -4,9 +4,11 @@ import { BrandCallout } from "./BrandCallout";
 import { ChamferedTabs, ChamferedTabsList, ChamferedTabsTrigger } from "@/components/ui/chamfered-tabs";
 import { MetricTile } from "@/components/ui/metric-tile";
 import { LinearProgress } from "@/components/ui/chamfered-progress";
+import { useFontMode } from "@/hooks/useFontMode";
 
 
 export const InterfaceKit = () => {
+  const { bodyFont } = useFontMode();
   return (
     <section id="components" className="space-y-16 pt-16">
       {/* Hero Statement */}
@@ -98,7 +100,7 @@ export const InterfaceKit = () => {
         </div>
 
         <p className="text-muted-foreground max-w-xl mt-8">
-          Segmented controls for mode switching. Uses Instrument Sans with standard 
+          Segmented controls for mode switching. Uses {bodyFont === "worksans" ? "Work Sans" : "Instrument Sans"} with standard 
           rounded corners for improved usability.
         </p>
       </div>
