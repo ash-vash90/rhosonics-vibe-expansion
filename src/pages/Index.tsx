@@ -3,6 +3,7 @@ import { AnimatedLogo, AnimatedLogoRef } from "@/components/AnimatedLogo";
 import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navigation } from "@/components/brand/Navigation";
+import { FontSelector } from "@/components/brand/FontSelector";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { cleanupAllGsap } from "@/hooks/useGsapCleanup";
 import { useFontMode } from "@/hooks/useFontMode";
@@ -178,7 +179,7 @@ const Index = () => {
   const heroContentRef = useRef<HTMLDivElement>(null);
   const heroLogoRef = useRef<AnimatedLogoRef>(null);
   const mainContentRef = useRef<HTMLDivElement>(null);
-  const { logoFont, bodyFont, setLogoFont, setBodyFont } = useFontMode();
+  const { logoFont } = useFontMode();
   const isPrimetime = logoFont === "primetime";
 
   // Hero entrance animations - deferred to reduce FID
@@ -329,37 +330,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <FontSelector />
       {/* ═══════════════════════════════════════════════════════════════
           HERO — BRAND SYSTEM INTRODUCTION (Full-width, centered)
        ═══════════════════════════════════════════════════════════════ */}
       <section ref={heroRef} className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-screen flex items-center justify-center">
-        {/* Font selectors — top right of hero, desktop only */}
-        <div className="hidden xl:flex absolute top-6 right-8 z-10 gap-3 items-center">
-          <div className="flex items-center gap-2">
-            <span className="font-data text-[10px] uppercase tracking-wider text-slate-500">Logo</span>
-            <select
-              value={logoFont}
-              onChange={(e) => setLogoFont(e.target.value as "unbounded" | "primetime")}
-              className="bg-rho-obsidian border border-slate-700 text-slate-300 text-xs font-data uppercase tracking-wider rounded-md px-2 py-1.5 cursor-pointer hover:border-slate-500 transition-colors focus:outline-none focus:border-primary"
-            >
-              <option value="unbounded">Unbounded</option>
-              <option value="primetime">Primetime</option>
-            </select>
-          </div>
-          <div className="w-px h-5 bg-slate-700" />
-          <div className="flex items-center gap-2">
-            <span className="font-data text-[10px] uppercase tracking-wider text-slate-500">Body</span>
-            <select
-              value={bodyFont}
-              onChange={(e) => setBodyFont(e.target.value as "instrument" | "worksans")}
-              className="bg-rho-obsidian border border-slate-700 text-slate-300 text-xs font-data uppercase tracking-wider rounded-md px-2 py-1.5 cursor-pointer hover:border-slate-500 transition-colors focus:outline-none focus:border-primary"
-            >
-              <option value="instrument">Instrument Sans</option>
-              <option value="worksans">Work Sans</option>
-            </select>
-          </div>
-        </div>
-
         {/* Floating particles */}
         <Suspense fallback={null}>
           <HeroParticles />
