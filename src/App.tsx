@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { FontModeProvider } from "@/hooks/useFontMode";
 
 const Index = lazy(() => import("./pages/Index"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
@@ -18,19 +19,21 @@ const PageLoader = () => (
 );
 
 const App = () => (
-  <TooltipProvider>
-    <Toaster />
-    <Sonner />
-    <BrowserRouter>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/newsletter" element={<Newsletter />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
-  </TooltipProvider>
+  <FontModeProvider>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/newsletter" element={<Newsletter />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </TooltipProvider>
+  </FontModeProvider>
 );
 
 export default App;
