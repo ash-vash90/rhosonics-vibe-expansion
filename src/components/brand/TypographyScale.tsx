@@ -3,33 +3,40 @@ import { BrandCallout } from "./BrandCallout";
 import { useState } from "react";
 import { useFontMode } from "@/hooks/useFontMode";
 
-const fontKitCSS = `/* Rhosonics Font Kit */
+const getFontKitCSS = (logoFontName: string, logoFontFamily: string, _bodyFontName: string, bodyFontFamily: string, logoGoogleParam: string | null, bodyGoogleParam: string) => {
+  const importUrl = logoGoogleParam
+    ? `@import url('https://fonts.googleapis.com/css2?${logoGoogleParam}&${bodyGoogleParam}&family=JetBrains+Mono:wght@500&display=swap');`
+    : `/* ${logoFontName} must be loaded locally — see @font-face below */\n@import url('https://fonts.googleapis.com/css2?${bodyGoogleParam}&family=JetBrains+Mono:wght@500&display=swap');`;
+
+  const localFontFace = !logoGoogleParam ? `\n\n/* Local font-face for ${logoFontName} */\n@font-face {\n  font-family: '${logoFontFamily}';\n  src: url('/fonts/${logoFontFamily.toLowerCase().replace(/\\s/g, '-')}.woff2') format('woff2');\n  font-weight: 300;\n  font-style: normal;\n  font-display: swap;\n}` : '';
+
+  return `/* Rhosonics Font Kit */
 /* Google Fonts Import - Add to <head> or CSS */
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+${importUrl}${localFontFace}
 
 /* Font Family Classes */
 .font-logo {
-  font-family: 'Unbounded', sans-serif;
-  font-weight: 500;
+  font-family: '${logoFontFamily}', sans-serif;
+  font-weight: ${logoGoogleParam ? '500' : '300'};
 }
 
 .font-ui {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: '${bodyFontFamily}', sans-serif;
   font-weight: 400;
 }
 
 .font-ui-medium {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: '${bodyFontFamily}', sans-serif;
   font-weight: 500;
 }
 
 .font-ui-semibold {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: '${bodyFontFamily}', sans-serif;
   font-weight: 600;
 }
 
 .font-ui-bold {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: '${bodyFontFamily}', sans-serif;
   font-weight: 700;
 }
 
@@ -37,19 +44,30 @@ const fontKitCSS = `/* Rhosonics Font Kit */
   font-family: 'JetBrains Mono', monospace;
   font-weight: 500;
 }`;
+};
 
-const fontKitHTML = `<!-- Rhosonics Font Kit -->
+const getFontKitHTML = (logoFontName: string, logoGoogleParam: string | null, bodyGoogleParam: string) => {
+  if (logoGoogleParam) {
+    return `<!-- Rhosonics Font Kit -->
 <!-- Add this to your HTML <head> section -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">`;
+<link href="https://fonts.googleapis.com/css2?${logoGoogleParam}&${bodyGoogleParam}&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">`;
+  }
+  return `<!-- Rhosonics Font Kit -->
+<!-- Add this to your HTML <head> section -->
+<!-- ${logoFontName} must be self-hosted — include the .woff2 file and @font-face rule -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?${bodyGoogleParam}&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">`;
+};
 
-const fontKitTailwind = `// Rhosonics Tailwind Font Config
+const getFontKitTailwind = (logoFontFamily: string, bodyFontFamily: string) => `// Rhosonics Tailwind Font Config
 // Add to your tailwind.config.js theme.extend section
 
 fontFamily: {
-  logo: ['Unbounded', 'sans-serif'],
-  ui: ['Instrument Sans', 'sans-serif'],
+  logo: ['${logoFontFamily}', 'sans-serif'],
+  ui: ['${bodyFontFamily}', 'sans-serif'],
   data: ['JetBrains Mono', 'monospace'],
 },`;
 
@@ -70,7 +88,16 @@ export const TypographyScale = () => {
   const { logoFont, bodyFont } = useFontMode();
 
   const logoFontName = logoFont === "primetime" ? "Primetime" : "Unbounded";
+  const logoFontFamily = logoFont === "primetime" ? "Primetime" : "Unbounded";
   const bodyFontName = bodyFont === "worksans" ? "Work Sans" : "Instrument Sans";
+  const bodyFontFamily = bodyFontName;
+
+  const logoGoogleParam = logoFont === "unbounded" ? "family=Unbounded:wght@500" : null;
+  const bodyGoogleParam = bodyFont === "worksans" ? "family=Work+Sans:wght@400;500;600;700" : "family=Instrument+Sans:wght@400;500;600;700";
+
+  const fontKitCSS = getFontKitCSS(logoFontName, logoFontFamily, bodyFontName, bodyFontFamily, logoGoogleParam, bodyGoogleParam);
+  const fontKitHTML = getFontKitHTML(logoFontName, logoGoogleParam, bodyGoogleParam);
+  const fontKitTailwind = getFontKitTailwind(logoFontFamily, bodyFontFamily);
 
   const copyToClipboard = (content: string, id: string) => {
     navigator.clipboard.writeText(content);
