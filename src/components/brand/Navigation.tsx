@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X, Zap, ChevronRight, ChevronDown } from "@/lib/icons";
 import { RhosonicsLogo } from "../RhosonicsLogo";
-import { useFontMode } from "@/hooks/useFontMode";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -115,7 +114,6 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(["00"]);
   const [activeSection, setActiveSection] = useState<string | null>("about");
-  const { fontMode, toggleFontMode } = useFontMode();
 
   const mobileMenuRef = useRef<HTMLElement | null>(null);
   const desktopNavRef = useRef<HTMLElement | null>(null);
@@ -362,17 +360,6 @@ export const Navigation = () => {
               </div>
               <span className="font-data text-xs text-slate-500 tracking-widest">BRAND SYSTEM</span>
             </button>
-            <button
-              className={`px-2.5 py-1.5 text-xs font-data uppercase tracking-wider rounded border transition-colors ${
-                fontMode === "alt"
-                  ? "border-primary text-primary bg-primary/10"
-                  : "border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
-              }`}
-              onClick={toggleFontMode}
-              title={fontMode === "default" ? "Switch to Primetime + Work Sans" : "Switch to Unbounded + Instrument Sans"}
-            >
-              {fontMode === "default" ? "ALT" : "DEF"}
-            </button>
           </div>
 
           {/* Navigation Links - Collapsible sections */}
@@ -457,17 +444,6 @@ export const Navigation = () => {
           <span className="font-data text-xs text-slate-400 tracking-widest">BRAND SYSTEM</span>
         </button>
         <div className="flex items-center gap-2">
-          <button
-            className={`px-2.5 py-1.5 text-xs font-data uppercase tracking-wider rounded border transition-colors touch-manipulation ${
-              fontMode === "alt"
-                ? "border-primary text-primary bg-primary/10"
-                : "border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
-            }`}
-            onClick={toggleFontMode}
-            title={fontMode === "default" ? "Switch to Primetime + Work Sans" : "Switch to Unbounded + Instrument Sans"}
-          >
-            {fontMode === "default" ? "ALT" : "DEF"}
-          </button>
           <button
             className="p-2 text-slate-400 hover:text-primary transition-colors touch-manipulation"
             onClick={() => setIsOpen(true)}
