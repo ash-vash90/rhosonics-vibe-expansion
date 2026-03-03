@@ -5,6 +5,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navigation } from "@/components/brand/Navigation";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { cleanupAllGsap } from "@/hooks/useGsapCleanup";
+import { useFontMode } from "@/hooks/useFontMode";
 
 // Defer GSAP import and registration to reduce initial main thread blocking
 let gsapInstance: typeof import("gsap").default | null = null;
@@ -177,6 +178,8 @@ const Index = () => {
   const heroContentRef = useRef<HTMLDivElement>(null);
   const heroLogoRef = useRef<AnimatedLogoRef>(null);
   const mainContentRef = useRef<HTMLDivElement>(null);
+  const { fontMode, toggleFontMode } = useFontMode();
+  const isAlt = fontMode === "alt";
 
   // Hero entrance animations - deferred to reduce FID
   useEffect(() => {
@@ -354,13 +357,26 @@ const Index = () => {
         <div className="hero-orb absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[120px]" />
         
         <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* Font toggle — top right, desktop only */}
+          <button
+            className={`hidden xl:flex absolute top-0 right-0 px-3 py-1.5 text-xs font-data uppercase tracking-wider rounded border transition-colors ${
+              isAlt
+                ? "border-primary text-primary bg-primary/10"
+                : "border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
+            }`}
+            onClick={toggleFontMode}
+            title={isAlt ? "Switch to Unbounded + Instrument Sans" : "Switch to Primetime + Work Sans"}
+          >
+            {isAlt ? "DEFAULT" : "ALT FONTS"}
+          </button>
+
           {/* Logo + Wordmark - Icon is 140% of text size */}
           <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-10 lg:mb-12">
             {/* Icon sizes: 1.4 × font-size → text-xl(20px)→28px, text-2xl(24px)→34px, text-3xl(30px)→42px, text-4xl(36px)→50px */}
-            <div className="w-7 h-7 md:w-[34px] md:h-[34px] lg:w-[42px] lg:h-[42px] xl:w-[50px] xl:h-[50px]">
+            <div className={`w-7 h-7 md:w-[34px] md:h-[34px] lg:w-[42px] lg:h-[42px] ${isAlt ? "xl:w-[54px] xl:h-[54px]" : "xl:w-[50px] xl:h-[50px]"}`}>
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
-            <span className="hero-wordmark font-logo text-white tracking-wide uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+            <span className={`hero-wordmark font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isAlt ? "xl:text-[2.5rem] tracking-normal" : "xl:text-4xl tracking-wide"}`}>
               {"RHOSONICS".split("").map((char, i) => (
                 <span key={i} className="wordmark-char inline-block">
                   {char}
