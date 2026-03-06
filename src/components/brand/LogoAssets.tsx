@@ -16,6 +16,7 @@ import { useFontMode } from "@/hooks/useFontMode";
 export const LogoAssets = () => {
   const [downloading, setDownloading] = useState<string | null>(null);
   const { logoFont } = useFontMode();
+  const isPrimetime = logoFont === "primetime";
 
   const handleDownloadSVG = (variantId: string) => {
     const variant = logoVariants.find(v => v.id === variantId);
@@ -82,7 +83,7 @@ export const LogoAssets = () => {
               className="w-8 h-8" 
             />
             <span 
-              className="font-logo text-2xl font-semibold tracking-wide"
+              className={`font-logo text-2xl font-semibold ${isPrimetime ? 'tracking-normal' : 'tracking-wide'}`}
               style={{ color: variant.textColor }}
             >
               RHOSONICS
@@ -95,7 +96,7 @@ export const LogoAssets = () => {
               className="w-10 h-10" 
             />
             <span 
-              className="font-logo text-xl font-semibold tracking-wide"
+              className={`font-logo text-xl font-semibold ${isPrimetime ? 'tracking-normal' : 'tracking-wide'}`}
               style={{ color: variant.textColor }}
             >
               RHOSONICS

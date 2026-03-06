@@ -366,11 +366,15 @@ const Index = () => {
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
             <span className={`hero-wordmark font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isPrimetime ? "xl:text-[2.35rem] tracking-normal" : "xl:text-4xl tracking-wide"}`}>
-              {"RHOSONICS".split("").map((char, i) => (
-                <span key={i} className="wordmark-char inline-block">
-                  {char}
-                </span>
-              ))}
+              {isPrimetime ? (
+                <span className="wordmark-char inline-block">RHOSONICS</span>
+              ) : (
+                "RHOSONICS".split("").map((char, i) => (
+                  <span key={i} className="wordmark-char inline-block">
+                    {char}
+                  </span>
+                ))
+              )}
             </span>
           </div>
           
@@ -699,7 +703,7 @@ const Index = () => {
                 <RhosonicsLogo variant="dark" />
               </div>
               <div>
-                <span className="font-logo tracking-wide text-foreground text-base">RHOSONICS</span>
+                <span className={`font-logo ${isPrimetime ? 'tracking-normal' : 'tracking-wide'} text-foreground text-base`}>RHOSONICS</span>
                 <span className="font-data text-xs text-slate-400 ml-2">BRAND SYSTEM</span>
               </div>
             </div>

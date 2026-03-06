@@ -86,6 +86,7 @@ const downloadFile = (content: string, filename: string, type: string) => {
 export const TypographyScale = () => {
   const [copiedSnippet, setCopiedSnippet] = useState<string | null>(null);
   const { logoFont, bodyFont } = useFontMode();
+  const isPrimetime = logoFont === "primetime";
 
   const logoFontName = logoFont === "primetime" ? "Primetime" : "Unbounded";
   const logoFontFamily = logoFont === "primetime" ? "Primetime" : "Unbounded";
@@ -177,7 +178,7 @@ export const TypographyScale = () => {
               <tr className="border-t border-border/50">
                 <td className="px-6 py-5 font-data text-xs text-muted-foreground uppercase">Logo</td>
                 <td className="px-6 py-5">
-                  <span className="font-logo text-2xl text-foreground tracking-wide uppercase">RHOSONICS</span>
+                  <span className={`font-logo text-2xl text-foreground ${isPrimetime ? 'tracking-normal' : 'tracking-wide'} uppercase`}>RHOSONICS</span>
                 </td>
                 <td className="px-6 py-5 text-right text-sm text-muted-foreground hidden md:table-cell">{logoFontName}</td>
               </tr>
@@ -369,7 +370,7 @@ export const TypographyScale = () => {
               <div>
                 <div className="label-tech text-muted-foreground mb-2">{logoFontName.toUpperCase()} FOR LOGO</div>
                 <div className="flex items-center gap-2 p-4 bg-slate-50 rounded border border-border">
-                  <span className="font-logo text-xl tracking-wide uppercase">RHOSONICS</span>
+                  <span className={`font-logo text-xl ${isPrimetime ? 'tracking-normal' : 'tracking-wide'} uppercase`}>RHOSONICS</span>
                 </div>
               </div>
               <div>
@@ -518,7 +519,7 @@ export const TypographyScale = () => {
           <h4 className="font-ui font-semibold text-foreground mb-4">Required Font Weights</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <span className="font-logo text-lg tracking-wide">{logoFontName}</span>
+              <span className={`font-logo text-lg ${isPrimetime ? 'tracking-normal' : 'tracking-wide'}`}>{logoFontName}</span>
               <p className="font-data text-xs text-muted-foreground mt-1">500 only</p>
             </div>
             <div>

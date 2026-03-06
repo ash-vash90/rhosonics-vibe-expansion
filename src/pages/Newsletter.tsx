@@ -244,7 +244,7 @@ const Newsletter = () => {
 
         {/* Footer */}
         <div className="bg-rho-obsidian px-8 py-6 text-center">
-          <p className="font-logo text-xs tracking-wide text-slate-400">
+          <p className="font-logo text-xs tracking-normal text-slate-400">
             Rhosonics — Ultrasonic Measurement Solutions
           </p>
         </div>

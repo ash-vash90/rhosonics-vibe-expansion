@@ -2,12 +2,16 @@ import { useRef, useEffect, useCallback } from "react";
 import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { RotateCcw } from "lucide-react";
+import { useFontMode } from "@/hooks/useFontMode";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const MasterLockup = () => {
+  const { logoFont } = useFontMode();
+  const isPrimetime = logoFont === "primetime";
+  const trackingClass = isPrimetime ? "tracking-normal" : "tracking-wide";
   const logoRef = useRef<AnimatedLogoRef>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -46,7 +50,7 @@ export const MasterLockup = () => {
           </div>
           <h1 
             ref={titleRef}
-            className="font-logo text-slate-100 tracking-wide leading-none opacity-0 uppercase"
+            className={`font-logo text-slate-100 ${trackingClass} leading-none opacity-0 uppercase`}
             style={{ fontSize: 'clamp(48px, 6vw, 64px)' }}
           >
             RHOSONICS
@@ -153,7 +157,7 @@ export const MasterLockup = () => {
                     <RhosonicsLogo variant="gradient" />
                   </div>
                   <span 
-                    className="font-logo text-slate-100 tracking-wide uppercase leading-none"
+                    className={`font-logo text-slate-100 ${trackingClass} uppercase leading-none`}
                     style={{ fontSize: size.text }}
                   >
                     RHOSONICS
@@ -269,7 +273,7 @@ export const MasterLockup = () => {
             content: (
               <div className="flex items-center gap-3">
                 <div style={{ width: 27, height: 27 }}><RhosonicsLogo variant="gradient" /></div>
-                <span className="font-logo text-foreground tracking-wide uppercase text-xl">RHOSONICS</span>
+                <span className={`font-logo text-foreground ${trackingClass} uppercase text-xl`}>RHOSONICS</span>
               </div>
             )
           },
@@ -278,7 +282,7 @@ export const MasterLockup = () => {
             content: (
               <div className="flex flex-col items-center gap-2">
                 <div style={{ width: 27, height: 27 }}><RhosonicsLogo variant="gradient" /></div>
-                <span className="font-logo text-foreground tracking-wide uppercase text-xl">RHOSONICS</span>
+                <span className={`font-logo text-foreground ${trackingClass} uppercase text-xl`}>RHOSONICS</span>
               </div>
             )
           },
