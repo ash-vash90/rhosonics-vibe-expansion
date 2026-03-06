@@ -82,7 +82,7 @@ export const LogoAssets = () => {
               className="w-8 h-8" 
             />
             <span 
-              className="font-logo text-2xl font-semibold tracking-wide"
+              className={`font-logo text-2xl font-semibold ${isPrimetime ? 'tracking-normal' : 'tracking-wide'}`}
               style={{ color: variant.textColor }}
             >
               RHOSONICS
@@ -95,7 +95,7 @@ export const LogoAssets = () => {
               className="w-10 h-10" 
             />
             <span 
-              className="font-logo text-xl font-semibold tracking-wide"
+              className={`font-logo text-xl font-semibold ${isPrimetime ? 'tracking-normal' : 'tracking-wide'}`}
               style={{ color: variant.textColor }}
             >
               RHOSONICS

@@ -231,7 +231,7 @@ export const MotionDesign = () => {
             </div>
             <span 
               ref={lockupWordmarkRef}
-              className="font-logo text-2xl text-foreground tracking-wide uppercase overflow-hidden"
+              className={`font-logo text-2xl text-foreground ${isPrimetime ? 'tracking-normal' : 'tracking-wide'} uppercase overflow-hidden`}
             >
               {"RHOSONICS".split("").map((char, i) => (
                 <span key={i} className="lockup-char inline-block" style={{ opacity: 0 }}>
