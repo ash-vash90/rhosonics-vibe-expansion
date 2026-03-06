@@ -86,6 +86,7 @@ const downloadFile = (content: string, filename: string, type: string) => {
 export const TypographyScale = () => {
   const [copiedSnippet, setCopiedSnippet] = useState<string | null>(null);
   const { logoFont, bodyFont } = useFontMode();
+  const isPrimetime = logoFont === "primetime";
 
   const logoFontName = logoFont === "primetime" ? "Primetime" : "Unbounded";
   const logoFontFamily = logoFont === "primetime" ? "Primetime" : "Unbounded";

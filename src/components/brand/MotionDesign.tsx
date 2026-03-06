@@ -1,12 +1,15 @@
 import { useRef } from "react";
 import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
 import { BrandCallout } from "./BrandCallout";
+import { useFontMode } from "@/hooks/useFontMode";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const MotionDesign = () => {
+  const { logoFont } = useFontMode();
+  const isPrimetime = logoFont === "primetime";
   const logoRef = useRef<AnimatedLogoRef>(null);
   const lockupLogoRef = useRef<AnimatedLogoRef>(null);
   const lockupWordmarkRef = useRef<HTMLSpanElement>(null);

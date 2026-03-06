@@ -16,6 +16,7 @@ import { useFontMode } from "@/hooks/useFontMode";
 export const LogoAssets = () => {
   const [downloading, setDownloading] = useState<string | null>(null);
   const { logoFont } = useFontMode();
+  const isPrimetime = logoFont === "primetime";
 
   const handleDownloadSVG = (variantId: string) => {
     const variant = logoVariants.find(v => v.id === variantId);
