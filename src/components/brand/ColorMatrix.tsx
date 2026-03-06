@@ -114,8 +114,8 @@ export const ColorMatrix = () => {
           <div>
             <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-6">Obsidian — Hardware & Dark UI</h4>
             <div className="space-y-0 mb-8">
-              <ColorSpecimen name="Obsidian" hex="#111522" rgb="17, 21, 34" hsl="226 33% 10%" bg="bg-rho-obsidian" use="Dark surfaces, devices" textLight />
-              <ColorSpecimen name="Obsidian Light" hex="#1E2433" rgb="30, 36, 51" hsl="226 25% 15%" bg="bg-[#1E2433]" use="Dark panels, cards" textLight />
+              <ColorSpecimen name="Obsidian" hex="#14171F" rgb="20, 23, 31" hsl="224 22% 10%" bg="bg-rho-obsidian" use="Dark surfaces, devices" textLight />
+              <ColorSpecimen name="Obsidian Light" hex="#1E222F" rgb="30, 34, 47" hsl="224 22% 15%" bg="bg-[#1E222F]" use="Dark panels, cards" textLight />
             </div>
             <BrandCallout variant="avoid" title="Never use pure black (#000)">
               Obsidian's blue tint creates visual cohesion with the Slate scale.
@@ -273,7 +273,7 @@ export const ColorMatrix = () => {
                 <span className="font-ui font-semibold text-foreground">Obsidian Gradient</span>
                 <span className="text-sm text-muted-foreground">Dark panels, hardware UI</span>
               </div>
-              <span className="font-data text-xs text-muted-foreground">linear-gradient(180deg, #1E2433 0%, #111522 100%)</span>
+              <span className="font-data text-xs text-muted-foreground">linear-gradient(180deg, #1E222F 0%, #14171F 100%)</span>
             </div>
           </div>
 

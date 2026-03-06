@@ -17,12 +17,12 @@
     /* Rhosonics Brand Colors - EXACT HEX VALUES */
     /* Green: #33993c = 125 50% 40% */
     /* Lime: #73B82E = 90 60% 45% */
-    /* Obsidian: #111522 = 226 33% 10% */
+    /* Obsidian: #14171F = 224 22% 10% */
     --rho-green: 125 50% 40%;
     --rho-green-accent: 90 60% 45%;
     --rho-green-glow: 90 70% 55%;
-    --rho-obsidian: 226 33% 10%;
-    --rho-obsidian-light: 226 25% 15%;
+    --rho-obsidian: 224 22% 10%;
+    --rho-obsidian-light: 224 22% 15%;
     
     /* Primary Green Scale (50-900)
        Full shade range for UI states: hover, active, subtle backgrounds.
@@ -119,14 +119,14 @@
     --sidebar-foreground: var(--slate-100);
     --sidebar-primary: var(--rho-green);
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 225 25% 15%;
+    --sidebar-accent: 224 20% 15%;
     --sidebar-accent-foreground: var(--slate-100);
-    --sidebar-border: 225 20% 20%;
+    --sidebar-border: 224 18% 20%;
     --sidebar-ring: var(--rho-green);
 
     /* Custom Rhosonics Tokens */
     --gradient-brand: linear-gradient(135deg, hsl(var(--rho-green-accent)) 0%, hsl(var(--rho-green)) 100%);
-    --gradient-obsidian: linear-gradient(180deg, hsl(225 25% 18%) 0%, hsl(var(--rho-obsidian)) 100%);
+    --gradient-obsidian: linear-gradient(180deg, hsl(224 20% 18%) 0%, hsl(var(--rho-obsidian)) 100%);
     --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--rho-green) / 0.15) 0%, transparent 50%);
     --gradient-metal: linear-gradient(135deg, hsl(210 40% 98%) 0%, hsl(214 32% 91%) 100%);
     --gradient-ore: linear-gradient(180deg, hsl(215 25% 27%) 0%, hsl(var(--rho-obsidian)) 100%);
