@@ -71,17 +71,17 @@
     --error-surface: 0 93% 97%;
     --error-border: 0 80% 85%;
     
-    /* Slate Scale - WCAG AA compliant (4.5:1 against --slate-50 background) */
-    --slate-50: 210 40% 98%;
-    --slate-100: 210 40% 96%;
-    --slate-200: 214 32% 91%;
-    --slate-300: 213 27% 84%;
-    --slate-400: 215 20% 42%;
-    --slate-500: 215 19% 35%;
-    --slate-600: 215 19% 30%;
-    --slate-700: 215 25% 27%;
-    --slate-800: 217 33% 17%;
-    --slate-900: 222 47% 11%;
+    /* Slate Scale - Aligned with Obsidian (224° hue family, reduced blue) */
+    --slate-50: 220 20% 98%;
+    --slate-100: 220 18% 96%;
+    --slate-200: 222 16% 91%;
+    --slate-300: 222 14% 84%;
+    --slate-400: 223 14% 42%;
+    --slate-500: 223 14% 35%;
+    --slate-600: 223 16% 30%;
+    --slate-700: 224 18% 24%;
+    --slate-800: 224 20% 17%;
+    --slate-900: 224 22% 11%;
 
     /* Semantic Tokens */
     --background: var(--slate-50);

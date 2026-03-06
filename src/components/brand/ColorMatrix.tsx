@@ -103,10 +103,10 @@ export const ColorMatrix = () => {
           <div>
             <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-6">Slate — Software UI</h4>
             <div className="space-y-0">
-              <ColorSpecimen name="Slate 50" hex="#F8FAFC" rgb="248, 250, 252" hsl="210 40% 98%" bg="bg-slate-50" use="Page backgrounds" border="border-slate-200" />
-              <ColorSpecimen name="Slate 200" hex="#E2E8F0" rgb="226, 232, 240" hsl="214 32% 91%" bg="bg-slate-200" use="Borders, dividers" border="border-slate-300" />
-              <ColorSpecimen name="Slate 600" hex="#475569" rgb="71, 85, 105" hsl="215 19% 35%" bg="bg-slate-600" use="Secondary text" textLight />
-              <ColorSpecimen name="Slate 900" hex="#0F172A" rgb="15, 23, 42" hsl="222 47% 11%" bg="bg-slate-900" use="Primary text" textLight />
+              <ColorSpecimen name="Slate 50" hex="#F8F9FA" rgb="248, 249, 250" hsl="220 20% 98%" bg="bg-slate-50" use="Page backgrounds" border="border-slate-200" />
+              <ColorSpecimen name="Slate 200" hex="#E4E6EB" rgb="228, 230, 235" hsl="222 16% 91%" bg="bg-slate-200" use="Borders, dividers" border="border-slate-300" />
+              <ColorSpecimen name="Slate 600" hex="#434852" rgb="67, 72, 82" hsl="223 16% 30%" bg="bg-slate-600" use="Secondary text" textLight />
+              <ColorSpecimen name="Slate 900" hex="#1A1D24" rgb="26, 29, 36" hsl="224 22% 11%" bg="bg-slate-900" use="Primary text" textLight />
             </div>
           </div>
 
