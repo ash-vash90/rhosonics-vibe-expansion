@@ -152,13 +152,13 @@ const SectionHeader = ({
       ctx?.revert();
     };
   }, []);
-  return <div ref={headerRef} id={id} className="mb-10 md:mb-16 lg:mb-20 scroll-mt-20 md:scroll-mt-24">
-      <div className="flex items-baseline gap-4 md:gap-6 mb-4 md:mb-6">
-        <span className="section-num font-data text-xs md:text-sm text-muted-foreground">{number}</span>
+  return <div ref={headerRef} id={id} className="mb-8 md:mb-12 lg:mb-16 scroll-mt-20 md:scroll-mt-24">
+      <div className="flex items-baseline gap-4 md:gap-6 mb-3 md:mb-4">
+        <span className="section-num font-data text-sm md:text-base font-bold text-primary">{number}</span>
         <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
       </div>
-      <h2 className="section-title font-ui text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 md:mb-6 tracking-tight">{title}</h2>
-      <p className="section-subtitle text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-2xl">{subtitle}</p>
+      <h2 className="section-title font-ui text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground mb-3 md:mb-4 tracking-tighter leading-[0.95]">{title}</h2>
+      <p className="section-subtitle text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl">{subtitle}</p>
     </div>;
 };
 const Index = () => {
