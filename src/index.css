@@ -627,7 +627,6 @@
 
   .card-obsidian:hover {
     border-color: hsl(var(--rho-green) / 0.5);
-    transform: translateY(-2px);
   }
 
   /* Mineral card - cool industrial field aesthetic */
