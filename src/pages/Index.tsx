@@ -57,26 +57,13 @@ const HeroParticles = lazy(() => import("@/components/brand/HeroParticles"));
 const SectionLoader = () => <div className="py-16 flex justify-center">
     <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
   </div>;
-const SectionDivider = () => (
-  <div className="py-12 md:py-16 flex items-center justify-center">
-    <div className="flex items-center gap-4 w-full max-w-md">
-      <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-border" />
-      <div className="relative">
-        <div className="w-2 h-2 rounded-full bg-primary/20" />
-        <div className="absolute inset-0 w-2 h-2 rounded-full bg-primary/40 animate-ping" style={{ animationDuration: '3s' }} />
-      </div>
-      <div className="w-1 h-1 rounded-full bg-border" />
-      <div className="relative">
-        <div className="w-3 h-3 rounded-full border border-primary/30 flex items-center justify-center">
-          <div className="w-1.5 h-1.5 rounded-full bg-primary/50" />
-        </div>
-      </div>
-      <div className="w-1 h-1 rounded-full bg-border" />
-      <div className="relative">
-        <div className="w-2 h-2 rounded-full bg-primary/20" />
-      </div>
-      <div className="flex-1 h-px bg-gradient-to-l from-transparent via-border to-border" />
-    </div>
+const SectionDivider = ({ label }: { label?: string }) => (
+  <div className="py-6 md:py-8 flex items-center gap-3">
+    <div className="flex-1 h-px bg-border" />
+    {label && (
+      <span className="font-data text-[10px] uppercase tracking-widest text-muted-foreground">{label}</span>
+    )}
+    <div className="flex-1 h-px bg-border" />
   </div>
 );
 interface SectionHeaderProps {
