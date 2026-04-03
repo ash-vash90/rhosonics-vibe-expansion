@@ -428,28 +428,18 @@ const Index = () => {
         <SectionDivider label="01" />
 
         {/* ─── SECTION 01: BRAND POSITIONING (DARK BAND) ─── */}
-        </main>
-      </div>
-      <div className="relative bg-rho-obsidian text-slate-100">
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/60" />
-        <div className="absolute inset-0 bg-grid-data opacity-[0.04] pointer-events-none" />
-        <div className="flex min-h-0 items-start">
-          <div className="hidden lg:block w-[220px] xl:w-[260px] flex-shrink-0" />
-          <div className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1400px] mx-auto overflow-x-hidden">
-            <ScrollSection className="py-16 md:py-24">
-              <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
-              <ErrorBoundary>
-                <Suspense fallback={<SectionLoader />}>
-                  <BrandPositioning />
-                </Suspense>
-              </ErrorBoundary>
-            </ScrollSection>
-          </div>
+        <div className="relative -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 bg-rho-obsidian text-slate-100">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/60" />
+          <div className="absolute inset-0 bg-grid-data opacity-[0.04] pointer-events-none" />
+          <ScrollSection className="py-16 md:py-24 relative">
+            <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <BrandPositioning />
+              </Suspense>
+            </ErrorBoundary>
+          </ScrollSection>
         </div>
-      </div>
-      <div className="flex min-h-0 items-start">
-        <Navigation />
-        <main className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1400px] mx-auto overflow-x-hidden">
 
         <SectionDivider label="02" />
 
