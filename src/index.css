@@ -648,8 +648,8 @@
   }
 
   .card-mineral:hover {
+    border-color: hsl(var(--mineral-neutral) / 0.5);
     box-shadow: var(--shadow-mineral);
-    transform: translateY(-2px);
   }
 
   /* Mineral accent border */
