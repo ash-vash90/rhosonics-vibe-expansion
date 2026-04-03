@@ -556,13 +556,13 @@
 
   /* Card Variants */
   .card-base {
-    @apply bg-card border border-border rounded-lg transition-all duration-200;
+    @apply bg-card border border-border rounded transition-all duration-200;
     box-shadow: var(--shadow-card);
   }
 
   .card-base:hover {
-    box-shadow: var(--shadow-elevated);
-    transform: translateY(-2px);
+    border-color: hsl(var(--slate-300));
+    box-shadow: var(--shadow-card);
   }
 
   /* Premium gradient card - use for hero elements with optional chamfer */
