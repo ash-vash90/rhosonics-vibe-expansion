@@ -503,6 +503,21 @@
 }
 
 @layer components {
+  /* Dark band context — overrides semantic tokens so child components render correctly on Obsidian backgrounds */
+  .dark-band {
+    --foreground: var(--slate-100);
+    --card: 225 25% 12%;
+    --card-foreground: var(--slate-100);
+    --muted: 225 20% 18%;
+    --muted-foreground: var(--slate-400);
+    --accent: 225 20% 18%;
+    --accent-foreground: var(--slate-100);
+    --border: 225 20% 20%;
+    --input: 225 20% 20%;
+    --secondary: 225 20% 18%;
+    --secondary-foreground: var(--slate-100);
+  }
+
   /* Brand Gradient Background */
   .bg-brand-gradient {
     background: var(--gradient-brand);
