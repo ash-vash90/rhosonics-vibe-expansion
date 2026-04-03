@@ -581,7 +581,7 @@ const Index = () => {
         <SectionDivider label="09" />
 
         {/* ─── SECTION 09: APPLICATIONS (DARK BAND) ─── */}
-        <div className="relative -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 bg-rho-obsidian text-slate-100">
+        <div className="dark-band relative -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 bg-rho-obsidian text-slate-100">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/60" />
           <div className="absolute inset-0 bg-grid-data opacity-[0.04] pointer-events-none" />
           <ScrollSection className="py-16 md:py-24 relative">
