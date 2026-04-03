@@ -602,8 +602,8 @@
   }
 
   .card-metal:hover {
-    box-shadow: var(--shadow-elevated);
-    transform: translateY(-2px);
+    border-color: hsl(var(--slate-400));
+    box-shadow: var(--shadow-card);
   }
 
   .card-eco {
