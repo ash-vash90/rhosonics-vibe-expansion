@@ -556,13 +556,13 @@
 
   /* Card Variants */
   .card-base {
-    @apply bg-card border border-border rounded-lg transition-all duration-200;
+    @apply bg-card border border-border rounded transition-all duration-200;
     box-shadow: var(--shadow-card);
   }
 
   .card-base:hover {
-    box-shadow: var(--shadow-elevated);
-    transform: translateY(-2px);
+    border-color: hsl(var(--slate-300));
+    box-shadow: var(--shadow-card);
   }
 
   /* Premium gradient card - use for hero elements with optional chamfer */
@@ -590,7 +590,7 @@
 
   .card-slate:hover {
     background: linear-gradient(145deg, hsl(215 19% 38%) 0%, hsl(215 19% 32%) 100%);
-    transform: translateY(-2px);
+    border-color: hsl(var(--slate-300));
   }
 
   /* Metal card - brushed aluminum feel */
@@ -602,8 +602,8 @@
   }
 
   .card-metal:hover {
-    box-shadow: var(--shadow-elevated);
-    transform: translateY(-2px);
+    border-color: hsl(var(--slate-400));
+    box-shadow: var(--shadow-card);
   }
 
   .card-eco {
@@ -627,7 +627,6 @@
 
   .card-obsidian:hover {
     border-color: hsl(var(--rho-green) / 0.5);
-    transform: translateY(-2px);
   }
 
   /* Mineral card - cool industrial field aesthetic */
@@ -649,8 +648,8 @@
   }
 
   .card-mineral:hover {
+    border-color: hsl(var(--mineral-neutral) / 0.5);
     box-shadow: var(--shadow-mineral);
-    transform: translateY(-2px);
   }
 
   /* Mineral accent border */

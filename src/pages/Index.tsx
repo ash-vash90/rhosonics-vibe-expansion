@@ -57,26 +57,13 @@ const HeroParticles = lazy(() => import("@/components/brand/HeroParticles"));
 const SectionLoader = () => <div className="py-16 flex justify-center">
     <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
   </div>;
-const SectionDivider = () => (
-  <div className="py-12 md:py-16 flex items-center justify-center">
-    <div className="flex items-center gap-4 w-full max-w-md">
-      <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-border" />
-      <div className="relative">
-        <div className="w-2 h-2 rounded-full bg-primary/20" />
-        <div className="absolute inset-0 w-2 h-2 rounded-full bg-primary/40 animate-ping" style={{ animationDuration: '3s' }} />
-      </div>
-      <div className="w-1 h-1 rounded-full bg-border" />
-      <div className="relative">
-        <div className="w-3 h-3 rounded-full border border-primary/30 flex items-center justify-center">
-          <div className="w-1.5 h-1.5 rounded-full bg-primary/50" />
-        </div>
-      </div>
-      <div className="w-1 h-1 rounded-full bg-border" />
-      <div className="relative">
-        <div className="w-2 h-2 rounded-full bg-primary/20" />
-      </div>
-      <div className="flex-1 h-px bg-gradient-to-l from-transparent via-border to-border" />
-    </div>
+const SectionDivider = ({ label }: { label?: string }) => (
+  <div className="py-6 md:py-8 flex items-center gap-3">
+    <div className="flex-1 h-px bg-border" />
+    {label && (
+      <span className="font-data text-[10px] uppercase tracking-widest text-muted-foreground">{label}</span>
+    )}
+    <div className="flex-1 h-px bg-border" />
   </div>
 );
 interface SectionHeaderProps {
@@ -165,13 +152,13 @@ const SectionHeader = ({
       ctx?.revert();
     };
   }, []);
-  return <div ref={headerRef} id={id} className="mb-10 md:mb-16 lg:mb-20 scroll-mt-20 md:scroll-mt-24">
-      <div className="flex items-baseline gap-4 md:gap-6 mb-4 md:mb-6">
-        <span className="section-num font-data text-xs md:text-sm text-muted-foreground">{number}</span>
+  return <div ref={headerRef} id={id} className="mb-8 md:mb-12 lg:mb-16 scroll-mt-20 md:scroll-mt-24">
+      <div className="flex items-baseline gap-4 md:gap-6 mb-3 md:mb-4">
+        <span className="section-num font-data text-sm md:text-base font-bold text-primary">{number}</span>
         <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
       </div>
-      <h2 className="section-title font-ui text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 md:mb-6 tracking-tight">{title}</h2>
-      <p className="section-subtitle text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-2xl">{subtitle}</p>
+      <h2 className="section-title font-ui text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground mb-3 md:mb-4 tracking-tighter leading-[0.95]">{title}</h2>
+      <p className="section-subtitle text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl">{subtitle}</p>
     </div>;
 };
 const Index = () => {
@@ -340,28 +327,24 @@ const Index = () => {
           <HeroParticles />
         </Suspense>
         
-        {/* Subtle gradient overlay */}
+        {/* Hard-edged diagonal gradient slash */}
         <div 
-          className="hero-gradient-overlay absolute inset-0 opacity-[0.08]"
+          className="absolute inset-0"
           style={{
-            background: 'linear-gradient(135deg, transparent 0%, transparent 60%, hsl(125 50% 40% / 0.4) 100%)'
+            background: 'linear-gradient(135deg, transparent 0%, transparent 55%, hsl(125 50% 40% / 0.08) 55%, hsl(125 50% 40% / 0.12) 65%, transparent 65%)'
           }}
         />
         
-        {/* Background pattern - very subtle */}
-        <div className="hero-pattern absolute inset-0 opacity-[0.04]">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2333993c' fill-opacity='0.5'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-          }} />
-        </div>
+        {/* Grid pattern - more aggressive */}
+        <div className="absolute inset-0 bg-grid-data opacity-[0.06]" />
         
-        {/* Gradient orb - more subtle */}
-        <div className="hero-orb absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[120px]" />
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary" />
         
         <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
-          {/* Logo + Wordmark - Icon is 140% of text size */}
-          <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-10 lg:mb-12">
+          {/* Logo + Wordmark */}
+          <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-8 lg:mb-10">
             <div className="w-7 h-7 md:w-[34px] md:h-[34px] lg:w-[42px] lg:h-[42px] xl:w-[50px] xl:h-[50px]">
               <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
             </div>
@@ -378,19 +361,23 @@ const Index = () => {
             </span>
           </div>
           
-          <div className="hero-version label-tech text-primary mb-5 lg:mb-6">
-            <span className="text-slate-400">2025</span>
-            <span className="mx-2">/</span>
-            BRAND SYSTEM
+          <div className="hero-version label-tech text-primary mb-4">
+            <span className="text-slate-500">THE RHOSONICS BRAND SYSTEM</span>
+            <span className="mx-2 text-slate-600">/</span>
+            <span>2025</span>
           </div>
           
-          <h1 className="hero-title font-ui font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight mb-6 lg:mb-8">
-            Brand Guidelines
+          <h1 className="hero-title font-ui font-bold text-5xl md:text-6xl lg:text-7xl xl:text-[7rem] tracking-tighter leading-[0.9] mb-6 lg:mb-8">
+            Precision.<br />Engineered.
           </h1>
-          
-          <p className="hero-subtitle text-lg md:text-xl lg:text-2xl text-slate-300 leading-relaxed max-w-2xl lg:max-w-3xl mx-auto">
-            A system of decisions designed to ensure clarity, consistency, and credibility wherever the brand appears.
-          </p>
+
+          {/* Technical measurement line */}
+          <div className="hero-subtitle flex flex-col items-center gap-6">
+            <div className="w-16 h-px bg-primary/40" />
+            <p className="text-base md:text-lg text-slate-400 leading-relaxed max-w-xl mx-auto">
+              A system of decisions ensuring clarity, consistency, and credibility wherever the brand appears.
+            </p>
+          </div>
         </div>
         
         {/* Scroll indicator */}
@@ -416,12 +403,9 @@ const Index = () => {
         {/* Main Content Area */}
         <main className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1400px] mx-auto overflow-x-hidden">
         
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 00: ABOUT THIS SYSTEM
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
+        {/* ─── SECTION 00: ABOUT THIS SYSTEM ─── */}
+        <ScrollSection className="py-12 md:py-16">
           <SectionHeader id="about" number="00" title="About This System" subtitle="What this is, who it's for, and how to use it." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <AboutThisSystem />
@@ -429,14 +413,11 @@ const Index = () => {
           </ErrorBoundary>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="00.1" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 00.1: DESIGN PROCESS
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
+        {/* ─── SECTION 00.1: DESIGN PROCESS ─── */}
+        <ScrollSection className="py-12 md:py-16">
           <SectionHeader id="design-process" number="00.1" title="Design Process" subtitle="How we approach design decisions, from concept to implementation." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <DesignProcess />
@@ -444,29 +425,27 @@ const Index = () => {
           </ErrorBoundary>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="01" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 01: BRAND POSITIONING
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
-          <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
-          
-          <ErrorBoundary>
-            <Suspense fallback={<SectionLoader />}>
-              <BrandPositioning />
-            </Suspense>
-          </ErrorBoundary>
-        </ScrollSection>
+        {/* ─── SECTION 01: BRAND POSITIONING (DARK BAND) ─── */}
+        <div className="relative -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 bg-rho-obsidian text-slate-100">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/60" />
+          <div className="absolute inset-0 bg-grid-data opacity-[0.04] pointer-events-none" />
+          <ScrollSection className="py-16 md:py-24 relative">
+            <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <BrandPositioning />
+              </Suspense>
+            </ErrorBoundary>
+          </ScrollSection>
+        </div>
 
-        <SectionDivider />
+        <SectionDivider label="02" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 02: BRAND PRINCIPLES
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
+        {/* ─── SECTION 02: BRAND PRINCIPLES ─── */}
+        <ScrollSection className="py-12 md:py-16">
           <SectionHeader id="principles" number="02" title="Brand Principles" subtitle="Decision-making tools for resolving design ambiguity." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <BrandPrinciples />
@@ -474,14 +453,11 @@ const Index = () => {
           </ErrorBoundary>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="03" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 03: THE VISUAL SYSTEM (OVERVIEW)
-         ───────────────────────────────────────────────────────────── */}
+        {/* ─── SECTION 03: THE VISUAL SYSTEM ─── */}
         <ScrollSection className="py-16 md:py-24">
           <SectionHeader id="visual-system" number="03" title="The Visual System" subtitle="How the system is structured in layers." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <VisualSystemOverview />
@@ -489,14 +465,11 @@ const Index = () => {
           </ErrorBoundary>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="03.1" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 03.1: ELEVATION SYSTEM
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
+        {/* ─── SECTION 03.1: ELEVATION SYSTEM ─── */}
+        <ScrollSection className="py-12 md:py-16">
           <SectionHeader id="elevation" number="03.1" title="Elevation & Depth" subtitle="Shadows and layering that create visual hierarchy." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <ElevationSystem />
@@ -504,14 +477,11 @@ const Index = () => {
           </ErrorBoundary>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="04" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 04: COLOR
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
+        {/* ─── SECTION 04: COLOR ─── */}
+        <ScrollSection className="py-12 md:py-16">
           <SectionHeader id="colors" number="04" title="Color Roles" subtitle="How color functions inside the system." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <ColorMatrix />
@@ -519,14 +489,11 @@ const Index = () => {
           </ErrorBoundary>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="05" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 05: TYPOGRAPHY
-         ───────────────────────────────────────────────────────────── */}
+        {/* ─── SECTION 05: TYPOGRAPHY ─── */}
         <ScrollSection className="py-16 md:py-24">
           <SectionHeader id="typography" number="05" title="Typography" subtitle="Clarity, measurement, and trust." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <TypographyScale />
@@ -544,28 +511,25 @@ const Index = () => {
           </ErrorBoundary>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="06" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 06: LOGO & ASSETS
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
+        {/* ─── SECTION 06: LOGO & ASSETS ─── */}
+        <ScrollSection className="py-12 md:py-16">
           <SectionHeader id="logo-assets" number="06" title="Logo & Assets" subtitle="Logo system, icons, and brand marks." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <LogoAssets />
             </Suspense>
           </ErrorBoundary>
 
-          <div id="icon-guidelines" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
-            <div className="mb-8 md:mb-12">
-              <div className="flex items-baseline gap-3 mb-3">
-                <span className="font-data text-xs text-muted-foreground">06.1</span>
+          <div id="icon-guidelines" className="scroll-mt-20 md:scroll-mt-24 mt-12 md:mt-16">
+            <div className="mb-6 md:mb-8">
+              <div className="flex items-baseline gap-3 mb-2">
+                <span className="font-data text-sm font-bold text-primary">06.1</span>
                 <div className="h-px flex-1 bg-border max-w-12" />
               </div>
-              <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Icon Guidelines</h3>
-              <p className="text-base text-muted-foreground">Geometric symbols engineered for clarity.</p>
+              <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2 tracking-tight">Icon Guidelines</h3>
+              <p className="text-sm text-muted-foreground">Geometric symbols engineered for clarity.</p>
             </div>
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
@@ -575,14 +539,11 @@ const Index = () => {
           </div>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="07" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 07: VOICE & TONE
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
+        {/* ─── SECTION 07: VOICE & TONE ─── */}
+        <ScrollSection className="py-12 md:py-16">
           <SectionHeader id="voice" number="07" title="Voice & Tone" subtitle="Direct. Technical. Confident. No fluff, no hedging." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <VoiceTone />
@@ -590,27 +551,24 @@ const Index = () => {
           </ErrorBoundary>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="08" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 08: IMAGERY & MOTION
-         ───────────────────────────────────────────────────────────── */}
+        {/* ─── SECTION 08: IMAGERY & MOTION ─── */}
         <ScrollSection className="py-16 md:py-24">
           <SectionHeader id="imagery" number="08" title="Imagery & Motion" subtitle="Photography, illustration, and animation guidelines." />
-          
           <ErrorBoundary>
             <Suspense fallback={<SectionLoader />}>
               <ImageryGuidelines />
             </Suspense>
           </ErrorBoundary>
-          <div id="motion-design" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
-            <div className="mb-8 md:mb-12">
-              <div className="flex items-baseline gap-3 mb-3">
-                <span className="font-data text-xs text-muted-foreground">08.1</span>
+          <div id="motion-design" className="scroll-mt-20 md:scroll-mt-24 mt-12 md:mt-16">
+            <div className="mb-6 md:mb-8">
+              <div className="flex items-baseline gap-3 mb-2">
+                <span className="font-data text-sm font-bold text-primary">08.1</span>
                 <div className="h-px flex-1 bg-border max-w-12" />
               </div>
-              <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">Motion Design</h3>
-              <p className="text-base text-muted-foreground">Animation that communicates cause and effect.</p>
+              <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2 tracking-tight">Motion Design</h3>
+              <p className="text-sm text-muted-foreground">Animation that communicates cause and effect.</p>
             </div>
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
@@ -620,64 +578,61 @@ const Index = () => {
           </div>
         </ScrollSection>
 
-        <SectionDivider />
+        <SectionDivider label="09" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 09: APPLICATIONS
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24">
-          <SectionHeader id="applications" number="09" title="Applications" subtitle="Industry use cases, components, and interface patterns." />
-          
-          <ErrorBoundary>
-            <Suspense fallback={<SectionLoader />}>
-              <IndustryApplications />
-            </Suspense>
-          </ErrorBoundary>
-          
-          {/* SDM Eco Interface Subsection */}
-          <div id="sdm-interface" className="scroll-mt-20 md:scroll-mt-24 mt-16 md:mt-24">
-            <div className="mb-8 md:mb-12">
-              <div className="flex items-baseline gap-3 mb-3">
-                <span className="font-data text-xs text-muted-foreground">09.1</span>
-                <div className="h-px flex-1 bg-border max-w-12" />
-              </div>
-              <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-2">SDM Eco Interface</h3>
-              <p className="text-base text-muted-foreground">Embedded touchscreen interface design system.</p>
-            </div>
+        {/* ─── SECTION 09: APPLICATIONS (DARK BAND) ─── */}
+        <div className="relative -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 bg-rho-obsidian text-slate-100">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/60" />
+          <div className="absolute inset-0 bg-grid-data opacity-[0.04] pointer-events-none" />
+          <ScrollSection className="py-16 md:py-24 relative">
+            <SectionHeader id="applications" number="09" title="Applications" subtitle="Industry use cases, components, and interface patterns." />
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
-                <SDMEcoInterface />
+                <IndustryApplications />
               </Suspense>
             </ErrorBoundary>
-          </div>
-          
-          <ErrorBoundary>
-            <Suspense fallback={<SectionLoader />}>
-              <EcoComponents />
-            </Suspense>
-          </ErrorBoundary>
-          <ErrorBoundary>
-            <Suspense fallback={<SectionLoader />}>
-              <InterfaceKit />
-            </Suspense>
-          </ErrorBoundary>
-          <ErrorBoundary>
-            <Suspense fallback={<SectionLoader />}>
-              <EmptyStates />
-            </Suspense>
-          </ErrorBoundary>
-        </ScrollSection>
+            
+            <div id="sdm-interface" className="scroll-mt-20 md:scroll-mt-24 mt-12 md:mt-16">
+              <div className="mb-6 md:mb-8">
+                <div className="flex items-baseline gap-3 mb-2">
+                  <span className="font-data text-sm font-bold text-primary">09.1</span>
+                  <div className="h-px flex-1 bg-border max-w-12" />
+                </div>
+                <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-2 tracking-tight">SDM Eco Interface</h3>
+                <p className="text-sm text-slate-400">Embedded touchscreen interface design system.</p>
+              </div>
+              <ErrorBoundary>
+                <Suspense fallback={<SectionLoader />}>
+                  <SDMEcoInterface />
+                </Suspense>
+              </ErrorBoundary>
+            </div>
+            
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <EcoComponents />
+              </Suspense>
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <InterfaceKit />
+              </Suspense>
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <Suspense fallback={<SectionLoader />}>
+                <EmptyStates />
+              </Suspense>
+            </ErrorBoundary>
+          </ScrollSection>
+        </div>
 
-        <SectionDivider />
+        <SectionDivider label="10" />
 
-        {/* ─────────────────────────────────────────────────────────────
-            SECTION 10: PROOF & EXAMPLES
-         ───────────────────────────────────────────────────────────── */}
-        <ScrollSection className="py-16 md:py-24 relative">
+        {/* ─── SECTION 10: PROOF & EXAMPLES ─── */}
+        <ScrollSection className="py-12 md:py-16 relative">
           <div className="absolute inset-0 bg-grid-data opacity-20 pointer-events-none" />
           <div className="relative">
             <SectionHeader id="proof" number="10" title="Proof & Examples" subtitle="Technology comparisons, case studies, and brand gallery." />
-            
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
                 <TechComparison />
@@ -691,25 +646,21 @@ const Index = () => {
           </div>
         </ScrollSection>
 
-
-        {/* ═══════════════════════════════════════════════════════════════
-            FOOTER
-         ═══════════════════════════════════════════════════════════════ */}
-        <footer className="mt-20 py-12 border-t-2 border-slate-200" role="contentinfo">
+        {/* ═══ FOOTER ═══ */}
+        <footer className="mt-12 py-10 border-t border-border" role="contentinfo">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            {/* Logo lockup: 135% ratio - text-base(16px)→22px icon */}
             <div className="flex items-center gap-3">
               <div className="w-[22px] h-[22px]">
                 <RhosonicsLogo variant="dark" />
               </div>
               <div>
                 <span className={`font-logo ${isPrimetime ? 'tracking-normal' : 'tracking-wide'} text-foreground text-base`}>RHOSONICS</span>
-                <span className="font-data text-xs text-slate-400 ml-2">BRAND SYSTEM</span>
+                <span className="font-data text-xs text-muted-foreground ml-2">BRAND SYSTEM</span>
               </div>
             </div>
-            <div className="text-sm text-slate-500">
+            <div className="text-sm text-muted-foreground">
               <span className="font-data text-xs">© {new Date().getFullYear()} RHOSONICS B.V.</span>
-              <span className="mx-2 text-slate-300">|</span>
+              <span className="mx-2 text-border">|</span>
               <span className="font-data text-xs">VERSION 2025</span>
             </div>
           </div>
