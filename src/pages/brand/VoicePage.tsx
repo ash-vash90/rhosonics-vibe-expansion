@@ -1,15 +1,19 @@
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
-import { SectionHeader, SectionLoader } from "@/components/brand/SectionUtils";
+import { SectionLoader } from "@/components/brand/SectionUtils";
+import { PageBanner } from "@/components/brand/PageBanner";
 
 const VoiceTone = lazy(() => import("@/components/brand/VoiceTone"));
 
 const VoicePage = () => (
-  <ScrollSection className="py-12 md:py-16">
-    <SectionHeader id="voice" number="07" title="Voice & Tone" subtitle="Direct. Technical. Confident. No fluff, no hedging." />
-    <ErrorBoundary><Suspense fallback={<SectionLoader />}><VoiceTone /></Suspense></ErrorBoundary>
-  </ScrollSection>
+  <>
+    <PageBanner number="07" title="Voice & Tone" subtitle="How the brand sounds across contexts." />
+    <ScrollSection className="py-12 md:py-16">
+      <div id="voice" className="scroll-mt-20" />
+      <ErrorBoundary><Suspense fallback={<SectionLoader />}><VoiceTone /></Suspense></ErrorBoundary>
+    </ScrollSection>
+  </>
 );
 
 export default VoicePage;
