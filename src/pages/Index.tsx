@@ -427,19 +427,15 @@ const Index = () => {
 
         <SectionDivider label="01" />
 
-        {/* ─── SECTION 01: BRAND POSITIONING (DARK BAND) ─── */}
-        <div className="dark-band relative -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 bg-rho-obsidian text-slate-100">
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/60" />
-          <div className="absolute inset-0 bg-grid-data opacity-[0.04] pointer-events-none" />
-          <ScrollSection className="py-16 md:py-24 relative">
-            <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
-            <ErrorBoundary>
-              <Suspense fallback={<SectionLoader />}>
-                <BrandPositioning />
-              </Suspense>
-            </ErrorBoundary>
-          </ScrollSection>
-        </div>
+        {/* ─── SECTION 01: BRAND POSITIONING ─── */}
+        <ScrollSection className="py-16 md:py-24">
+          <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <BrandPositioning />
+            </Suspense>
+          </ErrorBoundary>
+        </ScrollSection>
 
         <SectionDivider label="02" />
 
