@@ -327,19 +327,6 @@ const Index = () => {
           <HeroParticles />
         </Suspense>
         
-        {/* Hard-edged diagonal gradient slash */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, transparent 0%, transparent 55%, hsl(125 50% 40% / 0.08) 55%, hsl(125 50% 40% / 0.12) 65%, transparent 65%)'
-          }}
-        />
-        
-        {/* Grid pattern - more aggressive */}
-        <div className="absolute inset-0 bg-grid-data opacity-[0.06]" />
-        
-        {/* Top accent line */}
-        <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary" />
         
         <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
@@ -361,19 +348,11 @@ const Index = () => {
             </span>
           </div>
           
-          <div className="hero-version label-tech text-primary mb-4">
-            <span className="text-slate-500">THE RHOSONICS BRAND SYSTEM</span>
-            <span className="mx-2 text-slate-600">/</span>
-            <span>2025</span>
-          </div>
-          
-          <h1 className="hero-title font-ui font-bold text-5xl md:text-6xl lg:text-7xl xl:text-[7rem] tracking-tighter leading-[0.9] mb-6 lg:mb-8">
-            Precision.<br />Engineered.
+          <h1 className="hero-title font-ui font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-tight mb-6 lg:mb-8">
+            Brand Guidelines
           </h1>
 
-          {/* Technical measurement line */}
-          <div className="hero-subtitle flex flex-col items-center gap-6">
-            <div className="w-16 h-px bg-primary/40" />
+          <div className="hero-subtitle">
             <p className="text-base md:text-lg text-slate-400 leading-relaxed max-w-xl mx-auto">
               A system of decisions ensuring clarity, consistency, and credibility wherever the brand appears.
             </p>
