@@ -11,7 +11,7 @@ interface ScrollSectionProps {
   variant?: "default" | "tinted" | "dark";
 }
 
-export const ScrollSection = ({ children, className = "" }: ScrollSectionProps) => {
+export const ScrollSection = ({ children, className = "", variant = "default" }: ScrollSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(false);
 
