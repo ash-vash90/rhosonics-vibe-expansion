@@ -5,7 +5,18 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FontModeProvider } from "@/hooks/useFontMode";
 
-const Index = lazy(() => import("./pages/Index"));
+const BrandLayout = lazy(() => import("./components/brand/BrandLayout"));
+const AboutPage = lazy(() => import("./pages/brand/AboutPage"));
+const PositioningPage = lazy(() => import("./pages/brand/PositioningPage"));
+const PrinciplesPage = lazy(() => import("./pages/brand/PrinciplesPage"));
+const VisualSystemPage = lazy(() => import("./pages/brand/VisualSystemPage"));
+const ColorPage = lazy(() => import("./pages/brand/ColorPage"));
+const TypographyPage = lazy(() => import("./pages/brand/TypographyPage"));
+const LogoAssetsPage = lazy(() => import("./pages/brand/LogoAssetsPage"));
+const VoicePage = lazy(() => import("./pages/brand/VoicePage"));
+const ImageryPage = lazy(() => import("./pages/brand/ImageryPage"));
+const ApplicationsPage = lazy(() => import("./pages/brand/ApplicationsPage"));
+const ProofPage = lazy(() => import("./pages/brand/ProofPage"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -26,7 +37,20 @@ const App = () => (
       <BrowserRouter>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route element={<BrandLayout />}>
+              <Route index element={<AboutPage />} />
+              <Route path="about" element={<AboutPage />} />
+              <Route path="positioning" element={<PositioningPage />} />
+              <Route path="principles" element={<PrinciplesPage />} />
+              <Route path="visual-system" element={<VisualSystemPage />} />
+              <Route path="color" element={<ColorPage />} />
+              <Route path="typography" element={<TypographyPage />} />
+              <Route path="logo-assets" element={<LogoAssetsPage />} />
+              <Route path="voice" element={<VoicePage />} />
+              <Route path="imagery" element={<ImageryPage />} />
+              <Route path="applications" element={<ApplicationsPage />} />
+              <Route path="proof" element={<ProofPage />} />
+            </Route>
             <Route path="/newsletter" element={<Newsletter />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
