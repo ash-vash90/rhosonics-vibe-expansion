@@ -84,6 +84,9 @@ const BrandLayout = () => {
       {/* Hero */}
       {isHome && (
         <section className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-screen flex items-center justify-center">
+          {/* Gaussian blur orb */}
+          <div className="hero-blur-orb -top-40 -right-40 lg:right-10 lg:top-20" />
+          <div className="hero-blur-orb bottom-0 -left-60 lg:left-20 lg:bottom-10 opacity-50" style={{ width: 400, height: 400 }} />
           <Suspense fallback={null}><HeroParticles /></Suspense>
           <div ref={heroContentRef} className="hero-content relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4 mb-8 lg:mb-10">
