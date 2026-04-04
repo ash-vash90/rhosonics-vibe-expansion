@@ -427,19 +427,15 @@ const Index = () => {
 
         <SectionDivider label="01" />
 
-        {/* ─── SECTION 01: BRAND POSITIONING (DARK BAND) ─── */}
-        <div className="dark-band relative -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 bg-rho-obsidian text-slate-100">
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/60" />
-          <div className="absolute inset-0 bg-grid-data opacity-[0.04] pointer-events-none" />
-          <ScrollSection className="py-16 md:py-24 relative">
-            <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
-            <ErrorBoundary>
-              <Suspense fallback={<SectionLoader />}>
-                <BrandPositioning />
-              </Suspense>
-            </ErrorBoundary>
-          </ScrollSection>
-        </div>
+        {/* ─── SECTION 01: BRAND POSITIONING ─── */}
+        <ScrollSection className="py-16 md:py-24">
+          <SectionHeader id="positioning" number="01" title="Brand Positioning" subtitle="What the Rhosonics brand must communicate." />
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <BrandPositioning />
+            </Suspense>
+          </ErrorBoundary>
+        </ScrollSection>
 
         <SectionDivider label="02" />
 
@@ -580,51 +576,47 @@ const Index = () => {
 
         <SectionDivider label="09" />
 
-        {/* ─── SECTION 09: APPLICATIONS (DARK BAND) ─── */}
-        <div className="dark-band relative -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 bg-rho-obsidian text-slate-100">
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/60" />
-          <div className="absolute inset-0 bg-grid-data opacity-[0.04] pointer-events-none" />
-          <ScrollSection className="py-16 md:py-24 relative">
-            <SectionHeader id="applications" number="09" title="Applications" subtitle="Industry use cases, components, and interface patterns." />
-            <ErrorBoundary>
-              <Suspense fallback={<SectionLoader />}>
-                <IndustryApplications />
-              </Suspense>
-            </ErrorBoundary>
-            
-            <div id="sdm-interface" className="scroll-mt-20 md:scroll-mt-24 mt-12 md:mt-16">
-              <div className="mb-6 md:mb-8">
-                <div className="flex items-baseline gap-3 mb-2">
-                  <span className="font-data text-sm font-bold text-primary">09.1</span>
-                  <div className="h-px flex-1 bg-border max-w-12" />
-                </div>
-                <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-2 tracking-tight">SDM Eco Interface</h3>
-                <p className="text-sm text-slate-400">Embedded touchscreen interface design system.</p>
+        {/* ─── SECTION 09: APPLICATIONS ─── */}
+        <ScrollSection className="py-16 md:py-24">
+          <SectionHeader id="applications" number="09" title="Applications" subtitle="Industry use cases, components, and interface patterns." />
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <IndustryApplications />
+            </Suspense>
+          </ErrorBoundary>
+          
+          <div id="sdm-interface" className="scroll-mt-20 md:scroll-mt-24 mt-12 md:mt-16">
+            <div className="mb-6 md:mb-8">
+              <div className="flex items-baseline gap-3 mb-2">
+                <span className="font-data text-sm font-bold text-primary">09.1</span>
+                <div className="h-px flex-1 bg-border max-w-12" />
               </div>
-              <ErrorBoundary>
-                <Suspense fallback={<SectionLoader />}>
-                  <SDMEcoInterface />
-                </Suspense>
-              </ErrorBoundary>
+              <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2 tracking-tight">SDM Eco Interface</h3>
+              <p className="text-sm text-muted-foreground">Embedded touchscreen interface design system.</p>
             </div>
-            
             <ErrorBoundary>
               <Suspense fallback={<SectionLoader />}>
-                <EcoComponents />
+                <SDMEcoInterface />
               </Suspense>
             </ErrorBoundary>
-            <ErrorBoundary>
-              <Suspense fallback={<SectionLoader />}>
-                <InterfaceKit />
-              </Suspense>
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <Suspense fallback={<SectionLoader />}>
-                <EmptyStates />
-              </Suspense>
-            </ErrorBoundary>
-          </ScrollSection>
-        </div>
+          </div>
+          
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <EcoComponents />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <InterfaceKit />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Suspense fallback={<SectionLoader />}>
+              <EmptyStates />
+            </Suspense>
+          </ErrorBoundary>
+        </ScrollSection>
 
         <SectionDivider label="10" />
 
