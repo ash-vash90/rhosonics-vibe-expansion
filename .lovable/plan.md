@@ -1,109 +1,81 @@
 
 
-# Redesign: Safe SaaS → High-Performance Industrial Precision
+# Split Single-Page Layout into Multi-Page Navigation
 
-This plan transforms the brand guidelines site from its current clean-but-safe layout into something bolder, denser, and more visually assertive — without changing the core color palette.
-
----
-
-## 1. Hero Section Overhaul
-
-**Current**: Centered logo + "Brand Guidelines" title + soft subtitle. Generic brand system feel.
-
-**New**: Cinematic, full-bleed hero with assertive industrial copy and stronger visual hierarchy.
-
-- Replace "Brand Guidelines" with something like **"Precision. Engineered."** as the headline — short, decisive, industrial
-- Add a secondary line: "The Rhosonics Brand System / 2025" as a small data label above
-- Increase headline size dramatically: `text-6xl md:text-7xl lg:text-8xl xl:text-[7rem]` with `font-bold` and `leading-[0.9]`
-- Reduce subtitle font size to `text-base md:text-lg` — create more contrast between headline and body
-- Add a subtle horizontal rule or technical measurement line between headline and subtitle
-- Replace the soft gradient orb with a harder-edged diagonal gradient slash using existing Obsidian/Green tones
-- Tighten overall hero padding — less floating-in-space, more grounded
-
-**Files**: `src/pages/Index.tsx` (hero section, lines 337-407)
+Currently all 11 sections live on one massive scrolling page. This plan splits them into separate routes while preserving the sidebar navigation, hero, and shared layout.
 
 ---
 
-## 2. Typography: Sharper Hierarchy
+## Page Structure
 
-**Current**: Section headers are `text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold` with relaxed spacing.
+Each nav section becomes its own route. Sections with sub-items stay grouped on one page (scroll anchors within that page).
 
-**New**: More extreme hierarchy — bigger headings, tighter leading, smaller body.
-
-- `SectionHeader` title: bump to `text-4xl md:text-5xl lg:text-6xl xl:text-7xl` with `leading-[0.95]` and `tracking-tighter`
-- `SectionHeader` subtitle: reduce to `text-sm md:text-base lg:text-lg` (currently `text-base md:text-lg lg:text-xl`)
-- Section number: make bolder — `text-sm md:text-base font-bold` instead of `text-xs md:text-sm`
-- Add `font-semibold` or `font-bold` more aggressively to sub-headers throughout
-
-**Files**: `src/pages/Index.tsx` (SectionHeader component, lines 88-176)
-
----
-
-## 3. Layout Density & Rhythm
-
-**Current**: Uniform `py-16 md:py-24` on every section. Identical SectionDividers between each. Everything breathes equally.
-
-**New**: Alternate between dense and open sections. Create rhythm.
-
-- Reduce default section padding to `py-12 md:py-16` — tighter baseline
-- Every 2nd or 3rd section gets `py-16 md:py-24` for breathing room
-- Replace the decorative pulsing-dot SectionDivider with a sharper divider: a thin horizontal line with a small data label (section number) — more technical, less playful
-- Remove `translateY(-2px)` hover effects on cards — grounded, not floating
-
-**Files**: `src/pages/Index.tsx` (SectionDivider, section wrappers), `src/index.css` (card hover states)
+| Route | Section(s) | Components |
+|-------|-----------|------------|
+| `/` | Hero + overview/landing | Hero only (or Hero + About) |
+| `/about` | 00 — About, Design Process | AboutThisSystem, DesignProcess |
+| `/positioning` | 01 — Brand Positioning | BrandPositioning |
+| `/principles` | 02 — Brand Principles | BrandPrinciples |
+| `/visual-system` | 03 — Visual System, Elevation | VisualSystemOverview, ElevationSystem |
+| `/color` | 04 — Color Roles | ColorMatrix |
+| `/typography` | 05 — Typography, Constraints, Spacing | TypographyScale, TypographyConstraints, SpacingSystem |
+| `/logo-assets` | 06 — Logo & Assets, Icons | LogoAssets, IconGuidelines |
+| `/voice` | 07 — Voice & Tone | VoiceTone |
+| `/imagery` | 08 — Imagery, Motion | ImageryGuidelines, MotionDesign |
+| `/applications` | 09 — Applications, SDM, Components, Empty States | IndustryApplications, SDMEcoInterface, EcoComponents, InterfaceKit, EmptyStates |
+| `/proof` | 10 — Proof & Examples | TechComparison, CaseStudies |
 
 ---
 
-## 4. Section Contrast Bands
+## Implementation Steps
 
-Introduce alternating dark/light section backgrounds to break the monotony and add visual tension.
+### 1. Create a shared layout component (`src/components/brand/BrandLayout.tsx`)
+- Contains the hero (compact version on inner pages, full on `/`), Navigation sidebar, footer, FontSelector
+- Uses `<Outlet />` from react-router-dom to render child page content
+- The sidebar and top bar persist across all pages without remounting
 
-- Wrap select sections (e.g., Brand Positioning, Visual System, Applications) in full-width Obsidian-background bands
-- These dark bands use `bg-rho-obsidian text-slate-100` and span edge-to-edge, while content stays within `max-w-[1400px]`
-- This creates a strong light/dark rhythm as you scroll — immediately more distinctive
+### 2. Create individual page files (`src/pages/brand/`)
+- One file per route (e.g., `AboutPage.tsx`, `PositioningPage.tsx`, etc.)
+- Each page renders its section header(s) + lazy-loaded components with ErrorBoundary/Suspense
+- Reuses existing `SectionHeader`, `ScrollSection`, `SectionDivider` components
+- Sub-sections within a page use scroll anchors as they do today
 
-**Files**: `src/pages/Index.tsx` (wrap specific ScrollSection blocks in dark containers)
+### 3. Update routing (`src/App.tsx`)
+- Add a parent route with `BrandLayout` as the element
+- Nest all section routes under it
+- Keep `/newsletter` and `*` (NotFound) as separate top-level routes
 
----
+### 4. Update Navigation (`src/components/brand/Navigation.tsx`)
+- Change from `scrollToSection(id)` to `navigate('/route#anchor')` using react-router
+- Nav items link to routes instead of scroll targets
+- Active state detection switches from IntersectionObserver to route matching (with scroll-spy still active within a page for sub-sections)
+- Remove the GSAP scroll-trigger show/hide on desktop nav (it's always visible on inner pages)
 
-## 5. UI Element Refinements
-
-### Buttons
-- Reduce `rounded-lg` to `rounded` (4px) globally for a sharper, more industrial feel
-- Keep existing variants but add more weight: increase default padding slightly, make text `font-semibold`
-
-### Cards
-- Reduce `rounded-lg` to `rounded` or `rounded-sm` on `.card-base` and the default Card component
-- Remove hover `translateY(-2px)` float — replace with a subtle border-color change only
-- Increase border opacity slightly for more definition
-
-### Dividers
-- New `SectionDivider`: thin `h-px bg-border` with a centered `font-data text-[10px]` label showing the next section number
-- Remove the animated pulsing dot cluster entirely
-
-**Files**: `src/components/ui/button.tsx`, `src/components/ui/card.tsx`, `src/index.css`, `src/pages/Index.tsx`
-
----
-
-## 6. Industrial Visual Accents
-
-- Add corner bracket frames (`bracket-frame` class already exists in CSS) to key hero elements and section headers
-- Use the existing `bg-grid-data` pattern more aggressively on dark section backgrounds
-- Add a thin green accent line (2-3px) at the top of dark section bands — like a measurement indicator
-
-**Files**: `src/pages/Index.tsx`, `src/index.css`
+### 5. Simplify `src/pages/Index.tsx`
+- Becomes just the hero/landing page content
+- Most section code moves to the individual page files
+- Shared utilities (`SectionHeader`, `SectionDivider`, `SectionLoader`) extract to a shared file
 
 ---
 
-## Summary of File Changes
+## File Changes Summary
 
-| File | Changes |
-|------|---------|
-| `src/pages/Index.tsx` | Hero redesign, SectionHeader typography, SectionDivider replacement, dark section bands, layout density |
-| `src/index.css` | Card hover refinements, new divider styles, reduced border-radius defaults |
-| `src/components/ui/button.tsx` | Reduce border-radius to `rounded`, add `font-semibold` |
-| `src/components/ui/card.tsx` | Reduce border-radius to `rounded` |
-| `tailwind.config.ts` | No changes needed — existing system supports all modifications |
-
-Total: ~5 files, focused on the page layout and base UI components.
+| Action | File |
+|--------|------|
+| Create | `src/components/brand/BrandLayout.tsx` — shared layout with nav + outlet |
+| Create | `src/components/brand/SectionUtils.tsx` — SectionHeader, SectionDivider, SectionLoader |
+| Create | `src/pages/brand/AboutPage.tsx` |
+| Create | `src/pages/brand/PositioningPage.tsx` |
+| Create | `src/pages/brand/PrinciplesPage.tsx` |
+| Create | `src/pages/brand/VisualSystemPage.tsx` |
+| Create | `src/pages/brand/ColorPage.tsx` |
+| Create | `src/pages/brand/TypographyPage.tsx` |
+| Create | `src/pages/brand/LogoAssetsPage.tsx` |
+| Create | `src/pages/brand/VoicePage.tsx` |
+| Create | `src/pages/brand/ImageryPage.tsx` |
+| Create | `src/pages/brand/ApplicationsPage.tsx` |
+| Create | `src/pages/brand/ProofPage.tsx` |
+| Modify | `src/App.tsx` — nested routes under BrandLayout |
+| Modify | `src/pages/Index.tsx` — strip to hero + landing only |
+| Modify | `src/components/brand/Navigation.tsx` — route-based links + active state |
 
