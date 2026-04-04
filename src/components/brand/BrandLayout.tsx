@@ -8,6 +8,7 @@ import { ErrorBoundary } from "../ErrorBoundary";
 import { useFontMode } from "@/hooks/useFontMode";
 import { cleanupAllGsap } from "@/hooks/useGsapCleanup";
 import { loadGsap } from "./SectionUtils";
+import { CursorFollower } from "./CursorFollower";
 
 const HeroParticles = lazy(() => import("@/components/brand/HeroParticles"));
 
