@@ -1012,6 +1012,48 @@
     box-shadow: var(--shadow-elevated);
   }
 
+  /* Card hover with animated green underline */
+  .hover-card-accent {
+    @apply transition-all duration-300 relative overflow-hidden;
+  }
+  .hover-card-accent::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: hsl(var(--rho-green));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hover-card-accent:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elevated);
+  }
+  .hover-card-accent:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Hero blur orb */
+  .hero-blur-orb {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(var(--rho-green) / 0.15) 0%, hsl(var(--rho-green-accent) / 0.05) 40%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Stagger children utility */
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
   /* Gradient Text */
   .gradient-text {
     background: var(--gradient-brand);
