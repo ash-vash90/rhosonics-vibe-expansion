@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 interface ScrollSectionProps {
   children: ReactNode;
   className?: string;
+  variant?: "default" | "tinted" | "dark";
 }
 
 export const ScrollSection = ({ children, className = "" }: ScrollSectionProps) => {
