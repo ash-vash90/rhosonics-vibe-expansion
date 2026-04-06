@@ -3,6 +3,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
+import SectionCrossLink from "@/components/brand/SectionCrossLink";
 
 const TypographyScale = lazy(() => import("@/components/brand/TypographyScale"));
 const TypographyConstraints = lazy(() => import("@/components/brand/TypographyConstraints"));
