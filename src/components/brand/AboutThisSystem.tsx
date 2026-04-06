@@ -1,4 +1,4 @@
-import { Palette, Code, Megaphone, Users, ArrowRight } from "@/lib/icons";
+import { Palette, Code, Megaphone, Users, ArrowRight, Target, Shield, AlertTriangle } from "@/lib/icons";
 
 const AboutThisSystem = () => {
   return (

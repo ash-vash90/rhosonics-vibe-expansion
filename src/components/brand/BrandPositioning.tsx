@@ -90,6 +90,25 @@ const BrandPositioning = () => {
         </div>
       </div>
 
+      {/* Why Not Competitors - Differentiation callout */}
+      <div className="p-6 md:p-8 rounded-lg border border-primary/20 bg-primary/5">
+        <span className="font-data text-[10px] uppercase tracking-widest text-primary block mb-4">Technical Differentiation</span>
+        <h3 className="font-ui text-xl md:text-2xl font-bold text-foreground mb-6">Why Not the Alternative?</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {[
+            { claim: "Non-nuclear since 2009", context: "No licensing, no source disposal, no regulatory overhead" },
+            { claim: "±0.1% repeatability", context: "Verified across 10,000+ installations in live process conditions" },
+            { claim: "40+ years of ultrasonic expertise", context: "Founded in 1984. Single-domain focus, not a product line extension" },
+          ].map((item) => (
+            <div key={item.claim} className="space-y-2">
+              <p className="font-ui font-semibold text-foreground">{item.claim}</p>
+              <p className="text-xs text-muted-foreground">{item.context}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-muted-foreground/60 mt-6 italic">Every claim above is falsifiable and citation-ready.</p>
+      </div>
+
       {/* Core Values - FEATURE CARDS: Premium cards with breathing room */}
       <div id="audience">
         <div className="flex items-baseline gap-4 mb-10">
