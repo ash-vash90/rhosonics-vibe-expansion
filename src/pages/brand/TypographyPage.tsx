@@ -3,6 +3,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
+import SectionCrossLink from "@/components/brand/SectionCrossLink";
 
 const TypographyScale = lazy(() => import("@/components/brand/TypographyScale"));
 const TypographyConstraints = lazy(() => import("@/components/brand/TypographyConstraints"));
@@ -23,6 +24,10 @@ const TypographyPage = () => (
     <ScrollSection className="py-12 md:py-16">
       <div id="spacing" className="scroll-mt-20" />
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><SpacingSystem /></Suspense></ErrorBoundary>
+      <SectionCrossLink links={[
+        { label: "Visual System", to: "/visual-system", description: "How type works with elevation and depth" },
+        { label: "Color Roles", to: "/color", description: "Color and type work together for hierarchy" },
+      ]} />
     </ScrollSection>
   </>
 );

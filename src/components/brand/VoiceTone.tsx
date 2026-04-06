@@ -44,6 +44,56 @@ export const VoiceTone = () => {
         Our reader skips to the specification table. We put it first.
       </p>
 
+      {/* Audience Profile */}
+      <div>
+        <div className="flex items-center gap-4 mb-10">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Who We're Writing For</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Primary persona */}
+          <div className="relative p-6 rounded-lg border border-border/50 bg-muted/20">
+            <span className="font-data text-[10px] uppercase tracking-widest text-primary block mb-3">Primary Audience</span>
+            <h4 className="font-ui text-lg font-bold text-foreground mb-1">Senior Process Engineer</h4>
+            <p className="text-sm text-muted-foreground mb-4">15+ years experience · Evaluates on spec sheets, not brochures</p>
+            <ul className="space-y-2">
+              {[
+                "Skeptical of marketing claims — wants falsifiable data",
+                "Reads technical documentation before sales material",
+                "Trusts peer recommendations and published case studies",
+                "Decides based on ±0.1% accuracy, not brand prestige",
+              ].map((trait) => (
+                <li key={trait} className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <span className="w-1 h-1 bg-primary/50 rounded-full mt-1.5 flex-shrink-0" />
+                  {trait}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Secondary persona */}
+          <div className="relative p-6 rounded-lg border border-border/50 bg-muted/20">
+            <span className="font-data text-[10px] uppercase tracking-widest text-muted-foreground/60 block mb-3">Secondary Audience</span>
+            <h4 className="font-ui text-lg font-bold text-foreground mb-1">Operations Manager</h4>
+            <p className="text-sm text-muted-foreground mb-4">ROI-focused · Needs data to justify procurement internally</p>
+            <ul className="space-y-2">
+              {[
+                "Translates technical value into business outcomes",
+                "Needs clear before/after metrics for budget approval",
+                "Values long-term partnership and support continuity",
+                "Measures success in uptime, not feature lists",
+              ].map((trait) => (
+                <li key={trait} className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <span className="w-1 h-1 bg-primary/50 rounded-full mt-1.5 flex-shrink-0" />
+                  {trait}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {/* Voice Pillars - numbered list with value badges */}
       <div>
         <div className="flex items-center gap-4 mb-10">

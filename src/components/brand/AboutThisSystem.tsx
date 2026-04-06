@@ -1,4 +1,4 @@
-import { Palette, Code, Megaphone, Users, ArrowRight } from "@/lib/icons";
+import { Palette, Code, Megaphone, Users, ArrowRight, Target, Shield, AlertTriangle } from "@/lib/icons";
 
 const AboutThisSystem = () => {
   return (
@@ -105,6 +105,66 @@ const AboutThisSystem = () => {
                 <ArrowRight className="relative z-10 w-4 h-4 text-muted-foreground/0 group-hover:text-primary group-hover:translate-x-1 transition-all" />
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Brand Governance */}
+      <div className="space-y-12">
+        <div className="flex items-center gap-4">
+          <h3 className="font-data text-xs uppercase tracking-widest text-primary">Brand Governance</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Goals */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center">
+                <Target className="w-4 h-4 text-primary" />
+              </div>
+              <h4 className="font-ui font-semibold text-foreground">System Goals</h4>
+            </div>
+            <ul className="space-y-3">
+              {[
+                "Consistent output across teams and partners",
+                "Faster decisions — less back-and-forth on 'how should this look'",
+                "Reduced review cycles for brand-compliant work",
+              ].map((goal) => (
+                <li key={goal} className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <span className="w-1.5 h-1.5 bg-primary/50 rounded-full mt-1.5 flex-shrink-0" />
+                  {goal}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Ownership */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center">
+                <Shield className="w-4 h-4 text-primary" />
+              </div>
+              <h4 className="font-ui font-semibold text-foreground">Ownership</h4>
+            </div>
+            <div className="space-y-3 text-sm text-muted-foreground">
+              <p>The <strong className="text-foreground">Marketing & Communications team</strong> maintains this system.</p>
+              <p>Propose changes through a written brief explaining the rationale. Aesthetic preferences alone are not sufficient — changes must serve clarity, consistency, or credibility.</p>
+            </div>
+          </div>
+
+          {/* Exceptions */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center">
+                <AlertTriangle className="w-4 h-4 text-primary" />
+              </div>
+              <h4 className="font-ui font-semibold text-foreground">When Guidelines Don't Cover It</h4>
+            </div>
+            <div className="space-y-3 text-sm text-muted-foreground">
+              <p>Apply the <strong className="text-foreground">Decision Heuristic</strong>: choose the option that deepens understanding and demonstrates real-world capability.</p>
+              <p>Document the decision and flag it for inclusion in the next system update. Undocumented exceptions become inconsistencies.</p>
+            </div>
           </div>
         </div>
       </div>
