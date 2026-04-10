@@ -32,8 +32,7 @@ const caseStudies = [
       { label: "TEMP", value: "-10–65°C" },
       { label: "MAINT", value: "<4h/yr" },
     ],
-    // Mineral variant: Arid/earth-tone environments
-    variant: "mineral" as const,
+    variant: "default" as const,
     image: miningHero,
   },
   {
@@ -63,18 +62,13 @@ export const CaseStudies = () => {
           <article 
             key={study.id}
             className={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border flex flex-col ${
-              study.variant === 'dark' ? 'bg-rho-obsidian border-border/30' : 
-              study.variant === 'mineral' ? 'bg-mineral-surface border-mineral-deep/20' : 'bg-card border-border hover:border-primary/40'
+              study.variant === 'dark' ? 'bg-rho-obsidian border-border/30' : 'bg-card border-border hover:border-primary/40'
             }`}
           >
             {/* Hero Image */}
             <div
               className={`relative h-40 overflow-hidden ${
-                study.variant === "dark"
-                  ? "bg-rho-obsidian"
-                  : study.variant === "mineral"
-                    ? "bg-mineral-surface"
-                    : "bg-card"
+                study.variant === "dark" ? "bg-rho-obsidian" : "bg-card"
               }`}
             >
               {/* Image + overlay are composited as a single GPU layer to prevent edge flashing */}
@@ -89,9 +83,7 @@ export const CaseStudies = () => {
                   className={`absolute inset-0 pointer-events-none ${
                     study.variant === "dark"
                       ? "bg-gradient-to-t from-rho-obsidian via-rho-obsidian/60 to-transparent"
-                      : study.variant === "mineral"
-                        ? "bg-gradient-to-t from-mineral-surface via-mineral-surface/60 to-transparent"
-                        : "bg-gradient-to-t from-card via-card/60 to-transparent"
+                      : "bg-gradient-to-t from-card via-card/60 to-transparent"
                   }`}
                 />
               </div>
