@@ -6,6 +6,7 @@ import { PageBanner } from "@/components/brand/PageBanner";
 
 const VisualSystemOverview = lazy(() => import("@/components/brand/VisualSystemOverview"));
 const ElevationSystem = lazy(() => import("@/components/brand/ElevationSystem"));
+const ExportSection = lazy(() => import("@/components/brand/ExportSection"));
 
 const VisualSystemPage = () => (
   <>
@@ -19,6 +20,10 @@ const VisualSystemPage = () => (
       <div id="elevation" className="scroll-mt-20" />
       <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-6">Elevation & Depth</h3>
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><ElevationSystem /></Suspense></ErrorBoundary>
+    </ScrollSection>
+    <SectionDivider label="03.2" />
+    <ScrollSection className="py-12 md:py-16">
+      <ErrorBoundary><Suspense fallback={<SectionLoader />}><ExportSection /></Suspense></ErrorBoundary>
     </ScrollSection>
   </>
 );
