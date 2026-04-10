@@ -32,8 +32,7 @@ const caseStudies = [
       { label: "TEMP", value: "-10–65°C" },
       { label: "MAINT", value: "<4h/yr" },
     ],
-    // Mineral variant: Arid/earth-tone environments
-    variant: "mineral" as const,
+    variant: "default" as const,
     image: miningHero,
   },
   {
@@ -63,18 +62,13 @@ export const CaseStudies = () => {
           <article 
             key={study.id}
             className={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border flex flex-col ${
-              study.variant === 'dark' ? 'bg-rho-obsidian border-border/30' : 
-              study.variant === 'mineral' ? 'bg-mineral-surface border-mineral-deep/20' : 'bg-card border-border hover:border-primary/40'
+              study.variant === 'dark' ? 'bg-rho-obsidian border-border/30' : 'bg-card border-border hover:border-primary/40'
             }`}
           >
             {/* Hero Image */}
             <div
               className={`relative h-40 overflow-hidden ${
-                study.variant === "dark"
-                  ? "bg-rho-obsidian"
-                  : study.variant === "mineral"
-                    ? "bg-mineral-surface"
-                    : "bg-card"
+                study.variant === "dark" ? "bg-rho-obsidian" : "bg-card"
               }`}
             >
               {/* Image + overlay are composited as a single GPU layer to prevent edge flashing */}
@@ -89,9 +83,7 @@ export const CaseStudies = () => {
                   className={`absolute inset-0 pointer-events-none ${
                     study.variant === "dark"
                       ? "bg-gradient-to-t from-rho-obsidian via-rho-obsidian/60 to-transparent"
-                      : study.variant === "mineral"
-                        ? "bg-gradient-to-t from-mineral-surface via-mineral-surface/60 to-transparent"
-                        : "bg-gradient-to-t from-card via-card/60 to-transparent"
+                      : "bg-gradient-to-t from-card via-card/60 to-transparent"
                   }`}
                 />
               </div>
@@ -111,22 +103,19 @@ export const CaseStudies = () => {
                   {study.stat}
                 </div>
                 <div className={`text-sm font-medium ${
-                  study.variant === 'dark' ? 'text-slate-300' : 
-                  study.variant === 'mineral' ? 'text-mineral-deep/80' : 'text-slate-600'
+                  study.variant === 'dark' ? 'text-slate-300' : 'text-slate-600'
                 }`}>
                   {study.statLabel}
                 </div>
               </div>
 
               <h3 className={`text-lg font-semibold font-ui mb-2 ${
-                study.variant === 'dark' ? 'text-white' : 
-                study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
+                study.variant === 'dark' ? 'text-white' : 'text-foreground'
               }`}>
                 {study.title}
               </h3>
               <p className={`text-sm leading-relaxed flex-1 ${
-                study.variant === 'dark' ? 'text-slate-300' : 
-                study.variant === 'mineral' ? 'text-mineral-deep/90' : 'text-slate-600'
+                study.variant === 'dark' ? 'text-slate-300' : 'text-slate-600'
               }`}>
                 {study.description}
               </p>
@@ -135,20 +124,17 @@ export const CaseStudies = () => {
               <div className="mt-auto pt-4">
                 {/* Metrics - Clean grid layout */}
                 <div className={`grid grid-cols-3 divide-x rounded-md overflow-hidden ${
-                  study.variant === 'dark' ? 'bg-slate-800/60 divide-slate-700' : 
-                  study.variant === 'mineral' ? 'bg-mineral-deep/10 divide-mineral-deep/20' : 'bg-muted divide-border'
+                  study.variant === 'dark' ? 'bg-slate-800/60 divide-slate-700' : 'bg-muted divide-border'
                 }`}>
                   {study.metrics.map((metric) => (
                     <div key={metric.label} className="py-2.5 px-2 text-center">
                       <div className={`font-data text-[9px] tracking-wider mb-0.5 ${
-                        study.variant === 'dark' ? 'text-slate-400' : 
-                        study.variant === 'mineral' ? 'text-mineral-deep/60' : 'text-slate-500'
+                        study.variant === 'dark' ? 'text-slate-400' : 'text-slate-500'
                       }`}>
                         {metric.label}
                       </div>
                       <div className={`font-data text-xs ${
-                        study.variant === 'dark' ? 'text-white' : 
-                        study.variant === 'mineral' ? 'text-mineral-deep' : 'text-foreground'
+                        study.variant === 'dark' ? 'text-white' : 'text-foreground'
                       }`}>
                         {metric.value}
                       </div>
@@ -158,8 +144,7 @@ export const CaseStudies = () => {
 
                 {/* CTA - Always green, full width with hover */}
                 <button className={`-mx-6 -mb-6 mt-5 px-6 py-4 w-[calc(100%+3rem)] flex items-center justify-center gap-2 text-sm font-medium text-primary transition-colors border-t ${
-                  study.variant === 'dark' ? 'border-slate-700 hover:bg-slate-800/40' : 
-                  study.variant === 'mineral' ? 'border-mineral-deep/20 hover:bg-mineral-deep/5' : 'border-border hover:bg-muted/50'
+                  study.variant === 'dark' ? 'border-slate-700 hover:bg-slate-800/40' : 'border-border hover:bg-muted/50'
                 }`}>
                   <span className="font-ui">Read full study</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
