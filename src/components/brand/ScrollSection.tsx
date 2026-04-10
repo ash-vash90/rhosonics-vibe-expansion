@@ -105,7 +105,7 @@ export const ScrollSection = ({ children, className = "", variant = "default" }:
 
   const variantClasses = {
     default: "",
-    tinted: "relative bg-[hsl(var(--mineral-surface))] noise-overlay -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20",
+    tinted: "relative bg-[hsl(var(--slate-100))] noise-overlay -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20",
     dark: "relative bg-rho-obsidian text-slate-100 -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20",
   };
 
