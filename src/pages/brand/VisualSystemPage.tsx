@@ -6,6 +6,7 @@ import { PageBanner } from "@/components/brand/PageBanner";
 
 const VisualSystemOverview = lazy(() => import("@/components/brand/VisualSystemOverview"));
 const ElevationSystem = lazy(() => import("@/components/brand/ElevationSystem"));
+const ExportSection = lazy(() => import("@/components/brand/ExportSection"));
 
 const VisualSystemPage = () => (
   <>
