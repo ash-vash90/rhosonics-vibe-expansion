@@ -83,6 +83,10 @@ const navSections: NavSection[] = [
     id: "10", label: "PROOF & EXAMPLES", route: "/proof",
     items: [{ id: "proof", label: "Evidence & Data" }],
   },
+  {
+    id: "11", label: "SOCIAL MEDIA", route: "/social-media",
+    items: [{ id: "social-media", label: "LinkedIn Assets" }],
+  },
 ];
 
 // Map item IDs to their section's route
