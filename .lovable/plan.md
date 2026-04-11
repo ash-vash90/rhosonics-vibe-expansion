@@ -1,49 +1,50 @@
 
 
-# Content Strategy Enhancements from Article Analysis
+# Plan: Inject 2026 Web Design Trends into Brand Guidelines
 
-Apply the 7 principles from the winning content programs article to strengthen the brand guidelines content.
+## Context
 
----
+The video "Steal These 2026 Web Design Trends" by Chris Misterek (Self-Made Web Designer) covers 9 trends. I'll integrate the relevant ones into the existing brand guidelines — not as a separate trends page, but woven into the sections where they naturally belong.
 
-## Changes Overview
+## Relevant Trends & Where They Land
 
-### 1. About Page: Add Goals & Governance Section
-Add a new "Brand Governance" sub-section to `AboutThisSystem.tsx` covering:
-- **Clear goals**: What this system should achieve (consistent output, faster decisions, reduced back-and-forth)
-- **Ownership**: Who maintains the brand system, how to propose changes
-- **Exception handling**: What to do when guidelines don't cover a scenario
+| # | Trend | Rhosonics Relevance | Target Section |
+|---|-------|---------------------|----------------|
+| 1 | Performance-First Design | Core to industrial HMI/field devices | **Design Process** (DesignProcess.tsx) — add as 5th principle |
+| 2 | Bento Grid Layouts | Already used in Applications/Interface Kit | **Visual System** (VisualSystemOverview.tsx) — document as approved layout pattern |
+| 3 | Glassmorphism Done Right | **Anti-pattern** for Rhosonics (legibility in high-glare) | **Design Process** — add to "Don't" callout |
+| 4 | CSS Scroll-Driven Animations | Already using GSAP scroll triggers | **Motion Design** (MotionDesign.tsx) — add note about CSS-native progressive enhancement |
+| 5 | AI-Generated Layouts | Not directly relevant to brand guidelines | Skip |
+| 6 | Organic Shapes & Soft Gradients | Relevant — soft gradients already used, organic shapes need guardrails | **Visual System** — add gradient/shape guidance |
+| 7 | Unified Platform Design | Relevant to SDM ECO interface philosophy | **Applications** — add principle to InterfaceKit or SDMEcoInterface |
+| 8 | Dark Mode as First-Class | Already implemented but under-documented | **Color** page or **Visual System** — document dark mode as a design requirement, not afterthought |
+| 9 | Motion Narrative (Scroll as Storytelling) | Core to brand site's own scroll-reveal approach | **Motion Design** — add scroll narrative principle with dos/don'ts |
 
-### 2. Voice Page: Add Buyer Persona
-Add an "Audience Profile" block to `VoiceTone.tsx` before the Voice Pillars, explicitly naming the primary reader:
-- **Primary persona**: Senior Process Engineer, 15+ years experience, skeptical of marketing claims, evaluates on spec sheets not brochures
-- **Secondary persona**: Operations Manager, ROI-focused, needs data to justify procurement
-- This grounds all voice guidance in a real person rather than abstract rules
+## Implementation Details
 
-### 3. Positioning Page: Strengthen Differentiation
-Add an explicit "Why Not Competitors" callout to `BrandPositioning.tsx`:
-- A concise comparison: "Non-nuclear since 2009" vs nuclear alternatives
-- Falsifiable claims only (matching the existing voice principles)
-- Positioned after the brand pillars, before Core Values
+### 1. DesignProcess.tsx — Add "Performance-First Design" principle
+- Add a 5th principle card: icon `Gauge`, title "Performance Before Polish", description about designing with asset weight and load time in mind from the start
+- Add a "Don't" callout explicitly calling out glassmorphism/frosted glass as an anti-pattern (legibility in sunlight, HMI performance)
 
-### 4. Cross-Page Navigation Links
-Add a reusable `SectionCrossLink` component that links related sections:
-- Color page references Applications for real-world usage
-- Voice page links to Positioning for brand promise context
-- Typography links to Visual System for hierarchy rationale
-- Rendered as a subtle "See also" strip at the bottom of relevant sections
+### 2. VisualSystemOverview.tsx — Document layout patterns and gradient guidance
+- Add a "Layout Patterns" subsection documenting bento grids as an approved modular layout approach
+- Add "Gradient & Shape Language" guidance: soft gradients yes, organic blob shapes no (conflicts with "Engineered, not styled" principle) — keep shapes geometric/angular
 
----
+### 3. MotionDesign.tsx — Scroll narrative + CSS-native note
+- Add a "Scroll as Narrative" section: document the principle of progressive content reveal (Problem → Solution → Proof → Action)
+- Add a technical note encouraging CSS `scroll-driven-animations` as a progressive enhancement layer alongside GSAP
 
-## Files to Create/Modify
+### 4. Dark mode documentation
+- Add a subsection to the Color page or Visual System noting dark mode is a first-class design decision, not a bolt-on — document the `prefers-color-scheme` approach and that all components must maintain hierarchy in both modes
 
-| Action | File | Change |
-|--------|------|--------|
-| Create | `src/components/brand/SectionCrossLink.tsx` | Reusable cross-reference link component |
-| Modify | `src/components/brand/AboutThisSystem.tsx` | Add governance section (goals, ownership, exceptions) |
-| Modify | `src/components/brand/VoiceTone.tsx` | Add buyer persona block before Voice Pillars |
-| Modify | `src/components/brand/BrandPositioning.tsx` | Add differentiation callout after pillars |
-| Modify | `src/pages/brand/ColorPage.tsx` | Add cross-link to Applications |
-| Modify | `src/pages/brand/VoicePage.tsx` | Add cross-link to Positioning |
-| Modify | `src/pages/brand/TypographyPage.tsx` | Add cross-link to Visual System |
+### 5. agents.md — Update governance doc
+- Add a "2026 Design Trends Integration" section summarizing the adopted trends and explicitly noting glassmorphism as a forbidden pattern
+- Add performance-first as a design process step
+
+## Files Modified
+- `src/components/brand/DesignProcess.tsx` — add performance principle + glassmorphism anti-pattern
+- `src/components/brand/VisualSystemOverview.tsx` — add layout patterns + gradient guidance
+- `src/components/brand/MotionDesign.tsx` — add scroll narrative section
+- `src/pages/brand/ColorPage.tsx` or `src/components/brand/ColorMatrix.tsx` — add dark mode documentation
+- `agents.md` — update governance with new rules
 
