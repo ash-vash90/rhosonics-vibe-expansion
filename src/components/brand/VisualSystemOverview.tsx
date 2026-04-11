@@ -152,6 +152,165 @@ const VisualSystemOverview = () => {
           ))}
         </div>
       </div>
+
+      {/* Approved Layout Patterns */}
+      <div className="border-t border-border pt-12">
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Approved Layout Patterns</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Bento Grid */}
+          <div className="space-y-4">
+            <h4 className="font-ui font-semibold text-foreground">Bento Grid</h4>
+            <p className="text-sm text-muted-foreground">
+              Modular card layouts where items span different column/row counts. 
+              Ideal for dashboards, feature showcases, and metric overviews.
+            </p>
+            {/* Visual example */}
+            <div className="grid grid-cols-4 gap-2 p-4 bg-muted/30 rounded-lg border border-border">
+              <div className="col-span-2 row-span-2 bg-primary/15 rounded border border-primary/20 p-3 flex items-end">
+                <span className="font-data text-[10px] text-primary uppercase">HERO METRIC</span>
+              </div>
+              <div className="col-span-1 bg-muted/60 rounded border border-border p-2">
+                <div className="w-full h-1 bg-primary/30 rounded mt-auto" />
+              </div>
+              <div className="col-span-1 bg-muted/60 rounded border border-border p-2">
+                <div className="w-full h-1 bg-primary/30 rounded mt-auto" />
+              </div>
+              <div className="col-span-2 bg-muted/60 rounded border border-border p-2">
+                <div className="w-3/4 h-1 bg-border rounded" />
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Use <code className="font-data text-[11px] bg-muted px-1 py-0.5 rounded">grid-cols-*</code> with 
+              varied <code className="font-data text-[11px] bg-muted px-1 py-0.5 rounded">col-span-*</code> and <code className="font-data text-[11px] bg-muted px-1 py-0.5 rounded">row-span-*</code> values.
+            </p>
+          </div>
+
+          {/* Standard Grid */}
+          <div className="space-y-4">
+            <h4 className="font-ui font-semibold text-foreground">Uniform Grid</h4>
+            <p className="text-sm text-muted-foreground">
+              Equal-width columns for homogeneous content. Use when items share the same structure 
+              and no single item should dominate.
+            </p>
+            <div className="grid grid-cols-3 gap-2 p-4 bg-muted/30 rounded-lg border border-border">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-muted/60 rounded border border-border p-3">
+                  <div className="w-full h-1 bg-border rounded mb-2" />
+                  <div className="w-2/3 h-1 bg-border/60 rounded" />
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Default for lists, card grids, and repeating content blocks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Gradient & Shape Language */}
+      <div className="border-t border-border pt-12">
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Gradient &amp; Shape Language</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          {/* Approved: Soft gradients */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-2 h-2 rounded-full bg-primary" />
+              <h4 className="font-ui font-semibold text-foreground">Approved: Linear Gradients</h4>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Subtle directional gradients that reinforce depth or surface hierarchy. 
+              Keep transitions smooth and use brand-approved color stops.
+            </p>
+            <div className="flex gap-3">
+              <div className="flex-1 h-16 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10" />
+              <div className="flex-1 h-16 rounded-lg bg-gradient-to-b from-background to-muted/50 border border-border" />
+              <div className="flex-1 h-16 rounded-lg" style={{ background: 'linear-gradient(135deg, hsl(125 50% 40%) 0%, hsl(90 60% 45%) 100%)' }} />
+            </div>
+          </div>
+
+          {/* Forbidden: Organic blobs */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-2 h-2 rounded-full bg-destructive" />
+              <h4 className="font-ui font-semibold text-foreground">Forbidden: Organic Blob Shapes</h4>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Amorphous, rounded, or "liquid" shapes conflict with the <em>"Engineered, not styled"</em> principle. 
+              All decorative shapes must be geometric — angular, rectilinear, or derived from the grid.
+            </p>
+            <div className="flex gap-3 items-center">
+              <div className="flex-1 h-16 rounded-lg bg-muted/30 border border-border flex items-center justify-center">
+                <span className="font-data text-[10px] text-destructive uppercase">NO BLOBS</span>
+              </div>
+              <div className="flex-1 h-16 bg-muted/30 border border-border flex items-center justify-center" style={{ clipPath: 'polygon(0 0, 100% 0, 85% 100%, 15% 100%)' }}>
+                <span className="font-data text-[10px] text-primary uppercase">GEOMETRIC OK</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Dark Mode as First-Class */}
+      <div className="border-t border-border pt-12">
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Dark Mode — First-Class Requirement</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <div>
+            <p className="text-muted-foreground mb-4">
+              Dark mode is not a bolt-on afterthought — it's a <strong className="text-foreground">first-class design requirement</strong>. 
+              All components must maintain clear hierarchy, readable text, and proper contrast in both light and dark modes.
+            </p>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">→</span>
+                <span>Use <code className="font-data text-[11px] bg-muted px-1 py-0.5 rounded">prefers-color-scheme</code> as the system default</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">→</span>
+                <span>Allow manual override via theme toggle</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">→</span>
+                <span>Reduce accent saturation 10–20% on dark surfaces</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary mt-0.5">→</span>
+                <span>Test grayscale hierarchy in <em>both</em> modes</span>
+              </li>
+            </ul>
+          </div>
+          <div className="space-y-3">
+            {/* Light/dark side-by-side mini specimens */}
+            <div className="grid grid-cols-2 gap-2">
+              <div className="p-4 bg-background border border-border rounded-lg">
+                <span className="font-data text-[10px] text-muted-foreground uppercase block mb-2">LIGHT</span>
+                <div className="font-data text-2xl text-foreground">1.452</div>
+                <div className="text-xs text-muted-foreground">g/mL density</div>
+              </div>
+              <div className="p-4 bg-rho-obsidian rounded-lg">
+                <span className="font-data text-[10px] text-white/50 uppercase block mb-2">DARK</span>
+                <div className="font-data text-2xl text-white">1.452</div>
+                <div className="text-xs text-white/60">g/mL density</div>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Hierarchy (size, weight, opacity) must survive the mode switch. 
+              If it breaks in dark mode, the light mode was relying on color — fix the structure.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
