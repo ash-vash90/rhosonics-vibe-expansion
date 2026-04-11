@@ -87,6 +87,15 @@ const navSections: NavSection[] = [
     id: "11", label: "SOCIAL MEDIA", route: "/social-media",
     items: [{ id: "social-media", label: "LinkedIn Assets" }],
   },
+  {
+    id: "12", label: "TOOLS", route: "/tools",
+    items: [
+      { id: "photo-treatment", label: "Photo Treatment" },
+      { id: "icon-picker", label: "Icon Library" },
+      { id: "exports", label: "Design Tokens" },
+      { id: "downloads", label: "Downloads" },
+    ],
+  },
 ];
 
 // Map item IDs to their section's route
@@ -102,7 +111,7 @@ export const Navigation = () => {
   const mobileMenuRef = useRef<HTMLElement | null>(null);
 
   // Determine active section from current route
-  const activeRoute = location.pathname === "/" ? "/about" : location.pathname;
+  const activeRoute = location.pathname;
   const activeSection = navSections.find(s => s.route === activeRoute);
   const expandedSectionIds = activeSection ? [activeSection.id] : [];
 
