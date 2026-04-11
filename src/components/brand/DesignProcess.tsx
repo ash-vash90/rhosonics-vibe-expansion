@@ -1,5 +1,5 @@
 import { BrandCallout } from "./BrandCallout";
-import { Eye, Layers, Minimize2, Tag, ArrowRight } from "lucide-react";
+import { Eye, Layers, Minimize2, Tag, ArrowRight, Gauge } from "lucide-react";
 
 /**
  * Design Process Section
@@ -35,6 +35,12 @@ export const DesignProcess = () => {
       title: "Labels as a Last Resort",
       description: "Use formatting, context, and visual cues to communicate meaning before adding text labels. Every label is cognitive load.",
       example: "A green checkmark in a status column doesn't need 'Success' written next to it.",
+    },
+    {
+      icon: Gauge,
+      title: "Performance Before Polish",
+      description: "Design with asset weight and load time in mind from the start. Every image, animation, and dependency has a cost — especially on field devices with limited bandwidth.",
+      example: "A 2MB hero image on a HMI dashboard is a failure. Optimize assets before adding visual flourishes.",
     },
   ];
 
@@ -123,6 +129,28 @@ export const DesignProcess = () => {
           Once the structure is solid, explore. Try bold colors, subtle animations, refined typography. 
           Polish is where personality emerges.
         </BrandCallout>
+      </div>
+
+      {/* Anti-Patterns */}
+      <div>
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="font-data text-xs text-muted-foreground uppercase tracking-wider">Forbidden Patterns</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <BrandCallout variant="avoid" title="No Glassmorphism / Frosted Glass">
+            Backdrop blur and translucent surfaces fail in industrial contexts: unreadable in direct sunlight, 
+            expensive to render on embedded HMI hardware, and visually ambiguous when layered over complex data. 
+            Use solid backgrounds with proper elevation instead.
+          </BrandCallout>
+
+          <BrandCallout variant="avoid" title="No Decorative Motion">
+            Parallax scrolling, continuous background animations, and auto-playing videos consume bandwidth and 
+            CPU cycles on field devices. Every animation must serve understanding — if removing it doesn't 
+            reduce clarity, remove it.
+          </BrandCallout>
+        </div>
       </div>
 
       {/* Grayscale Test Visual */}
