@@ -46,7 +46,7 @@ export const SocialMediaGuidelines = () => (
   <section className="space-y-16">
     {/* Intro */}
     <div>
-      <h2 className="text-2xl md:text-3xl font-logo font-bold text-foreground mb-4">
+      <h2 className="text-2xl md:text-3xl font-ui font-semibold text-foreground mb-4">
         Social Media Assets
       </h2>
       <p className="text-base text-muted-foreground font-ui max-w-2xl">
