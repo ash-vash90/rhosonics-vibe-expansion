@@ -35,12 +35,12 @@ export const PageBanner = ({ number, title, subtitle }: PageBannerProps) => {
   }, []);
 
   return (
-    <div ref={bannerRef} className="relative overflow-hidden -mb-6 md:mb-4 lg:mb-6 -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 pt-12 pb-2 md:pt-14 md:pb-8 lg:pt-16 lg:pb-10 bg-gradient-to-b from-[hsl(var(--slate-50))] to-background">
+    <div ref={bannerRef} className="relative overflow-hidden -mb-6 md:mb-4 lg:mb-6 -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 pt-14 pb-3 md:pt-14 md:pb-8 lg:pt-16 lg:pb-10 bg-gradient-to-b from-[hsl(var(--slate-50))] to-background">
       {/* Accent line at the very top */}
       <div className="banner-accent-line absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary via-[hsl(var(--rho-green-accent))] to-transparent origin-left" />
       
       {/* Watermark number */}
-      <span className="banner-watermark absolute top-[56%] -translate-y-1/2 right-1 md:top-1/2 md:right-8 lg:right-12 xl:right-20 font-data text-[5rem] sm:text-[5.5rem] md:text-[12rem] lg:text-[16rem] font-bold leading-none text-[hsl(var(--slate-200))] select-none pointer-events-none opacity-60">
+      <span className="banner-watermark absolute top-5 right-0 block font-data text-[4.5rem] sm:text-[5rem] md:top-1/2 md:right-8 md:-translate-y-1/2 md:text-[12rem] lg:right-12 lg:text-[16rem] xl:right-20 font-bold leading-[1.06] text-[hsl(var(--slate-200))] select-none pointer-events-none opacity-60">
         {number}
       </span>
 
