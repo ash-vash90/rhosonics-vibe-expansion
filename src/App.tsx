@@ -17,6 +17,7 @@ const VoicePage = lazy(() => import("./pages/brand/VoicePage"));
 const ImageryPage = lazy(() => import("./pages/brand/ImageryPage"));
 const ApplicationsPage = lazy(() => import("./pages/brand/ApplicationsPage"));
 const ProofPage = lazy(() => import("./pages/brand/ProofPage"));
+const SocialMediaPage = lazy(() => import("./pages/brand/SocialMediaPage"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -50,6 +51,7 @@ const App = () => (
               <Route path="imagery" element={<ImageryPage />} />
               <Route path="applications" element={<ApplicationsPage />} />
               <Route path="proof" element={<ProofPage />} />
+              <Route path="social-media" element={<SocialMediaPage />} />
             </Route>
             <Route path="/newsletter" element={<Newsletter />} />
             <Route path="*" element={<NotFound />} />
