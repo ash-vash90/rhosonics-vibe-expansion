@@ -1,50 +1,53 @@
 
 
-# Plan: Inject 2026 Web Design Trends into Brand Guidelines
+# Plan: Restructure Brand Guidelines Navigation and Home Page
 
-## Context
+## Problem
+1. Home page shows hero + full AboutPage content below, creating infinite scroll that negates the multi-page architecture
+2. Interactive tools (Photo Treatment, Icon Picker, Export/Downloads) are scattered across content sections instead of being grouped logically
+3. Some sections don't flow naturally next to each other
 
-The video "Steal These 2026 Web Design Trends" by Chris Misterek (Self-Made Web Designer) covers 9 trends. I'll integrate the relevant ones into the existing brand guidelines — not as a separate trends page, but woven into the sections where they naturally belong.
+## Changes
 
-## Relevant Trends & Where They Land
+### 1. Home Page: Hero + Section Directory (no scroll)
+**File: `src/App.tsx`** and **`src/components/brand/BrandLayout.tsx`**
+- Remove the `index` route pointing to `AboutPage` -- home (`/`) renders only the hero
+- Replace the "SCROLL" button with a grid of navigation cards linking to each section (00-11), styled as a branded directory
+- The hero becomes a full-viewport landing with section links below it (or overlaid), not a gateway to infinite content
 
-| # | Trend | Rhosonics Relevance | Target Section |
-|---|-------|---------------------|----------------|
-| 1 | Performance-First Design | Core to industrial HMI/field devices | **Design Process** (DesignProcess.tsx) — add as 5th principle |
-| 2 | Bento Grid Layouts | Already used in Applications/Interface Kit | **Visual System** (VisualSystemOverview.tsx) — document as approved layout pattern |
-| 3 | Glassmorphism Done Right | **Anti-pattern** for Rhosonics (legibility in high-glare) | **Design Process** — add to "Don't" callout |
-| 4 | CSS Scroll-Driven Animations | Already using GSAP scroll triggers | **Motion Design** (MotionDesign.tsx) — add note about CSS-native progressive enhancement |
-| 5 | AI-Generated Layouts | Not directly relevant to brand guidelines | Skip |
-| 6 | Organic Shapes & Soft Gradients | Relevant — soft gradients already used, organic shapes need guardrails | **Visual System** — add gradient/shape guidance |
-| 7 | Unified Platform Design | Relevant to SDM ECO interface philosophy | **Applications** — add principle to InterfaceKit or SDMEcoInterface |
-| 8 | Dark Mode as First-Class | Already implemented but under-documented | **Color** page or **Visual System** — document dark mode as a design requirement, not afterthought |
-| 9 | Motion Narrative (Scroll as Storytelling) | Core to brand site's own scroll-reveal approach | **Motion Design** — add scroll narrative principle with dos/don'ts |
+### 2. Create a dedicated Tools & Downloads page
+**New file: `src/pages/brand/ToolsPage.tsx`** (route: `/tools`, nav section 12)
+- Move **ExportSection** here from Visual System page
+- Move **PhotoTreatmentTool** here from Imagery page
+- Move **IconPicker** here from Icon Guidelines (keep icon guidelines content, remove the interactive picker)
+- Add **DownloadableAssets** / **LogoDownloadButtons** if not already surfaced
+- This becomes the "toolbox" page -- all interactive utilities in one place
 
-## Implementation Details
+### 3. Clean up section content after tool removal
+- **VisualSystemPage.tsx**: Remove ExportSection, page ends after Elevation & Depth
+- **ImageryGuidelines.tsx**: Remove PhotoTreatmentTool and BeforeAfterSlider tool instances; keep the imagery rules and examples
+- **IconGuidelines.tsx**: Remove IconPicker component; keep icon usage rules and specifications
 
-### 1. DesignProcess.tsx — Add "Performance-First Design" principle
-- Add a 5th principle card: icon `Gauge`, title "Performance Before Polish", description about designing with asset weight and load time in mind from the start
-- Add a "Don't" callout explicitly calling out glassmorphism/frosted glass as an anti-pattern (legibility in sunlight, HMI performance)
+### 4. Update Navigation
+**File: `src/components/brand/Navigation.tsx`**
+- Add section `12 / TOOLS` with route `/tools` and items for each tool
+- Reorder if needed to group logically: Story (00-02) -> Visual System (03-06) -> Content (07-08) -> Practice (09-11) -> Tools (12)
 
-### 2. VisualSystemOverview.tsx — Document layout patterns and gradient guidance
-- Add a "Layout Patterns" subsection documenting bento grids as an approved modular layout approach
-- Add "Gradient & Shape Language" guidance: soft gradients yes, organic blob shapes no (conflicts with "Engineered, not styled" principle) — keep shapes geometric/angular
-
-### 3. MotionDesign.tsx — Scroll narrative + CSS-native note
-- Add a "Scroll as Narrative" section: document the principle of progressive content reveal (Problem → Solution → Proof → Action)
-- Add a technical note encouraging CSS `scroll-driven-animations` as a progressive enhancement layer alongside GSAP
-
-### 4. Dark mode documentation
-- Add a subsection to the Color page or Visual System noting dark mode is a first-class design decision, not a bolt-on — document the `prefers-color-scheme` approach and that all components must maintain hierarchy in both modes
-
-### 5. agents.md — Update governance doc
-- Add a "2026 Design Trends Integration" section summarizing the adopted trends and explicitly noting glassmorphism as a forbidden pattern
-- Add performance-first as a design process step
+### 5. Update App.tsx routes
+- Add `<Route path="tools" element={<ToolsPage />} />`
+- Change index route to render a new `HomePage` component (hero + directory grid) instead of `AboutPage`
 
 ## Files Modified
-- `src/components/brand/DesignProcess.tsx` — add performance principle + glassmorphism anti-pattern
-- `src/components/brand/VisualSystemOverview.tsx` — add layout patterns + gradient guidance
-- `src/components/brand/MotionDesign.tsx` — add scroll narrative section
-- `src/pages/brand/ColorPage.tsx` or `src/components/brand/ColorMatrix.tsx` — add dark mode documentation
-- `agents.md` — update governance with new rules
+- `src/components/brand/BrandLayout.tsx` -- hero section gets directory grid instead of scroll CTA
+- `src/App.tsx` -- new route for tools, index route change
+- `src/pages/brand/ToolsPage.tsx` -- **new** dedicated tools page
+- `src/pages/brand/VisualSystemPage.tsx` -- remove ExportSection
+- `src/components/brand/ImageryGuidelines.tsx` -- remove PhotoTreatmentTool and interactive sliders
+- `src/components/brand/IconGuidelines.tsx` -- remove IconPicker
+- `src/components/brand/Navigation.tsx` -- add Tools section, verify grouping
+
+## Technical Notes
+- The home directory grid will use the existing nav section data structure to auto-generate cards
+- Tools page uses the same lazy-loading pattern as all other pages
+- No database or backend changes needed
 
