@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FontModeProvider } from "@/hooks/useFontMode";
 
 const BrandLayout = lazy(() => import("./components/brand/BrandLayout"));
+const HomePage = lazy(() => import("./pages/brand/HomePage"));
 const AboutPage = lazy(() => import("./pages/brand/AboutPage"));
 const PositioningPage = lazy(() => import("./pages/brand/PositioningPage"));
 const PrinciplesPage = lazy(() => import("./pages/brand/PrinciplesPage"));
@@ -18,9 +19,9 @@ const ImageryPage = lazy(() => import("./pages/brand/ImageryPage"));
 const ApplicationsPage = lazy(() => import("./pages/brand/ApplicationsPage"));
 const ProofPage = lazy(() => import("./pages/brand/ProofPage"));
 const SocialMediaPage = lazy(() => import("./pages/brand/SocialMediaPage"));
+const ToolsPage = lazy(() => import("./pages/brand/ToolsPage"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
     <div className="flex flex-col items-center gap-4">
@@ -39,7 +40,7 @@ const App = () => (
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route element={<BrandLayout />}>
-              <Route index element={<AboutPage />} />
+              <Route index element={<HomePage />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="positioning" element={<PositioningPage />} />
               <Route path="principles" element={<PrinciplesPage />} />
@@ -52,6 +53,7 @@ const App = () => (
               <Route path="applications" element={<ApplicationsPage />} />
               <Route path="proof" element={<ProofPage />} />
               <Route path="social-media" element={<SocialMediaPage />} />
+              <Route path="tools" element={<ToolsPage />} />
             </Route>
             <Route path="/newsletter" element={<Newsletter />} />
             <Route path="*" element={<NotFound />} />

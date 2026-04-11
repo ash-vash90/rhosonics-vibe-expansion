@@ -11,7 +11,6 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import BeforeAfterSlider from "./BeforeAfterSlider";
-import PhotoTreatmentTool from "./PhotoTreatmentTool";
 
 // Image style examples - AI generated
 import fieldMining from "@/assets/brand/imagery-field-mining.jpg";
@@ -1086,8 +1085,6 @@ export const ImageryGuidelines = () => {
           </div>
           </div>
 
-          {/* Photo Treatment Tool */}
-          <PhotoTreatmentTool />
         </div>
 
       {/* ═══════════════════════════════════════════════════════════════

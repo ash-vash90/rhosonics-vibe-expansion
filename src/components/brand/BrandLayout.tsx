@@ -113,12 +113,6 @@ const BrandLayout = () => {
               </p>
             </div>
           </div>
-          <button onClick={scrollToContent} className="hero-scroll absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-500 hover:text-primary transition-colors cursor-pointer group" aria-label="Scroll to content">
-            <div className="flex flex-col items-center gap-2">
-              <span className="font-data text-[10px] tracking-widest opacity-60">SCROLL</span>
-              <div className="w-px h-8 bg-gradient-to-b from-slate-500 to-transparent" />
-            </div>
-          </button>
         </section>
       )}
 
