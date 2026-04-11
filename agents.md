@@ -1118,5 +1118,38 @@ Before submitting any design/code change, verify:
 
 ---
 
-*Last updated: 2026-02-01*
-*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles*
+## 2026 Design Trends Integration
+
+The following trends have been evaluated and integrated into the brand system:
+
+### Adopted Trends
+
+| Trend | Status | Where Documented |
+|-------|--------|------------------|
+| Performance-First Design | ✅ Adopted | Design Process — 5th principle |
+| Bento Grid Layouts | ✅ Adopted | Visual System — Approved Layout Patterns |
+| Scroll as Narrative | ✅ Adopted | Motion Design — Scroll Narrative section |
+| Dark Mode as First-Class | ✅ Adopted | Visual System — Dark Mode section |
+| Soft Linear Gradients | ✅ Adopted | Visual System — Gradient & Shape Language |
+| CSS Scroll-Driven Animations | ✅ Adopted | Motion Design — progressive enhancement note |
+
+### Explicitly Forbidden
+
+| Trend | Reason |
+|-------|--------|
+| **Glassmorphism / Frosted Glass** | Unreadable in direct sunlight, expensive to render on embedded HMI hardware, visually ambiguous over complex data |
+| **Organic Blob Shapes** | Conflicts with "Engineered, not styled" principle — all shapes must be geometric/angular |
+| **Decorative Motion** | Parallax, continuous animations, auto-playing video consume bandwidth/CPU on field devices |
+
+### Performance-First Design Process
+
+Add to every design review:
+1. What is the total asset weight of this page/component?
+2. Does every image have a compressed/WebP variant?
+3. Are animations GPU-accelerated (transform/opacity only)?
+4. Would this render acceptably on a 2G connection?
+
+---
+
+*Last updated: 2026-04-11*
+*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles + 2026 Design Trends Analysis*

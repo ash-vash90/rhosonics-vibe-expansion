@@ -473,6 +473,45 @@ export const MotionDesign = () => {
           </div>
         </div>
       </div>
+
+      {/* Scroll as Narrative */}
+      <div className="border-t border-border pt-12">
+        <h3 className="label-tech text-muted-foreground mb-2">SCROLL AS NARRATIVE</h3>
+        <p className="text-muted-foreground mb-8 max-w-2xl">
+          Scrolling is not decoration — it's storytelling structure. Use progressive content reveal to guide the reader 
+          through a logical argument, not just a page.
+        </p>
+
+        <div className="flex flex-col md:flex-row items-stretch gap-4 mb-8">
+          {[
+            { step: "01", label: "Problem", desc: "Establish the challenge the reader recognizes", color: "bg-muted/50" },
+            { step: "02", label: "Solution", desc: "Introduce the approach with clarity", color: "bg-primary/10" },
+            { step: "03", label: "Proof", desc: "Show evidence — data, metrics, case studies", color: "bg-primary/15" },
+            { step: "04", label: "Action", desc: "Clear next step with low friction", color: "bg-primary/20" },
+          ].map((phase, idx) => (
+            <div key={phase.step} className="flex-1 relative">
+              <div className={`p-6 ${phase.color} border border-border rounded-lg h-full`}>
+                <span className="font-data text-xs text-primary uppercase tracking-wider block mb-2">
+                  {phase.step}
+                </span>
+                <h4 className="font-ui font-semibold text-foreground mb-2">{phase.label}</h4>
+                <p className="text-sm text-muted-foreground">{phase.desc}</p>
+              </div>
+              {idx < 3 && (
+                <div className="hidden md:flex absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                  <span className="text-border text-lg">→</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <BrandCallout variant="info" title="Prefer CSS scroll-driven-animations">
+          Where possible, use native CSS <code className="font-data text-[11px]">animation-timeline: scroll()</code> as a 
+          progressive enhancement layer. GSAP ScrollTrigger remains the primary tool for complex sequences, 
+          but CSS-native scroll animations reduce JavaScript overhead and improve performance on constrained devices.
+        </BrandCallout>
+      </div>
     </section>
   );
 };
