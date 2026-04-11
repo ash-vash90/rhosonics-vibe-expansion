@@ -73,9 +73,7 @@ const BrandLayout = () => {
 
   useEffect(() => () => { cleanupAllGsap(); }, []);
 
-  const scrollToContent = () => {
-    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-  };
+
 
   return (
     <div className="min-h-screen bg-background">
