@@ -40,7 +40,7 @@ export const PageBanner = ({ number, title, subtitle }: PageBannerProps) => {
       <div className="banner-accent-line absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary via-[hsl(var(--rho-green-accent))] to-transparent origin-left" />
       
       {/* Watermark number */}
-      <span className="banner-watermark absolute top-6 right-2 font-data text-[3.75rem] sm:text-[4.25rem] md:absolute md:top-1/2 md:bottom-auto md:right-8 md:-translate-y-1/2 md:text-[12rem] lg:right-12 lg:text-[16rem] xl:right-20 font-bold leading-none text-[hsl(var(--slate-200))] select-none pointer-events-none opacity-60">
+      <span className="banner-watermark absolute top-12 right-2 font-data text-[3.75rem] sm:text-[4.25rem] md:absolute md:top-1/2 md:bottom-auto md:right-8 md:-translate-y-1/2 md:text-[12rem] lg:right-12 lg:text-[16rem] xl:right-20 font-bold leading-none text-[hsl(var(--slate-200))] select-none pointer-events-none opacity-60">
         {number}
       </span>
 
