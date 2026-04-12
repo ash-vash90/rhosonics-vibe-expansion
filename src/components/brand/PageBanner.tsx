@@ -50,7 +50,7 @@ export const PageBanner = ({ number, title, subtitle }: PageBannerProps) => {
           <span className="font-data text-sm md:text-base font-bold text-primary">{number}</span>
           <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
         </div>
-        <h1 className="banner-title font-ui text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground tracking-tighter leading-[1.05] mb-2 md:mb-4">
+        <h1 className="banner-title font-ui text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground tracking-tight leading-[1.05] mb-2 md:mb-4">
           {title}
         </h1>
         <p className="banner-subtitle text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl">
