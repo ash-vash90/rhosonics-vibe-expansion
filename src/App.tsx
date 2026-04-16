@@ -20,6 +20,7 @@ const ApplicationsPage = lazy(() => import("./pages/brand/ApplicationsPage"));
 const ProofPage = lazy(() => import("./pages/brand/ProofPage"));
 // const SocialMediaPage = lazy(() => import("./pages/brand/SocialMediaPage"));
 const ToolsPage = lazy(() => import("./pages/brand/ToolsPage"));
+const ReviewPage = lazy(() => import("./pages/brand/ReviewPage"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PageLoader = () => (
@@ -54,6 +55,7 @@ const App = () => (
               <Route path="proof" element={<ProofPage />} />
               {/* <Route path="social-media" element={<SocialMediaPage />} /> */}
               <Route path="tools" element={<ToolsPage />} />
+              <Route path="review" element={<ReviewPage />} />
             </Route>
             <Route path="/newsletter" element={<Newsletter />} />
             <Route path="*" element={<NotFound />} />
