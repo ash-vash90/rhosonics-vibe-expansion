@@ -11,7 +11,7 @@ export const OriginStory = () => {
         <div className="relative p-10 md:p-16">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-14 h-14 rounded-full bg-slate-800 border-2 border-earth-ochre/60 flex items-center justify-center">
-              <span className="font-data text-xl text-earth-ochre font-bold">84</span>
+              <span className="font-data text-xl text-earth-ochre font-bold">92</span>
             </div>
             <div className="h-px flex-1 bg-gradient-to-r from-earth-ochre/40 to-transparent" />
             <span className="font-data text-sm text-earth-ochre/80 uppercase tracking-wider">The Netherlands</span>
@@ -33,7 +33,7 @@ export const OriginStory = () => {
       <h3 className="label-tech text-muted-foreground mb-6">MILESTONES</h3>
       <div className="flex items-stretch border-t border-b border-border">
         {[
-          { year: "1984", title: "The Garage", desc: "First prototype built on a workbench.", icon: Wrench },
+          { year: "1992", title: "The Garage", desc: "First prototype built on a workbench.", icon: Wrench },
           { year: "FIRST", title: "Brewing Precision", desc: "Measuring beer density for a local brewery.", icon: Beaker },
           { year: "TODAY", title: "Worldwide Impact", desc: "Mining to semiconductors, six continents.", icon: Globe },
         ].map((milestone, idx) => (

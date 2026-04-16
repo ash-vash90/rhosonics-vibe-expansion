@@ -98,7 +98,7 @@ const BrandPositioning = () => {
           {[
             { claim: "Non-nuclear since 2009", context: "No licensing, no source disposal, no regulatory overhead" },
             { claim: "±0.1% repeatability", context: "Verified across 10,000+ installations in live process conditions" },
-            { claim: "40+ years of ultrasonic expertise", context: "Founded in 1984. Single-domain focus, not a product line extension" },
+            { claim: "30+ years of ultrasonic expertise", context: "Founded in 1992. Single-domain focus, not a product line extension" },
           ].map((item) => (
             <div key={item.claim} className="space-y-2">
               <p className="font-ui font-semibold text-foreground">{item.claim}</p>
