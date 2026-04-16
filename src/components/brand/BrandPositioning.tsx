@@ -96,7 +96,7 @@ const BrandPositioning = () => {
         <h3 className="font-ui text-xl md:text-2xl font-bold text-foreground mb-6">Why Not the Alternative?</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
-            { claim: "Non-nuclear since 2009", context: "No licensing, no source disposal, no regulatory overhead" },
+            { claim: "100% non-nuclear technology", context: "No licensing, no source disposal, no regulatory overhead" },
             { claim: "±0.1% repeatability", context: "Verified across 10,000+ installations in live process conditions" },
             { claim: "30+ years of ultrasonic expertise", context: "Founded in 1992. Single-domain focus, not a product line extension" },
           ].map((item) => (
