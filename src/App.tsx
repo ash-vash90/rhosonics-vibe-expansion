@@ -55,6 +55,7 @@ const App = () => (
               <Route path="proof" element={<ProofPage />} />
               {/* <Route path="social-media" element={<SocialMediaPage />} /> */}
               <Route path="tools" element={<ToolsPage />} />
+              <Route path="review" element={<ReviewPage />} />
             </Route>
             <Route path="/newsletter" element={<Newsletter />} />
             <Route path="*" element={<NotFound />} />
