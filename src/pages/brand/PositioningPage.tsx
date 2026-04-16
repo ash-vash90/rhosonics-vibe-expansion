@@ -5,6 +5,7 @@ import { SectionLoader } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
 
 const BrandPositioning = lazy(() => import("@/components/brand/BrandPositioning"));
+const VoiceTone = lazy(() => import("@/components/brand/VoiceTone"));
 
 const PositioningPage = () => (
   <>
@@ -12,6 +13,10 @@ const PositioningPage = () => (
     <ScrollSection className="py-12 md:py-16">
       <div id="positioning" className="scroll-mt-20" />
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><BrandPositioning /></Suspense></ErrorBoundary>
+    </ScrollSection>
+    <ScrollSection className="py-12 md:py-16">
+      <div id="voice" className="scroll-mt-20" />
+      <ErrorBoundary><Suspense fallback={<SectionLoader />}><VoiceTone /></Suspense></ErrorBoundary>
     </ScrollSection>
   </>
 );

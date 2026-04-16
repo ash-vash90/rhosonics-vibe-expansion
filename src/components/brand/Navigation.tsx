@@ -27,7 +27,10 @@ const navSections: NavSection[] = [
   },
   {
     id: "01", label: "POSITIONING", route: "/positioning",
-    items: [{ id: "positioning", label: "Brand Positioning" }],
+    items: [
+      { id: "positioning", label: "Brand Positioning" },
+      { id: "voice", label: "Voice & Tone" },
+    ],
   },
   {
     id: "02", label: "PRINCIPLES", route: "/principles",
@@ -59,10 +62,10 @@ const navSections: NavSection[] = [
       { id: "icon-guidelines", label: "Icon Guidelines" },
     ],
   },
-  {
-    id: "07", label: "VOICE & TONE", route: "/voice",
-    items: [{ id: "voice", label: "Voice & Tone" }],
-  },
+  // {
+  //   id: "07", label: "VOICE & TONE", route: "/voice",
+  //   items: [{ id: "voice", label: "Voice & Tone" }],
+  // },
   {
     id: "08", label: "IMAGERY & MOTION", route: "/imagery",
     items: [

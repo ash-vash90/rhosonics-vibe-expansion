@@ -14,7 +14,7 @@ const VisualSystemPage = lazy(() => import("./pages/brand/VisualSystemPage"));
 const ColorPage = lazy(() => import("./pages/brand/ColorPage"));
 const TypographyPage = lazy(() => import("./pages/brand/TypographyPage"));
 const LogoAssetsPage = lazy(() => import("./pages/brand/LogoAssetsPage"));
-const VoicePage = lazy(() => import("./pages/brand/VoicePage"));
+// const VoicePage = lazy(() => import("./pages/brand/VoicePage"));
 const ImageryPage = lazy(() => import("./pages/brand/ImageryPage"));
 const ApplicationsPage = lazy(() => import("./pages/brand/ApplicationsPage"));
 const ProofPage = lazy(() => import("./pages/brand/ProofPage"));
@@ -48,7 +48,7 @@ const App = () => (
               <Route path="color" element={<ColorPage />} />
               <Route path="typography" element={<TypographyPage />} />
               <Route path="logo-assets" element={<LogoAssetsPage />} />
-              <Route path="voice" element={<VoicePage />} />
+              {/* <Route path="voice" element={<VoicePage />} /> */}
               <Route path="imagery" element={<ImageryPage />} />
               <Route path="applications" element={<ApplicationsPage />} />
               <Route path="proof" element={<ProofPage />} />

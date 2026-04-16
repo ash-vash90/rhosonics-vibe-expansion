@@ -19,7 +19,7 @@ const sectionGroups: SectionGroup[] = [
     title: "Story",
     sections: [
       { id: "00", label: "About", route: "/about", desc: "What this system is, who it's for", accent: "hsl(var(--primary))" },
-      { id: "01", label: "Positioning", route: "/positioning", desc: "Where the brand sits in the market", accent: "hsl(var(--primary))" },
+      { id: "01", label: "Positioning & Voice", route: "/positioning", desc: "Where the brand sits and how it speaks", accent: "hsl(var(--primary))" },
       { id: "02", label: "Principles", route: "/principles", desc: "The rules that govern every decision", accent: "hsl(var(--primary))" },
     ],
   },
@@ -35,7 +35,6 @@ const sectionGroups: SectionGroup[] = [
   {
     title: "Content",
     sections: [
-      { id: "07", label: "Voice & Tone", route: "/voice", desc: "How the brand speaks and writes", accent: "hsl(280 45% 55%)" },
       { id: "08", label: "Imagery & Motion", route: "/imagery", desc: "Photography, textures, animation", accent: "hsl(280 45% 55%)" },
     ],
   },
