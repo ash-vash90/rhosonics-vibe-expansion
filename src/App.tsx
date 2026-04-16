@@ -18,7 +18,7 @@ const VoicePage = lazy(() => import("./pages/brand/VoicePage"));
 const ImageryPage = lazy(() => import("./pages/brand/ImageryPage"));
 const ApplicationsPage = lazy(() => import("./pages/brand/ApplicationsPage"));
 const ProofPage = lazy(() => import("./pages/brand/ProofPage"));
-const SocialMediaPage = lazy(() => import("./pages/brand/SocialMediaPage"));
+// const SocialMediaPage = lazy(() => import("./pages/brand/SocialMediaPage"));
 const ToolsPage = lazy(() => import("./pages/brand/ToolsPage"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const NotFound = lazy(() => import("./pages/NotFound"));
