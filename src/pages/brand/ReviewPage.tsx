@@ -407,8 +407,8 @@ const ReviewPage = () => (
               </div>
             </div>
 
-            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
-              <span className="font-data text-[10px] uppercase tracking-widest text-amber-600 block mb-1">Note</span>
+            <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20">
+              <span className="font-data text-[10px] uppercase tracking-widest text-destructive block mb-1">Note</span>
               <p className="text-sm text-foreground">Current imagery is AI-generated placeholder. Real photography replacement is needed for final brand assets.</p>
             </div>
 
