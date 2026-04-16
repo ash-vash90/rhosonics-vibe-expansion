@@ -20,6 +20,7 @@ const ApplicationsPage = lazy(() => import("./pages/brand/ApplicationsPage"));
 const ProofPage = lazy(() => import("./pages/brand/ProofPage"));
 // const SocialMediaPage = lazy(() => import("./pages/brand/SocialMediaPage"));
 const ToolsPage = lazy(() => import("./pages/brand/ToolsPage"));
+const ReviewPage = lazy(() => import("./pages/brand/ReviewPage"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PageLoader = () => (
