@@ -44,7 +44,7 @@ const sectionGroups: SectionGroup[] = [
     sections: [
       { id: "09", label: "Applications", route: "/applications", desc: "Industry use and interface kit", accent: "hsl(38 92% 50%)" },
       { id: "10", label: "Proof & Examples", route: "/proof", desc: "Evidence, data, and case studies", accent: "hsl(38 92% 50%)" },
-      { id: "11", label: "Social Media", route: "/social-media", desc: "LinkedIn assets and templates", accent: "hsl(38 92% 50%)" },
+      // { id: "11", label: "Social Media", route: "/social-media", desc: "LinkedIn assets and templates", accent: "hsl(38 92% 50%)" },
     ],
   },
   {
