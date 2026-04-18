@@ -81,7 +81,7 @@ export const ElevationSystem = () => {
           <div className="relative">
             {/* Light source indicator */}
             <div className="absolute -top-8 -left-8 w-12 h-12 bg-gradient-radial from-yellow-200/60 to-transparent rounded-full blur-sm" />
-            <div className="absolute -top-6 -left-6 font-data text-xs text-muted-foreground">Light</div>
+            <div className="absolute -top-6 -left-6 font-data text-xs uppercase text-muted-foreground">Light</div>
             
             {/* Demo card with shadow */}
             <div 
@@ -116,7 +116,7 @@ export const ElevationSystem = () => {
             >
               {/* Level indicator */}
               <div className="w-20 flex-shrink-0">
-                <span className="font-data text-2xl text-foreground">L{level.level}</span>
+                <span className="font-data text-2xl uppercase text-foreground">L{level.level}</span>
               </div>
 
               {/* Visual demo */}
@@ -196,27 +196,27 @@ export const ElevationSystem = () => {
         <div className="flex flex-wrap gap-8">
           <div className="text-center">
             <div className="w-32 h-20 bg-background border border-border rounded-lg flex items-center justify-center mb-3 shadow-sm">
-              <span className="font-data text-xs text-muted-foreground">Resting</span>
+              <span className="font-data text-xs uppercase text-muted-foreground">Resting</span>
             </div>
-            <span className="font-data text-xs text-muted-foreground">L1 → L1</span>
+            <span className="font-data text-xs uppercase text-muted-foreground">L1 → L1</span>
           </div>
           
           <div className="flex items-center text-muted-foreground">→</div>
           
           <div className="text-center">
             <div className="w-32 h-20 bg-background border border-border rounded-lg flex items-center justify-center mb-3 shadow-md -translate-y-0.5">
-              <span className="font-data text-xs text-muted-foreground">Hover</span>
+              <span className="font-data text-xs uppercase text-muted-foreground">Hover</span>
             </div>
-            <span className="font-data text-xs text-muted-foreground">L1 → L2</span>
+            <span className="font-data text-xs uppercase text-muted-foreground">L1 → L2</span>
           </div>
           
           <div className="flex items-center text-muted-foreground">→</div>
           
           <div className="text-center">
             <div className="w-32 h-20 bg-background border border-border rounded-lg flex items-center justify-center mb-3 shadow-sm translate-y-0.5">
-              <span className="font-data text-xs text-muted-foreground">Pressed</span>
+              <span className="font-data text-xs uppercase text-muted-foreground">Pressed</span>
             </div>
-            <span className="font-data text-xs text-muted-foreground">L2 → L1</span>
+            <span className="font-data text-xs uppercase text-muted-foreground">L2 → L1</span>
           </div>
         </div>
       </div>

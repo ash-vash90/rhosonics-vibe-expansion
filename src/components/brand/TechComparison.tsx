@@ -369,19 +369,19 @@ export const TechComparison = () => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border bg-slate-50/50">
-              <th className="text-left p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <th className="text-left p-4 font-data text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Technology
               </th>
-              <th className="text-center p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <th className="text-center p-4 font-data text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Energy (W)
               </th>
-              <th className="text-center p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <th className="text-center p-4 font-data text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Accuracy (%)
               </th>
-              <th className="text-center p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden sm:table-cell">
+              <th className="text-center p-4 font-data text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden sm:table-cell">
                 Maint. (h/yr)
               </th>
-              <th className="text-center p-4 font-ui text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <th className="text-center p-4 font-data text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Rel. Cost
               </th>
             </tr>
@@ -400,12 +400,12 @@ export const TechComparison = () => {
                     </span>
                   )}
                 </td>
-                <td className="text-center p-4 font-data text-muted-foreground">{row.energy}</td>
-                <td className="text-center p-4 font-data text-muted-foreground">{row.accuracy}</td>
-                <td className="text-center p-4 font-data text-muted-foreground hidden sm:table-cell">
+                <td className="text-center p-4 font-data uppercase text-muted-foreground">{row.energy}</td>
+                <td className="text-center p-4 font-data uppercase text-muted-foreground">{row.accuracy}</td>
+                <td className="text-center p-4 font-data uppercase text-muted-foreground hidden sm:table-cell">
                   {row.maintenance}
                 </td>
-                <td className="text-center p-4 font-data text-muted-foreground">{row.cost}%</td>
+                <td className="text-center p-4 font-data uppercase text-muted-foreground">{row.cost}%</td>
               </tr>
             ))}
           </tbody>

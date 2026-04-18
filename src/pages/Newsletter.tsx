@@ -282,7 +282,7 @@ const CopyableSection = ({
       <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           onClick={() => onCopy(id, label)}
-          className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-medium rounded bg-muted/80 text-muted-foreground hover:bg-muted transition-colors backdrop-blur-sm"
+          className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-medium rounded bg-muted text-muted-foreground hover:bg-muted/90 transition-colors"
           title={`Copy "${label}" section HTML`}
         >
           {isCopied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}

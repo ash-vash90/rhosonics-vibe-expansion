@@ -285,7 +285,7 @@ export const Navigation = () => {
     <>
       {/* Mobile/Tablet Overlay */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 xl:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-rho-obsidian/60 z-40 xl:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsOpen(false)}
@@ -312,7 +312,7 @@ export const Navigation = () => {
       </div>
 
       {/* Top Header Bar - Mobile & Tablet */}
-      <div className="fixed top-0 left-0 right-0 h-14 bg-rho-obsidian/95 backdrop-blur-sm border-b border-slate-800/80 flex items-center justify-between px-4 z-30 xl:hidden">
+      <div className="fixed top-0 left-0 right-0 h-14 bg-rho-obsidian border-b border-slate-800/80 flex items-center justify-between px-4 z-30 xl:hidden">
         <button
           onClick={() => navigateTo("/")}
           className="flex items-center gap-2 touch-manipulation"

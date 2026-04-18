@@ -75,7 +75,7 @@ export const QuickNav = () => {
       }`}
       aria-label="Quick navigation"
     >
-      <div className="bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+      <div className="bg-rho-obsidian border-b border-slate-800">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
           <div className="flex items-center gap-1 md:gap-2 py-3 overflow-x-auto scrollbar-hide">
             {chapters.map((chapter) => (
@@ -88,7 +88,7 @@ export const QuickNav = () => {
                     : "text-slate-400 hover:text-slate-100 hover:bg-slate-800"
                 }`}
               >
-                <span className="font-data text-xs">{chapter.num}</span>
+                <span className="font-data text-xs uppercase">{chapter.num}</span>
                 <span className="font-ui hidden sm:inline">{chapter.label}</span>
               </button>
             ))}

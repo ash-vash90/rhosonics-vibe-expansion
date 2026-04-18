@@ -4,7 +4,7 @@ export const FontSelector = () => {
   const { logoFont, bodyFont, setLogoFont, setBodyFont } = useFontMode();
 
   return (
-    <div className="hidden xl:flex fixed top-4 right-4 z-50 gap-3 items-center bg-rho-obsidian/90 backdrop-blur-sm border border-slate-800 rounded-lg px-4 py-2 shadow-lg">
+    <div className="hidden xl:flex fixed top-4 right-4 z-50 gap-3 items-center bg-rho-obsidian rounded-lg px-4 py-2 shadow-lg">
       <div className="flex items-center gap-2">
         <span className="font-data text-[10px] uppercase tracking-wider text-slate-500">Logo</span>
         <select
