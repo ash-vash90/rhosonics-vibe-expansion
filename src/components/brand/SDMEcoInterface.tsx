@@ -182,7 +182,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
       
       {/* Device label - smaller on mobile */}
       <div className="mt-6 sm:mt-12 flex justify-center">
-        <div className="flex items-center gap-3 sm:gap-5 px-4 sm:px-8 py-2 sm:py-4 rounded-lg sm:rounded-2xl bg-gradient-to-r from-muted/70 to-muted/40 border border-border/50 backdrop-blur-sm shadow-lg">
+        <div className="flex items-center gap-3 sm:gap-5 px-4 sm:px-8 py-2 sm:py-4 rounded-lg sm:rounded-2xl bg-gradient-to-r from-muted/70 to-muted/40 shadow-lg">
           <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-primary animate-pulse shadow-lg shadow-primary/50" />
           <span className="font-data text-xs sm:text-sm text-muted-foreground uppercase tracking-[0.15em] sm:tracking-[0.2em]">SDM ECO · 800×480</span>
         </div>
@@ -246,15 +246,15 @@ const LiveMetric = ({
   highlight?: boolean;
   size?: "normal" | "large";
 }) => (
-  <div className={`relative p-5 rounded-2xl border-2 transition-all duration-300 ${
-    highlight 
-      ? "bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 shadow-lg shadow-primary/10" 
-      : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-md"
+  <div className={`relative p-5 rounded-2xl transition-all duration-300 ${
+    highlight
+      ? "bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg shadow-primary/10"
+      : "bg-white border-2 border-slate-200 hover:border-slate-300"
   }`}>
     <span className="font-ui text-base text-slate-500 font-medium mb-2 block">{label}</span>
     
     <div className="flex items-baseline gap-2">
-      <span className={`font-data text-slate-900 tabular-nums tracking-tight font-medium ${
+      <span className={`font-data text-slate-900 tabular-nums tracking-tight font-medium uppercase ${
         size === "large" ? "text-7xl" : "text-6xl"
       }`}>
         {value}
@@ -395,7 +395,7 @@ const AnimatedTemp = ({
   return (
     <div className="text-center">
       <span className="font-ui text-base text-slate-500 font-medium block mb-2">{label}</span>
-      <span className="font-data text-5xl text-slate-900 tabular-nums font-medium">
+      <span className="font-data text-5xl text-slate-900 tabular-nums font-medium uppercase">
         {value.toFixed(2)}
       </span>
       <span className="font-data text-2xl text-slate-400 uppercase ml-1">°C</span>
@@ -477,7 +477,7 @@ const SamplingScreen = () => {
           <div className="bg-white rounded-xl border-2 border-slate-200 p-4 shadow-sm">
             <AnimatedTemp baseValue={26.02} variance={0.08} label="Liquid temperature" />
           </div>
-          <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl border-2 border-primary/25 p-4 shadow-lg shadow-primary/10">
+          <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-4 shadow-lg shadow-primary/10">
             {isSampling ? (
               <div className="text-center">
                 <span className="font-ui text-base text-slate-500 font-medium block mb-2">Sampled temperature</span>
@@ -489,7 +489,7 @@ const SamplingScreen = () => {
             ) : (
               <div className="text-center">
                 <span className="font-ui text-base text-slate-500 font-medium block mb-2">Sampled temperature</span>
-                <span className="font-data text-5xl text-primary tabular-nums font-medium">25.98</span>
+                <span className="font-data text-5xl text-primary tabular-nums font-medium uppercase">25.98</span>
                 <span className="font-data text-2xl text-primary/60 uppercase ml-1">°C</span>
               </div>
             )}
@@ -497,7 +497,7 @@ const SamplingScreen = () => {
           <div className="bg-white rounded-xl border-2 border-slate-200 p-4 shadow-sm">
             <div className="text-center">
               <span className="font-ui text-base text-slate-500 font-medium block mb-2">Recommended</span>
-              <span className="font-data text-5xl text-slate-900 tabular-nums font-medium">25.00</span>
+              <span className="font-data text-5xl text-slate-900 tabular-nums font-medium uppercase">25.00</span>
               <span className="font-data text-2xl text-slate-400 uppercase ml-1">°C</span>
             </div>
           </div>
@@ -730,7 +730,7 @@ const CalibrationScreen = () => (
             <div className={`w-1 h-16 rounded-full ${point.done ? "bg-primary" : "bg-amber-400"}`} />
             
             {/* Point number */}
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 font-data text-lg font-medium ${
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 font-data text-lg font-medium uppercase ${
               point.done 
                 ? "bg-primary/15 border border-primary/25 text-primary" 
                 : "bg-amber-100 border border-amber-300 text-amber-700"
@@ -818,7 +818,7 @@ const SettingsScreen = () => (
       <div className="grid grid-cols-2 gap-8">
         {/* Density */}
         <div>
-          <h3 className="font-ui text-base text-slate-500 font-medium mb-3 uppercase tracking-wide">Density</h3>
+          <h3 className="font-data text-xs text-slate-500 font-medium mb-3 uppercase tracking-wider">Density</h3>
           <div className="space-y-2">
             {["SG", "kg/m³", "g/L", "lb/ft³", "SGx1000", "Weight %"].map((unit, i) => (
               <label
@@ -844,7 +844,7 @@ const SettingsScreen = () => (
 
         {/* Temperature */}
         <div>
-          <h3 className="font-ui text-base text-slate-500 font-medium mb-3 uppercase tracking-wide">Temperature</h3>
+          <h3 className="font-data text-xs text-slate-500 font-medium mb-3 uppercase tracking-wider">Temperature</h3>
           <div className="space-y-2">
             {["Celsius (°C)", "Fahrenheit (°F)"].map((unit, i) => (
               <label
@@ -887,9 +887,9 @@ const PinScreen = () => (
         {/* PIN Display */}
         <div className="flex flex-col items-center">
           <h2 className="font-ui text-xl text-slate-700 font-semibold mb-4">Enter access code</h2>
-          <div className="px-8 py-5 rounded-xl bg-white border-2 border-primary shadow-lg shadow-primary/10 mb-6">
-            <span className="font-data text-4xl text-slate-400 tracking-[0.4em]">••••</span>
-            <span className="font-data text-4xl text-primary animate-pulse">_</span>
+          <div className="px-8 py-5 rounded-xl bg-white shadow-lg shadow-primary/20 mb-6">
+            <span className="font-data text-4xl text-slate-400 uppercase tracking-[0.4em]">••••</span>
+            <span className="font-data text-4xl text-primary uppercase animate-pulse">_</span>
           </div>
           <button className="w-full py-3.5 px-8 rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-white font-ui text-lg font-semibold shadow-lg shadow-primary/30 transition-all">
             Continue
@@ -902,12 +902,12 @@ const PinScreen = () => (
             {[7, 8, 9, 4, 5, 6, 1, 2, 3].map((num) => (
               <button
                 key={num}
-                className="w-16 h-14 rounded-xl bg-white hover:bg-slate-50 active:bg-slate-100 border border-slate-200 font-data text-2xl text-slate-800 font-medium transition-all shadow-sm hover:shadow"
+                className="w-16 h-14 rounded-xl bg-white hover:bg-slate-50 active:bg-slate-100 border border-slate-200 font-data text-2xl text-slate-800 font-medium uppercase transition-all shadow-sm hover:shadow"
               >
                 {num}
               </button>
             ))}
-            <button className="w-16 h-14 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 font-data text-2xl text-slate-800 font-medium transition-all shadow-sm">
+            <button className="w-16 h-14 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 font-data text-2xl text-slate-800 font-medium uppercase transition-all shadow-sm">
               0
             </button>
             <button className="w-16 h-14 col-span-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 font-ui text-base text-slate-600 font-medium transition-all shadow-sm flex items-center justify-center gap-2">

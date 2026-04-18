@@ -27,10 +27,10 @@ const metricTileVariants = cva(
   {
     variants: {
       variant: {
-        obsidian: "bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30",
+        obsidian: "bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100 shadow-lg shadow-rho-obsidian/30 hover:shadow-xl hover:shadow-rho-obsidian/40",
         primary: "bg-gradient-to-br from-primary-600 to-primary-700 text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30",
-        outline: "bg-card text-foreground border border-border/50 shadow-sm hover:shadow-md hover:border-border",
-        glass: "bg-white/5 backdrop-blur-md text-white border border-white/10 hover:bg-white/8 hover:border-white/15",
+        outline: "bg-card text-foreground border border-border/50 hover:border-border",
+        glass: "bg-rho-obsidian/80 text-white hover:bg-rho-obsidian/90",
       },
       size: {
         default: "min-w-[180px] p-5",
@@ -121,19 +121,19 @@ const MetricTile = React.forwardRef<HTMLDivElement, MetricTileProps>(
         */}
         <div className="flex items-baseline gap-1.5">
           <span className={cn(
-            "font-data text-4xl font-semibold tracking-tight leading-none",
+            "font-data text-4xl font-semibold uppercase tracking-tight leading-none",
             isDark ? "text-current" : "text-foreground"
           )}>
             {value}
           </span>
-          
-          {/* 
+
+          {/*
             Unit is deliberately smaller and lighter than the value.
             It clarifies meaning without competing for attention.
           */}
           {unit && (
             <span className={cn(
-              "font-data text-sm tracking-wide",
+              "font-data text-sm uppercase tracking-wide",
               secondaryClass
             )}>
               {unit}

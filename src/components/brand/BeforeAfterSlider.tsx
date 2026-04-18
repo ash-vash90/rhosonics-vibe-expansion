@@ -223,13 +223,13 @@ const BeforeAfterSlider = ({
 
       {/* Labels */}
       <div
-        className="absolute top-3 left-3 px-3 py-1 bg-warning-surface border border-warning-border rounded text-xs font-data text-warning transition-opacity"
+        className="absolute top-3 left-3 px-3 py-1 bg-warning-surface border border-warning-border rounded text-xs font-data uppercase text-warning transition-opacity"
         style={{ opacity: sliderPosition > 15 ? 1 : 0 }}
       >
         {beforeLabel}
       </div>
       <div
-        className="absolute top-3 right-3 px-3 py-1 bg-success-surface border border-success-border rounded text-xs font-data text-success transition-opacity"
+        className="absolute top-3 right-3 px-3 py-1 bg-success-surface border border-success-border rounded text-xs font-data uppercase text-success transition-opacity"
         style={{ opacity: sliderPosition < 85 ? 1 : 0 }}
       >
         {afterLabel}
@@ -237,7 +237,7 @@ const BeforeAfterSlider = ({
 
       {/* Filter specs indicator */}
       <div 
-        className="absolute bottom-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm rounded text-[10px] font-data text-white/80 transition-opacity"
+        className="absolute bottom-3 right-3 px-2 py-1 bg-rho-obsidian/70 rounded text-[10px] font-data uppercase text-white/80 transition-opacity"
         style={{ opacity: sliderPosition < 85 ? 1 : 0 }}
       >
         SAT {saturation > 1 ? "+" : ""}{Math.round((saturation - 1) * 100)}% · CON +{Math.round((contrast - 1) * 100)}%
@@ -284,7 +284,7 @@ const BeforeAfterSlider = ({
             </div>
             
             {/* Text hint */}
-            <div className="px-4 py-2 bg-black/70 backdrop-blur-sm rounded-full text-white text-sm font-ui flex items-center gap-2">
+            <div className="px-4 py-2 bg-rho-obsidian/80 rounded-full text-white text-sm font-ui flex items-center gap-2">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
               </svg>

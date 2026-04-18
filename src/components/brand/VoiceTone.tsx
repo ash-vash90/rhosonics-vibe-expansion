@@ -108,7 +108,7 @@ export const VoiceTone = () => {
               className={`p-4 md:p-6 ${i > 0 ? 'sm:border-l border-border' : ''} ${i >= 2 ? 'border-t lg:border-t-0' : ''} ${i === 1 ? 'border-t sm:border-t-0' : ''} hover:bg-muted/30 transition-colors`}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="font-data text-xl md:text-2xl text-primary/40">{pillar.num}</span>
+                <span className="font-data text-xl md:text-2xl uppercase text-primary/40">{pillar.num}</span>
                 <ValueBadge valueId={pillar.valueId} showIcon />
               </div>
               <h3 className="font-ui font-bold text-lg md:text-xl mt-2 md:mt-3 mb-1 md:mb-2 text-foreground">{pillar.title}</h3>

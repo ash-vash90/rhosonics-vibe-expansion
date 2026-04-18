@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/lib/icons";
 import dredgingHero from "@/assets/case-studies/dredging-hero.jpg";
 import miningHero from "@/assets/case-studies/mining-hero.jpg";
 import wastewaterHero from "@/assets/case-studies/wastewater-hero.jpg";
@@ -90,7 +90,7 @@ export const CaseStudies = () => {
 
               {/* Industry badge - JetBrains Mono with transparency */}
               <div className="absolute top-3 left-3">
-                <span className="font-data text-[11px] tracking-wider px-2.5 py-1 rounded bg-rho-obsidian/60 text-primary-foreground backdrop-blur-sm border border-border/30">
+                <span className="font-data text-[11px] uppercase tracking-wider px-2.5 py-1 rounded bg-rho-obsidian text-primary-foreground">
                   {study.industry}
                 </span>
               </div>
