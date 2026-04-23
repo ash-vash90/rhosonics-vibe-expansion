@@ -195,16 +195,16 @@
 
   /* Typography Classes */
   .font-logo {
+    font-family: 'Primetime', 'Unbounded', sans-serif;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+
+  body.logo-unbounded .font-logo,
+  body.logo-unbounded [class*="font-logo"] {
     font-family: 'Unbounded', sans-serif;
     font-weight: 500;
     letter-spacing: -0.02em;
-  }
-
-  body.logo-primetime .font-logo,
-  body.logo-primetime [class*="font-logo"] {
-    font-family: 'Primetime', sans-serif;
-    font-weight: 300;
-    letter-spacing: -0.01em;
   }
 
   .font-ui {

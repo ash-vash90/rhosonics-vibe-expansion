@@ -7,7 +7,7 @@ interface FieldNoteProps {
 }
 
 export const FieldNote = ({ stamp, quote, name, role, initials }: FieldNoteProps) => (
-  <aside className="relative max-w-md pl-6 py-5 pr-5 border-l-2 border-primary bg-muted/30 rotate-[-0.4deg]">
+  <aside className="relative max-w-md pl-6 py-5 pr-5 border-l-2 border-primary bg-muted/30 clip-chamfer-sm rotate-[-0.4deg]">
     <div className="flex items-center gap-3 mb-3">
       <span className="font-data text-[10px] uppercase tracking-[0.2em] text-primary">
         {stamp}

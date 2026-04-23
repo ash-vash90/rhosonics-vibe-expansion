@@ -9,11 +9,15 @@
 
 | Element | Rule | Example |
 |---------|------|---------|
-| Logo font | Unbounded ONLY for wordmark | `font-logo tracking-wide` |
+| Logo font | Primetime (Unbounded fallback), wordmark only | `font-logo` |
 | UI text | Instrument Sans, sentence case | `font-ui` |
 | Data/labels | JetBrains Mono, ALL-CAPS | `font-data uppercase` |
+| Display headings | Fluid scale, negative tracking | `text-display-lg tracking-display` |
 | Primary color | Use semantic tokens | `text-primary`, `bg-primary` |
 | Black | Never #000, use Obsidian | `bg-rho-obsidian` |
+| Panel shape | Chamfered clip-path for panels & cards | `clip-chamfer-md` |
+| Button shape | Rounded, never chamfered | `rounded-md` |
+| Shadows on chamfers | `drop-shadow-*` (not `shadow-*`) | `drop-shadow-lg` |
 | Icons | Import from `@/lib/icons` | `import { Activity } from "@/lib/icons"` |
 | Logo ratio | Icon = Text × 1.35 | 24px text → 32px icon |
 
@@ -162,14 +166,17 @@ If uncertain, choose the more restrained option.
 
 | Font | Purpose | Case | Weight | Tailwind |
 |------|---------|------|--------|----------|
-| **Unbounded** | Logo wordmark ONLY | Title | 500 | `font-logo` |
-| **Instrument Sans** | All UI text (90%) | Sentence | 400-700 | `font-ui` |
+| **Primetime** | Logo wordmark (default) | Title | 300 | `font-logo` |
+| **Unbounded** | Logo wordmark (fallback, opt-in via `body.logo-unbounded`) | Title | 500 | `font-logo` |
+| **Instrument Sans** | All UI text (~90%) | Sentence | 400-700 | `font-ui` |
 | **JetBrains Mono** | Data, metrics, labels | ALL-CAPS | 500 | `font-data` |
+
+The `FontSelector` component lets designers swap to Unbounded at runtime; Primetime is the canonical default.
 
 ### ⛔ Typography Violations
 
 ```tsx
-// ❌ WRONG: Unbounded for heading
+// ❌ WRONG: font-logo for headings (reserve for "RHOSONICS" wordmark)
 <h1 className="font-logo text-4xl">Welcome</h1>
 
 // ❌ WRONG: Instrument Sans in all-caps
@@ -179,21 +186,45 @@ If uncertain, choose the more restrained option.
 <span className="font-data">Flow Rate</span>
 
 // ✅ CORRECT: Each font in its role
-<h1 className="font-ui text-4xl font-semibold">Welcome</h1>
-<span className="font-data text-xs uppercase tracking-wider">STATUS</span>
+<h1 className="font-ui text-display-lg tracking-display font-semibold">Welcome</h1>
+<span className="font-data text-xs uppercase tracking-label-wide">STATUS</span>
 ```
 
-### Type Scale
+### Fluid Display Scale
+
+Display text uses `clamp()` so headlines scale continuously with viewport width — no manual `md:`/`lg:` sizing at the hero level.
+
+| Token | clamp() | Line Height | Use |
+|-------|---------|-------------|-----|
+| `text-display-lg` | 2rem → 3.5rem | 1.05 | Hero, page title |
+| `text-display-md` | 1.75rem → 3rem | 1.1 | Section title |
+| `text-display-sm` | 1.5rem → 2.5rem | 1.15 | Subsection title |
+| `text-display-xs` | 1.1rem → 1.5rem | 1.2 | Card hero text |
+
+### Tracking Scale
+
+Reference design tightens display text aggressively and spaces monospace labels generously. Use the named tokens rather than arbitrary `tracking-[...]` values.
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `tracking-display` | -0.02em | Large display headings |
+| `tracking-display-tight` | -0.015em | Medium display headings |
+| `tracking-display-snug` | -0.01em | Wordmark, small display |
+| `tracking-label` | 0.05em | JetBrains Mono labels |
+| `tracking-label-wide` | 0.12em | Prominent uppercase labels |
+| `tracking-label-wider` | 0.14em | Stamps, section-opening labels |
+
+### Body Type Scale
+
+Static sizes apply to body, caption, and data text. Only display headings use fluid `clamp()`.
 
 | Role | Size | Font | Class Example |
 |------|------|------|---------------|
-| Display Hero | 48px | Instrument Sans | `text-5xl font-ui font-bold` |
-| Section Title | 36px | Instrument Sans | `text-4xl font-ui font-semibold` |
-| Card Title | 24px | Instrument Sans | `text-2xl font-ui font-semibold` |
 | Body | 16px | Instrument Sans | `text-base font-ui` |
 | Caption | 14px | Instrument Sans | `text-sm font-ui text-muted-foreground` |
-| Data Label | 12px | JetBrains Mono | `text-xs font-data uppercase tracking-wider` |
-| Metric Value | 32px+ | JetBrains Mono | `text-3xl font-data uppercase` |
+| Data Label | 12px | JetBrains Mono | `text-xs font-data uppercase tracking-label-wide` |
+| Stamp | 10-11px | JetBrains Mono | `text-[11px] font-data uppercase tracking-label-wider` |
+| Metric Value | fluid | JetBrains Mono | `text-display-md font-data uppercase` |
 
 ### Line Height (Proportional to Line Length)
 
@@ -272,13 +303,30 @@ These colors carry meaning. Never decorative.
 | Success | Confirmations | Same as Primary | `bg-success` |
 | Info | Guidance | Slate-600 | `text-slate-600` (never blue) |
 
-#### Context (Situational)
-Reserved for specific environmental contexts.
+#### Context (Environmental)
+These colors carry environmental/material meaning and extend beyond imagery into UI surfaces that evoke the field.
 
-| Token | Usage | When to Use |
-|-------|-------|-------------|
-| Mineral palette | Field photography overlays | Only in imagery/environmental contexts |
-| Eco tints | Sustainability metrics | Only when showing environmental impact data |
+| Token | Usage | Where to Use |
+|-------|-------|--------------|
+| `mineral-neutral` (#847F5E) | Field-aesthetic UI surfaces, workshop cards | Industrial/environmental section backgrounds, `card-mineral`, `shadow-mineral` |
+| `mineral-surface` (#EAE8DE) | Warm neutral surface | Field-context cards, workshop grid backgrounds |
+| `mineral-deep` (#555443) | Deep olive stone accent | Mineral card bottom borders, hover accents |
+| `mineral-bronze` (#736B4D) | Earthy olive accent | Secondary environmental emphasis |
+| `eco-surface` / `eco-border` | Sustainability sections | Green-tinted surfaces communicating environmental impact |
+
+**Important correction from earlier versions of this doc:** mineral colors are **not** restricted to imagery. They are UI tokens for sections that communicate field/environmental context (mining, dredging, wastewater) — paired with `--shadow-mineral` and `--gradient-field`. They still must not substitute for Slate in general software UI chrome.
+
+#### Semantic Surface / Border Pairs
+
+Every signal color has a `surface` and `border` companion for info boxes, callouts, and status blocks. Use these rather than hard-coded tints.
+
+| Signal | Default | Surface | Border |
+|--------|---------|---------|--------|
+| Info | `text-info` | `bg-info-surface` | `border-info-border` |
+| Warning | `text-warning` | `bg-warning-surface` | `border-warning-border` |
+| Error | `text-error` | `bg-error-surface` | `border-error-border` |
+| Success | `text-success` | `bg-success-surface` | `border-success-border` |
+| Eco | `text-primary` | `bg-eco-surface` | `border-eco-border` |
 
 ### Primary Green Scale (50-900)
 
@@ -386,13 +434,31 @@ All shadows originate from a **top-left light source** (consistent across all co
 
 ### 5-Level Elevation Scale
 
-| Level | Name | Usage | Tailwind / CSS |
-|-------|------|-------|----------------|
-| 0 | **None** | Flat elements, inline content | (no shadow) |
-| 1 | **Card** | Cards, dropdowns, raised surfaces | `shadow-card` |
-| 2 | **Elevated** | Hover states, floating elements | `shadow-elevated` |
-| 3 | **Modal** | Dialogs, overlays, popovers | `shadow-lg` + custom |
-| 4 | **Glow** | Hero elements, premium focus states | Custom glow effect |
+Glow is canonical, not exceptional — it's part of the standard scale for brand-green focus on primary CTAs and hero elements.
+
+| Level | Name | Usage | Tailwind utility | CSS token |
+|-------|------|-------|------------------|-----------|
+| 0 | **None** | Flat elements, inline content | — | — |
+| 1 | **Card** | Cards, raised surfaces | `shadow-card` | `--shadow-card` |
+| 2 | **Elevated** | Hover states, floating elements | `shadow-elevated` | `--shadow-elevated` |
+| 3 | **Glow (small)** | Primary buttons, interactive focus | `shadow-glow-sm` | `--shadow-glow-sm` |
+| 4 | **Glow** | Hero CTAs, premium focus states | `shadow-glow` | `--shadow-glow` |
+| — | **Mineral** | Field-aesthetic cards, workshop sections | `shadow-mineral` | `--shadow-mineral` |
+
+### Shadows on Chamfered Surfaces
+
+Because `clip-path` clips `box-shadow`, always use `filter: drop-shadow` (`drop-shadow-*` Tailwind utilities) on any element that also carries `clip-chamfer-*`. Otherwise the shadow gets cut along the chamfer and looks broken.
+
+```tsx
+// ❌ WRONG: box-shadow clipped by chamfer
+<div className="clip-chamfer-md shadow-lg bg-card">...</div>
+
+// ✅ CORRECT: drop-shadow follows the chamfered shape
+<div className="clip-chamfer-md drop-shadow-lg bg-card">...</div>
+
+// ✅ ALSO CORRECT: rounded element with box-shadow (no clip-path)
+<div className="rounded-lg shadow-lg bg-card">...</div>
+```
 
 ```tsx
 // Level 1: Card
@@ -456,6 +522,60 @@ For brand elements, use colored shadows derived from the element's color:
 
 ---
 
+## 4.5. Shape Language
+
+The brand shape system has two distinct modes. Use the wrong one and the surface reads as generic SaaS instead of industrial instrumentation.
+
+### Chamfered Panels (primary)
+
+Panels, cards, callouts, and content containers use **chamfered clip-paths**. The 45° corners at the top-left and bottom-right evoke engineering drawings, milled aluminum, and machined bezels — not decoration.
+
+| Token | Clip | Use |
+|-------|------|-----|
+| `clip-chamfer-btn` | 6px | (reserved; buttons use `rounded-md` instead — see below) |
+| `clip-chamfer-sm` | 8px | Small panels, chips, margin notes |
+| `clip-chamfer-md` | 12px | Standard cards, metric tiles, panels |
+| `clip-chamfer-lg` | 24px | Hero surfaces, large feature panels |
+
+```tsx
+// ✅ Chamfered card with drop-shadow (shadow follows clip shape)
+<div className="clip-chamfer-md drop-shadow-lg bg-card p-6">
+  <h3 className="font-ui text-xl font-semibold">Panel title</h3>
+</div>
+
+// ✅ Chamfered with gradient background
+<div className="clip-chamfer-lg bg-gradient-to-br from-muted/40 to-transparent p-8">
+  ...
+</div>
+```
+
+### Rounded Buttons (not chamfered)
+
+Buttons are the one exception: they stay rounded. Chamfered buttons fight with the ergonomics of click targets — a 45° corner reads as a torn edge at button scale, not precision.
+
+| Element | Radius | Tailwind |
+|---------|--------|----------|
+| Buttons | 6px | `rounded-md` |
+| Pills / badges | 2px–full | `rounded-sm` or `rounded-full` |
+| Avatars | full | `rounded-full` |
+| Input fields | 6px | `rounded-md` |
+
+```tsx
+// ✅ Button stays rounded
+<button className="rounded-md bg-primary px-4 py-2">Save</button>
+
+// ❌ WRONG: Chamfered button
+<button className="clip-chamfer-btn bg-primary px-4 py-2">Save</button>
+```
+
+### Caveats
+
+- **Borders get clipped too.** Don't combine `border-*` with `clip-chamfer-*`. Use background color shift or a gradient for separation.
+- **Nested images.** An `<img>` inside a chamfered parent gets its corners clipped too. Intentional for hero panels; awkward for thumbnails. Keep image cards rounded.
+- **Never combine** `clip-chamfer-*` with `rounded-*` on the same element.
+
+---
+
 ## 5. Logo Usage
 
 ### The 135% Rule
@@ -484,6 +604,12 @@ import { RhosonicsLogo } from "@/components/RhosonicsLogo";
 // With animation (hero only)
 <RhosonicsLogo variant="gradient" animated />
 ```
+
+### Wordmark Font
+
+`font-logo` resolves to **Primetime** (weight 300, `letter-spacing: -0.01em`) by default. Designers can opt into the Unbounded fallback at runtime by adding `body.logo-unbounded` (handled by the `FontSelector` component).
+
+For SVG exports, use the path-outlined wordmark at `src/assets/brand/rhosonics-wordmark-paths.ts` so recipients don't need the font installed.
 
 ### ⛔ Logo Violations
 
@@ -1006,26 +1132,30 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 ### Typography
 - ❌ Never use Space Grotesk font
-- ❌ Never use Unbounded for anything except logo wordmark
+- ❌ Never use `font-logo` outside the RHOSONICS wordmark
 - ❌ Never use ALL-CAPS with Instrument Sans
 - ❌ Never use sentence case with JetBrains Mono labels
 - ❌ Never use gradients on body text
 - ❌ Never use line heights below 1.25 for multi-line text
 - ❌ Never exceed 75 characters per line for body text
+- ❌ Never hand-roll `clamp()` in component code — use `text-display-*` utilities
 
 ### Color
 - ❌ Never use pure black (#000000)
 - ❌ Never use Lime Accent as standalone color (gradients only)
-- ❌ Never use blue for info states
-- ❌ Never substitute Mineral colors for Slate in UI
+- ❌ Never use blue for info states — Slate-600 only
+- ❌ Never substitute Mineral colors for **Slate UI chrome** (navigation, form inputs, generic containers). Mineral *is* allowed on environmental/field-context surfaces.
 - ❌ Never use direct hex values in components (use tokens)
 - ❌ Never use full-saturation accents on dark backgrounds
 
-### Shadows & Depth
-- ❌ Never combine borders AND shadows on same element (pick one)
+### Shape & Depth
+- ❌ Never combine `border-*` with `clip-chamfer-*` — the border gets clipped, leaving a broken partial line
+- ❌ Never combine `clip-chamfer-*` with `rounded-*` on the same element
+- ❌ Never use `box-shadow` / `shadow-*` on a chamfered element — use `drop-shadow-*` so the shadow follows the clip
+- ❌ Never chamfer buttons (`rounded-md` only for buttons/inputs)
+- ❌ Never combine static borders AND static shadows on same non-chamfered element (pick one)
 - ❌ Never use shadows on inline elements
 - ❌ Never use inconsistent shadow directions
-- ❌ Never skip elevation levels (card → modal, not card → glow)
 
 ### Layout
 - ❌ Never center-align body paragraphs (left-align only)
@@ -1038,8 +1168,9 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 - ❌ Never use labels when data format is self-explanatory
 
 ### Logo
+- ❌ Never swap Primetime for another display font (Unbounded fallback is handled automatically)
 - ❌ Never rotate the logo
-- ❌ Never add shadows or glows
+- ❌ Never add shadows or glows to the mark itself
 - ❌ Never stretch or distort
 - ❌ Never use below 40px
 - ❌ Never change gradient colors
@@ -1151,5 +1282,5 @@ Add to every design review:
 
 ---
 
-*Last updated: 2026-04-11*
-*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles + 2026 Design Trends Analysis*
+*Last updated: 2026-04-23*
+*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles + 2026 Design Trends Analysis + Homepage reference design alignment (Primetime primary, chamfer system, mineral-in-UI, fluid type, 5-level shadow with glow)*
