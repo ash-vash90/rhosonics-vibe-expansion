@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
  */
 
 const metricTileVariants = cva(
-  "relative flex flex-col clip-chamfer-md overflow-hidden group cursor-default transition-all duration-300 ease-out hover:-translate-y-0.5",
+  "relative flex flex-col rounded-md overflow-hidden group cursor-default transition-all duration-300 ease-out hover:-translate-y-0.5",
   {
     variants: {
       variant: {

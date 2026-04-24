@@ -38,7 +38,7 @@ export const EcoComponents = () => {
               Optimized density measurement reduced fresh water intake by 15,000L today.
             </p>
 
-            <button className="chamfer-shape bg-primary/10 text-primary px-5 py-2.5 font-data text-xs uppercase tracking-wider border border-eco-border hover:bg-primary hover:text-primary-foreground transition-all">
+            <button className="rounded bg-primary/10 text-primary px-5 py-2.5 font-data text-xs uppercase tracking-wider border border-eco-border hover:bg-primary hover:text-primary-foreground transition-all">
               View Eco Report
             </button>
           </div>

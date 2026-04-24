@@ -159,7 +159,7 @@ export const DownloadableAssets = () => {
           <span>All assets, all formats, one download.</span>
           <button
             onClick={handleDownloadAll}
-            className="chamfer-shape bg-brand-gradient text-primary-foreground px-5 py-2.5 font-data text-xs uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 ml-4"
+            className="rounded bg-brand-gradient text-primary-foreground px-5 py-2.5 font-data text-xs uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 ml-4"
           >
             <Download className="w-4 h-4" />
             Download All
