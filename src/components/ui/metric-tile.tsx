@@ -23,13 +23,13 @@ import { cn } from "@/lib/utils";
  */
 
 const metricTileVariants = cva(
-  "relative flex flex-col rounded-xl overflow-hidden group cursor-default transition-all duration-300 ease-out hover:-translate-y-0.5",
+  "relative flex flex-col clip-chamfer-md overflow-hidden group cursor-default transition-all duration-300 ease-out hover:-translate-y-0.5",
   {
     variants: {
       variant: {
-        obsidian: "bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100 shadow-lg shadow-rho-obsidian/30 hover:shadow-xl hover:shadow-rho-obsidian/40",
-        primary: "bg-gradient-to-br from-primary-600 to-primary-700 text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30",
-        outline: "bg-card text-foreground border border-border/50 hover:border-border",
+        obsidian: "bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100",
+        primary: "bg-gradient-to-br from-primary-600 to-primary-700 text-primary-foreground",
+        outline: "bg-card text-foreground",
         glass: "bg-rho-obsidian/80 text-white hover:bg-rho-obsidian/90",
       },
       size: {

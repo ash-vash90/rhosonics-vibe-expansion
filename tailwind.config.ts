@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        logo: ['Unbounded', 'sans-serif'],
+        logo: ['Primetime', 'Unbounded', 'sans-serif'],
         ui: ['Instrument Sans', 'sans-serif'],
         data: ['JetBrains Mono', 'monospace'],
       },
@@ -158,9 +158,42 @@ export default {
       },
       boxShadow: {
         'card': '0 4px 6px -1px hsl(0 0% 0% / 0.05), 0 2px 4px -2px hsl(0 0% 0% / 0.05)',
-        'elevated': '0 10px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1)',
+        'elevated': '0 15px 30px -5px hsl(0 0% 0% / 0.12), 0 10px 10px -5px hsl(0 0% 0% / 0.08)',
+        'glow-sm': '0 0 30px -5px hsl(var(--rho-green) / 0.3)',
+        'glow': '0 0 60px -10px hsl(var(--rho-green) / 0.4)',
+        'mineral': '0 4px 20px -5px hsl(var(--mineral-neutral) / 0.25)',
+      },
+      letterSpacing: {
+        'display': '-0.02em',
+        'display-tight': '-0.015em',
+        'display-snug': '-0.01em',
+        'label': '0.05em',
+        'label-wide': '0.12em',
+        'label-wider': '0.14em',
+      },
+      fontSize: {
+        'display-xs': ['clamp(1.1rem, 2vw, 1.5rem)', { lineHeight: '1.2' }],
+        'display-sm': ['clamp(1.5rem, 3vw, 2.5rem)', { lineHeight: '1.15' }],
+        'display-md': ['clamp(1.75rem, 3vw, 3rem)', { lineHeight: '1.1' }],
+        'display-lg': ['clamp(2rem, 5vw, 3.5rem)', { lineHeight: '1.05' }],
+      },
+      clipPath: {
+        'chamfer-btn': 'var(--chamfer-btn)',
+        'chamfer-sm': 'var(--chamfer-sm)',
+        'chamfer-md': 'var(--chamfer-md)',
+        'chamfer-lg': 'var(--chamfer-lg)',
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    ({ addUtilities }: { addUtilities: (u: Record<string, Record<string, string>>) => void }) => {
+      addUtilities({
+        '.clip-chamfer-btn': { clipPath: 'var(--chamfer-btn)' },
+        '.clip-chamfer-sm': { clipPath: 'var(--chamfer-sm)' },
+        '.clip-chamfer-md': { clipPath: 'var(--chamfer-md)' },
+        '.clip-chamfer-lg': { clipPath: 'var(--chamfer-lg)' },
+      });
+    },
+  ],
 } satisfies Config;

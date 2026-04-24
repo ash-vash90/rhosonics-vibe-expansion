@@ -11,7 +11,7 @@ interface FontModeContextValue {
 }
 
 const FontModeContext = createContext<FontModeContextValue>({
-  logoFont: "unbounded",
+  logoFont: "primetime",
   bodyFont: "instrument",
   setLogoFont: () => {},
   setBodyFont: () => {},
@@ -23,10 +23,8 @@ export const FontModeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const body = document.body;
-    body.classList.toggle("logo-primetime", logoFont === "primetime");
+    body.classList.toggle("logo-unbounded", logoFont === "unbounded");
     body.classList.toggle("body-worksans", bodyFont === "worksans");
-    // Legacy class for any remaining references
-    body.classList.toggle("font-alt", logoFont === "primetime" && bodyFont === "worksans");
   }, [logoFont, bodyFont]);
 
   return (

@@ -124,7 +124,7 @@ const BrandPositioning = () => {
           {BRAND_VALUES.map((value) => (
             <div
               key={value.id}
-              className="value-card group p-8 rounded-xl border border-border/50 bg-gradient-to-br from-muted/40 to-transparent hover:from-muted/60 hover:border-border transition-all duration-300"
+              className="value-card group p-8 clip-chamfer-md bg-gradient-to-br from-muted/40 to-transparent hover:from-muted/60 transition-all duration-300"
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
