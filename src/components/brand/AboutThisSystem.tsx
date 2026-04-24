@@ -88,10 +88,10 @@ const AboutThisSystem = () => {
             ].map((item) => (
               <div 
                 key={item.title} 
-                className="group relative flex items-center gap-5 p-5 clip-chamfer-sm hover:bg-muted/30 transition-all duration-300 cursor-default"
+                className="group relative flex items-center gap-5 p-5 rounded-md hover:bg-muted/30 transition-all duration-300 cursor-default"
               >
                 {/* Subtle gradient background on hover */}
-                <div className={`absolute inset-0 clip-chamfer-sm bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                <div className={`absolute inset-0 rounded-md bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                 
                 <div className="relative z-10 w-11 h-11 rounded-lg bg-muted/50 group-hover:bg-background flex items-center justify-center transition-colors">
                   <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />

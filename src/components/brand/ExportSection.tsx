@@ -81,7 +81,7 @@ const ExportSection = () => {
           
           <Button
             onClick={() => { downloadTokensStudioJSON(); toast.success("Tokens Studio JSON downloaded"); }}
-            className="gap-2 chamfer-shape w-full"
+            className="gap-2 w-full"
             data-export-exclude
           >
             <Download className="w-4 h-4" />
@@ -118,7 +118,7 @@ const ExportSection = () => {
 
           <Button
             onClick={() => { downloadStyleDictionaryJSON(); toast.success("Style Dictionary JSON downloaded"); }}
-            className="gap-2 chamfer-shape w-full"
+            className="gap-2 w-full"
             variant="outline"
             data-export-exclude
           >
@@ -191,7 +191,7 @@ const ExportSection = () => {
           <Button 
             onClick={handleExportHTML} 
             disabled={isExportingHTML} 
-            className="gap-2 chamfer-shape w-full" 
+            className="gap-2 w-full" 
             variant="outline"
             data-export-exclude
           >
@@ -214,7 +214,7 @@ const ExportSection = () => {
           <Button
             onClick={handleExportPack}
             disabled={isExportingPack}
-            className="gap-2 chamfer-shape"
+            className="gap-2"
             data-export-exclude
           >
             {isExportingPack ? (

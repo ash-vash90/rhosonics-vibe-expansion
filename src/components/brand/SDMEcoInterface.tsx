@@ -182,7 +182,7 @@ const DeviceFrame = ({ children }: { children: React.ReactNode }) => {
       
       {/* Device label - smaller on mobile */}
       <div className="mt-6 sm:mt-12 flex justify-center">
-        <div className="flex items-center gap-3 sm:gap-5 px-4 sm:px-8 py-2 sm:py-4 clip-chamfer-md bg-gradient-to-r from-muted/70 to-muted/40 drop-shadow-lg">
+        <div className="flex items-center gap-3 sm:gap-5 px-4 sm:px-8 py-2 sm:py-4 rounded-md bg-gradient-to-r from-muted/70 to-muted/40 drop-shadow-lg">
           <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-primary animate-pulse shadow-lg shadow-primary/50" />
           <span className="font-data text-xs sm:text-sm text-muted-foreground uppercase tracking-[0.15em] sm:tracking-[0.2em]">SDM ECO · 800×480</span>
         </div>
