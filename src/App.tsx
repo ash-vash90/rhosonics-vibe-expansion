@@ -22,7 +22,9 @@ const ProofPage = lazy(() => import("./pages/brand/ProofPage"));
 const ToolsPage = lazy(() => import("./pages/brand/ToolsPage"));
 const ReviewPage = lazy(() => import("./pages/brand/ReviewPage"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
-const SketchesPage = lazy(() => import("./pages/SketchesPage"));
+const SketchesPage = import.meta.env.DEV
+  ? lazy(() => import("./pages/SketchesPage"))
+  : null;
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -59,7 +61,7 @@ const App = () => (
               <Route path="review" element={<ReviewPage />} />
             </Route>
             <Route path="/newsletter" element={<Newsletter />} />
-            <Route path="/sketches" element={<SketchesPage />} />
+            {SketchesPage && <Route path="/sketches" element={<SketchesPage />} />}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
