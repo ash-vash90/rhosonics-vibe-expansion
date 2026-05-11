@@ -1,0 +1,429 @@
+/*
+ * Rhosonics Design System — Color & Typography Tokens
+ * Source: ash-vash90/rhosonics-vibe-expansion
+ *
+ * Usage:
+ *   @import url('./colors_and_type.css');
+ *   Or link in HTML: <link rel="stylesheet" href="colors_and_type.css">
+ *
+ * All colors use HSL. Never use pure black (#000).
+ * WCAG AA 4.5:1 contrast minimum — non-negotiable.
+ */
+
+/* ============================================================
+   FONTS
+   ============================================================ */
+
+@font-face {
+  font-family: 'Primetime';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./fonts/primetime-light.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/unbounded-600.ttf') format('truetype');
+}
+
+/* Google Fonts (loaded via CDN — Instrument Sans + JetBrains Mono) */
+/* Add to HTML <head>:
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+*/
+
+/* ============================================================
+   ROOT TOKENS — LIGHT MODE (default)
+   ============================================================ */
+
+:root {
+
+  /* ----------------------------------------------------------
+     BRAND COLORS
+     ---------------------------------------------------------- */
+
+  /* Primary Green — signals, CTAs, measurable outcomes */
+  --rho-green:        125 50% 40%;   /* #33993C */
+  --rho-green-accent: 90 60% 45%;    /* #73B82E — lime, use only to support rho-green */
+  --rho-green-glow:   90 70% 55%;    /* Glow variant */
+
+  /* Obsidian — primary dark background */
+  --rho-obsidian:       224 22% 10%; /* #14171F */
+  --rho-obsidian-light: 224 22% 15%; /* Slightly lighter obsidian */
+
+  /* ----------------------------------------------------------
+     PRIMARY GREEN SCALE (50–900)
+     ---------------------------------------------------------- */
+  --primary-50:  125 45% 97%;   /* Subtle bg, hover tints */
+  --primary-100: 125 42% 93%;   /* Light bg, selected states */
+  --primary-200: 125 40% 85%;   /* Borders, dividers */
+  --primary-300: 125 42% 72%;   /* Muted accents */
+  --primary-400: 125 45% 55%;   /* De-emphasized primary */
+  --primary-500: 125 50% 40%;   /* PRIMARY — default brand green */
+  --primary-600: 125 52% 35%;   /* Hover on primary */
+  --primary-700: 125 55% 28%;   /* Active/pressed */
+  --primary-800: 125 58% 20%;   /* Dark accents */
+  --primary-900: 125 60% 12%;   /* Darkest variant */
+
+  /* ----------------------------------------------------------
+     SLATE SCALE — UI neutrals (224° hue family)
+     Use for all software UI surfaces, text, borders.
+     NEVER substitute Mineral colors here.
+     ---------------------------------------------------------- */
+  --slate-50:  220 20% 98%;   /* Near-white surface */
+  --slate-100: 220 18% 96%;   /* Light surface */
+  --slate-200: 222 16% 91%;   /* Borders, dividers */
+  --slate-300: 222 14% 84%;   /* Subtle borders */
+  --slate-400: 223 14% 42%;   /* Muted text, icons */
+  --slate-500: 223 14% 35%;   /* Secondary text */
+  --slate-600: 223 16% 30%;   /* Body text on light */
+  --slate-700: 224 18% 24%;   /* Strong text */
+  --slate-800: 224 20% 17%;   /* Near-dark surface */
+  --slate-900: 224 22% 11%;   /* Dark surface */
+
+  /* ----------------------------------------------------------
+     MINERAL NEUTRALS — Field/Environmental contexts ONLY
+     Olive/stone tones. Never substitute for Slate UI neutrals.
+     ---------------------------------------------------------- */
+  --mineral-neutral: 60 12% 48%;   /* #847F5E — olive stone */
+  --mineral-surface: 55 15% 91%;   /* #EAE8DE — warm olive cream */
+  --mineral-deep:    65 14% 32%;   /* #555443 — deep olive stone */
+  --mineral-bronze:  55 20% 38%;   /* #736B4D — earthy olive accent */
+
+  /* ----------------------------------------------------------
+     ECO TINTS — Sustainability/environmental sections ONLY
+     ---------------------------------------------------------- */
+  --eco-surface: 125 43% 95%;
+  --eco-border:  125 50% 90%;
+
+  /* ----------------------------------------------------------
+     SEMANTIC STATUS COLORS
+     ---------------------------------------------------------- */
+  --info:            215 19% 35%;
+  --info-surface:    210 40% 97%;
+  --info-border:     214 32% 85%;
+
+  --warning:         38 92% 50%;
+  --warning-surface: 48 96% 97%;
+  --warning-border:  48 90% 80%;
+
+  --success:         125 50% 40%;  /* Uses Rhosonics Green */
+  --success-surface: 125 50% 97%;
+  --success-border:  125 40% 85%;
+
+  --error:           0 84% 51%;
+  --error-surface:   0 93% 97%;
+  --error-border:    0 80% 85%;
+
+  /* ----------------------------------------------------------
+     SEMANTIC UI TOKENS (light mode)
+     ---------------------------------------------------------- */
+  --background:         var(--slate-50);
+  --foreground:         var(--rho-obsidian);
+  --card:               0 0% 100%;
+  --card-foreground:    var(--rho-obsidian);
+  --popover:            0 0% 100%;
+  --popover-foreground: var(--rho-obsidian);
+  --primary:            var(--rho-green);
+  --primary-foreground: 0 0% 100%;
+  --secondary:          var(--slate-100);
+  --secondary-foreground: var(--rho-obsidian);
+  --muted:              var(--slate-100);
+  --muted-foreground:   var(--slate-600);
+  --accent:             var(--eco-surface);
+  --accent-foreground:  var(--rho-green);
+  --destructive:        0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border:             var(--slate-200);
+  --input:              var(--slate-200);
+  --ring:               var(--rho-green);
+  --radius:             0.375rem;   /* 6px — max 4px for strictly-industrial UI */
+
+  /* ----------------------------------------------------------
+     GRADIENTS
+     ---------------------------------------------------------- */
+  --gradient-brand:    linear-gradient(135deg, hsl(var(--rho-green-accent)) 0%, hsl(var(--rho-green)) 100%);
+  --gradient-obsidian: linear-gradient(180deg, hsl(224 20% 18%) 0%, hsl(var(--rho-obsidian)) 100%);
+  --gradient-hero:     radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--rho-green) / 0.15) 0%, transparent 50%);
+  --gradient-metal:    linear-gradient(135deg, hsl(210 40% 98%) 0%, hsl(214 32% 91%) 100%);
+  --gradient-ore:      linear-gradient(180deg, hsl(215 25% 27%) 0%, hsl(var(--rho-obsidian)) 100%);
+  --gradient-mineral:  linear-gradient(145deg, hsl(120 4% 64%) 0%, hsl(var(--mineral-neutral)) 100%);
+  --gradient-field:    linear-gradient(180deg, hsl(var(--mineral-surface)) 0%, hsl(100 4% 94%) 100%);
+
+  /* ----------------------------------------------------------
+     SHADOWS (5-level elevation system)
+     ---------------------------------------------------------- */
+  --shadow-0:       none;
+  --shadow-1:       0 4px 6px -1px hsl(0 0% 0% / 0.05), 0 2px 4px -2px hsl(0 0% 0% / 0.05);
+  --shadow-2:       0 15px 30px -5px hsl(0 0% 0% / 0.12), 0 10px 10px -5px hsl(0 0% 0% / 0.08);
+  --shadow-3:       0 0 30px -5px hsl(var(--rho-green) / 0.3);
+  --shadow-4:       0 0 60px -10px hsl(var(--rho-green) / 0.4);
+  /* Aliases */
+  --shadow-card:    var(--shadow-1);
+  --shadow-elevated: var(--shadow-2);
+  --shadow-glow-sm: var(--shadow-3);
+  --shadow-glow:    var(--shadow-4);
+  --shadow-mineral: 0 4px 20px -5px hsl(var(--mineral-neutral) / 0.25);
+  --shadow-cutout:  drop-shadow(0 15px 30px hsl(0 0% 0% / 0.15));
+
+  /* ----------------------------------------------------------
+     CHAMFER CLIP-PATHS — Industrial geometric motif
+     ---------------------------------------------------------- */
+  --chamfer-lg:  polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
+  --chamfer-md:  polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+  --chamfer-sm:  polygon(8px 0,  100% 0, 100% calc(100% - 8px),  calc(100% - 8px)  100%, 0 100%, 0 8px);
+  --chamfer-btn: polygon(6px 0,  100% 0, 100% calc(100% - 6px),  calc(100% - 6px)  100%, 0 100%, 0 6px);
+
+  /* ----------------------------------------------------------
+     SIDEBAR TOKENS
+     ---------------------------------------------------------- */
+  --sidebar-background: var(--rho-obsidian);
+  --sidebar-foreground: var(--slate-100);
+  --sidebar-primary:    var(--rho-green);
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent:     224 20% 15%;
+  --sidebar-accent-foreground: var(--slate-100);
+  --sidebar-border:     224 18% 20%;
+  --sidebar-ring:       var(--rho-green);
+}
+
+/* ============================================================
+   DARK MODE OVERRIDES
+   ============================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background:           var(--rho-obsidian);
+    --foreground:           var(--slate-100);
+    --card:                 225 25% 12%;
+    --card-foreground:      var(--slate-100);
+    --popover:              225 25% 12%;
+    --popover-foreground:   var(--slate-100);
+    --secondary:            225 20% 18%;
+    --secondary-foreground: var(--slate-100);
+    --muted:                225 20% 18%;
+    --muted-foreground:     var(--slate-400);
+    --accent:               225 20% 18%;
+    --accent-foreground:    var(--slate-100);
+    --destructive:          0 62% 30%;
+    --destructive-foreground: var(--slate-100);
+    --border:               225 20% 20%;
+    --input:                225 20% 20%;
+  }
+}
+
+.dark {
+  --background:           var(--rho-obsidian);
+  --foreground:           var(--slate-100);
+  --card:                 225 25% 12%;
+  --card-foreground:      var(--slate-100);
+  --popover:              225 25% 12%;
+  --popover-foreground:   var(--slate-100);
+  --secondary:            225 20% 18%;
+  --secondary-foreground: var(--slate-100);
+  --muted:                225 20% 18%;
+  --muted-foreground:     var(--slate-400);
+  --accent:               225 20% 18%;
+  --accent-foreground:    var(--slate-100);
+  --destructive:          0 62% 30%;
+  --destructive-foreground: var(--slate-100);
+  --border:               225 20% 20%;
+  --input:                225 20% 20%;
+}
+
+/* ============================================================
+   FONT FAMILY VARIABLES
+   ============================================================ */
+
+:root {
+  --font-logo: 'Primetime', 'Unbounded', sans-serif;
+  --font-ui:   'Instrument Sans', sans-serif;
+  --font-data: 'JetBrains Mono', monospace;
+}
+
+/* ============================================================
+   BASE TYPOGRAPHY — Semantic HTML element styles
+   ============================================================ */
+
+body {
+  font-family: var(--font-ui);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-family: var(--font-ui);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: hsl(var(--foreground));
+  text-wrap: pretty;
+}
+
+h2 {
+  font-family: var(--font-ui);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: hsl(var(--foreground));
+}
+
+h3 {
+  font-family: var(--font-ui);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: hsl(var(--foreground));
+}
+
+h4 {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: hsl(var(--foreground));
+}
+
+p {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: hsl(var(--muted-foreground));
+  max-width: 65ch;
+  text-wrap: pretty;
+}
+
+code, pre {
+  font-family: var(--font-data);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* Font roles */
+.font-logo  { font-family: var(--font-logo); font-weight: 300; letter-spacing: -0.01em; }
+.font-ui    { font-family: var(--font-ui); }
+.font-data  { font-family: var(--font-data); font-weight: 500; }
+
+/* Data label — JetBrains Mono, ALL CAPS */
+.label-tech {
+  font-family: var(--font-data);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* UI label — Instrument Sans, small caps */
+.label-ui {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Large metric value */
+.metric-value {
+  font-family: var(--font-data);
+  font-weight: 500;
+  font-size: 3rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+}
+
+/* Section header */
+.section-header {
+  font-family: var(--font-ui);
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: hsl(var(--foreground));
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Chamfer shapes */
+.chamfer-lg  { clip-path: var(--chamfer-lg); }
+.chamfer-md  { clip-path: var(--chamfer-md); }
+.chamfer-sm  { clip-path: var(--chamfer-sm); }
+.chamfer-btn { clip-path: var(--chamfer-btn); }
+
+/* Card base */
+.card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: hsl(var(--slate-300));
+  box-shadow: var(--shadow-elevated);
+}
+
+/* Brand button (chamfered CTA) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  clip-path: var(--chamfer-btn);
+}
+
+.btn-primary:hover {
+  background: hsl(var(--primary-600));
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
+}
+
+/* Bracket frame decoration */
+.bracket-frame { position: relative; }
+.bracket-frame::before,
+.bracket-frame::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: hsl(var(--slate-400));
+  opacity: 0.5;
+  pointer-events: none;
+}
+.bracket-frame::before {
+  top: 0; left: 0;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.bracket-frame::after {
+  bottom: 0; right: 0;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
