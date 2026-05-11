@@ -6,9 +6,9 @@ const generateCSSVariables = () => `/* Rhosonics Brand Colors */
 :root {
   --rho-green: #33993c;
   --rho-lime: #73B82E;
-  --rho-obsidian: #111522;
-  --mineral-neutral: #8B8F88;
-  --mineral-surface: #E7E8E6;
+  --rho-obsidian: #14171F;
+  --mineral-neutral: #847F5E;
+  --mineral-surface: #EAE8DE;
 }`;
 
 const generateTailwindConfig = () => `// Rhosonics Tailwind Config
@@ -18,7 +18,10 @@ module.exports = {
       colors: {
         'rho-green': '#33993c',
         'rho-lime': '#73B82E',
-        'rho-obsidian': '#111522',
+        'rho-obsidian': '#14171F',
+        'rho-obsidian-light': '#1E222F',
+        'mineral-neutral': '#847F5E',
+        'mineral-surface': '#EAE8DE',
       }
     }
   }
@@ -48,7 +51,7 @@ const generateLogoSVG = (variant: 'gradient' | 'green' | 'white' | 'obsidian') =
     gradient: { arc1: '#73B82E', arc2: '#4DA832', arc3: '#33993c' },
     green: { arc1: '#33993c', arc2: '#33993c', arc3: '#33993c' },
     white: { arc1: '#ffffff', arc2: '#ffffff', arc3: '#ffffff' },
-    obsidian: { arc1: '#111522', arc2: '#111522', arc3: '#111522' },
+    obsidian: { arc1: '#14171F', arc2: '#14171F', arc3: '#14171F' },
   };
   const c = colors[variant];
   

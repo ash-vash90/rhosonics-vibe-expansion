@@ -324,7 +324,7 @@ const ReviewPage = () => (
                   { name: "Green", color: "bg-primary", hex: "#33993C" },
                   { name: "Slate 100", color: "bg-slate-100", hex: "#F1F5F9" },
                   { name: "Slate 500", color: "bg-slate-500", hex: "#64748B" },
-                  { name: "Mineral", color: "bg-[#7a7a5c]", hex: "#7A7A5C" },
+                  { name: "Mineral", color: "bg-mineral-neutral", hex: "#847F5E" },
                 ].map((c) => (
                   <div key={c.name} className="text-center">
                     <div className={`w-12 h-12 rounded ${c.color} border border-border/30`} />

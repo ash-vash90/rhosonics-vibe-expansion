@@ -78,6 +78,7 @@ export default {
           "green-accent": "hsl(var(--rho-green-accent))",
           "green-glow": "hsl(var(--rho-green-glow))",
           obsidian: "hsl(var(--rho-obsidian))",
+          "obsidian-light": "hsl(var(--rho-obsidian-light))",
         },
         eco: {
           surface: "hsl(var(--eco-surface))",

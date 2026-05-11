@@ -101,7 +101,7 @@ export const SocialMediaGuidelines = () => (
     <div className="p-6 rounded-lg border border-border bg-card space-y-4">
       <h3 className="font-ui font-bold text-foreground">Layout Rules</h3>
       <ul className="list-disc list-inside text-sm text-muted-foreground font-ui space-y-2">
-        <li>Always use the obsidian (#111522) background — never white backgrounds for LinkedIn.</li>
+        <li>Always use the obsidian (#14171F) background — never white backgrounds for LinkedIn.</li>
         <li>Primary green (#33993c) for accents, CTAs, and number highlights only.</li>
         <li>Headline text in white, body text in light grey. Never green body text.</li>
         <li>Product photography should occupy ~40-50% of the composition.</li>
