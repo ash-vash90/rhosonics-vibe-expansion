@@ -90,11 +90,11 @@ const BrandLayout = () => {
           <div ref={heroContentRef} className="hero-content relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
             {/* Oversized background data mark */}
             <div aria-hidden="true" className="pointer-events-none select-none absolute -top-4 -left-2 lg:-top-6 lg:-left-4 font-data font-black uppercase leading-none text-white/[0.025] text-[120px] md:text-[180px] lg:text-[240px]">
-              Ref_00
+              Brand_OS
             </div>
 
-            <div className="relative grid grid-cols-12 gap-y-12 lg:gap-x-12 items-start">
-              {/* LEFT — editorial headline + CTAs + stats */}
+            <div className="relative grid grid-cols-12 gap-y-12 lg:gap-x-12 items-center">
+              {/* LEFT — editorial headline + intent */}
               <div className="col-span-12 lg:col-span-7 flex flex-col gap-8 lg:gap-10">
                 {/* Eyebrow */}
                 <div className="hero-logo flex items-center gap-3 font-data text-[11px] uppercase tracking-[0.3em] text-slate-400">
@@ -107,14 +107,14 @@ const BrandLayout = () => {
                   <span>Version 2025</span>
                 </div>
 
-                {/* Headline with green emphasis */}
+                {/* Headline */}
                 <h1 className="hero-title font-ui font-bold text-white leading-[0.95] tracking-tight text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
-                  A system of decisions for what your <span className="text-primary">brand</span> is really doing.
+                  Brand <span className="text-primary">Guidelines</span>.
                 </h1>
 
                 {/* Subtitle */}
                 <p className="hero-subtitle max-w-xl text-slate-400 text-base lg:text-lg leading-relaxed">
-                  The operational visual language behind every Rhosonics surface — from instrument HMIs and datasheets to pitch decks and field reports. Built for clarity, calibrated for credibility.
+                  A system of decisions ensuring clarity, consistency, and credibility wherever the Rhosonics brand appears — from instrument HMIs and datasheets to pitch decks, posters, and field reports.
                 </p>
 
                 {/* CTA row */}
@@ -127,105 +127,72 @@ const BrandLayout = () => {
                     Download assets
                   </a>
                 </div>
-
-                {/* Stat strip */}
-                <div className="hero-scroll mt-2 grid grid-cols-3 gap-6 lg:gap-8 border-t border-slate-800 pt-6">
-                  {[
-                    ["10,000+", "Installations\nworldwide"],
-                    ["±0.1%", "Density accuracy,\ndrift-free"],
-                    ["34 yrs", "Ultrasonic R&D\nDelft, NL"],
-                  ].map(([num, label]) => (
-                    <div key={num} className="flex flex-col gap-1">
-                      <span className="font-data font-medium text-white text-2xl lg:text-3xl tracking-tight leading-none">{num}</span>
-                      <span className="font-data text-[10px] uppercase tracking-widest text-slate-500 leading-snug whitespace-pre-line">{label}</span>
-                    </div>
-                  ))}
-                </div>
               </div>
 
-              {/* RIGHT — telemetry HMI mock */}
-              <div className="hero-version col-span-12 lg:col-span-5 lg:pt-2">
-                <div className="relative bg-rho-obsidian-light border border-slate-800 rounded-md p-5 lg:p-6">
-                  {/* Bracket corners */}
-                  <div aria-hidden="true" className="absolute -top-1 -left-1 w-3 h-3 border-t border-l border-primary/60" />
-                  <div aria-hidden="true" className="absolute -top-1 -right-1 w-3 h-3 border-t border-r border-primary/60" />
-                  <div aria-hidden="true" className="absolute -bottom-1 -left-1 w-3 h-3 border-b border-l border-primary/60" />
-                  <div aria-hidden="true" className="absolute -bottom-1 -right-1 w-3 h-3 border-b border-r border-primary/60" />
-
-                  {/* Header bar */}
-                  <div className="flex items-center justify-between font-data text-[10px] uppercase tracking-widest text-slate-500 mb-5">
-                    <span>SDM ECO · BRAND.RHOSONICS · GUIDELINES</span>
+              {/* RIGHT — chamfered identity specimen card */}
+              <div className="hero-version col-span-12 lg:col-span-5">
+                <div className="relative bg-rho-obsidian-light p-8 lg:p-10 clip-chamfer-lg">
+                  {/* Top: live system marker */}
+                  <div className="flex items-center justify-between font-data text-[10px] uppercase tracking-widest text-slate-500 mb-10">
+                    <span>Identity Specimen · 01</span>
                     <span className="flex items-center gap-1.5 text-primary">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary" /> LIVE
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" /> ACTIVE
                     </span>
                   </div>
 
-                  {/* Two metric tiles */}
-                  <div className="grid grid-cols-2 gap-3 mb-3">
-                    <div className="bg-rho-obsidian rounded-md p-3">
-                      <div className="font-data text-[10px] uppercase tracking-widest text-slate-500 mb-2">Density</div>
-                      <div className="flex items-baseline gap-1.5">
-                        <span className="font-data font-medium text-white text-3xl tracking-tight">1.483</span>
-                        <span className="font-data text-[10px] uppercase text-slate-500 tracking-widest">SG</span>
-                      </div>
-                      <div className="font-data text-[10px] text-primary mt-1">▲ +0.012 vs target</div>
+                  {/* Logo lockup */}
+                  <div className="flex items-center gap-4 mb-10">
+                    <div className="w-14 h-14 lg:w-16 lg:h-16 shrink-0">
+                      <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
                     </div>
-                    <div className="bg-rho-obsidian rounded-md p-3">
-                      <div className="font-data text-[10px] uppercase tracking-widest text-slate-500 mb-2">Solids</div>
-                      <div className="flex items-baseline gap-1.5">
-                        <span className="font-data font-medium text-white text-3xl tracking-tight">38.4</span>
-                        <span className="font-data text-[10px] uppercase text-slate-500 tracking-widest">%w/w</span>
-                      </div>
-                      <div className="font-data text-[10px] text-slate-400 mt-1">Within spec</div>
-                    </div>
+                    <span className={`font-logo text-white text-3xl lg:text-4xl uppercase ${isPrimetime ? "tracking-normal" : "tracking-wide"}`}>
+                      {isPrimetime ? (
+                        <span className="wordmark-char inline-block">RHOSONICS</span>
+                      ) : (
+                        "RHOSONICS".split("").map((char, i) => (
+                          <span key={i} className="wordmark-char inline-block">{char}</span>
+                        ))
+                      )}
+                    </span>
                   </div>
 
-                  {/* Waveform */}
-                  <div className="bg-rho-obsidian rounded-md p-3 mb-3">
-                    <div className="flex items-center justify-between font-data text-[10px] uppercase tracking-widest text-slate-500 mb-2">
-                      <span>Signal Waveform</span>
-                      <span>2.0 MHz · 48 kS/s</span>
-                    </div>
-                    <svg viewBox="0 0 300 60" className="w-full h-14" aria-hidden="true">
-                      <defs>
-                        <linearGradient id="wfFade" x1="0" x2="1">
-                          <stop offset="0" stopColor="hsl(125 50% 40%)" stopOpacity="0.1" />
-                          <stop offset="0.5" stopColor="hsl(125 50% 40%)" stopOpacity="1" />
-                          <stop offset="1" stopColor="hsl(125 50% 40%)" stopOpacity="0.1" />
-                        </linearGradient>
-                      </defs>
-                      <path
-                        d="M0 30 Q 15 30 20 30 T 40 30 Q 55 5 60 30 Q 65 55 70 30 Q 75 10 80 30 Q 85 50 90 30 T 110 30 Q 130 30 140 30 Q 155 12 160 30 Q 165 48 170 30 Q 175 18 180 30 T 200 30 Q 220 30 230 30 Q 245 22 250 30 Q 255 38 260 30 T 300 30"
-                        stroke="url(#wfFade)" strokeWidth="1.5" fill="none"
-                      />
-                      {[...Array(20)].map((_, i) => (
-                        <line key={i} x1={i * 15} y1="0" x2={i * 15} y2="60" stroke="hsl(0 0% 100% / 0.04)" strokeWidth="0.5" />
+                  {/* Color row */}
+                  <div className="mb-10">
+                    <div className="font-data text-[10px] uppercase tracking-widest text-slate-500 mb-3">Core Palette</div>
+                    <div className="grid grid-cols-4 gap-2">
+                      {[
+                        ["Green", "hsl(125 50% 40%)", "#33993C"],
+                        ["Obsidian", "hsl(224 22% 10%)", "#14171F"],
+                        ["Slate", "hsl(224 18% 24%)", "#333845"],
+                        ["Paper", "hsl(220 18% 96%)", "#F2F4F7"],
+                      ].map(([name, css, hex]) => (
+                        <div key={name as string} className="flex flex-col gap-1.5">
+                          <div className="aspect-square rounded-sm" style={{ background: css as string }} />
+                          <div className="font-data text-[9px] uppercase tracking-widest text-slate-400 leading-tight">{name}</div>
+                          <div className="font-data text-[9px] text-slate-600 leading-tight">{hex}</div>
+                        </div>
                       ))}
-                    </svg>
+                    </div>
                   </div>
 
-                  {/* Footer telemetry row */}
-                  <div className="grid grid-cols-4 gap-2">
-                    {[
-                      ["Temp", "25.73 °C"],
-                      ["Sonic vel.", "1512 m/s"],
-                      ["Uptime", "423 d"],
-                      ["Status", "NOMINAL"],
-                    ].map(([k, v], i) => (
-                      <div key={k} className="bg-rho-obsidian rounded-md p-2.5">
-                        <div className="font-data text-[9px] uppercase tracking-widest text-slate-500 mb-1">{k}</div>
-                        <div className={`font-data text-xs ${i === 3 ? "text-primary" : "text-white"}`}>{v}</div>
+                  {/* Typography specimen */}
+                  <div>
+                    <div className="font-data text-[10px] uppercase tracking-widest text-slate-500 mb-3">Type Stack</div>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-baseline justify-between gap-3 border-t border-slate-800 pt-2">
+                        <span className="font-logo text-white text-lg">Rhosonics</span>
+                        <span className="font-data text-[9px] uppercase tracking-widest text-slate-500">Logo · Primetime</span>
                       </div>
-                    ))}
+                      <div className="flex items-baseline justify-between gap-3 border-t border-slate-800 pt-2">
+                        <span className="font-ui text-white text-lg">Aa Bb Cc 123</span>
+                        <span className="font-data text-[9px] uppercase tracking-widest text-slate-500">UI · Instrument Sans</span>
+                      </div>
+                      <div className="flex items-baseline justify-between gap-3 border-t border-slate-800 pt-2">
+                        <span className="font-data text-white text-base uppercase">DATA 0.42 SG</span>
+                        <span className="font-data text-[9px] uppercase tracking-widest text-slate-500">Data · JetBrains Mono</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                {/* Logo + origin marker beneath HMI */}
-                <div className="hero-logo flex items-center gap-3 mt-5 font-data text-[10px] uppercase tracking-widest text-slate-500">
-                  <div className="w-5 h-5"><AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden /></div>
-                  <span className={`font-logo text-slate-300 text-xs ${isPrimetime ? "tracking-normal" : "tracking-wide"}`}>RHOSONICS</span>
-                  <span className="text-slate-700">·</span>
-                  <span>Origin · 52.2343° N / 5.1764° E</span>
                 </div>
               </div>
             </div>
