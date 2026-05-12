@@ -139,11 +139,7 @@ const AboutThisSystem = () => {
           <div className="flex-1 h-px bg-border self-center" />
         </header>
 
-        <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
-          <div aria-hidden="true" className="absolute -top-px left-3 w-3 h-3 border-t border-l border-primary/40" />
-          <div aria-hidden="true" className="absolute -top-px right-3 w-3 h-3 border-t border-r border-primary/40" />
-          <div aria-hidden="true" className="absolute -bottom-px left-3 w-3 h-3 border-b border-l border-primary/40" />
-          <div aria-hidden="true" className="absolute -bottom-px right-3 w-3 h-3 border-b border-r border-primary/40" />
+        <div className="relative bg-card rounded-lg border border-border/60 p-3 md:p-4">
 
           <div className="grid lg:grid-cols-3 gap-2 md:gap-3">
             {[
