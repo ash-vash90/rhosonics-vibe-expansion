@@ -6,40 +6,52 @@ const variantConfig: Record<TelemetryVariant, {
   ref: string;
   tag: string;
   accent: string;
+  surface: string;
   iconBg: string;
   iconColor: string;
+  iconBorder: string;
   bracket: string;
   bar: string;
+  titleColor: string;
   icon: React.ElementType;
 }> = {
   best: {
     ref: "OK",
     tag: "best practice",
     accent: "text-success",
-    iconBg: "bg-success/10",
-    iconColor: "text-success",
-    bracket: "border-success/40",
+    surface: "bg-success-surface",
+    iconBg: "bg-success",
+    iconColor: "text-white",
+    iconBorder: "ring-1 ring-success/30",
+    bracket: "border-success",
     bar: "bg-success",
+    titleColor: "text-success",
     icon: CheckCircle,
   },
   info: {
     ref: "INFO",
     tag: "guidance",
     accent: "text-info",
-    iconBg: "bg-info/10",
-    iconColor: "text-info",
-    bracket: "border-info/40",
+    surface: "bg-info-surface",
+    iconBg: "bg-info",
+    iconColor: "text-white",
+    iconBorder: "ring-1 ring-info/30",
+    bracket: "border-info",
     bar: "bg-info",
+    titleColor: "text-info",
     icon: Lightbulb,
   },
   avoid: {
     ref: "AVOID",
     tag: "anti-pattern",
     accent: "text-warning",
-    iconBg: "bg-warning/10",
-    iconColor: "text-warning",
-    bracket: "border-warning/40",
+    surface: "bg-warning-surface",
+    iconBg: "bg-warning",
+    iconColor: "text-white",
+    iconBorder: "ring-1 ring-warning/30",
+    bracket: "border-warning",
     bar: "bg-warning",
+    titleColor: "text-warning",
     icon: AlertTriangle,
   },
 };
