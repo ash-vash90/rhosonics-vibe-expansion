@@ -70,31 +70,31 @@ const TelemetryCallout = ({
   const cfg = variantConfig[variant];
   const Icon = cfg.icon;
   return (
-    <div className="relative bg-card clip-chamfer-md p-5 md:p-6">
+    <div className={`relative clip-chamfer-md p-5 md:p-6 ${cfg.surface}`}>
       <div aria-hidden="true" className={`absolute -top-px left-3 w-3 h-3 border-t border-l ${cfg.bracket}`} />
       <div aria-hidden="true" className={`absolute -top-px right-3 w-3 h-3 border-t border-r ${cfg.bracket}`} />
       <div aria-hidden="true" className={`absolute -bottom-px left-3 w-3 h-3 border-b border-l ${cfg.bracket}`} />
       <div aria-hidden="true" className={`absolute -bottom-px right-3 w-3 h-3 border-b border-r ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute left-0 top-3 bottom-3 w-px ${cfg.bar}`} />
+      <div aria-hidden="true" className={`absolute left-0 top-3 bottom-3 w-1 ${cfg.bar}`} />
 
-      <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-widest text-muted-foreground/70 mb-4">
-        <span className={cfg.accent}>{index}</span>
+      <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-widest mb-4">
+        <span className={`${cfg.accent} font-semibold`}>{index}</span>
         <span className="text-border">·</span>
-        <span className={cfg.accent}>{cfg.ref}</span>
+        <span className={`${cfg.accent} font-semibold`}>{cfg.ref}</span>
         <span className="text-border">·</span>
-        <span>{cfg.tag}</span>
+        <span className="text-muted-foreground/80">{cfg.tag}</span>
       </div>
 
       <div className="flex items-start gap-3 mb-3">
-        <div className={`w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0 ${cfg.iconBg}`}>
+        <div className={`w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0 ${cfg.iconBg} ${cfg.iconBorder}`}>
           <Icon className={`w-4 h-4 ${cfg.iconColor}`} />
         </div>
-        <h4 className="font-ui text-base lg:text-lg font-semibold text-foreground pt-1.5">
+        <h4 className={`font-ui text-base lg:text-lg font-semibold pt-1.5 ${cfg.titleColor}`}>
           {title}
         </h4>
       </div>
 
-      <p className="text-sm text-muted-foreground leading-relaxed">{children}</p>
+      <p className="text-sm text-foreground/80 leading-relaxed">{children}</p>
     </div>
   );
 };
