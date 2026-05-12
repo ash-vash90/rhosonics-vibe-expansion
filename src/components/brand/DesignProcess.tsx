@@ -173,8 +173,7 @@ export const DesignProcess = () => {
           <div className="flex-1 h-px bg-border self-center" />
         </header>
 
-        <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
-          <Brackets />
+        <div className={groupClass}>
           <div className="grid md:grid-cols-2 gap-2 md:gap-3">
             {principles.map((principle, idx) => (
               <div
@@ -219,8 +218,7 @@ export const DesignProcess = () => {
           <div className="flex-1 h-px bg-border self-center" />
         </header>
 
-        <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
-          <Brackets />
+        <div className={groupClass}>
           <div className="flex flex-col md:flex-row items-stretch gap-2 md:gap-3">
             {[
               { step: "01", label: "Functionality", desc: "What does the user need to do?" },
@@ -288,8 +286,7 @@ export const DesignProcess = () => {
           <div className="flex-1 h-px bg-border self-center" />
         </header>
 
-        <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
-          <Brackets />
+        <div className={groupClass}>
           <div className="grid md:grid-cols-2 gap-2 md:gap-3">
             {[
               { id: "01", label: "With Color", grayscale: false },
