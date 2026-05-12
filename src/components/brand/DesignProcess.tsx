@@ -59,15 +59,15 @@ export const DesignProcess = () => {
 
       {/* Telemetry intro */}
       <div className="relative max-w-3xl">
-        <div className="flex items-center gap-3 font-data text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-4">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-data text-[10px] md:text-[11px] uppercase tracking-[0.2em] md:tracking-[0.3em] text-muted-foreground mb-4">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
           </span>
           <span>Subsection</span>
-          <span className="text-border">·</span>
+          <span className="text-border hidden sm:inline">·</span>
           <span>00.1 / Process</span>
-          <span className="text-border">·</span>
+          <span className="text-border hidden sm:inline">·</span>
           <span>{String(principles.length).padStart(2, "0")} Principles</span>
         </div>
         <p className="text-muted-foreground text-base lg:text-lg leading-relaxed">
