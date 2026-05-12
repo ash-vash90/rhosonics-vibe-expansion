@@ -70,12 +70,8 @@ const TelemetryCallout = ({
   const cfg = variantConfig[variant];
   const Icon = cfg.icon;
   return (
-    <div className={`relative clip-chamfer-md p-5 md:p-6 ${cfg.surface}`}>
-      <div aria-hidden="true" className={`absolute -top-px left-3 w-3 h-3 border-t border-l ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute -top-px right-3 w-3 h-3 border-t border-r ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute -bottom-px left-3 w-3 h-3 border-b border-l ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute -bottom-px right-3 w-3 h-3 border-b border-r ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute left-0 top-3 bottom-3 w-1 ${cfg.bar}`} />
+    <div className={`relative overflow-hidden rounded-md p-5 md:p-6 ${cfg.surface}`}>
+      <div aria-hidden="true" className={`absolute left-0 top-0 bottom-0 w-1 ${cfg.bar}`} />
 
       <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-widest mb-4">
         <span className={`${cfg.accent} font-semibold`}>{index}</span>
