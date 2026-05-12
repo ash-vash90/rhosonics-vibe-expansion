@@ -1,5 +1,91 @@
-import { BrandCallout } from "./BrandCallout";
-import { Eye, Layers, Minimize2, Tag, ArrowRight, Gauge } from "lucide-react";
+import { Eye, Layers, Minimize2, Tag, ArrowRight, Gauge, Lightbulb, CheckCircle, AlertTriangle } from "lucide-react";
+
+type TelemetryVariant = "best" | "info" | "avoid";
+
+const variantConfig: Record<TelemetryVariant, {
+  ref: string;
+  tag: string;
+  accent: string;
+  iconBg: string;
+  iconColor: string;
+  bracket: string;
+  bar: string;
+  icon: React.ElementType;
+}> = {
+  best: {
+    ref: "OK",
+    tag: "best practice",
+    accent: "text-success",
+    iconBg: "bg-success/10",
+    iconColor: "text-success",
+    bracket: "border-success/40",
+    bar: "bg-success",
+    icon: CheckCircle,
+  },
+  info: {
+    ref: "INFO",
+    tag: "guidance",
+    accent: "text-info",
+    iconBg: "bg-info/10",
+    iconColor: "text-info",
+    bracket: "border-info/40",
+    bar: "bg-info",
+    icon: Lightbulb,
+  },
+  avoid: {
+    ref: "AVOID",
+    tag: "anti-pattern",
+    accent: "text-warning",
+    iconBg: "bg-warning/10",
+    iconColor: "text-warning",
+    bracket: "border-warning/40",
+    bar: "bg-warning",
+    icon: AlertTriangle,
+  },
+};
+
+const TelemetryCallout = ({
+  variant,
+  title,
+  index,
+  children,
+}: {
+  variant: TelemetryVariant;
+  title: string;
+  index: string;
+  children: React.ReactNode;
+}) => {
+  const cfg = variantConfig[variant];
+  const Icon = cfg.icon;
+  return (
+    <div className="relative bg-card clip-chamfer-md p-5 md:p-6">
+      <div aria-hidden="true" className={`absolute -top-px left-3 w-3 h-3 border-t border-l ${cfg.bracket}`} />
+      <div aria-hidden="true" className={`absolute -top-px right-3 w-3 h-3 border-t border-r ${cfg.bracket}`} />
+      <div aria-hidden="true" className={`absolute -bottom-px left-3 w-3 h-3 border-b border-l ${cfg.bracket}`} />
+      <div aria-hidden="true" className={`absolute -bottom-px right-3 w-3 h-3 border-b border-r ${cfg.bracket}`} />
+      <div aria-hidden="true" className={`absolute left-0 top-3 bottom-3 w-px ${cfg.bar}`} />
+
+      <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-widest text-muted-foreground/70 mb-4">
+        <span className={cfg.accent}>{index}</span>
+        <span className="text-border">·</span>
+        <span className={cfg.accent}>{cfg.ref}</span>
+        <span className="text-border">·</span>
+        <span>{cfg.tag}</span>
+      </div>
+
+      <div className="flex items-start gap-3 mb-3">
+        <div className={`w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0 ${cfg.iconBg}`}>
+          <Icon className={`w-4 h-4 ${cfg.iconColor}`} />
+        </div>
+        <h4 className="font-ui text-base lg:text-lg font-semibold text-foreground pt-1.5">
+          {title}
+        </h4>
+      </div>
+
+      <p className="text-sm text-muted-foreground leading-relaxed">{children}</p>
+    </div>
+  );
+};
 
 /**
  * Design Process Section — Precision Telemetry treatment
@@ -171,36 +257,25 @@ export const DesignProcess = () => {
         </header>
 
         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-          <BrandCallout variant="best" title="Be a Pessimist When Building">
+          <TelemetryCallout variant="best" index="01" title="Be a Pessimist When Building">
             Start simple. Don't add features, colors, or effects until you've proven the core functionality works.
             Every addition must justify itself.
-          </BrandCallout>
-          <BrandCallout variant="info" title="Be an Optimist When Polishing">
+          </TelemetryCallout>
+          <TelemetryCallout variant="info" index="02" title="Be an Optimist When Polishing">
             Once the structure is solid, explore. Try bold colors, subtle animations, refined typography.
             Polish is where personality emerges.
-          </BrandCallout>
-        </div>
-      </div>
-
-      {/* Anti-Patterns */}
-      <div>
-        <header className="flex items-baseline gap-4 mb-5">
-          <span className="font-data text-[10px] uppercase tracking-[0.3em] text-primary">GRP_04</span>
-          <h3 className="font-ui text-base md:text-lg font-semibold text-foreground tracking-tight">Forbidden Patterns</h3>
-          <div className="flex-1 h-px bg-border self-center" />
-        </header>
-
-        <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-          <BrandCallout variant="avoid" title="No Glassmorphism / Frosted Glass">
+          </TelemetryCallout>
+...
+          <TelemetryCallout variant="avoid" index="01" title="No Glassmorphism / Frosted Glass">
             Backdrop blur and translucent surfaces fail in industrial contexts: unreadable in direct sunlight,
             expensive to render on embedded HMI hardware, and visually ambiguous when layered over complex data.
             Use solid backgrounds with proper elevation instead.
-          </BrandCallout>
-          <BrandCallout variant="avoid" title="No Decorative Motion">
+          </TelemetryCallout>
+          <TelemetryCallout variant="avoid" index="02" title="No Decorative Motion">
             Parallax scrolling, continuous background animations, and auto-playing videos consume bandwidth and
             CPU cycles on field devices. Every animation must serve understanding — if removing it doesn't
             reduce clarity, remove it.
-          </BrandCallout>
+          </TelemetryCallout>
         </div>
       </div>
 
