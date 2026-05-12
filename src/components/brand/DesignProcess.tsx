@@ -257,36 +257,25 @@ export const DesignProcess = () => {
         </header>
 
         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-          <BrandCallout variant="best" title="Be a Pessimist When Building">
+          <TelemetryCallout variant="best" index="01" title="Be a Pessimist When Building">
             Start simple. Don't add features, colors, or effects until you've proven the core functionality works.
             Every addition must justify itself.
-          </BrandCallout>
-          <BrandCallout variant="info" title="Be an Optimist When Polishing">
+          </TelemetryCallout>
+          <TelemetryCallout variant="info" index="02" title="Be an Optimist When Polishing">
             Once the structure is solid, explore. Try bold colors, subtle animations, refined typography.
             Polish is where personality emerges.
-          </BrandCallout>
-        </div>
-      </div>
-
-      {/* Anti-Patterns */}
-      <div>
-        <header className="flex items-baseline gap-4 mb-5">
-          <span className="font-data text-[10px] uppercase tracking-[0.3em] text-primary">GRP_04</span>
-          <h3 className="font-ui text-base md:text-lg font-semibold text-foreground tracking-tight">Forbidden Patterns</h3>
-          <div className="flex-1 h-px bg-border self-center" />
-        </header>
-
-        <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-          <BrandCallout variant="avoid" title="No Glassmorphism / Frosted Glass">
+          </TelemetryCallout>
+...
+          <TelemetryCallout variant="avoid" index="01" title="No Glassmorphism / Frosted Glass">
             Backdrop blur and translucent surfaces fail in industrial contexts: unreadable in direct sunlight,
             expensive to render on embedded HMI hardware, and visually ambiguous when layered over complex data.
             Use solid backgrounds with proper elevation instead.
-          </BrandCallout>
-          <BrandCallout variant="avoid" title="No Decorative Motion">
+          </TelemetryCallout>
+          <TelemetryCallout variant="avoid" index="02" title="No Decorative Motion">
             Parallax scrolling, continuous background animations, and auto-playing videos consume bandwidth and
             CPU cycles on field devices. Every animation must serve understanding — if removing it doesn't
             reduce clarity, remove it.
-          </BrandCallout>
+          </TelemetryCallout>
         </div>
       </div>
 
