@@ -96,11 +96,7 @@ const AboutThisSystem = () => {
         </div>
 
         {/* Who this is for — chamfered container */}
-        <div className="relative bg-card clip-chamfer-md p-6 md:p-8">
-          <div aria-hidden="true" className="absolute -top-px left-3 w-3 h-3 border-t border-l border-primary/40" />
-          <div aria-hidden="true" className="absolute -top-px right-3 w-3 h-3 border-t border-r border-primary/40" />
-          <div aria-hidden="true" className="absolute -bottom-px left-3 w-3 h-3 border-b border-l border-primary/40" />
-          <div aria-hidden="true" className="absolute -bottom-px right-3 w-3 h-3 border-b border-r border-primary/40" />
+        <div className="relative bg-card rounded-lg border border-border/60 p-6 md:p-8">
 
           <header className="flex items-baseline gap-4 mb-8">
             <span className="font-data text-[10px] uppercase tracking-[0.3em] text-primary">GRP_B</span>
