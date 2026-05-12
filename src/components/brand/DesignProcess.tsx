@@ -70,12 +70,8 @@ const TelemetryCallout = ({
   const cfg = variantConfig[variant];
   const Icon = cfg.icon;
   return (
-    <div className={`relative clip-chamfer-md p-5 md:p-6 ${cfg.surface}`}>
-      <div aria-hidden="true" className={`absolute -top-px left-3 w-3 h-3 border-t border-l ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute -top-px right-3 w-3 h-3 border-t border-r ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute -bottom-px left-3 w-3 h-3 border-b border-l ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute -bottom-px right-3 w-3 h-3 border-b border-r ${cfg.bracket}`} />
-      <div aria-hidden="true" className={`absolute left-0 top-3 bottom-3 w-1 ${cfg.bar}`} />
+    <div className={`relative overflow-hidden rounded-md p-5 md:p-6 ${cfg.surface}`}>
+      <div aria-hidden="true" className={`absolute left-0 top-0 bottom-0 w-1 ${cfg.bar}`} />
 
       <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-widest mb-4">
         <span className={`${cfg.accent} font-semibold`}>{index}</span>
@@ -136,14 +132,7 @@ export const DesignProcess = () => {
     },
   ];
 
-  const Brackets = () => (
-    <>
-      <div aria-hidden="true" className="absolute -top-px left-3 w-3 h-3 border-t border-l border-primary/40" />
-      <div aria-hidden="true" className="absolute -top-px right-3 w-3 h-3 border-t border-r border-primary/40" />
-      <div aria-hidden="true" className="absolute -bottom-px left-3 w-3 h-3 border-b border-l border-primary/40" />
-      <div aria-hidden="true" className="absolute -bottom-px right-3 w-3 h-3 border-b border-r border-primary/40" />
-    </>
-  );
+  const groupClass = "relative bg-card rounded-lg border border-border/60 p-3 md:p-4";
 
   return (
     <section id="design-process" className="relative space-y-16 md:space-y-20">
@@ -184,8 +173,7 @@ export const DesignProcess = () => {
           <div className="flex-1 h-px bg-border self-center" />
         </header>
 
-        <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
-          <Brackets />
+        <div className={groupClass}>
           <div className="grid md:grid-cols-2 gap-2 md:gap-3">
             {principles.map((principle, idx) => (
               <div
@@ -230,8 +218,7 @@ export const DesignProcess = () => {
           <div className="flex-1 h-px bg-border self-center" />
         </header>
 
-        <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
-          <Brackets />
+        <div className={groupClass}>
           <div className="flex flex-col md:flex-row items-stretch gap-2 md:gap-3">
             {[
               { step: "01", label: "Functionality", desc: "What does the user need to do?" },
@@ -299,8 +286,7 @@ export const DesignProcess = () => {
           <div className="flex-1 h-px bg-border self-center" />
         </header>
 
-        <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
-          <Brackets />
+        <div className={groupClass}>
           <div className="grid md:grid-cols-2 gap-2 md:gap-3">
             {[
               { id: "01", label: "With Color", grayscale: false },
