@@ -115,7 +115,7 @@ export const ColorMatrix = () => {
             <h4 className="font-data text-xs text-muted-foreground uppercase tracking-wider mb-6">Obsidian — Hardware & Dark UI</h4>
             <div className="space-y-0 mb-8">
               <ColorSpecimen name="Obsidian" hex="#14171F" rgb="20, 23, 31" hsl="224 22% 10%" bg="bg-rho-obsidian" use="Dark surfaces, devices" textLight />
-              <ColorSpecimen name="Obsidian Light" hex="#1E222F" rgb="30, 34, 47" hsl="224 22% 15%" bg="bg-[#1E222F]" use="Dark panels, cards" textLight />
+              <ColorSpecimen name="Obsidian Light" hex="#1E222F" rgb="30, 34, 47" hsl="224 22% 15%" bg="bg-rho-obsidian-light" use="Dark panels, cards" textLight />
             </div>
             <BrandCallout variant="avoid" title="Never use pure black (#000)">
               Obsidian's blue tint creates visual cohesion with the Slate scale.
@@ -203,9 +203,9 @@ export const ColorMatrix = () => {
             </p>
             <div className="space-y-0">
               <ColorSpecimen name="Mineral Surface" hex="#EBEADF" rgb="235, 234, 223" hsl="55 15% 91%" bg="bg-mineral-surface" use="Backgrounds" border="border-mineral-neutral/30" />
-              <ColorSpecimen name="Mineral Neutral" hex="#848058" rgb="132, 128, 88" hsl="60 12% 48%" bg="bg-mineral-neutral" use="Accents, borders" textLight />
-              <ColorSpecimen name="Mineral Deep" hex="#565443" rgb="86, 84, 67" hsl="65 14% 32%" bg="bg-mineral-deep" use="Text, emphasis" textLight />
-              <ColorSpecimen name="Mineral Bronze" hex="#746C4D" rgb="116, 108, 77" hsl="55 20% 38%" bg="bg-mineral-bronze" use="Earthy accents" textLight />
+              <ColorSpecimen name="Mineral Neutral" hex="#847F5E" rgb="132, 128, 88" hsl="60 12% 48%" bg="bg-mineral-neutral" use="Accents, borders" textLight />
+              <ColorSpecimen name="Mineral Deep" hex="#555443" rgb="86, 84, 67" hsl="65 14% 32%" bg="bg-mineral-deep" use="Text, emphasis" textLight />
+              <ColorSpecimen name="Mineral Bronze" hex="#736B4D" rgb="116, 108, 77" hsl="55 20% 38%" bg="bg-mineral-bronze" use="Earthy accents" textLight />
             </div>
           </div>
 
@@ -217,7 +217,7 @@ export const ColorMatrix = () => {
             </p>
             <div className="space-y-0 mb-8">
               <ColorSpecimen name="Eco Surface" hex="#ECFDF0" rgb="236, 253, 240" hsl="125 43% 95%" bg="bg-eco-surface" use="Eco card backgrounds" border="border-eco-border" />
-              <ColorSpecimen name="Eco Border" hex="#C6F7D0" rgb="198, 247, 208" hsl="125 50% 90%" bg="bg-[#C6F7D0]" use="Eco component borders" border="border-primary/20" />
+              <ColorSpecimen name="Eco Border" hex="#C6F7D0" rgb="198, 247, 208" hsl="125 50% 90%" bg="bg-eco-border" use="Eco component borders" border="border-primary/20" />
             </div>
 
             <BrandCallout variant="avoid" title="Contextual Constraint">
@@ -279,13 +279,13 @@ export const ColorMatrix = () => {
 
           {/* Mineral Gradient */}
           <div className="space-y-3">
-            <div className="h-20 rounded-lg" style={{ background: 'linear-gradient(145deg, #9A9573 0%, #848058 100%)' }} />
+            <div className="h-20 rounded-lg" style={{ background: 'linear-gradient(145deg, #9A9573 0%, #847F5E 100%)' }} />
             <div>
               <div className="flex items-baseline gap-2 mb-1">
                 <span className="font-ui font-semibold text-foreground">Mineral Gradient</span>
                 <span className="text-sm text-muted-foreground">Field contexts only</span>
               </div>
-              <span className="font-data text-xs text-muted-foreground">linear-gradient(145deg, #9A9573 0%, #848058 100%)</span>
+              <span className="font-data text-xs text-muted-foreground">linear-gradient(145deg, #9A9573 0%, #847F5E 100%)</span>
             </div>
           </div>
         </div>
