@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Zap, ChevronRight, ChevronDown } from "@/lib/icons";
-import { useFontMode } from "@/hooks/useFontMode";
+
 import { RhosonicsLogo } from "../RhosonicsLogo";
 
 interface NavItem {
