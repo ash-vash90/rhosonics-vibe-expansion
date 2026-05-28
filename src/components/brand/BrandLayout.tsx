@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { Suspense, lazy, useRef, useEffect } from "react";
 import { Navigation } from "./Navigation";
-import { FontSelector } from "./FontSelector";
+
 import { RhosonicsLogo } from "../RhosonicsLogo";
 import { AnimatedLogo, AnimatedLogoRef } from "../AnimatedLogo";
 import { ErrorBoundary } from "../ErrorBoundary";
@@ -78,7 +78,7 @@ const BrandLayout = () => {
   return (
     <div className="min-h-screen bg-background">
       <CursorFollower />
-      <FontSelector />
+
 
       {/* Hero */}
       {isHome && (

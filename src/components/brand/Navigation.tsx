@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Zap, ChevronRight, ChevronDown } from "@/lib/icons";
-import { useFontMode } from "@/hooks/useFontMode";
+
 import { RhosonicsLogo } from "../RhosonicsLogo";
 
 interface NavItem {
@@ -109,7 +109,7 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { logoFont, bodyFont, setLogoFont, setBodyFont } = useFontMode();
+  
 
   const mobileMenuRef = useRef<HTMLElement | null>(null);
 
@@ -241,31 +241,6 @@ export const Navigation = () => {
           );
         })}
 
-        {/* Font Selectors */}
-        <div className="pt-3 space-y-3 border-t border-slate-800/50">
-          <div className="flex items-center gap-2">
-            <span className="font-data text-[10px] uppercase tracking-wider text-slate-500 w-10">Logo</span>
-            <select
-              value={logoFont}
-              onChange={(e) => setLogoFont(e.target.value as "unbounded" | "primetime")}
-              className="flex-1 bg-slate-800/50 border border-slate-700 text-slate-300 text-xs font-data uppercase tracking-wider rounded-md px-2 py-1.5 cursor-pointer hover:border-slate-500 transition-colors focus:outline-none focus:border-primary"
-            >
-              <option value="unbounded">Unbounded</option>
-              <option value="primetime">Primetime</option>
-            </select>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="font-data text-[10px] uppercase tracking-wider text-slate-500 w-10">Body</span>
-            <select
-              value={bodyFont}
-              onChange={(e) => setBodyFont(e.target.value as "instrument" | "worksans")}
-              className="flex-1 bg-slate-800/50 border border-slate-700 text-slate-300 text-xs font-data uppercase tracking-wider rounded-md px-2 py-1.5 cursor-pointer hover:border-slate-500 transition-colors focus:outline-none focus:border-primary"
-            >
-              <option value="instrument">Instrument Sans</option>
-              <option value="worksans">Work Sans</option>
-            </select>
-          </div>
-        </div>
 
         {/* Version Badge */}
         <div className="pt-4">
