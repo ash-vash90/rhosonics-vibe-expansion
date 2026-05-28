@@ -1,7 +1,9 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
-type LogoFont = "unbounded" | "primetime";
-type BodyFont = "instrument" | "worksans";
+// Fonts are locked: Primetime (logo) + Instrument Sans (body). Hook kept as a
+// no-op stub so existing consumers compile without churn.
+type LogoFont = "primetime";
+type BodyFont = "instrument";
 
 interface FontModeContextValue {
   logoFont: LogoFont;
@@ -10,28 +12,15 @@ interface FontModeContextValue {
   setBodyFont: (f: BodyFont) => void;
 }
 
-const FontModeContext = createContext<FontModeContextValue>({
+const noop = () => {};
+
+const value: FontModeContextValue = {
   logoFont: "primetime",
   bodyFont: "instrument",
-  setLogoFont: () => {},
-  setBodyFont: () => {},
-});
-
-export const FontModeProvider = ({ children }: { children: ReactNode }) => {
-  const [logoFont, setLogoFont] = useState<LogoFont>("primetime");
-  const [bodyFont, setBodyFont] = useState<BodyFont>("instrument");
-
-  useEffect(() => {
-    const body = document.body;
-    body.classList.toggle("logo-unbounded", logoFont === "unbounded");
-    body.classList.toggle("body-worksans", bodyFont === "worksans");
-  }, [logoFont, bodyFont]);
-
-  return (
-    <FontModeContext.Provider value={{ logoFont, bodyFont, setLogoFont, setBodyFont }}>
-      {children}
-    </FontModeContext.Provider>
-  );
+  setLogoFont: noop,
+  setBodyFont: noop,
 };
 
-export const useFontMode = () => useContext(FontModeContext);
+export const FontModeProvider = ({ children }: { children: ReactNode }) => <>{children}</>;
+
+export const useFontMode = () => value;
