@@ -16,8 +16,8 @@ interface StatProps {
 export const StatCallout = ({ value, label, source, emphasis = "default", className }: StatProps) => {
   const colour = emphasis === "primary" ? "text-primary" : "text-foreground";
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
-      <span className={cn("font-data font-bold uppercase tracking-tight leading-none text-5xl md:text-6xl lg:text-7xl", colour)}>
+    <div className={cn("flex flex-col gap-2 min-w-0", className)}>
+      <span className={cn("font-data font-bold uppercase tracking-tight leading-none text-4xl md:text-5xl lg:text-6xl truncate", colour)}>
         {value}
       </span>
       <span className="text-sm md:text-base text-foreground/80 leading-snug max-w-[26ch]">{label}</span>

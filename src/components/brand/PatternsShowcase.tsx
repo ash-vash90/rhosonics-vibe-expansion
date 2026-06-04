@@ -178,17 +178,17 @@ export const PatternsShowcase = () => {
             }
             blocks={[
               {
-                meta: "01 · ACQUIRE",
+                meta: "ACQUIRE",
                 title: "Acoustic measurement, in-process",
                 body: "The sensor reads slurry properties directly through the pipe wall. No bypass loop, no sample line, no moving parts in contact with the medium.",
               },
               {
-                meta: "02 · INTERPRET",
+                meta: "INTERPRET",
                 title: "Liquid Profiles do the math",
                 body: "Stored fluid models translate raw signal into the values an operator actually wants — density, concentration, massflow — without manual conversion.",
               },
               {
-                meta: "03 · DELIVER",
+                meta: "DELIVER",
                 title: "Signals every control system speaks",
                 body: "4-20mA, HART, Modbus, OPC-UA. The same SDM Eco talks to a 1980s PLC and a 2026 cloud historian without an integration project.",
               },
