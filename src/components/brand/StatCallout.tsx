@@ -17,7 +17,7 @@ export const StatCallout = ({ value, label, source, emphasis = "default", classN
   const colour = emphasis === "primary" ? "text-primary" : "text-foreground";
   return (
     <div className={cn("flex flex-col gap-2 min-w-0", className)}>
-      <span className={cn("font-data font-bold uppercase tracking-tight leading-none text-4xl md:text-5xl lg:text-6xl truncate", colour)}>
+      <span className={cn("font-data font-bold uppercase leading-none text-4xl md:text-5xl xl:text-6xl", colour)}>
         {value}
       </span>
       <span className="text-sm md:text-base text-foreground/80 leading-snug max-w-[26ch]">{label}</span>
@@ -36,7 +36,7 @@ interface RowProps {
 }
 
 export const StatCalloutRow = ({ children, className }: RowProps) => (
-  <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12", className)}>{children}</div>
+  <div className={cn("grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12", className)}>{children}</div>
 );
 
 export default StatCallout;
