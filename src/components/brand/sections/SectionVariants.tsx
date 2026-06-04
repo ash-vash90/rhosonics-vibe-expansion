@@ -29,7 +29,7 @@ const padY: Record<Density, string> = {
 const bleed = "-mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20";
 
 interface BaseProps {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
   density?: Density;
   id?: string;

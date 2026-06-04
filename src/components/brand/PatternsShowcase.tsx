@@ -1,9 +1,7 @@
 import {
   SectionDefault,
   SectionTinted,
-  SectionEco,
   SectionDark,
-  SectionSplit,
   SectionFullBleedMock,
 } from "@/components/brand/sections/SectionVariants";
 import { SolutionIcon, type SolutionIconName } from "@/components/brand/icons/SolutionIcon";
