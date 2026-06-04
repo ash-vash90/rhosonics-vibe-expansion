@@ -4,6 +4,7 @@ import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
 
+const PatternsShowcase = lazy(() => import("@/components/brand/PatternsShowcase"));
 const IndustryApplications = lazy(() => import("@/components/brand/IndustryApplications"));
 const SDMEcoInterface = lazy(() => import("@/components/brand/SDMEcoInterface"));
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
@@ -13,6 +14,9 @@ const EmptyStates = lazy(() => import("@/components/brand/EmptyStates"));
 const ApplicationsPage = () => (
   <>
     <PageBanner number="09" title="Applications" subtitle="How the brand system applies to products and industries." />
+    <div id="patterns" className="scroll-mt-20" />
+    <ErrorBoundary><Suspense fallback={<SectionLoader />}><PatternsShowcase /></Suspense></ErrorBoundary>
+    <SectionDivider label="09.0" />
     <ScrollSection className="py-12 md:py-16">
       <div id="applications" className="scroll-mt-20" />
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><IndustryApplications /></Suspense></ErrorBoundary>
