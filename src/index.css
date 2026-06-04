@@ -1261,3 +1261,20 @@ body.print-mode {
     display: none !important;
   }
 }
+
+/* ============================================================
+   Marquee track (used by ProofMarquee).
+   Pure CSS continuous scroll; respects prefers-reduced-motion.
+   ============================================================ */
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  animation: marquee-scroll linear infinite;
+  will-change: transform;
+}
+.group:hover .marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
