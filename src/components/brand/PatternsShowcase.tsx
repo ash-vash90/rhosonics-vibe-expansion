@@ -9,6 +9,7 @@ import { ProductPreviewCard } from "@/components/brand/ProductPreviewCard";
 import { StatCallout, StatCalloutRow } from "@/components/brand/StatCallout";
 import { PinnedCapability } from "@/components/brand/PinnedCapability";
 import { ProofMarquee } from "@/components/brand/ProofMarquee";
+import { SectionRhythmGuide } from "@/components/brand/SectionRhythmGuide";
 
 /**
  * Patterns Showcase
