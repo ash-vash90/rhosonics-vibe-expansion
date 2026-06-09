@@ -1,10 +1,23 @@
 import { Beaker, Cpu, Anchor, Recycle } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
+import { ImpactBar } from "./ImpactBar";
+import { FactFile } from "./FactFile";
 
 export const IndustryApplications = () => {
 
   return (
     <section id="industries" className="space-y-16">
+      {/* Case-study impact header — aggregated field outcomes */}
+      <ImpactBar
+        eyebrow="Field outcomes · across industries"
+        stats={[
+          { value: "14%", label: "Reduction in chemical dosing waste", source: "Site A · 6 mo" },
+          { value: "±0.001", label: "Density accuracy in calibrated range", source: "Lab Report 2024-Q3" },
+          { value: "9.2yr", label: "Median MTBF across install base", source: "Service log 2024" },
+          { value: "0", label: "Recalibrations needed in first year", source: "Site B · 12 mo" },
+        ]}
+      />
+
       {/* Hero Statement */}
       <div>
         <p className="text-lg md:text-xl font-ui text-foreground leading-relaxed max-w-4xl">
@@ -12,6 +25,17 @@ export const IndustryApplications = () => {
           <span className="text-muted-foreground"> because context matters. The underlying measurement system remains the same — only the interface framing changes.</span>
         </p>
       </div>
+
+      {/* Reference installation fact file */}
+      <FactFile
+        ariaLabel="Reference installation fact file"
+        items={[
+          { label: "Industry", value: "Mineral processing" },
+          { label: "Medium", value: "Copper tailings slurry" },
+          { label: "Technology", value: "SDM Eco · inline acoustic" },
+          { label: "Site", value: "Andes plant · 4,200 m" },
+        ]}
+      />
 
       {/* Industry Cards - Full width specimens */}
       <div className="grid md:grid-cols-3 gap-px bg-border rounded-lg overflow-hidden">
