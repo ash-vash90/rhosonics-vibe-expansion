@@ -9,6 +9,7 @@ import { useFontMode } from "@/hooks/useFontMode";
 import { cleanupAllGsap } from "@/hooks/useGsapCleanup";
 import { loadGsap } from "./SectionUtils";
 import { CursorFollower } from "./CursorFollower";
+import { CommandPalette } from "./CommandPalette";
 
 const HeroParticles = lazy(() => import("@/components/brand/HeroParticles"));
 
@@ -78,6 +79,7 @@ const BrandLayout = () => {
   return (
     <div className="min-h-screen bg-background">
       <CursorFollower />
+      <CommandPalette />
 
 
       {/* Hero */}
