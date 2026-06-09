@@ -1,108 +1,64 @@
-# Customer.io-Inspired System Patterns
+# Competitor research → Rhosonics enhancements
 
-A reusable layer of primitives — not a re-skin — so any page can adopt the rhythm without us touching every component. All work stays inside existing brand guardrails (4px scale, brand-restricted palette, Primetime/Instrument Sans, no chamfers everywhere, evidence voice).
+I deep-researched FLSmidth, Metso, and Vaisala. Below is what each does well, mapped against your brand constraints (no chamfers, no glass, 4px rounded, HSL tokens, alternating section rhythm, industrial precision, evidence over claims). Then a concrete adoption plan.
 
-## What we keep from us
-- Primetime + Instrument Sans + JetBrains Mono. No serif display.
-- Obsidian / Slate / Rho Green palette only (brand-restricted icon set).
-- Industrial precision, 4px rounded corners, no pill buttons, no glass.
-- "Evidence over claims" voice — no marketing softness on copy.
+## What each site does best
 
-## What we take from Customer.io
-1. **Big, calm display headlines** with generous whitespace above the fold and at section boundaries (we already do this in hero; extend to section openers).
-2. **Section rhythm variation** — every section visually contrasts the previous one.
-3. **Custom multicoloured-but-restricted icon family** for solutions/capabilities.
-4. **Eco-tinted product-preview cards** that frame an HMI/UI mockup inside a soft surface.
-5. **Big stat callouts** for proof (percentage + label pattern).
-6. **Marquee proof strip** (logos already on most pages — formalize the pattern).
-7. **Pinned visual side, scrolling copy side** for capability deep-dives.
+**FLSmidth** — Emotional cinematic heroes, organic "wave" section dividers, ROI-first impact bars on case studies, "Fact File" metadata tables (Commodity/Tech/Application), brand-anchored logo block, blue+cyan two-tier accent system.
 
----
+**Metso** — Massive typographic heroes, three-mode section rhythm (Data / Power / Action), sticky contextual sub-nav on long pages, hyper-real 3D product renders with ghosted cutaways, single high-contrast color reserved for sustainability (Metso Plus green), hover hotspots on equipment.
 
-## Deliverables
+**Vaisala** — Closest peer. Macro-photography that treats sensors as jewelry, "Impact" heroes (show the *result* of measurement, not the factory), standardized Challenge/Solution/Impact case framework, dramatic type hierarchy (72pt+ heroes, 16pt body), search-first nav for deep catalogs, atmospheric isometric process diagrams.
 
-### 1. Section rhythm primitives — `src/components/brand/sections/`
-Standardize the variants `ScrollSection` already hints at, expand to six. Each is a thin wrapper enforcing background, padding rhythm, and edge bleed.
+## What to ADOPT (fits Rhosonics)
 
-- `SectionDefault` — white, standard density
-- `SectionTinted` — `slate-50` surface (exists)
-- `SectionEco` — `eco-surface` light green band
-- `SectionDark` — obsidian (exists)
-- `SectionSplit` — 60/40 asymmetric two-column with optional sticky-left
-- `SectionFullBleedMock` — full-width product image / HMI on tinted surface
+1. **Impact-Bar case study headers (FLS)** — Move ROI numbers (% solids accuracy, $ saved, hours reclaimed) to the top of every case study in a high-contrast obsidian or eco-surface band. Already partially in `StatCallout` — extend into a dedicated case-study header pattern.
+2. **Fact File metadata table (FLS)** — Standardized 4-cell strip on every case/application page: Industry · Medium · Technology · Site. JetBrains Mono, all-caps. Reinforces "evidence over claims."
+3. **Three-mode section rhythm (Metso)** — Maps cleanly onto your existing six variants. Formalize Data (default/tinted) / Power (dark) / Action (split/full-bleed) as a documented rotation rule in the brand system page.
+4. **Sticky contextual sub-nav (Metso)** — On long pages (Applications, About, Visual System) add a secondary horizontal sticky bar with section anchors. Helps the dense brand system feel navigable.
+5. **Sustainability color-coding (Metso)** — You already have `eco-surface`. Tighten the rule: eco-surface appears *only* on sustainability/SDM-Eco content. Audit pages and remove any decorative use.
+6. **Macro product photography treatment (Vaisala)** — New imagery grade: extreme close-up of SDM sensor housing, brushed metal, droplet on probe. Treated as "instrument-as-jewelry." Use in `ProductPreviewCard` heroes.
+7. **Impact hero (Vaisala)** — On Applications and case study pages, lead with the *outcome* (clean tailings discharge, accurate density readout, recovered concentrate) rather than the device. The device appears second.
+8. **Challenge / Solution / Evidence triad (Vaisala)** — Standardize all case studies on this 3-part structure. Aligns with the existing 10-section case study spec — collapse to this triad at the summary level.
+9. **Dramatic type hierarchy (Vaisala)** — Audit hero scales. Push H1 to clamp(3rem, 6vw, 5.5rem) on hero, keep body at 16-18px. Currently some hero sections under-scale.
+10. **Search-first navigation (Vaisala)** — Add a `/` keyboard shortcut + command-palette style search across the brand system (sections, tokens, components). High utility for a 100+ section system.
 
-Authoring rule: pages compose by alternating variants. We add a lint-style helper `assertSectionRhythm()` in dev only that warns if two adjacent sections share the same variant.
+## What to REJECT
 
-### 2. Brand-restricted icon family — `src/components/brand/icons/SolutionIcon.tsx`
-Customer.io uses chunky illustrative SVG glyphs sitting on a soft background. We do the same with our palette:
-- 96×96 SVG, 4px-grid geometry, 2px strokes
-- Two-tone fill: Obsidian outline + Rho Green or Mineral Bronze accent surface
-- Sit on a 4px-rounded `slate-100` or `eco-surface` tile, no border
-- Eight starter glyphs covering our existing solution categories (Density, Concentration, Calibration, Sustainability, Massflow, Integration, Telemetry, Compliance)
+- **FLS organic wave dividers** — Conflicts with industrial precision principle. Your sharp horizontal-line dividers (`section-divider-technical-spec`) are correct. Do not adopt curves.
+- **Metso chamfered/beveled corners** — Already banned in `removed-sections-log-v2`. Keep 4px rounded.
+- **Metso full-bleed black "Power Mode" without restraint** — Your dark variant exists; don't over-use. Adjacent-variant rule already prevents this.
+- **FLS blue-square logo anchor** — Your logo identity (135% ratio, 3-element wave) is already distinctive; don't add a container.
+- **Vaisala coral + lime-yellow dual accents** — Conflicts with single-green accent rule. Keep `rho-green` as the only action color.
 
-Authoring helper `<SolutionIcon name="density" accent="green" />` so any page can drop one in.
+## Implementation phases (separate later requests)
 
-### 3. Product-preview card — `src/components/brand/ProductPreviewCard.tsx`
-The customer.io "screenshot framed in a soft tinted band" pattern, rebuilt for our HMI mocks:
-- `eco-surface` or `slate-100` background
-- HMI rendered inside at 4px corner radius with a subtle elevated shadow (Elevation L3)
-- Optional dotted-line annotation overlay (we have terrain-grain assets we can reuse)
-- Caption slot below using JetBrains Mono label
+**Phase 1 — Patterns (highest ROI, lowest risk)**
+- `ImpactBar` component (case-study header with 3-4 ROI stats, obsidian or eco surface, JetBrains Mono numerals)
+- `FactFile` component (4-cell metadata strip, mono caps)
+- Document Data/Power/Action rotation in `SectionRhythmGuide`
 
-### 4. Stat callout — `src/components/brand/StatCallout.tsx`
-For case-study + applications proof:
-- Massive JetBrains Mono number (display-lg), all-caps
-- Single short label below in Instrument Sans
-- Optional inline source citation (Voice principle: evidence)
-- Composable row/grid; pair naturally with `ProductPreviewCard`
+**Phase 2 — Navigation & wayfinding**
+- `StickySubNav` for long pages (Applications, About, VisualSystem)
+- Command-palette search (`/` shortcut) over brand system anchors
 
-### 5. Pinned-visual capability section — `src/components/brand/PinnedCapability.tsx`
-Customer.io's "Meet your AI Agent" three-headline pattern, our version:
-- Sticky-positioned visual column (HMI mock or technical diagram)
-- Right column: 3 stacked H3 + paragraph blocks revealed on scroll via existing `ScrollReveal`
-- Used for capability deep-dives on Applications / Positioning
+**Phase 3 — Imagery & storytelling**
+- Macro-photography treatment spec (new entry in `imagery-system-spec`)
+- `CaseStudyTriad` summary component (Challenge / Solution / Evidence)
+- Impact-first hero pattern documented in `PageBanner` variants
 
-### 6. Marquee proof strip — `src/components/brand/ProofMarquee.tsx`
-Formalize the logo/spec strip we already use ad hoc:
-- Continuous CSS marquee, pauses on hover
-- Optional "case study" badge per item linking out
-- Greyscale logos that tint Rho Green on hover
+**Phase 4 — Type scale audit**
+- Push hero H1 scale on home + landing pages
+- Verify body stays 16-18px throughout
 
-### 7. Pages updated to demonstrate the rhythm
-Light edits only — slot the new primitives in, don't redesign content:
-- `HomePage.tsx` — show full rhythm (default → eco → split → dark → full-bleed → marquee)
-- `ApplicationsPage.tsx` — adopt `SolutionIcon` + `StatCallout`
-- `PositioningPage.tsx` — adopt `PinnedCapability`
-- `AboutThisSystem.tsx` info/success/warning boxes — unchanged (recently styled)
+## Technical notes
 
-### 8. Memory updates
-- New: `mem://brand/section-rhythm-spec` — six variants + alternation rule
-- New: `mem://brand/solution-icon-family-spec` — geometry, palette, accent rules
-- New: `mem://brand/stat-callout-spec` — pattern + citation requirement
-- Update: `mem://brand/visual-system-layout-patterns-spec` — add pinned-capability + product-preview patterns
-- Update Core in `mem://index.md` — add "Section rhythm: alternate variants; never adjacent duplicates"
+- All new components live under `src/components/brand/` and reuse existing tokens (`rho-obsidian`, `eco-surface`, `slate-100`, `rho-green`).
+- New surface variants extend `SectionVariants.tsx` only if a current variant cannot express the pattern.
+- ImpactBar and FactFile are pure presentational — no business logic.
+- Sticky sub-nav uses `IntersectionObserver` for active-section state (no scroll listeners).
+- Macro imagery is a sourcing/spec change, not a code change — added to imagery memory.
 
 ---
 
-## Technical Notes
-
-- All new components are presentational only — no backend touched.
-- Icons authored as inline SVG in TS (tree-shakable, no asset pipeline change).
-- Marquee uses CSS `@keyframes` (no GSAP needed) to keep main-thread idle.
-- `PinnedCapability` uses CSS `position: sticky` first; falls back to existing `ScrollReveal` for the right column.
-- Colors via existing HSL tokens only; no new palette entries.
-- No new dependencies. No MagicUI imports — we own the primitives.
-
-## Out of scope
-- No font changes. No button shape changes. No new colour tokens.
-- No copy rewrites (voice/tone stays).
-- No backend, auth, or data work.
-
-## Build order
-1. Tokens/primitives (sections, marquee) — non-visual scaffold
-2. `SolutionIcon` family + eight glyphs
-3. `ProductPreviewCard` + `StatCallout`
-4. `PinnedCapability`
-5. Roll into `HomePage` to validate full rhythm
-6. Selective roll into Applications / Positioning
-7. Memory updates
+Want me to start with Phase 1 (ImpactBar + FactFile + rhythm doc), or pick specific items from any phase?
