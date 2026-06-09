@@ -227,6 +227,13 @@ export const PatternsShowcase = () => {
         </div>
       </SectionDark>
 
+      {/* 5b. TINTED — section rhythm guide (Data / Power / Action) */}
+      <SectionTinted id="patterns-rhythm" ariaLabel="Section rhythm guide">
+        <div className="px-4 md:px-8 lg:px-12 xl:px-20">
+          <SectionRhythmGuide />
+        </div>
+      </SectionTinted>
+
       {/* 6. DEFAULT — proof marquee strip */}
       <SectionDefault id="patterns-marquee" ariaLabel="Industries served" density="compact">
         <div className="px-4 md:px-8 lg:px-12 xl:px-20">
