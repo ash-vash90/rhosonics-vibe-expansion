@@ -8,6 +8,7 @@ import SectionCrossLink from "@/components/brand/SectionCrossLink";
 const TypographyScale = lazy(() => import("@/components/brand/TypographyScale"));
 const TypographyConstraints = lazy(() => import("@/components/brand/TypographyConstraints"));
 const SpacingSystem = lazy(() => import("@/components/brand/SpacingSystem"));
+const HeroTypeScaleAudit = lazy(() => import("@/components/brand/HeroTypeScaleAudit"));
 
 const TypographyPage = () => (
   <>
@@ -24,6 +25,11 @@ const TypographyPage = () => (
     <ScrollSection className="py-12 md:py-16">
       <div id="spacing" className="scroll-mt-20" />
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><SpacingSystem /></Suspense></ErrorBoundary>
+    </ScrollSection>
+    <SectionDivider label="05.3" />
+    <ScrollSection className="py-12 md:py-16" variant="tinted">
+      <div id="hero-type-scale" className="scroll-mt-20" />
+      <ErrorBoundary><Suspense fallback={<SectionLoader />}><HeroTypeScaleAudit /></Suspense></ErrorBoundary>
       <SectionCrossLink links={[
         { label: "Visual System", to: "/visual-system", description: "How type works with elevation and depth" },
         { label: "Color Roles", to: "/color", description: "Color and type work together for hierarchy" },
