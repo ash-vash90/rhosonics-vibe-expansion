@@ -92,7 +92,8 @@ export const SectionHeader = ({ number, title, subtitle, id }: SectionHeaderProp
         <span className="section-num font-data text-sm md:text-base font-bold text-primary">{number}</span>
         <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
       </div>
-      <h2 className="section-title font-ui text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground mb-3 md:mb-4 tracking-tighter leading-[0.95]">{title}</h2>
+      {/* Section title sits one tier below PageBanner H1 — see HeroTypeScaleAudit */}
+      <h2 className="section-title font-ui text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-3 md:mb-4 tracking-tight leading-[1.0]">{title}</h2>
       <p className="section-subtitle text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl">{subtitle}</p>
     </div>
   );
