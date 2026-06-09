@@ -9,6 +9,7 @@ import { ProductPreviewCard } from "@/components/brand/ProductPreviewCard";
 import { StatCallout, StatCalloutRow } from "@/components/brand/StatCallout";
 import { PinnedCapability } from "@/components/brand/PinnedCapability";
 import { ProofMarquee } from "@/components/brand/ProofMarquee";
+import { SectionRhythmGuide } from "@/components/brand/SectionRhythmGuide";
 
 /**
  * Patterns Showcase
@@ -225,6 +226,13 @@ export const PatternsShowcase = () => {
           </div>
         </div>
       </SectionDark>
+
+      {/* 5b. TINTED — section rhythm guide (Data / Power / Action) */}
+      <SectionTinted id="patterns-rhythm" ariaLabel="Section rhythm guide">
+        <div className="px-4 md:px-8 lg:px-12 xl:px-20">
+          <SectionRhythmGuide />
+        </div>
+      </SectionTinted>
 
       {/* 6. DEFAULT — proof marquee strip */}
       <SectionDefault id="patterns-marquee" ariaLabel="Industries served" density="compact">
