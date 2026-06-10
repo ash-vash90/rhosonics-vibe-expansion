@@ -6,7 +6,7 @@ export const BrandEthos = () => {
     <section id="brand-ethos" className="mb-16">
       {/* Two-column: Persona + Aesthetic */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-        <div className="card-gradient chamfer-lg p-8 relative">
+        <div className="card-obsidian clip-chamfer-lg drop-shadow-lg p-8 relative">
           <div className="absolute inset-0 bg-wave-subtle opacity-20 pointer-events-none" />
           <div className="relative">
             <div className="flex items-center gap-4 mb-4">
@@ -22,7 +22,7 @@ export const BrandEthos = () => {
           </div>
         </div>
 
-        <div className="card-metal p-8 relative overflow-hidden">
+        <div className="card-base p-8 relative overflow-hidden">
           <div className="absolute inset-0 bg-terrain-grain opacity-50" />
           <div className="relative">
             <div className="flex items-center gap-4 mb-4">

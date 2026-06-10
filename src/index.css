@@ -127,24 +127,17 @@
     /* Custom Rhosonics Tokens */
     --gradient-brand: linear-gradient(135deg, hsl(var(--rho-green-accent)) 0%, hsl(var(--rho-green)) 100%);
     --gradient-obsidian: linear-gradient(180deg, hsl(224 20% 18%) 0%, hsl(var(--rho-obsidian)) 100%);
-    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--rho-green) / 0.15) 0%, transparent 50%);
-    --gradient-metal: linear-gradient(135deg, hsl(210 40% 98%) 0%, hsl(214 32% 91%) 100%);
-    --gradient-ore: linear-gradient(180deg, hsl(215 25% 27%) 0%, hsl(var(--rho-obsidian)) 100%);
-    --gradient-mineral: linear-gradient(145deg, hsl(120 4% 64%) 0%, hsl(var(--mineral-neutral)) 100%);
     --gradient-field: linear-gradient(180deg, hsl(var(--mineral-surface)) 0%, hsl(100 4% 94%) 100%);
     --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.05), 0 2px 4px -2px hsl(0 0% 0% / 0.05);
     --shadow-elevated: 0 15px 30px -5px hsl(0 0% 0% / 0.12), 0 10px 10px -5px hsl(0 0% 0% / 0.08);
-    --shadow-cutout: drop-shadow(0 15px 30px hsl(0 0% 0% / 0.15));
     --shadow-glow: 0 0 60px -10px hsl(var(--rho-green) / 0.4);
     --shadow-glow-sm: 0 0 30px -5px hsl(var(--rho-green) / 0.3);
     --shadow-mineral: 0 4px 20px -5px hsl(var(--mineral-neutral) / 0.25);
-    
-    /* Chamfer clips */
+
+    /* Chamfer clips — large surfaces only (see agents.md §4.5).
+       Small sizes (sm/btn) were retired: chamfers are earned by scale. */
     --chamfer-lg: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
     --chamfer-md: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-    --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-    --chamfer-btn: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-    --chamfer-btn-lg: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
   }
 
   .dark {
@@ -499,16 +492,6 @@
     background: var(--gradient-obsidian);
   }
 
-  /* Hero Glow Effect */
-  .bg-hero-glow {
-    background: var(--gradient-hero);
-  }
-
-  /* Chamfered Button Shape */
-  .chamfer-shape {
-    clip-path: var(--chamfer-btn);
-  }
-
   /* Label Tech Style - for technical labels and data */
   .label-tech {
     @apply font-data text-sm uppercase tracking-wide font-medium;
@@ -519,25 +502,13 @@
     @apply font-data text-xs uppercase tracking-wider;
   }
 
-  /* Label UI - for general UI labels */
-  .label-ui {
-    @apply font-ui text-xs uppercase tracking-wider font-medium;
-  }
-
-  /* Chamfer shapes */
-  .chamfer-lg {
-    clip-path: var(--chamfer-lg);
-  }
-  
-  .chamfer-md {
-    clip-path: var(--chamfer-md);
-  }
-  
-  .chamfer-sm {
-    clip-path: var(--chamfer-sm);
-  }
-
-  /* Card Variants */
+  /* ============================================
+     Surface Families — exactly four (agents.md §4.5)
+     card-base     light default
+     card-obsidian dark / premium (absorbs retired card-gradient & card-slate)
+     card-eco      sustainability
+     card-mineral  field / environmental
+     ============================================ */
   .card-base {
     @apply bg-card border border-border rounded transition-all duration-200;
     box-shadow: var(--shadow-card);
@@ -545,47 +516,6 @@
 
   .card-base:hover {
     border-color: hsl(var(--slate-300));
-    box-shadow: var(--shadow-card);
-  }
-
-  /* Premium gradient card - use for hero elements with optional chamfer */
-  .card-gradient {
-    @apply overflow-hidden relative;
-    background: var(--gradient-ore);
-    border: 1px solid hsl(225 20% 25%);
-    color: hsl(var(--slate-100));
-    border-radius: 0.75rem;
-  }
-
-  .card-gradient.chamfer-lg {
-    clip-path: var(--chamfer-lg);
-    border-radius: 0;
-  }
-
-  /* Slate card - medium grey industrial look */
-  .card-slate {
-    @apply overflow-hidden relative transition-all duration-200;
-    background: linear-gradient(145deg, hsl(215 19% 40%) 0%, hsl(215 19% 35%) 100%);
-    border: 1px solid hsl(var(--slate-400));
-    color: hsl(var(--slate-100));
-    border-radius: 0.5rem;
-  }
-
-  .card-slate:hover {
-    background: linear-gradient(145deg, hsl(215 19% 38%) 0%, hsl(215 19% 32%) 100%);
-    border-color: hsl(var(--slate-300));
-  }
-
-  /* Metal card - brushed aluminum feel */
-  .card-metal {
-    @apply overflow-hidden relative transition-all duration-200;
-    background: linear-gradient(145deg, hsl(210 40% 98%) 0%, hsl(214 32% 93%) 50%, hsl(213 27% 88%) 100%);
-    border: 1px solid hsl(var(--slate-300));
-    border-radius: 0.5rem;
-  }
-
-  .card-metal:hover {
-    border-color: hsl(var(--slate-400));
     box-shadow: var(--shadow-card);
   }
 
@@ -603,7 +533,7 @@
 
   .card-obsidian {
     @apply overflow-hidden transition-all duration-200 rounded-lg;
-    background: hsl(var(--rho-obsidian));
+    background: var(--gradient-obsidian);
     border: 1px solid hsl(225 20% 20%);
     color: hsl(var(--slate-100));
   }
@@ -644,36 +574,6 @@
     border-color: hsl(var(--mineral-neutral));
   }
 
-  /* Corner brackets for technical framing */
-  .bracket-frame {
-    @apply relative;
-  }
-
-  .bracket-frame::before,
-  .bracket-frame::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-color: hsl(var(--slate-400));
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  .bracket-frame::before {
-    top: 0;
-    left: 0;
-    border-top: 2px solid;
-    border-left: 2px solid;
-  }
-
-  .bracket-frame::after {
-    bottom: 0;
-    right: 0;
-    border-bottom: 2px solid;
-    border-right: 2px solid;
-  }
-
   /* Color Swatch */
   .swatch {
     @apply h-28 p-4 rounded-lg flex flex-col justify-between transition-transform duration-200;
@@ -682,54 +582,6 @@
 
   .swatch:hover {
     transform: scale(1.02);
-  }
-
-  .swatch-sm {
-    @apply h-20 p-3 rounded-lg flex flex-col justify-end transition-transform duration-200;
-    border: 1px solid hsl(0 0% 0% / 0.05);
-  }
-
-  .swatch-sm:hover {
-    transform: scale(1.05);
-  }
-
-  /* Section Headers - Refined hierarchy */
-  .section-header {
-    @apply font-ui font-semibold text-3xl md:text-4xl lg:text-5xl mb-10 text-foreground tracking-tight leading-[1.15];
-  }
-
-  .section-label {
-    @apply label-tech mb-4 text-primary;
-  }
-
-  /* Bold section header variant */
-  .section-header-bold {
-    @apply font-ui font-bold text-4xl md:text-6xl lg:text-7xl text-foreground tracking-tight leading-[1.1];
-  }
-
-  /* Subsection headers */
-  .subsection-header {
-    @apply font-ui font-semibold text-xl md:text-2xl text-foreground tracking-tight;
-  }
-
-  /* Body text with improved readability */
-  .body-lg {
-    @apply text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl;
-  }
-
-  /* Section Divider */
-  .section-divider {
-    @apply relative my-16;
-  }
-
-  .section-divider::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
   }
 
   /* Navigation Link */
@@ -783,7 +635,15 @@
     mix-blend-mode: overlay;
   }
 
-  /* Pattern Backgrounds */
+  /* ============================================
+     Texture Families — exactly three (agents.md §4.5)
+     Signal    = ultrasonic waves (bg-wave-subtle)
+     Precision = engineering grids (bg-grid-data, bg-workshop-grid)
+     Field     = terrain + industry patterns (bg-terrain-*, bg-pattern-*)
+     Rule: max one texture per surface, behind content, ≤ 50% opacity.
+     ============================================ */
+
+  /* FIELD family — industry patterns (use only in their own industry section) */
   .bg-pattern-topo {
     background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2333993c' stroke-width='0.6'%3E%3Cellipse cx='25' cy='25' rx='6' ry='5' opacity='0.15'/%3E%3Cellipse cx='25' cy='25' rx='11' ry='9' opacity='0.12'/%3E%3Cellipse cx='25' cy='25' rx='16' ry='13' opacity='0.09'/%3E%3Cellipse cx='25' cy='25' rx='21' ry='17' opacity='0.06'/%3E%3C/g%3E%3C/svg%3E");
     background-size: 50px 50px;
@@ -808,22 +668,7 @@
     background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%2394a3b8' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
   }
 
-  /* Grid background */
-  .bg-grid {
-    background-image: 
-      linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-
-  /* Ultrasonic Wave Patterns */
-  .bg-wave-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='200' height='60' viewBox='0 0 200 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 Q 25 10 50 30 T 100 30 T 150 30 T 200 30' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3Cpath d='M0 35 Q 25 55 50 35 T 100 35 T 150 35 T 200 35' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.25'/%3E%3Cpath d='M0 25 Q 25 5 50 25 T 100 25 T 150 25 T 200 25' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.25'/%3E%3C/svg%3E");
-    background-size: 200px 60px;
-    background-repeat: repeat-x;
-    background-position: center;
-  }
-
+  /* SIGNAL family — the ultrasonic wave, the brand's signature texture */
   .bg-wave-subtle {
     background-image: url("data:image/svg+xml,%3Csvg width='300' height='40' viewBox='0 0 300 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 Q 37.5 5 75 20 T 150 20 T 225 20 T 300 20' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.15'/%3E%3Cpath d='M0 25 Q 37.5 35 75 25 T 150 25 T 225 25 T 300 25' stroke='%23ffffff' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
     background-size: 300px 40px;
@@ -831,20 +676,7 @@
     background-position: center;
   }
 
-  .bg-wave-hero {
-    background-image: url("data:image/svg+xml,%3Csvg width='400' height='100' viewBox='0 0 400 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 50 20 100 50 T 200 50 T 300 50 T 400 50' stroke='%2333993c' stroke-width='2' fill='none' opacity='0.08'/%3E%3Cpath d='M0 60 Q 50 80 100 60 T 200 60 T 300 60 T 400 60' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.05'/%3E%3Cpath d='M0 40 Q 50 10 100 40 T 200 40 T 300 40 T 400 40' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.05'/%3E%3C/svg%3E");
-    background-size: 400px 100px;
-    background-repeat: repeat-x;
-    background-position: bottom;
-  }
-
-  /* Terrain Textures - Field Aesthetic (Mineral Neutrals) */
-  .bg-terrain-contour {
-    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 Q 50 30 100 45 T 200 35' stroke='%238B8F88' stroke-width='1' fill='none' opacity='0.18'/%3E%3Cpath d='M0 80 Q 60 65 120 85 T 200 70' stroke='%238B8F88' stroke-width='1' fill='none' opacity='0.14'/%3E%3Cpath d='M0 120 Q 40 135 90 115 T 200 125' stroke='%238B8F88' stroke-width='1' fill='none' opacity='0.11'/%3E%3Cpath d='M0 160 Q 70 150 130 165 T 200 155' stroke='%238B8F88' stroke-width='1' fill='none' opacity='0.08'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
-    background-repeat: repeat;
-  }
-
+  /* FIELD family — terrain textures (mineral neutrals) */
   .bg-terrain-strata {
     background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='100' height='100' fill='none'/%3E%3Cpath d='M0 15 L100 20 M0 35 L100 30 M0 55 L100 60 M0 75 L100 70 M0 95 L100 90' stroke='%238B8F88' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3Ccircle cx='25' cy='45' r='2' fill='%238B8F88' opacity='0.06'/%3E%3Ccircle cx='70' cy='75' r='3' fill='%238B8F88' opacity='0.05'/%3E%3Ccircle cx='85' cy='25' r='1.5' fill='%238B8F88' opacity='0.07'/%3E%3C/svg%3E");
     background-size: 100px 100px;
@@ -864,7 +696,7 @@
     background-repeat: repeat;
   }
 
-  /* Workshop Aesthetic - Garage Spirit */
+  /* PRECISION family — engineering grids */
   .bg-workshop-grid {
     background-color: hsl(var(--mineral-surface));
     background-image: 
@@ -875,13 +707,6 @@
     background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
   }
 
-  .bg-rivet-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2' fill='%238B8F88' opacity='0.15'/%3E%3Ccircle cx='20' cy='20' r='4' fill='none' stroke='%238B8F88' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E");
-    background-size: 40px 40px;
-    background-repeat: repeat;
-  }
-
-  /* Data Grid - for proof/technical sections */
   .bg-grid-data {
     background-image: 
       linear-gradient(hsl(var(--primary) / 0.06) 1px, transparent 1px),
@@ -898,44 +723,9 @@
     100% { opacity: 1; transform: scale(1) rotate(0deg); }
   }
 
-  @keyframes textReveal {
-    0% { opacity: 0; filter: blur(8px); transform: translateY(10px); }
-    100% { opacity: 1; filter: none; transform: translateY(0); }
-  }
-
-  @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(30px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
   @keyframes pulse-dot {
     0%, 100% { opacity: 1; box-shadow: 0 0 0 0 hsl(var(--rho-green) / 0.4); }
     50% { opacity: 0.8; box-shadow: 0 0 0 6px hsl(var(--rho-green) / 0); }
-  }
-
-  @keyframes slideInRight {
-    0% { opacity: 0; transform: translateX(-20px); }
-    100% { opacity: 1; transform: translateX(0); }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 0 20px -5px hsl(var(--rho-green) / 0.3); }
-    50% { box-shadow: 0 0 40px -5px hsl(var(--rho-green) / 0.5); }
-  }
-
-  @keyframes borderGlow {
-    0%, 100% { border-color: hsl(var(--rho-green) / 0.3); }
-    50% { border-color: hsl(var(--rho-green) / 0.7); }
   }
 
   .animate-boot {
@@ -943,38 +733,8 @@
     transform-origin: bottom right;
   }
 
-  .animate-text-reveal {
-    animation: textReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .animate-fade-in-up {
-    animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
   .animate-pulse-dot {
     animation: pulse-dot 2s ease-in-out infinite;
-  }
-
-  .animate-slide-in-right {
-    animation: slideInRight 0.5s ease-out forwards;
-  }
-
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
-  }
-
-  .animate-shimmer {
-    background: linear-gradient(90deg, transparent, hsl(var(--rho-green) / 0.1), transparent);
-    background-size: 200% 100%;
-    animation: shimmer 2s linear infinite;
-  }
-
-  .animate-glow-pulse {
-    animation: glowPulse 3s ease-in-out infinite;
-  }
-
-  .animate-border-glow {
-    animation: borderGlow 2s ease-in-out infinite;
   }
 
   /* Animation Delays */
@@ -985,39 +745,6 @@
   .delay-500 { animation-delay: 0.5s; }
   .delay-600 { animation-delay: 0.6s; }
   .delay-700 { animation-delay: 0.7s; }
-
-  /* Hover Transforms */
-  .hover-lift {
-    @apply transition-all duration-300;
-  }
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-elevated);
-  }
-
-  /* Card hover with animated green underline */
-  .hover-card-accent {
-    @apply transition-all duration-300 relative overflow-hidden;
-  }
-  .hover-card-accent::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: hsl(var(--rho-green));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .hover-card-accent:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-elevated);
-  }
-  .hover-card-accent:hover::after {
-    transform: scaleX(1);
-  }
 
   /* Hero blur orb */
   .hero-blur-orb {
@@ -1031,39 +758,6 @@
     z-index: 0;
   }
 
-  /* Stagger children utility */
-  .stagger-children > * {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  /* Gradient Text */
-  .gradient-text {
-    background: var(--gradient-brand);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Underline Animation */
-  .hover-underline {
-    @apply relative;
-  }
-
-  .hover-underline::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: hsl(var(--rho-green));
-    transition: width 0.3s ease;
-  }
-
-  .hover-underline:hover::after {
-    width: 100%;
-  }
 }
 
 /* PDF export (html2canvas) helpers */

@@ -136,25 +136,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "boot-sequence": {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
-        },
-        "text-reveal": {
-          "0%": { opacity: "0", filter: "blur(4px)" },
-          "100%": { opacity: "1", filter: "blur(0)" },
-        },
-        "fade-in-up": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "boot": "boot-sequence 0.5s ease-out forwards",
-        "text-reveal": "text-reveal 0.8s ease-out forwards",
-        "fade-in-up": "fade-in-up 0.6s ease-out forwards",
       },
       boxShadow: {
         'card': '0 4px 6px -1px hsl(0 0% 0% / 0.05), 0 2px 4px -2px hsl(0 0% 0% / 0.05)',
@@ -178,8 +163,6 @@ export default {
         'display-lg': ['clamp(2rem, 5vw, 3.5rem)', { lineHeight: '1.05' }],
       },
       clipPath: {
-        'chamfer-btn': 'var(--chamfer-btn)',
-        'chamfer-sm': 'var(--chamfer-sm)',
         'chamfer-md': 'var(--chamfer-md)',
         'chamfer-lg': 'var(--chamfer-lg)',
       },
@@ -188,11 +171,11 @@ export default {
   plugins: [
     require("tailwindcss-animate"),
     ({ addUtilities }: { addUtilities: (u: Record<string, Record<string, string>>) => void }) => {
+      // Chamfers are for large surfaces only (agents.md §4.5). clip-path clips
+      // borders and ignores radius, so both are stripped here by design.
       addUtilities({
-        '.clip-chamfer-btn': { clipPath: 'var(--chamfer-btn)' },
-        '.clip-chamfer-sm': { clipPath: 'var(--chamfer-sm)' },
-        '.clip-chamfer-md': { clipPath: 'var(--chamfer-md)' },
-        '.clip-chamfer-lg': { clipPath: 'var(--chamfer-lg)' },
+        '.clip-chamfer-md': { clipPath: 'var(--chamfer-md)', border: 'none', borderRadius: '0' },
+        '.clip-chamfer-lg': { clipPath: 'var(--chamfer-lg)', border: 'none', borderRadius: '0' },
       });
     },
   ],

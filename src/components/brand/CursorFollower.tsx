@@ -20,7 +20,7 @@ export const CursorFollower = () => {
 
     const onOver = (e: MouseEvent) => {
       const el = e.target as HTMLElement;
-      const interactive = el.closest("a, button, [role='button'], input, select, textarea, .card-base, .card-eco, .card-obsidian, .card-metal, .card-slate, .card-mineral, .swatch");
+      const interactive = el.closest("a, button, [role='button'], input, select, textarea, .card-base, .card-eco, .card-obsidian, .card-mineral, .swatch");
       isHovering.current = !!interactive;
     };
 
