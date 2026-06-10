@@ -15,9 +15,11 @@
 | Display headings | Fluid scale, negative tracking | `text-display-lg tracking-display` |
 | Primary color | Use semantic tokens | `text-primary`, `bg-primary` |
 | Black | Never #000, use Obsidian | `bg-rho-obsidian` |
-| Panel shape | Chamfered clip-path for panels & cards | `clip-chamfer-md` |
+| Shape | Rounded by default; chamfer **large surfaces only** | `rounded-lg` / `clip-chamfer-lg` |
 | Button shape | Rounded, never chamfered | `rounded-md` |
 | Shadows on chamfers | `drop-shadow-*` (not `shadow-*`) | `drop-shadow-lg` |
+| Surfaces | Four card families, nothing else | `card-base`, `card-obsidian`, `card-eco`, `card-mineral` |
+| Texture | Max one per surface, from 3 families | `bg-wave-subtle`, `bg-grid-data`, `bg-terrain-*` |
 | Icons | Import from `@/lib/icons` | `import { Activity } from "@/lib/icons"` |
 | Logo ratio | Icon = Text × 1.35 | 24px text → 32px icon |
 
@@ -522,57 +524,96 @@ For brand elements, use colored shadows derived from the element's color:
 
 ---
 
-## 4.5. Shape Language
+## 4.5. Shape, Surface & Texture
 
-The brand shape system has two distinct modes. Use the wrong one and the surface reads as generic SaaS instead of industrial instrumentation.
+One geometry, four surfaces, three texture families. Every visual style on a page must come from this section — if a style isn't listed here, it isn't in the brand. This is what keeps the system unique without letting it sprawl.
 
-### Chamfered Panels (primary)
+### Shape: Rounded by Default, Chamfer by Scale
 
-Panels, cards, callouts, and content containers use **chamfered clip-paths**. The 45° corners at the top-left and bottom-right evoke engineering drawings, milled aluminum, and machined bezels — not decoration.
+The default shape for every element is **rounded**. The chamfer — a 45° cut at the top-left and bottom-right corner — is the brand's structural signature, evoking milled aluminum and machined bezels. But it is **earned by scale**: on a large panel it reads as a machined edge; on a small element it reads as a torn pixel.
 
-| Token | Clip | Use |
-|-------|------|-----|
-| `clip-chamfer-btn` | 6px | (reserved; buttons use `rounded-md` instead — see below) |
-| `clip-chamfer-sm` | 8px | Small panels, chips, margin notes |
-| `clip-chamfer-md` | 12px | Standard cards, metric tiles, panels |
-| `clip-chamfer-lg` | 24px | Hero surfaces, large feature panels |
+**Chamfers are allowed only on larger elements:**
+
+| Token | Cut | Allowed on |
+|-------|-----|------------|
+| `clip-chamfer-lg` | 24px | Hero surfaces, full-width section panels |
+| `clip-chamfer-md` | 12px | Large feature cards and panels that span a full content column — roughly **≥ 280px wide and ≥ 160px tall** |
+
+Rules of use:
+
+1. **Minimum size.** Below ~280×160px, use `rounded-*` — no exceptions. This includes metric tiles, chips, thumbnails, and small cards.
+2. **Never interactive controls.** Buttons, inputs, selects, badges, and avatars are always rounded — a 45° corner fights the ergonomics of a click target.
+3. **Scarcity.** At most two chamfered surfaces per viewport. The chamfer marks the *structure* of a page (hero, primary panel), not default card chrome.
+4. **Shadows.** `clip-path` clips `box-shadow`, so chamfered elements use `drop-shadow-*` utilities only.
+5. **No borders, no radius.** Borders get clipped into broken lines and `rounded-*` is ignored — the chamfer utilities now strip both automatically. Use a background shift or gradient for separation instead.
+6. **Nested images.** An `<img>` inside a chamfered parent gets its corners clipped too. Intentional for hero panels; awkward for thumbnails. Keep image cards rounded.
+
+> **Removed from the system:** `clip-chamfer-sm` (8px) and `clip-chamfer-btn` (6px) no longer exist. Small-scale chamfers were the main source of visual noise — at that size the cut carries no meaning.
 
 ```tsx
-// ✅ Chamfered card with drop-shadow (shadow follows clip shape)
-<div className="clip-chamfer-md drop-shadow-lg bg-card p-6">
+// ✅ Hero panel — large surface, drop-shadow, no border
+<div className="clip-chamfer-lg bg-obsidian-gradient drop-shadow-lg p-8">...</div>
+
+// ✅ Full-column feature panel
+<div className="clip-chamfer-md bg-card drop-shadow-md p-6">
   <h3 className="font-ui text-xl font-semibold">Panel title</h3>
 </div>
 
-// ✅ Chamfered with gradient background
-<div className="clip-chamfer-lg bg-gradient-to-br from-muted/40 to-transparent p-8">
-  ...
-</div>
+// ❌ WRONG: chamfered button (interactive control)
+<button className="clip-chamfer-md bg-primary px-4 py-2">Save</button>
+
+// ❌ WRONG: chamfered metric tile (too small — use rounded-lg)
+<div className="clip-chamfer-md w-40 p-3">±0.1%</div>
 ```
 
-### Rounded Buttons (not chamfered)
-
-Buttons are the one exception: they stay rounded. Chamfered buttons fight with the ergonomics of click targets — a 45° corner reads as a torn edge at button scale, not precision.
+#### Rounded elements (everything else)
 
 | Element | Radius | Tailwind |
 |---------|--------|----------|
-| Buttons | 6px | `rounded-md` |
-| Pills / badges | 2px–full | `rounded-sm` or `rounded-full` |
-| Avatars | full | `rounded-full` |
-| Input fields | 6px | `rounded-md` |
+| Buttons, inputs | 6px | `rounded-md` |
+| Cards, tiles, panels below chamfer scale | 8px | `rounded-lg` |
+| Tags | 2px | `rounded-sm` |
+| Pills, badges, avatars | full | `rounded-full` |
 
-```tsx
-// ✅ Button stays rounded
-<button className="rounded-md bg-primary px-4 py-2">Save</button>
+### Surface Families (exactly four)
 
-// ❌ WRONG: Chamfered button
-<button className="clip-chamfer-btn bg-primary px-4 py-2">Save</button>
-```
+All container styling comes from one of four card families. These replace the previous seven variants.
 
-### Caveats
+| Class | Role | Appearance |
+|-------|------|------------|
+| `card-base` | Default light surface | White card, hairline border, `--shadow-card` |
+| `card-obsidian` | Dark / premium surface | Obsidian gradient, green hover accent |
+| `card-eco` | Sustainability content | Green-tinted surface + border, glow on hover |
+| `card-mineral` | Field / environmental context | Warm mineral surface, olive accent edge |
 
-- **Borders get clipped too.** Don't combine `border-*` with `clip-chamfer-*`. Use background color shift or a gradient for separation.
-- **Nested images.** An `<img>` inside a chamfered parent gets its corners clipped too. Intentional for hero panels; awkward for thumbnails. Keep image cards rounded.
-- **Never combine** `clip-chamfer-*` with `rounded-*` on the same element.
+**Retired variants and their replacements:**
+
+| ❌ Retired | ✅ Use instead |
+|-----------|---------------|
+| `card-metal` | `card-base` |
+| `card-slate` | `card-obsidian` |
+| `card-gradient` | `card-obsidian` (it now carries the gradient) |
+
+Semantic info/warning/error/success boxes keep using the surface/border token pairs from §3 — those are signals, not surfaces.
+
+### Texture Families (exactly three)
+
+Background textures are what keep the brand unique — and what made it feel scattered when every section invented its own. Every texture now belongs to one of three families, each tied to a brand pillar:
+
+| Family | Pillar | Utilities | Where |
+|--------|--------|-----------|-------|
+| **Signal** | Ultrasonic measurement (the product) | `bg-wave-subtle` | Dark hero surfaces, obsidian panels |
+| **Precision** | Engineering discipline | `bg-grid-data`, `bg-workshop-grid` | Technical/proof sections, workshop contexts |
+| **Field** | Industrial environments | `bg-terrain-strata`, `bg-terrain-grain`, `bg-terrain-ore`; industry patterns `bg-pattern-topo`, `bg-pattern-topo-dark`, `bg-pattern-minerals`, `bg-pattern-semicon`, `bg-pattern-dredging` | Mineral/field surfaces, industry application sections only |
+
+Rules of use:
+
+1. **One texture per surface, maximum.** Never layer two patterns. (`noise-overlay` is the only sanctioned second layer, on hero surfaces.)
+2. **Always behind content** — an absolutely-positioned layer at ≤ 50% opacity.
+3. **Never under dense data.** Tables, charts, and metric grids sit on plain surfaces.
+4. **Industry patterns stay in their industry.** `bg-pattern-dredging` belongs on the dredging section, nowhere else.
+
+> **Removed from the system:** `bg-wave-pattern`, `bg-wave-hero` (one wave is enough), `bg-terrain-contour`, `bg-rivet-pattern`, `bg-grid`, `bg-hero-glow`.
 
 ---
 
@@ -1149,10 +1190,14 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 - ❌ Never use full-saturation accents on dark backgrounds
 
 ### Shape & Depth
-- ❌ Never combine `border-*` with `clip-chamfer-*` — the border gets clipped, leaving a broken partial line
-- ❌ Never combine `clip-chamfer-*` with `rounded-*` on the same element
+- ❌ Never chamfer an element smaller than ~280×160px — small chamfer sizes were removed from the system
+- ❌ Never chamfer interactive controls (buttons, inputs, badges, avatars) — `rounded-md`/`rounded-full` only
+- ❌ Never use more than two chamfered surfaces in one viewport
+- ❌ Never combine `border-*` or `rounded-*` with `clip-chamfer-*` — the utilities strip them, don't write them
 - ❌ Never use `box-shadow` / `shadow-*` on a chamfered element — use `drop-shadow-*` so the shadow follows the clip
-- ❌ Never chamfer buttons (`rounded-md` only for buttons/inputs)
+- ❌ Never use retired utilities: `card-metal`, `card-slate`, `card-gradient`, `clip-chamfer-sm`, `clip-chamfer-btn`
+- ❌ Never layer two background textures on one surface (`noise-overlay` on heroes is the only exception)
+- ❌ Never put a texture behind dense data (tables, charts, metric grids)
 - ❌ Never combine static borders AND static shadows on same non-chamfered element (pick one)
 - ❌ Never use shadows on inline elements
 - ❌ Never use inconsistent shadow directions
@@ -1227,6 +1272,11 @@ Before submitting any design/code change, verify:
 - [ ] Shadow levels used appropriately (card → elevated → modal)
 - [ ] No competing borders + shadows on same element
 
+### Shape & Surface
+- [ ] Chamfers only on large structural surfaces (≥ ~280×160px), max two per viewport
+- [ ] Containers use one of the four surface families (`card-base`, `card-obsidian`, `card-eco`, `card-mineral`)
+- [ ] At most one texture per surface, from a sanctioned family (Signal / Precision / Field)
+
 ### Components
 - [ ] Icons imported from `@/lib/icons`
 - [ ] Icon color/weight matches adjacent text
@@ -1282,5 +1332,5 @@ Add to every design review:
 
 ---
 
-*Last updated: 2026-04-23*
-*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles + 2026 Design Trends Analysis + Homepage reference design alignment (Primetime primary, chamfer system, mineral-in-UI, fluid type, 5-level shadow with glow)*
+*Last updated: 2026-06-10*
+*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles + 2026 Design Trends Analysis + Homepage reference design alignment (Primetime primary, chamfer system, mineral-in-UI, fluid type, 5-level shadow with glow) + Visual system unification (chamfer-by-scale doctrine, four surface families, three texture families)*
