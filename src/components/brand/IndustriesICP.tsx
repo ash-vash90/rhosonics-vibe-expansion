@@ -1,4 +1,7 @@
 import { INDUSTRY_VALUE_MAPPING, getValueById } from "@/data/brand-values";
+import { IndustryThumb } from "./IndustryThumb";
+import { OperatorQuoteCard } from "./OperatorQuoteCard";
+import { ArrowRight } from "@/lib/icons";
 
 /**
  * IndustriesICP — five industries × scaffolded ICPs. Light cards with
