@@ -1,100 +1,84 @@
-## What Apple does, and why it works
+# 01 Brand Position — customer.io section patterns, Rhosonics-translated
 
-Apple's HIG principles (Purpose, Agency, Responsibility, Familiarity, Flexibility, Simplicity, Craft, Delight) share one structure:
+## What I'm borrowing from customer.io
 
-- **One-word name** (a virtue, not a feature)
-- **A bold imperative** ("Make something meaningful.")
-- **One sentence of essence** — what it actually means
-- **2–3 supporting clauses** — how to apply it in practice
+| customer.io move | Why it works | How I translate it |
+|---|---|---|
+| KPI stat strip (99.98% · 100B+ · 24/5 · 99% with thin vertical rules) | Anchors the page in concrete numbers, fast | Foundation stat strip — 5 values · 5 principles · 5 industries · 10 ICP slots |
+| Small dot-eyebrow tag ("● Platform philosophy") above a display headline | Quiet sectioning without heavy numbered chrome | Replace the inner SectionHeader number-block with a green-dot eyebrow + display H2 + subtitle |
+| Hero confirmation chips ("✓ 14-day free trial · ✓ No credit card · ✓ Cancel anytime") | Adds proof + scannability under the hero | Hero chip row: "✓ 5 values · ✓ 5 principles · ✓ 5 industries · ✓ Active v2026" |
+| Capabilities card grid (image thumb + title + sentence) | Concrete, click-through, visually rich | Industries cards get a per-industry abstract obsidian thumbnail (SVG, green-only) + scope + ICPs + "Read brief →" |
+| Big case-study quote card (portrait + logo + two metric callouts + pull quote) | Editorial weight, evidence-first | "Voice of operator" scaffolded card under Industries — quote slot + 2 metric slots + named role placeholder, clearly marked pending |
+| Floating geometric accents (orange squares + arrow scribble) | Adds craft + motion hint to flat hero | Three small chamfered green squares + a hand-drawn green arrow SVG behind the PageBanner watermark — green only, no orange |
+| Closing CTA band ("Supercharge your messaging") with two pill CTAs | Always points readers to the next thing | New "Now apply the foundation." closer above TelemetryFooter, two pill CTAs → 02 Voice & 03 Logo |
 
-They are *decision tools*, not style rules. They tell a designer what to weigh when two options compete. That's the bar.
-
-## The translation rule
-
-Rhosonics' foundation is not a generic product company — it's measurement. Vision and mission both point at one thing: **making the physical world legible, controllable, and lighter on the planet**. The five values (Expertise, Collaboration, Innovation, Quality, Sustainability) are *what we are*. The principles should be *what the work has to do* to prove it.
-
-So each principle:
-- maps to one canonical value (no orphans, no overlaps),
-- carries the vision/mission's measurement-first worldview,
-- gives a concrete test a designer/writer can apply at review time.
-
-## The five principles
+## Final page order
 
 ```text
-01  PURPOSE         →  Expertise
-    Measure what matters.
-02  EVIDENCE        →  Quality
-    Show the number, name the method.
-03  PARTNERSHIP     →  Collaboration
-    Solve it with them, not at them.
-04  MECHANISM       →  Innovation
-    Show what's novel. Don't claim it.
-05  FOOTPRINT       →  Sustainability
-    Quantify the saving.
+PageBanner (01)
+  └─ floating green accent squares + green arrow SVG behind watermark
+  └─ hero confirmation chip row (4 chips, green checks)
+
+01.1 Foundation
+  └─ Vision (obsidian, chamfered) + Mission (light, green rail)   [unchanged]
+  └─ NEW: 4-tile KPI stat strip (5 values · 5 principles · 5 industries · 10 ICP slots)
+
+01.2 Values & Operating Rules                                     [unchanged 5-up grid]
+
+01.3 Design Principles                                            [unchanged obsidian panel]
+
+01.4 Industries & ICPs
+  └─ Industry cards get an abstract obsidian SVG thumbnail per industry
+  └─ NEW: scaffolded "Voice of operator" pull-quote card after the grid
+
+01.5 NEW closer band — "Now apply the foundation."
+  └─ Two pill CTAs → 02 Voice & Tone · 03 Logo
+  └─ Chip row: "● 11 chapters remaining"
+
+TelemetryFooter                                                   [unchanged]
 ```
 
-Five, not eight. One per value. Apple can afford eight because they design for everyone; we design for senior engineers and operators, and a shorter list is sharper.
+Inside every 01.x section, the existing `SectionHeader` (number + bold title + subtitle + divider) is replaced by a lighter `DotEyebrowHeader`:
 
-### 01 — Purpose · *Measure what matters.*
-**Essence.** Every element exists to make something measurable, controllable, or optimizable. If it doesn't, cut it.
-**Apply.**
-- Lead with the measurement, not the marketing.
-- Name the quantity (g/cm³, kg/h, %solids) before the brand.
-- If a section can't answer "what does this help measure?", it doesn't ship.
+```text
+●  Foundation                       ← green dot + JetBrains Mono label
+Vision sets the horizon.            ← display H2, Instrument Sans semibold
+The Mission is the work…            ← subtitle paragraph
+```
 
-### 02 — Evidence · *Show the number, name the method.*
-**Essence.** Claims are cheap. Verified numbers, cited methods, and named engineers are not.
-**Apply.**
-- Every metric carries a source line (method, site, date).
-- No round-number marketing claims (no "10× better", no "best-in-class").
-- Prefer a graph with axes over an adjective.
+The "01.1 / 01.2 / 01.3 / 01.4" chapter numbers stay, but as a small mono tag *next to* the eyebrow label, not as a giant numbered header.
 
-### 03 — Partnership · *Solve it with them, not at them.*
-**Essence.** Our work is co-authored with operators in the field. The brand should sound and look like that — never one-sided.
-**Apply.**
-- Speak with partners by name; quote them verbatim where possible.
-- Case studies are joint stories, not testimonials.
-- Replace "we deliver" with "we built this with…".
+## Files
 
-### 04 — Mechanism · *Show what's novel. Don't claim it.*
-**Essence.** "Innovative" is the word people use when they can't explain the mechanism. Explain the mechanism.
-**Apply.**
-- Diagram the physics or the data path before naming the product.
-- Banned words: *innovative*, *revolutionary*, *next-gen*, *cutting-edge*.
-- If a feature is new, say what changed and why it matters.
+**New**
+- `src/components/brand/DotEyebrowHeader.tsx` — green-dot eyebrow + display H2 + subtitle; replaces inline `SectionHeader` calls on this page only
+- `src/components/brand/FoundationStats.tsx` — 4-tile KPI strip with thin vertical dividers, mono numerals
+- `src/components/brand/IndustryThumb.tsx` — small obsidian SVG illustration per industry id (5 abstract marks: concentrator, wafer, dredge hull, clarifier, paste-fill); green stroke only
+- `src/components/brand/OperatorQuoteCard.tsx` — scaffolded case-study-style quote card (quote slot + 2 metric callouts + named role placeholder + "pending" tag)
+- `src/components/brand/HeroChipRow.tsx` — confirmation chips row with green check icon
+- `src/components/brand/ApplyFoundationCTA.tsx` — closer band with display headline + 2 pill CTAs + chapter-progress chip
 
-### 05 — Footprint · *Quantify the saving.*
-**Essence.** Sustainability is a number — kWh saved, m³ water avoided, kg of hazardous chemicals removed, nuclear sources retired. If we can't quantify it, we don't claim it.
-**Apply.**
-- Green saturation (the only saturated colour) is reserved for measured savings.
-- Every eco claim cites the baseline it improves on.
-- No vague green language ("eco-friendly", "greener future"). Numbers or silence.
+**Edited**
+- `src/pages/brand/PositioningPage.tsx` — swap SectionHeader for DotEyebrowHeader, insert chip row + FoundationStats + OperatorQuoteCard + ApplyFoundationCTA, plus floating accent SVG behind PageBanner
+- `src/components/brand/IndustriesICP.tsx` — add `IndustryThumb` as card header, append `OperatorQuoteCard` below the grid
 
-## What goes on the page
+**Untouched**
+- `Foundation.tsx`, `ValueOperatingRules.tsx`, `DesignPrinciples.tsx`, `PageBanner.tsx`, `SectionUtils.tsx`, `TelemetryFooter`
 
-`/position` becomes a 3-act chapter, no more footers stacked at the bottom:
+## Brand-rule guardrails
 
-1. **Foundation** (existing hero) — Vision + Mission, side by side.
-2. **Values & Operating Rules** (existing) — the canonical five values, each paired with its operating rule.
-3. **Design Principles** (NEW) — the five principles above, in a single sectioned list. Each row:
-   - mono index (`01`–`05`)
-   - the one-word principle name
-   - the bold imperative ("Measure what matters.")
-   - the essence sentence
-   - 2–3 "Apply" bullets
-   - a small tag showing which value it grounds in (e.g. `→ Expertise`)
-
-Greyscale by default; green used only on the index numbers and the value tags, per the colour-for-emphasis rule. Standard 4px corners — these are content rows, not hero surfaces, so no chamfers.
+- Green (`hsl(var(--primary))`) is the only saturated colour. customer.io's orange/violet accents → green-only.
+- No glassmorphism. Chamfers only on the large Vision panel, the obsidian Principles panel, and the closer band — everywhere else stays 4px rounded.
+- No all-caps Instrument Sans. Eyebrow labels use JetBrains Mono uppercase.
+- Confirmation chips use check icon from `@/lib/icons` (Lucide `Check`), not a custom shape.
+- All copy stays canonical: Vision/Mission/value names/principle imperatives from `src/data/brand-values.ts`. New copy is only the new chip/stat labels and the closer headline.
+- Floating accent squares behind PageBanner are decorative — set `aria-hidden`, never carry meaning.
+- "Voice of operator" card is explicitly marked pending so it isn't mistaken for shipped content.
 
 ## Technical notes
 
-- New file: `src/components/brand/DesignPrinciples.tsx` — pure presentational, reads from a new `BRAND_PRINCIPLES` array.
-- New export in `src/data/brand-values.ts`: `BRAND_PRINCIPLES`, typed, with `id`, `num`, `name`, `imperative`, `essence`, `apply: string[]`, `valueId` (FK to `BrandValue.id`).
-- Wire into `src/pages/brand/PositioningPage.tsx` as a third lazy section under `ValueOperatingRules`. No extra footer, no extra cross-link block (the global `BrandLayout` footer is the only footer).
-- A memory file (`mem://brand/design-principles-v3`) will be saved alongside the code so future work can't drift back to vague aesthetic principles. Updates the existing `design-principles-v2` reference in the index.
-
-## Out of scope
-
-- No changes to the values list, vision, or mission strings — those are canonical.
-- No changes to other pages (`/voice`, `/proof`, etc.) in this pass. The principles will *eventually* be cited from those pages, but that's a follow-up once these five are approved.
-- No new colours, fonts, or layout tokens.
+- `DotEyebrowHeader` is page-local; it does not replace the global `SectionHeader` used on other brand chapters.
+- `IndustryThumb` SVGs are inlined React components (no external image fetch), 16:9 aspect, `currentColor` stroke so they pick up `text-primary`.
+- Closer band uses `bg-foreground text-background` with the same shadow token as the principles panel so it rhymes visually with 01.3.
+- KPI strip uses CSS grid with `divide-x divide-border` for the thin rules — matches customer.io's stat bar without adding box-borders.
+- All new sections register a `ScrollSection` variant that respects the no-adjacent-duplicate rhythm rule (default → tinted → default → tinted → dark closer).
