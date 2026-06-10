@@ -1,84 +1,63 @@
 import { BRAND_VALUES, BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
 
 /**
- * Foundation — Vision + Mission as a side-by-side pair (calm, readable,
- * not theatrical), followed by the five canonical values.
+ * Foundation — the /position hero.
  *
- * Dramatic typography is reserved for chapter theses elsewhere. The
- * foundation statements are serious, not decorative.
+ * Two-part composition:
+ *  · Vision: dark, chamfered, large-scale statement (left, 8 cols)
+ *  · Mission: green hairline-rail, bottom-aligned (right, 4 cols)
+ *
+ * Chamfer on the Vision panel is intentional — it's a large hero surface
+ * and qualifies under the chamfer rule. The Mission column is plain.
  */
+
+const VISION_CLIP =
+  "polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%)";
+
 export const Foundation = () => {
   return (
-    <section aria-labelledby="foundation-heading" className="space-y-20 md:space-y-28">
-      {/* Vision + Mission, side by side */}
-      <div>
-        <h2 id="foundation-heading" className="sr-only">
-          Vision and mission
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-          <article className="space-y-4 md:border-r md:border-border md:pr-10 lg:pr-16">
-            <div className="flex items-baseline gap-4">
-              <span className="font-data text-xs text-primary">VISION</span>
-              <div className="h-px flex-1 bg-border max-w-16" />
-            </div>
-            <p className="font-ui font-semibold text-foreground tracking-tight leading-[1.2] text-2xl md:text-3xl max-w-prose">
+    <section aria-labelledby="foundation-heading" className="relative">
+      <p className="font-data text-xs tracking-[0.2em] uppercase text-muted-foreground mb-8">
+        01 — Brand Position
+      </p>
+      <h2 id="foundation-heading" className="sr-only">
+        Vision and mission
+      </h2>
+
+      <div className="grid grid-cols-12 gap-6 lg:gap-8">
+        {/* Vision — dark chamfered hero panel */}
+        <article className="col-span-12 lg:col-span-8">
+          <div
+            className="bg-foreground text-background p-10 md:p-14 lg:p-16"
+            style={{ clipPath: VISION_CLIP }}
+          >
+            <span className="block font-data text-[10px] tracking-[0.2em] uppercase text-primary mb-6">
+              The Long Horizon
+            </span>
+            <p className="font-ui font-semibold tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl">
               {BRAND_VISION}
             </p>
-            <p className="font-ui text-sm text-muted-foreground">
-              — the long horizon.
-            </p>
-          </article>
+          </div>
+        </article>
 
-          <article className="space-y-4">
-            <div className="flex items-baseline gap-4">
-              <span className="font-data text-xs text-primary">MISSION</span>
-              <div className="h-px flex-1 bg-border max-w-16" />
-            </div>
-            <p className="font-ui font-semibold text-foreground tracking-tight leading-[1.2] text-2xl md:text-3xl max-w-prose">
+        {/* Mission — calm, present-tense, green rail */}
+        <article className="col-span-12 lg:col-span-4 flex flex-col justify-end lg:pl-2 pb-2">
+          <div className="border-l-2 border-primary pl-6 md:pl-8">
+            <span className="block font-data text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-4">
+              The Mission
+            </span>
+            <p className="font-ui text-lg md:text-xl text-foreground/80 leading-relaxed">
               {BRAND_MISSION}
             </p>
-            <p className="font-ui text-sm text-muted-foreground">
-              — what we deliver today.
-            </p>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
 
-      {/* Values — five, in canonical order */}
-      <div>
-        <div className="flex items-baseline gap-4 mb-10">
-          <span className="font-data text-xs text-primary">VALUES</span>
-          <div className="h-px flex-1 bg-border max-w-24" />
-        </div>
-
-        <ol className="divide-y divide-border border-t border-b border-border">
-          {BRAND_VALUES.map((value) => {
-            const Icon = value.icon;
-            return (
-              <li
-                key={value.id}
-                className="grid grid-cols-[auto_auto_1fr] md:grid-cols-[6rem_auto_1fr] items-baseline gap-x-4 md:gap-x-8 gap-y-2 py-8 md:py-10"
-              >
-                <span className="font-data text-xs md:text-sm text-muted-foreground">
-                  {value.num}
-                </span>
-                <div className="flex items-center gap-3 md:gap-4">
-                  <Icon
-                    className="w-4 h-4 md:w-5 md:h-5 text-foreground/60"
-                    aria-hidden
-                  />
-                  <h3 className="font-ui font-bold text-foreground tracking-tight text-2xl md:text-3xl lg:text-4xl">
-                    {value.title}
-                  </h3>
-                </div>
-                <p className="col-span-3 md:col-start-3 md:col-end-4 text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
-                  {value.desc}
-                </p>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
+      {/* Hidden values payload — consumed by ValueOperatingRules below.
+          Kept silent here so the hero stays a hero. */}
+      <span className="sr-only">
+        {BRAND_VALUES.map((v) => `${v.num} ${v.title}. ${v.desc} `).join("")}
+      </span>
     </section>
   );
 };

@@ -1,9 +1,14 @@
 import { BRAND_VALUES } from "@/data/brand-values";
 
 /**
- * ValueOperatingRules — how each canonical value shows up in the work.
- * One row per value, 1:1 with src/data/brand-values.ts. No detached
- * "design principles" — every rule traces to a value.
+ * ValueOperatingRules — integrated values + operating rules.
+ *
+ * One row per canonical value. Left column (5/12): number, title,
+ * description. Right column (6/12, offset by 1): tinted card with a
+ * dark left rail (green on Sustainability) carrying the operating rule.
+ *
+ * Replaces the old separate "values list" + "in practice" sections —
+ * the rule each value demands of the work lives next to the value itself.
  */
 
 const RULES: Record<string, string> = {
@@ -20,44 +25,57 @@ const RULES: Record<string, string> = {
 };
 
 export const ValueOperatingRules = () => (
-  <section aria-labelledby="value-rules-heading" className="space-y-10">
-    <div className="max-w-3xl space-y-4">
-      <div className="flex items-baseline gap-4">
-        <span className="font-data text-xs text-primary">IN PRACTICE</span>
-        <div className="h-px flex-1 bg-border max-w-16" />
-      </div>
+  <section aria-labelledby="value-rules-heading">
+    {/* Section header — mono label, hairline rule, section number */}
+    <div className="flex items-baseline justify-between mb-12 md:mb-16 border-b border-border pb-4">
       <h2
         id="value-rules-heading"
-        className="font-ui font-bold text-foreground tracking-tight text-3xl md:text-4xl leading-tight"
+        className="font-data text-xs tracking-[0.3em] uppercase text-foreground"
       >
-        How the values show up in the work.
+        Core Values &amp; Operating Rules
       </h2>
-      <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-        Values are only as good as the behaviour they demand. Each row below is
-        the operating rule we hold the work to.
-      </p>
+      <span className="font-data text-[10px] text-muted-foreground">01.2</span>
     </div>
 
-    <dl className="divide-y divide-border border-t border-b border-border">
-      {BRAND_VALUES.map((value) => (
-        <div
-          key={value.id}
-          className="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-2 md:gap-10 py-6 md:py-8"
-        >
-          <dt className="flex items-baseline gap-3">
-            <span className="font-data text-xs text-muted-foreground">
-              {value.num}
-            </span>
-            <span className="font-ui font-semibold text-foreground text-lg md:text-xl">
-              {value.title}
-            </span>
-          </dt>
-          <dd className="text-base md:text-lg text-foreground/85 leading-relaxed max-w-3xl">
-            {RULES[value.id]}
-          </dd>
-        </div>
-      ))}
-    </dl>
+    <ol className="space-y-20 md:space-y-24 list-none">
+      {BRAND_VALUES.map((value, i) => {
+        const isLast = i === BRAND_VALUES.length - 1;
+        return (
+          <li key={value.id} className="grid grid-cols-12 gap-6 lg:gap-8 group">
+            {/* Left: value definition */}
+            <div className="col-span-12 lg:col-span-5">
+              <div className="flex items-start gap-5 md:gap-6">
+                <span className="font-data text-xs text-muted-foreground/60 mt-2 shrink-0">
+                  {value.num}
+                </span>
+                <div>
+                  <h3 className="font-ui font-semibold text-foreground tracking-tight text-2xl md:text-3xl mb-3 md:mb-4">
+                    {value.title}
+                  </h3>
+                  <p className="text-foreground/70 leading-relaxed max-w-prose">
+                    {value.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: operating rule — tinted card, dark rail (green on last) */}
+            <div
+              className={`col-span-12 lg:col-start-7 lg:col-span-6 bg-muted/40 p-7 md:p-8 rounded-[4px] border-l-4 ${
+                isLast ? "border-primary" : "border-foreground"
+              }`}
+            >
+              <span className="block font-data text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-2">
+                In Practice
+              </span>
+              <p className="font-ui text-base md:text-lg font-medium text-foreground/90 leading-snug">
+                {RULES[value.id]}
+              </p>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
   </section>
 );
 
