@@ -598,22 +598,40 @@ Semantic info/warning/error/success boxes keep using the surface/border token pa
 
 ### Texture Families (exactly three)
 
-Background textures are what keep the brand unique — and what made it feel scattered when every section invented its own. Every texture now belongs to one of three families, each tied to a brand pillar:
+Background textures are what keep the brand unique — and what made it feel scattered when every section invented its own. The full palette stays, but every texture now belongs to one of three families, each tied to a brand pillar:
 
 | Family | Pillar | Utilities | Where |
 |--------|--------|-----------|-------|
-| **Signal** | Ultrasonic measurement (the product) | `bg-wave-subtle` | Dark hero surfaces, obsidian panels |
-| **Precision** | Engineering discipline | `bg-grid-data`, `bg-workshop-grid` | Technical/proof sections, workshop contexts |
-| **Field** | Industrial environments | `bg-terrain-strata`, `bg-terrain-grain`, `bg-terrain-ore`; industry patterns `bg-pattern-topo`, `bg-pattern-topo-dark`, `bg-pattern-minerals`, `bg-pattern-semicon`, `bg-pattern-dredging` | Mineral/field surfaces, industry application sections only |
+| **Signal** | Ultrasonic measurement (the product) | `bg-wave-subtle` (white strokes, dark surfaces), `bg-wave-pattern` (green strokes, light surfaces), `bg-wave-hero` (faint green wash, hero scale), `bg-hero-glow` (radial green light) | Hero surfaces, obsidian panels |
+| **Precision** | Engineering discipline | `bg-grid` (neutral), `bg-grid-data` (green data grid), `bg-workshop-grid` (mineral blueprint), `bg-rivet-pattern` | Technical/proof sections, workshop contexts |
+| **Field** | Industrial environments | `bg-terrain-contour`, `bg-terrain-strata`, `bg-terrain-grain`, `bg-terrain-ore`; industry patterns `bg-pattern-topo`, `bg-pattern-topo-dark`, `bg-pattern-minerals`, `bg-pattern-semicon`, `bg-pattern-dredging` | Mineral/field surfaces, industry application sections only |
+
+#### Composing textures with background colors
+
+This is where the system's flexibility lives — instead of inventing new styles, build new surface looks by **layering one pattern over an approved background color**. Most patterns are transparent SVG overlays designed exactly for this (`bg-terrain-ore`, `bg-pattern-minerals`, `bg-pattern-dredging`, and `bg-workshop-grid` carry their own base color; everything else inherits whatever sits beneath).
+
+```tsx
+// ✅ Pattern × background-color composition — the sanctioned way to
+//    create a new surface look
+<section className="relative bg-rho-obsidian">
+  <div className="absolute inset-0 bg-terrain-strata opacity-30" />
+  <div className="relative">...</div>
+</section>
+
+// ✅ Same pattern, different mood: layered over a mineral surface
+<section className="relative bg-mineral-surface">
+  <div className="absolute inset-0 bg-terrain-contour opacity-40" />
+  <div className="relative">...</div>
+</section>
+```
 
 Rules of use:
 
 1. **One texture per surface, maximum.** Never layer two patterns. (`noise-overlay` is the only sanctioned second layer, on hero surfaces.)
 2. **Always behind content** — an absolutely-positioned layer at ≤ 50% opacity.
-3. **Never under dense data.** Tables, charts, and metric grids sit on plain surfaces.
-4. **Industry patterns stay in their industry.** `bg-pattern-dredging` belongs on the dredging section, nowhere else.
-
-> **Removed from the system:** `bg-wave-pattern`, `bg-wave-hero` (one wave is enough), `bg-terrain-contour`, `bg-rivet-pattern`, `bg-grid`, `bg-hero-glow`.
+3. **Background colors come from the token palette** (§3) — compose freely with patterns, but don't introduce new colors.
+4. **Never under dense data.** Tables, charts, and metric grids sit on plain surfaces.
+5. **Industry patterns stay in their industry.** `bg-pattern-dredging` belongs on the dredging section, nowhere else.
 
 ---
 
