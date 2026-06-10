@@ -8,14 +8,18 @@ import { DecisionQuestions } from "@/components/brand/DecisionQuestions";
 import { AdditionalDonts } from "@/components/brand/AdditionalDonts";
 import SectionCrossLink from "@/components/brand/SectionCrossLink";
 
-const BrandPositioning = lazy(() => import("@/components/brand/BrandPositioning"));
+const Foundation = lazy(() => import("@/components/brand/Foundation"));
 const BrandPrinciples = lazy(() => import("@/components/brand/BrandPrinciples"));
-const MissionVision = lazy(() => import("@/components/brand/MissionVision"));
 const OriginStory = lazy(() => import("@/components/brand/OriginStory"));
 
 /**
- * 01 Brand Position — merged chapter holding what used to live across
- * /about, /positioning, and /principles. Voice now has its own chapter (02).
+ * 01 Brand Position — the foundation chapter.
+ *
+ * Composition (deliberate, top-down):
+ *   01.1  Foundation: Vision → Mission → 5 Values
+ *   01.2  Principles: how the foundation translates into work
+ *   01.3  Origin: short, factual, no mythology
+ *   01.4  Governance: decision questions + don'ts
  */
 
 const PositioningPage = () => (
@@ -23,57 +27,58 @@ const PositioningPage = () => (
     <PageBanner
       number="01"
       title="Brand Position"
-      subtitle="Where the brand sits, what it stands for, who it speaks to, and what it refuses to do."
-      meta={["Story", "v2025"]}
+      subtitle="What we believe, what we deliver, and who we deliver it with."
     />
 
-    {/* 01.1 Position & Purpose */}
-    <ScrollSection id="positioning">
-      <ErrorBoundary><Suspense fallback={<SectionLoader />}><BrandPositioning /></Suspense></ErrorBoundary>
+    <ScrollSection id="foundation">
+      <ErrorBoundary>
+        <Suspense fallback={<SectionLoader />}>
+          <Foundation />
+        </Suspense>
+      </ErrorBoundary>
     </ScrollSection>
 
     <SectionDivider label="01.2" />
 
-    {/* 01.2 Principles */}
     <ScrollSection id="principles" variant="tinted">
-      <ErrorBoundary><Suspense fallback={<SectionLoader />}><BrandPrinciples /></Suspense></ErrorBoundary>
+      <ErrorBoundary>
+        <Suspense fallback={<SectionLoader />}>
+          <BrandPrinciples />
+        </Suspense>
+      </ErrorBoundary>
     </ScrollSection>
 
     <SectionDivider label="01.3" />
 
-    {/* 01.3 Mission & Vision */}
-    <ScrollSection id="mission">
-      <ErrorBoundary><Suspense fallback={<SectionLoader />}><MissionVision /></Suspense></ErrorBoundary>
+    <ScrollSection id="origin">
+      <ErrorBoundary>
+        <Suspense fallback={<SectionLoader />}>
+          <OriginStory />
+        </Suspense>
+      </ErrorBoundary>
     </ScrollSection>
 
     <SectionDivider label="01.4" />
 
-    {/* 01.4 Origin */}
-    <ScrollSection id="origin" variant="tinted">
-      <ErrorBoundary><Suspense fallback={<SectionLoader />}><OriginStory /></Suspense></ErrorBoundary>
-    </ScrollSection>
-
-    <SectionDivider label="01.5" />
-
-    {/* 01.5 Governance */}
-    <ScrollSection id="governance">
+    <ScrollSection id="governance" variant="tinted">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
         <DecisionQuestions
-          code="01.5"
+          code="01.4"
           questions={[
-            "Could this brand-position statement equally describe a competitor? If yes, sharpen it.",
-            "Does the language assume the reader is a senior engineer, not a marketer?",
-            "Have we named the audience by their work, not their job title?",
-            "Is there at least one thing we explicitly refuse to do?",
+            "Does this surface state the vision, mission, or a value verbatim — or does it paraphrase?",
+            "Would a senior engineer recognise themselves as the reader?",
+            "Have we named at least one thing we refuse to do?",
+            "Could a competitor say this sentence about themselves? If yes, sharpen it.",
           ]}
         />
         <AdditionalDonts
-          code="01.6"
+          code="01.5"
           items={[
-            "Never frame the brand against named competitors.",
-            "Never invoke heritage as a substitute for current evidence.",
+            "Never invent a sixth value. The five are canonical.",
+            "Never paraphrase the vision or mission. Quote them verbatim or link to them.",
             "Never describe the company with abstract values (\"passion\", \"excellence\").",
-            "Never write a positioning line longer than fifteen words.",
+            "Never lead with heritage. Lead with evidence.",
+            "Never run internal value statements on a public page.",
           ]}
         />
       </div>
@@ -81,8 +86,8 @@ const PositioningPage = () => (
 
     <SectionCrossLink
       links={[
-        { label: "Voice & Tone", to: "/voice", description: "How the position sounds in language (02)" },
-        { label: "Proof & Case Studies", to: "/proof", description: "The evidence behind the position (09.4)" },
+        { label: "Voice & Tone", to: "/voice", description: "How the foundation sounds in language (02)" },
+        { label: "Proof", to: "/proof", description: "The evidence behind every value (09.B)" },
       ]}
     />
 
@@ -90,9 +95,9 @@ const PositioningPage = () => (
       className="mt-16 md:mt-20"
       items={[
         { label: "Section", value: "01 · Brand Position" },
-        { label: "Scope", value: "Purpose · Principles · Origin" },
+        { label: "Scope", value: "Vision · Mission · Values" },
         { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: "Canonical", emphasis: true },
       ]}
     />
   </>
