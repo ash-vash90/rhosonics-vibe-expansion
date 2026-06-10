@@ -1,60 +1,69 @@
-# Phase 1 — ImpactBar, FactFile, Rhythm Doc
+# Brand System — Definitive Structure (approved 2026-06-10)
 
-Three deliverables, all in `src/components/brand/`, reusing existing tokens. No new section variants, no new colors.
+Synthesised from Bang & Olufsen, IBM Design Language, Herman Miller and Klarna. Goal: a public-credential brand book that reads as a precision-instrument spec, not a marketing deck.
 
-## 1. `ImpactBar` component
+## Canonical IA (10 chapters + Tools appendix)
 
-**File:** `src/components/brand/ImpactBar.tsx`
-
-Case-study header strip. 3–4 ROI stats in a single horizontal band, JetBrains Mono numerals, Instrument Sans labels. Two surfaces only: `obsidian` (dark) or `eco` (sustainability outcomes).
-
-```text
-┌────────────────────────────────────────────────────────────────┐
-│  ±0.05%        18 MO         12,400 hrs       2.3 GWh/yr       │
-│  SOLIDS ACC    PAYBACK       RECLAIMED        ENERGY SAVED     │
-│  src · plant   src · finance src · ops        src · sustain    │
-└────────────────────────────────────────────────────────────────┘
+```
+00  Introduction         /                — directory, governance, changelog
+01  Brand Position       /position        — purpose, principles, audience, what we are / are not
+02  Voice & Tone         /voice           — principles, lexicon (use/avoid), before/after rewrites, funnel rule
+03  Logo                 /logo            — construction, clearspace, misuse, co-brand, downloads
+04  Color                /color           — palette, families, pairings, accessibility
+05  Typography           /typography      — roles, scale (UI + data), micro-specs, misuse
+06  Iconography          /iconography     — UI icons + pictograms (two-tier, shared DNA)
+07  Imagery              /imagery         — photo categories with proportion ratios, technical/cutaway
+08  Data Visualization   /data-viz        — billboard.js governance, honesty rules
+09  Applications & Proof /applications + /proof — industries, interface kit, case studies, social
+10  Resources            /resources       — downloads, contacts, versioning
+APP Tools                /tools           — consolidated interactive utilities (kept per user)
 ```
 
-Props: `surface: "obsidian" | "eco"`, `stats: { value, label, source? }[]` (3–4), optional `eyebrow`.
+Old routes (`/about`, `/positioning`, `/principles`, `/visual-system`, `/logo-assets`, `/social-media`, `/review`) redirect to their new home.
 
-Composition: a thin wrapper over `StatCallout` rendered inside a full-bleed band. Source citation is mandatory per `stat-callout-spec` — types enforce it as optional but lint-warn at runtime in dev if missing.
+## Per-chapter required primitives
 
-## 2. `FactFile` component
+Every chapter ends with the same two blocks:
 
-**File:** `src/components/brand/FactFile.tsx`
+- **Decision Questions** — Socratic governance (IBM). 3–5 questions any execution must answer.
+- **Additional Don'ts** — catch-all rules (HM). Short, numeric, testable.
 
-Standardized 4-cell metadata strip for case/application pages. Mono caps, separated by hairline dividers (no borders — separation via background per `separation-principle`). Sits directly under page hero, above ImpactBar.
+## Phase 2A — Structural skeleton (this commit)
 
-```text
-┌─────────────┬─────────────┬─────────────┬─────────────┐
-│ INDUSTRY    │ MEDIUM      │ TECHNOLOGY  │ SITE        │
-│ Mining      │ Cu Tailings │ SDM-Eco     │ Chile, 2024 │
-└─────────────┴─────────────┴─────────────┴─────────────┘
-```
+1. Routes renamed, redirects in place, new pages stubbed.
+2. Navigation rebuilt around the 10 chapters.
+3. CommandPalette entries updated.
+4. BrandLayout simplified — CursorFollower and HeroParticles removed.
+5. Voice chapter re-enabled with LexiconTable and RewriteTable primitives.
+6. Tools chapter consolidates: PhotoTreatmentTool · IconPicker · ExportSection · DownloadableAssets · design-token exports.
+7. Kill list executed (see below).
 
-Props: `items: { label, value }[]` (typically 4). Renders as `dl` for semantics. Responsive: 4 cols desktop → 2 cols tablet → 2 cols mobile (never stack to 1 — preserves "fact file" density).
+## Phase 2B — Content authorship (next)
 
-## 3. Section rhythm documentation
+- Full Lexicon + Rewrite content authored to the Klarna model.
+- Position chapter merged narrative authored.
+- DataViz chapter authored with billboard.js examples and honesty rules.
+- Resources chapter content authored.
+- Photography proportion ratios codified in Imagery.
+- Decision Questions and Additional Don'ts populated on every chapter.
 
-**File:** edit `src/components/brand/PatternsShowcase.tsx` (or wherever the rhythm guide lives — to be confirmed during build) to add a new sub-section formalizing the **Data / Power / Action** rotation:
+## Phase 3 — Visual pass
 
-- **Data mode** = `default` + `tinted` + `eco` (calm, evidence-dense)
-- **Power mode** = `dark` (statement, sparing use)
-- **Action mode** = `split` + `fullBleedMock` (interactive/product)
+After structure and content are right.
 
-Rule: never two consecutive sections from the same mode. Existing `assertSectionRhythm` already prevents same-*variant* adjacency; this layer adds the higher-order mode grouping.
+## Kill list executed in Phase 2A
 
-## Out of scope (later phases)
+Pages: `ReviewPage`, `SocialMediaPage`, `AboutPage` (folded into Position).
+Components: `AboutThisSystem`, `AboutSystemRefreshed`, `PatternsShowcase`, `BeforeAfterSlider`, `CursorFollower`, `HeroParticles`, `SectionRhythmGuide`, `HeroTypeScaleAudit`, `ChapterProgress`, `QuickNav`, `SectionBridge`, `StickySubNav`.
 
-- StickySubNav, command-palette search → Phase 2
-- Macro photography spec, CaseStudyTriad, impact-first hero → Phase 3
-- Hero type-scale audit → Phase 4
+Single nav system retained: left rail (Navigation) + ⌘K (CommandPalette). All other nav layers removed.
 
-## Technical notes
+## Tools chapter scope (per user)
 
-- Both components are pure presentational, no business logic, no new tokens.
-- ImpactBar uses existing `bg-rho-obsidian` / `bg-[hsl(var(--eco-surface))]`, full-bleed via the same `-mx-... px-...` pattern from `SectionVariants`.
-- FactFile uses `slate-100` cell backgrounds with `gap-px` on a slate-200 grid container to fake hairlines without borders.
-- No edits to `SectionVariants.tsx` — current six variants cover the need.
-- Components ship unused; they'll be wired into pages in follow-up requests so this phase stays reviewable in isolation.
+All interactive utilities live here:
+- Photo Treatment Tool
+- Icon Library (picker)
+- Color Token + Tailwind exports
+- Design Token (Tokens Studio / Style Dictionary) downloads
+- HTML / Figma asset-pack export
+- Logo file downloads (SVG/PNG variants)
