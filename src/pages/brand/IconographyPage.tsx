@@ -3,7 +3,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
-import { TelemetryEyebrow, TelemetryFooter } from "@/components/brand/telemetry";
+import { TelemetryFooter } from "@/components/brand/telemetry";
 import { SolutionIcon, type SolutionIconName } from "@/components/brand/icons/SolutionIcon";
 import { DecisionQuestions } from "@/components/brand/DecisionQuestions";
 import { AdditionalDonts } from "@/components/brand/AdditionalDonts";
@@ -34,7 +34,6 @@ const IconographyPage = () => (
     {/* 06.1 UI Icons */}
     <ScrollSection id="ui-icons">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="06.1" label="UI Icons" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           Small. Functional. Replaceable.
         </h2>
@@ -51,7 +50,6 @@ const IconographyPage = () => (
     {/* 06.2 Pictograms */}
     <ScrollSection id="pictograms" variant="tinted">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="06.2" label="Pictograms" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           Engineered geometry, brand-restricted.
         </h2>

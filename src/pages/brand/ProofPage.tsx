@@ -3,7 +3,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
-import { TelemetryEyebrow, TelemetryFooter } from "@/components/brand/telemetry";
+import { TelemetryFooter } from "@/components/brand/telemetry";
 import { DecisionQuestions } from "@/components/brand/DecisionQuestions";
 import { AdditionalDonts } from "@/components/brand/AdditionalDonts";
 import SectionCrossLink from "@/components/brand/SectionCrossLink";
@@ -51,7 +51,6 @@ const ProofPage = () => (
     <SectionDivider label="09.B.3" />
     <ScrollSection id="triads">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="09.B.3" label="Case study triad" />
         <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-[1.1] mb-3">
           Three pieces of evidence, side by side.
         </h3>

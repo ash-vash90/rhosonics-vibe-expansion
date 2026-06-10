@@ -3,7 +3,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
-import { TelemetryEyebrow, TelemetryFooter } from "@/components/brand/telemetry";
+import { TelemetryFooter } from "@/components/brand/telemetry";
 import { LexiconTable } from "@/components/brand/voice/LexiconTable";
 import { RewriteTable } from "@/components/brand/voice/RewriteTable";
 import { DecisionQuestions } from "@/components/brand/DecisionQuestions";
@@ -31,7 +31,6 @@ const VoicePage = () => (
     {/* 02.1 Lexicon — use / avoid */}
     <ScrollSection id="lexicon" variant="tinted">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="02.1" label="Lexicon" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           Words we use. Words we don't.
         </h2>
@@ -48,7 +47,6 @@ const VoicePage = () => (
     {/* 02.2 Before / After rewrites */}
     <ScrollSection id="rewrites">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="02.2" label="Before / After" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           The voice in motion.
         </h2>
@@ -65,7 +63,6 @@ const VoicePage = () => (
     {/* 02.3 Funnel rule */}
     <ScrollSection id="funnel-rule" variant="tinted">
       <header className="max-w-3xl mb-8">
-        <TelemetryEyebrow className="mb-3" code="02.3" label="Funnel rule" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           Marketing voice never enters the spec sheet.
         </h2>
