@@ -7,13 +7,16 @@ const Foundation = lazy(() => import("@/components/brand/Foundation"));
 const ValueOperatingRules = lazy(
   () => import("@/components/brand/ValueOperatingRules"),
 );
+const DesignPrinciples = lazy(
+  () => import("@/components/brand/DesignPrinciples"),
+);
 
 /**
  * 01 Brand Position — the foundation chapter.
  *
- * Hero (Vision + Mission) then values + operating rules.
- * BrandLayout already provides the page footer — no telemetry footer
- * or cross-link block here (avoids stacking three footers).
+ * Foundation (Vision + Mission) → Values + Operating Rules → Design
+ * Principles. BrandLayout already provides the page footer — no
+ * telemetry footer or cross-link block here.
  */
 
 const PositioningPage = () => (
@@ -30,6 +33,14 @@ const PositioningPage = () => (
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <ValueOperatingRules />
+        </Suspense>
+      </ErrorBoundary>
+    </ScrollSection>
+
+    <ScrollSection id="design-principles">
+      <ErrorBoundary>
+        <Suspense fallback={<SectionLoader />}>
+          <DesignPrinciples />
         </Suspense>
       </ErrorBoundary>
     </ScrollSection>

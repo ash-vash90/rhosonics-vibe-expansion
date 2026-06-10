@@ -178,6 +178,96 @@ export const INDUSTRY_VALUE_MAPPING = {
 } as const;
 
 // ---------------------------------------------------------------
+// Design principles — derived from values + vision/mission.
+// One principle per canonical value. Decision tools, not style rules.
+// Modelled on Apple HIG: one-word name, bold imperative, essence,
+// 2–3 applicable rules. Approved June 2026.
+// ---------------------------------------------------------------
+
+export interface BrandPrinciple {
+  id: string;
+  num: string;
+  name: string;
+  imperative: string;
+  essence: string;
+  apply: string[];
+  valueId: string;
+}
+
+export const BRAND_PRINCIPLES: BrandPrinciple[] = [
+  {
+    id: "purpose",
+    num: "01",
+    name: "Purpose",
+    imperative: "Measure what matters.",
+    essence:
+      "Every element exists to make something measurable, controllable, or optimizable. If it doesn't, cut it.",
+    apply: [
+      "Lead with the measurement, not the marketing.",
+      "Name the quantity (g/cm³, kg/h, %solids) before the brand.",
+      "If a section can't answer \"what does this help measure?\", it doesn't ship.",
+    ],
+    valueId: "expertise",
+  },
+  {
+    id: "evidence",
+    num: "02",
+    name: "Evidence",
+    imperative: "Show the number, name the method.",
+    essence:
+      "Claims are cheap. Verified numbers, cited methods, and named engineers are not.",
+    apply: [
+      "Every metric carries a source line — method, site, date.",
+      "No round-number marketing claims. No \"10× better\". No \"best-in-class\".",
+      "Prefer a graph with axes over an adjective.",
+    ],
+    valueId: "quality",
+  },
+  {
+    id: "partnership",
+    num: "03",
+    name: "Partnership",
+    imperative: "Solve it with them, not at them.",
+    essence:
+      "Our work is co-authored with operators in the field. The brand should sound and look like that — never one-sided.",
+    apply: [
+      "Speak with partners by name; quote them verbatim where possible.",
+      "Case studies are joint stories, not testimonials.",
+      "Replace \"we deliver\" with \"we built this with…\".",
+    ],
+    valueId: "collaboration",
+  },
+  {
+    id: "mechanism",
+    num: "04",
+    name: "Mechanism",
+    imperative: "Show what's novel. Don't claim it.",
+    essence:
+      "\"Innovative\" is the word people use when they can't explain the mechanism. Explain the mechanism.",
+    apply: [
+      "Diagram the physics or the data path before naming the product.",
+      "Banned words: innovative, revolutionary, next-gen, cutting-edge.",
+      "If a feature is new, say what changed and why it matters.",
+    ],
+    valueId: "innovation",
+  },
+  {
+    id: "footprint",
+    num: "05",
+    name: "Footprint",
+    imperative: "Quantify the saving.",
+    essence:
+      "Sustainability is a number — kWh saved, m³ water avoided, kg of hazardous chemicals removed, nuclear sources retired. If we can't quantify it, we don't claim it.",
+    apply: [
+      "Green saturation is reserved for measured savings.",
+      "Every eco claim cites the baseline it improves on.",
+      "No vague green language (\"eco-friendly\", \"greener future\"). Numbers or silence.",
+    ],
+    valueId: "sustainability",
+  },
+];
+
+// ---------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------
 
@@ -186,5 +276,8 @@ export const getValueById = (id: string): BrandValue | undefined =>
 
 export const getValueIcon = (id: string): LucideIcon | undefined =>
   getValueById(id)?.icon;
+
+export const getPrincipleById = (id: string): BrandPrinciple | undefined =>
+  BRAND_PRINCIPLES.find((p) => p.id === id);
 
 export default BRAND_VALUES;

@@ -1,66 +1,100 @@
-## What's wrong on /position today
+## What Apple does, and why it works
 
-1. **Vision + Mission are oversized** — rendered as 7xl / 5xl headlines stacked vertically. They read as decoration, not as a statement you can absorb.
-2. **Principles don't ladder up to the values** — `BrandPrinciples` lists "Precision before decoration / Expression with intent / Engineered, not styled / Consistency enables flexibility". None of those are Expertise, Collaboration, Innovation, Quality, or Sustainability. They're a design-team artefact pretending to be brand strategy.
-3. **Origin Story is orphaned** — "started measuring beer density in 1992" sits on the foundation chapter with no thread tying it to vision, mission, values, or what we do today. It's nostalgia, not positioning.
-4. **Governance block is filler** — "Before it ships, can the work answer…" and "The catch-all rules" are IBM/Herman-Miller-style ceremony copied wholesale. They don't help anyone make a decision and they undermine the seriousness of the page above them.
+Apple's HIG principles (Purpose, Agency, Responsibility, Familiarity, Flexibility, Simplicity, Craft, Delight) share one structure:
 
-## The fix
+- **One-word name** (a virtue, not a feature)
+- **A bold imperative** ("Make something meaningful.")
+- **One sentence of essence** — what it actually means
+- **2–3 supporting clauses** — how to apply it in practice
 
-Rebuild `/position` as a single, tight foundation chapter. Four sections, in this order, nothing else:
+They are *decision tools*, not style rules. They tell a designer what to weigh when two options compete. That's the bar.
 
-### 01.1 — Vision & Mission, side by side
-Replace the stacked giant-type Foundation block with a two-column statement:
+## The translation rule
+
+Rhosonics' foundation is not a generic product company — it's measurement. Vision and mission both point at one thing: **making the physical world legible, controllable, and lighter on the planet**. The five values (Expertise, Collaboration, Innovation, Quality, Sustainability) are *what we are*. The principles should be *what the work has to do* to prove it.
+
+So each principle:
+- maps to one canonical value (no orphans, no overlaps),
+- carries the vision/mission's measurement-first worldview,
+- gives a concrete test a designer/writer can apply at review time.
+
+## The five principles
 
 ```text
-┌──────────────────────────┬──────────────────────────┐
-│ VISION                   │ MISSION                  │
-│ Leading the way in what  │ Advanced measurement     │
-│ can be measured,         │ solutions for more       │
-│ controlled, and          │ efficient, automated,    │
-│ optimized.               │ and sustainable          │
-│                          │ operations.              │
-│ — the horizon            │ — what we do today       │
-└──────────────────────────┴──────────────────────────┘
+01  PURPOSE         →  Expertise
+    Measure what matters.
+02  EVIDENCE        →  Quality
+    Show the number, name the method.
+03  PARTNERSHIP     →  Collaboration
+    Solve it with them, not at them.
+04  MECHANISM       →  Innovation
+    Show what's novel. Don't claim it.
+05  FOOTPRINT       →  Sustainability
+    Quantify the saving.
 ```
 
-- Type size around `text-2xl md:text-3xl` (serious, readable, not theatrical).
-- Equal weight, equal column. Dramatic typography is reserved for chapter theses elsewhere — not for the foundation statements themselves.
-- One short qualifier line under each so the relationship (long horizon / present commitment) is explicit.
-- Stacks on mobile.
+Five, not eight. One per value. Apple can afford eight because they design for everyone; we design for senior engineers and operators, and a shorter list is sharper.
 
-### 01.2 — The five values
-Keep the values list from the current `Foundation` component (numbered, icon + title + description, divided rows). This part already works. It stays as-is below the Vision/Mission pair.
+### 01 — Purpose · *Measure what matters.*
+**Essence.** Every element exists to make something measurable, controllable, or optimizable. If it doesn't, cut it.
+**Apply.**
+- Lead with the measurement, not the marketing.
+- Name the quantity (g/cm³, kg/h, %solids) before the brand.
+- If a section can't answer "what does this help measure?", it doesn't ship.
 
-### 01.3 — How the values show up in our work
-Replace `BrandPrinciples` entirely. New block, one row per value, each value paired with the operational behaviour it demands:
+### 02 — Evidence · *Show the number, name the method.*
+**Essence.** Claims are cheap. Verified numbers, cited methods, and named engineers are not.
+**Apply.**
+- Every metric carries a source line (method, site, date).
+- No round-number marketing claims (no "10× better", no "best-in-class").
+- Prefer a graph with axes over an adjective.
 
-| Value | What it demands of the work |
-| --- | --- |
-| Expertise | Evidence over claims. Cite the measurement, name the engineer. |
-| Collaboration | Speak with partners, not at customers. Co-authored language. |
-| Innovation | Show the novel mechanism, not the marketing word "innovative". |
-| Quality | Every number is verifiable. Every spec traces to a test. |
-| Sustainability | Quantify the saving (energy, chemicals, nuclear avoidance). |
+### 03 — Partnership · *Solve it with them, not at them.*
+**Essence.** Our work is co-authored with operators in the field. The brand should sound and look like that — never one-sided.
+**Apply.**
+- Speak with partners by name; quote them verbatim where possible.
+- Case studies are joint stories, not testimonials.
+- Replace "we deliver" with "we built this with…".
 
-This is the only "principles" surface on the page, and every row maps 1:1 to a canonical value. No standalone "design principles" detached from the foundation.
+### 04 — Mechanism · *Show what's novel. Don't claim it.*
+**Essence.** "Innovative" is the word people use when they can't explain the mechanism. Explain the mechanism.
+**Apply.**
+- Diagram the physics or the data path before naming the product.
+- Banned words: *innovative*, *revolutionary*, *next-gen*, *cutting-edge*.
+- If a feature is new, say what changed and why it matters.
 
-### 01.4 — Remove Origin Story from this page
-Cut `OriginStory` from `/position` entirely. The beer-density 1992 story belongs on an About / Company page (or inside a Proof anecdote), not on the foundation chapter. The agent will leave `OriginStory.tsx` in the codebase, unrouted, so it can be re-placed later if you want it on a different page.
+### 05 — Footprint · *Quantify the saving.*
+**Essence.** Sustainability is a number — kWh saved, m³ water avoided, kg of hazardous chemicals removed, nuclear sources retired. If we can't quantify it, we don't claim it.
+**Apply.**
+- Green saturation (the only saturated colour) is reserved for measured savings.
+- Every eco claim cites the baseline it improves on.
+- No vague green language ("eco-friendly", "greener future"). Numbers or silence.
 
-### 01.5 — Delete the governance filler
-Remove the `DecisionQuestions` and `AdditionalDonts` blocks from `/position`. They are removed only from this page; the components remain available for chapters where a real governance test exists. If those blocks turn out to be filler everywhere, that's a separate pass — flag it after seeing the rebuilt page.
+## What goes on the page
 
-## Files touched
+`/position` becomes a 3-act chapter, no more footers stacked at the bottom:
 
-- `src/pages/brand/PositioningPage.tsx` — rewrite section composition; remove `BrandPrinciples`, `OriginStory`, `DecisionQuestions`, `AdditionalDonts` from this page.
-- `src/components/brand/Foundation.tsx` — restructure: Vision/Mission become a two-column pair at calmer scale; values list preserved.
-- New: `src/components/brand/ValueOperatingRules.tsx` — the "how values show up in the work" table (section 01.3).
+1. **Foundation** (existing hero) — Vision + Mission, side by side.
+2. **Values & Operating Rules** (existing) — the canonical five values, each paired with its operating rule.
+3. **Design Principles** (NEW) — the five principles above, in a single sectioned list. Each row:
+   - mono index (`01`–`05`)
+   - the one-word principle name
+   - the bold imperative ("Measure what matters.")
+   - the essence sentence
+   - 2–3 "Apply" bullets
+   - a small tag showing which value it grounds in (e.g. `→ Expertise`)
 
-No data changes. `src/data/brand-values.ts` stays the single source of truth.
+Greyscale by default; green used only on the index numbers and the value tags, per the colour-for-emphasis rule. Standard 4px corners — these are content rows, not hero surfaces, so no chamfers.
 
-## Out of scope (flag for later)
+## Technical notes
 
-- Whether `DecisionQuestions` / `AdditionalDonts` should be removed from every other chapter too.
-- Where Origin Story belongs (new About page, Proof sidebar, or cut entirely).
-- A full visual pass on the rest of the chapters — this plan only fixes `/position`.
+- New file: `src/components/brand/DesignPrinciples.tsx` — pure presentational, reads from a new `BRAND_PRINCIPLES` array.
+- New export in `src/data/brand-values.ts`: `BRAND_PRINCIPLES`, typed, with `id`, `num`, `name`, `imperative`, `essence`, `apply: string[]`, `valueId` (FK to `BrandValue.id`).
+- Wire into `src/pages/brand/PositioningPage.tsx` as a third lazy section under `ValueOperatingRules`. No extra footer, no extra cross-link block (the global `BrandLayout` footer is the only footer).
+- A memory file (`mem://brand/design-principles-v3`) will be saved alongside the code so future work can't drift back to vague aesthetic principles. Updates the existing `design-principles-v2` reference in the index.
+
+## Out of scope
+
+- No changes to the values list, vision, or mission strings — those are canonical.
+- No changes to other pages (`/voice`, `/proof`, etc.) in this pass. The principles will *eventually* be cited from those pages, but that's a follow-up once these five are approved.
+- No new colours, fonts, or layout tokens.
