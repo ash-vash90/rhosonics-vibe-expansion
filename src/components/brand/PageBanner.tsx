@@ -1,13 +1,21 @@
-import { useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { loadGsap } from "./SectionUtils";
+import { TelemetryEyebrow } from "./telemetry";
 
 interface PageBannerProps {
   number: string;
   title: string;
   subtitle: string;
+  /** Telemetry eyebrow above the number row: meta[0] is the label,
+   *  the rest join with middots, e.g. ["Practice", "v2025"]. */
+  meta?: string[];
+  /** Impact slot — rendered below the subtitle, inside the banner
+   *  surface. Used by metric-first pages (e.g. Proof's ImpactFirstHero
+   *  with `embedded`) so the page has ONE hero, never two. */
+  children?: ReactNode;
 }
 
-export const PageBanner = ({ number, title, subtitle }: PageBannerProps) => {
+export const PageBanner = ({ number, title, subtitle, meta, children }: PageBannerProps) => {
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,7 +46,10 @@ export const PageBanner = ({ number, title, subtitle }: PageBannerProps) => {
     <div ref={bannerRef} className="relative overflow-visible md:overflow-hidden -mb-6 md:mb-4 lg:mb-6 -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 pt-16 pb-2 md:pt-14 md:pb-8 lg:pt-16 lg:pb-10 bg-gradient-to-b from-[hsl(var(--slate-50))] to-background">
       {/* Accent line at the very top */}
       <div className="banner-accent-line absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary via-[hsl(var(--rho-green-accent))] to-transparent origin-left" />
-      
+
+      {/* Signal texture — the ultrasonic wave every page hero carries */}
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-16 bg-wave-pattern opacity-20 pointer-events-none" />
+
       {/* Watermark number */}
       <span className="banner-watermark hidden md:block absolute md:top-1/2 md:right-8 md:-translate-y-1/2 md:text-[12rem] lg:right-12 lg:text-[16rem] xl:right-20 font-data font-bold leading-none text-[hsl(var(--slate-200))] select-none pointer-events-none opacity-60">
         {number}
@@ -46,6 +57,9 @@ export const PageBanner = ({ number, title, subtitle }: PageBannerProps) => {
 
       {/* Content */}
       <div className="relative z-10">
+        {meta && meta.length > 0 && (
+          <TelemetryEyebrow className="mb-4" pulse label={meta[0]} meta={meta.slice(1)} />
+        )}
         <div className="flex items-baseline gap-3 mb-3">
           <span className="font-data text-sm md:text-base font-bold text-primary">{number}</span>
           <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
@@ -56,6 +70,7 @@ export const PageBanner = ({ number, title, subtitle }: PageBannerProps) => {
         <p className="banner-subtitle text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl">
           {subtitle}
         </p>
+        {children && <div className="mt-8 md:mt-10">{children}</div>}
       </div>
     </div>
   );

@@ -598,22 +598,114 @@ Semantic info/warning/error/success boxes keep using the surface/border token pa
 
 ### Texture Families (exactly three)
 
-Background textures are what keep the brand unique — and what made it feel scattered when every section invented its own. Every texture now belongs to one of three families, each tied to a brand pillar:
+Background textures are what keep the brand unique — and what made it feel scattered when every section invented its own. The full palette stays, but every texture now belongs to one of three families, each tied to a brand pillar:
 
 | Family | Pillar | Utilities | Where |
 |--------|--------|-----------|-------|
-| **Signal** | Ultrasonic measurement (the product) | `bg-wave-subtle` | Dark hero surfaces, obsidian panels |
-| **Precision** | Engineering discipline | `bg-grid-data`, `bg-workshop-grid` | Technical/proof sections, workshop contexts |
-| **Field** | Industrial environments | `bg-terrain-strata`, `bg-terrain-grain`, `bg-terrain-ore`; industry patterns `bg-pattern-topo`, `bg-pattern-topo-dark`, `bg-pattern-minerals`, `bg-pattern-semicon`, `bg-pattern-dredging` | Mineral/field surfaces, industry application sections only |
+| **Signal** | Ultrasonic measurement (the product) | `bg-wave-subtle` (white strokes, dark surfaces), `bg-wave-pattern` (green strokes, light surfaces), `bg-wave-hero` (faint green wash, hero scale), `bg-hero-glow` (radial green light) | Hero surfaces, obsidian panels |
+| **Precision** | Engineering discipline | `bg-grid` (neutral), `bg-grid-data` (green data grid), `bg-workshop-grid` (mineral blueprint), `bg-rivet-pattern` | Technical/proof sections, workshop contexts |
+| **Field** | Industrial environments | `bg-terrain-contour`, `bg-terrain-strata`, `bg-terrain-grain`, `bg-terrain-ore`; industry patterns `bg-pattern-topo`, `bg-pattern-topo-dark`, `bg-pattern-minerals`, `bg-pattern-semicon`, `bg-pattern-dredging` | Mineral/field surfaces, industry application sections only |
+
+#### Composing textures with background colors
+
+This is where the system's flexibility lives — instead of inventing new styles, build new surface looks by **layering one pattern over an approved background color**. Most patterns are transparent SVG overlays designed exactly for this (`bg-terrain-ore`, `bg-pattern-minerals`, `bg-pattern-dredging`, and `bg-workshop-grid` carry their own base color; everything else inherits whatever sits beneath).
+
+```tsx
+// ✅ Pattern × background-color composition — the sanctioned way to
+//    create a new surface look
+<section className="relative bg-rho-obsidian">
+  <div className="absolute inset-0 bg-terrain-strata opacity-30" />
+  <div className="relative">...</div>
+</section>
+
+// ✅ Same pattern, different mood: layered over a mineral surface
+<section className="relative bg-mineral-surface">
+  <div className="absolute inset-0 bg-terrain-contour opacity-40" />
+  <div className="relative">...</div>
+</section>
+```
 
 Rules of use:
 
 1. **One texture per surface, maximum.** Never layer two patterns. (`noise-overlay` is the only sanctioned second layer, on hero surfaces.)
 2. **Always behind content** — an absolutely-positioned layer at ≤ 50% opacity.
-3. **Never under dense data.** Tables, charts, and metric grids sit on plain surfaces.
-4. **Industry patterns stay in their industry.** `bg-pattern-dredging` belongs on the dredging section, nowhere else.
+3. **Background colors come from the token palette** (§3) — compose freely with patterns, but don't introduce new colors.
+4. **Never under dense data.** Tables, charts, and metric grids sit on plain surfaces.
+5. **Industry patterns stay in their industry.** `bg-pattern-dredging` belongs on the dredging section, nowhere else.
 
-> **Removed from the system:** `bg-wave-pattern`, `bg-wave-hero` (one wave is enough), `bg-terrain-contour`, `bg-rivet-pattern`, `bg-grid`, `bg-hero-glow`.
+---
+
+## 4.6. Page Architecture (Role-Based Composition)
+
+**The unifying concept: a precision instrument reading the field.** The *structure* of every page is the instrument — telemetry labels, hairline rules, metric-first data, chamfered large panels (the technical precision that holds in semiconductor/flat-panel contexts). The *material accents* are the field — terrain and industry textures on context sections (the mining ruggedness). The mission maps directly onto the visual system:
+
+| Mission word | Family | Where it shows |
+|---|---|---|
+| **Measured** | Signal (waves) | Page heroes |
+| **Controlled** | Precision (grids) | Data and evidence sections |
+| **Optimized / sustainable** | Eco surfaces | Sustainability outcomes |
+| **The industries** | Field (terrain) | Industry/field-context sections |
+
+### Canonical page skeleton
+
+Every page follows this skeleton — no exceptions, no second systems:
+
+```
+PageBanner(number, title, subtitle, meta[, impact-slot children])
+  → [ SectionDivider "NN.N" → ScrollSection(variant by role) ]*
+  → TelemetryFooter
+```
+
+- **`PageBanner`** is the page's ONLY hero. It carries the Signal wave automatically. Metric-first pages put an `<ImpactFirstHero embedded …/>` in the banner's children slot — never a second hero block below it.
+- **`ScrollSection`** is the ONLY section wrapper (`SectionVariants` was deleted). Variants: `default`, `tinted`, `eco`, `dark`. Anchors go on the `id` prop (handles `scroll-mt-20`).
+- **Spacing law:** `density="compact"` (`py-12 md:py-16`) is the sitewide default rhythm; `standard` is reserved for statement bands; spacious rhythm is retired. Explicit `py-*` in className overrides density.
+- **Rhythm rule:** never two adjacent non-default sections with the same variant — a dev-mode assertion in `BrandLayout` warns on violations.
+
+### Section role → surface/texture mapping
+
+| Section role | Variant | Surface | Texture (one max) |
+|---|---|---|---|
+| Page hero / banner | (PageBanner) | slate-50→bg gradient | Signal: `bg-wave-pattern`, automatic |
+| Directory / index | default | `bg-card clip-chamfer-md` + CornerBrackets | none — structure is the texture |
+| Data / evidence / specs | default | flat or `card-base` grids | Precision: `bg-grid-data` underlay ≤ `opacity-20` |
+| Industry / field context | default or dark | `card-mineral` / obsidian panels | Field: `bg-terrain-*` / `bg-pattern-*` per industry |
+| Sustainability outcomes | eco | `card-eco` | none or `bg-wave-subtle` |
+| Governance / meta / process | tinted | slate-100 | noise-overlay (built into tinted) |
+| Dark statement band (max 1/page) | dark | obsidian | optional `bg-pattern-topo-dark` |
+| Page close | — | `TelemetryFooter` | none |
+
+Limits: max one Field moment and one dark band per page; Precision underlays never above `opacity-20`.
+
+### Telemetry component kit
+
+The brand's signature dialect lives in `src/components/brand/telemetry/` — never hand-roll these patterns:
+
+| Component | Replaces | Rules |
+|---|---|---|
+| `TelemetryEyebrow` | every ad-hoc `font-data text-[11px] uppercase tracking-[0.3em]` row | one per section header; `code` for "NN.N"/"GRP_NN", `pulse` for live-system headers, `tone="dark"` on dark surfaces |
+| `CornerBrackets` | hand-positioned bracket corner divs | only inside `relative` chamfered panels — they restore the edge the clip strips |
+| `TelemetryFooter` | hand-rolled metadata strips | exactly one per page, last element; convention: Section / context / Owner / Status (emphasized) |
+| `DataWatermark` | giant faded background words | max one per page, `aria-hidden`, ~2.5% opacity |
+
+```tsx
+// ✅ A canonical page
+<PageBanner number="07" title="Voice" subtitle="…" meta={["Story", "v2025"]} />
+<SectionDivider label="07.1" />
+<ScrollSection id="tone" variant="tinted">…</ScrollSection>
+<TelemetryFooter items={[
+  { label: "Section", value: "07 · Voice" },
+  { label: "Scope", value: "Tone + Terminology" },
+  { label: "Owner", value: "MarComms" },
+  { label: "Status", value: "Active", emphasis: true },
+]} />
+
+// ❌ WRONG: second hero stacked under the banner
+<PageBanner … />
+<ScrollSection><ImpactFirstHero … /></ScrollSection>
+
+// ❌ WRONG: hand-rolled eyebrow
+<div className="font-data text-[11px] uppercase tracking-[0.3em] text-primary">10.3 · Case study</div>
+```
 
 ---
 
@@ -1207,6 +1299,13 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 - ❌ Never use inconsistent spacing within component groups
 - ❌ Never mix 4px-based and non-4px-based spacing
 
+### Page Architecture
+- ❌ Never stack two heroes — metric heroes embed in PageBanner's children slot
+- ❌ Never hand-roll telemetry eyebrows, footers, brackets, or watermarks — use the `telemetry/` kit
+- ❌ Never use `SectionVariants` — deleted; `ScrollSection` is the only section wrapper
+- ❌ Never deviate from the compact rhythm (`py-12 md:py-16`) except for statement bands
+- ❌ Never give a page more than one Field moment or one dark band
+
 ### Process
 - ❌ Never ship without grayscale hierarchy validation
 - ❌ Never add decorative elements before structure is solid
@@ -1240,6 +1339,9 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
 | CSS variables | `src/index.css` |
 | Tailwind config | `tailwind.config.ts` |
 | Logo component | `src/components/RhosonicsLogo.tsx` |
+| Telemetry kit | `src/components/brand/telemetry/` |
+| Section wrapper | `src/components/brand/ScrollSection.tsx` |
+| Page banner | `src/components/brand/PageBanner.tsx` |
 | Wordmark paths | `src/assets/brand/rhosonics-wordmark-paths.ts` |
 | Button component | `src/components/ui/button.tsx` |
 | Metric tile | `src/components/ui/metric-tile.tsx` |
@@ -1333,4 +1435,4 @@ Add to every design review:
 ---
 
 *Last updated: 2026-06-10*
-*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles + 2026 Design Trends Analysis + Homepage reference design alignment (Primetime primary, chamfer system, mineral-in-UI, fluid type, 5-level shadow with glow) + Visual system unification (chamfer-by-scale doctrine, four surface families, three texture families)*
+*Source: Rhosonics Brand Guidelines System + Refactoring UI Principles + 2026 Design Trends Analysis + Homepage reference design alignment (Primetime primary, chamfer system, mineral-in-UI, fluid type, 5-level shadow with glow) + Visual system unification (chamfer-by-scale doctrine, four surface families, three texture families) + Page architecture unification ("precision instrument reading the field": one section system, telemetry kit, role-based texture mapping)*

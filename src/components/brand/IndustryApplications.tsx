@@ -41,8 +41,8 @@ export const IndustryApplications = () => {
       <div className="grid md:grid-cols-3 gap-px bg-border rounded-lg overflow-hidden">
         {/* Mineral Processing */}
         <div className="relative overflow-hidden bg-rho-obsidian">
+          {/* One texture per surface (agents.md §4.5) — ore carries the field context */}
           <div className="absolute inset-0 bg-terrain-ore" />
-          <div className="absolute inset-0 bg-terrain-strata opacity-30" />
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-mineral-neutral to-mineral-deep" />
           <div className="relative p-8 min-h-[320px] flex flex-col">
             <div className="flex justify-between items-center mb-auto">

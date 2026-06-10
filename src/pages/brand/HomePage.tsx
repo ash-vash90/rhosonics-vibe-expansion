@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "@/lib/icons";
+import { ScrollSection } from "@/components/brand/ScrollSection";
+import { TelemetryEyebrow, CornerBrackets, TelemetryFooter, DataWatermark } from "@/components/brand/telemetry";
 
 interface Section {
   id: string;
@@ -66,26 +68,16 @@ const HomePage = () => {
   return (
     <div className="relative py-16 md:py-20 lg:py-24" id="about">
       {/* Oversized background data mark */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute -top-4 right-0 font-data font-black uppercase leading-none text-foreground/[0.025] text-[120px] md:text-[180px] lg:text-[220px]"
-      >
-        Index
-      </div>
+      <DataWatermark text="Index" />
 
       {/* Section header — telemetry strip */}
       <div className="relative mb-12 md:mb-16">
-        <div className="flex items-center gap-3 font-data text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-4">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-          </span>
-          <span>Directory</span>
-          <span className="text-border">·</span>
-          <span>{String(totalSections).padStart(2, "0")} Sections</span>
-          <span className="text-border">·</span>
-          <span>v2025</span>
-        </div>
+        <TelemetryEyebrow
+          className="mb-4"
+          pulse
+          label="Directory"
+          meta={[`${String(totalSections).padStart(2, "0")} Sections`, "v2025"]}
+        />
 
         <h2 className="font-ui text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight leading-[1.05] mb-4 max-w-3xl">
           System Contents
@@ -98,7 +90,7 @@ const HomePage = () => {
       {/* Group blocks */}
       <div className="space-y-12 md:space-y-16">
         {sectionGroups.map((group) => (
-          <section key={group.title} className="relative">
+          <ScrollSection key={group.title} className="py-0 relative">
             {/* Group header — bracket-coded telemetry row */}
             <header className="flex items-baseline gap-4 mb-5">
               <span className="font-data text-[10px] uppercase tracking-[0.3em] text-primary">
@@ -115,11 +107,7 @@ const HomePage = () => {
 
             {/* Chamfered container holding the directory rows */}
             <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
-              {/* Subtle bracket corners on the large container */}
-              <div aria-hidden="true" className="absolute -top-px left-3 w-3 h-3 border-t border-l border-primary/40" />
-              <div aria-hidden="true" className="absolute -top-px right-3 w-3 h-3 border-t border-r border-primary/40" />
-              <div aria-hidden="true" className="absolute -bottom-px left-3 w-3 h-3 border-b border-l border-primary/40" />
-              <div aria-hidden="true" className="absolute -bottom-px right-3 w-3 h-3 border-b border-r border-primary/40" />
+              <CornerBrackets />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
                 {group.sections.map((section) => (
@@ -150,24 +138,20 @@ const HomePage = () => {
                 ))}
               </div>
             </div>
-          </section>
+          </ScrollSection>
         ))}
       </div>
 
       {/* Footer telemetry strip */}
-      <div className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-border pt-6">
-        {[
-          ["Standard", "Brand OS"],
-          ["Build", "Stable · 2025"],
-          ["Origin", "Delft, NL"],
-          ["Status", "Active"],
-        ].map(([k, v], i) => (
-          <div key={k} className="flex flex-col gap-1">
-            <span className="font-data text-[10px] uppercase tracking-widest text-muted-foreground/70">{k}</span>
-            <span className={`font-data text-xs uppercase tracking-wider ${i === 3 ? "text-primary" : "text-foreground"}`}>{v}</span>
-          </div>
-        ))}
-      </div>
+      <TelemetryFooter
+        className="mt-16 md:mt-20"
+        items={[
+          { label: "Standard", value: "Brand OS" },
+          { label: "Build", value: "Stable · 2025" },
+          { label: "Origin", value: "Delft, NL" },
+          { label: "Status", value: "Active", emphasis: true },
+        ]}
+      />
     </div>
   );
 };

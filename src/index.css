@@ -127,6 +127,7 @@
     /* Custom Rhosonics Tokens */
     --gradient-brand: linear-gradient(135deg, hsl(var(--rho-green-accent)) 0%, hsl(var(--rho-green)) 100%);
     --gradient-obsidian: linear-gradient(180deg, hsl(224 20% 18%) 0%, hsl(var(--rho-obsidian)) 100%);
+    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--rho-green) / 0.15) 0%, transparent 50%);
     --gradient-field: linear-gradient(180deg, hsl(var(--mineral-surface)) 0%, hsl(100 4% 94%) 100%);
     --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.05), 0 2px 4px -2px hsl(0 0% 0% / 0.05);
     --shadow-elevated: 0 15px 30px -5px hsl(0 0% 0% / 0.12), 0 10px 10px -5px hsl(0 0% 0% / 0.08);
@@ -669,6 +670,13 @@
   }
 
   /* SIGNAL family — the ultrasonic wave, the brand's signature texture */
+  .bg-wave-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='60' viewBox='0 0 200 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 Q 25 10 50 30 T 100 30 T 150 30 T 200 30' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3Cpath d='M0 35 Q 25 55 50 35 T 100 35 T 150 35 T 200 35' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.25'/%3E%3Cpath d='M0 25 Q 25 5 50 25 T 100 25 T 150 25 T 200 25' stroke='%2333993c' stroke-width='1' fill='none' opacity='0.25'/%3E%3C/svg%3E");
+    background-size: 200px 60px;
+    background-repeat: repeat-x;
+    background-position: center;
+  }
+
   .bg-wave-subtle {
     background-image: url("data:image/svg+xml,%3Csvg width='300' height='40' viewBox='0 0 300 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 Q 37.5 5 75 20 T 150 20 T 225 20 T 300 20' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.15'/%3E%3Cpath d='M0 25 Q 37.5 35 75 25 T 150 25 T 225 25 T 300 25' stroke='%23ffffff' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
     background-size: 300px 40px;
@@ -676,7 +684,25 @@
     background-position: center;
   }
 
+  .bg-wave-hero {
+    background-image: url("data:image/svg+xml,%3Csvg width='400' height='100' viewBox='0 0 400 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 50 20 100 50 T 200 50 T 300 50 T 400 50' stroke='%2333993c' stroke-width='2' fill='none' opacity='0.08'/%3E%3Cpath d='M0 60 Q 50 80 100 60 T 200 60 T 300 60 T 400 60' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.05'/%3E%3Cpath d='M0 40 Q 50 10 100 40 T 200 40 T 300 40 T 400 40' stroke='%2333993c' stroke-width='1.5' fill='none' opacity='0.05'/%3E%3C/svg%3E");
+    background-size: 400px 100px;
+    background-repeat: repeat-x;
+    background-position: bottom;
+  }
+
+  /* Hero glow wash — radial brand-green light for hero sections */
+  .bg-hero-glow {
+    background: var(--gradient-hero);
+  }
+
   /* FIELD family — terrain textures (mineral neutrals) */
+  .bg-terrain-contour {
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 Q 50 30 100 45 T 200 35' stroke='%238B8F88' stroke-width='1' fill='none' opacity='0.18'/%3E%3Cpath d='M0 80 Q 60 65 120 85 T 200 70' stroke='%238B8F88' stroke-width='1' fill='none' opacity='0.14'/%3E%3Cpath d='M0 120 Q 40 135 90 115 T 200 125' stroke='%238B8F88' stroke-width='1' fill='none' opacity='0.11'/%3E%3Cpath d='M0 160 Q 70 150 130 165 T 200 155' stroke='%238B8F88' stroke-width='1' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+  }
+
   .bg-terrain-strata {
     background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='100' height='100' fill='none'/%3E%3Cpath d='M0 15 L100 20 M0 35 L100 30 M0 55 L100 60 M0 75 L100 70 M0 95 L100 90' stroke='%238B8F88' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3Ccircle cx='25' cy='45' r='2' fill='%238B8F88' opacity='0.06'/%3E%3Ccircle cx='70' cy='75' r='3' fill='%238B8F88' opacity='0.05'/%3E%3Ccircle cx='85' cy='25' r='1.5' fill='%238B8F88' opacity='0.07'/%3E%3C/svg%3E");
     background-size: 100px 100px;
@@ -696,7 +722,20 @@
     background-repeat: repeat;
   }
 
+  .bg-rivet-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2' fill='%238B8F88' opacity='0.15'/%3E%3Ccircle cx='20' cy='20' r='4' fill='none' stroke='%238B8F88' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E");
+    background-size: 40px 40px;
+    background-repeat: repeat;
+  }
+
   /* PRECISION family — engineering grids */
+  .bg-grid {
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
   .bg-workshop-grid {
     background-color: hsl(var(--mineral-surface));
     background-image: 
