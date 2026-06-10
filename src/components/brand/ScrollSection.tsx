@@ -8,10 +8,53 @@ gsap.registerPlugin(ScrollTrigger);
 interface ScrollSectionProps {
   children: ReactNode;
   className?: string;
-  variant?: "default" | "tinted" | "dark";
+  variant?: "default" | "tinted" | "eco" | "dark";
+  /** Vertical rhythm. Compact (py-12 md:py-16) is the sitewide default;
+   *  standard is reserved for statement bands. Explicit p*-/py- classes in
+   *  className always win. */
+  density?: "compact" | "standard";
+  /** Anchor id; applies scroll-mt-20 so in-page nav lands cleanly. */
+  id?: string;
 }
 
-export const ScrollSection = ({ children, className = "", variant = "default" }: ScrollSectionProps) => {
+const bleed = "-mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20";
+
+const variantClasses = {
+  default: "",
+  tinted: `relative bg-[hsl(var(--slate-100))] noise-overlay ${bleed}`,
+  eco: `relative bg-[hsl(var(--eco-surface))] ${bleed}`,
+  dark: `relative bg-rho-obsidian text-slate-100 ${bleed}`,
+};
+
+const densityClasses = {
+  compact: "py-12 md:py-16",
+  standard: "py-16 md:py-24",
+};
+
+/**
+ * Dev-only rhythm check — warns when two adjacent sections share a variant.
+ * Mounted once in BrandLayout on route change.
+ */
+export const assertSectionRhythm = (root: HTMLElement | null) => {
+  if (!root || import.meta.env.PROD) return;
+  const sections = root.querySelectorAll<HTMLElement>("[data-section-variant]");
+  let prev: string | null = null;
+  sections.forEach((el) => {
+    const v = el.dataset.sectionVariant ?? null;
+    if (v && v !== "default" && v === prev) {
+      console.warn("[section-rhythm] Adjacent sections share variant:", v, el);
+    }
+    prev = v;
+  });
+};
+
+export const ScrollSection = ({
+  children,
+  className = "",
+  variant = "default",
+  density = "compact",
+  id,
+}: ScrollSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(false);
 
@@ -103,14 +146,18 @@ export const ScrollSection = ({ children, className = "", variant = "default" }:
     }
   }, [isInView]);
 
-  const variantClasses = {
-    default: "",
-    tinted: "relative bg-[hsl(var(--slate-100))] noise-overlay -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20",
-    dark: "relative bg-rho-obsidian text-slate-100 -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20",
-  };
+  // Explicit padding in className suppresses the density default so
+  // overrides like py-0 keep working without Tailwind ordering conflicts.
+  const hasOwnPadding = /(^|\s)(p|py|pt|pb)-/.test(className);
 
   return (
-    <section ref={sectionRef} className={`${variantClasses[variant]} ${className}`} style={{ opacity: isInView ? undefined : 0 }}>
+    <section
+      ref={sectionRef}
+      id={id}
+      data-section-variant={variant}
+      className={`${variantClasses[variant]} ${hasOwnPadding ? "" : densityClasses[density]} ${id ? "scroll-mt-20" : ""} ${className}`}
+      style={{ opacity: isInView ? undefined : 0 }}
+    >
       {children}
     </section>
   );

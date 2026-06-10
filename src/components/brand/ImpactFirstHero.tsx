@@ -22,13 +22,17 @@ import { cn } from "@/lib/utils";
  */
 
 interface ImpactFirstHeroProps {
-  eyebrow: string;
+  eyebrow?: string;
   metric: string; // e.g. "−14%"
   metricSource: string; // e.g. "plant ops · 18 mo"
   outcome: string; // sentence that completes the metric
   problem: string; // one-line problem framing under the metric
   aside?: ReactNode; // optional supplemental block (image, mini stat)
   surface?: "default" | "obsidian";
+  /** Render inside PageBanner's impact slot: no own section padding or
+   *  background, no eyebrow (the banner provides context), metric scaled
+   *  down one step. Resolves the dual-hero anti-pattern. */
+  embedded?: boolean;
   className?: string;
 }
 
@@ -40,6 +44,7 @@ export const ImpactFirstHero = ({
   problem,
   aside,
   surface = "default",
+  embedded = false,
   className,
 }: ImpactFirstHeroProps) => {
   const isDark = surface === "obsidian";
@@ -47,19 +52,25 @@ export const ImpactFirstHero = ({
     <section
       aria-label="Impact-first case hero"
       className={cn(
-        "relative py-14 md:py-20",
-        isDark ? "bg-rho-obsidian text-slate-100" : "bg-background text-foreground",
+        "relative",
+        embedded
+          ? "py-0 bg-transparent"
+          : isDark
+            ? "py-14 md:py-20 bg-rho-obsidian text-slate-100"
+            : "py-14 md:py-20 bg-background text-foreground",
         className,
       )}
     >
-      <div
-        className={cn(
-          "font-data text-[11px] uppercase tracking-[0.3em] mb-10 md:mb-14",
-          isDark ? "text-slate-300" : "text-primary",
-        )}
-      >
-        {eyebrow}
-      </div>
+      {!embedded && eyebrow && (
+        <div
+          className={cn(
+            "font-data text-[11px] uppercase tracking-[0.3em] mb-10 md:mb-14",
+            isDark ? "text-slate-300" : "text-primary",
+          )}
+        >
+          {eyebrow}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Metric column — front and center */}
@@ -68,7 +79,7 @@ export const ImpactFirstHero = ({
             <div
               className={cn(
                 "font-data font-bold uppercase leading-[0.85] tracking-tight",
-                "text-7xl md:text-8xl lg:text-9xl",
+                embedded ? "text-6xl md:text-7xl lg:text-8xl" : "text-7xl md:text-8xl lg:text-9xl",
                 isDark ? "text-slate-100" : "text-foreground",
               )}
             >

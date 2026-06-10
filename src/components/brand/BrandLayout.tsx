@@ -10,6 +10,8 @@ import { cleanupAllGsap } from "@/hooks/useGsapCleanup";
 import { loadGsap } from "./SectionUtils";
 import { CursorFollower } from "./CursorFollower";
 import { CommandPalette } from "./CommandPalette";
+import { assertSectionRhythm } from "./ScrollSection";
+import { TelemetryEyebrow, DataWatermark } from "./telemetry";
 
 const HeroParticles = lazy(() => import("@/components/brand/HeroParticles"));
 
@@ -74,6 +76,14 @@ const BrandLayout = () => {
 
   useEffect(() => () => { cleanupAllGsap(); }, []);
 
+  // Dev-only section-rhythm check: warns when adjacent sections share a variant
+  const mainRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (import.meta.env.PROD) return;
+    const t = setTimeout(() => assertSectionRhythm(mainRef.current), 1200);
+    return () => clearTimeout(t);
+  }, [location.pathname]);
+
 
 
   return (
@@ -91,9 +101,7 @@ const BrandLayout = () => {
           <Suspense fallback={null}><HeroParticles /></Suspense>
           <div ref={heroContentRef} className="hero-content relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
             {/* Oversized background data mark */}
-            <div aria-hidden="true" className="pointer-events-none select-none absolute -top-4 -left-2 lg:-top-6 lg:-left-4 font-data font-black uppercase leading-none text-white/[0.025] text-[120px] md:text-[180px] lg:text-[240px]">
-              Brand_OS
-            </div>
+            <DataWatermark text="Brand_OS" align="left" tone="dark" className="lg:-top-6 lg:text-[240px]" />
 
             <div className="relative flex flex-col items-center text-center gap-8 lg:gap-10 max-w-4xl mx-auto">
               {/* Logo lockup */}
@@ -113,15 +121,7 @@ const BrandLayout = () => {
               </div>
 
               {/* Eyebrow */}
-              <div className="hero-version flex items-center gap-3 font-data text-[11px] uppercase tracking-[0.3em] text-slate-400">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-                </span>
-                <span>Brand System</span>
-                <span className="text-slate-700">·</span>
-                <span>Version 2025</span>
-              </div>
+              <TelemetryEyebrow className="hero-version" pulse tone="dark" label="Brand System" meta={["Version 2025"]} />
 
               {/* Headline */}
               <h1 className="hero-title font-ui font-bold text-white leading-[0.95] tracking-tight text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
@@ -140,7 +140,7 @@ const BrandLayout = () => {
       {/* Main content with sidebar */}
       <div className="flex min-h-screen items-start">
         <Navigation />
-        <main className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1400px] mx-auto overflow-x-hidden">
+        <main ref={mainRef} className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1400px] mx-auto overflow-x-hidden">
           <ErrorBoundary>
             <Outlet />
           </ErrorBoundary>
