@@ -63,7 +63,7 @@ const INDUSTRIES: IndustryCard[] = [
 
 export const IndustriesICP = () => (
   <div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
       {INDUSTRIES.map((ind) => {
         const valueId =
           INDUSTRY_VALUE_MAPPING[ind.id as keyof typeof INDUSTRY_VALUE_MAPPING];
@@ -72,9 +72,10 @@ export const IndustriesICP = () => (
         return (
           <article
             key={ind.id}
-            className="bg-card rounded-[4px] overflow-hidden flex flex-col transition-transform duration-300 hover:-translate-y-1"
+            className="bg-card rounded-[4px] overflow-hidden flex flex-col transition-transform duration-300 hover:-translate-y-1 group"
             style={{ boxShadow: "var(--shadow-card)" }}
           >
+            <IndustryThumb id={ind.id} />
             <div className={`h-1 ${accent}`} />
             <div className="p-6 flex flex-col flex-1">
               <div className="flex items-baseline justify-between mb-4">
@@ -98,7 +99,7 @@ export const IndustriesICP = () => (
                 <span className="block font-data text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-2">
                   Primary ICP
                 </span>
-                <ul className="space-y-1 list-none">
+                <ul className="space-y-1 list-none mb-4">
                   {ind.icps.map((role, i) => (
                     <li
                       key={i}
@@ -108,6 +109,10 @@ export const IndustriesICP = () => (
                     </li>
                   ))}
                 </ul>
+                <span className="inline-flex items-center gap-1.5 font-data text-[10px] tracking-[0.2em] uppercase text-foreground/60 group-hover:text-primary transition-colors">
+                  Read brief
+                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+                </span>
               </div>
             </div>
           </article>
@@ -123,6 +128,8 @@ export const IndustriesICP = () => (
       partners and decision-criteria will be co-authored with the
       commercial team before this section ships externally.
     </p>
+
+    <OperatorQuoteCard />
   </div>
 );
 
