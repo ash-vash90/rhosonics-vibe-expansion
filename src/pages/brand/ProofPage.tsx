@@ -4,12 +4,13 @@ import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
 import { TelemetryEyebrow, TelemetryFooter } from "@/components/brand/telemetry";
+import { DecisionQuestions } from "@/components/brand/DecisionQuestions";
+import { AdditionalDonts } from "@/components/brand/AdditionalDonts";
+import SectionCrossLink from "@/components/brand/SectionCrossLink";
 import { ImpactFirstHero } from "@/components/brand/ImpactFirstHero";
 import { CaseStudyTriad } from "@/components/brand/CaseStudyTriad";
-import { MacroPhotographySpec } from "@/components/brand/MacroPhotographySpec";
 import { LogoWallProof } from "@/components/brand/LogoWallProof";
 import { SustainabilityAggregate } from "@/components/brand/SustainabilityAggregate";
-import { ResourceLibraryGrid } from "@/components/brand/ResourceLibraryGrid";
 import miningHero from "@/assets/case-studies/mining-hero.jpg";
 import dredgingHero from "@/assets/case-studies/dredging-hero.jpg";
 import wastewaterHero from "@/assets/case-studies/wastewater-hero.jpg";
@@ -19,11 +20,10 @@ const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
 
 const ProofPage = () => (
   <>
-    {/* Single hero: banner carries wayfinding, the metric leads inside it */}
     <PageBanner
-      number="10"
-      title="Proof & Examples"
-      subtitle="Technology comparisons, case studies, and brand gallery."
+      number="09.B"
+      title="Proof"
+      subtitle="Field results, technology comparisons, and the reference network."
       meta={["Field outcome", "Copper concentrator", "2024"]}
     >
       <ImpactFirstHero
@@ -35,23 +35,23 @@ const ProofPage = () => (
       />
     </PageBanner>
 
-    <SectionDivider label="10.1" />
-    <ScrollSection id="proof" className="relative">
+    <SectionDivider label="09.B.1" />
+    <ScrollSection id="comparison" className="relative">
       <div className="absolute inset-0 bg-grid-data opacity-20 pointer-events-none" />
       <div className="relative">
         <ErrorBoundary><Suspense fallback={<SectionLoader />}><TechComparison /></Suspense></ErrorBoundary>
       </div>
     </ScrollSection>
 
-    <SectionDivider label="10.2" />
+    <SectionDivider label="09.B.2" />
     <ScrollSection variant="tinted">
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><CaseStudies /></Suspense></ErrorBoundary>
     </ScrollSection>
 
-    <SectionDivider label="10.3" />
-    <ScrollSection id="case-triads">
+    <SectionDivider label="09.B.3" />
+    <ScrollSection id="triads">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="10.3" label="Case study triad" />
+        <TelemetryEyebrow className="mb-3" code="09.B.3" label="Case study triad" />
         <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-[1.1] mb-3">
           Three pieces of evidence, side by side.
         </h3>
@@ -100,13 +100,8 @@ const ProofPage = () => (
       </div>
     </ScrollSection>
 
-    <SectionDivider label="10.4" />
-    <ScrollSection id="macro-photography" variant="tinted">
-      <MacroPhotographySpec />
-    </ScrollSection>
-
-    <SectionDivider label="10.5" />
-    <ScrollSection id="references">
+    <SectionDivider label="09.B.4" />
+    <ScrollSection id="references" variant="tinted">
       <LogoWallProof
         totalReferences={312}
         asOf="Q2 2025"
@@ -159,7 +154,7 @@ const ProofPage = () => (
       />
     </ScrollSection>
 
-    <SectionDivider label="10.6" />
+    <SectionDivider label="09.B.5" />
     <ScrollSection id="sustainability" className="py-0">
       <SustainabilityAggregate
         asOf="FY2024"
@@ -175,92 +170,43 @@ const ProofPage = () => (
       />
     </ScrollSection>
 
-    <SectionDivider label="10.7" />
-    <ScrollSection id="resources" variant="tinted">
-      <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="10.7" label="Resource library" />
-        <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-[1.1] mb-3">
-          Datasheets, drawings, and certificates.
-        </h3>
-        <p className="text-muted-foreground text-base leading-relaxed">
-          Format, revision and size live on the card face — engineers vet
-          provenance before they download. No gating, no email walls.
-        </p>
-      </header>
-      <ResourceLibraryGrid
-        items={[
-          {
-            kind: "datasheet",
-            code: "DS.SDM-ECO.04",
-            title: "SDM Eco inline density meter",
-            summary: "Full mechanical, electrical and process spec for the SDM Eco family, including all wetted-part options.",
-            format: "PDF",
-            sizeKb: 2840,
-            pages: 12,
-            revision: "Rev 4 · 2024-11",
-            href: "#",
-          },
-          {
-            kind: "guide",
-            code: "AG.TAILINGS.02",
-            title: "Tailings line calibration — copper",
-            summary: "Field calibration procedure for SDM Eco on copper tailings between 12–55 % solids by weight.",
-            format: "PDF",
-            sizeKb: 1620,
-            pages: 22,
-            revision: "Rev 2 · 2025-02",
-            href: "#",
-          },
-          {
-            kind: "whitepaper",
-            code: "WP.NUCLEAR-REPLACE.01",
-            title: "Replacing nuclear gauges with inline acoustic",
-            summary: "Comparative study across 18 sites: regulatory burden, MTBF, and measurement fidelity over 24 months.",
-            format: "PDF",
-            sizeKb: 3120,
-            pages: 34,
-            revision: "Rev 1 · 2025-04",
-            href: "#",
-          },
-          {
-            kind: "drawing",
-            code: "DWG.SDM-ECO.DN80",
-            title: "SDM Eco DN80 installation drawing",
-            summary: "2D installation drawing including mounting flange, clearance envelope and wiring entry positions.",
-            format: "DWG",
-            sizeKb: 580,
-            revision: "Rev 3 · 2024-09",
-            href: "#",
-          },
-          {
-            kind: "drawing",
-            code: "STEP.SDM-ECO.DN80",
-            title: "SDM Eco DN80 — STEP model",
-            summary: "3D STEP file for plant CAD integration. Includes process connections and electrical entries.",
-            format: "STEP",
-            sizeKb: 4480,
-            revision: "Rev 3 · 2024-09",
-            href: "#",
-          },
-          {
-            kind: "certificate",
-            code: "CERT.SDM-ECO.IECEX",
-            title: "IECEx Ex db certificate",
-            summary: "Hazardous area certification for SDM Eco in Zone 1 and Zone 2 installations.",
-            format: "PDF",
-            sizeKb: 940,
-            pages: 6,
-            revision: "Rev 1 · 2024-07",
-            href: "#",
-          },
-        ]}
-      />
+    <SectionDivider label="09.B.x" />
+
+    <ScrollSection id="governance" variant="tinted">
+      <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
+        <DecisionQuestions
+          code="09.B.x"
+          questions={[
+            "Does every number on this page have a source and an as-of date?",
+            "Did we publish the methodology, or just the result?",
+            "Could the cited operator verify the quote attributed to them?",
+            "Are baselines pre-installation, not a softer comparison year?",
+          ]}
+        />
+        <AdditionalDonts
+          code="09.B.y"
+          items={[
+            "Never publish a metric without a verifier or methodology line.",
+            "Never paraphrase an operator quote. Quote or omit.",
+            "Never use a logo without written permission from the customer.",
+            "Never aggregate sites of fewer than 9 months into the headline.",
+            "Never republish a case study without the site re-confirming.",
+          ]}
+        />
+      </div>
     </ScrollSection>
+
+    <SectionCrossLink
+      links={[
+        { label: "Applications", to: "/applications", description: "Where the proof gets deployed (09.A)" },
+        { label: "Resources", to: "/resources", description: "Datasheets and certificates (10)" },
+      ]}
+    />
 
     <TelemetryFooter
       className="mt-16 md:mt-20"
       items={[
-        { label: "Section", value: "10 · Proof" },
+        { label: "Section", value: "09.B · Proof" },
         { label: "Evidence", value: "312 sites · 24 countries" },
         { label: "Owner", value: "MarComms" },
         { label: "Status", value: "Active", emphasis: true },

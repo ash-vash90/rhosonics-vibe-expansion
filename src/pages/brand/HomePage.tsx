@@ -3,95 +3,90 @@ import { ChevronRight } from "@/lib/icons";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { TelemetryEyebrow, CornerBrackets, TelemetryFooter, DataWatermark } from "@/components/brand/telemetry";
 
-interface Section {
+interface Chapter {
   id: string;
   label: string;
   route: string;
   desc: string;
 }
 
-interface SectionGroup {
+interface ChapterGroup {
   code: string;
   title: string;
-  sections: Section[];
+  chapters: Chapter[];
 }
 
-const sectionGroups: SectionGroup[] = [
+// The definitive 10-chapter Information Architecture, approved 2026-06-10.
+// Synthesised from Bang & Olufsen, IBM, Herman Miller, Klarna.
+const chapterGroups: ChapterGroup[] = [
   {
     code: "GRP_01",
-    title: "Story",
-    sections: [
-      { id: "00", label: "About", route: "/about", desc: "What this system is, who it's for" },
-      { id: "01", label: "Positioning & Voice", route: "/positioning", desc: "Where the brand sits and how it speaks" },
-      { id: "02", label: "Principles", route: "/principles", desc: "The rules that govern every decision" },
+    title: "Foundation",
+    chapters: [
+      { id: "01", label: "Brand Position", route: "/position", desc: "Purpose, principles, audience, and what we refuse to be." },
+      { id: "02", label: "Voice & Tone", route: "/voice", desc: "Lexicon, rewrites, and the funnel rule." },
     ],
   },
   {
     code: "GRP_02",
     title: "Visual System",
-    sections: [
-      { id: "03", label: "Visual System", route: "/visual-system", desc: "Layers, elevation, and structure" },
-      { id: "04", label: "Color", route: "/color", desc: "Palette, usage, and accessibility" },
-      { id: "05", label: "Typography", route: "/typography", desc: "Type scale, roles, and constraints" },
-      { id: "06", label: "Logo & Assets", route: "/logo-assets", desc: "Logo system, icons, and downloads" },
+    chapters: [
+      { id: "03", label: "Logo", route: "/logo", desc: "Construction, clearspace, misuse, downloads." },
+      { id: "04", label: "Color", route: "/color", desc: "Palette, families, pairings, accessibility." },
+      { id: "05", label: "Typography", route: "/typography", desc: "Roles, scale, micro-specs, misuse." },
+      { id: "06", label: "Iconography", route: "/iconography", desc: "UI icons and pictograms, shared DNA." },
+      { id: "07", label: "Imagery", route: "/imagery", desc: "Photo categories with proportion ratios." },
+      { id: "08", label: "Data Visualization", route: "/data-viz", desc: "Honesty rules, billboard.js, no embellishment." },
     ],
   },
   {
     code: "GRP_03",
-    title: "Content",
-    sections: [
-      { id: "08", label: "Imagery & Motion", route: "/imagery", desc: "Photography, textures, animation" },
-    ],
-  },
-  {
-    code: "GRP_04",
     title: "Practice",
-    sections: [
-      { id: "09", label: "Applications", route: "/applications", desc: "Industry use and interface kit" },
-      { id: "10", label: "Proof & Examples", route: "/proof", desc: "Evidence, data, and case studies" },
+    chapters: [
+      { id: "09.A", label: "Applications", route: "/applications", desc: "Industries, interface kit, components." },
+      { id: "09.B", label: "Proof", route: "/proof", desc: "Field results, comparisons, references." },
+      { id: "10", label: "Resources", route: "/resources", desc: "Downloads, owners, changelog." },
     ],
   },
   {
-    code: "GRP_05",
-    title: "Tools",
-    sections: [
-      { id: "12", label: "Tools", route: "/tools", desc: "Photo treatment, exports, icon picker" },
+    code: "APP",
+    title: "Appendix",
+    chapters: [
+      { id: "T", label: "Tools", route: "/tools", desc: "Icon picker, photo treatment, token exports." },
     ],
   },
 ];
 
-const totalSections = sectionGroups.reduce((n, g) => n + g.sections.length, 0);
+const totalChapters = chapterGroups.reduce((n, g) => n + g.chapters.length, 0);
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   return (
     <div className="relative py-16 md:py-20 lg:py-24" id="about">
-      {/* Oversized background data mark */}
       <DataWatermark text="Index" />
 
-      {/* Section header — telemetry strip */}
       <div className="relative mb-12 md:mb-16">
         <TelemetryEyebrow
           className="mb-4"
           pulse
           label="Directory"
-          meta={[`${String(totalSections).padStart(2, "0")} Sections`, "v2025"]}
+          meta={[`${String(totalChapters).padStart(2, "0")} Chapters`, "v2026.06"]}
         />
 
         <h2 className="font-ui text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight leading-[1.05] mb-4 max-w-3xl">
-          System Contents
+          A brand book for engineers.
         </h2>
-        <p className="text-muted-foreground text-base lg:text-lg max-w-xl leading-relaxed">
-          Everything you need to represent Rhosonics consistently — from strategy to execution.
+        <p className="text-muted-foreground text-base lg:text-lg max-w-2xl leading-relaxed">
+          Ten chapters. One Tools appendix. No tools, no playground, no marketing scaffolding —
+          philosophy at the top, operating rules in the middle, assets at the bottom. Used by our
+          team, our partners, and anyone who wants to know how we think.
         </p>
       </div>
 
-      {/* Group blocks */}
       <div className="space-y-12 md:space-y-16">
-        {sectionGroups.map((group) => (
+        {chapterGroups.map((group) => (
           <ScrollSection key={group.title} className="py-0 relative">
-            {/* Group header — bracket-coded telemetry row */}
             <header className="flex items-baseline gap-4 mb-5">
               <span className="font-data text-[10px] uppercase tracking-[0.3em] text-primary">
                 {group.code}
@@ -100,39 +95,36 @@ const HomePage = () => {
                 {group.title}
               </h3>
               <span className="font-data text-[10px] uppercase tracking-widest text-muted-foreground/60">
-                {String(group.sections.length).padStart(2, "0")} entries
+                {String(group.chapters.length).padStart(2, "0")} entries
               </span>
               <div className="flex-1 h-px bg-border self-center" />
             </header>
 
-            {/* Chamfered container holding the directory rows */}
-            <div className="relative bg-card clip-chamfer-md p-3 md:p-4">
+            <div className="relative bg-card p-3 md:p-4 rounded">
               <CornerBrackets />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
-                {group.sections.map((section) => (
+                {group.chapters.map((chapter) => (
                   <button
-                    key={section.id}
-                    onClick={() => navigate(section.route)}
+                    key={chapter.id}
+                    onClick={() => navigate(chapter.route)}
                     className="group text-left p-4 lg:p-5 rounded-md bg-background hover:bg-primary/5 transition-colors duration-200 relative"
-                    aria-label={`${section.label} — ${section.desc}`}
+                    aria-label={`${chapter.label} — ${chapter.desc}`}
                   >
-                    {/* Top meta row */}
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-widest text-muted-foreground/70">
-                        <span className="text-primary">{section.id}</span>
+                        <span className="text-primary">{chapter.id}</span>
                         <span className="text-border">·</span>
-                        <span className="opacity-70">{section.route}</span>
+                        <span className="opacity-70">{chapter.route}</span>
                       </div>
                       <ChevronRight className="w-3.5 h-3.5 text-muted-foreground translate-x-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                     </div>
 
-                    {/* Title */}
                     <h4 className="font-ui font-semibold text-foreground text-sm lg:text-base mb-1 group-hover:text-primary transition-colors">
-                      {section.label}
+                      {chapter.label}
                     </h4>
                     <p className="text-xs lg:text-[13px] text-muted-foreground leading-relaxed">
-                      {section.desc}
+                      {chapter.desc}
                     </p>
                   </button>
                 ))}
@@ -142,12 +134,11 @@ const HomePage = () => {
         ))}
       </div>
 
-      {/* Footer telemetry strip */}
       <TelemetryFooter
         className="mt-16 md:mt-20"
         items={[
           { label: "Standard", value: "Brand OS" },
-          { label: "Build", value: "Stable · 2025" },
+          { label: "Revision", value: "2026.06" },
           { label: "Origin", value: "Delft, NL" },
           { label: "Status", value: "Active", emphasis: true },
         ]}
