@@ -74,7 +74,7 @@ export const Foundation = () => {
       {/* Mission — light chamfered surface */}
       <article className="col-span-12 lg:col-span-5">
         <div
-          className="relative h-full bg-card p-10 md:p-12 lg:p-14 border-t-4 border-primary min-h-[420px] lg:min-h-[480px] flex flex-col"
+          className="relative h-full bg-card p-10 md:p-12 lg:p-14 min-h-[420px] lg:min-h-[480px] flex flex-col"
           style={{
             clipPath: MISSION_CLIP,
             boxShadow: "var(--shadow-card)",

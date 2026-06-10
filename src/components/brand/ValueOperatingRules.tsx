@@ -27,9 +27,7 @@ export const ValueOperatingRules = () => (
       return (
         <article
           key={value.id}
-          className={`group relative flex flex-col bg-card p-7 md:p-8 rounded-[6px] border-t-2 transition-transform duration-300 hover:-translate-y-1 ${
-            isEco ? "border-primary" : "border-foreground"
-          }`}
+          className="group relative flex flex-col bg-card p-7 md:p-8 rounded-[6px] transition-transform duration-300 hover:-translate-y-1"
           style={{ boxShadow: "var(--shadow-card)" }}
         >
           {/* Header row: number + icon */}
