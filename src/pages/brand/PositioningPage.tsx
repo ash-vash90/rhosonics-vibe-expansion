@@ -6,7 +6,6 @@ import {
   SectionDivider,
 } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
-import { TelemetryFooter } from "@/components/brand/telemetry";
 import { DotEyebrowHeader } from "@/components/brand/DotEyebrowHeader";
 import { HeroChipRow } from "@/components/brand/HeroChipRow";
 import { FoundationStats } from "@/components/brand/FoundationStats";
@@ -120,15 +119,6 @@ const PositioningPage = () => (
       <ApplyFoundationCTA />
     </ScrollSection>
 
-    <TelemetryFooter
-      className="mt-16 md:mt-20"
-      items={[
-        { label: "Section", value: "01 · Brand Position" },
-        { label: "Scope", value: "Foundation, values, principles, audiences" },
-        { label: "Owner", value: "Brand Council" },
-        { label: "Status", value: "Active", emphasis: true },
-      ]}
-    />
   </>
 );
 
