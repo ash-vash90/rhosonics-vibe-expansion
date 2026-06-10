@@ -1,8 +1,7 @@
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
-import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
-import { PageBanner } from "@/components/brand/PageBanner";
+import { SectionLoader } from "@/components/brand/SectionUtils";
 import { TelemetryFooter } from "@/components/brand/telemetry";
 import SectionCrossLink from "@/components/brand/SectionCrossLink";
 
@@ -14,20 +13,17 @@ const ValueOperatingRules = lazy(
 /**
  * 01 Brand Position — the foundation chapter.
  *
- * Vision + Mission (side-by-side) → the five values → the operating
- * rules each value demands. Nothing else. No origin mythology, no
- * detached design principles, no governance ceremony.
+ * Composition (industrial offset):
+ *   · Foundation hero: chamfered dark Vision (8 col) + Mission rail (4 col)
+ *   · Core Values & Operating Rules: 5 rows, value + rule paired
+ *
+ * No PageBanner — the hero carries its own chapter mark.
+ * No origin story, no detached design principles, no governance ceremony.
  */
 
 const PositioningPage = () => (
   <>
-    <PageBanner
-      number="01"
-      title="Brand Position"
-      subtitle="The vision, the mission, the five values, and the behaviour they demand."
-    />
-
-    <ScrollSection id="foundation">
+    <ScrollSection id="foundation" className="pt-12 md:pt-16">
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <Foundation />
@@ -35,9 +31,7 @@ const PositioningPage = () => (
       </ErrorBoundary>
     </ScrollSection>
 
-    <SectionDivider label="01.2" />
-
-    <ScrollSection id="operating-rules" variant="tinted">
+    <ScrollSection id="operating-rules">
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <ValueOperatingRules />
