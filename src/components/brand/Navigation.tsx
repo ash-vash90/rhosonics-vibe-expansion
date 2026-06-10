@@ -7,7 +7,6 @@ import { RhosonicsLogo } from "../RhosonicsLogo";
 interface NavItem {
   id: string;
   label: string;
-  highlight?: boolean;
 }
 
 interface NavSection {
@@ -17,30 +16,41 @@ interface NavSection {
   items: NavItem[];
 }
 
+/**
+ * Canonical 10-chapter IA + Tools appendix.
+ * Old routes redirect (see App.tsx); navigation only surfaces the new ones.
+ */
 const navSections: NavSection[] = [
   {
-    id: "00", label: "ABOUT", route: "/about",
+    id: "00", label: "INTRODUCTION", route: "/",
     items: [
-      { id: "about", label: "About This System" },
-      { id: "design-process", label: "Design Process" },
+      { id: "directory", label: "System Directory" },
+      { id: "governance", label: "Governance & Owner" },
     ],
   },
   {
-    id: "01", label: "POSITIONING", route: "/positioning",
+    id: "01", label: "BRAND POSITION", route: "/position",
     items: [
-      { id: "positioning", label: "Brand Positioning" },
-      { id: "voice", label: "Voice & Tone" },
+      { id: "positioning", label: "Position & Purpose" },
+      { id: "principles", label: "Brand Principles" },
+      { id: "mission", label: "Mission & Vision" },
+      { id: "origin", label: "Origin" },
     ],
   },
   {
-    id: "02", label: "PRINCIPLES", route: "/principles",
-    items: [{ id: "principles", label: "Brand Principles" }],
+    id: "02", label: "VOICE & TONE", route: "/voice",
+    items: [
+      { id: "voice-principles", label: "Voice Principles" },
+      { id: "lexicon", label: "Lexicon · Use / Avoid" },
+      { id: "rewrites", label: "Before / After Rewrites" },
+      { id: "funnel-rule", label: "Funnel Rule" },
+    ],
   },
   {
-    id: "03", label: "VISUAL SYSTEM", route: "/visual-system",
+    id: "03", label: "LOGO", route: "/logo",
     items: [
-      { id: "visual-system", label: "System Structure" },
-      { id: "elevation", label: "Elevation & Depth" },
+      { id: "logo-system", label: "Logo System" },
+      { id: "downloads", label: "Logo Downloads" },
     ],
   },
   {
@@ -56,50 +66,56 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    id: "06", label: "LOGO & ASSETS", route: "/logo-assets",
+    id: "06", label: "ICONOGRAPHY", route: "/iconography",
     items: [
-      { id: "logo-assets", label: "Logo System" },
-      { id: "icon-guidelines", label: "Icon Guidelines" },
-    ],
-  },
-  // {
-  //   id: "07", label: "VOICE & TONE", route: "/voice",
-  //   items: [{ id: "voice", label: "Voice & Tone" }],
-  // },
-  {
-    id: "08", label: "IMAGERY & MOTION", route: "/imagery",
-    items: [
-      { id: "imagery", label: "Imagery Guidelines" },
-      { id: "motion-design", label: "Motion Design" },
+      { id: "ui-icons", label: "UI Icons" },
+      { id: "pictograms", label: "Pictograms" },
     ],
   },
   {
-    id: "09", label: "APPLICATIONS", route: "/applications",
+    id: "07", label: "IMAGERY", route: "/imagery",
     items: [
-      { id: "applications", label: "Industry Applications" },
+      { id: "imagery", label: "Photography" },
+      { id: "motion-design", label: "Motion" },
+    ],
+  },
+  {
+    id: "08", label: "DATA VISUALIZATION", route: "/data-viz",
+    items: [
+      { id: "principles", label: "Principles" },
+      { id: "honesty", label: "Honesty Rules" },
+    ],
+  },
+  {
+    id: "09", label: "APPLICATIONS & PROOF", route: "/applications",
+    items: [
+      { id: "applications", label: "Industries" },
       { id: "sdm-interface", label: "SDM Eco Interface" },
       { id: "components", label: "Interface Kit" },
-      { id: "empty-states", label: "Empty States" },
+      { id: "proof", label: "Proof & Case Studies" },
     ],
   },
   {
-    id: "10", label: "PROOF & EXAMPLES", route: "/proof",
-    items: [{ id: "proof", label: "Evidence & Data" }],
+    id: "10", label: "RESOURCES", route: "/resources",
+    items: [
+      { id: "downloads", label: "Downloads" },
+      { id: "contacts", label: "Contacts" },
+      { id: "changelog", label: "Changelog" },
+    ],
   },
-  // {
-  //   id: "11", label: "SOCIAL MEDIA", route: "/social-media",
-  //   items: [{ id: "social-media", label: "LinkedIn Assets" }],
-  // },
   {
-    id: "12", label: "TOOLS", route: "/tools",
+    id: "AP", label: "TOOLS", route: "/tools",
     items: [
       { id: "photo-treatment", label: "Photo Treatment" },
       { id: "icon-picker", label: "Icon Library" },
       { id: "exports", label: "Design Tokens" },
-      { id: "downloads", label: "Downloads" },
+      { id: "downloads", label: "Asset Downloads" },
     ],
   },
 ];
+
+// Special-case: section 09's "Proof" item jumps to /proof, not /applications#proof
+const PROOF_ITEM_ID = "proof";
 
 // Map item IDs to their section's route
 const itemRouteMap = new Map<string, string>();
@@ -109,13 +125,15 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  
 
   const mobileMenuRef = useRef<HTMLElement | null>(null);
 
   // Determine active section from current route
   const activeRoute = location.pathname;
-  const activeSection = navSections.find(s => s.route === activeRoute);
+  const activeSection = navSections.find(s =>
+    s.route === activeRoute ||
+    (s.id === "09" && activeRoute === "/proof"),
+  );
   const expandedSectionIds = activeSection ? [activeSection.id] : [];
 
   // Close menu on click outside
@@ -141,8 +159,7 @@ export const Navigation = () => {
 
   const navigateTo = useCallback((route: string, anchor?: string) => {
     setIsOpen(false);
-    if (location.pathname === route || (location.pathname === "/" && route === "/about")) {
-      // Same page — just scroll
+    if (location.pathname === route) {
       if (anchor) {
         const el = document.getElementById(anchor);
         if (el) { el.scrollIntoView({ behavior: "smooth" }); return; }
@@ -150,7 +167,6 @@ export const Navigation = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       navigate(route);
-      // After navigation, scroll to anchor if specified
       if (anchor) {
         setTimeout(() => {
           const el = document.getElementById(anchor);
@@ -162,9 +178,13 @@ export const Navigation = () => {
     }
   }, [location.pathname, navigate]);
 
-  const handleItemClick = useCallback((item: NavItem) => {
-    const route = itemRouteMap.get(item.id) || "/about";
-    navigateTo(route, item.id);
+  const handleItemClick = useCallback((item: NavItem, sectionRoute: string) => {
+    // Proof item in section 09 is its own page
+    if (item.id === PROOF_ITEM_ID && sectionRoute === "/applications") {
+      navigateTo("/proof");
+      return;
+    }
+    navigateTo(sectionRoute, item.id);
   }, [navigateTo]);
 
   const renderNavContent = (isMobile: boolean) => (
@@ -182,6 +202,7 @@ export const Navigation = () => {
           <button
             className="text-slate-400 border border-slate-700 p-2 rounded-md hover:border-primary hover:text-primary transition-colors touch-manipulation"
             onClick={() => setIsOpen(false)}
+            aria-label="Close menu"
           >
             <X className="w-5 h-5" />
           </button>
@@ -191,7 +212,8 @@ export const Navigation = () => {
       {/* Navigation Links */}
       <div className="p-4 sm:p-6 space-y-2 overflow-y-auto">
         {navSections.map((section) => {
-          const isActiveSection = section.route === activeRoute;
+          const isActiveSection = section.route === activeRoute ||
+            (section.id === "09" && activeRoute === "/proof");
           const isExpanded = expandedSectionIds.includes(section.id);
 
           return (
@@ -223,8 +245,8 @@ export const Navigation = () => {
                 }`}>
                   {section.items.map((item) => (
                     <button
-                      key={item.id}
-                      onClick={() => handleItemClick(item)}
+                      key={`${section.id}-${item.id}`}
+                      onClick={() => handleItemClick(item, section.route)}
                       className={`nav-link mb-1 text-left w-full flex items-center justify-between group min-h-[40px] pl-4 touch-manipulation transition-colors ${
                         isActiveSection
                           ? 'text-primary/80 hover:text-primary'
@@ -241,14 +263,13 @@ export const Navigation = () => {
           );
         })}
 
-
         {/* Version Badge */}
         <div className="pt-4">
           <div className="flex items-center gap-3 px-3 py-2 bg-slate-800/50 rounded-md">
             <Zap className="w-4 h-4 text-primary" />
             <div>
               <span className="label-tech-sm text-slate-500 block">STATUS</span>
-              <span className="text-sm text-slate-300 font-medium">System Active</span>
+              <span className="text-sm text-slate-300 font-medium">System Active · ⌘K</span>
             </div>
           </div>
         </div>
@@ -270,7 +291,7 @@ export const Navigation = () => {
       <nav
         ref={mobileMenuRef}
         className={`
-          fixed xl:hidden top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100 
+          fixed xl:hidden top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100
           z-50 flex-shrink-0 overflow-y-auto
           transform transition-transform duration-300 ease-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
@@ -295,14 +316,13 @@ export const Navigation = () => {
           <div className="w-4 h-4"><RhosonicsLogo variant="gradient" /></div>
           <span className="font-data text-xs text-slate-400 tracking-widest">BRAND SYSTEM</span>
         </button>
-        <div className="flex items-center gap-2">
-          <button
-            className="p-2 text-slate-400 hover:text-primary transition-colors touch-manipulation"
-            onClick={() => setIsOpen(true)}
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-        </div>
+        <button
+          className="p-2 text-slate-400 hover:text-primary transition-colors touch-manipulation"
+          onClick={() => setIsOpen(true)}
+          aria-label="Open menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Spacer for mobile/tablet header */}

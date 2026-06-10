@@ -4,30 +4,17 @@ import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
 import { TelemetryFooter } from "@/components/brand/telemetry";
-import { StickySubNav } from "@/components/brand/StickySubNav";
+import SectionCrossLink from "@/components/brand/SectionCrossLink";
 
-const PatternsShowcase = lazy(() => import("@/components/brand/PatternsShowcase"));
 const IndustryApplications = lazy(() => import("@/components/brand/IndustryApplications"));
 const SDMEcoInterface = lazy(() => import("@/components/brand/SDMEcoInterface"));
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
 const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
 const EmptyStates = lazy(() => import("@/components/brand/EmptyStates"));
 
-const SUBNAV = [
-  { id: "patterns", num: "09.0", label: "Patterns" },
-  { id: "applications", num: "09.1", label: "Industries" },
-  { id: "sdm-interface", num: "09.2", label: "SDM Eco" },
-  { id: "components", num: "09.3", label: "Components" },
-  { id: "empty-states", num: "09.4", label: "Empty states" },
-];
-
 const ApplicationsPage = () => (
   <>
     <PageBanner number="09" title="Applications" subtitle="How the brand system applies to products and industries." meta={["Practice", "v2025"]} />
-    <StickySubNav items={SUBNAV} ariaLabel="Applications section navigation" />
-    <div id="patterns" className="scroll-mt-20" />
-    <ErrorBoundary><Suspense fallback={<SectionLoader />}><PatternsShowcase /></Suspense></ErrorBoundary>
-    <SectionDivider label="09.0" />
     <ScrollSection id="applications">
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><IndustryApplications /></Suspense></ErrorBoundary>
     </ScrollSection>
@@ -47,6 +34,12 @@ const ApplicationsPage = () => (
     <ScrollSection id="empty-states">
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><EmptyStates /></Suspense></ErrorBoundary>
     </ScrollSection>
+    <SectionCrossLink
+      links={[
+        { label: "Proof & Case Studies", to: "/proof", description: "Field evidence and outcomes (09.5)" },
+        { label: "Resources", to: "/resources", description: "Spec sheets, drawings, certificates" },
+      ]}
+    />
     <TelemetryFooter
       className="mt-16 md:mt-20"
       items={[

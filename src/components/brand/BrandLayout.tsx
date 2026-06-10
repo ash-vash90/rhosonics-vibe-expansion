@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { Suspense, lazy, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Navigation } from "./Navigation";
 
 import { RhosonicsLogo } from "../RhosonicsLogo";
@@ -8,12 +8,9 @@ import { ErrorBoundary } from "../ErrorBoundary";
 import { useFontMode } from "@/hooks/useFontMode";
 import { cleanupAllGsap } from "@/hooks/useGsapCleanup";
 import { loadGsap } from "./SectionUtils";
-import { CursorFollower } from "./CursorFollower";
 import { CommandPalette } from "./CommandPalette";
 import { assertSectionRhythm } from "./ScrollSection";
 import { TelemetryEyebrow, DataWatermark } from "./telemetry";
-
-const HeroParticles = lazy(() => import("@/components/brand/HeroParticles"));
 
 const BrandLayout = () => {
   const location = useLocation();
@@ -88,7 +85,6 @@ const BrandLayout = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <CursorFollower />
       <CommandPalette />
 
 
@@ -98,7 +94,6 @@ const BrandLayout = () => {
           {/* Gaussian blur orb */}
           <div className="hero-blur-orb -top-40 -right-40 lg:right-10 lg:top-20" />
           <div className="hero-blur-orb bottom-0 -left-60 lg:left-20 lg:bottom-10 opacity-50" style={{ width: 400, height: 400 }} />
-          <Suspense fallback={null}><HeroParticles /></Suspense>
           <div ref={heroContentRef} className="hero-content relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
             {/* Oversized background data mark */}
             <DataWatermark text="Brand_OS" align="left" tone="dark" className="lg:-top-6 lg:text-[240px]" />

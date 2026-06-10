@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import BeforeAfterSlider from "./BeforeAfterSlider";
+// BeforeAfterSlider removed in Phase 2A refactor — see /imagery 07.x for treatment spec.
 
 // Image style examples - AI generated
 import fieldMining from "@/assets/brand/imagery-field-mining.jpg";
@@ -915,43 +915,36 @@ export const ImageryGuidelines = () => {
             </p>
           </div>
 
-          {/* Interactive Before / After Comparisons */}
+          {/* Static treatment reference (interactive slider removed) */}
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <BeforeAfterSlider
-                sourceImage={treatmentBefore}
-                beforeLabel="ORIGINAL"
-                afterLabel="TREATED"
-                imageAlt="Industrial mining site field photography"
-                saturation={0.85}
-                contrast={1.20}
-                brightness={0.96}
+            <figure className="space-y-3">
+              <img
+                src={treatmentBefore}
+                alt="Mining site, treated to brand grade"
+                className="w-full aspect-[4/3] object-cover rounded"
+                style={{ filter: "saturate(0.85) contrast(1.2) brightness(0.96)" }}
               />
-              <div className="flex items-center justify-between">
+              <figcaption className="flex items-center justify-between">
                 <span className="label-tech-sm text-primary">MINING</span>
                 <span className="text-xs text-muted-foreground">Warm earth tones → cool industrial grade</span>
-              </div>
-            </div>
-            
-            <div className="space-y-3">
-              <BeforeAfterSlider
-                sourceImage={fieldWastewater}
-                beforeLabel="ORIGINAL"
-                afterLabel="TREATED"
-                imageAlt="Wastewater treatment facility"
-                saturation={0.90}
-                contrast={1.12}
-                brightness={0.97}
+              </figcaption>
+            </figure>
+            <figure className="space-y-3">
+              <img
+                src={fieldWastewater}
+                alt="Wastewater facility, treated to brand grade"
+                className="w-full aspect-[4/3] object-cover rounded"
+                style={{ filter: "saturate(0.9) contrast(1.12) brightness(0.97)" }}
               />
-              <div className="flex items-center justify-between">
+              <figcaption className="flex items-center justify-between">
                 <span className="label-tech-sm text-primary">WASTEWATER</span>
                 <span className="text-xs text-muted-foreground">Cool blues → cinematic brand mood</span>
-              </div>
-            </div>
+              </figcaption>
+            </figure>
           </div>
-          
+
           <p className="text-sm text-muted-foreground text-center">
-            Drag each slider to see the brand treatment applied in real-time — per-image tuning, consistent mood
+            Treatment baked in — interactive slider retired in Phase 2A refactor.
           </p>
 
           {/* Treatment Details Grid */}
