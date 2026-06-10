@@ -14,7 +14,7 @@ interface PageBannerProps {
   children?: ReactNode;
 }
 
-export const PageBanner = ({ number, title, subtitle, meta, children }: PageBannerProps) => {
+export const PageBanner = ({ number, title, subtitle, children }: PageBannerProps) => {
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
