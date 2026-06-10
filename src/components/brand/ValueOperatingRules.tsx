@@ -21,7 +21,7 @@ const RULES: Record<string, string> = {
 
 export const ValueOperatingRules = () => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-    {BRAND_VALUES.map((value, i) => {
+    {BRAND_VALUES.map((value) => {
       const Icon = value.icon;
       const isEco = value.id === "sustainability";
       return (

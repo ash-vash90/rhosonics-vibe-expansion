@@ -1,4 +1,4 @@
-import { BRAND_VALUES, INDUSTRY_VALUE_MAPPING, getValueById } from "@/data/brand-values";
+import { INDUSTRY_VALUE_MAPPING, getValueById } from "@/data/brand-values";
 
 /**
  * IndustriesICP — the audiences this brand actually serves.
