@@ -1,63 +1,85 @@
-import { BRAND_VALUES, BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
+import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
 
 /**
  * Foundation — the /position hero.
  *
- * Two-part composition:
- *  · Vision: dark, chamfered, large-scale statement (left, 8 cols)
- *  · Mission: green hairline-rail, bottom-aligned (right, 4 cols)
+ * Vision: dark, chamfered, large-scale statement with gradient accent.
+ * Mission: lighter surface, large type, green gradient rail.
  *
- * Chamfer on the Vision panel is intentional — it's a large hero surface
- * and qualifies under the chamfer rule. The Mission column is plain.
+ * Chamfers used only on these large hero surfaces (allowed under the
+ * chamfer rule). Colour used for emphasis on key phrases only.
  */
 
 const VISION_CLIP =
-  "polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%)";
+  "polygon(0 0, 100% 0, 100% calc(100% - 56px), calc(100% - 56px) 100%, 0 100%)";
+
+const MISSION_CLIP =
+  "polygon(40px 0, 100% 0, 100% 100%, 0 100%, 0 40px)";
 
 export const Foundation = () => {
   return (
     <section aria-labelledby="foundation-heading" className="relative">
-      <p className="font-data text-xs tracking-[0.2em] uppercase text-muted-foreground mb-8">
-        01 — Brand Position
-      </p>
       <h2 id="foundation-heading" className="sr-only">
         Vision and mission
       </h2>
 
-      <div className="grid grid-cols-12 gap-6 lg:gap-8">
-        {/* Vision — dark chamfered hero panel */}
-        <article className="col-span-12 lg:col-span-8">
+      <div className="grid grid-cols-12 gap-6 lg:gap-10">
+        {/* Vision — dark chamfered hero */}
+        <article className="col-span-12 lg:col-span-7">
           <div
-            className="bg-foreground text-background p-10 md:p-14 lg:p-16"
+            className="relative overflow-hidden bg-foreground text-background p-10 md:p-14 lg:p-16"
             style={{ clipPath: VISION_CLIP }}
           >
-            <span className="block font-data text-[10px] tracking-[0.2em] uppercase text-primary mb-6">
-              The Long Horizon
-            </span>
-            <p className="font-ui font-semibold tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl">
-              {BRAND_VISION}
-            </p>
+            {/* Soft gradient wash — emphasis only */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 opacity-60 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(120% 80% at 100% 0%, hsl(var(--primary) / 0.35), transparent 55%), radial-gradient(80% 60% at 0% 100%, hsl(var(--primary) / 0.18), transparent 60%)",
+              }}
+            />
+            <div className="relative">
+              <span className="block font-data text-sm md:text-base tracking-[0.25em] uppercase text-primary mb-8 md:mb-10">
+                The Long Horizon — Vision
+              </span>
+              <p className="font-ui font-semibold tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl">
+                Leading the way in what can be{" "}
+                <span
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(110deg, hsl(var(--primary)) 0%, hsl(var(--rho-green-accent, var(--primary))) 100%)",
+                  }}
+                >
+                  measured, controlled, and optimized
+                </span>
+                .
+              </p>
+              <span className="sr-only">{BRAND_VISION}</span>
+            </div>
           </div>
         </article>
 
-        {/* Mission — calm, present-tense, green rail */}
-        <article className="col-span-12 lg:col-span-4 flex flex-col justify-end lg:pl-2 pb-2">
-          <div className="border-l-2 border-primary pl-6 md:pl-8">
-            <span className="block font-data text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-4">
-              The Mission
+        {/* Mission — light chamfered surface, scaled to balance Vision */}
+        <article className="col-span-12 lg:col-span-5">
+          <div
+            className="relative h-full bg-muted/50 p-10 md:p-12 lg:p-14 border-t-4 border-primary"
+            style={{ clipPath: MISSION_CLIP }}
+          >
+            <span className="block font-data text-sm md:text-base tracking-[0.25em] uppercase text-primary mb-8 md:mb-10">
+              The Work — Mission
             </span>
-            <p className="font-ui text-lg md:text-xl text-foreground/80 leading-relaxed">
-              {BRAND_MISSION}
+            <p className="font-ui font-semibold tracking-tight leading-[1.15] text-2xl md:text-3xl lg:text-[2.5rem] text-foreground">
+              Advanced measurement solutions for more{" "}
+              <span className="text-primary">efficient</span>,{" "}
+              <span className="text-primary">automated</span>, and{" "}
+              <span className="text-primary">sustainable</span> operations.
             </p>
+            <span className="sr-only">{BRAND_MISSION}</span>
           </div>
         </article>
       </div>
-
-      {/* Hidden values payload — consumed by ValueOperatingRules below.
-          Kept silent here so the hero stays a hero. */}
-      <span className="sr-only">
-        {BRAND_VALUES.map((v) => `${v.num} ${v.title}. ${v.desc} `).join("")}
-      </span>
     </section>
   );
 };
