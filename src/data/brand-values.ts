@@ -1,12 +1,26 @@
-import { Users, Wrench, BookOpen, TrendingUp } from "@/lib/icons";
+import { BookOpen, Users, Lightbulb, ShieldCheck, Leaf } from "@/lib/icons";
 import type { LucideIcon } from "@/lib/icons";
 
 /**
- * Core Brand Values - Single Source of Truth
- * 
- * These four values anchor everything Rhosonics does: 
- * how we design, write, build partnerships, and deliver impact.
+ * CANONICAL BRAND FOUNDATION
+ * ---------------------------------------------------------------
+ * Single source of truth. Approved by leadership, June 2026.
+ * Supersedes every prior value list (Partnership / Challenge /
+ * Expertise / Progress) and every prior mission/vision draft.
+ *
+ * Anything that references brand values, mission, or vision in
+ * this codebase MUST read from this file. No copies, no drift.
  */
+
+export const BRAND_VISION =
+  "Leading the way in what can be measured, controlled, and optimized.";
+
+export const BRAND_MISSION =
+  "Advanced measurement solutions for more efficient, automated, and sustainable operations.";
+
+// ---------------------------------------------------------------
+// External values — used on every public surface
+// ---------------------------------------------------------------
 
 export interface BrandValue {
   id: string;
@@ -14,119 +28,163 @@ export interface BrandValue {
   num: string;
   title: string;
   shortTitle: string;
+  /** Public statement, lifted verbatim from the approved draft. */
   desc: string;
   keywords: string[];
 }
 
 export const BRAND_VALUES: BrandValue[] = [
   {
-    id: "partnership",
-    icon: Users,
-    num: "01",
-    title: "Built on Partnership",
-    shortTitle: "Partnership",
-    desc: "We build lasting relationships through openness, trust, and shared responsibility. By working closely with our customers and partners, we create solutions that perform in the long term — not just at delivery.",
-    keywords: ["trust", "collaboration", "long-term", "shared responsibility", "openness"],
-  },
-  {
-    id: "challenge",
-    icon: Wrench,
-    num: "02",
-    title: "Engineered for Challenge",
-    shortTitle: "Challenge",
-    desc: "We thrive in complex, demanding environments. New applications and harsh conditions drive us to adapt, innovate, and engineer practical solutions without compromising rigor.",
-    keywords: ["resilience", "innovation", "harsh environments", "adapt", "practical"],
-  },
-  {
     id: "expertise",
     icon: BookOpen,
-    num: "03",
-    title: "Expertise in Practice",
+    num: "01",
+    title: "Expertise",
     shortTitle: "Expertise",
-    desc: "We use our knowledge to improve understanding and advance the conversation. By explaining how and why, not just what, we help customers make better decisions and move their industries forward.",
-    keywords: ["knowledge", "understanding", "education", "clarity", "decisions"],
+    desc:
+      "We combine deep scientific knowledge with hands-on field experience to solve complex problems, translating real-world insights into effective, accessible solutions.",
+    keywords: ["science", "field experience", "accessible", "translate", "solve"],
   },
   {
-    id: "progress",
-    icon: TrendingUp,
+    id: "collaboration",
+    icon: Users,
+    num: "02",
+    title: "Collaboration",
+    shortTitle: "Collaboration",
+    desc:
+      "We work together to understand and resolve unique measurement, process and control challenges.",
+    keywords: ["partnership", "together", "understand", "resolve", "unique"],
+  },
+  {
+    id: "innovation",
+    icon: Lightbulb,
+    num: "03",
+    title: "Innovation",
+    shortTitle: "Innovation",
+    desc:
+      "We create novel solutions and continuously improve our products and processes.",
+    keywords: ["novel", "improve", "continuous", "products", "processes"],
+  },
+  {
+    id: "quality",
+    icon: ShieldCheck,
     num: "04",
-    title: "Progress That Matters",
-    shortTitle: "Progress",
-    desc: "We focus on progress that delivers real, measurable impact. Through better measurement and insight, we help customers operate more efficiently, responsibly and sustainably — for their business and the world around it.",
-    keywords: ["measurable", "impact", "sustainability", "efficiency", "insight"],
+    title: "Quality",
+    shortTitle: "Quality",
+    desc:
+      "We deliver products that meet and exceed industrial standards. We verify our quality at every stage of our process, from design to on-site measurement.",
+    keywords: ["verified", "standards", "every stage", "design", "on-site"],
+  },
+  {
+    id: "sustainability",
+    icon: Leaf,
+    num: "05",
+    title: "Sustainability",
+    shortTitle: "Sustainability",
+    desc:
+      "We help reduce the environmental impact of industrial processes. Our solutions increase efficiency, lower energy demand, minimize the use of hazardous chemicals, and reduce reliance on harmful technologies.",
+    keywords: ["environment", "efficiency", "energy", "non-nuclear", "impact"],
   },
 ];
 
-/**
- * Mapping: Voice Pillars → Core Values
- */
+// ---------------------------------------------------------------
+// Internal values — never rendered on public pages.
+// Kept here so internal tooling can read them, but flagged.
+// ---------------------------------------------------------------
+
+export interface InternalValue {
+  id: string;
+  title: string;
+  statement: string;
+  internal: true;
+}
+
+export const INTERNAL_VALUES: InternalValue[] = [
+  {
+    id: "collaboration",
+    title: "Collaboration",
+    statement:
+      "We work as one team and elevate one another. We grow together, because progress happens through shared efforts.",
+    internal: true,
+  },
+  {
+    id: "quality",
+    title: "Quality",
+    statement:
+      "We take pride in our work and uphold quality together, ensuring everything we deliver meets our standards.",
+    internal: true,
+  },
+  {
+    id: "expertise",
+    title: "Expertise",
+    statement:
+      "We learn continuously and share insights and challenges openly. Every experience strengthens our collective expertise.",
+    internal: true,
+  },
+  {
+    id: "innovation",
+    title: "Innovation",
+    statement:
+      "We explore new ideas, move ideas into action, and learn by doing, to continuously improve our products and processes.",
+    internal: true,
+  },
+];
+
+// ---------------------------------------------------------------
+// Mappings — every downstream subsystem grounds itself in a value.
+// IDs only. Update here, never inline.
+// ---------------------------------------------------------------
+
 export const VOICE_VALUE_MAPPING = {
-  direct: "expertise",      // Expertise enables direct communication
-  educational: "expertise", // Expertise drives education
-  evidenceBased: "progress", // Progress requires evidence
-  partnershipFirst: "partnership", // Direct connection
+  direct: "expertise",
+  educational: "expertise",
+  evidenceBased: "quality",
+  partnershipFirst: "collaboration",
 } as const;
 
-/**
- * Mapping: Design Principles → Core Values
- */
 export const PRINCIPLE_VALUE_MAPPING = {
-  precisionBeforeDecoration: "expertise",  // Clarity enables understanding
-  expressionWithIntent: "progress",        // Every element serves impact
-  engineeredNotStyled: "challenge",        // Built for real conditions
-  consistencyEnablesFlexibility: "partnership", // Stable system for collaboration
+  precisionBeforeDecoration: "quality",
+  expressionWithIntent: "expertise",
+  engineeredNotStyled: "innovation",
+  consistencyEnablesFlexibility: "collaboration",
 } as const;
 
-/**
- * Mapping: Visual Layers → Core Values
- */
 export const VISUAL_LAYER_VALUE_MAPPING = {
-  foundations: "partnership", // Stable base enables long-term collaboration
-  signals: "progress",        // Highlighting what drives impact
-  contextual: "challenge",    // Adapting to real environments
+  foundations: "quality",
+  signals: "expertise",
+  contextual: "collaboration",
 } as const;
 
-/**
- * Mapping: Color Categories → Core Values
- */
 export const COLOR_VALUE_MAPPING = {
-  primary: "progress",      // Growth, measurable outcomes
-  slate: "expertise",       // Clarity, precision
-  mineral: "challenge",     // Field conditions, real environments
-  obsidian: "partnership",  // Professional trust, enduring quality
+  primary: "sustainability", // green carries the eco signal
+  slate: "expertise",
+  mineral: "innovation",
+  obsidian: "quality",
 } as const;
 
-/**
- * Mapping: Imagery Categories → Core Values
- */
 export const IMAGERY_VALUE_MAPPING = {
-  fieldContext: "challenge",      // Real-world durability
-  engineeringContext: "expertise", // Precision and clarity
+  fieldContext: "collaboration",
+  engineeringContext: "expertise",
+  verification: "quality",
+  ecoContext: "sustainability",
+  rAndD: "innovation",
 } as const;
 
-/**
- * Mapping: Industry Applications → Core Values
- */
 export const INDUSTRY_VALUE_MAPPING = {
-  minerals: "challenge",     // Harsh conditions
-  semiconductor: "expertise", // Precision required
-  dredging: "progress",      // Efficiency and impact
-  wastewater: "progress",    // Sustainability
-  mining: "challenge",       // Demanding environments
+  minerals: "expertise",
+  semiconductor: "quality",
+  dredging: "innovation",
+  wastewater: "sustainability",
+  mining: "collaboration",
 } as const;
 
-/**
- * Get a value by its ID
- */
-export const getValueById = (id: string): BrandValue | undefined => {
-  return BRAND_VALUES.find(v => v.id === id);
-};
+// ---------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------
 
-/**
- * Get value icon component by ID
- */
-export const getValueIcon = (id: string): LucideIcon | undefined => {
-  return getValueById(id)?.icon;
-};
+export const getValueById = (id: string): BrandValue | undefined =>
+  BRAND_VALUES.find((v) => v.id === id);
+
+export const getValueIcon = (id: string): LucideIcon | undefined =>
+  getValueById(id)?.icon;
 
 export default BRAND_VALUES;

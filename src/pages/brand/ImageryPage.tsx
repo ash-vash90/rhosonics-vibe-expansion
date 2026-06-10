@@ -3,7 +3,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
-import { TelemetryEyebrow, TelemetryFooter } from "@/components/brand/telemetry";
+import { TelemetryFooter } from "@/components/brand/telemetry";
 import { DecisionQuestions } from "@/components/brand/DecisionQuestions";
 import { AdditionalDonts } from "@/components/brand/AdditionalDonts";
 import SectionCrossLink from "@/components/brand/SectionCrossLink";
@@ -62,7 +62,6 @@ const ImageryPage = () => (
     {/* 07.1 Proportion ratios */}
     <ScrollSection id="ratios">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="07.1" label="Proportion ratios" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           The image budget.
         </h2>

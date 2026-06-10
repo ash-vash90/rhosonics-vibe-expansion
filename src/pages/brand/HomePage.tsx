@@ -74,13 +74,13 @@ const HomePage = () => {
           meta={[`${String(totalChapters).padStart(2, "0")} Chapters`, "v2026.06"]}
         />
 
-        <h2 className="font-ui text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight leading-[1.05] mb-4 max-w-3xl">
-          A brand book for engineers.
+        <h2 className="font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.0] mb-6 max-w-4xl">
+          Advanced measurement for more efficient, automated, and sustainable operations.
         </h2>
         <p className="text-muted-foreground text-base lg:text-lg max-w-2xl leading-relaxed">
-          Ten chapters. One Tools appendix. No tools, no playground, no marketing scaffolding —
-          philosophy at the top, operating rules in the middle, assets at the bottom. Used by our
-          team, our partners, and anyone who wants to know how we think.
+          Our mission, stated plainly. Everything in this brand system — every word, every visual,
+          every rule — exists to deliver it. Ten chapters and one Tools appendix. Used by our team,
+          our partners, and anyone who wants to know how we think.
         </p>
       </div>
 

@@ -1,7 +1,7 @@
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
-import { TelemetryEyebrow, TelemetryFooter } from "@/components/brand/telemetry";
+import { TelemetryFooter } from "@/components/brand/telemetry";
 import { DecisionQuestions } from "@/components/brand/DecisionQuestions";
 import { AdditionalDonts } from "@/components/brand/AdditionalDonts";
 import SectionCrossLink from "@/components/brand/SectionCrossLink";
@@ -51,7 +51,6 @@ const DataVizPage = () => (
     {/* 08.1 Principles */}
     <ScrollSection id="principles">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="08.1" label="Principles" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           Five rules for every chart.
         </h2>
@@ -77,7 +76,6 @@ const DataVizPage = () => (
     {/* 08.2 Honesty rules */}
     <ScrollSection id="honesty" variant="tinted">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="08.2" label="Honesty rules" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           A misdrawn chart is a misstatement.
         </h2>
@@ -111,7 +109,6 @@ const DataVizPage = () => (
     {/* 08.3 Implementation note */}
     <ScrollSection id="implementation">
       <div className="max-w-3xl">
-        <TelemetryEyebrow className="mb-3" code="08.3" label="Implementation" />
         <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-tight mb-4">
           billboard.js. Never Recharts.
         </h2>

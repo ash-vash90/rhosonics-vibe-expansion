@@ -3,7 +3,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
-import { TelemetryEyebrow, TelemetryFooter } from "@/components/brand/telemetry";
+import { TelemetryFooter } from "@/components/brand/telemetry";
 
 const ResourceLibraryGrid = lazy(() =>
   import("@/components/brand/ResourceLibraryGrid").then(m => ({ default: m.ResourceLibraryGrid })),
@@ -48,7 +48,6 @@ const ResourcesPage = () => (
     {/* 10.1 Resource library */}
     <ScrollSection id="downloads">
       <header className="max-w-3xl mb-10">
-        <TelemetryEyebrow className="mb-3" code="10.1" label="Resource library" />
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
           Datasheets, drawings, certificates.
         </h2>
@@ -104,7 +103,6 @@ const ResourcesPage = () => (
     {/* 10.2 Contacts */}
     <ScrollSection id="contacts" variant="tinted">
       <header className="max-w-3xl mb-8">
-        <TelemetryEyebrow className="mb-3" code="10.2" label="Contacts & governance" />
         <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4">
           One named owner per scope.
         </h2>
@@ -139,7 +137,6 @@ const ResourcesPage = () => (
     {/* 10.3 Changelog */}
     <ScrollSection id="changelog">
       <header className="max-w-3xl mb-8">
-        <TelemetryEyebrow className="mb-3" code="10.3" label="Changelog" />
         <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4">
           Versioned, public, dated.
         </h2>

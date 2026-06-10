@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useRef } from "react";
 import { loadGsap } from "./SectionUtils";
-import { TelemetryEyebrow } from "./telemetry";
 
 interface PageBannerProps {
   number: string;
@@ -15,7 +14,7 @@ interface PageBannerProps {
   children?: ReactNode;
 }
 
-export const PageBanner = ({ number, title, subtitle, meta, children }: PageBannerProps) => {
+export const PageBanner = ({ number, title, subtitle, children }: PageBannerProps) => {
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,9 +56,7 @@ export const PageBanner = ({ number, title, subtitle, meta, children }: PageBann
 
       {/* Content */}
       <div className="relative z-10">
-        {meta && meta.length > 0 && (
-          <TelemetryEyebrow className="mb-4" pulse label={meta[0]} meta={meta.slice(1)} />
-        )}
+        {/* Meta intentionally suppressed — PageBanner number is the only chapter marker. */}
         <div className="flex items-baseline gap-3 mb-3">
           <span className="font-data text-sm md:text-base font-bold text-primary">{number}</span>
           <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
