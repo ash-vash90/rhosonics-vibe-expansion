@@ -1,78 +1,96 @@
 import { BRAND_PRINCIPLES, getValueById } from "@/data/brand-values";
 
 /**
- * DesignPrinciples — five decision tools derived from the canonical
- * values. Section heading is supplied by the page via SectionHeader.
- * Greyscale by default; green only on index numbers and value tags.
+ * DesignPrinciples — obsidian panel with green-glow wash, hosting the
+ * five decision tools as horizontal rows (per selected v2 direction).
  */
 
 export const DesignPrinciples = () => (
-  <ol className="space-y-12 md:space-y-14 list-none">
-    {BRAND_PRINCIPLES.map((p) => {
-      const value = getValueById(p.valueId);
-      const isFootprint = p.id === "footprint";
-      return (
-        <li
-          key={p.id}
-          className="grid grid-cols-12 gap-6 lg:gap-8 items-start bg-card p-6 md:p-8 lg:p-10 rounded-[6px]"
-          style={{ boxShadow: "var(--shadow-card)" }}
-        >
-          {/* Left rail — index + value tag */}
-          <div className="col-span-12 lg:col-span-3">
-            <div className="flex lg:flex-col items-baseline lg:items-start gap-4 lg:gap-3">
-              <span
-                className={`font-data text-3xl md:text-4xl tracking-tight ${
-                  isFootprint ? "text-primary" : "text-foreground"
-                }`}
-              >
-                {p.num}
-              </span>
-              {value && (
-                <span className="font-data text-[10px] tracking-[0.2em] uppercase text-primary">
-                  → {value.title}
+  <div
+    className="relative bg-foreground text-background p-8 md:p-12 lg:p-14 rounded-[4px] overflow-hidden"
+    style={{ boxShadow: "var(--shadow-elevated)" }}
+  >
+    {/* Green glow, top-right */}
+    <div
+      aria-hidden="true"
+      className="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full pointer-events-none"
+      style={{
+        background:
+          "radial-gradient(closest-side, hsl(var(--primary) / 0.18), transparent 70%)",
+        filter: "blur(60px)",
+      }}
+    />
+    {/* Faint grid texture */}
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 opacity-[0.05] pointer-events-none"
+      style={{
+        backgroundImage:
+          "linear-gradient(to right, hsl(var(--background)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--background)) 1px, transparent 1px)",
+        backgroundSize: "48px 48px",
+      }}
+    />
+
+    <div className="relative z-10">
+      <ol className="list-none space-y-0">
+        {BRAND_PRINCIPLES.map((p, i) => {
+          const value = getValueById(p.valueId);
+          const last = i === BRAND_PRINCIPLES.length - 1;
+          return (
+            <li
+              key={p.id}
+              className={`grid grid-cols-12 gap-6 md:gap-8 items-start py-7 md:py-8 ${
+                last ? "" : "border-b border-background/10"
+              }`}
+            >
+              {/* Index */}
+              <div className="col-span-2 md:col-span-1">
+                <span className="font-data text-2xl md:text-3xl font-bold text-background/25">
+                  {p.num}
                 </span>
-              )}
-            </div>
-          </div>
+              </div>
 
-          {/* Right — name, imperative, essence, apply list */}
-          <div className="col-span-12 lg:col-span-9">
-            <h3 className="font-ui font-semibold text-foreground tracking-tight text-xl md:text-2xl mb-2">
-              {p.name}
-            </h3>
-            <p className="font-ui font-semibold text-foreground text-2xl md:text-3xl lg:text-[2rem] leading-tight tracking-tight mb-5 md:mb-6 max-w-[28ch]">
-              {p.imperative}
-            </p>
-            <p className="text-foreground/70 leading-relaxed max-w-[55ch] mb-7 md:mb-8">
-              {p.essence}
-            </p>
+              {/* Name + value tag */}
+              <div className="col-span-10 md:col-span-3">
+                <span className="block font-data text-[10px] tracking-[0.25em] uppercase text-primary mb-2">
+                  {value?.title ?? "—"}
+                </span>
+                <h3 className="font-ui font-semibold text-background text-xl md:text-2xl tracking-tight">
+                  {p.name}
+                </h3>
+              </div>
 
-            <div className="border-t border-border pt-5 md:pt-6">
-              <span className="block font-data text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-4">
-                Apply
-              </span>
-              <ul className="space-y-2.5 list-none">
-                {p.apply.map((rule, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-3 text-foreground/85 leading-snug max-w-[58ch]"
-                  >
-                    <span
-                      className="font-data text-[10px] text-muted-foreground/70 mt-2 shrink-0"
-                      aria-hidden="true"
+              {/* Imperative + essence + apply */}
+              <div className="col-span-12 md:col-span-8 space-y-4">
+                <p className="font-ui font-semibold text-background text-lg md:text-xl leading-snug tracking-tight">
+                  {p.imperative}
+                </p>
+                <p className="text-background/60 leading-relaxed text-sm md:text-base max-w-[58ch]">
+                  {p.essence}
+                </p>
+                <ul className="list-none space-y-1.5 pt-1">
+                  {p.apply.map((rule, idx) => (
+                    <li
+                      key={idx}
+                      className="flex items-start gap-3 text-background/80 text-sm leading-snug max-w-[60ch]"
                     >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span>{rule}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </li>
-      );
-    })}
-  </ol>
+                      <span
+                        className="font-data text-[10px] text-primary/80 mt-1.5 shrink-0"
+                        aria-hidden="true"
+                      >
+                        →
+                      </span>
+                      <span>{rule}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  </div>
 );
 
 export default DesignPrinciples;

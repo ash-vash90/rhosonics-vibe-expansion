@@ -1,12 +1,9 @@
 import { INDUSTRY_VALUE_MAPPING, getValueById } from "@/data/brand-values";
 
 /**
- * IndustriesICP — the audiences this brand actually serves.
- *
- * Five industries, each grounded in one canonical value via
- * INDUSTRY_VALUE_MAPPING. ICP slots are deliberately placeholder —
- * leadership has not approved the operator profiles yet, but the
- * page reserves the structure so they slot in without redesign.
+ * IndustriesICP — five industries × scaffolded ICPs. Light cards with
+ * a green top bar (active) or muted top bar (pending), per the
+ * selected v2 console-grid direction.
  */
 
 interface IndustryCard {
@@ -14,8 +11,8 @@ interface IndustryCard {
   num: string;
   name: string;
   scope: string;
-  /** Placeholder until ICPs are approved. */
   icps: string[];
+  status: "active" | "pending";
 }
 
 const INDUSTRIES: IndustryCard[] = [
@@ -25,6 +22,7 @@ const INDUSTRIES: IndustryCard[] = [
     name: "Minerals Processing",
     scope: "Concentrators, tailings, hydrocyclone feeds.",
     icps: ["Process metallurgist", "Plant control engineer"],
+    status: "active",
   },
   {
     id: "semiconductor",
@@ -32,6 +30,7 @@ const INDUSTRIES: IndustryCard[] = [
     name: "Semiconductor",
     scope: "Slurry delivery, CMP, ultrapure chemistry.",
     icps: ["Fab process engineer", "Slurry supply lead"],
+    status: "active",
   },
   {
     id: "dredging",
@@ -39,6 +38,7 @@ const INDUSTRIES: IndustryCard[] = [
     name: "Dredging & Marine",
     scope: "Hopper density, pipeline transport, beach reclamation.",
     icps: ["Dredge master", "Production engineer"],
+    status: "active",
   },
   {
     id: "wastewater",
@@ -46,6 +46,7 @@ const INDUSTRIES: IndustryCard[] = [
     name: "Wastewater",
     scope: "Sludge dewatering, digester loading, return-activated lines.",
     icps: ["Plant operations manager", "Process control specialist"],
+    status: "pending",
   },
   {
     id: "mining",
@@ -53,69 +54,58 @@ const INDUSTRIES: IndustryCard[] = [
     name: "Mining",
     scope: "Underground paste-fill, surface tailings, slurry pipelines.",
     icps: ["Backfill engineer", "Tailings supervisor"],
+    status: "pending",
   },
 ];
 
 export const IndustriesICP = () => (
   <div>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
       {INDUSTRIES.map((ind) => {
-        const valueId = INDUSTRY_VALUE_MAPPING[ind.id as keyof typeof INDUSTRY_VALUE_MAPPING];
+        const valueId =
+          INDUSTRY_VALUE_MAPPING[ind.id as keyof typeof INDUSTRY_VALUE_MAPPING];
         const value = getValueById(valueId);
+        const accent = ind.status === "active" ? "bg-primary" : "bg-border";
         return (
           <article
             key={ind.id}
-            className="relative flex flex-col bg-card p-6 md:p-7 rounded-[6px] border border-border/60 transition-transform duration-300 hover:-translate-y-1"
+            className="bg-card rounded-[4px] overflow-hidden flex flex-col transition-transform duration-300 hover:-translate-y-1"
             style={{ boxShadow: "var(--shadow-card)" }}
           >
-            {/* Top meta row */}
-            <div className="flex items-baseline justify-between mb-5">
-              <span className="font-data text-xs tracking-[0.25em] text-muted-foreground">
-                {ind.num}
-              </span>
-              {value && (
-                <span className="font-data text-[10px] tracking-[0.2em] uppercase text-primary">
-                  → {value.title}
+            <div className={`h-1 ${accent}`} />
+            <div className="p-6 flex flex-col flex-1">
+              <div className="flex items-baseline justify-between mb-4">
+                <span className="font-data text-[10px] tracking-[0.25em] text-muted-foreground">
+                  {ind.num}
                 </span>
-              )}
-            </div>
-
-            <h3 className="font-ui font-semibold text-foreground tracking-tight text-xl md:text-2xl leading-tight mb-2">
-              {ind.name}
-            </h3>
-            <p className="text-foreground/70 leading-relaxed text-sm mb-6">
-              {ind.scope}
-            </p>
-
-            <div className="mt-auto pt-5 border-t border-border">
-              <span className="block font-data text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-3">
-                Ideal Customer Profiles
-              </span>
-              <ul className="space-y-1.5 list-none">
-                {ind.icps.map((role, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2.5 text-sm text-foreground/85"
-                  >
-                    <span
-                      className="font-data text-[10px] text-muted-foreground/60 mt-1.5 shrink-0"
-                      aria-hidden="true"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span>{role}</span>
-                  </li>
-                ))}
-                <li className="flex items-start gap-2.5 text-sm text-muted-foreground/70 italic">
-                  <span
-                    className="font-data text-[10px] text-muted-foreground/40 mt-1.5 shrink-0 not-italic"
-                    aria-hidden="true"
-                  >
-                    ··
+                {value && (
+                  <span className="font-data text-[10px] tracking-[0.2em] uppercase text-primary">
+                    {value.title}
                   </span>
-                  <span>Additional profiles pending approval.</span>
-                </li>
-              </ul>
+                )}
+              </div>
+              <h3 className="font-ui font-semibold text-foreground tracking-tight text-base md:text-lg leading-tight mb-2">
+                {ind.name}
+              </h3>
+              <p className="text-foreground/65 leading-relaxed text-xs md:text-sm mb-5">
+                {ind.scope}
+              </p>
+
+              <div className="mt-auto pt-4 border-t border-border/70">
+                <span className="block font-data text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-2">
+                  Primary ICP
+                </span>
+                <ul className="space-y-1 list-none">
+                  {ind.icps.map((role, i) => (
+                    <li
+                      key={i}
+                      className="text-xs md:text-sm text-foreground/85 leading-snug"
+                    >
+                      {role}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </article>
         );

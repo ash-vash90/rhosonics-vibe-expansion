@@ -1,9 +1,9 @@
 import { BRAND_VALUES } from "@/data/brand-values";
 
 /**
- * ValueOperatingRules — five values, each paired with the operating
- * rule it enforces on the work. Card-based grid with elevation for
- * depth. Section heading is supplied by the page via SectionHeader.
+ * ValueOperatingRules — five values × five operating rules.
+ * Tight 5-up console grid (per selected v2 direction). Hover lifts
+ * the card and shifts the title to primary green.
  */
 
 const RULES: Record<string, string> = {
@@ -20,58 +20,31 @@ const RULES: Record<string, string> = {
 };
 
 export const ValueOperatingRules = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-    {BRAND_VALUES.map((value) => {
-      const Icon = value.icon;
-      const isEco = value.id === "sustainability";
-      return (
-        <article
-          key={value.id}
-          className="group relative flex flex-col bg-card p-7 md:p-8 rounded-[6px] transition-transform duration-300 hover:-translate-y-1"
-          style={{ boxShadow: "var(--shadow-card)" }}
-        >
-          {/* Header row: number + icon */}
-          <div className="flex items-start justify-between mb-6">
-            <span
-              className={`font-data text-xs tracking-[0.25em] ${
-                isEco ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              {value.num}
-            </span>
-            <div
-              className={`w-10 h-10 flex items-center justify-center rounded-[4px] ${
-                isEco
-                  ? "bg-[hsl(var(--eco-surface))] text-primary"
-                  : "bg-muted text-foreground"
-              }`}
-            >
-              <Icon className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
-            </div>
-          </div>
-
-          {/* Title */}
-          <h3 className="font-ui font-semibold text-foreground tracking-tight text-2xl md:text-[1.75rem] leading-tight mb-3">
-            {value.title}
-          </h3>
-
-          {/* Public statement */}
-          <p className="text-foreground/70 leading-relaxed text-sm md:text-base mb-6 grow">
-            {value.desc}
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-border rounded-[4px] overflow-hidden" style={{ boxShadow: "var(--shadow-card)" }}>
+    {BRAND_VALUES.map((value) => (
+      <article
+        key={value.id}
+        className="group bg-card p-6 md:p-7 flex flex-col transition-colors duration-200 hover:bg-muted/40"
+      >
+        <span className="font-data text-xs tracking-[0.25em] text-primary mb-5">
+          {value.num}
+        </span>
+        <h3 className="font-ui font-semibold text-foreground text-lg md:text-xl tracking-tight mb-3 transition-colors group-hover:text-primary">
+          {value.title}
+        </h3>
+        <p className="text-foreground/65 leading-relaxed text-sm mb-5">
+          {value.desc}
+        </p>
+        <div className="mt-auto pt-4 border-t border-border/70">
+          <span className="block font-data text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-2">
+            Operating Rule
+          </span>
+          <p className="text-sm font-medium text-foreground leading-snug">
+            {RULES[value.id]}
           </p>
-
-          {/* Operating rule — inset block */}
-          <div className="mt-auto pt-5 border-t border-border">
-            <span className="block font-data text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-2">
-              Operating Rule
-            </span>
-            <p className="font-ui text-sm md:text-base font-medium text-foreground leading-snug">
-              {RULES[value.id]}
-            </p>
-          </div>
-        </article>
-      );
-    })}
+        </div>
+      </article>
+    ))}
   </div>
 );
 
