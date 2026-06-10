@@ -1,9 +1,5 @@
-import {
-  SectionDefault,
-  SectionTinted,
-  SectionDark,
-  SectionFullBleedMock,
-} from "@/components/brand/sections/SectionVariants";
+import { ScrollSection } from "@/components/brand/ScrollSection";
+import { TelemetryEyebrow } from "@/components/brand/telemetry";
 import { SolutionIcon, type SolutionIconName } from "@/components/brand/icons/SolutionIcon";
 import { ProductPreviewCard } from "@/components/brand/ProductPreviewCard";
 import { StatCallout, StatCalloutRow } from "@/components/brand/StatCallout";
@@ -43,48 +39,50 @@ const PROOF_ITEMS = [
 
 export const PatternsShowcase = () => {
   return (
-    <div className="-mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20">
+    <>
       {/* 1. DEFAULT — capability grid with icon family */}
-      <SectionDefault id="patterns-capabilities" ariaLabel="Capabilities">
-        <div className="px-4 md:px-8 lg:px-12 xl:px-20">
-          <header className="max-w-3xl mb-12 md:mb-16">
-            <div className="font-data text-[11px] uppercase tracking-[0.3em] text-primary mb-4">Capabilities</div>
-            <h2 className="font-ui font-bold text-foreground tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl mb-4">
-              Everything an SDM&nbsp;Eco does
-            </h2>
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-              Eight capabilities, one inline sensor. Engineered to be read at a glance and trusted on the line.
-            </p>
-          </header>
+      <ScrollSection id="patterns-capabilities">
+        <header className="max-w-3xl mb-12 md:mb-16">
+          <TelemetryEyebrow className="mb-4" label="Capabilities" />
+          <h2 className="font-ui font-bold text-foreground tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl mb-4">
+            Everything an SDM&nbsp;Eco does
+          </h2>
+          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+            Eight capabilities, one inline sensor. Engineered to be read at a glance and trusted on the line.
+          </p>
+        </header>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {ICONS.map((it, i) => (
-              <article key={it.name} className="flex flex-col gap-4">
-                <SolutionIcon
-                  name={it.name}
-                  accent={i % 3 === 0 ? "bronze" : i % 3 === 1 ? "green" : "slate"}
-                  surface={i % 2 === 0 ? "slate" : "eco"}
-                  size={64}
-                  label={it.title}
-                />
-                <div>
-                  <h3 className="font-ui font-semibold text-foreground text-base mb-1">{it.title}</h3>
-                  <p className="text-sm text-foreground/70 leading-relaxed">{it.body}</p>
-                </div>
-              </article>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {ICONS.map((it, i) => (
+            <article key={it.name} className="flex flex-col gap-4">
+              <SolutionIcon
+                name={it.name}
+                accent={i % 3 === 0 ? "bronze" : i % 3 === 1 ? "green" : "slate"}
+                surface={i % 2 === 0 ? "slate" : "eco"}
+                size={64}
+                label={it.title}
+              />
+              <div>
+                <h3 className="font-ui font-semibold text-foreground text-base mb-1">{it.title}</h3>
+                <p className="text-sm text-foreground/70 leading-relaxed">{it.body}</p>
+              </div>
+            </article>
+          ))}
         </div>
-      </SectionDefault>
+      </ScrollSection>
 
       {/* 2. ECO — full-bleed product mock */}
-      <SectionFullBleedMock
-        id="patterns-product"
-        ariaLabel="Product preview"
-        eyebrow="HMI"
-        title="A control surface engineers actually trust"
-        caption="High-legibility light-mode HMI built for low-PPI panels and gloved hands."
-        mock={
+      <ScrollSection id="patterns-product" variant="eco">
+        <div className="max-w-3xl mx-auto text-center mb-10 md:mb-14 px-2">
+          <TelemetryEyebrow className="mb-4 justify-center" label="HMI" />
+          <h2 className="font-ui font-bold text-foreground tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl mb-4">
+            A control surface engineers actually trust
+          </h2>
+          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+            High-legibility light-mode HMI built for low-PPI panels and gloved hands.
+          </p>
+        </div>
+        <div className="relative max-w-6xl mx-auto">{
           <ProductPreviewCard
             surface="eco"
             caption="Liquid Profile A — Limestone slurry, 1.42 SG nominal. Massflow integration enabled."
@@ -139,34 +137,31 @@ export const PatternsShowcase = () => {
               </div>
             </div>
           </ProductPreviewCard>
-        }
-      />
+        }</div>
+      </ScrollSection>
 
       {/* 3. TINTED — stat callouts */}
-      <SectionTinted id="patterns-proof" ariaLabel="Proof">
-        <div className="px-4 md:px-8 lg:px-12 xl:px-20">
-          <header className="max-w-3xl mb-12 md:mb-16">
-            <div className="font-data text-[11px] uppercase tracking-[0.3em] text-primary mb-4">Field evidence</div>
-            <h2 className="font-ui font-bold text-foreground tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl mb-4">
-              Numbers from the line
-            </h2>
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-              Operator-reported results from sites running the SDM Eco in production. No projections.
-            </p>
-          </header>
-          <StatCalloutRow>
-            <StatCallout value="±0.001" label="Density accuracy in calibrated range" source="Lab Report 2024-Q3" emphasis="primary" />
-            <StatCallout value="14%" label="Reduction in chemical dosing waste" source="Site A · 6 mo" />
-            <StatCallout value="0" label="Recalibrations needed in first year" source="Site B · 12 mo" />
-            <StatCallout value="9.2yr" label="Median MTBF across the install base" source="Service log 2024" />
-          </StatCalloutRow>
-        </div>
-      </SectionTinted>
+      <ScrollSection id="patterns-proof" variant="tinted">
+        <header className="max-w-3xl mb-12 md:mb-16">
+          <TelemetryEyebrow className="mb-4" label="Field evidence" />
+          <h2 className="font-ui font-bold text-foreground tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl mb-4">
+            Numbers from the line
+          </h2>
+          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+            Operator-reported results from sites running the SDM Eco in production. No projections.
+          </p>
+        </header>
+        <StatCalloutRow>
+          <StatCallout value="±0.001" label="Density accuracy in calibrated range" source="Lab Report 2024-Q3" emphasis="primary" />
+          <StatCallout value="14%" label="Reduction in chemical dosing waste" source="Site A · 6 mo" />
+          <StatCallout value="0" label="Recalibrations needed in first year" source="Site B · 12 mo" />
+          <StatCallout value="9.2yr" label="Median MTBF across the install base" source="Service log 2024" />
+        </StatCalloutRow>
+      </ScrollSection>
 
       {/* 4. SPLIT — pinned capability */}
-      <SectionDefault id="patterns-pinned" ariaLabel="Pinned capability">
-        <div className="px-4 md:px-8 lg:px-12 xl:px-20">
-          <PinnedCapability
+      <ScrollSection id="patterns-pinned">
+        <PinnedCapability
             eyebrow="How it works"
             heading="From raw acoustic data to operator-grade signal"
             intro="A single inline sensor doing the work of three traditional instruments — without bolt-on logic."
@@ -195,62 +190,55 @@ export const PatternsShowcase = () => {
               },
             ]}
           />
-        </div>
-      </SectionDefault>
+      </ScrollSection>
 
       {/* 5. DARK — voice / philosophy */}
-      <SectionDark id="patterns-voice" ariaLabel="Philosophy">
-        <div className="px-4 md:px-8 lg:px-12 xl:px-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-            <div className="lg:col-span-5">
-              <div className="font-data text-[11px] uppercase tracking-[0.3em] text-primary mb-4">Engineering principle</div>
-              <h2 className="font-ui font-bold text-white tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl">
-                Designed to be ignored.
-              </h2>
-            </div>
-            <div className="lg:col-span-7 space-y-6 text-slate-300 text-base md:text-lg leading-relaxed">
-              <p>
-                A well-designed inline sensor disappears into the line. Engineers stop thinking about it. That's the
-                bar.
-              </p>
-              <p className="text-slate-400">
-                We design every screen, label, and signal so the only attention the instrument earns is the alarm it
-                raises — never the one it causes by being unclear.
-              </p>
-              <div className="flex flex-wrap gap-3 pt-4 font-data text-[10px] uppercase tracking-[0.25em] text-slate-500">
-                <span className="px-3 py-1 border border-slate-700 rounded">CLARITY</span>
-                <span className="px-3 py-1 border border-slate-700 rounded">EVIDENCE</span>
-                <span className="px-3 py-1 border border-slate-700 rounded">RESTRAINT</span>
-              </div>
+      <ScrollSection id="patterns-voice" variant="dark">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="lg:col-span-5">
+            <TelemetryEyebrow className="mb-4" tone="dark" label="Engineering principle" />
+            <h2 className="font-ui font-bold text-white tracking-tight leading-[1.05] text-3xl md:text-5xl lg:text-6xl">
+              Designed to be ignored.
+            </h2>
+          </div>
+          <div className="lg:col-span-7 space-y-6 text-slate-300 text-base md:text-lg leading-relaxed">
+            <p>
+              A well-designed inline sensor disappears into the line. Engineers stop thinking about it. That's the
+              bar.
+            </p>
+            <p className="text-slate-400">
+              We design every screen, label, and signal so the only attention the instrument earns is the alarm it
+              raises — never the one it causes by being unclear.
+            </p>
+            <div className="flex flex-wrap gap-3 pt-4 font-data text-[10px] uppercase tracking-[0.25em] text-slate-500">
+              <span className="px-3 py-1 border border-slate-700 rounded">CLARITY</span>
+              <span className="px-3 py-1 border border-slate-700 rounded">EVIDENCE</span>
+              <span className="px-3 py-1 border border-slate-700 rounded">RESTRAINT</span>
             </div>
           </div>
         </div>
-      </SectionDark>
+      </ScrollSection>
 
       {/* 5b. TINTED — section rhythm guide (Data / Power / Action) */}
-      <SectionTinted id="patterns-rhythm" ariaLabel="Section rhythm guide">
-        <div className="px-4 md:px-8 lg:px-12 xl:px-20">
-          <SectionRhythmGuide />
-        </div>
-      </SectionTinted>
+      <ScrollSection id="patterns-rhythm" variant="tinted">
+        <SectionRhythmGuide />
+      </ScrollSection>
 
       {/* 6. DEFAULT — proof marquee strip */}
-      <SectionDefault id="patterns-marquee" ariaLabel="Industries served" density="compact">
-        <div className="px-4 md:px-8 lg:px-12 xl:px-20">
-          <div className="font-data text-[11px] uppercase tracking-[0.3em] text-muted-foreground text-center mb-8">
-            Deployed across
-          </div>
-          <ProofMarquee
-            ariaLabel="Industries deployed across"
-            items={PROOF_ITEMS.map((label) => (
-              <span key={label} className="font-data text-sm md:text-base uppercase tracking-[0.25em]">
-                {label}
-              </span>
-            ))}
-          />
+      <ScrollSection id="patterns-marquee">
+        <div className="font-data text-[11px] uppercase tracking-[0.3em] text-muted-foreground text-center mb-8">
+          Deployed across
         </div>
-      </SectionDefault>
-    </div>
+        <ProofMarquee
+          ariaLabel="Industries deployed across"
+          items={PROOF_ITEMS.map((label) => (
+            <span key={label} className="font-data text-sm md:text-base uppercase tracking-[0.25em]">
+              {label}
+            </span>
+          ))}
+        />
+      </ScrollSection>
+    </>
   );
 };
 
