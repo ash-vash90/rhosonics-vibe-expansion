@@ -4,10 +4,13 @@ import { ScrollSection } from "@/components/brand/ScrollSection";
 import {
   SectionLoader,
   SectionDivider,
-  SectionHeader,
 } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
 import { TelemetryFooter } from "@/components/brand/telemetry";
+import { DotEyebrowHeader } from "@/components/brand/DotEyebrowHeader";
+import { HeroChipRow } from "@/components/brand/HeroChipRow";
+import { FoundationStats } from "@/components/brand/FoundationStats";
+import { ApplyFoundationCTA } from "@/components/brand/ApplyFoundationCTA";
 
 const Foundation = lazy(() => import("@/components/brand/Foundation"));
 const ValueOperatingRules = lazy(
@@ -23,9 +26,9 @@ const IndustriesICP = lazy(
 /**
  * 01 Brand Position — the foundation chapter.
  *
- * PageBanner (01) → Foundation (01.1) → Values (01.2) →
- * Design Principles (01.3) → Industries & ICPs (01.4) →
- * TelemetryFooter. BrandLayout supplies the global footer.
+ * Section patterns adapted from customer.io: dot-eyebrow headers,
+ * KPI stat strip, capability-style cards, big quote card, closing
+ * CTA band. Brand-restricted: green only, no glassmorphism.
  */
 
 const PositioningPage = () => (
@@ -34,29 +37,40 @@ const PositioningPage = () => (
       number="01"
       title="Brand Position"
       subtitle="Where Rhosonics stands, what it stands for, and the rules every downstream decision answers to."
-      meta={["Foundation", "v2026"]}
-    />
+    >
+      <HeroChipRow
+        chips={[
+          "5 values",
+          "5 principles",
+          "5 industries",
+          "Active · v2026",
+        ]}
+      />
+    </PageBanner>
 
-    {/* 01.1 Foundation — Vision + Mission */}
+    {/* 01.1 Foundation — Vision + Mission + KPI strip */}
     <ScrollSection id="foundation">
-      <SectionHeader
-        number="01.1"
-        title="Foundation."
-        subtitle="The Vision sets the horizon. The Mission is the work we do to get there."
+      <DotEyebrowHeader
+        eyebrow="Foundation"
+        num="01.1"
+        title="Vision sets the horizon. Mission is the work."
+        subtitle="The two statements every other chapter answers to. Read them as a pair — one names the destination, one names the route."
       />
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <Foundation />
         </Suspense>
       </ErrorBoundary>
+      <FoundationStats />
     </ScrollSection>
 
     <SectionDivider label="01.2" />
 
     {/* 01.2 Core Values + Operating Rules */}
     <ScrollSection id="values" variant="tinted">
-      <SectionHeader
-        number="01.2"
+      <DotEyebrowHeader
+        eyebrow="Operating system"
+        num="01.2"
         title="Core values, operating rules."
         subtitle="Five values. Each paired with the rule it enforces on the work — not aspirational language, but a test we apply before something ships."
       />
@@ -71,8 +85,9 @@ const PositioningPage = () => (
 
     {/* 01.3 Design Principles */}
     <ScrollSection id="design-principles">
-      <SectionHeader
-        number="01.3"
+      <DotEyebrowHeader
+        eyebrow="Decision tools"
+        num="01.3"
         title="Design principles."
         subtitle="Five decision tools, one per value. When two options compete, these tell us which one ships."
       />
@@ -87,9 +102,10 @@ const PositioningPage = () => (
 
     {/* 01.4 Industries & ICPs */}
     <ScrollSection id="industries" variant="tinted">
-      <SectionHeader
-        number="01.4"
-        title="Industries & ideal customers."
+      <DotEyebrowHeader
+        eyebrow="Audiences"
+        num="01.4"
+        title="Industries and ideal customers."
         subtitle="The audiences this brand actually serves. ICP slots are scaffolded; final operator profiles co-author with the commercial team."
       />
       <ErrorBoundary>
@@ -97,6 +113,11 @@ const PositioningPage = () => (
           <IndustriesICP />
         </Suspense>
       </ErrorBoundary>
+    </ScrollSection>
+
+    {/* 01.5 Closer band — next chapters */}
+    <ScrollSection id="apply">
+      <ApplyFoundationCTA />
     </ScrollSection>
 
     <TelemetryFooter
