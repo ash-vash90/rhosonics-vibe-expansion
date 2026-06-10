@@ -3,6 +3,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionLoader, SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
+import { TelemetryEyebrow, TelemetryFooter } from "@/components/brand/telemetry";
 import { ImpactFirstHero } from "@/components/brand/ImpactFirstHero";
 import { CaseStudyTriad } from "@/components/brand/CaseStudyTriad";
 import { MacroPhotographySpec } from "@/components/brand/MacroPhotographySpec";
@@ -18,40 +19,39 @@ const CaseStudies = lazy(() => import("@/components/brand/CaseStudies"));
 
 const ProofPage = () => (
   <>
-    <PageBanner number="10" title="Proof & Examples" subtitle="Technology comparisons, case studies, and brand gallery." />
-
-    {/* Impact-first hero — the outcome leads, the headline supports */}
-    <ScrollSection className="py-0">
+    {/* Single hero: banner carries wayfinding, the metric leads inside it */}
+    <PageBanner
+      number="10"
+      title="Proof & Examples"
+      subtitle="Technology comparisons, case studies, and brand gallery."
+      meta={["Field outcome", "Copper concentrator", "2024"]}
+    >
       <ImpactFirstHero
-        eyebrow="10.0 · Field outcome · Copper concentrator · 2024"
+        embedded
         metric="−14%"
         metricSource="plant operations · 18 mo rolling avg"
         outcome="Tailings water loss, after eighteen months of SDM Eco inline density measurement."
         problem="The site replaced nuclear gauges on three slurry lines. Reclaim improved without process changes; the only variable was measurement fidelity."
       />
-    </ScrollSection>
+    </PageBanner>
 
     <SectionDivider label="10.1" />
-    <ScrollSection className="py-12 md:py-16 relative">
+    <ScrollSection id="proof" className="relative">
       <div className="absolute inset-0 bg-grid-data opacity-20 pointer-events-none" />
       <div className="relative">
-        <div id="proof" className="scroll-mt-20" />
         <ErrorBoundary><Suspense fallback={<SectionLoader />}><TechComparison /></Suspense></ErrorBoundary>
       </div>
     </ScrollSection>
 
     <SectionDivider label="10.2" />
-    <ScrollSection className="py-12 md:py-16" variant="tinted">
+    <ScrollSection variant="tinted">
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><CaseStudies /></Suspense></ErrorBoundary>
     </ScrollSection>
 
     <SectionDivider label="10.3" />
-    <ScrollSection className="py-12 md:py-16">
-      <div id="case-triads" className="scroll-mt-20" />
+    <ScrollSection id="case-triads">
       <header className="max-w-3xl mb-10">
-        <div className="font-data text-[11px] uppercase tracking-[0.3em] text-primary mb-3">
-          10.3 · Case study triad
-        </div>
+        <TelemetryEyebrow className="mb-3" code="10.3" label="Case study triad" />
         <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-[1.1] mb-3">
           Three pieces of evidence, side by side.
         </h3>
@@ -101,14 +101,12 @@ const ProofPage = () => (
     </ScrollSection>
 
     <SectionDivider label="10.4" />
-    <ScrollSection className="py-12 md:py-16" variant="tinted">
-      <div id="macro-photography" className="scroll-mt-20" />
+    <ScrollSection id="macro-photography" variant="tinted">
       <MacroPhotographySpec />
     </ScrollSection>
 
     <SectionDivider label="10.5" />
-    <ScrollSection className="py-12 md:py-16">
-      <div id="references" className="scroll-mt-20" />
+    <ScrollSection id="references">
       <LogoWallProof
         totalReferences={312}
         asOf="Q2 2025"
@@ -162,8 +160,7 @@ const ProofPage = () => (
     </ScrollSection>
 
     <SectionDivider label="10.6" />
-    <ScrollSection className="py-0">
-      <div id="sustainability" className="scroll-mt-20" />
+    <ScrollSection id="sustainability" className="py-0">
       <SustainabilityAggregate
         asOf="FY2024"
         scope="312 plant sites · 24 countries"
@@ -179,12 +176,9 @@ const ProofPage = () => (
     </ScrollSection>
 
     <SectionDivider label="10.7" />
-    <ScrollSection className="py-12 md:py-16" variant="tinted">
-      <div id="resources" className="scroll-mt-20" />
+    <ScrollSection id="resources" variant="tinted">
       <header className="max-w-3xl mb-10">
-        <div className="font-data text-[11px] uppercase tracking-[0.3em] text-primary mb-3">
-          10.7 · Resource library
-        </div>
+        <TelemetryEyebrow className="mb-3" code="10.7" label="Resource library" />
         <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-[1.1] mb-3">
           Datasheets, drawings, and certificates.
         </h3>
@@ -262,6 +256,16 @@ const ProofPage = () => (
         ]}
       />
     </ScrollSection>
+
+    <TelemetryFooter
+      className="mt-16 md:mt-20"
+      items={[
+        { label: "Section", value: "10 · Proof" },
+        { label: "Evidence", value: "312 sites · 24 countries" },
+        { label: "Owner", value: "MarComms" },
+        { label: "Status", value: "Active", emphasis: true },
+      ]}
+    />
   </>
 );
 
