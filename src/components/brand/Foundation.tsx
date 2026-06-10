@@ -1,38 +1,47 @@
 import { BRAND_VALUES, BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
 
 /**
- * Foundation — the single, deliberate composition of the
- * canonical brand foundation: Vision, Mission, and the five values.
+ * Foundation — Vision + Mission as a side-by-side pair (calm, readable,
+ * not theatrical), followed by the five canonical values.
  *
- * Used on the Brand Position chapter. Linked from HomePage.
- * No decoration without reason. Greyscale-legible. Chamfer-free.
+ * Dramatic typography is reserved for chapter theses elsewhere. The
+ * foundation statements are serious, not decorative.
  */
 export const Foundation = () => {
   return (
     <section aria-labelledby="foundation-heading" className="space-y-20 md:space-y-28">
-      {/* Vision — the long horizon */}
+      {/* Vision + Mission, side by side */}
       <div>
-        <div className="flex items-baseline gap-4 mb-6">
-          <span className="font-data text-xs text-primary">VISION</span>
-          <div className="h-px flex-1 bg-border max-w-24" />
-        </div>
-        <h2
-          id="foundation-heading"
-          className="font-ui font-bold text-foreground tracking-tight leading-[0.95] text-4xl md:text-6xl lg:text-7xl max-w-5xl"
-        >
-          {BRAND_VISION}
+        <h2 id="foundation-heading" className="sr-only">
+          Vision and mission
         </h2>
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+          <article className="space-y-4 md:border-r md:border-border md:pr-10 lg:pr-16">
+            <div className="flex items-baseline gap-4">
+              <span className="font-data text-xs text-primary">VISION</span>
+              <div className="h-px flex-1 bg-border max-w-16" />
+            </div>
+            <p className="font-ui font-semibold text-foreground tracking-tight leading-[1.2] text-2xl md:text-3xl max-w-prose">
+              {BRAND_VISION}
+            </p>
+            <p className="font-ui text-sm text-muted-foreground">
+              — the long horizon.
+            </p>
+          </article>
 
-      {/* Mission — the operating commitment */}
-      <div>
-        <div className="flex items-baseline gap-4 mb-6">
-          <span className="font-data text-xs text-primary">MISSION</span>
-          <div className="h-px flex-1 bg-border max-w-24" />
+          <article className="space-y-4">
+            <div className="flex items-baseline gap-4">
+              <span className="font-data text-xs text-primary">MISSION</span>
+              <div className="h-px flex-1 bg-border max-w-16" />
+            </div>
+            <p className="font-ui font-semibold text-foreground tracking-tight leading-[1.2] text-2xl md:text-3xl max-w-prose">
+              {BRAND_MISSION}
+            </p>
+            <p className="font-ui text-sm text-muted-foreground">
+              — what we deliver today.
+            </p>
+          </article>
         </div>
-        <p className="font-ui font-semibold text-foreground tracking-tight leading-[1.1] text-2xl md:text-4xl lg:text-5xl max-w-4xl">
-          {BRAND_MISSION}
-        </p>
       </div>
 
       {/* Values — five, in canonical order */}
