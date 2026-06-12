@@ -133,9 +133,9 @@ const BrandLayout = () => {
       )}
 
       {/* Main content with sidebar */}
-      <div className="flex min-h-screen items-start">
+      <div className="flex min-h-screen items-start [--sb:0px] xl:[--sb:288px]">
         <Navigation />
-        <main ref={mainRef} className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1280px] mx-auto overflow-x-hidden">
+        <main ref={mainRef} className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1280px] mx-auto overflow-x-clip">
           <ErrorBoundary>
             <Outlet />
           </ErrorBoundary>

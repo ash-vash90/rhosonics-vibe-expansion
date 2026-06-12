@@ -30,8 +30,10 @@ export const ChapterBanner = ({
   children,
 }: ChapterBannerProps) => (
   <section
-    className="relative overflow-hidden -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 text-[hsl(var(--slate-50))]"
+    className="relative overflow-hidden text-[hsl(var(--slate-50))]"
     style={{
+      width: "calc(100vw - var(--sb, 0px))",
+      marginLeft: "calc((100% - 100vw + var(--sb, 0px)) / 2)",
       background: "hsl(var(--rho-obsidian))",
       borderBottom: "1px solid hsl(224 18% 18%)",
     }}

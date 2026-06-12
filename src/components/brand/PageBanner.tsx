@@ -44,7 +44,11 @@ export const PageBanner = ({ number, title, subtitle, children }: PageBannerProp
   return (
     <div
       ref={bannerRef}
-      className="relative overflow-visible md:overflow-hidden -mb-6 md:mb-4 lg:mb-6 -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20 pt-16 pb-2 md:pt-14 md:pb-8 lg:pt-16 lg:pb-10 bg-gradient-to-b from-[hsl(var(--slate-50))] to-background"
+      className="relative overflow-visible md:overflow-hidden -mb-6 md:mb-4 lg:mb-6 px-4 md:px-8 lg:px-12 xl:px-20 pt-16 pb-2 md:pt-14 md:pb-8 lg:pt-16 lg:pb-10 bg-gradient-to-b from-[hsl(var(--slate-50))] to-background"
+      style={{
+        width: "calc(100vw - var(--sb, 0px))",
+        marginLeft: "calc((100% - 100vw + var(--sb, 0px)) / 2)",
+      }}
     >
       {/* Accent line at the very top */}
       <div className="banner-accent-line absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary via-[hsl(var(--rho-green-accent))] to-transparent origin-left" />
