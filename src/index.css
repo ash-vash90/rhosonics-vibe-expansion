@@ -1011,3 +1011,26 @@ body.print-mode {
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
+
+/* ============================================================
+   Dark scrollbar for the obsidian sidebar nav — the default
+   light scrollbar track reads as a white gap between the
+   sidebar and full-bleed banner surfaces.
+   ============================================================ */
+.nav-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--slate-700)) hsl(var(--rho-obsidian));
+}
+.nav-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.nav-scroll::-webkit-scrollbar-track {
+  background: hsl(var(--rho-obsidian));
+}
+.nav-scroll::-webkit-scrollbar-thumb {
+  background: hsl(var(--slate-700));
+  border-radius: 4px;
+}
+.nav-scroll::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--slate-600));
+}
