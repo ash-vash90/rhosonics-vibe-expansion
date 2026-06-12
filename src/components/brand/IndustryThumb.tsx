@@ -9,7 +9,6 @@ interface IndustryThumbProps {
 
 const IMAGES: Record<string, { src: string; alt: string }> = {
   minerals: { src: mineralsImg, alt: "Mineral concentrator with hydrocyclones and slurry piping" },
-  semiconductor: { src: semiconductorImg, alt: "Semiconductor fab cleanroom slurry and ultrapure water delivery" },
   dredging: { src: dredgingImg, alt: "Trailing suction hopper dredger discharging slurry at sea" },
   wastewater: { src: wastewaterImg, alt: "Wastewater treatment plant clarifiers and digesters" },
   mining: { src: miningImg, alt: "Underground paste-fill pipeline in a mine" },
