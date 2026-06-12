@@ -1,78 +1,57 @@
 import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
 
 /**
- * Foundation — Vision (obsidian, chamfered, dotted green) + Mission
- * (light surface, green rail). Matches the selected v2 "console-grid"
- * direction. Tokens only — no hardcoded hex.
+ * Foundation — Vision and Mission as a brand-principles document.
+ * Each statement carries: the current wording, what it replaced, and
+ * what that change means for the company. No marketing chrome.
  */
 
-const VISION_CLIP =
-  "polygon(0 0, 100% 0, 100% calc(100% - 48px), calc(100% - 48px) 100%, 0 100%)";
+interface StatementBlockProps {
+  kind: "Vision" | "Mission";
+  statement: React.ReactNode;
+  previously: string;
+  meaning: string;
+}
+
+const StatementBlock = ({ kind, statement, previously, meaning }: StatementBlockProps) => (
+  <article className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-6 md:gap-10 py-10 md:py-12 border-t border-border first:border-t-0">
+    <span className="font-data text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+      {kind}
+    </span>
+    <div className="space-y-6 max-w-[62ch]">
+      <p className="font-ui font-semibold leading-[1.2] tracking-tight text-2xl md:text-[1.75rem] text-foreground">
+        {statement}
+      </p>
+
+      <dl className="grid grid-cols-1 sm:grid-cols-[120px_1fr] gap-y-3 gap-x-6 text-[15px] leading-[1.6]">
+        <dt className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground pt-1">
+          Previously
+        </dt>
+        <dd className="text-muted-foreground italic">"{previously}"</dd>
+
+        <dt className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground pt-1">
+          What changed
+        </dt>
+        <dd className="text-foreground/85">{meaning}</dd>
+      </dl>
+    </div>
+  </article>
+);
 
 export const Foundation = () => (
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    {/* Vision — obsidian, chamfered corner, green dot grid */}
-    <article
-      className="relative overflow-hidden bg-foreground text-background p-10 md:p-12 min-h-[360px] flex flex-col"
-      style={{
-        clipPath: VISION_CLIP,
-        boxShadow: "var(--shadow-elevated)",
-      }}
-    >
-      {/* Green dot field */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-[0.12] pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 2px 2px, hsl(var(--primary)) 1px, transparent 0)",
-          backgroundSize: "24px 24px",
-        }}
-      />
-      {/* Soft green wash, top-right */}
-      <div
-        aria-hidden="true"
-        className="absolute -top-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(closest-side, hsl(var(--primary) / 0.35), transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <div className="relative z-10 flex flex-col h-full">
-        <span className="block font-data text-xs tracking-[0.3em] uppercase text-primary mb-8">
-          Vision
-        </span>
-        <h2 className="font-ui font-semibold leading-[1.1] tracking-tight text-3xl md:text-4xl lg:text-5xl">
-          Leading the way in what can be{" "}
-          <span className="text-primary">
-            measured, controlled, and optimized.
-          </span>
-        </h2>
-        <div className="mt-8 h-1 w-24 bg-primary" />
-        <span className="sr-only">{BRAND_VISION}</span>
-      </div>
-    </article>
-
-    {/* Mission — light surface, green left rail */}
-    <article
-      className="relative bg-card p-10 md:p-12 min-h-[360px] flex flex-col border-l-4 border-primary"
-      style={{ boxShadow: "var(--shadow-card)" }}
-    >
-      <span className="block font-data text-xs tracking-[0.3em] uppercase text-muted-foreground mb-8">
-        Mission
-      </span>
-      <h3 className="font-ui font-semibold leading-[1.2] tracking-tight text-2xl md:text-3xl lg:text-[2.25rem] text-foreground mt-auto">
-        Advanced measurement solutions for more{" "}
-        <span className="bg-primary/10 px-1.5 text-primary">
-          efficient, automated,
-        </span>{" "}
-        and{" "}
-        <span className="bg-primary/10 px-1.5 text-primary">sustainable</span>{" "}
-        operations.
-      </h3>
-      <span className="sr-only">{BRAND_MISSION}</span>
-    </article>
+  <div className="border-y border-border">
+    <StatementBlock
+      kind="Vision"
+      statement={BRAND_VISION}
+      previously="For a greener and smarter industry."
+      meaning="The old vision named an outcome for our customers' world. The new one names our position in it. We are no longer adjacent to industrial progress — we lead the category of what can be measured, controlled, and optimized. Greener and smarter is implied; leadership is stated."
+    />
+    <StatementBlock
+      kind="Mission"
+      statement={BRAND_MISSION}
+      previously="We create ultrasonic measuring technologies to help our customers have more efficient and sustainable processes."
+      meaning="The old mission described what we build (ultrasonic technologies). The new one describes what we deliver (measurement solutions) and adds automation as a first-class outcome. The work is no longer scoped to one sensing principle — it is scoped to the operation."
+    />
   </div>
 );
 

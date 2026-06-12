@@ -8,7 +8,6 @@ import {
 import {
   ChapterBanner,
   SectionHeader2,
-  DarkProofGrid,
 } from "@/components/brand/system";
 
 const Foundation = lazy(() => import("@/components/brand/Foundation"));
@@ -57,29 +56,13 @@ const PositioningPage = () => (
       subtitle="The foundation chapter: vision, mission, values, decision tools, and the audiences this brand actually serves."
     />
 
-    {/* 01.1 Foundation */}
+    {/* 01.1 Foundation — Vision & Mission, with what changed */}
     <ScrollSection id="foundation">
-      <SectionHeader2
-        eyebrow="Foundation · 01.1"
-        title="Vision sets the horizon. Mission is the work."
-        intro="The two statements every other chapter answers to. Read them as a pair — one names the destination, one names the route."
-      />
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <Foundation />
         </Suspense>
       </ErrorBoundary>
-      <div className="mt-10 md:mt-14">
-        <DarkProofGrid
-          eyebrow="Foundation by the numbers"
-          stats={[
-            { value: "5", label: "Canonical values" },
-            { value: "5", label: "Design principles" },
-            { value: "5", label: "Industries served" },
-            { value: "10", label: "ICP slots scaffolded" },
-          ]}
-        />
-      </div>
     </ScrollSection>
 
     <SectionDivider label="01.2" />
