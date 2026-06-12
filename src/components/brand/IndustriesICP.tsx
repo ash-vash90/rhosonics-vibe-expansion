@@ -37,18 +37,6 @@ const INDUSTRIES: Industry[] = [
     status: "active",
   },
   {
-    id: "semiconductor",
-    num: "02",
-    name: "Semiconductor",
-    scope: "Slurry · CMP · UPW",
-    headline: "Slurry concentration where particle count is the spec.",
-    icps: ["Fab process engineer", "Slurry supply lead"],
-    outcomes: [
-      { value: "ppm", label: "Resolution on dilute streams" },
-      { value: "24/7", label: "Inline, no offline sampling" },
-    ],
-    status: "active",
-  },
   {
     id: "dredging",
     num: "03",
