@@ -292,7 +292,7 @@ export const Navigation = () => {
         ref={mobileMenuRef}
         className={`
           fixed xl:hidden top-0 left-0 h-screen w-72 bg-rho-obsidian text-slate-100
-          z-50 flex-shrink-0 overflow-y-auto
+          z-50 flex-shrink-0 overflow-y-auto nav-scroll
           transform transition-transform duration-300 ease-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
@@ -302,7 +302,7 @@ export const Navigation = () => {
 
       {/* Desktop sidebar */}
       <div className="hidden xl:block sticky top-0 h-screen w-72 z-20 flex-shrink-0">
-        <nav className="h-full w-full bg-rho-obsidian text-slate-100 overflow-y-auto">
+        <nav className="h-full w-full bg-rho-obsidian text-slate-100 overflow-y-auto nav-scroll">
           {renderNavContent(false)}
         </nav>
       </div>
