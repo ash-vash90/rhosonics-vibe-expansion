@@ -67,12 +67,12 @@ const PositioningPage = () => (
 
     <SectionDivider label="01.2" />
 
-    {/* 01.2 Core Values + Operating Rules */}
+    {/* 01.2 Core Values */}
     <ScrollSection id="values" variant="tinted">
       <SectionHeader2
-        eyebrow="Operating system · 01.2"
-        title="Core values, operating rules."
-        intro="Five values. Each paired with the rule it enforces on the work — not aspirational language, but a test we apply before something ships."
+        eyebrow="Foundation · 01.2"
+        title="Core values."
+        intro="The five principles that shape how we work and what we prioritize."
       />
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
