@@ -171,9 +171,9 @@ export const IMAGERY_VALUE_MAPPING = {
 
 export const INDUSTRY_VALUE_MAPPING = {
   minerals: "expertise",
-  dredging: "innovation",
-  wastewater: "sustainability",
-  mining: "collaboration",
+  semiconductor: "quality",
+  flatpanel: "innovation",
+  chemicals: "collaboration",
 } as const;
 
 // ---------------------------------------------------------------
