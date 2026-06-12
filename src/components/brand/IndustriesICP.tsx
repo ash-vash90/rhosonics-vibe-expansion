@@ -37,9 +37,8 @@ const INDUSTRIES: Industry[] = [
     status: "active",
   },
   {
-  {
     id: "dredging",
-    num: "03",
+    num: "02",
     name: "Dredging",
     scope: "Hopper · pipeline",
     headline: "Cycle-time math on the hopper, not in the spreadsheet.",
@@ -52,7 +51,7 @@ const INDUSTRIES: Industry[] = [
   },
   {
     id: "wastewater",
-    num: "04",
+    num: "03",
     name: "Wastewater",
     scope: "Sludge · digesters",
     headline: "Solids concentration that polymer dose can follow.",
