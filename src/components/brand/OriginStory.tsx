@@ -1,61 +1,89 @@
-import { Wrench, Beaker, Globe } from "lucide-react";
+/**
+ * Heritage — where Rhosonics started and what carried forward.
+ *
+ * Same restrained pattern as Foundation.tsx: sticky label column
+ * + single statement + hairline-divided milestone strip. No
+ * decorative chrome, no invented metadata, no fake icons —
+ * the facts carry the section.
+ */
 
-export const OriginStory = () => {
-  return (
-    <section id="origin" className="mb-32">
-      {/* Hero Story Block */}
-      <div className="relative overflow-hidden rounded-lg border border-border/50 bg-card mb-16">
-        <div className="absolute inset-0 bg-workshop-grid opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-br from-earth-ochre/5 via-transparent to-primary/5" />
-        
-        <div className="relative p-10 md:p-16">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 rounded-full bg-slate-800 border-2 border-earth-ochre/60 flex items-center justify-center">
-              <span className="font-data text-xl text-earth-ochre font-bold">92</span>
-            </div>
-            <div className="h-px flex-1 bg-gradient-to-r from-earth-ochre/40 to-transparent" />
-            <span className="font-data text-sm text-earth-ochre/80 uppercase tracking-wider">The Netherlands</span>
-          </div>
+const milestones: { label: string; title: string; body: string }[] = [
+  {
+    label: "1992",
+    title: "Origin",
+    body: "A small workshop in the Netherlands. The first device built by hand.",
+  },
+  {
+    label: "Model 8000",
+    title: "Ultrasonic process analyzer",
+    body: "The instrument the company was founded to build. Inline, non-radioactive, ultrasonic.",
+  },
+  {
+    label: "Today",
+    title: "SDM ECO and CCM portfolio",
+    body: "Slurry density and chemical concentration, deployed across mineral processing, semiconductor, flat panel display and chemical plants worldwide.",
+  },
+];
 
-          <p className="text-2xl md:text-4xl font-ui leading-relaxed mb-8 max-w-4xl">
-            <span className="text-slate-400">It started with a question:</span>
-            <span className="text-earth-ochre font-semibold"> how do you measure beer density?</span>
-          </p>
-          <p className="text-lg md:text-xl text-slate-500 leading-relaxed max-w-3xl">
-            The local brewer needed to know. Our founder had a workbench. 
-            What began as a single measurement device became an entirely new approach to industrial process control.
-            Four decades later, that same curiosity drives every sensor we build.
-          </p>
-        </div>
-      </div>
-
-      {/* Timeline - Horizontal strip */}
-      <h3 className="label-tech text-muted-foreground mb-6">MILESTONES</h3>
-      <div className="flex items-stretch border-t border-b border-border">
-        {[
-          { year: "1992", title: "The Garage", desc: "First prototype built on a workbench.", icon: Wrench },
-          { year: "FIRST", title: "Brewing Precision", desc: "Measuring beer density for a local brewery.", icon: Beaker },
-          { year: "TODAY", title: "Worldwide Impact", desc: "Mining to semiconductors, six continents.", icon: Globe },
-        ].map((milestone, idx) => (
-          <div 
-            key={idx} 
-            className="flex-1 py-8 px-6 border-r border-border last:border-r-0 group hover:bg-slate-50 transition-colors"
+export const OriginStory = () => (
+  <div className="py-16 md:py-24 space-y-20 md:space-y-24">
+    {/* Statement */}
+    <section className="grid grid-cols-12 gap-y-10 gap-x-8">
+      <header className="col-span-12 lg:col-span-2">
+        <div className="lg:sticky lg:top-24">
+          <span className="block font-data text-[11px] tracking-[0.28em] uppercase text-muted-foreground font-medium">
+            Heritage
+          </span>
+          <h3
+            className="font-ui font-semibold text-foreground tracking-[-0.03em] mt-5 leading-[0.95]"
+            style={{ fontSize: "clamp(2rem, 2.6vw, 2.75rem)" }}
           >
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-primary group-hover:text-white transition-all flex-shrink-0">
-                <milestone.icon className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-data text-xs text-earth-ochre block mb-1">{milestone.year}</span>
-                <h4 className="font-ui font-semibold text-foreground mb-1">{milestone.title}</h4>
-                <p className="text-sm text-muted-foreground">{milestone.desc}</p>
-              </div>
-            </div>
-          </div>
-        ))}
+            1992 — today
+          </h3>
+        </div>
+      </header>
+
+      <div className="col-span-12 lg:col-start-4 lg:col-span-9">
+        <p
+          className="font-ui font-medium tracking-[-0.02em] text-foreground leading-[1.12]
+                     [&_em]:not-italic [&_em]:text-primary"
+          style={{ fontSize: "clamp(1.625rem, 2.6vw, 2.25rem)" }}
+        >
+          Rhosonics began in 1992 in a small Netherlands workshop, with the{" "}
+          <em>Model 8000</em> ultrasonic process analyzer. The portfolio has
+          changed; the discipline has not — inline ultrasonic measurement on
+          streams that other techniques struggle with.
+        </p>
       </div>
     </section>
-  );
-};
+
+    {/* Milestone strip */}
+    <section
+      aria-label="Milestones"
+      className="grid grid-cols-1 md:grid-cols-3 border-t border-b border-border"
+    >
+      {milestones.map((m, idx) => (
+        <div
+          key={m.label}
+          className={`p-8 md:p-10 ${
+            idx < milestones.length - 1
+              ? "border-b md:border-b-0 md:border-r border-border"
+              : ""
+          }`}
+        >
+          <span className="block font-data text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground mb-4">
+            {m.label}
+          </span>
+          <h4 className="font-ui font-semibold text-foreground tracking-[-0.01em] text-lg mb-2">
+            {m.title}
+          </h4>
+          <p className="text-[14px] leading-relaxed text-foreground/75 max-w-[40ch]">
+            {m.body}
+          </p>
+        </div>
+      ))}
+    </section>
+  </div>
+);
 
 export default OriginStory;
