@@ -18,7 +18,7 @@ export const InstrumentPanel = ({
   title,
   live = true,
   children,
-  chamfered = true,
+  chamfered = false,
   className = "",
 }: InstrumentPanelProps) => (
   <div

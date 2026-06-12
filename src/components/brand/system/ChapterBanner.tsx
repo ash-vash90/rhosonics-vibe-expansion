@@ -93,10 +93,10 @@ export const ChapterBanner = ({
           </div>
 
           <h1
-            className="font-ui font-bold text-balance leading-[1.02] text-[hsl(var(--slate-50))] mb-6"
+            className="font-ui font-bold text-balance leading-[1.05] text-[hsl(var(--slate-50))] mb-6"
             style={{
-              fontSize: "clamp(40px, 5.2vw, 68px)",
-              letterSpacing: "-0.028em",
+              fontSize: "clamp(30px, 3.6vw, 46px)",
+              letterSpacing: "-0.022em",
             }}
           >
             {title}
