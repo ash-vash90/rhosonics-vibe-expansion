@@ -14,22 +14,33 @@ interface StatementBlockProps {
 }
 
 const StatementBlock = ({ kind, statement, previously, meaning }: StatementBlockProps) => (
-  <article className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-6 md:gap-10 py-10 md:py-12 border-t border-border first:border-t-0">
-    <span className="font-data text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
-      {kind}
-    </span>
-    <div className="space-y-6 max-w-[62ch]">
-      <p className="font-ui font-semibold leading-[1.2] tracking-tight text-2xl md:text-[1.75rem] text-foreground">
+  <article className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-8 md:gap-16 py-14 md:py-20 border-t border-border first:border-t-0">
+    {/* Large typographic label — the anchor of each block */}
+    <div className="flex md:items-start">
+      <span
+        className="font-ui font-bold uppercase tracking-[-0.04em] leading-[0.9]"
+        style={{
+          fontSize: "clamp(3rem, 5.5vw, 5.5rem)",
+          color: "hsl(var(--rho-green))",
+        }}
+      >
+        {kind}
+      </span>
+    </div>
+
+    <div className="space-y-8 max-w-[62ch]">
+      <p className="font-ui font-semibold leading-[1.15] tracking-[-0.02em] text-foreground"
+         style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.875rem)" }}>
         {statement}
       </p>
 
-      <dl className="grid grid-cols-1 sm:grid-cols-[120px_1fr] gap-y-3 gap-x-6 text-[15px] leading-[1.6]">
-        <dt className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground pt-1">
+      <dl className="grid grid-cols-1 sm:grid-cols-[120px_1fr] gap-y-3 gap-x-8 text-[15px] leading-[1.6]">
+        <dt className="font-data text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground pt-1">
           Previously
         </dt>
         <dd className="text-muted-foreground italic">"{previously}"</dd>
 
-        <dt className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground pt-1">
+        <dt className="font-data text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground pt-1">
           What changed
         </dt>
         <dd className="text-foreground/85">{meaning}</dd>
