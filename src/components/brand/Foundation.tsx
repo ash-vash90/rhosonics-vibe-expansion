@@ -89,7 +89,7 @@ const emphasize = (sentence: string, keyword: string): React.ReactNode => {
 };
 
 export const Foundation = () => (
-  <div className="px-6 md:px-10 lg:px-16 max-w-[1280px] mx-auto py-24 md:py-36 space-y-40 md:space-y-56">
+  <div className="py-16 md:py-24 space-y-32 md:space-y-40">
     <StatementBlock
       label="Vision"
       statement={emphasize(BRAND_VISION, "measured")}
