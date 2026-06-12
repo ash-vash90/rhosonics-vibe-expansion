@@ -87,7 +87,7 @@ const PositioningPage = () => (
     <ScrollSection id="design-principles">
       <SectionHeader2
         eyebrow="Decision tools · 01.3"
-        title="Design principles."
+        title="Design principles"
         intro="Five decision tools, one per value. When two options compete, these tell us which one ships."
       />
       <ErrorBoundary>
