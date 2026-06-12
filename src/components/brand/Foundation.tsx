@@ -14,16 +14,9 @@ interface StatementBlockProps {
   label: string;
   /** The canonical statement, with one keyword wrapped in <em>…</em> for green emphasis. */
   statement: React.ReactNode;
-  previously: string;
-  meaning: string;
 }
 
-const StatementBlock = ({
-  label,
-  statement,
-  previously,
-  meaning,
-}: StatementBlockProps) => (
+const StatementBlock = ({ label, statement }: StatementBlockProps) => (
   <section className="grid grid-cols-12 gap-y-10 gap-x-8">
     <header className="col-span-12 lg:col-span-2">
       <div className="lg:sticky lg:top-24">
@@ -47,29 +40,8 @@ const StatementBlock = ({
       >
         {statement}
       </p>
-
-      <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-        <div className="space-y-4">
-          <span className="block font-data text-[10px] tracking-[0.24em] uppercase text-muted-foreground">
-            Replaces
-          </span>
-          <p className="font-ui text-base md:text-lg text-muted-foreground italic leading-[1.55] max-w-[44ch]">
-            &ldquo;{previously}&rdquo;
-          </p>
-        </div>
-        <div className="space-y-4">
-          <span className="block font-data text-[10px] tracking-[0.24em] uppercase text-muted-foreground">
-            Rationale
-          </span>
-          <p className="font-ui text-base md:text-[17px] text-foreground/80 leading-[1.65] max-w-[60ch]">
-            {meaning}
-          </p>
-        </div>
-      </div>
     </div>
   </section>
-
-
 );
 
 /**
@@ -93,14 +65,10 @@ export const Foundation = () => (
     <StatementBlock
       label="Vision"
       statement={emphasize(BRAND_VISION, "measured")}
-      previously="For a greener and smarter industry."
-      meaning="The old vision named an outcome for our customers' world. The new one names our position in it. We are no longer adjacent to industrial progress — we lead the category of what can be measured, controlled, and optimized."
     />
     <StatementBlock
       label="Mission"
       statement={emphasize(BRAND_MISSION, "automated")}
-      previously="We create ultrasonic measuring technologies to help our customers have more efficient and sustainable processes."
-      meaning="The old mission described what we build (ultrasonic technologies). The new one describes what we deliver (measurement solutions) and adds automation as a first-class outcome. The work is no longer scoped to one sensing principle — it is scoped to the operation."
     />
   </div>
 );
