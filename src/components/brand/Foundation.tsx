@@ -48,7 +48,10 @@ const StatementBlock = ({
 
     {/* Statement + change record */}
     <div className="col-span-12 md:col-span-8 space-y-8">
-      <p className="font-ui font-semibold text-foreground leading-[1.25] tracking-[-0.02em] text-2xl md:text-[2rem] max-w-[28ch]">
+      <p
+        className="font-ui font-semibold text-foreground leading-[1.1] tracking-[-0.025em] max-w-[20ch]"
+        style={{ fontSize: "clamp(2.5rem, 4.8vw, 4.25rem)" }}
+      >
         {statement}
       </p>
 
