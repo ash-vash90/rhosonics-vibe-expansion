@@ -1,70 +1,47 @@
+## What to update on the site, based on the video
 
-## Reverse-engineer Claude design → Brand Position
+The video tells one factual story that is missing (or wrong) on the site, and reinforces things already covered. I'll only edit where the video adds verifiable substance, not where it's marketing colour.
 
-I unpacked both bundles (they're a custom format wrapping the real HTML/CSS in base64+gzip script tags). The tokens already match the project (`--rho-green 125 50% 40%`, slate scale, JetBrains Mono for data, Instrument Sans for UI, chamfer clip-paths). What's different is the **section grammar** — that's what this plan extracts and applies.
+### Findings
 
-### The seven design moves to copy
+1. **`OriginStory.tsx` is factually wrong and currently orphaned** (not rendered anywhere). It claims Rhosonics started by measuring **beer density** for a local brewer. The video says the company started in 1992 in a small Netherlands workshop building the **Rhosonics Model 8000 ultrasonic process analyzer**. This needs correcting before it ever ships.
+2. **`/position` has no heritage chapter.** The video makes 1992 → Model 8000 → today's SDM ECO portfolio a central message. That is a foundation-level fact, not marketing — it belongs in the Brand Position chapter.
+3. **Industries section header is stale.** The intro still reads *"Five industries, ten ICP slots…"* — we now show four industries and no ICP role lists. Needs to match the rewritten brief format.
+4. **Foundation (Vision, Mission, Values) is already aligned** with the video's message. Per project memory it's canonical and must not be paraphrased. No change.
+5. **Industries copy is already aligned** with the video's measurement-focused framing (slurry density, chemical concentrations, mineral/semi/flatpanel/chemicals). No content change needed — only the section intro.
+6. **"People, craftsmanship, global service"** is the emotional through-line of the video. Per the *Brand pages ≠ landing pages* rule, /position should not grow a marketing pillar grid for this. Skip on the brand-system page; this content belongs on a future public About page, not here.
 
-1. **Section eyebrow with a leading 24px green hairline** — `before { content: ""; width: 24px; height: 1px; background: green }` + green uppercase mono label. Replaces the current `DotEyebrowHeader` (which uses a dot + numeric tag).
-2. **Section title scale** — `clamp(32px, 4vw, 48px)`, weight 700, `letter-spacing: -0.02em`, `max-width: 22ch`, balanced.
-3. **Instrument panel** — dark obsidian card with `clip-path: var(--chamfer-lg)`, a 1px header rule, a tiny `LIVE • dot pulse` chip, two big tabular-num readouts in JetBrains Mono with smaller uppercase unit suffixes, and a waveform/grid backdrop. The signature element.
-4. **Dark proof grid** — 3 columns separated by vertical hairlines on the obsidian band, mono numerals 32px, `+` and unit suffixes in slate-400/green.
-5. **Tabbed switcher (ICP pattern)** — full-width bordered cells with `tab-num + tab-name + tab-sub`, active tab gets a 2px green underline anchored to `bottom: -1px` of the container border (the underline visually "consumes" the border).
-6. **Outcome chip in cards** — small `outcome-num` (large mono) + `outcome-lbl` block at the bottom of any evidence card. Same pattern works for the operator-quote callouts.
-7. **Hero gradient stack** — radial green wash + 80px grid masked by a radial ellipse + low-opacity SVG turbulence noise. Becomes the standard "chapter banner" treatment.
+### Changes
 
-### Phase 1 — Build the shared kit (under `src/components/brand/system/`)
+**1. Rewrite `src/components/brand/OriginStory.tsx`**
+   - Drop the beer/brewery story, the `earth-ochre` decoration, the `bg-workshop-grid`, and the hover/colour chrome.
+   - Rebuild in the same system-kit voice as `Foundation.tsx`: small sticky label column ("Heritage") + a single restrained statement + a three-step milestone strip.
+   - Statement (working draft, evidence-only, no superlatives):
+     *"Rhosonics began in 1992 in a small Netherlands workshop, with the **Model 8000** ultrasonic process analyzer. The portfolio has changed — the discipline hasn't: inline ultrasonic measurement on streams that other techniques struggle with."*
+   - Milestone strip (three cells, hairline-divided, no decorative icons competing with text):
+     - `1992 — Origin` · *Netherlands workshop. First device built by hand.*
+     - `Model 8000 — Ultrasonic process analyzer.` *The product the company was founded to build.*
+     - `Today — SDM ECO portfolio.* *Slurry density and chemical concentration, deployed worldwide.*
+   - Year/labels in JetBrains Mono uppercase (data label rule). All prose in Instrument Sans. No green except a single hairline accent.
 
-New, reusable primitives that the rest of the brand pages will adopt later:
+**2. Mount it as chapter 01.5 on `src/pages/brand/PositioningPage.tsx`**
+   - Insert between Industries and the ApplyFoundationCTA closer.
+   - `SectionDivider label="01.5"` → `ScrollSection id="heritage"` (variant: alternate from Industries' `tinted` → default).
+   - Add a `SectionHeader2` above it: eyebrow `Heritage · 01.5`, title `Where this started`, intro one line about why heritage matters as positioning (continuity of method, not nostalgia).
+   - Lazy-load `OriginStory` like the other sections.
 
-```
-src/components/brand/system/
-  SectionEyebrow.tsx      ← green 24px line + uppercase mono label
-  SectionTitle.tsx        ← 22ch, clamp scale, balanced
-  InstrumentPanel.tsx     ← dark card chrome: title row, LIVE chip, slot
-  InstrumentReadout.tsx   ← label + big mono value + unit + delta
-  WaveformBackdrop.tsx    ← grid + animated green path (uses existing GSAP loader)
-  DarkProofGrid.tsx       ← 3-col hairline-divided stat strip on obsidian
-  TabbedSwitcher.tsx      ← borderless ICP-style tabs, green-underline active
-  OutcomeChip.tsx         ← outcome-num + outcome-lbl block
-  ChapterBanner.tsx       ← hero treatment: radial wash + grid mask + noise
-```
+**3. Fix stale Industries intro on `PositioningPage.tsx`**
+   - Replace *"Five industries, ten ICP slots. Pick a tab — the active panel shows the operator profile and the outcome shape the brand is built around."*
+   - With: *"Four industries, two product lines. Each panel describes the measurement context and where Rhosonics sits in it."*
 
-These reuse existing tokens only — no new colors. Chamfer is restricted to large surfaces (per brand rule v2).
+### Out of scope (deliberately)
 
-### Phase 2 — Re-skin PositioningPage with the new kit
+- No edits to Foundation, Values, Design Principles, or `brand-values.ts` — already canonical and consistent with the video.
+- No new "People / craftsmanship / global service" pillars on /position — that's landing-page content; if you want it, it should land on a public About page (separate task).
+- No video embed. You asked to use the content, not the player.
 
-| Current | After |
-|---|---|
-| `PageBanner` + `HeroChipRow` | `ChapterBanner` with split layout: left = title + chip row, right = `InstrumentPanel` showing live "Brand telemetry" (5 values, 5 principles, 5 industries counters as readouts, with a waveform under) |
-| `DotEyebrowHeader` (5 instances) | `SectionEyebrow` + `SectionTitle` pair — drop the numeric tag, the `SectionDivider label="01.x"` between sections already carries the chapter number |
-| `FoundationStats` (light card) | `DarkProofGrid` on an obsidian band so it sits visually under the Foundation prose (matches the homepage's hero-proof rhythm) |
-| `ValueOperatingRules` (5-up gap-px grid) | Keep grid but adopt the `TabbedSwitcher` chrome: full-width bordered cells, mono `01–05` numerals, hover background, green underline on hover row |
-| `DesignPrinciples` (obsidian panel) | Wrap in `InstrumentPanel` — gains the LIVE/title bar header, hairline rules, and a faint waveform watermark across the bottom |
-| `IndustriesICP` (5 thumbs) | Convert to actual `TabbedSwitcher` — five industry tabs, active tab reveals a two-column body (left: `IndustryThumb` + headline + ICP slots, right: outcome chips) |
-| `OperatorQuoteCard` | Replace the placeholder metric blocks with `OutcomeChip` components for visual consistency |
-| `ApplyFoundationCTA` | Re-skin with a small `InstrumentPanel` on the right showing "Next: 02 Voice / 03 Logo" as live readouts |
+### Technical notes
 
-`PositioningPage.tsx` stays the same orchestration — only the components inside swap. Foundation/ValueOperatingRules/DesignPrinciples/IndustriesICP get their headers and chrome replaced; their data and copy don't change.
-
-### Phase 3 — Roadmap (not built in this PR)
-
-Once the kit is proven on 01 Brand Position, the same primitives roll into:
-- 02 Voice — `SectionEyebrow` + `InstrumentPanel` wrapping the lexicon/rewrite tables
-- 03 Logo & 04 Typography — `ChapterBanner` + `DarkProofGrid` for the scale numbers
-- 05 Color — `TabbedSwitcher` for the role-based palette grouping
-- 09 Tools — already has telemetry chrome; align to the new primitives
-
-I'll list this as future work, not implement it in this round.
-
-### Constraints honored
-
-- No new colors; green stays the only saturated hue.
-- Chamfers only on `InstrumentPanel`, `ChapterBanner`, `DarkProofGrid` (large surfaces).
-- No glassmorphism; obsidian + hairlines only.
-- All-caps reserved for JetBrains Mono data labels — never on Instrument Sans body.
-- Telemetry chrome (`TelemetryEyebrow`, `DataWatermark`, `CornerBrackets`) stays banned on 01 — the `InstrumentPanel` is the chapter's evidence anchor instead.
-
-### Open question (not blocking)
-
-The hero-right `InstrumentPanel` on Brand Position could either show **abstract brand telemetry** (5 values counter, 5 principles, etc.) or **real product telemetry** (a paused SDM ECO readout). I'll default to abstract brand telemetry so it reads as a meta-statement about the brand system itself; flag in the closing message if you'd prefer the product readout.
+- `OriginStory.tsx` will be rewritten in full (small file, ~60 lines) to match `Foundation.tsx` patterns (system kit, design tokens, no hardcoded colours, no glassmorphism, no fake industrial chrome).
+- `PositioningPage.tsx` gets one new `lazy()` import, one new `SectionDivider`, one new `ScrollSection`, and one one-line copy edit.
+- No data layer or schema changes. No new assets.
