@@ -2,8 +2,9 @@ import { BRAND_VALUES } from "@/data/brand-values";
 
 /**
  * ValueOperatingRules — five values × five operating rules.
- * Tight 5-up console grid (per selected v2 direction). Hover lifts
- * the card and shifts the title to primary green.
+ * Re-skinned with the ICP-tab chrome from the Claude-generated
+ * homepage: full-width bordered cells, mono numerals, hover row
+ * gets a green underline (no state-switch — every cell is "active").
  */
 
 const RULES: Record<string, string> = {
@@ -20,29 +21,38 @@ const RULES: Record<string, string> = {
 };
 
 export const ValueOperatingRules = () => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-border rounded-[4px] overflow-hidden" style={{ boxShadow: "var(--shadow-card)" }}>
-    {BRAND_VALUES.map((value) => (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 border border-border bg-card">
+    {BRAND_VALUES.map((value, i) => (
       <article
         key={value.id}
-        className="group bg-card p-6 md:p-7 flex flex-col transition-colors duration-200 hover:bg-muted/40"
+        className={`group relative flex flex-col p-6 md:p-7 transition-colors duration-200 hover:bg-[hsl(var(--slate-100))] ${
+          i < BRAND_VALUES.length - 1 ? "lg:border-r border-border" : ""
+        } ${i < BRAND_VALUES.length - 2 ? "sm:max-lg:border-b border-border" : ""}`}
       >
-        <span className="font-data text-xs tracking-[0.25em] text-primary mb-5">
-          {value.num}
-        </span>
+        <div className="flex items-baseline justify-between mb-5">
+          <span className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            {value.num} / Value
+          </span>
+        </div>
         <h3 className="font-ui font-semibold text-foreground text-lg md:text-xl tracking-tight mb-3 transition-colors group-hover:text-primary">
           {value.title}
         </h3>
-        <p className="text-foreground/65 leading-relaxed text-sm mb-5">
+        <p className="text-[hsl(var(--slate-600))] leading-[1.6] text-sm mb-6 max-w-[36ch]">
           {value.desc}
         </p>
-        <div className="mt-auto pt-4 border-t border-border/70">
-          <span className="block font-data text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-2">
+        <div className="mt-auto pt-5 border-t border-border">
+          <span className="block font-data text-[10px] font-medium uppercase tracking-[0.14em] text-primary mb-2">
             Operating Rule
           </span>
-          <p className="text-sm font-medium text-foreground leading-snug">
+          <p className="text-sm font-medium text-foreground leading-[1.5]">
             {RULES[value.id]}
           </p>
         </div>
+        {/* hover underline — matches the ICP active-tab signature */}
+        <span
+          aria-hidden="true"
+          className="absolute left-0 right-0 -bottom-px h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"
+        />
       </article>
     ))}
   </div>
