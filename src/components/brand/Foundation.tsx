@@ -2,17 +2,20 @@ import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
 
 /**
  * Foundation — Vision and Mission.
- * Two-column structure: small label column, statement + commentary column.
- * No spec-sheet chrome. Industrial feel comes from tight typographic
- * hierarchy and disciplined alignment, not decoration.
+ *
+ * Layout: sticky small label column (left, 3/12) + large statement +
+ * two-column footer comparing "Replaces" vs "Rationale" (right, 8/12).
+ * Industrial feel from disciplined hierarchy and restraint, not decoration.
+ * No fake counter brackets, no dashed dividers, no terminal markers.
+ * Green is reserved for the emphasis word in each statement.
  */
 
 interface StatementBlockProps {
   label: string;
+  /** The canonical statement, with one keyword wrapped in <em>…</em> for green emphasis. */
   statement: React.ReactNode;
   previously: string;
   meaning: string;
-  last?: boolean;
 }
 
 const StatementBlock = ({
@@ -20,61 +23,84 @@ const StatementBlock = ({
   statement,
   previously,
   meaning,
-  last,
 }: StatementBlockProps) => (
-  <li
-    className={`grid grid-cols-1 md:grid-cols-[200px_1fr] gap-x-12 gap-y-8 py-20 md:py-24 ${
-      last ? "" : "border-b border-foreground/10"
-    }`}
-  >
-    {/* Label column */}
-    <div>
-      <h3
-        className="font-ui font-semibold text-foreground tracking-[-0.03em] leading-none"
-        style={{ fontSize: "clamp(2.25rem, 3.4vw, 3rem)" }}
-      >
-        {label}
-      </h3>
-    </div>
+  <section className="grid grid-cols-12 gap-y-12 gap-x-8">
+    <header className="col-span-12 lg:col-span-3">
+      <div className="lg:sticky lg:top-24">
+        <span className="block font-data text-[11px] tracking-[0.25em] uppercase text-muted-foreground font-medium">
+          Foundation
+        </span>
+        <h3
+          className="font-ui font-light text-foreground tracking-tight mt-5"
+          style={{ fontSize: "clamp(2rem, 3vw, 2.75rem)" }}
+        >
+          {label}
+        </h3>
+      </div>
+    </header>
 
-    {/* Statement + commentary column */}
-    <div>
+    <div className="col-span-12 lg:col-start-5 lg:col-span-8">
       <p
-        className="font-ui font-medium text-foreground leading-[1.2] tracking-[-0.02em] max-w-[28ch]"
-        style={{ fontSize: "clamp(1.875rem, 3.2vw, 2.75rem)" }}
+        className="font-ui font-medium tracking-tight text-foreground leading-[1.05]
+                   [&_em]:not-italic [&_em]:text-primary"
+        style={{ fontSize: "clamp(2.25rem, 4.2vw, 3.75rem)" }}
       >
         {statement}
       </p>
 
-      <div className="mt-12 md:mt-14 max-w-[62ch] space-y-5">
-        <p className="font-ui text-base leading-[1.65] text-foreground/80">
-          <span className="text-muted-foreground">Replaces </span>
-          <span className="text-foreground">&ldquo;{previously}&rdquo;</span>
-        </p>
-        <p className="font-ui text-base leading-[1.65] text-foreground/80">
-          {meaning}
-        </p>
+      <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+        <div className="space-y-4">
+          <span className="block font-data text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
+            Replaces
+          </span>
+          <p className="font-ui text-lg md:text-xl text-muted-foreground italic leading-relaxed max-w-[40ch]">
+            &ldquo;{previously}&rdquo;
+          </p>
+        </div>
+        <div className="space-y-4">
+          <span className="block font-data text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
+            Rationale
+          </span>
+          <p className="font-ui text-base md:text-lg text-foreground/80 leading-relaxed max-w-[52ch]">
+            {meaning}
+          </p>
+        </div>
       </div>
     </div>
-  </li>
+  </section>
 );
 
+/**
+ * Wrap a single keyword in the canonical statement with green emphasis,
+ * without altering the source-of-truth string in brand-values.ts.
+ */
+const emphasize = (sentence: string, keyword: string): React.ReactNode => {
+  const idx = sentence.indexOf(keyword);
+  if (idx === -1) return sentence;
+  return (
+    <>
+      {sentence.slice(0, idx)}
+      <em>{keyword}</em>
+      {sentence.slice(idx + keyword.length)}
+    </>
+  );
+};
+
 export const Foundation = () => (
-  <ol className="list-none px-6 md:px-10 max-w-[1200px] mx-auto">
+  <div className="px-6 md:px-10 lg:px-16 max-w-[1280px] mx-auto py-20 md:py-28 space-y-32 md:space-y-40">
     <StatementBlock
       label="Vision"
-      statement={BRAND_VISION}
+      statement={emphasize(BRAND_VISION, "measured")}
       previously="For a greener and smarter industry."
-      meaning="The old vision named an outcome for our customers' world. The new one names our position in it. We are no longer adjacent to industrial progress — we lead the category of what can be measured, controlled, and optimized. Greener and smarter is implied; leadership is stated."
+      meaning="The old vision named an outcome for our customers' world. The new one names our position in it. We are no longer adjacent to industrial progress — we lead the category of what can be measured, controlled, and optimized."
     />
     <StatementBlock
       label="Mission"
-      statement={BRAND_MISSION}
+      statement={emphasize(BRAND_MISSION, "automated")}
       previously="We create ultrasonic measuring technologies to help our customers have more efficient and sustainable processes."
       meaning="The old mission described what we build (ultrasonic technologies). The new one describes what we deliver (measurement solutions) and adds automation as a first-class outcome. The work is no longer scoped to one sensing principle — it is scoped to the operation."
-      last
     />
-  </ol>
+  </div>
 );
 
 export default Foundation;
