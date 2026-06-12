@@ -64,7 +64,7 @@ const INDUSTRIES: Industry[] = [
   },
   {
     id: "mining",
-    num: "05",
+    num: "04",
     name: "Mining",
     scope: "Paste-fill · tailings",
     headline: "Paste density at the bore, before it sets.",
