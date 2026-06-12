@@ -69,7 +69,7 @@ export const ChapterBanner = ({
       }}
     />
 
-    <div className="relative px-4 md:px-8 lg:px-12 xl:px-20 pt-14 pb-16 md:pt-20 md:pb-24">
+    <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 lg:px-12 xl:px-20 pt-14 pb-16 md:pt-20 md:pb-24">
       <div
         className={`grid gap-12 lg:gap-16 items-center ${
           instrument ? "lg:grid-cols-[1.1fr_1fr]" : "grid-cols-1"
