@@ -5,8 +5,9 @@ import {
   SectionLoader,
   SectionDivider,
 } from "@/components/brand/SectionUtils";
+import { PageBanner } from "@/components/brand/PageBanner";
+import { TelemetryFooter } from "@/components/brand/telemetry";
 import {
-  ChapterBanner,
   SectionHeader2,
 } from "@/components/brand/system";
 
@@ -36,26 +37,11 @@ const ApplyFoundationCTA = lazy(
 
 const PositioningPage = () => (
   <>
-    <ChapterBanner
+    <PageBanner
       number="01"
-      eyebrow="Brand Position · v2026"
-      title={
-        <>
-          Where Rhosonics stands —{" "}
-          <span
-            style={{
-              background:
-                "linear-gradient(135deg, hsl(var(--rho-green-accent)) 0%, hsl(var(--rho-green)) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            and the rules it answers to.
-          </span>
-        </>
-      }
+      title="Brand Position"
       subtitle="The foundation chapter: vision, mission, values, decision tools, and the audiences this brand actually serves."
+      meta={["Foundation", "v2026"]}
     />
 
     {/* 01.1 Foundation — Vision & Mission, with what changed */}
@@ -139,6 +125,16 @@ const PositioningPage = () => (
         </Suspense>
       </ErrorBoundary>
     </ScrollSection>
+
+    <TelemetryFooter
+      className="mt-16 md:mt-20"
+      items={[
+        { label: "Section", value: "01 · Brand Position" },
+        { label: "Scope", value: "Foundation, values, audiences" },
+        { label: "Owner", value: "MarComms" },
+        { label: "Status", value: "Active", emphasis: true },
+      ]}
+    />
   </>
 );
 
