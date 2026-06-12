@@ -1,5 +1,4 @@
 import mineralsImg from "@/assets/industries/minerals.jpg";
-import semiconductorImg from "@/assets/industries/semiconductor.jpg";
 import dredgingImg from "@/assets/industries/dredging.jpg";
 import wastewaterImg from "@/assets/industries/wastewater.jpg";
 import miningImg from "@/assets/industries/mining.jpg";
