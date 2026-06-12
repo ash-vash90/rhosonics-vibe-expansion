@@ -1,16 +1,13 @@
 import { BRAND_PRINCIPLES, getValueById } from "@/data/brand-values";
 import { InstrumentPanel } from "./system/InstrumentPanel";
-import { WaveformBackdrop } from "./system/WaveformBackdrop";
 
 /**
  * DesignPrinciples — five decision tools, wrapped in an
  * InstrumentPanel so the chapter's analytical core reads as a piece
- * of instrument output. A faint waveform watermark sits behind the
- * list to reinforce the "live data" metaphor.
+ * of instrument output.
  */
 export const DesignPrinciples = () => (
   <InstrumentPanel title="Decision tools · 01.3" live className="min-h-[480px]">
-    <WaveformBackdrop seed={3} className="opacity-50" />
     <ol className="relative list-none space-y-0">
       {BRAND_PRINCIPLES.map((p, i) => {
         const value = getValueById(p.valueId);
