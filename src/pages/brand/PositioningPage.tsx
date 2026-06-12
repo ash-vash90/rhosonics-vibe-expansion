@@ -5,11 +5,13 @@ import {
   SectionLoader,
   SectionDivider,
 } from "@/components/brand/SectionUtils";
-import { PageBanner } from "@/components/brand/PageBanner";
-import { DotEyebrowHeader } from "@/components/brand/DotEyebrowHeader";
-import { HeroChipRow } from "@/components/brand/HeroChipRow";
-import { FoundationStats } from "@/components/brand/FoundationStats";
-import { ApplyFoundationCTA } from "@/components/brand/ApplyFoundationCTA";
+import {
+  ChapterBanner,
+  SectionHeader2,
+  InstrumentPanel,
+  InstrumentReadout,
+  DarkProofGrid,
+} from "@/components/brand/system";
 
 const Foundation = lazy(() => import("@/components/brand/Foundation"));
 const ValueOperatingRules = lazy(
@@ -21,57 +23,85 @@ const DesignPrinciples = lazy(
 const IndustriesICP = lazy(
   () => import("@/components/brand/IndustriesICP"),
 );
+const ApplyFoundationCTA = lazy(
+  () => import("@/components/brand/ApplyFoundationCTA"),
+);
 
 /**
- * 01 Brand Position — the foundation chapter.
- *
- * Section patterns adapted from customer.io: dot-eyebrow headers,
- * KPI stat strip, capability-style cards, big quote card, closing
- * CTA band. Brand-restricted: green only, no glassmorphism.
+ * 01 Brand Position — chapter built on the new shared system kit
+ * (src/components/brand/system). Patterns reverse-engineered from
+ * the Claude-generated Homepage + SDM ECO bundles: green-hairline
+ * eyebrows, dark instrument panels, hairline-divided stat strips,
+ * ICP-style tabbed switchers.
  */
 
 const PositioningPage = () => (
   <>
-    <PageBanner
+    <ChapterBanner
       number="01"
-      title="Brand Position"
-      subtitle="Where Rhosonics stands, what it stands for, and the rules every downstream decision answers to."
-    >
-      <HeroChipRow
-        chips={[
-          "5 values",
-          "5 principles",
-          "5 industries",
-          "Active · v2026",
-        ]}
-      />
-    </PageBanner>
+      eyebrow="Brand Position · v2026"
+      title={
+        <>
+          Where Rhosonics stands —{" "}
+          <span
+            style={{
+              background:
+                "linear-gradient(135deg, hsl(var(--rho-green-accent)) 0%, hsl(var(--rho-green)) 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            and the rules it answers to.
+          </span>
+        </>
+      }
+      subtitle="The foundation chapter: vision, mission, values, decision tools, and the audiences this brand actually serves."
+      instrument={
+        <InstrumentPanel title="Brand telemetry · 01" live>
+          <div className="grid grid-cols-2 gap-3">
+            <InstrumentReadout label="Canonical values" value="5" unit="active" />
+            <InstrumentReadout label="Design principles" value="5" unit="tools" />
+            <InstrumentReadout label="Industries" value="5" unit="served" />
+            <InstrumentReadout label="ICP slots" value="10" unit="scaffold" delta="→ co-author pending" />
+          </div>
+        </InstrumentPanel>
+      }
+    />
 
-    {/* 01.1 Foundation — Vision + Mission + KPI strip */}
+    {/* 01.1 Foundation */}
     <ScrollSection id="foundation">
-      <DotEyebrowHeader
-        eyebrow="Foundation"
-        num="01.1"
+      <SectionHeader2
+        eyebrow="Foundation · 01.1"
         title="Vision sets the horizon. Mission is the work."
-        subtitle="The two statements every other chapter answers to. Read them as a pair — one names the destination, one names the route."
+        intro="The two statements every other chapter answers to. Read them as a pair — one names the destination, one names the route."
       />
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <Foundation />
         </Suspense>
       </ErrorBoundary>
-      <FoundationStats />
+      <div className="mt-10 md:mt-14">
+        <DarkProofGrid
+          eyebrow="Foundation by the numbers"
+          stats={[
+            { value: "5", label: "Canonical values" },
+            { value: "5", label: "Design principles" },
+            { value: "5", label: "Industries served" },
+            { value: "10", label: "ICP slots scaffolded" },
+          ]}
+        />
+      </div>
     </ScrollSection>
 
     <SectionDivider label="01.2" />
 
     {/* 01.2 Core Values + Operating Rules */}
     <ScrollSection id="values" variant="tinted">
-      <DotEyebrowHeader
-        eyebrow="Operating system"
-        num="01.2"
+      <SectionHeader2
+        eyebrow="Operating system · 01.2"
         title="Core values, operating rules."
-        subtitle="Five values. Each paired with the rule it enforces on the work — not aspirational language, but a test we apply before something ships."
+        intro="Five values. Each paired with the rule it enforces on the work — not aspirational language, but a test we apply before something ships."
       />
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
@@ -84,11 +114,10 @@ const PositioningPage = () => (
 
     {/* 01.3 Design Principles */}
     <ScrollSection id="design-principles">
-      <DotEyebrowHeader
-        eyebrow="Decision tools"
-        num="01.3"
+      <SectionHeader2
+        eyebrow="Decision tools · 01.3"
         title="Design principles."
-        subtitle="Five decision tools, one per value. When two options compete, these tell us which one ships."
+        intro="Five decision tools, one per value. When two options compete, these tell us which one ships."
       />
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
@@ -101,11 +130,10 @@ const PositioningPage = () => (
 
     {/* 01.4 Industries & ICPs */}
     <ScrollSection id="industries" variant="tinted">
-      <DotEyebrowHeader
-        eyebrow="Audiences"
-        num="01.4"
+      <SectionHeader2
+        eyebrow="Audiences · 01.4"
         title="Industries and ideal customers."
-        subtitle="The audiences this brand actually serves. ICP slots are scaffolded; final operator profiles co-author with the commercial team."
+        intro="Five industries, ten ICP slots. Pick a tab — the active panel shows the operator profile and the outcome shape the brand is built around."
       />
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
@@ -114,11 +142,14 @@ const PositioningPage = () => (
       </ErrorBoundary>
     </ScrollSection>
 
-    {/* 01.5 Closer band — next chapters */}
+    {/* 01.5 Closer */}
     <ScrollSection id="apply">
-      <ApplyFoundationCTA />
+      <ErrorBoundary>
+        <Suspense fallback={<SectionLoader />}>
+          <ApplyFoundationCTA />
+        </Suspense>
+      </ErrorBoundary>
     </ScrollSection>
-
   </>
 );
 

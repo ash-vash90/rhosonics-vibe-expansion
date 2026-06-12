@@ -1,84 +1,70 @@
-# 01 Brand Position — customer.io section patterns, Rhosonics-translated
 
-## What I'm borrowing from customer.io
+## Reverse-engineer Claude design → Brand Position
 
-| customer.io move | Why it works | How I translate it |
-|---|---|---|
-| KPI stat strip (99.98% · 100B+ · 24/5 · 99% with thin vertical rules) | Anchors the page in concrete numbers, fast | Foundation stat strip — 5 values · 5 principles · 5 industries · 10 ICP slots |
-| Small dot-eyebrow tag ("● Platform philosophy") above a display headline | Quiet sectioning without heavy numbered chrome | Replace the inner SectionHeader number-block with a green-dot eyebrow + display H2 + subtitle |
-| Hero confirmation chips ("✓ 14-day free trial · ✓ No credit card · ✓ Cancel anytime") | Adds proof + scannability under the hero | Hero chip row: "✓ 5 values · ✓ 5 principles · ✓ 5 industries · ✓ Active v2026" |
-| Capabilities card grid (image thumb + title + sentence) | Concrete, click-through, visually rich | Industries cards get a per-industry abstract obsidian thumbnail (SVG, green-only) + scope + ICPs + "Read brief →" |
-| Big case-study quote card (portrait + logo + two metric callouts + pull quote) | Editorial weight, evidence-first | "Voice of operator" scaffolded card under Industries — quote slot + 2 metric slots + named role placeholder, clearly marked pending |
-| Floating geometric accents (orange squares + arrow scribble) | Adds craft + motion hint to flat hero | Three small chamfered green squares + a hand-drawn green arrow SVG behind the PageBanner watermark — green only, no orange |
-| Closing CTA band ("Supercharge your messaging") with two pill CTAs | Always points readers to the next thing | New "Now apply the foundation." closer above TelemetryFooter, two pill CTAs → 02 Voice & 03 Logo |
+I unpacked both bundles (they're a custom format wrapping the real HTML/CSS in base64+gzip script tags). The tokens already match the project (`--rho-green 125 50% 40%`, slate scale, JetBrains Mono for data, Instrument Sans for UI, chamfer clip-paths). What's different is the **section grammar** — that's what this plan extracts and applies.
 
-## Final page order
+### The seven design moves to copy
 
-```text
-PageBanner (01)
-  └─ floating green accent squares + green arrow SVG behind watermark
-  └─ hero confirmation chip row (4 chips, green checks)
+1. **Section eyebrow with a leading 24px green hairline** — `before { content: ""; width: 24px; height: 1px; background: green }` + green uppercase mono label. Replaces the current `DotEyebrowHeader` (which uses a dot + numeric tag).
+2. **Section title scale** — `clamp(32px, 4vw, 48px)`, weight 700, `letter-spacing: -0.02em`, `max-width: 22ch`, balanced.
+3. **Instrument panel** — dark obsidian card with `clip-path: var(--chamfer-lg)`, a 1px header rule, a tiny `LIVE • dot pulse` chip, two big tabular-num readouts in JetBrains Mono with smaller uppercase unit suffixes, and a waveform/grid backdrop. The signature element.
+4. **Dark proof grid** — 3 columns separated by vertical hairlines on the obsidian band, mono numerals 32px, `+` and unit suffixes in slate-400/green.
+5. **Tabbed switcher (ICP pattern)** — full-width bordered cells with `tab-num + tab-name + tab-sub`, active tab gets a 2px green underline anchored to `bottom: -1px` of the container border (the underline visually "consumes" the border).
+6. **Outcome chip in cards** — small `outcome-num` (large mono) + `outcome-lbl` block at the bottom of any evidence card. Same pattern works for the operator-quote callouts.
+7. **Hero gradient stack** — radial green wash + 80px grid masked by a radial ellipse + low-opacity SVG turbulence noise. Becomes the standard "chapter banner" treatment.
 
-01.1 Foundation
-  └─ Vision (obsidian, chamfered) + Mission (light, green rail)   [unchanged]
-  └─ NEW: 4-tile KPI stat strip (5 values · 5 principles · 5 industries · 10 ICP slots)
+### Phase 1 — Build the shared kit (under `src/components/brand/system/`)
 
-01.2 Values & Operating Rules                                     [unchanged 5-up grid]
+New, reusable primitives that the rest of the brand pages will adopt later:
 
-01.3 Design Principles                                            [unchanged obsidian panel]
-
-01.4 Industries & ICPs
-  └─ Industry cards get an abstract obsidian SVG thumbnail per industry
-  └─ NEW: scaffolded "Voice of operator" pull-quote card after the grid
-
-01.5 NEW closer band — "Now apply the foundation."
-  └─ Two pill CTAs → 02 Voice & Tone · 03 Logo
-  └─ Chip row: "● 11 chapters remaining"
-
-TelemetryFooter                                                   [unchanged]
+```
+src/components/brand/system/
+  SectionEyebrow.tsx      ← green 24px line + uppercase mono label
+  SectionTitle.tsx        ← 22ch, clamp scale, balanced
+  InstrumentPanel.tsx     ← dark card chrome: title row, LIVE chip, slot
+  InstrumentReadout.tsx   ← label + big mono value + unit + delta
+  WaveformBackdrop.tsx    ← grid + animated green path (uses existing GSAP loader)
+  DarkProofGrid.tsx       ← 3-col hairline-divided stat strip on obsidian
+  TabbedSwitcher.tsx      ← borderless ICP-style tabs, green-underline active
+  OutcomeChip.tsx         ← outcome-num + outcome-lbl block
+  ChapterBanner.tsx       ← hero treatment: radial wash + grid mask + noise
 ```
 
-Inside every 01.x section, the existing `SectionHeader` (number + bold title + subtitle + divider) is replaced by a lighter `DotEyebrowHeader`:
+These reuse existing tokens only — no new colors. Chamfer is restricted to large surfaces (per brand rule v2).
 
-```text
-●  Foundation                       ← green dot + JetBrains Mono label
-Vision sets the horizon.            ← display H2, Instrument Sans semibold
-The Mission is the work…            ← subtitle paragraph
-```
+### Phase 2 — Re-skin PositioningPage with the new kit
 
-The "01.1 / 01.2 / 01.3 / 01.4" chapter numbers stay, but as a small mono tag *next to* the eyebrow label, not as a giant numbered header.
+| Current | After |
+|---|---|
+| `PageBanner` + `HeroChipRow` | `ChapterBanner` with split layout: left = title + chip row, right = `InstrumentPanel` showing live "Brand telemetry" (5 values, 5 principles, 5 industries counters as readouts, with a waveform under) |
+| `DotEyebrowHeader` (5 instances) | `SectionEyebrow` + `SectionTitle` pair — drop the numeric tag, the `SectionDivider label="01.x"` between sections already carries the chapter number |
+| `FoundationStats` (light card) | `DarkProofGrid` on an obsidian band so it sits visually under the Foundation prose (matches the homepage's hero-proof rhythm) |
+| `ValueOperatingRules` (5-up gap-px grid) | Keep grid but adopt the `TabbedSwitcher` chrome: full-width bordered cells, mono `01–05` numerals, hover background, green underline on hover row |
+| `DesignPrinciples` (obsidian panel) | Wrap in `InstrumentPanel` — gains the LIVE/title bar header, hairline rules, and a faint waveform watermark across the bottom |
+| `IndustriesICP` (5 thumbs) | Convert to actual `TabbedSwitcher` — five industry tabs, active tab reveals a two-column body (left: `IndustryThumb` + headline + ICP slots, right: outcome chips) |
+| `OperatorQuoteCard` | Replace the placeholder metric blocks with `OutcomeChip` components for visual consistency |
+| `ApplyFoundationCTA` | Re-skin with a small `InstrumentPanel` on the right showing "Next: 02 Voice / 03 Logo" as live readouts |
 
-## Files
+`PositioningPage.tsx` stays the same orchestration — only the components inside swap. Foundation/ValueOperatingRules/DesignPrinciples/IndustriesICP get their headers and chrome replaced; their data and copy don't change.
 
-**New**
-- `src/components/brand/DotEyebrowHeader.tsx` — green-dot eyebrow + display H2 + subtitle; replaces inline `SectionHeader` calls on this page only
-- `src/components/brand/FoundationStats.tsx` — 4-tile KPI strip with thin vertical dividers, mono numerals
-- `src/components/brand/IndustryThumb.tsx` — small obsidian SVG illustration per industry id (5 abstract marks: concentrator, wafer, dredge hull, clarifier, paste-fill); green stroke only
-- `src/components/brand/OperatorQuoteCard.tsx` — scaffolded case-study-style quote card (quote slot + 2 metric callouts + named role placeholder + "pending" tag)
-- `src/components/brand/HeroChipRow.tsx` — confirmation chips row with green check icon
-- `src/components/brand/ApplyFoundationCTA.tsx` — closer band with display headline + 2 pill CTAs + chapter-progress chip
+### Phase 3 — Roadmap (not built in this PR)
 
-**Edited**
-- `src/pages/brand/PositioningPage.tsx` — swap SectionHeader for DotEyebrowHeader, insert chip row + FoundationStats + OperatorQuoteCard + ApplyFoundationCTA, plus floating accent SVG behind PageBanner
-- `src/components/brand/IndustriesICP.tsx` — add `IndustryThumb` as card header, append `OperatorQuoteCard` below the grid
+Once the kit is proven on 01 Brand Position, the same primitives roll into:
+- 02 Voice — `SectionEyebrow` + `InstrumentPanel` wrapping the lexicon/rewrite tables
+- 03 Logo & 04 Typography — `ChapterBanner` + `DarkProofGrid` for the scale numbers
+- 05 Color — `TabbedSwitcher` for the role-based palette grouping
+- 09 Tools — already has telemetry chrome; align to the new primitives
 
-**Untouched**
-- `Foundation.tsx`, `ValueOperatingRules.tsx`, `DesignPrinciples.tsx`, `PageBanner.tsx`, `SectionUtils.tsx`, `TelemetryFooter`
+I'll list this as future work, not implement it in this round.
 
-## Brand-rule guardrails
+### Constraints honored
 
-- Green (`hsl(var(--primary))`) is the only saturated colour. customer.io's orange/violet accents → green-only.
-- No glassmorphism. Chamfers only on the large Vision panel, the obsidian Principles panel, and the closer band — everywhere else stays 4px rounded.
-- No all-caps Instrument Sans. Eyebrow labels use JetBrains Mono uppercase.
-- Confirmation chips use check icon from `@/lib/icons` (Lucide `Check`), not a custom shape.
-- All copy stays canonical: Vision/Mission/value names/principle imperatives from `src/data/brand-values.ts`. New copy is only the new chip/stat labels and the closer headline.
-- Floating accent squares behind PageBanner are decorative — set `aria-hidden`, never carry meaning.
-- "Voice of operator" card is explicitly marked pending so it isn't mistaken for shipped content.
+- No new colors; green stays the only saturated hue.
+- Chamfers only on `InstrumentPanel`, `ChapterBanner`, `DarkProofGrid` (large surfaces).
+- No glassmorphism; obsidian + hairlines only.
+- All-caps reserved for JetBrains Mono data labels — never on Instrument Sans body.
+- Telemetry chrome (`TelemetryEyebrow`, `DataWatermark`, `CornerBrackets`) stays banned on 01 — the `InstrumentPanel` is the chapter's evidence anchor instead.
 
-## Technical notes
+### Open question (not blocking)
 
-- `DotEyebrowHeader` is page-local; it does not replace the global `SectionHeader` used on other brand chapters.
-- `IndustryThumb` SVGs are inlined React components (no external image fetch), 16:9 aspect, `currentColor` stroke so they pick up `text-primary`.
-- Closer band uses `bg-foreground text-background` with the same shadow token as the principles panel so it rhymes visually with 01.3.
-- KPI strip uses CSS grid with `divide-x divide-border` for the thin rules — matches customer.io's stat bar without adding box-borders.
-- All new sections register a `ScrollSection` variant that respects the no-adjacent-duplicate rhythm rule (default → tinted → default → tinted → dark closer).
+The hero-right `InstrumentPanel` on Brand Position could either show **abstract brand telemetry** (5 values counter, 5 principles, etc.) or **real product telemetry** (a paused SDM ECO readout). I'll default to abstract brand telemetry so it reads as a meta-statement about the brand system itself; flag in the closing message if you'd prefer the product readout.
