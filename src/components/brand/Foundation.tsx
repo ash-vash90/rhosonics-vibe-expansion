@@ -1,84 +1,94 @@
 import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
 
 /**
- * Foundation — Vision and Mission as a brand-principles document.
- * Editorial layout: large label above, statement and change-notes below.
- * Stacked rather than columned so the typography can breathe without
- * colliding into the body copy.
+ * Foundation — Vision and Mission as principles entries.
+ * Matches the DesignPrinciples grid aesthetic: mono index, small-caps
+ * data label, statement as the principle, change-record as paired
+ * key/value rows. No display-wordmark, no marketing chrome.
  */
 
 interface StatementBlockProps {
-  kind: "Vision" | "Mission";
-  index: string;
+  num: string;
+  kind: "VISION" | "MISSION";
   statement: React.ReactNode;
   previously: string;
   meaning: string;
+  last?: boolean;
 }
 
-const StatementBlock = ({ kind, index, statement, previously, meaning }: StatementBlockProps) => (
-  <article className="py-20 md:py-28 border-t border-border first:border-t-0">
-    <div className="max-w-[1100px] mx-auto px-6 md:px-10">
-      {/* Index marker */}
-      <div className="font-data text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground mb-6">
-        {index} · {kind === "Vision" ? "The horizon" : "The work"}
-      </div>
+const StatementBlock = ({
+  num,
+  kind,
+  statement,
+  previously,
+  meaning,
+  last,
+}: StatementBlockProps) => (
+  <li
+    className={`grid grid-cols-12 gap-6 md:gap-8 items-start py-10 md:py-14 ${
+      last ? "" : "border-b border-border"
+    }`}
+  >
+    {/* Mono index */}
+    <div className="col-span-2 md:col-span-1">
+      <span className="font-data text-2xl md:text-3xl font-medium text-foreground/25 tabular-nums">
+        {num}
+      </span>
+    </div>
 
-      {/* Display label */}
-      <h2
-        className="font-ui font-bold uppercase tracking-[-0.045em] leading-[0.85] mb-10 md:mb-14"
-        style={{
-          fontSize: "clamp(4.5rem, 12vw, 10rem)",
-          color: "hsl(var(--rho-green))",
-        }}
-      >
+    {/* Data label */}
+    <div className="col-span-10 md:col-span-3">
+      <span className="block font-data text-[10px] font-medium tracking-[0.14em] uppercase text-primary mb-2">
         {kind}
-      </h2>
+      </span>
+      <span className="block font-data text-[10px] font-medium tracking-[0.14em] uppercase text-muted-foreground">
+        {kind === "VISION" ? "The horizon" : "The work"}
+      </span>
+    </div>
 
-      {/* The statement itself — the principle */}
-      <p
-        className="font-ui font-semibold leading-[1.2] tracking-[-0.02em] text-foreground max-w-[22ch]"
-        style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.75rem)" }}
-      >
+    {/* Statement + change record */}
+    <div className="col-span-12 md:col-span-8 space-y-8">
+      <p className="font-ui font-semibold text-foreground leading-[1.25] tracking-[-0.02em] text-2xl md:text-[2rem] max-w-[28ch]">
         {statement}
       </p>
 
-      {/* Change record */}
-      <dl className="mt-16 grid grid-cols-1 md:grid-cols-[160px_1fr] gap-y-4 gap-x-12 max-w-[68ch] pt-8 border-t border-border">
-        <dt className="font-data text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground pt-1">
+      <dl className="grid grid-cols-[120px_1fr] gap-y-3 gap-x-8 pt-6 border-t border-border max-w-[64ch]">
+        <dt className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground pt-1">
           Previously
         </dt>
-        <dd className="text-[15px] leading-[1.7] text-muted-foreground italic">
+        <dd className="text-[14px] leading-[1.65] text-muted-foreground italic">
           "{previously}"
         </dd>
 
-        <dt className="font-data text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground pt-1">
+        <dt className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground pt-1">
           What changed
         </dt>
-        <dd className="text-[15px] leading-[1.7] text-foreground/85">
+        <dd className="text-[14px] leading-[1.65] text-foreground/80">
           {meaning}
         </dd>
       </dl>
     </div>
-  </article>
+  </li>
 );
 
 export const Foundation = () => (
-  <div className="border-y border-border">
+  <ol className="list-none px-6 md:px-10 max-w-[1200px] mx-auto">
     <StatementBlock
-      kind="Vision"
-      index="01.1.a"
+      num="01"
+      kind="VISION"
       statement={BRAND_VISION}
       previously="For a greener and smarter industry."
       meaning="The old vision named an outcome for our customers' world. The new one names our position in it. We are no longer adjacent to industrial progress — we lead the category of what can be measured, controlled, and optimized. Greener and smarter is implied; leadership is stated."
     />
     <StatementBlock
-      kind="Mission"
-      index="01.1.b"
+      num="02"
+      kind="MISSION"
       statement={BRAND_MISSION}
       previously="We create ultrasonic measuring technologies to help our customers have more efficient and sustainable processes."
       meaning="The old mission described what we build (ultrasonic technologies). The new one describes what we deliver (measurement solutions) and adds automation as a first-class outcome. The work is no longer scoped to one sensing principle — it is scoped to the operation."
+      last
     />
-  </div>
+  </ol>
 );
 
 export default Foundation;
