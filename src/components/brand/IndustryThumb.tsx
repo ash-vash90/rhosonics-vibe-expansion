@@ -1,23 +1,34 @@
 import mineralsImg from "@/assets/industries/minerals.jpg";
-import dredgingImg from "@/assets/industries/dredging.jpg";
-import wastewaterImg from "@/assets/industries/wastewater.jpg";
-import miningImg from "@/assets/industries/mining.jpg";
+import semiconductorImg from "@/assets/industries/semiconductor.jpg";
+import flatpanelImg from "@/assets/industries/flatpanel.jpg";
+import chemicalsImg from "@/assets/industries/chemicals.jpg";
 
 interface IndustryThumbProps {
   id: string;
 }
 
 const IMAGES: Record<string, { src: string; alt: string }> = {
-  minerals: { src: mineralsImg, alt: "Mineral concentrator with hydrocyclones and slurry piping" },
-  dredging: { src: dredgingImg, alt: "Trailing suction hopper dredger discharging slurry at sea" },
-  wastewater: { src: wastewaterImg, alt: "Wastewater treatment plant clarifiers and digesters" },
-  mining: { src: miningImg, alt: "Underground paste-fill pipeline in a mine" },
+  minerals: {
+    src: mineralsImg,
+    alt: "Mineral processing plant with hydrocyclones and slurry piping",
+  },
+  semiconductor: {
+    src: semiconductorImg,
+    alt: "Semiconductor fab cleanroom with slurry and ultrapure water delivery",
+  },
+  flatpanel: {
+    src: flatpanelImg,
+    alt: "Flat panel display fab with substrate handling robots",
+  },
+  chemicals: {
+    src: chemicalsImg,
+    alt: "Chemical processing plant with stainless reactors and inline sensors",
+  },
 };
 
 /**
  * IndustryThumb — real photographic thumbnail per industry.
  * Placeholder AI-generated imagery; swap with licensed photography later.
- * 16:9 aspect, no overlays — let the photo do the work.
  */
 export const IndustryThumb = ({ id }: IndustryThumbProps) => {
   const img = IMAGES[id];
