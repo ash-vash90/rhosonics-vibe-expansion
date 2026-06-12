@@ -57,16 +57,6 @@ const PositioningPage = () => (
         </>
       }
       subtitle="The foundation chapter: vision, mission, values, decision tools, and the audiences this brand actually serves."
-      instrument={
-        <InstrumentPanel title="Brand telemetry · 01" live chamfered>
-          <div className="grid grid-cols-2 gap-3">
-            <InstrumentReadout label="Canonical values" value="5" unit="active" />
-            <InstrumentReadout label="Design principles" value="5" unit="tools" />
-            <InstrumentReadout label="Industries" value="5" unit="served" />
-            <InstrumentReadout label="ICP slots" value="10" unit="scaffold" delta="→ co-author pending" />
-          </div>
-        </InstrumentPanel>
-      }
     />
 
     {/* 01.1 Foundation */}
