@@ -38,7 +38,7 @@ const StatementBlock = ({
 
     {/* Data label */}
     <div className="col-span-10 md:col-span-3">
-      <span className="block font-data text-[10px] font-medium tracking-[0.14em] uppercase text-primary mb-2">
+      <span className="block font-data font-medium tracking-[0.06em] uppercase text-primary mb-3 text-3xl md:text-4xl leading-none">
         {kind}
       </span>
       <span className="block font-data text-[10px] font-medium tracking-[0.14em] uppercase text-muted-foreground">
