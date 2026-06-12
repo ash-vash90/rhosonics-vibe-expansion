@@ -41,7 +41,7 @@ export const Foundation = () => (
       />
       <div className="relative z-10 flex flex-col h-full">
         <span className="block font-data text-xs tracking-[0.3em] uppercase text-primary mb-8">
-          01.1 / Vision
+          Vision
         </span>
         <h2 className="font-ui font-semibold leading-[1.1] tracking-tight text-3xl md:text-4xl lg:text-5xl">
           Leading the way in what can be{" "}
@@ -60,7 +60,7 @@ export const Foundation = () => (
       style={{ boxShadow: "var(--shadow-card)" }}
     >
       <span className="block font-data text-xs tracking-[0.3em] uppercase text-muted-foreground mb-8">
-        01.2 / Mission
+        Mission
       </span>
       <h3 className="font-ui font-semibold leading-[1.2] tracking-tight text-2xl md:text-3xl lg:text-[2.25rem] text-foreground mt-auto">
         Advanced measurement solutions for more{" "}
