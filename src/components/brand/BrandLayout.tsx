@@ -133,9 +133,12 @@ const BrandLayout = () => {
       )}
 
       {/* Main content with sidebar */}
-      <div className="flex min-h-screen items-start [--sb:0px] xl:[--sb:288px]">
+      <div className="flex min-h-screen items-start">
         <Navigation />
-        <main ref={mainRef} className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1280px] mx-auto overflow-x-clip">
+        <main
+          ref={mainRef}
+          className="flex-1 min-w-0 overflow-x-clip grid content-start grid-cols-[minmax(1rem,1fr)_minmax(0,1280px)_minmax(1rem,1fr)] md:grid-cols-[minmax(2rem,1fr)_minmax(0,1280px)_minmax(2rem,1fr)] lg:grid-cols-[minmax(3rem,1fr)_minmax(0,1280px)_minmax(3rem,1fr)] xl:grid-cols-[minmax(5rem,1fr)_minmax(0,1280px)_minmax(5rem,1fr)] [&>*:not(.full-bleed)]:col-start-2 [&>.full-bleed]:col-span-full"
+        >
           <ErrorBoundary>
             <Outlet />
           </ErrorBoundary>

@@ -17,7 +17,7 @@ interface ScrollSectionProps {
   id?: string;
 }
 
-const bleed = "-mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 px-4 md:px-8 lg:px-12 xl:px-20";
+const bleed = "full-bleed px-4 md:px-8 lg:px-12 xl:px-20";
 
 const variantClasses = {
   default: "",
@@ -158,7 +158,11 @@ export const ScrollSection = ({
       className={`${variantClasses[variant]} ${hasOwnPadding ? "" : densityClasses[density]} ${id ? "scroll-mt-20" : ""} ${className}`}
       style={{ opacity: isInView ? undefined : 0 }}
     >
-      {children}
+      {variant === "default" ? (
+        children
+      ) : (
+        <div className="max-w-[1280px] mx-auto">{children}</div>
+      )}
     </section>
   );
 };
