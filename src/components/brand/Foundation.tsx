@@ -24,15 +24,15 @@ const StatementBlock = ({
   previously,
   meaning,
 }: StatementBlockProps) => (
-  <section className="grid grid-cols-12 gap-y-12 gap-x-8">
+  <section className="grid grid-cols-12 gap-y-10 gap-x-8">
     <header className="col-span-12 lg:col-span-3">
       <div className="lg:sticky lg:top-24">
-        <span className="block font-data text-[11px] tracking-[0.25em] uppercase text-muted-foreground font-medium">
+        <span className="block font-data text-[11px] tracking-[0.28em] uppercase text-muted-foreground font-medium">
           Foundation
         </span>
         <h3
-          className="font-ui font-light text-foreground tracking-tight mt-5"
-          style={{ fontSize: "clamp(2rem, 3vw, 2.75rem)" }}
+          className="font-ui font-semibold text-foreground tracking-[-0.04em] mt-6 leading-[0.9]"
+          style={{ fontSize: "clamp(3rem, 5.5vw, 5.25rem)" }}
         >
           {label}
         </h3>
@@ -41,33 +41,34 @@ const StatementBlock = ({
 
     <div className="col-span-12 lg:col-start-5 lg:col-span-8">
       <p
-        className="font-ui font-medium tracking-tight text-foreground leading-[1.05]
+        className="font-ui font-medium tracking-[-0.025em] text-foreground leading-[1.02]
                    [&_em]:not-italic [&_em]:text-primary"
-        style={{ fontSize: "clamp(2.25rem, 4.2vw, 3.75rem)" }}
+        style={{ fontSize: "clamp(2.5rem, 4.8vw, 4.25rem)" }}
       >
         {statement}
       </p>
 
-      <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-        <div className="space-y-4">
-          <span className="block font-data text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
+      <div className="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20">
+        <div className="space-y-5">
+          <span className="block font-data text-[10px] tracking-[0.24em] uppercase text-muted-foreground">
             Replaces
           </span>
-          <p className="font-ui text-lg md:text-xl text-muted-foreground italic leading-relaxed max-w-[40ch]">
+          <p className="font-ui text-lg md:text-xl text-muted-foreground italic leading-[1.45] max-w-[38ch]">
             &ldquo;{previously}&rdquo;
           </p>
         </div>
-        <div className="space-y-4">
-          <span className="block font-data text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
+        <div className="space-y-5">
+          <span className="block font-data text-[10px] tracking-[0.24em] uppercase text-muted-foreground">
             Rationale
           </span>
-          <p className="font-ui text-base md:text-lg text-foreground/80 leading-relaxed max-w-[52ch]">
+          <p className="font-ui text-base md:text-[17px] text-foreground/80 leading-[1.65] max-w-[54ch]">
             {meaning}
           </p>
         </div>
       </div>
     </div>
   </section>
+
 );
 
 /**
@@ -87,7 +88,7 @@ const emphasize = (sentence: string, keyword: string): React.ReactNode => {
 };
 
 export const Foundation = () => (
-  <div className="px-6 md:px-10 lg:px-16 max-w-[1280px] mx-auto py-20 md:py-28 space-y-32 md:space-y-40">
+  <div className="px-6 md:px-10 lg:px-16 max-w-[1280px] mx-auto py-24 md:py-36 space-y-40 md:space-y-56">
     <StatementBlock
       label="Vision"
       statement={emphasize(BRAND_VISION, "measured")}
