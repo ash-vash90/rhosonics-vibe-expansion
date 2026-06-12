@@ -135,30 +135,28 @@ const BrandLayout = () => {
       {/* Main content with sidebar */}
       <div className="flex min-h-screen items-start">
         <Navigation />
-        <main ref={mainRef} className="flex-1 min-w-0 overflow-x-hidden">
-          <div className="max-w-[1280px] mx-auto px-4 md:px-8 lg:px-12 xl:px-20">
-            <ErrorBoundary>
-              <Outlet />
-            </ErrorBoundary>
+        <main ref={mainRef} className="flex-1 min-w-0 px-4 md:px-8 lg:px-12 xl:px-20 max-w-[1280px] mx-auto overflow-x-clip">
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
 
-            {/* Footer */}
-            <footer className="mt-12 py-10 border-t border-border" role="contentinfo">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-[22px] h-[22px]"><RhosonicsLogo variant="dark" /></div>
-                  <div>
-                    <span className={`font-logo ${isPrimetime ? 'tracking-normal' : 'tracking-wide'} text-foreground text-base`}>RHOSONICS</span>
-                    <span className="font-data text-xs text-muted-foreground ml-2">BRAND SYSTEM</span>
-                  </div>
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  <span className="font-data text-xs">© {new Date().getFullYear()} RHOSONICS B.V.</span>
-                  <span className="mx-2 text-border">|</span>
-                  <span className="font-data text-xs">VERSION 2025</span>
+          {/* Footer */}
+          <footer className="mt-12 py-10 border-t border-border" role="contentinfo">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-[22px] h-[22px]"><RhosonicsLogo variant="dark" /></div>
+                <div>
+                  <span className={`font-logo ${isPrimetime ? 'tracking-normal' : 'tracking-wide'} text-foreground text-base`}>RHOSONICS</span>
+                  <span className="font-data text-xs text-muted-foreground ml-2">BRAND SYSTEM</span>
                 </div>
               </div>
-            </footer>
-          </div>
+              <div className="text-sm text-muted-foreground">
+                <span className="font-data text-xs">© {new Date().getFullYear()} RHOSONICS B.V.</span>
+                <span className="mx-2 text-border">|</span>
+                <span className="font-data text-xs">VERSION 2025</span>
+              </div>
+            </div>
+          </footer>
         </main>
       </div>
     </div>
