@@ -8,8 +8,6 @@ import {
 import {
   ChapterBanner,
   SectionHeader2,
-  InstrumentPanel,
-  InstrumentReadout,
   DarkProofGrid,
 } from "@/components/brand/system";
 
