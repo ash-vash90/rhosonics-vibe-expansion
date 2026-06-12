@@ -171,7 +171,6 @@ export const IMAGERY_VALUE_MAPPING = {
 
 export const INDUSTRY_VALUE_MAPPING = {
   minerals: "expertise",
-  semiconductor: "quality",
   dredging: "innovation",
   wastewater: "sustainability",
   mining: "collaboration",

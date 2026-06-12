@@ -37,21 +37,8 @@ const INDUSTRIES: Industry[] = [
     status: "active",
   },
   {
-    id: "semiconductor",
-    num: "02",
-    name: "Semiconductor",
-    scope: "Slurry · CMP · UPW",
-    headline: "Slurry concentration where particle count is the spec.",
-    icps: ["Fab process engineer", "Slurry supply lead"],
-    outcomes: [
-      { value: "ppm", label: "Resolution on dilute streams" },
-      { value: "24/7", label: "Inline, no offline sampling" },
-    ],
-    status: "active",
-  },
-  {
     id: "dredging",
-    num: "03",
+    num: "02",
     name: "Dredging",
     scope: "Hopper · pipeline",
     headline: "Cycle-time math on the hopper, not in the spreadsheet.",
@@ -64,7 +51,7 @@ const INDUSTRIES: Industry[] = [
   },
   {
     id: "wastewater",
-    num: "04",
+    num: "03",
     name: "Wastewater",
     scope: "Sludge · digesters",
     headline: "Solids concentration that polymer dose can follow.",
@@ -77,7 +64,7 @@ const INDUSTRIES: Industry[] = [
   },
   {
     id: "mining",
-    num: "05",
+    num: "04",
     name: "Mining",
     scope: "Paste-fill · tailings",
     headline: "Paste density at the bore, before it sets.",
