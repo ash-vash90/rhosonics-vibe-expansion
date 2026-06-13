@@ -22,7 +22,7 @@ export const InstrumentPanel = ({
   className = "",
 }: InstrumentPanelProps) => (
   <div
-    className={`relative flex flex-col bg-foreground text-background border border-[hsl(224_18%_20%)] p-6 md:p-7 ${className}`}
+    className={`relative flex flex-col bg-foreground text-background border border-[hsl(224_18%_20%)] p-4 sm:p-6 md:p-7 ${className}`}
     style={{
       clipPath: chamfered ? "var(--chamfer-lg)" : undefined,
       background:

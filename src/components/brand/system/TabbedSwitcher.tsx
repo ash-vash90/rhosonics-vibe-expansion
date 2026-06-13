@@ -34,7 +34,7 @@ export const TabbedSwitcher = ({
       <div
         role="tablist"
         aria-label={ariaLabel}
-        className="flex items-stretch border-b border-border bg-card"
+        className="flex items-stretch border-b border-border bg-card overflow-x-auto md:overflow-x-visible scrollbar-none snap-x snap-mandatory"
       >
         {tabs.map((t, i) => {
           const isActive = t.id === activeId;
@@ -46,7 +46,7 @@ export const TabbedSwitcher = ({
               aria-controls={`panel-${t.id}`}
               id={`tab-${t.id}`}
               onClick={() => setActiveId(t.id)}
-              className={`relative flex-1 text-left px-5 md:px-6 py-5 flex flex-col gap-1.5 transition-colors ${
+              className={`relative shrink-0 basis-[60%] sm:basis-auto sm:flex-1 text-left px-4 sm:px-5 md:px-6 py-4 sm:py-5 flex flex-col gap-1.5 transition-colors snap-start ${
                 i < tabs.length - 1 ? "border-r border-border" : ""
               } hover:bg-[hsl(var(--slate-100))]`}
             >
@@ -54,7 +54,7 @@ export const TabbedSwitcher = ({
                 {t.num}
               </span>
               <span
-                className={`font-ui font-semibold text-base md:text-lg tracking-tight transition-colors ${
+                className={`font-ui font-semibold text-sm sm:text-base md:text-lg tracking-tight transition-colors ${
                   isActive ? "text-foreground" : "text-[hsl(var(--slate-500))]"
                 }`}
               >

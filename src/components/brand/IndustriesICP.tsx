@@ -81,7 +81,7 @@ const tabs: SwitcherTab[] = INDUSTRIES.map((ind) => {
         </div>
 
         {/* right: brief */}
-        <div className="p-8 md:p-10 lg:p-12 flex flex-col gap-7">
+        <div className="p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col gap-6 sm:gap-7">
           <div className="flex items-center gap-3 flex-wrap">
             <span className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
               {ind.num} · {ind.name}
