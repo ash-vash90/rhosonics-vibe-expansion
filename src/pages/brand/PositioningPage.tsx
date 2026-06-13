@@ -6,7 +6,6 @@ import {
   SectionDivider,
 } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
-import { TelemetryFooter } from "@/components/brand/telemetry";
 import {
   SectionHeader2,
 } from "@/components/brand/system";
@@ -126,15 +125,6 @@ const PositioningPage = () => (
       </ErrorBoundary>
     </ScrollSection>
 
-    <TelemetryFooter
-      className="mt-16 md:mt-20"
-      items={[
-        { label: "Section", value: "01 · Brand Position" },
-        { label: "Scope", value: "Foundation, values, audiences" },
-        { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
-      ]}
-    />
   </>
 );
 
