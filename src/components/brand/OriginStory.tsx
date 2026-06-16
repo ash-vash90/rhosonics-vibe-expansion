@@ -83,6 +83,7 @@ export const OriginStory = () => (
         </p>
       </div>
     </div>
+  </div>
 );
 
 export default OriginStory;
