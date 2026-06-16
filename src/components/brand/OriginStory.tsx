@@ -71,13 +71,39 @@ export const OriginStory = () => (
       <span className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
         Continuity
       </span>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
           The same impulse that produced the Model 8000 in 1992 still drives the portfolio today: <em className="not-italic text-primary">make measurements that are hard to get, easy to trust</em>. Inline, non-radioactive, real-time — the constraints have not changed, only the range of applications.
         </p>
+
         <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
-          That continuity is why the renewed foundation does not contradict the past. The vision — <em className="not-italic">Leading the way in what can be measured, controlled, and optimized</em> — is a broader framing of the same problem the workshop set out to solve. The mission — <em className="not-italic">Advanced measurement solutions for more efficient, automated, and sustainable operations</em> — adds the operational outcomes that customers now expect, but the mechanism remains ultrasonic measurement on difficult streams. The values describe the behaviour that made the first instrument reliable and the behaviour that keeps the current portfolio deployable: <strong className="font-semibold text-foreground">Expertise</strong> to know the physics, <strong className="font-semibold text-foreground">Collaboration</strong> to fit the plant, <strong className="font-semibold text-foreground">Innovation</strong> to solve the next stream, <strong className="font-semibold text-foreground">Quality</strong> to survive the environment, and <strong className="font-semibold text-foreground">Sustainability</strong> because non-radioactive was the original advantage and still is.
+          That continuity is why the renewed foundation does not contradict the past. The vision — <em className="not-italic">Leading the way in what can be measured, controlled, and optimized</em> — is a broader framing of the same problem the workshop set out to solve.
         </p>
+
+        <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
+          The mission — <em className="not-italic">Advanced measurement solutions for more efficient, automated, and sustainable operations</em> — adds the operational outcomes that customers now expect, but the mechanism remains ultrasonic measurement on difficult streams.
+        </p>
+
+        <div className="space-y-4">
+          <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
+            The values describe the behaviour that made the first instrument reliable and the behaviour that keeps the current portfolio deployable:
+          </p>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+            {[
+              { name: "Expertise", desc: "to know the physics" },
+              { name: "Collaboration", desc: "to fit the plant" },
+              { name: "Innovation", desc: "to solve the next stream" },
+              { name: "Quality", desc: "to survive the environment" },
+              { name: "Sustainability", desc: "non-radioactive was the original advantage and still is" },
+            ].map((v) => (
+              <li key={v.name} className="flex items-baseline gap-2">
+                <span className="font-ui font-semibold text-foreground text-[14px]">{v.name}</span>
+                <span className="text-foreground/60 text-[14px]">— {v.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
           Heritage is not nostalgia here. It is proof that the discipline works.
         </p>
