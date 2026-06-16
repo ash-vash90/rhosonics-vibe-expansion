@@ -23,7 +23,7 @@ const StatementRow = ({ label, statement }: StatementRowProps) => (
     <div className="col-span-12 lg:col-span-3">
       <div className="flex items-center gap-3">
         <span aria-hidden="true" className="block h-2 w-2 rounded-full bg-primary" />
-        <span className="font-data text-[11px] tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+        <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
           {label}
         </span>
       </div>
