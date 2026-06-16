@@ -117,7 +117,7 @@ const PositioningPage = () => (
     </ScrollSection>
 
     {/* 01.6 Closer */}
-    <ScrollSection id="apply">
+    <ScrollSection id="apply" className="py-0">
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <ApplyFoundationCTA />
