@@ -1,7 +1,7 @@
-import { INDUSTRY_VALUE_MAPPING, getValueById } from "@/data/brand-values";
 import { IndustryThumb } from "./IndustryThumb";
 import { OperatorQuoteCard } from "./OperatorQuoteCard";
 import { TabbedSwitcher, type SwitcherTab } from "./system/TabbedSwitcher";
+
 
 /**
  * IndustriesICP — four industries we serve. Each tab describes the
@@ -65,9 +65,6 @@ const INDUSTRIES: Industry[] = [
 ];
 
 const tabs: SwitcherTab[] = INDUSTRIES.map((ind) => {
-  const valueId =
-    INDUSTRY_VALUE_MAPPING[ind.id as keyof typeof INDUSTRY_VALUE_MAPPING];
-  const value = getValueById(valueId);
   return {
     id: ind.id,
     num: ind.num,
@@ -86,14 +83,6 @@ const tabs: SwitcherTab[] = INDUSTRIES.map((ind) => {
             <span className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
               {ind.num} · {ind.name}
             </span>
-            {value && (
-              <>
-                <span aria-hidden="true" className="h-px w-6 bg-primary" />
-                <span className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-primary">
-                  {value.title}
-                </span>
-              </>
-            )}
           </div>
 
           <div>
