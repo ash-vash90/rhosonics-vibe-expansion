@@ -8,9 +8,10 @@ import { ArrowRight } from "@/lib/icons";
 export const ApplyFoundationCTA = () => (
   <section
     aria-label="Apply the foundation — next chapters"
-    className="relative mt-16 md:mt-24 -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 text-[hsl(var(--slate-50))] overflow-hidden clip-chamfer-lg"
+    className="relative mt-16 md:mt-24 -mx-4 md:-mx-8 lg:-mx-12 xl:-mx-20 text-[hsl(var(--slate-50))] overflow-hidden"
     style={{
       background: "hsl(var(--rho-obsidian))",
+      borderTop: "1px solid hsl(224 18% 18%)",
     }}
   >
     <div
