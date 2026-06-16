@@ -155,8 +155,6 @@ const BrandLayout = () => {
               </div>
               <div className="text-sm text-muted-foreground">
                 <span className="font-data text-xs">© {new Date().getFullYear()} RHOSONICS B.V.</span>
-                <span className="mx-2 text-border">|</span>
-                <span className="font-data text-xs">VERSION 2025</span>
               </div>
             </div>
           </footer>
