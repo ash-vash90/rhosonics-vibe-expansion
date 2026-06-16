@@ -25,38 +25,6 @@ const milestones: { label: string; title: string; body: string }[] = [
   },
 ];
 
-const valueLinks: { name: string; heritage: string; connection: string }[] = [
-  {
-    name: "Expertise",
-    heritage: "The physics of the first instrument",
-    connection:
-      "The Model 8000 was built on a deep understanding of ultrasonic physics. That same scientific rigour still drives every product.",
-  },
-  {
-    name: "Collaboration",
-    heritage: "Built to fit the plant",
-    connection:
-      "The first devices were built in partnership with the plants that needed them. The practice of co-developing solutions with operators has never stopped.",
-  },
-  {
-    name: "Innovation",
-    heritage: "Solving the next stream",
-    connection:
-      "From the original ultrasonic breakthrough to today's SDM ECO, the impulse is the same: find a measurement that other techniques cannot handle, and make it reliable.",
-  },
-  {
-    name: "Quality",
-    heritage: "Surviving the environment",
-    connection:
-      "The first instruments had to survive Dutch winters and industrial process conditions. The same discipline of environmental verification still shapes every design.",
-  },
-  {
-    name: "Sustainability",
-    heritage: "Non-radioactive from day one",
-    connection:
-      "Avoiding radioactive sources was a design choice in 1992, not a marketing claim. The environmental logic is older than the brand language.",
-  },
-];
 
 export const OriginStory = () => (
   <div className="space-y-14 md:space-y-20">
@@ -161,43 +129,8 @@ export const OriginStory = () => (
         </div>
       </div>
 
-      {/* Values link strip */}
-      <div className="border-t border-border">
-        <div className="px-8 md:px-10 lg:px-12 py-6 border-b border-border flex items-center gap-3">
-          <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
-          <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
-            Values
-          </span>
-          <span className="font-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground ml-auto">
-            Heritage link
-          </span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
-          {valueLinks.map((v, idx) => (
-            <div
-              key={v.name}
-              className={`px-8 md:px-10 lg:px-12 py-6 ${
-                idx < valueLinks.length - 1
-                  ? "border-b sm:border-b lg:border-b-0 lg:border-r border-border"
-                  : ""
-              }`}
-            >
-              <span className="block font-ui font-semibold text-foreground text-sm mb-1">
-                {v.name}
-              </span>
-              <span className="block text-[13px] leading-relaxed text-foreground/60 mb-3">
-                {v.heritage}
-              </span>
-              <span className="block text-[12px] leading-[1.5] text-foreground/50">
-                {v.connection}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Closing */}
-      <div className="px-8 md:px-10 lg:px-12 py-6 border-t border-border">
+      <div className="px-8 md:px-10 lg:px-12 py-6">
         <p className="font-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
           Heritage is not nostalgia. It is proof that the discipline works.
         </p>
@@ -207,3 +140,4 @@ export const OriginStory = () => (
 );
 
 export default OriginStory;
+
