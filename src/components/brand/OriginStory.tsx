@@ -1,4 +1,4 @@
-import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
+import { BRAND_VALUES } from "@/data/brand-values";
 
 /**
  * Heritage — where Rhosonics started and what carried forward.
