@@ -54,31 +54,29 @@ const emphasize = (sentence: string, keyword: string): React.ReactNode => {
 };
 
 export const Foundation = () => (
-  <div className="py-12 md:py-16">
+  <div
+    className="relative clip-chamfer-lg overflow-hidden"
+    style={{ background: "hsl(var(--rho-obsidian))" }}
+  >
+    {/* Signal glow — subtle, top-right */}
     <div
-      className="relative clip-chamfer-lg overflow-hidden"
-      style={{ background: "hsl(var(--rho-obsidian))" }}
-    >
-      {/* Signal glow — subtle, top-right */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle at 88% 12%, hsl(var(--rho-green) / 0.16), transparent 55%)",
-        }}
-      />
+      aria-hidden="true"
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        background:
+          "radial-gradient(circle at 88% 12%, hsl(var(--rho-green) / 0.16), transparent 55%)",
+      }}
+    />
 
-      <div className="relative divide-y divide-[hsl(224_18%_18%)]">
-        <StatementRow
-          label="Vision"
-          statement={emphasize(BRAND_VISION, "measured")}
-        />
-        <StatementRow
-          label="Mission"
-          statement={emphasize(BRAND_MISSION, "automated")}
-        />
-      </div>
+    <div className="relative divide-y divide-[hsl(224_18%_18%)]">
+      <StatementRow
+        label="Vision"
+        statement={emphasize(BRAND_VISION, "measured")}
+      />
+      <StatementRow
+        label="Mission"
+        statement={emphasize(BRAND_MISSION, "automated")}
+      />
     </div>
   </div>
 );

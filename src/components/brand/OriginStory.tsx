@@ -26,36 +26,18 @@ const milestones: { label: string; title: string; body: string }[] = [
 ];
 
 export const OriginStory = () => (
-  <div className="py-16 md:py-24 space-y-20 md:space-y-24">
+  <div className="space-y-14 md:space-y-20">
     {/* Statement */}
-    <section className="grid grid-cols-12 gap-y-10 gap-x-8">
-      <header className="col-span-12 lg:col-span-2">
-        <div className="lg:sticky lg:top-24">
-          <span className="block font-data text-[11px] tracking-[0.28em] uppercase text-muted-foreground font-medium">
-            Heritage
-          </span>
-          <h3
-            className="font-ui font-semibold text-foreground tracking-[-0.03em] mt-5 leading-[0.95]"
-            style={{ fontSize: "clamp(2rem, 2.6vw, 2.75rem)" }}
-          >
-            1992 — today
-          </h3>
-        </div>
-      </header>
-
-      <div className="col-span-12 lg:col-start-4 lg:col-span-9">
-        <p
-          className="font-ui font-medium tracking-[-0.02em] text-foreground leading-[1.12]
-                     [&_em]:not-italic [&_em]:text-primary"
-          style={{ fontSize: "clamp(1.625rem, 2.6vw, 2.25rem)" }}
-        >
-          Rhosonics began in 1992 in a small Netherlands workshop, with the{" "}
-          <em>Model 8000</em> ultrasonic process analyzer. The portfolio has
-          changed; the discipline has not — inline ultrasonic measurement on
-          streams that other techniques struggle with.
-        </p>
-      </div>
-    </section>
+    <p
+      className="font-ui font-medium tracking-[-0.02em] text-foreground leading-[1.12] max-w-[34ch]
+                 [&_em]:not-italic [&_em]:text-primary"
+      style={{ fontSize: "clamp(1.625rem, 2.6vw, 2.25rem)" }}
+    >
+      Rhosonics began in 1992 in a small Netherlands workshop, with the{" "}
+      <em>Model 8000</em> ultrasonic process analyzer. The portfolio has
+      changed; the discipline has not — inline ultrasonic measurement on
+      streams that other techniques struggle with.
+    </p>
 
     {/* Milestone strip */}
     <section
@@ -71,7 +53,7 @@ export const OriginStory = () => (
               : ""
           }`}
         >
-          <span className="block font-data text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground mb-4">
+          <span className="block font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground mb-4">
             {m.label}
           </span>
           <h4 className="font-ui font-semibold text-foreground tracking-[-0.01em] text-lg mb-2">

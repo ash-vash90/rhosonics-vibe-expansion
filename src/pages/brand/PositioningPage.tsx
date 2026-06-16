@@ -116,6 +116,8 @@ const PositioningPage = () => (
       </ErrorBoundary>
     </ScrollSection>
 
+    <SectionDivider label="01.6" />
+
     {/* 01.6 Closer */}
     <ScrollSection id="apply" className="py-0">
       <ErrorBoundary>

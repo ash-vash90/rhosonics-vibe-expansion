@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "@/lib/icons";
+import { SectionEyebrow } from "./system/SectionEyebrow";
+
 
 /**
  * ApplyFoundationCTA — chapter closer. Headline + the two next-chapter
@@ -24,15 +26,9 @@ export const ApplyFoundationCTA = () => (
     />
 
     <div className="relative px-4 md:px-8 lg:px-12 xl:px-20 py-10 md:py-14 lg:py-16 max-w-[820px]">
-      <div className="inline-flex items-center gap-3 mb-5">
-        <span
-          aria-hidden="true"
-          className="block h-2 w-2 rounded-full bg-primary"
-        />
-        <span className="font-data text-[11px] md:text-xs font-medium uppercase tracking-[0.14em] text-[hsl(var(--rho-green-accent))]">
-          01.6 · Next
-        </span>
-      </div>
+      <SectionEyebrow tone="accent" className="mb-5">
+        Next · 01.6
+      </SectionEyebrow>
       <h2
         className="font-ui font-bold tracking-tight text-balance max-w-[16ch] mb-5 text-[hsl(var(--slate-50))]"
         style={{ fontSize: "clamp(32px, 4.4vw, 56px)", letterSpacing: "-0.025em" }}
