@@ -3,51 +3,44 @@ import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
 /**
  * Foundation — Vision and Mission.
  *
- * Layout: sticky small label column (left, 3/12) + large statement +
- * two-column footer comparing "Replaces" vs "Rationale" (right, 8/12).
- * Industrial feel from disciplined hierarchy and restraint, not decoration.
- * No fake counter brackets, no dashed dividers, no terminal markers.
- * Green is reserved for the emphasis word in each statement.
+ * Single dark chamfered hero panel containing both canonical statements,
+ * separated by a hairline divider. This is the one chamfered surface
+ * the chapter earns: the thesis surface for the whole brand position.
+ * Everything else on /position stays at standard 4px corners.
+ *
+ * Industrial feel from disciplined hierarchy + restraint, not decoration.
+ * Green reserved for the single emphasis word in each statement.
  */
 
-interface StatementBlockProps {
+interface StatementRowProps {
   label: string;
   /** The canonical statement, with one keyword wrapped in <em>…</em> for green emphasis. */
   statement: React.ReactNode;
 }
 
-const StatementBlock = ({ label, statement }: StatementBlockProps) => (
-  <section className="grid grid-cols-12 gap-y-10 gap-x-8">
-    <header className="col-span-12 lg:col-span-2">
-      <div className="lg:sticky lg:top-24">
-        <span className="block font-data text-[11px] tracking-[0.28em] uppercase text-muted-foreground font-medium">
-          Foundation
-        </span>
-        <h3
-          className="font-ui font-semibold text-foreground tracking-[-0.03em] mt-5 leading-[0.95]"
-          style={{ fontSize: "clamp(2rem, 2.6vw, 2.75rem)" }}
-        >
+const StatementRow = ({ label, statement }: StatementRowProps) => (
+  <div className="grid grid-cols-12 gap-y-6 gap-x-8 py-10 md:py-14 lg:py-16 px-6 md:px-10 lg:px-14">
+    <div className="col-span-12 lg:col-span-3">
+      <div className="flex items-center gap-3">
+        <span aria-hidden="true" className="block h-2 w-2 rounded-full bg-primary" />
+        <span className="font-data text-[11px] tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
           {label}
-        </h3>
+        </span>
       </div>
-    </header>
+    </div>
 
-    <div className="col-span-12 lg:col-start-4 lg:col-span-9">
+    <div className="col-span-12 lg:col-span-9">
       <p
-        className="font-ui font-medium tracking-[-0.02em] text-foreground leading-[1.08]
-                   [&_em]:not-italic [&_em]:text-primary"
-        style={{ fontSize: "clamp(1.875rem, 3.4vw, 3rem)" }}
+        className="font-ui font-medium tracking-[-0.025em] text-[hsl(var(--slate-50))] leading-[1.08]
+                   [&_em]:not-italic [&_em]:text-[hsl(var(--rho-green-accent))]"
+        style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.75rem)" }}
       >
         {statement}
       </p>
     </div>
-  </section>
+  </div>
 );
 
-/**
- * Wrap a single keyword in the canonical statement with green emphasis,
- * without altering the source-of-truth string in brand-values.ts.
- */
 const emphasize = (sentence: string, keyword: string): React.ReactNode => {
   const idx = sentence.indexOf(keyword);
   if (idx === -1) return sentence;
@@ -61,15 +54,32 @@ const emphasize = (sentence: string, keyword: string): React.ReactNode => {
 };
 
 export const Foundation = () => (
-  <div className="py-16 md:py-24 space-y-32 md:space-y-40">
-    <StatementBlock
-      label="Vision"
-      statement={emphasize(BRAND_VISION, "measured")}
-    />
-    <StatementBlock
-      label="Mission"
-      statement={emphasize(BRAND_MISSION, "automated")}
-    />
+  <div className="py-12 md:py-16">
+    <div
+      className="relative clip-chamfer-lg overflow-hidden"
+      style={{ background: "hsl(var(--rho-obsidian))" }}
+    >
+      {/* Signal glow — subtle, top-right */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 88% 12%, hsl(var(--rho-green) / 0.16), transparent 55%)",
+        }}
+      />
+
+      <div className="relative divide-y divide-[hsl(224_18%_18%)]">
+        <StatementRow
+          label="Vision"
+          statement={emphasize(BRAND_VISION, "measured")}
+        />
+        <StatementRow
+          label="Mission"
+          statement={emphasize(BRAND_MISSION, "automated")}
+        />
+      </div>
+    </div>
   </div>
 );
 
