@@ -23,7 +23,7 @@ const StatementRow = ({ label, statement, unlocked }: StatementRowProps) => (
     <div className="col-span-12 lg:col-span-3">
       <div className="flex items-center gap-3">
         <span aria-hidden="true" className="block h-2 w-2 rounded-full bg-primary" />
-        <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+        <span className="font-data text-sm tracking-[0.28em] uppercase text-primary font-medium">
           {label}
         </span>
       </div>
@@ -33,7 +33,7 @@ const StatementRow = ({ label, statement, unlocked }: StatementRowProps) => (
       {unlocked ? (
         <p
           className="font-ui font-medium tracking-[-0.025em] text-[hsl(var(--slate-50))] leading-[1.08]
-                     [&_em]:not-italic [&_em]:text-[hsl(var(--rho-green-accent))]"
+                     [&_em]:not-italic [&_em]:text-primary"
           style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.75rem)" }}
         >
           {statement}
