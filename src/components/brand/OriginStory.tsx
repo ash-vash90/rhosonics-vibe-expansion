@@ -1,3 +1,5 @@
+import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
+
 /**
  * Heritage — where Rhosonics started and what carried forward.
  *
@@ -23,6 +25,14 @@ const milestones: { label: string; title: string; body: string }[] = [
     title: "SDM ECO and CCM portfolio",
     body: "Slurry density and chemical concentration, deployed across mineral processing, semiconductor, flat panel display and chemical plants worldwide.",
   },
+];
+
+const valueLinks: { name: string; heritage: string }[] = [
+  { name: "Expertise", heritage: "The physics of the first instrument" },
+  { name: "Collaboration", heritage: "Built to fit the plant" },
+  { name: "Innovation", heritage: "Solving the next stream" },
+  { name: "Quality", heritage: "Surviving the environment" },
+  { name: "Sustainability", heritage: "Non-radioactive from day one" },
 ];
 
 export const OriginStory = () => (
@@ -66,49 +76,100 @@ export const OriginStory = () => (
       ))}
     </section>
 
-    {/* Connection to renewed foundation */}
-    <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-16">
-      <span className="font-data text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-        Continuity
-      </span>
-      <div className="space-y-8">
-        <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
-          The same impulse that produced the Model 8000 in 1992 still drives the portfolio today: <em className="not-italic text-primary">make measurements that are hard to get, easy to trust</em>. Inline, non-radioactive, real-time — the constraints have not changed, only the range of applications.
-        </p>
+    {/* Continuity panel — how heritage feeds the renewed foundation */}
+    <section aria-label="Continuity" className="border border-border rounded-[4px] overflow-hidden">
+      {/* Panel header */}
+      <div className="px-8 md:px-10 lg:px-12 py-6 border-b border-border flex items-center gap-3">
+        <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
+        <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+          Continuity
+        </span>
+      </div>
 
-        <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
-          That continuity is why the renewed foundation does not contradict the past. The vision — <em className="not-italic">Leading the way in what can be measured, controlled, and optimized</em> — is a broader framing of the same problem the workshop set out to solve.
-        </p>
-
-        <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
-          The mission — <em className="not-italic">Advanced measurement solutions for more efficient, automated, and sustainable operations</em> — adds the operational outcomes that customers now expect, but the mechanism remains ultrasonic measurement on difficult streams.
-        </p>
-
-        <div className="space-y-4">
-          <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
-            The values describe the behaviour that made the first instrument reliable and the behaviour that keeps the current portfolio deployable:
-          </p>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
-            {[
-              { name: "Expertise", desc: "to know the physics" },
-              { name: "Collaboration", desc: "to fit the plant" },
-              { name: "Innovation", desc: "to solve the next stream" },
-              { name: "Quality", desc: "to survive the environment" },
-              { name: "Sustainability", desc: "non-radioactive was the original advantage and still is" },
-            ].map((v) => (
-              <li key={v.name} className="flex items-baseline gap-2">
-                <span className="font-ui font-semibold text-foreground text-[14px]">{v.name}</span>
-                <span className="text-foreground/60 text-[14px]">— {v.desc}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <p className="text-[15px] leading-[1.6] text-foreground/80 max-w-[65ch]">
-          Heritage is not nostalgia here. It is proof that the discipline works.
+      {/* Core statement */}
+      <div className="px-8 md:px-10 lg:px-12 py-8 md:py-10 border-b border-border">
+        <p
+          className="font-ui font-medium tracking-[-0.02em] text-foreground leading-[1.12] max-w-[38ch]
+                     [&_em]:not-italic [&_em]:text-primary"
+          style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.875rem)" }}
+        >
+          The same impulse that produced the Model 8000 still drives the portfolio today:{" "}
+          <em>make measurements that are hard to get, easy to trust</em>.
         </p>
       </div>
-    </div>
+
+      {/* Vision / Mission row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
+        <div className="px-8 md:px-10 lg:px-12 py-8 md:py-10 space-y-4">
+          <div className="flex items-center gap-3">
+            <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
+            <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+              Vision
+            </span>
+          </div>
+          <p className="font-ui font-medium tracking-[-0.01em] text-foreground leading-[1.2] text-lg">
+            {BRAND_VISION}
+          </p>
+          <p className="text-[14px] leading-relaxed text-foreground/70 max-w-[40ch]">
+            A broader framing of the same problem the workshop set out to solve.
+          </p>
+        </div>
+
+        <div className="px-8 md:px-10 lg:px-12 py-8 md:py-10 space-y-4">
+          <div className="flex items-center gap-3">
+            <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
+            <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+              Mission
+            </span>
+          </div>
+          <p className="font-ui font-medium tracking-[-0.01em] text-foreground leading-[1.2] text-lg">
+            {BRAND_MISSION}
+          </p>
+          <p className="text-[14px] leading-relaxed text-foreground/70 max-w-[40ch]">
+            The same mechanism, now with broader operational outcomes.
+          </p>
+        </div>
+      </div>
+
+      {/* Values link strip */}
+      <div className="border-t border-border">
+        <div className="px-8 md:px-10 lg:px-12 py-6 border-b border-border flex items-center gap-3">
+          <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
+          <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+            Values
+          </span>
+          <span className="font-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground ml-auto">
+            Heritage link
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+          {valueLinks.map((v, idx) => (
+            <div
+              key={v.name}
+              className={`px-8 md:px-10 lg:px-12 py-6 ${
+                idx < valueLinks.length - 1
+                  ? "border-b sm:border-b lg:border-b-0 lg:border-r border-border"
+                  : ""
+              }`}
+            >
+              <span className="block font-ui font-semibold text-foreground text-sm mb-1">
+                {v.name}
+              </span>
+              <span className="block text-[13px] leading-relaxed text-foreground/60">
+                {v.heritage}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Closing */}
+      <div className="px-8 md:px-10 lg:px-12 py-6 border-t border-border">
+        <p className="font-data text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+          Heritage is not nostalgia. It is proof that the discipline works.
+        </p>
+      </div>
+    </section>
   </div>
 );
 
