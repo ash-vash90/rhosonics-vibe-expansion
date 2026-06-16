@@ -7,7 +7,7 @@ import { InstrumentPanel } from "./system/InstrumentPanel";
  * of instrument output.
  */
 export const DesignPrinciples = () => (
-  <InstrumentPanel title="Decision tools · 01.3" live className="min-h-[480px]">
+  <InstrumentPanel title="Decision tools" live className="min-h-[480px]">
     <ol className="relative list-none space-y-0">
       {BRAND_PRINCIPLES.map((p, i) => {
         const value = getValueById(p.valueId);
