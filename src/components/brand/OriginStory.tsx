@@ -75,7 +75,7 @@ export const OriginStory = () => (
       {/* Panel header */}
       <div className="px-8 md:px-10 lg:px-12 py-6 border-b border-border flex items-center gap-3">
         <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
-        <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+        <span className="font-data text-sm tracking-[0.28em] uppercase text-primary font-medium">
           Continuity
         </span>
       </div>
@@ -97,7 +97,7 @@ export const OriginStory = () => (
       <div className="px-8 md:px-10 lg:px-12 py-8 md:py-10 border-b border-border space-y-8">
         <div className="flex items-center gap-3">
           <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
-          <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+          <span className="font-data text-sm tracking-[0.28em] uppercase text-primary font-medium">
             What carried forward
           </span>
         </div>
