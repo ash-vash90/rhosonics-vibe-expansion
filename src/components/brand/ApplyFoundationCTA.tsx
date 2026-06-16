@@ -23,7 +23,7 @@ export const ApplyFoundationCTA = () => (
       }}
     />
 
-    <div className="relative px-4 md:px-8 lg:px-12 xl:px-20 py-14 md:py-20 lg:py-24 max-w-[820px]">
+    <div className="relative px-4 md:px-8 lg:px-12 xl:px-20 py-10 md:py-14 lg:py-16 max-w-[820px]">
       <div className="inline-flex items-center gap-3 mb-5">
         <span
           aria-hidden="true"
