@@ -133,9 +133,7 @@ const tabs: SwitcherTab[] = INDUSTRIES.map((ind) => {
 
 export const IndustriesICP = () => (
   <div>
-    <div className="clip-chamfer-lg bg-card">
-      <TabbedSwitcher tabs={tabs} ariaLabel="Industries we serve" />
-    </div>
+    <TabbedSwitcher tabs={tabs} ariaLabel="Industries we serve" />
     <OperatorQuoteCard />
   </div>
 );
