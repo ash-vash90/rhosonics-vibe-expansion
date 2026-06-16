@@ -54,10 +54,26 @@ const PositioningPage = () => (
 
     <SectionDivider label="01.2" />
 
-    {/* 01.2 Core Values */}
-    <ScrollSection id="values" variant="tinted">
+    {/* 01.2 Heritage — origin and continuity */}
+    <ScrollSection id="heritage" variant="tinted">
       <SectionHeader2
-        eyebrow="Foundation · 01.2"
+        eyebrow="Heritage · 01.2"
+        title="Where this started"
+        intro="The company was founded around one instrument. Knowing what that was — and what carried forward — clarifies what the brand still stands for."
+      />
+      <ErrorBoundary>
+        <Suspense fallback={<SectionLoader />}>
+          <OriginStory />
+        </Suspense>
+      </ErrorBoundary>
+    </ScrollSection>
+
+    <SectionDivider label="01.3" />
+
+    {/* 01.3 Core Values */}
+    <ScrollSection id="values">
+      <SectionHeader2
+        eyebrow="Foundation · 01.3"
         title="Core values."
         intro="The five principles that shape how we work and what we prioritize."
       />
@@ -68,12 +84,12 @@ const PositioningPage = () => (
       </ErrorBoundary>
     </ScrollSection>
 
-    <SectionDivider label="01.3" />
+    <SectionDivider label="01.4" />
 
-    {/* 01.3 Design Principles */}
-    <ScrollSection id="design-principles">
+    {/* 01.4 Design Principles */}
+    <ScrollSection id="design-principles" variant="tinted">
       <SectionHeader2
-        eyebrow="Decision tools · 01.3"
+        eyebrow="Decision tools · 01.4"
         title="Design principles"
         intro="Five decision tools, one per value. When two options compete, these tell us which one ships."
       />
@@ -84,34 +100,18 @@ const PositioningPage = () => (
       </ErrorBoundary>
     </ScrollSection>
 
-    <SectionDivider label="01.4" />
+    <SectionDivider label="01.5" />
 
-    {/* 01.4 Industries & ICPs */}
-    <ScrollSection id="industries" variant="tinted">
+    {/* 01.5 Industries & ICPs */}
+    <ScrollSection id="industries">
       <SectionHeader2
-        eyebrow="Audiences · 01.4"
+        eyebrow="Audiences · 01.5"
         title="Industries and ideal customers."
         intro="Four industries, two product lines. Each panel describes the measurement context and where Rhosonics sits in it."
       />
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <IndustriesICP />
-        </Suspense>
-      </ErrorBoundary>
-    </ScrollSection>
-
-    <SectionDivider label="01.5" />
-
-    {/* 01.5 Heritage — origin and continuity */}
-    <ScrollSection id="heritage">
-      <SectionHeader2
-        eyebrow="Heritage · 01.5"
-        title="Where this started"
-        intro="The company was founded around one instrument. Knowing what that was — and what carried forward — clarifies what the brand still stands for."
-      />
-      <ErrorBoundary>
-        <Suspense fallback={<SectionLoader />}>
-          <OriginStory />
         </Suspense>
       </ErrorBoundary>
     </ScrollSection>
