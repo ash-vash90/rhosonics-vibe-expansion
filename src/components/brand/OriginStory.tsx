@@ -1,5 +1,3 @@
-import { BRAND_VALUES } from "@/data/brand-values";
-
 /**
  * Heritage — where Rhosonics started and what carried forward.
  *
@@ -27,12 +25,37 @@ const milestones: { label: string; title: string; body: string }[] = [
   },
 ];
 
-const valueLinks: { name: string; heritage: string }[] = [
-  { name: "Expertise", heritage: "The physics of the first instrument" },
-  { name: "Collaboration", heritage: "Built to fit the plant" },
-  { name: "Innovation", heritage: "Solving the next stream" },
-  { name: "Quality", heritage: "Surviving the environment" },
-  { name: "Sustainability", heritage: "Non-radioactive from day one" },
+const valueLinks: { name: string; heritage: string; connection: string }[] = [
+  {
+    name: "Expertise",
+    heritage: "The physics of the first instrument",
+    connection:
+      "The Model 8000 was built on a deep understanding of ultrasonic physics. That same scientific rigour still drives every product.",
+  },
+  {
+    name: "Collaboration",
+    heritage: "Built to fit the plant",
+    connection:
+      "The first devices were built in partnership with the plants that needed them. The practice of co-developing solutions with operators has never stopped.",
+  },
+  {
+    name: "Innovation",
+    heritage: "Solving the next stream",
+    connection:
+      "From the original ultrasonic breakthrough to today's SDM ECO, the impulse is the same: find a measurement that other techniques cannot handle, and make it reliable.",
+  },
+  {
+    name: "Quality",
+    heritage: "Surviving the environment",
+    connection:
+      "The first instruments had to survive Dutch winters and industrial process conditions. The same discipline of environmental verification still shapes every design.",
+  },
+  {
+    name: "Sustainability",
+    heritage: "Non-radioactive from day one",
+    connection:
+      "Avoiding radioactive sources was a design choice in 1992, not a marketing claim. The environmental logic is older than the brand language.",
+  },
 ];
 
 export const OriginStory = () => (
@@ -77,7 +100,10 @@ export const OriginStory = () => (
     </section>
 
     {/* Continuity panel — how heritage feeds the renewed foundation */}
-    <section aria-label="Continuity" className="border border-border rounded-[4px] overflow-hidden">
+    <section
+      aria-label="Continuity"
+      className="border border-border rounded-[4px] overflow-hidden"
+    >
       {/* Panel header */}
       <div className="px-8 md:px-10 lg:px-12 py-6 border-b border-border flex items-center gap-3">
         <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
@@ -93,40 +119,44 @@ export const OriginStory = () => (
                      [&_em]:not-italic [&_em]:text-primary"
           style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.875rem)" }}
         >
-          The same impulse that produced the Model 8000 still drives the portfolio today:{" "}
+          The same impulse that produced the Model 8000 still drives the
+          portfolio today:{" "}
           <em>make measurements that are hard to get, easy to trust</em>.
         </p>
       </div>
 
-      {/* Vision / Mission row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
-        <div className="px-8 md:px-10 lg:px-12 py-8 md:py-10 space-y-4">
-          <div className="flex items-center gap-3">
-            <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
-            <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
-              Vision
-            </span>
-          </div>
-          <p className="font-ui font-medium tracking-[-0.01em] text-foreground leading-[1.2] text-lg">
-            {BRAND_VISION}
-          </p>
-          <p className="text-[14px] leading-relaxed text-foreground/70 max-w-[40ch]">
-            A broader framing of the same problem the workshop set out to solve.
-          </p>
+      {/* Heritage — renewed foundation connection */}
+      <div className="px-8 md:px-10 lg:px-12 py-8 md:py-10 border-b border-border space-y-8">
+        <div className="flex items-center gap-3">
+          <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
+          <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
+            What carried forward
+          </span>
         </div>
 
-        <div className="px-8 md:px-10 lg:px-12 py-8 md:py-10 space-y-4">
-          <div className="flex items-center gap-3">
-            <span aria-hidden className="block h-2 w-2 rounded-full bg-primary" />
-            <span className="font-data text-sm tracking-[0.28em] uppercase text-[hsl(var(--rho-green-accent))] font-medium">
-              Mission
-            </span>
-          </div>
-          <p className="font-ui font-medium tracking-[-0.01em] text-foreground leading-[1.2] text-lg">
-            {BRAND_MISSION}
+        <div className="space-y-6 max-w-[70ch]">
+          <p className="font-ui font-medium tracking-[-0.01em] text-foreground leading-[1.3] text-[17px]">
+            The renewed foundation is not a rewrite. It is a broader framing
+            of the same discipline that started in a 1992 workshop and still
+            drives the portfolio today.
           </p>
-          <p className="text-[14px] leading-relaxed text-foreground/70 max-w-[40ch]">
-            The same mechanism, now with broader operational outcomes.
+
+          <p className="text-[15px] leading-relaxed text-foreground/80">
+            The vision — leading the way in what can be measured, controlled,
+            and optimized — is a wider statement of the same problem the
+            workshop set out to solve: industrial processes that lack reliable
+            inline measurement. The mission — advanced measurement solutions
+            for more efficient, automated, and sustainable operations — keeps
+            the same mechanism (ultrasonic, inline, non-nuclear) but broadens
+            the outcomes from a single instrument to a portfolio that serves
+            multiple industries and process types.
+          </p>
+
+          <p className="text-[15px] leading-relaxed text-foreground/80">
+            The five values are not new ideals. They are the behaviours that
+            made the first instrument possible, named so they can be
+            maintained as the company scales. Each one has a direct line back
+            to the heritage.
           </p>
         </div>
       </div>
@@ -155,8 +185,11 @@ export const OriginStory = () => (
               <span className="block font-ui font-semibold text-foreground text-sm mb-1">
                 {v.name}
               </span>
-              <span className="block text-[13px] leading-relaxed text-foreground/60">
+              <span className="block text-[13px] leading-relaxed text-foreground/60 mb-3">
                 {v.heritage}
+              </span>
+              <span className="block text-[12px] leading-[1.5] text-foreground/50">
+                {v.connection}
               </span>
             </div>
           ))}
