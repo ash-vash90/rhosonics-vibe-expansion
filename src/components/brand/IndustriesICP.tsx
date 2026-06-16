@@ -73,7 +73,7 @@ const tabs: SwitcherTab[] = INDUSTRIES.map((ind) => {
     content: (
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr]">
         {/* left: photo */}
-        <div className="lg:border-r border-border">
+        <div className="lg:border-r border-border h-full min-h-[280px]">
           <IndustryThumb id={ind.id} />
         </div>
 
