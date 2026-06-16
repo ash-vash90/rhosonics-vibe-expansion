@@ -35,7 +35,7 @@ export const IndustryThumb = ({ id }: IndustryThumbProps) => {
   if (!img) return null;
 
   return (
-    <div className="relative w-full aspect-[16/9] bg-foreground overflow-hidden">
+    <div className="relative w-full h-full bg-foreground overflow-hidden">
       <img
         src={img.src}
         alt={img.alt}
