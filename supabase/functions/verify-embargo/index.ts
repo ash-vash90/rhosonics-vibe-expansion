@@ -9,9 +9,15 @@ Deno.serve(async (req) => {
     const { password } = await req.json().catch(() => ({ password: "" }));
     const expected = Deno.env.get("FOUNDATION_EMBARGO_PASSWORD") ?? "";
 
-    if (typeof password !== "string" || password.length === 0 || expected.length === 0) {
-      return new Response(JSON.stringify({ ok: false }), {
-        status: 401,
+    if (typeof password !== "string" || password.length === 0) {
+      return new Response(JSON.stringify({ ok: false, reason: "missing_password" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (expected.length === 0) {
+      return new Response(JSON.stringify({ ok: false, reason: "secret_not_configured" }), {
+        status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
