@@ -18,35 +18,25 @@ export const LogoAssets = () => {
   const { logoFont } = useFontMode();
   const isPrimetime = logoFont === "primetime";
 
-  const handleDownloadSVG = (variantId: string) => {
+  const buildSVG = async (variant: typeof logoVariants[0]) => {
+    if (variant.layout === "vertical") return generateVerticalLockupSVG(variant);
+    if (variant.layout === "horizontal") return generateLockupSVG(variant);
+    return generateIconOnlySVG(variant);
+  };
+
+  const handleDownloadSVG = async (variantId: string) => {
     const variant = logoVariants.find(v => v.id === variantId);
     if (!variant) return;
-    
-    let svg: string;
-    if (variant.layout === "vertical") {
-      svg = generateVerticalLockupSVG(variant);
-    } else if (variant.layout === "horizontal") {
-      svg = generateLockupSVG(variant);
-    } else {
-      svg = generateIconOnlySVG(variant);
-    }
+    const svg = await buildSVG(variant);
     downloadSVG(svg, `rhosonics-${variantId}`);
   };
 
   const handleDownloadPNG = async (variantId: string, scale: number) => {
     const variant = logoVariants.find(v => v.id === variantId);
     if (!variant) return;
-    
     setDownloading(`${variantId}-${scale}x`);
     try {
-      let svg: string;
-      if (variant.layout === "vertical") {
-        svg = generateVerticalLockupSVG(variant);
-      } else if (variant.layout === "horizontal") {
-        svg = generateLockupSVG(variant);
-      } else {
-        svg = generateIconOnlySVG(variant);
-      }
+      const svg = await buildSVG(variant);
       await downloadPNG(svg, `rhosonics-${variantId}`, scale);
     } finally {
       setDownloading(null);
