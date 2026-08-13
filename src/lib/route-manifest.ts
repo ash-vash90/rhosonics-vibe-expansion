@@ -10,6 +10,8 @@ export type PageRoute = {
   title?: string;
   /** Text that must appear in the server-rendered HTML (crawler-visible). */
   contains: string[];
+  /** Route is guarded by `import.meta.env.DEV` and 404s in production by design. */
+  devOnly?: boolean;
 };
 
 /** Routes that must render HTML on the server with status 200. */
@@ -28,7 +30,7 @@ export const PAGE_ROUTES: PageRoute[] = [
   { path: "/resources", contains: ["Resource"] },
   { path: "/tools", contains: ["Tool"] },
   { path: "/newsletter", contains: ["Newsletter"] },
-  { path: "/sketches", contains: ["Sketch"] },
+  { path: "/sketches", contains: ["Sketch"], devOnly: true },
 ];
 
 /** Legacy paths that must issue a server-side redirect. */

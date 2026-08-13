@@ -34,7 +34,12 @@ describe("SSR smoke", () => {
     }
   });
 
-  describe.each(PAGE_ROUTES)("page $path", (route) => {
+  // Dev-only routes 404 by design once built for production.
+  const testedRoutes = process.env["SMOKE_BASE_URL"]
+    ? PAGE_ROUTES.filter((r) => !r.devOnly)
+    : PAGE_ROUTES;
+
+  describe.each(testedRoutes)("page $path", (route) => {
     let res: Response;
     let body: string;
     let text: string;
