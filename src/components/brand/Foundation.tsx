@@ -1,12 +1,12 @@
 import { useState, type FormEvent } from "react";
 import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
-import { supabase } from "@/integrations/supabase/client";
+import { verifyEmbargo } from "@/lib/embargo.functions";
 import { Lock } from "@/lib/icons";
 
 /**
  * Foundation — Vision and Mission, embargoed behind a server-checked
- * password. The canonical statements only render after the edge
- * function `verify-embargo` confirms the password matches the secret.
+ * password. The canonical statements only render after the server
+ * function `verifyEmbargo` confirms the password matches the secret.
  * Unlock persists in sessionStorage for the tab session.
  */
 
@@ -82,10 +82,8 @@ const UnlockBar = ({ onUnlock }: { onUnlock: () => void }) => {
     setSubmitting(true);
     setError(null);
     try {
-      const { data, error: fnErr } = await supabase.functions.invoke("verify-embargo", {
-        body: { password },
-      });
-      if (fnErr || !data?.ok) {
+      const result = await verifyEmbargo({ data: { password } });
+      if (!result?.ok) {
         setError("Incorrect password.");
         return;
       }
