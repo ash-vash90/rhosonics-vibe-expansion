@@ -9,7 +9,10 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "vitest run --config vitest.config.ts",
+    "test:ssr": "vitest run --config vitest.config.ts",
+    "test:hydration": "python3 tests/hydration_smoke.py"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
