@@ -268,7 +268,9 @@ const TexturePreview = () => {
   // Scale multipliers for pattern sizing - 1× is the base, scaling up to 2× (denser baseline)
   const scaleLabels = ["0.5×", "0.75×", "1×", "1.25×", "1.5×", "2×"];
   const scaleValues = [0.05, 0.075, 0.1, 0.125, 0.15, 0.2];
-  const currentScaleLabel = scaleLabels[scaleValues.indexOf(scale[0])] || `${scale[0]}×`;
+  const opacityValue = opacity[0] ?? 0.12;
+  const scaleValue = scale[0] ?? 0.1;
+  const currentScaleLabel = scaleLabels[scaleValues.indexOf(scaleValue)] || `${scaleValue}×`;
 
   return (
     <div className="mt-12 border border-border rounded-lg overflow-hidden">
@@ -316,13 +318,13 @@ const TexturePreview = () => {
             <div 
               className="absolute inset-0 transition-opacity duration-300"
               style={{ 
-                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value),
-                backgroundSize: `${scale[0] * 100}%`
+                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacityValue, textureColor.value),
+                backgroundSize: `${scaleValue * 100}%`
               }}
             />
             <div className="absolute bottom-4 left-4 right-4">
               <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
-                {selectedTexture.name} @ {Math.round(opacity[0] * 100)}% opacity, {currentScaleLabel} scale
+                {selectedTexture.name} @ {Math.round(opacityValue * 100)}% opacity, {currentScaleLabel} scale
               </div>
             </div>
           </div>
@@ -336,8 +338,8 @@ const TexturePreview = () => {
             <div 
               className="absolute inset-0 transition-opacity duration-300"
               style={{ 
-                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value),
-                backgroundSize: `${scale[0] * 100}%`
+                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacityValue, textureColor.value),
+                backgroundSize: `${scaleValue * 100}%`
               }}
             />
             {/* Tile grid indicator */}
@@ -346,7 +348,7 @@ const TexturePreview = () => {
               style={{
                 backgroundImage: `linear-gradient(to right, ${bgColor.textLight ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'} 1px, transparent 1px),
                                   linear-gradient(to bottom, ${bgColor.textLight ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'} 1px, transparent 1px)`,
-                backgroundSize: `${scale[0] * 100}% ${scale[0] * 100}%`
+                backgroundSize: `${scaleValue * 100}% ${scaleValue * 100}%`
               }}
             />
             {/* Info overlay */}
@@ -357,7 +359,7 @@ const TexturePreview = () => {
             </div>
             <div className="absolute bottom-4 left-4 right-4">
               <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
-                {selectedTexture.name} @ {Math.round(opacity[0] * 100)}% opacity, {currentScaleLabel} scale
+                {selectedTexture.name} @ {Math.round(opacityValue * 100)}% opacity, {currentScaleLabel} scale
               </div>
             </div>
           </div>
@@ -389,7 +391,7 @@ const TexturePreview = () => {
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="label-tech-sm text-primary">OPACITY</span>
-              <span className="font-data text-sm text-foreground">{Math.round(opacity[0] * 100)}%</span>
+              <span className="font-data text-sm text-foreground">{Math.round(opacityValue * 100)}%</span>
             </div>
             <Slider
               value={opacity}
