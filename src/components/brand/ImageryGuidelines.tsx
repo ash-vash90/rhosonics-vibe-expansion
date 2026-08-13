@@ -158,11 +158,11 @@ const industryTextures = textures.filter(t => t.category === "industry");
 
 // Interactive Texture Preview Component
 const TexturePreview = () => {
-  const [selectedTexture, setSelectedTexture] = useState(textures[0]);
+  const [selectedTexture, setSelectedTexture] = useState(textures[0]!);
   const [opacity, setOpacity] = useState([0.12]);
   const [scale, setScale] = useState([0.1]);
-  const [bgColor, setBgColor] = useState(approvedBackgrounds[0]);
-  const [textureColor, setTextureColor] = useState(approvedTextureColors[0]);
+  const [bgColor, setBgColor] = useState(approvedBackgrounds[0]!);
+  const [textureColor, setTextureColor] = useState(approvedTextureColors[0]!);
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<"preview" | "tiling">("preview");
   const [pngWidth, setPngWidth] = useState(1920);
@@ -182,13 +182,15 @@ const TexturePreview = () => {
   };
 
   const generateTiledSvg = (width: number, height: number) => {
-    const tileSvg = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value);
+    const tileSvg = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0] ?? 0.12, textureColor.value);
     // Extract viewBox dimensions from the raw SVG
     const vbMatch = tileSvg.match(/viewBox=['"](\d+)\s+(\d+)\s+(\d+)\s+(\d+)['"]/);
-    const tileW = vbMatch ? parseInt(vbMatch[3]) : 16;
-    const tileH = vbMatch ? parseInt(vbMatch[4]) : 16;
+    const vbW = vbMatch?.[3];
+    const vbH = vbMatch?.[4];
+    const tileW = vbW ? parseInt(vbW) : 16;
+    const tileH = vbH ? parseInt(vbH) : 16;
     // Scale factor based on current scale setting (scale[0] maps 0.1 = 1x)
-    const scaleFactor = scale[0] / 0.1;
+    const scaleFactor = (scale[0] ?? 0.1) / 0.1;
     const patternW = tileW * scaleFactor;
     const patternH = tileH * scaleFactor;
     const encoded = encodeURIComponent(tileSvg);
