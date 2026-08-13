@@ -76,9 +76,12 @@ export const BrandCallout = ({
         <h4 className="font-ui font-bold text-foreground mb-1">
           {title}
         </h4>
-        <p className="text-muted-foreground leading-relaxed">
+        {/* div, not p: callers pass block-level children (grids, lists), which
+            are invalid inside <p> and break hydration. */}
+        <div className="text-muted-foreground leading-relaxed">
           {children}
-        </p>
+        </div>
+
       </div>
     </div>
   );

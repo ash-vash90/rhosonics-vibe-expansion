@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -58,9 +59,8 @@ const T = {
   strokeLinejoin: "miter" as const,
 };
 
-// Unique pattern id suffix per render to avoid collisions when multiple icons exist on a page.
-let __patternSeq = 0;
-const nextSeq = () => `pi${++__patternSeq}`;
+// Unique pattern id suffix per icon instance. Must be SSR-stable (React.useId),
+// never a module-level counter — that mismatches between server and client render.
 
 /**
  * Shared hatch / cross-hatch defs. Patterns are registered once per icon instance,
@@ -275,7 +275,7 @@ export const SolutionIcon = ({
 }: Props) => {
   const tile = surfaceClass[surface];
   const a = accentToken[accent];
-  const uid = nextSeq();
+  const uid = `pi${useId().replace(/:/g, "")}`;
   return (
     <div
       className={cn("inline-flex items-center justify-center rounded-sm p-3", tile, className)}

@@ -9,7 +9,10 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "vitest run --config vitest.config.ts",
+    "test:ssr": "vitest run --config vitest.config.ts",
+    "test:hydration": "python3 tests/hydration_smoke.py"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -72,7 +75,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
+    "@lovable.dev/vite-plugin-dev-server-bridge": "^1.0.2",
+    "@lovable.dev/vite-plugin-hmr-gate": "^1.6.1",
     "@lovable.dev/vite-tanstack-config": "^2.13.0",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^22.16.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
@@ -88,9 +94,7 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^8.2.0",
-    "@lovable.dev/vite-plugin-dev-server-bridge": "^1.0.2",
-    "@lovable.dev/vite-plugin-hmr-gate": "^1.6.1",
-    "@tailwindcss/typography": "^0.5.16"
+    "vitest": "^4.1.10"
   },
   "version": "1.0.0",
   "description": "Brand design system documentation for Rhosonics"
