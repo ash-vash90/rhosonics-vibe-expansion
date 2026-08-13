@@ -78,10 +78,11 @@ async function checkPage(origin: string, route: (typeof PAGE_ROUTES)[number]): P
     notes.push(`Expected 200, got ${res.status}`);
   }
 
-  const text = textOf(body);
+  const text = textOf(body).toLowerCase();
   const missing = route.contains.length
-    ? route.contains.every((needle) => !text.includes(needle))
+    ? route.contains.every((needle) => !text.includes(needle.toLowerCase()))
     : false;
+
   if (missing) {
     ssr = ssr === "fail" ? "fail" : "warn";
     notes.push(`Server HTML missing expected copy: ${route.contains.join(" / ")}`);
