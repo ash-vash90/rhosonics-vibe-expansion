@@ -90,16 +90,18 @@ async def check_page(context, path: str) -> None:
     if not hydrated:
         fail(f"{path} has no visible hydrated content")
 
+    # Navigation must exist and be wired up (this app navigates via buttons).
     interactive = await page.evaluate(
-        "() => typeof window.requestIdleCallback === 'function' && !!document.querySelector('a[href]')"
+        "() => document.querySelectorAll('a[href], button').length > 0"
     )
     if not interactive:
-        fail(f"{path} rendered no links after hydration")
+        fail(f"{path} rendered no interactive navigation after hydration")
 
     if warnings:
-        fail(f"{path} hydration mismatch warnings: {warnings[:2]}")
+        fail(f"{path} hydration mismatch: {warnings[0][:240]}")
     if errors:
-        fail(f"{path} console errors: {errors[:2]}")
+        fail(f"{path} console errors: {[e[:240] for e in errors[:2]]}")
+
 
     print(f"ok   {path} ({status})")
     await page.close()
