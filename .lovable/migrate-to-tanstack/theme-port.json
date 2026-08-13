@@ -1,0 +1,33 @@
+{
+  "customizations": [
+    { "token": "@font-face Primetime", "source": "src/index.css", "reappliedIn": "src/styles.css" },
+    { "token": "--font-logo / --font-ui / --font-data (fontFamily)", "source": "tailwind.config.ts", "reappliedIn": "src/styles.css @theme" },
+    { "token": "rho brand color triplets (--rho-green, --rho-green-accent, --rho-green-glow, --rho-obsidian, --rho-obsidian-light)", "source": "src/index.css", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": "primary green scale --primary-50..900", "source": "src/index.css + tailwind.config.ts", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": "mineral neutrals (--mineral-neutral/surface/deep/bronze)", "source": "src/index.css + tailwind.config.ts", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": "eco tints (--eco-surface, --eco-border)", "source": "src/index.css + tailwind.config.ts", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": "status colors (info/warning/success/error + surface/border)", "source": "src/index.css + tailwind.config.ts", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": "brand slate scale --slate-50..900 (overrides Tailwind default)", "source": "src/index.css + tailwind.config.ts", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": "semantic tokens (background, foreground, card, popover, primary, secondary, muted, accent, destructive, border, input, ring, radius)", "source": "src/index.css", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": "sidebar tokens (--sidebar-background et al)", "source": "src/index.css + tailwind.config.ts", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": ".dark overrides block", "source": "src/index.css", "reappliedIn": "src/styles.css .dark" },
+    { "token": "gradients (--gradient-brand/obsidian/hero/field)", "source": "src/index.css", "reappliedIn": "src/styles.css :root" },
+    { "token": "shadows (--shadow-card/elevated/glow/glow-sm/mineral) + boxShadow utilities", "source": "src/index.css + tailwind.config.ts", "reappliedIn": "src/styles.css :root + @theme" },
+    { "token": "chamfer clips (--chamfer-lg, --chamfer-md) + clip-chamfer-md/lg utilities", "source": "src/index.css + tailwind.config.ts plugin", "reappliedIn": "src/styles.css :root + @utility" },
+    { "token": "letterSpacing scale (display/display-tight/display-snug/label/label-wide/label-wider)", "source": "tailwind.config.ts", "reappliedIn": "src/styles.css @theme --tracking-*" },
+    { "token": "fontSize display tiers (display-xs/sm/md/lg with line-heights)", "source": "tailwind.config.ts", "reappliedIn": "src/styles.css @theme --text-*" },
+    { "token": "borderRadius sm/md/lg from --radius", "source": "tailwind.config.ts", "reappliedIn": "src/styles.css @theme --radius-*" },
+    { "token": "accordion-down/accordion-up keyframes + animations", "source": "tailwind.config.ts", "reappliedIn": "src/styles.css @theme --animate-*" },
+    { "token": "bare `rounded` v3 compat utility (0.25rem)", "source": "tailwind v3 default used across src/", "reappliedIn": "src/styles.css @utility rounded" },
+    { "token": "base layer (* border-color, body font/bg, .font-logo/.font-ui/.font-data)", "source": "src/index.css", "reappliedIn": "src/styles.css @layer base" },
+    { "token": "billboard.js brand theme (full .bb* selector block)", "source": "src/index.css", "reappliedIn": "src/styles.css @layer base" },
+    { "token": "::selection highlight", "source": "src/index.css", "reappliedIn": "src/styles.css @layer base" },
+    { "token": "components layer (bg-brand-gradient, bg-gradient-primary, bg-obsidian-gradient, label-tech, label-tech-sm, card-base, card-eco, card-obsidian, card-mineral, border-mineral*, swatch, nav-link*, noise-overlay)", "source": "src/index.css", "reappliedIn": "src/styles.css @layer components" },
+    { "token": "texture families (bg-pattern-*, bg-wave-*, bg-hero-glow, bg-terrain-*, bg-rivet-pattern, bg-grid, bg-workshop-grid, bg-grid-data)", "source": "src/index.css", "reappliedIn": "src/styles.css @layer components" },
+    { "token": "utilities layer (bootSequence, pulse-dot, animate-boot, animate-pulse-dot, delay-100..700, hero-blur-orb)", "source": "src/index.css", "reappliedIn": "src/styles.css @layer utilities" },
+    { "token": "PDF export helpers (.pdf-exporting)", "source": "src/index.css", "reappliedIn": "src/styles.css" },
+    { "token": "print-mode + full @media print A4 case-study block", "source": "src/index.css", "reappliedIn": "src/styles.css" },
+    { "token": "marquee-scroll keyframes + .marquee-track", "source": "src/index.css", "reappliedIn": "src/styles.css" },
+    { "token": ".nav-scroll dark scrollbar styles", "source": "src/index.css", "reappliedIn": "src/styles.css" }
+  ]
+}

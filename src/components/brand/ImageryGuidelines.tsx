@@ -481,7 +481,7 @@ const TexturePreview = () => {
                   type="number"
                   value={pngWidth}
                   onChange={(e) => setPngWidth(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-full px-3 py-1.5 text-sm font-data bg-card border border-border rounded focus:border-primary focus:outline-none"
+                  className="w-full px-3 py-1.5 text-sm font-data bg-card border border-border rounded focus:border-primary focus:outline-hidden"
                 />
               </div>
               <span className="text-muted-foreground mt-5">×</span>
@@ -491,7 +491,7 @@ const TexturePreview = () => {
                   type="number"
                   value={pngHeight}
                   onChange={(e) => setPngHeight(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-full px-3 py-1.5 text-sm font-data bg-card border border-border rounded focus:border-primary focus:outline-none"
+                  className="w-full px-3 py-1.5 text-sm font-data bg-card border border-border rounded focus:border-primary focus:outline-hidden"
                 />
               </div>
             </div>

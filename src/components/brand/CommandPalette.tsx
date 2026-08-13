@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@/lib/router-compat";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Search } from "@/lib/icons";
 import { cn } from "@/lib/utils";
@@ -121,7 +121,7 @@ export const CommandPalette = () => {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onListKey}
             placeholder="Jump to section…"
-            className="flex-1 bg-transparent outline-none text-foreground font-ui text-base placeholder:text-muted-foreground"
+            className="flex-1 bg-transparent outline-hidden text-foreground font-ui text-base placeholder:text-muted-foreground"
             aria-label="Command palette search"
           />
           <kbd className="font-data text-[10px] uppercase tracking-[0.2em] text-muted-foreground border border-border rounded px-1.5 py-0.5">

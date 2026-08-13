@@ -392,7 +392,7 @@ export const IconPicker = ({ onSelect, className }: IconPickerProps) => {
             placeholder="Search icons..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-background border border-border rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
             aria-label="Search icons"
           />
           {searchQuery && (
@@ -510,7 +510,7 @@ export const IconPicker = ({ onSelect, className }: IconPickerProps) => {
                               className={cn(
                                 "group relative aspect-square flex flex-col items-center justify-center gap-1 p-2 rounded-lg border border-transparent",
                                 "hover:border-primary hover:bg-primary/5 transition-all",
-                                "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
+                                "focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary",
                                 copiedIcon === name && "border-primary bg-primary/10"
                               )}
                               aria-label={`${name} icon`}
