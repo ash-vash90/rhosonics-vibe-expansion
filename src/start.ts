@@ -18,7 +18,7 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 
-// Keep CSRF protection local rather than referencing createCsrfMiddleware.
+// Keep CSRF protection local rather than referencing the optional framework helper.
 // Some production bundles expose an incompatible export under that name and
 // can rewrite even a guarded dynamic lookup into a hard-crashing direct call.
 
