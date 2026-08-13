@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "@/lib/router-compat";
 import { Menu, X, Zap, ChevronRight, ChevronDown } from "@/lib/icons";
 
 import { RhosonicsLogo } from "../RhosonicsLogo";

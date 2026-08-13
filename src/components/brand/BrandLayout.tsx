@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "@/lib/router-compat";
 import { useRef, useEffect } from "react";
 import { Navigation } from "./Navigation";
 

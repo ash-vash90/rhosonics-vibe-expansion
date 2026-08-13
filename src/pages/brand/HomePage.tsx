@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@/lib/router-compat";
 import { ChevronRight } from "@/lib/icons";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { TelemetryEyebrow, CornerBrackets, TelemetryFooter, DataWatermark } from "@/components/brand/telemetry";
