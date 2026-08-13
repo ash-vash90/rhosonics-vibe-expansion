@@ -30,7 +30,7 @@ export const PAGE_ROUTES: PageRoute[] = [
   { path: "/resources", contains: ["Resource"] },
   { path: "/tools", contains: ["Tool"] },
   { path: "/newsletter", contains: ["Newsletter"] },
-  { path: "/sketches", contains: ["Sketch"] },
+  { path: "/sketches", contains: ["Sketch"], devOnly: true },
 ];
 
 /** Legacy paths that must issue a server-side redirect. */
