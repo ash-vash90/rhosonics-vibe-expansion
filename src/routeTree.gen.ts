@@ -32,6 +32,7 @@ import { Route as BrandResourcesRouteImport } from './routes/_brand.resources'
 import { Route as BrandToolsRouteImport } from './routes/_brand.tools'
 import { Route as BrandTypographyRouteImport } from './routes/_brand.typography'
 import { Route as BrandVoiceRouteImport } from './routes/_brand.voice'
+import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 
 const BrandRoute = BrandRouteImport.update({
   id: '/_brand',
@@ -147,6 +148,11 @@ const BrandVoiceRoute = BrandVoiceRouteImport.update({
   path: '/voice',
   getParentRoute: () => BrandRoute,
 } as any)
+const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
+  id: '/api/public/health',
+  path: '/api/public/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof BrandIndexRoute
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/tools': typeof BrandToolsRoute
   '/typography': typeof BrandTypographyRoute
   '/voice': typeof BrandVoiceRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/typography': typeof BrandTypographyRoute
   '/voice': typeof BrandVoiceRoute
   '/': typeof BrandIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -221,6 +229,7 @@ export interface FileRoutesById {
   '/_brand/typography': typeof BrandTypographyRoute
   '/_brand/voice': typeof BrandVoiceRoute
   '/_brand/': typeof BrandIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -247,6 +256,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/typography'
     | '/voice'
+    | '/api/public/health'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
@@ -271,6 +281,7 @@ export interface FileRouteTypes {
     | '/typography'
     | '/voice'
     | '/'
+    | '/api/public/health'
   id:
     | '__root__'
     | '/_brand'
@@ -296,6 +307,7 @@ export interface FileRouteTypes {
     | '/_brand/typography'
     | '/_brand/voice'
     | '/_brand/'
+    | '/api/public/health'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -309,6 +321,7 @@ export interface RootRouteChildren {
   SketchesRoute: typeof SketchesRoute
   SocialMediaRoute: typeof SocialMediaRoute
   VisualSystemRoute: typeof VisualSystemRoute
+  ApiPublicHealthRoute: typeof ApiPublicHealthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -474,6 +487,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandVoiceRouteImport
       parentRoute: typeof BrandRoute
     }
+    '/api/public/health': {
+      id: '/api/public/health'
+      path: '/api/public/health'
+      fullPath: '/api/public/health'
+      preLoaderRoute: typeof ApiPublicHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -522,6 +542,7 @@ const rootRouteChildren: RootRouteChildren = {
   SketchesRoute: SketchesRoute,
   SocialMediaRoute: SocialMediaRoute,
   VisualSystemRoute: VisualSystemRoute,
+  ApiPublicHealthRoute: ApiPublicHealthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
