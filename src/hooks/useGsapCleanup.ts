@@ -221,7 +221,7 @@ export const useScrollTriggeredAnimation = <T extends HTMLElement = HTMLDivEleme
         scrollTrigger: {
           trigger: element,
           start: options.triggerStart || 'top 80%',
-          end: options.triggerEnd,
+          ...(options.triggerEnd !== undefined ? { end: options.triggerEnd } : {}),
           toggleActions: options.toggleActions || 'play none none none',
           once: options.once ?? true,
         }

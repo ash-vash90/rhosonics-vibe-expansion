@@ -30,9 +30,9 @@ function analyzeImage(canvas: HTMLCanvasElement): ColorAnalysis {
   let count = 0;
 
   for (let i = 0; i < data.length; i += 4 * step) {
-    const r = data[i] / 255;
-    const g = data[i + 1] / 255;
-    const b = data[i + 2] / 255;
+    const r = (data[i] ?? 0) / 255;
+    const g = (data[i + 1] ?? 0) / 255;
+    const b = (data[i + 2] ?? 0) / 255;
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
     const l = (max + min) / 2;
@@ -112,17 +112,18 @@ function applyUnsharpMask(ctx: CanvasRenderingContext2D, w: number, h: number, a
   const copy = new Uint8ClampedArray(src);
 
   const stride = w * 4;
+  const px = (k: number): number => copy[k] ?? 0;
   for (let y = 1; y < h - 1; y++) {
     for (let x = 1; x < stride - 4; x += 4) {
       const idx = y * stride + x;
       for (let c = 0; c < 3; c++) {
         const i = idx + c;
         const blurred = (
-          copy[i - stride - 4] + copy[i - stride] * 2 + copy[i - stride + 4] +
-          copy[i - 4] * 2 + copy[i] * 4 + copy[i + 4] * 2 +
-          copy[i + stride - 4] + copy[i + stride] * 2 + copy[i + stride + 4]
+          px(i - stride - 4) + px(i - stride) * 2 + px(i - stride + 4) +
+          px(i - 4) * 2 + px(i) * 4 + px(i + 4) * 2 +
+          px(i + stride - 4) + px(i + stride) * 2 + px(i + stride + 4)
         ) / 16;
-        src[i] = Math.min(255, Math.max(0, copy[i] + amount * (copy[i] - blurred)));
+        src[i] = Math.min(255, Math.max(0, px(i) + amount * (px(i) - blurred)));
       }
     }
   }
@@ -303,12 +304,14 @@ const PhotoTreatmentTool = () => {
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     setIsDragging(true);
-    handleSliderMove(e.touches[0].clientX);
+    const touch = e.touches[0];
+    if (touch) handleSliderMove(touch.clientX);
   }, [handleSliderMove]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (!isDragging) return;
-    handleSliderMove(e.touches[0].clientX);
+    const touch = e.touches[0];
+    if (touch) handleSliderMove(touch.clientX);
   }, [isDragging, handleSliderMove]);
 
   return (

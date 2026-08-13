@@ -21,7 +21,7 @@ export const useScrollReveal = (options?: gsap.TweenVars) => {
         { 
           opacity: 0, 
           y: 60,
-          ...options?.from 
+          ...options?.["from"] 
         },
         {
           opacity: 1,

@@ -158,11 +158,11 @@ const industryTextures = textures.filter(t => t.category === "industry");
 
 // Interactive Texture Preview Component
 const TexturePreview = () => {
-  const [selectedTexture, setSelectedTexture] = useState(textures[0]);
+  const [selectedTexture, setSelectedTexture] = useState(textures[0]!);
   const [opacity, setOpacity] = useState([0.12]);
   const [scale, setScale] = useState([0.1]);
-  const [bgColor, setBgColor] = useState(approvedBackgrounds[0]);
-  const [textureColor, setTextureColor] = useState(approvedTextureColors[0]);
+  const [bgColor, setBgColor] = useState(approvedBackgrounds[0]!);
+  const [textureColor, setTextureColor] = useState(approvedTextureColors[0]!);
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<"preview" | "tiling">("preview");
   const [pngWidth, setPngWidth] = useState(1920);
@@ -182,13 +182,15 @@ const TexturePreview = () => {
   };
 
   const generateTiledSvg = (width: number, height: number) => {
-    const tileSvg = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value);
+    const tileSvg = generateSvgWithOpacityAndColor(selectedTexture.rawSvg, opacity[0] ?? 0.12, textureColor.value);
     // Extract viewBox dimensions from the raw SVG
     const vbMatch = tileSvg.match(/viewBox=['"](\d+)\s+(\d+)\s+(\d+)\s+(\d+)['"]/);
-    const tileW = vbMatch ? parseInt(vbMatch[3]) : 16;
-    const tileH = vbMatch ? parseInt(vbMatch[4]) : 16;
+    const vbW = vbMatch?.[3];
+    const vbH = vbMatch?.[4];
+    const tileW = vbW ? parseInt(vbW) : 16;
+    const tileH = vbH ? parseInt(vbH) : 16;
     // Scale factor based on current scale setting (scale[0] maps 0.1 = 1x)
-    const scaleFactor = scale[0] / 0.1;
+    const scaleFactor = (scale[0] ?? 0.1) / 0.1;
     const patternW = tileW * scaleFactor;
     const patternH = tileH * scaleFactor;
     const encoded = encodeURIComponent(tileSvg);
@@ -266,7 +268,9 @@ const TexturePreview = () => {
   // Scale multipliers for pattern sizing - 1× is the base, scaling up to 2× (denser baseline)
   const scaleLabels = ["0.5×", "0.75×", "1×", "1.25×", "1.5×", "2×"];
   const scaleValues = [0.05, 0.075, 0.1, 0.125, 0.15, 0.2];
-  const currentScaleLabel = scaleLabels[scaleValues.indexOf(scale[0])] || `${scale[0]}×`;
+  const opacityValue = opacity[0] ?? 0.12;
+  const scaleValue = scale[0] ?? 0.1;
+  const currentScaleLabel = scaleLabels[scaleValues.indexOf(scaleValue)] || `${scaleValue}×`;
 
   return (
     <div className="mt-12 border border-border rounded-lg overflow-hidden">
@@ -314,13 +318,13 @@ const TexturePreview = () => {
             <div 
               className="absolute inset-0 transition-opacity duration-300"
               style={{ 
-                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value),
-                backgroundSize: `${scale[0] * 100}%`
+                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacityValue, textureColor.value),
+                backgroundSize: `${scaleValue * 100}%`
               }}
             />
             <div className="absolute bottom-4 left-4 right-4">
               <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
-                {selectedTexture.name} @ {Math.round(opacity[0] * 100)}% opacity, {currentScaleLabel} scale
+                {selectedTexture.name} @ {Math.round(opacityValue * 100)}% opacity, {currentScaleLabel} scale
               </div>
             </div>
           </div>
@@ -334,8 +338,8 @@ const TexturePreview = () => {
             <div 
               className="absolute inset-0 transition-opacity duration-300"
               style={{ 
-                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacity[0], textureColor.value),
-                backgroundSize: `${scale[0] * 100}%`
+                backgroundImage: getPatternWithOpacityAndColor(selectedTexture.rawSvg, opacityValue, textureColor.value),
+                backgroundSize: `${scaleValue * 100}%`
               }}
             />
             {/* Tile grid indicator */}
@@ -344,7 +348,7 @@ const TexturePreview = () => {
               style={{
                 backgroundImage: `linear-gradient(to right, ${bgColor.textLight ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'} 1px, transparent 1px),
                                   linear-gradient(to bottom, ${bgColor.textLight ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'} 1px, transparent 1px)`,
-                backgroundSize: `${scale[0] * 100}% ${scale[0] * 100}%`
+                backgroundSize: `${scaleValue * 100}% ${scaleValue * 100}%`
               }}
             />
             {/* Info overlay */}
@@ -355,7 +359,7 @@ const TexturePreview = () => {
             </div>
             <div className="absolute bottom-4 left-4 right-4">
               <div className={`inline-block px-3 py-1.5 rounded text-xs font-data ${bgColor.textLight ? "bg-white/10 text-white" : "bg-black/5 text-foreground"}`}>
-                {selectedTexture.name} @ {Math.round(opacity[0] * 100)}% opacity, {currentScaleLabel} scale
+                {selectedTexture.name} @ {Math.round(opacityValue * 100)}% opacity, {currentScaleLabel} scale
               </div>
             </div>
           </div>
@@ -387,7 +391,7 @@ const TexturePreview = () => {
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="label-tech-sm text-primary">OPACITY</span>
-              <span className="font-data text-sm text-foreground">{Math.round(opacity[0] * 100)}%</span>
+              <span className="font-data text-sm text-foreground">{Math.round(opacityValue * 100)}%</span>
             </div>
             <Slider
               value={opacity}

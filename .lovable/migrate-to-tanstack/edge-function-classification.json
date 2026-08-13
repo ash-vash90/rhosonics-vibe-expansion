@@ -4,7 +4,7 @@
       "name": "verify-embargo",
       "classification": "internal-only",
       "signal": "called from src/components/brand/Foundation.tsx via supabase.functions.invoke; reads FOUNDATION_EMBARGO_PASSWORD secret",
-      "outcome": "left"
+      "outcome": "migrated"
     },
     {
       "name": "upscale-image",

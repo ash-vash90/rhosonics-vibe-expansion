@@ -68,8 +68,10 @@ const processElement = (original: Element, clone: Element): void => {
   const cloneChildren = Array.from(clone.children);
   
   for (let i = 0; i < originalChildren.length; i++) {
-    if (cloneChildren[i]) {
-      processElement(originalChildren[i], cloneChildren[i]);
+    const originalChild = originalChildren[i];
+    const cloneChild = cloneChildren[i];
+    if (originalChild && cloneChild) {
+      processElement(originalChild, cloneChild);
     }
   }
 };
