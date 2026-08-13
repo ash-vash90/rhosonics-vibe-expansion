@@ -93,7 +93,7 @@ const HatchDefs = ({ uid, accent }: { uid: string; accent: string }) => (
   </defs>
 );
 
-const glyphs: Record<SolutionIconName, (accent: string, uid: string) => JSX.Element> = {
+const glyphs: Record<SolutionIconName, (accent: string, uid: string) => React.JSX.Element> = {
   // Density — graduated cylinder with hatched base region
   density: (a, uid) => (
     <>
@@ -186,7 +186,7 @@ const glyphs: Record<SolutionIconName, (accent: string, uid: string) => JSX.Elem
         [36, 18],
         [44, 14],
         [52, 8],
-      ].map(([x, h]) => (
+      ].map(([x = 0, h = 0]) => (
         <rect key={x} x={x} y={48 - h / 2} width="4" height={h} fill={a} />
       ))}
       <line x1="68" y1="48" x2="84" y2="48" {...T} />

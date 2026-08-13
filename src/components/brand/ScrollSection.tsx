@@ -40,7 +40,7 @@ export const assertSectionRhythm = (root: HTMLElement | null) => {
   const sections = root.querySelectorAll<HTMLElement>("[data-section-variant]");
   let prev: string | null = null;
   sections.forEach((el) => {
-    const v = el.dataset.sectionVariant ?? null;
+    const v = el.dataset["sectionVariant"] ?? null;
     if (v && v !== "default" && v === prev) {
       console.warn("[section-rhythm] Adjacent sections share variant:", v, el);
     }
@@ -66,7 +66,7 @@ export const ScrollSection = ({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setIsInView(true);
           observer.disconnect();
         }

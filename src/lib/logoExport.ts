@@ -35,7 +35,7 @@ const fetchFontAsDataUrl = async (): Promise<string> => {
     const buf = await res.arrayBuffer();
     let binary = "";
     const bytes = new Uint8Array(buf);
-    for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+    for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i] ?? 0);
     const b64 = btoa(binary);
     cachedFontDataUrl = `data:font/woff2;base64,${b64}`;
     return cachedFontDataUrl;

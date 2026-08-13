@@ -20,7 +20,7 @@ export const verifyEmbargo = createServerFn({ method: "POST" })
     const a = new TextEncoder().encode(data.password);
     const b = new TextEncoder().encode(expected);
     let mismatch = a.length ^ b.length;
-    for (let i = 0; i < Math.min(a.length, b.length); i++) mismatch |= a[i] ^ b[i];
+    for (let i = 0; i < Math.min(a.length, b.length); i++) mismatch |= (a[i] ?? 0) ^ (b[i] ?? 0);
 
     return { ok: mismatch === 0 };
   });

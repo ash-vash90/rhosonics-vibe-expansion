@@ -77,11 +77,11 @@ export const TabbedSwitcher = ({
       </div>
       <div
         role="tabpanel"
-        id={`panel-${active.id}`}
-        aria-labelledby={`tab-${active.id}`}
+        id={`panel-${active?.id}`}
+        aria-labelledby={`tab-${active?.id}`}
         className="bg-card border-x border-b border-border"
       >
-        {active.content}
+        {active?.content}
       </div>
     </div>
   );

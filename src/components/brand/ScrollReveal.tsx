@@ -58,7 +58,10 @@ export const ScrollReveal = ({
       },
     };
 
-    const { from, to } = animations[animation];
+    const { from, to } = animations[animation] ?? {
+      from: { opacity: 0, y: 40 },
+      to: { opacity: 1, y: 0 },
+    };
 
     const ctx = gsap.context(() => {
       if (stagger) {
