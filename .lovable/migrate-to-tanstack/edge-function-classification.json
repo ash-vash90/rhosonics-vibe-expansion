@@ -1,0 +1,16 @@
+{
+  "functions": [
+    {
+      "name": "verify-embargo",
+      "classification": "internal-only",
+      "signal": "called from src/components/brand/Foundation.tsx via supabase.functions.invoke; reads FOUNDATION_EMBARGO_PASSWORD secret",
+      "outcome": "left"
+    },
+    {
+      "name": "upscale-image",
+      "classification": "unknown",
+      "signal": "no internal call sites found in src/; calls Lovable AI gateway with LOVABLE_API_KEY",
+      "outcome": "left"
+    }
+  ]
+}
