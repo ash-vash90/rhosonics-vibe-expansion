@@ -123,18 +123,30 @@ async def check_client_navigation(context) -> None:
     page = await context.new_page()
     await page.goto(BASE_URL, wait_until="networkidle")
     await page.evaluate("() => { window.__ssrSmokeMarker = true; }")
-    link = page.locator('a[href="/position"]').first
-    if await link.count() == 0:
-        fail("no in-app link to /position found on the home page")
+
+    target = page.locator('a[href="/position"]').first
+    if await target.count() == 0:
+        # The brand nav uses buttons + programmatic navigation.
+        target = page.get_by_role("button", name=re.compile("position", re.I)).first
+    if await target.count() == 0:
+        fail("no in-app control to reach /position from the home page")
         await page.close()
         return
-    await link.click()
-    await page.wait_for_url("**/position")
-    await page.wait_for_selector("h1")
+
+    await target.click()
+    try:
+        await page.wait_for_url("**/position", timeout=10_000)
+        await page.wait_for_selector("h1")
+    except Exception as exc:  # noqa: BLE001
+        fail(f"client-side navigation to /position failed: {exc}")
+        await page.close()
+        return
+
     if not await page.evaluate("() => window.__ssrSmokeMarker === true"):
         fail("navigation to /position triggered a full page reload")
     else:
         print("ok   client-side navigation / -> /position")
+
     await page.close()
 
 
