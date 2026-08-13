@@ -10,6 +10,8 @@ export type PageRoute = {
   title?: string;
   /** Text that must appear in the server-rendered HTML (crawler-visible). */
   contains: string[];
+  /** Route is guarded by `import.meta.env.DEV` and 404s in production by design. */
+  devOnly?: boolean;
 };
 
 /** Routes that must render HTML on the server with status 200. */
