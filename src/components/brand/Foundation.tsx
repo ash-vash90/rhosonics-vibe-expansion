@@ -115,7 +115,7 @@ const UnlockBar = ({ onUnlock }: { onUnlock: () => void }) => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Passphrase"
           aria-label="Embargo passphrase"
-          className="flex-1 sm:max-w-[280px] bg-[hsl(224_18%_12%)] border border-[hsl(224_18%_22%)] focus:border-primary focus:outline-none px-3 py-2 rounded-[4px] font-data text-sm text-[hsl(var(--slate-50))] placeholder:text-[hsl(var(--slate-500))]"
+          className="flex-1 sm:max-w-[280px] bg-[hsl(224_18%_12%)] border border-[hsl(224_18%_22%)] focus:border-primary focus:outline-hidden px-3 py-2 rounded-[4px] font-data text-sm text-[hsl(var(--slate-50))] placeholder:text-[hsl(var(--slate-500))]"
         />
         <button
           type="submit"

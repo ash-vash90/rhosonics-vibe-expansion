@@ -57,7 +57,7 @@ export const ResourceLibraryCard = ({ item }: { item: ResourceItem }) => {
       rel={item.external ? "noopener noreferrer" : undefined}
       className={cn(
         "group block bg-background p-5 md:p-6 transition-colors",
-        "hover:bg-[hsl(var(--slate-100))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+        "hover:bg-[hsl(var(--slate-100))] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary",
       )}
       aria-label={`${KIND_LABEL[item.kind]} — ${item.title}`}
     >
