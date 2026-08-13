@@ -1,4 +1,3 @@
-import * as ReactStart from "@tanstack/react-start";
 import { createStart, createMiddleware } from "@tanstack/react-start";
 
 
@@ -19,16 +18,13 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 
-// Start installs CSRF protection automatically when src/start.ts is absent;
-// defining the file opts out, so re-add it when the installed runtime exposes
-// it. Some bundled runtime builds don't export it — calling it unconditionally
-// crashes SSR with "createCsrfMiddleware is not a function". In that case we
-// fall back to a minimal same-origin check so protection degrades gracefully
-// instead of disappearing (or crashing the whole app).
+// Keep CSRF protection local rather than referencing the optional framework helper.
+// Some production bundles expose an incompatible export under that name and
+// can rewrite even a guarded dynamic lookup into a hard-crashing direct call.
 
 const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 
-const fallbackCsrfMiddleware = createMiddleware().server(async ({ next, request }) => {
+const csrfMiddleware = createMiddleware().server(async ({ next, request }) => {
   try {
     const method = (request.method || "GET").toUpperCase();
     if (!SAFE_METHODS.has(method)) {
@@ -54,23 +50,7 @@ const fallbackCsrfMiddleware = createMiddleware().server(async ({ next, request 
   return next();
 });
 
-function resolveCsrfMiddleware(): unknown {
-  const createCsrf = (ReactStart as Record<string, unknown>)["createCsrfMiddleware"];
-  if (typeof createCsrf !== "function") return fallbackCsrfMiddleware;
-  try {
-    const built = (createCsrf as (opts: unknown) => unknown)({
-      filter: (ctx: { handlerType?: string }) => ctx.handlerType === "serverFn",
-    });
-    return built ?? fallbackCsrfMiddleware;
-  } catch (error) {
-    console.error("createCsrfMiddleware unavailable, using same-origin fallback", error);
-    return fallbackCsrfMiddleware;
-  }
-}
-
-const csrfMiddleware = resolveCsrfMiddleware();
-
 export const startInstance = createStart(() => ({
-  requestMiddleware: [errorMiddleware, csrfMiddleware] as never,
+  requestMiddleware: [errorMiddleware, csrfMiddleware],
 }));
 
