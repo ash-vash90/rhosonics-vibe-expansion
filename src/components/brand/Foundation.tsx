@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { BRAND_VISION, BRAND_MISSION } from "@/data/brand-values";
 import { verifyEmbargo } from "@/lib/embargo.functions";
 import { Lock } from "@/lib/icons";
@@ -133,10 +133,13 @@ const UnlockBar = ({ onUnlock }: { onUnlock: () => void }) => {
 };
 
 export const Foundation = () => {
-  const [unlocked, setUnlocked] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return sessionStorage.getItem(UNLOCK_KEY) === "1";
-  });
+  const [unlocked, setUnlocked] = useState(false);
+
+  // Read after hydration — reading sessionStorage in the initializer would
+  // mismatch the server-rendered (locked) markup for returning visitors.
+  useEffect(() => {
+    if (sessionStorage.getItem(UNLOCK_KEY) === "1") setUnlocked(true);
+  }, []);
 
   return (
     <div
