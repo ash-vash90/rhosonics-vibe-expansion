@@ -73,6 +73,22 @@ async function checkPage(origin: string, route: (typeof PAGE_ROUTES)[number]): P
     };
   }
 
+  if (route.devOnly && res.status === 404) {
+    // Dev-only playground route: a 404 in production is the expected outcome.
+    return {
+      path: route.path,
+      kind: "page",
+      status: res.status,
+      durationMs,
+      ssr: "pass",
+      hydration: "pass",
+      redirect: "n/a",
+      title: titleOf(body),
+      bytes: body.length,
+      notes: ["Dev-only route — 404 in production is expected"],
+    };
+  }
+
   if (res.status !== 200) {
     ssr = "fail";
     notes.push(`Expected 200, got ${res.status}`);
