@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as BrandRouteImport } from './routes/_brand'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as HealthRouteImport } from './routes/health'
 import { Route as LogoAssetsRouteImport } from './routes/logo-assets'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as PositioningRouteImport } from './routes/positioning'
@@ -42,6 +43,11 @@ const BrandRoute = BrandRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HealthRoute = HealthRouteImport.update({
+  id: '/health',
+  path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LogoAssetsRoute = LogoAssetsRouteImport.update({
@@ -163,6 +169,7 @@ const ApiPublicHealthRoutesRoute = ApiPublicHealthRoutesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof BrandIndexRoute
   '/about': typeof AboutRoute
+  '/health': typeof HealthRoute
   '/logo-assets': typeof LogoAssetsRoute
   '/newsletter': typeof NewsletterRoute
   '/positioning': typeof PositioningRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
+  '/health': typeof HealthRoute
   '/logo-assets': typeof LogoAssetsRoute
   '/newsletter': typeof NewsletterRoute
   '/positioning': typeof PositioningRoute
@@ -216,6 +224,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_brand': typeof BrandRouteWithChildren
   '/about': typeof AboutRoute
+  '/health': typeof HealthRoute
   '/logo-assets': typeof LogoAssetsRoute
   '/newsletter': typeof NewsletterRoute
   '/positioning': typeof PositioningRoute
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/health'
     | '/logo-assets'
     | '/newsletter'
     | '/positioning'
@@ -270,6 +280,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
+    | '/health'
     | '/logo-assets'
     | '/newsletter'
     | '/positioning'
@@ -297,6 +308,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_brand'
     | '/about'
+    | '/health'
     | '/logo-assets'
     | '/newsletter'
     | '/positioning'
@@ -325,6 +337,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   BrandRoute: typeof BrandRouteWithChildren
   AboutRoute: typeof AboutRoute
+  HealthRoute: typeof HealthRoute
   LogoAssetsRoute: typeof LogoAssetsRoute
   NewsletterRoute: typeof NewsletterRoute
   PositioningRoute: typeof PositioningRoute
@@ -350,6 +363,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/health': {
+      id: '/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof HealthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/logo-assets': {
@@ -565,6 +585,7 @@ const ApiPublicHealthRouteWithChildren = ApiPublicHealthRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   BrandRoute: BrandRouteWithChildren,
   AboutRoute: AboutRoute,
+  HealthRoute: HealthRoute,
   LogoAssetsRoute: LogoAssetsRoute,
   NewsletterRoute: NewsletterRoute,
   PositioningRoute: PositioningRoute,
