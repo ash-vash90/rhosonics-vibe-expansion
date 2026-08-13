@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as BrandRouteImport } from './routes/_brand'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as HealthRouteImport } from './routes/health'
 import { Route as LogoAssetsRouteImport } from './routes/logo-assets'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as PositioningRouteImport } from './routes/positioning'
@@ -32,6 +33,8 @@ import { Route as BrandResourcesRouteImport } from './routes/_brand.resources'
 import { Route as BrandToolsRouteImport } from './routes/_brand.tools'
 import { Route as BrandTypographyRouteImport } from './routes/_brand.typography'
 import { Route as BrandVoiceRouteImport } from './routes/_brand.voice'
+import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
+import { Route as ApiPublicHealthRoutesRouteImport } from './routes/api/public/health.routes'
 
 const BrandRoute = BrandRouteImport.update({
   id: '/_brand',
@@ -40,6 +43,11 @@ const BrandRoute = BrandRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HealthRoute = HealthRouteImport.update({
+  id: '/health',
+  path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LogoAssetsRoute = LogoAssetsRouteImport.update({
@@ -147,10 +155,21 @@ const BrandVoiceRoute = BrandVoiceRouteImport.update({
   path: '/voice',
   getParentRoute: () => BrandRoute,
 } as any)
+const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
+  id: '/api/public/health',
+  path: '/api/public/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicHealthRoutesRoute = ApiPublicHealthRoutesRouteImport.update({
+  id: '/routes',
+  path: '/routes',
+  getParentRoute: () => ApiPublicHealthRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof BrandIndexRoute
   '/about': typeof AboutRoute
+  '/health': typeof HealthRoute
   '/logo-assets': typeof LogoAssetsRoute
   '/newsletter': typeof NewsletterRoute
   '/positioning': typeof PositioningRoute
@@ -171,9 +190,12 @@ export interface FileRoutesByFullPath {
   '/tools': typeof BrandToolsRoute
   '/typography': typeof BrandTypographyRoute
   '/voice': typeof BrandVoiceRoute
+  '/api/public/health': typeof ApiPublicHealthRouteWithChildren
+  '/api/public/health/routes': typeof ApiPublicHealthRoutesRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
+  '/health': typeof HealthRoute
   '/logo-assets': typeof LogoAssetsRoute
   '/newsletter': typeof NewsletterRoute
   '/positioning': typeof PositioningRoute
@@ -195,11 +217,14 @@ export interface FileRoutesByTo {
   '/typography': typeof BrandTypographyRoute
   '/voice': typeof BrandVoiceRoute
   '/': typeof BrandIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRouteWithChildren
+  '/api/public/health/routes': typeof ApiPublicHealthRoutesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_brand': typeof BrandRouteWithChildren
   '/about': typeof AboutRoute
+  '/health': typeof HealthRoute
   '/logo-assets': typeof LogoAssetsRoute
   '/newsletter': typeof NewsletterRoute
   '/positioning': typeof PositioningRoute
@@ -221,12 +246,15 @@ export interface FileRoutesById {
   '/_brand/typography': typeof BrandTypographyRoute
   '/_brand/voice': typeof BrandVoiceRoute
   '/_brand/': typeof BrandIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRouteWithChildren
+  '/api/public/health/routes': typeof ApiPublicHealthRoutesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/health'
     | '/logo-assets'
     | '/newsletter'
     | '/positioning'
@@ -247,9 +275,12 @@ export interface FileRouteTypes {
     | '/tools'
     | '/typography'
     | '/voice'
+    | '/api/public/health'
+    | '/api/public/health/routes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
+    | '/health'
     | '/logo-assets'
     | '/newsletter'
     | '/positioning'
@@ -271,10 +302,13 @@ export interface FileRouteTypes {
     | '/typography'
     | '/voice'
     | '/'
+    | '/api/public/health'
+    | '/api/public/health/routes'
   id:
     | '__root__'
     | '/_brand'
     | '/about'
+    | '/health'
     | '/logo-assets'
     | '/newsletter'
     | '/positioning'
@@ -296,11 +330,14 @@ export interface FileRouteTypes {
     | '/_brand/typography'
     | '/_brand/voice'
     | '/_brand/'
+    | '/api/public/health'
+    | '/api/public/health/routes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   BrandRoute: typeof BrandRouteWithChildren
   AboutRoute: typeof AboutRoute
+  HealthRoute: typeof HealthRoute
   LogoAssetsRoute: typeof LogoAssetsRoute
   NewsletterRoute: typeof NewsletterRoute
   PositioningRoute: typeof PositioningRoute
@@ -309,6 +346,7 @@ export interface RootRouteChildren {
   SketchesRoute: typeof SketchesRoute
   SocialMediaRoute: typeof SocialMediaRoute
   VisualSystemRoute: typeof VisualSystemRoute
+  ApiPublicHealthRoute: typeof ApiPublicHealthRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -325,6 +363,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/health': {
+      id: '/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof HealthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/logo-assets': {
@@ -474,6 +519,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandVoiceRouteImport
       parentRoute: typeof BrandRoute
     }
+    '/api/public/health': {
+      id: '/api/public/health'
+      path: '/api/public/health'
+      fullPath: '/api/public/health'
+      preLoaderRoute: typeof ApiPublicHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/health/routes': {
+      id: '/api/public/health/routes'
+      path: '/routes'
+      fullPath: '/api/public/health/routes'
+      preLoaderRoute: typeof ApiPublicHealthRoutesRouteImport
+      parentRoute: typeof ApiPublicHealthRoute
+    }
   }
 }
 
@@ -511,9 +570,22 @@ const BrandRouteChildren: BrandRouteChildren = {
 
 const BrandRouteWithChildren = BrandRoute._addFileChildren(BrandRouteChildren)
 
+interface ApiPublicHealthRouteChildren {
+  ApiPublicHealthRoutesRoute: typeof ApiPublicHealthRoutesRoute
+}
+
+const ApiPublicHealthRouteChildren: ApiPublicHealthRouteChildren = {
+  ApiPublicHealthRoutesRoute: ApiPublicHealthRoutesRoute,
+}
+
+const ApiPublicHealthRouteWithChildren = ApiPublicHealthRoute._addFileChildren(
+  ApiPublicHealthRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   BrandRoute: BrandRouteWithChildren,
   AboutRoute: AboutRoute,
+  HealthRoute: HealthRoute,
   LogoAssetsRoute: LogoAssetsRoute,
   NewsletterRoute: NewsletterRoute,
   PositioningRoute: PositioningRoute,
@@ -522,6 +594,7 @@ const rootRouteChildren: RootRouteChildren = {
   SketchesRoute: SketchesRoute,
   SocialMediaRoute: SocialMediaRoute,
   VisualSystemRoute: VisualSystemRoute,
+  ApiPublicHealthRoute: ApiPublicHealthRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
