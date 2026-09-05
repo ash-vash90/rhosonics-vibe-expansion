@@ -33,7 +33,7 @@ const ENTRIES: Entry[] = [
   { num: "08", label: "Data Visualization", hint: "Honesty rules · billboard.js", path: "/data-viz" },
   { num: "09", label: "Applications", path: "/applications" },
   { num: "09.1", label: "Industries", path: "/applications", hash: "applications" },
-  { num: "09.2", label: "SDM Eco interface", path: "/applications", hash: "sdm-interface" },
+  { num: "09.2", label: "SDM ECO interface", path: "/applications", hash: "sdm-interface" },
   { num: "09.3", label: "Interface kit", path: "/applications", hash: "components" },
   { num: "09.4", label: "Proof & case studies", path: "/proof" },
   { num: "10", label: "Resources", hint: "Downloads · contacts · changelog", path: "/resources" },

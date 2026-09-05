@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -28,7 +29,7 @@ const IconographyPage = () => (
       number="06"
       title="Iconography"
       subtitle="Two icon systems with shared DNA. UI icons do work; pictograms communicate."
-      meta={["Visual System", "v2025"]}
+      meta={["Visual System", `v${BRAND_SYSTEM.version}`]}
     />
 
     {/* 06.1 UI Icons */}
@@ -90,7 +91,7 @@ const IconographyPage = () => (
         <DecisionQuestions
           code="06.3"
           questions={[
-            "Does the icon survive being shrunk to 16px without losing meaning?",
+            "Do UI icons remain clear at their intended size, and pictograms at their own larger scale?",
             "Is every vertex on the 4px grid?",
             "Did we resist the urge to make it look \"smart\" or \"AI\"?",
             "Would an engineer recognize the referenced object?",
@@ -99,7 +100,7 @@ const IconographyPage = () => (
         <AdditionalDonts
           code="06.4"
           items={[
-            "No rounded line caps. Use square caps and miter joins.",
+            "Custom pictograms use square caps and miter joins. Lucide UI icons retain their native rounded caps and joins.",
             "Never use a UI icon at pictogram scale, or vice versa.",
             "No more than one accent colour per icon.",
             "Never combine multiple pictograms into a composite mark.",
@@ -122,7 +123,7 @@ const IconographyPage = () => (
         { label: "Section", value: "06 · Iconography" },
         { label: "Scope", value: "UI + Pictograms" },
         { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

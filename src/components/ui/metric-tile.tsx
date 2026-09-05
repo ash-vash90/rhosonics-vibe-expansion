@@ -133,7 +133,7 @@ const MetricTile = React.forwardRef<HTMLDivElement, MetricTileProps>(
           */}
           {unit && (
             <span className={cn(
-              "font-data text-sm uppercase tracking-wide",
+              "font-data text-sm normal-case tracking-normal",
               secondaryClass
             )}>
               {unit}

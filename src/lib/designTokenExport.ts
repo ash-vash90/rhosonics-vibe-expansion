@@ -11,52 +11,22 @@
 // BRAND TOKEN SOURCE OF TRUTH
 // ═══════════════════════════════════════════════════════════════
 
+import { colorToken, colorValues, contrastRatio, type ColorToken } from './brandTokens';
+
 const BRAND_COLORS = {
-  green: { hex: "#33993C", hsl: "125 50% 40%", description: "Primary brand green" },
-  lime: { hex: "#73B82E", hsl: "90 60% 45%", description: "Accent lime / gradient start" },
-  obsidian: { hex: "#14171F", hsl: "224 22% 10%", description: "Dark foundation" },
-  white: { hex: "#FFFFFF", hsl: "0 0% 100%", description: "Light foreground" },
-} as const;
-
-const PRIMARY_SCALE = {
-  "50": { hex: "#F4FAF4", hsl: "125 45% 97%" },
-  "100": { hex: "#E6F4E7", hsl: "125 42% 93%" },
-  "200": { hex: "#C4E5C6", hsl: "125 40% 85%" },
-  "300": { hex: "#82C886", hsl: "125 42% 72%" },
-  "400": { hex: "#4DA853", hsl: "125 45% 55%" },
-  "500": { hex: "#33993C", hsl: "125 50% 40%" },
-  "600": { hex: "#2B8533", hsl: "125 52% 35%" },
-  "700": { hex: "#216828", hsl: "125 55% 28%" },
-  "800": { hex: "#174A1C", hsl: "125 58% 20%" },
-  "900": { hex: "#0D2E10", hsl: "125 60% 12%" },
-} as const;
-
-const SLATE_SCALE = {
-  "50": { hex: "#F8F9FA", hsl: "220 20% 98%" },
-  "100": { hex: "#F1F3F5", hsl: "220 18% 96%" },
-  "200": { hex: "#E2E5E9", hsl: "222 16% 91%" },
-  "300": { hex: "#CDD1D8", hsl: "222 14% 84%" },
-  "400": { hex: "#5E6573", hsl: "223 14% 42%" },
-  "500": { hex: "#4E5562", hsl: "223 14% 35%" },
-  "600": { hex: "#424852", hsl: "223 16% 30%" },
-  "700": { hex: "#333A44", hsl: "224 18% 24%" },
-  "800": { hex: "#252A32", hsl: "224 20% 17%" },
-  "900": { hex: "#181C23", hsl: "224 22% 11%" },
-} as const;
-
-const MINERAL_COLORS = {
-  neutral: { hex: "#847F5E", hsl: "60 12% 48%", description: "Olive stone" },
-  surface: { hex: "#EAE8DE", hsl: "55 15% 91%", description: "Warm olive cream" },
-  deep: { hex: "#555443", hsl: "65 14% 32%", description: "Deep olive stone" },
-  bronze: { hex: "#736B4D", hsl: "55 20% 38%", description: "Earthy olive accent" },
-} as const;
-
-const STATE_COLORS = {
-  info: { hex: "#49556A", hsl: "215 19% 35%" },
-  warning: { hex: "#F5A623", hsl: "38 92% 50%" },
-  success: { hex: "#33993C", hsl: "125 50% 40%" },
-  error: { hex: "#E53935", hsl: "0 84% 51%" },
-} as const;
+  green: { ...colorToken('rho-green'), description: 'Primary brand green' },
+  lime: { ...colorToken('rho-green-accent'), description: 'Gradient accent' },
+  obsidian: { ...colorToken('rho-obsidian'), description: 'Dark foundation' },
+  white: { ...colorToken('white'), description: 'Light foreground' },
+};
+const scale = (prefix: string) => Object.fromEntries(Object.keys(colorValues)
+  .filter(key => key.startsWith(prefix + '-'))
+  .map(key => [key.slice(prefix.length + 1), colorToken(key as ColorToken)]));
+const PRIMARY_SCALE = scale('primary');
+const SLATE_SCALE = scale('slate');
+const MINERAL_COLORS = Object.fromEntries(Object.entries(scale('mineral')).map(([key, value]) => [key, { ...value, description: 'Field context' }]));
+const STATE_COLORS = Object.fromEntries(['info', 'warning', 'success', 'error'].map(key => [key, colorToken(key as ColorToken)]));
+const ALL_COLORS = Object.fromEntries(Object.keys(colorValues).map(key => [key, colorToken(key as ColorToken)]));
 
 const TYPOGRAPHY = {
   logo: {
@@ -103,10 +73,11 @@ const RADII = {
 // TOKENS STUDIO FORMAT (Figma Plugin)
 // ═══════════════════════════════════════════════════════════════
 
-function buildTokensStudioJSON(): string {
+export function buildTokensStudioJSON(): string {
   const tokens = {
     "Rhosonics/Brand": {
       color: {
+        tokens: Object.fromEntries(Object.entries(ALL_COLORS).map(([key, value]) => [key, { value: value.hex, type: "color" }])),
         brand: {
           green: { value: BRAND_COLORS.green.hex, type: "color", description: BRAND_COLORS.green.description },
           lime: { value: BRAND_COLORS.lime.hex, type: "color", description: BRAND_COLORS.lime.description },
@@ -128,6 +99,8 @@ function buildTokensStudioJSON(): string {
           background: { value: "{color.slate.50}", type: "color" },
           foreground: { value: "{color.brand.obsidian}", type: "color" },
           primary: { value: "{color.brand.green}", type: "color" },
+          action: { value: "{color.tokens.action}", type: "color" },
+          "action-hover": { value: "{color.tokens.action-hover}", type: "color" },
           "primary-foreground": { value: "#FFFFFF", type: "color" },
           muted: { value: "{color.slate.100}", type: "color" },
           "muted-foreground": { value: "{color.slate.600}", type: "color" },
@@ -169,9 +142,10 @@ function buildTokensStudioJSON(): string {
 // STYLE DICTIONARY FORMAT
 // ═══════════════════════════════════════════════════════════════
 
-function buildStyleDictionaryJSON(): string {
+export function buildStyleDictionaryJSON(): string {
   const dictionary = {
     color: {
+        tokens: Object.fromEntries(Object.entries(ALL_COLORS).map(([key, value]) => [key, { value: value.hex, type: "color" }])),
       brand: {
         green: { value: BRAND_COLORS.green.hex, comment: BRAND_COLORS.green.description },
         lime: { value: BRAND_COLORS.lime.hex, comment: BRAND_COLORS.lime.description },
@@ -238,11 +212,11 @@ function buildColorSwatchSVG(): string {
     const row = Math.floor(i / cols);
     const x = 40 + col * (cellW + gap);
     const y = 80 + row * (cellH + gap);
-    const textColor = ["#14171F", "#555443", "#736B4D", "#847F5E"].includes(s.hex) || s.hex.startsWith("#0") || s.hex.startsWith("#1") || s.hex.startsWith("#2") || s.hex.startsWith("#3") || s.hex.startsWith("#4") ? "#FFFFFF" : "#14171F";
+    const textColor = contrastRatio(s.hex, BRAND_COLORS.obsidian.hex) >= 4.5 ? BRAND_COLORS.obsidian.hex : BRAND_COLORS.white.hex;
     return `<g>
       <rect x="${x}" y="${y}" width="${cellW}" height="${cellH}" rx="8" fill="${s.hex}" stroke="#E2E5E9" stroke-width="1"/>
       <text x="${x + 12}" y="${y + cellH - 32}" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="${textColor}">${s.label}</text>
-      <text x="${x + 12}" y="${y + cellH - 16}" font-family="monospace" font-size="10" fill="${textColor}" opacity="0.7">${s.hex}</text>
+      <text x="${x + 12}" y="${y + cellH - 16}" font-family="monospace" font-size="10" fill="${textColor}">${s.hex}</text>
     </g>`;
   }).join("\n");
 

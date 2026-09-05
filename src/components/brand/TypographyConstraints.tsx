@@ -31,7 +31,7 @@ export const TypographyConstraints = () => {
       examples: "Paragraphs, documentation",
       lineHeight: "1.75",
       tailwind: "leading-relaxed",
-      demo: "The SDM Eco provides continuous, real-time density measurement for industrial slurry applications. Built for harsh environments, it delivers the precision operators need to optimize processes and reduce waste.",
+      demo: "The SDM ECO provides continuous, real-time density measurement for industrial slurry applications. Built for harsh environments, it delivers the precision operators need to optimize processes and reduce waste.",
       demoClass: "font-ui text-base leading-relaxed",
     },
   ];
@@ -151,7 +151,7 @@ export const TypographyConstraints = () => {
             </div>
             <div className="p-4 bg-error-surface border border-error-border rounded-lg">
               <p className="font-ui text-base text-foreground leading-relaxed">
-                The SDM Eco provides continuous, real-time density measurement for industrial slurry applications. Built for harsh environments, it delivers precision operators need to optimize processes and reduce waste. The ultrasonic technology works non-invasively.
+                The SDM ECO provides continuous, real-time density measurement for industrial slurry applications. Built for harsh environments, it delivers precision operators need to optimize processes and reduce waste. The ultrasonic technology works non-invasively.
               </p>
             </div>
             <p className="text-xs text-muted-foreground mt-2">Hard to track lines, causes re-reading</p>
@@ -165,7 +165,7 @@ export const TypographyConstraints = () => {
             </div>
             <div className="p-4 bg-eco-surface border border-eco-border rounded-lg">
               <p className="font-ui text-base text-foreground leading-relaxed max-w-prose">
-                The SDM Eco provides continuous, real-time density measurement for industrial slurry applications. Built for harsh environments, it delivers precision operators need.
+                The SDM ECO provides continuous, real-time density measurement for industrial slurry applications. Built for harsh environments, it delivers precision operators need.
               </p>
             </div>
             <p className="text-xs text-muted-foreground mt-2">Comfortable reading rhythm</p>

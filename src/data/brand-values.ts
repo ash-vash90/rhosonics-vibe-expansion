@@ -204,7 +204,7 @@ export const BRAND_PRINCIPLES: BrandPrinciple[] = [
     apply: [
       "Lead with the measurement, not the marketing.",
       "Name the quantity (g/cm³, kg/h, %solids) before the brand.",
-      "If a section can't answer \"what does this help measure?\", it doesn't ship.",
+      "Connect the section to a real process, customer or measurement need.",
     ],
     valueId: "expertise",
   },
@@ -245,7 +245,7 @@ export const BRAND_PRINCIPLES: BrandPrinciple[] = [
       "\"Innovative\" is the word people use when they can't explain the mechanism. Explain the mechanism.",
     apply: [
       "Diagram the physics or the data path before naming the product.",
-      "Banned words: innovative, revolutionary, next-gen, cutting-edge.",
+      "Explain the mechanism behind an innovation claim; preserve approved product names.",
       "If a feature is new, say what changed and why it matters.",
     ],
     valueId: "innovation",
@@ -258,7 +258,7 @@ export const BRAND_PRINCIPLES: BrandPrinciple[] = [
     essence:
       "Sustainability is a number — kWh saved, m³ water avoided, kg of hazardous chemicals removed, nuclear sources retired. If we can't quantify it, we don't claim it.",
     apply: [
-      "Green saturation is reserved for measured savings.",
+      "Eco surfaces support sourced environmental results. Brand accents, actions and status colours follow their separate roles in Color.",
       "Every eco claim cites the baseline it improves on.",
       "No vague green language (\"eco-friendly\", \"greener future\"). Numbers or silence.",
     ],

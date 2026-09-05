@@ -31,10 +31,11 @@ export interface ResourceItem {
   title: string;
   summary: string;
   format: "PDF" | "DWG" | "STEP" | "ZIP";
-  sizeKb: number;
+  sizeKb?: number;
   pages?: number;
-  revision: string; // e.g. "Rev 4 · 2024-11"
-  href: string;
+  revision?: string; // e.g. "Rev 4 · 2024-11"
+  href?: string;
+  unavailableReason?: string;
   external?: boolean;
 }
 
@@ -49,16 +50,19 @@ const formatSize = (kb: number) => {
 };
 
 export const ResourceLibraryCard = ({ item }: { item: ResourceItem }) => {
+  const available = Boolean(item.href && item.href !== '#');
+  const Component = available ? 'a' : 'article';
   const Icon = item.external ? ArrowUpRight : Download;
   return (
-    <a
-      href={item.href}
+    <Component
+      href={available ? item.href : undefined}
       target={item.external ? "_blank" : undefined}
       rel={item.external ? "noopener noreferrer" : undefined}
       className={cn(
         "group block bg-background p-5 md:p-6 transition-colors",
         "hover:bg-[hsl(var(--slate-100))] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary",
       )}
+      aria-disabled={!available || undefined}
       aria-label={`${KIND_LABEL[item.kind]} — ${item.title}`}
     >
       <div className="flex items-start justify-between gap-4 mb-4">
@@ -86,10 +90,10 @@ export const ResourceLibraryCard = ({ item }: { item: ResourceItem }) => {
             <dt className="sr-only">Format</dt>
             <dd className="text-foreground/80">{item.format}</dd>
           </div>
-          <div className="flex items-baseline gap-1.5">
+          {item.sizeKb !== undefined && <div className="flex items-baseline gap-1.5">
             <dt className="sr-only">Size</dt>
             <dd>{formatSize(item.sizeKb)}</dd>
-          </div>
+          </div>}
           {item.pages && (
             <div className="flex items-baseline gap-1.5">
               <dt className="sr-only">Pages</dt>
@@ -97,13 +101,14 @@ export const ResourceLibraryCard = ({ item }: { item: ResourceItem }) => {
             </div>
           )}
         </dl>
-        <Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
+        {available && <Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />}
       </div>
 
       <div className="font-data text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80 mt-3">
-        {item.revision}
+        {available ? item.revision : 'Not available'}
       </div>
-    </a>
+      {!available && <p className="text-sm text-muted-foreground mt-3">{item.unavailableReason ?? "Awaiting an approved file and revision."}</p>}
+    </Component>
   );
 };
 

@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -17,8 +18,8 @@ const VoicePage = () => (
     <PageBanner
       number="02"
       title="Voice & Tone"
-      subtitle="The brand's voice is governed the same way as its instruments: by rule, not by taste."
-      meta={["Story", "v2025"]}
+      subtitle="Clear, technically credible, practical and collaborative. Adapt the emphasis to the reader."
+      meta={["Story", `v${BRAND_SYSTEM.version}`]}
     />
 
     {/* 02.0 Principles */}
@@ -32,11 +33,10 @@ const VoicePage = () => (
     <ScrollSection id="lexicon" variant="tinted">
       <header className="max-w-3xl mb-10">
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
-          Words we use. Words we don't.
+          Choose words for their meaning.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-          Vocabulary is governance. The list below is enforceable, not advisory. If a word on the right shows up in
-          published copy, it gets rewritten before it ships.
+          Prefer specific explanations over vague claims. These examples guide usage; ordinary words such as customer, advanced and case study are allowed when accurate. Preserve approved product names, including SDM ECO and CCM SMART.
         </p>
       </header>
       <LexiconTable />
@@ -51,8 +51,7 @@ const VoicePage = () => (
           The voice in motion.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-          The fastest way to learn the voice is to see real copy rewritten. Each row is taken from production
-          material — left as shipped, right as it should have shipped.
+          These illustrative rewrites demonstrate the approach. Bracketed fields require approved evidence before publication; they are not product specifications or customer results.
         </p>
       </header>
       <RewriteTable />
@@ -64,7 +63,7 @@ const VoicePage = () => (
     <ScrollSection id="funnel-rule" variant="tinted">
       <header className="max-w-3xl mb-8">
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
-          Marketing voice never enters the spec sheet.
+          One voice, different emphasis.
         </h2>
       </header>
       <div className="grid md:grid-cols-2 gap-px bg-[hsl(var(--slate-200))] max-w-5xl">
@@ -80,8 +79,7 @@ const VoicePage = () => (
           <div className="font-data text-[10px] uppercase tracking-[0.25em] text-primary mb-3">Lower funnel</div>
           <h3 className="font-ui text-xl font-semibold text-foreground mb-2">Pure specification.</h3>
           <p className="text-foreground/75 leading-relaxed text-sm md:text-base">
-            Datasheets, integration docs, drawings. Numbers, tolerances, references. No outcome framing, no
-            metaphor, no marketing copy of any kind. Engineers expect precision; we owe it to them.
+            Datasheets, integration documents and drawings lead with specifications, conditions and limitations. Product pages connect those facts to process relevance. Keep unsupported promotional claims out of technical documentation.
           </p>
         </article>
       </div>
@@ -128,7 +126,7 @@ const VoicePage = () => (
         { label: "Section", value: "02 · Voice & Tone" },
         { label: "Scope", value: "Verbal identity" },
         { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

@@ -1,3 +1,5 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
+import { Link } from "@/lib/router-compat";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -29,7 +31,8 @@ interface ChangeEntry {
 }
 
 const CHANGELOG: ChangeEntry[] = [
-  { date: "2026-06-10", scope: "System", summary: "Restructured to 10-chapter IA + Tools appendix. Kill list executed." },
+  { date: BRAND_SYSTEM.updated, scope: "Consistency review", summary: "Unified colour specifications and exports, reconciled guidance, labelled examples and clarified unavailable resources." },
+  { date: "2026-06-10", scope: "System", summary: "Reorganised into ten chapters, with Applications and Proof under chapter 09, plus a Tools appendix." },
   { date: "2026-04-12", scope: "Voice", summary: "Lexicon and Before/After Rewrites primitives added." },
   { date: "2026-02-20", scope: "Color", summary: "Green 50–900 scale finalized." },
   { date: "2025-11-04", scope: "Imagery", summary: "Macro photography spec codified for case studies." },
@@ -41,8 +44,8 @@ const ResourcesPage = () => (
     <PageBanner
       number="10"
       title="Resources"
-      subtitle="Downloads, owners, and version history. No gating. No email walls."
-      meta={["Reference", "v2025"]}
+      subtitle="Brand assets, resource availability, responsible teams and version history."
+      meta={["Reference", `v${BRAND_SYSTEM.version}`]}
     />
 
     {/* 10.1 Resource library */}
@@ -52,45 +55,40 @@ const ResourcesPage = () => (
           Datasheets, drawings, certificates.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-          Format, revision and size live on the card face — engineers vet provenance before they download. The
-          full asset library is also accessible from the Tools chapter.
+          Product files below are awaiting approved uploads. File sizes, revisions and certification details appear only when the actual documents are available.
         </p>
       </header>
+      <p className="mb-6 text-base"><Link to="/logo" className="text-action underline">Download approved logo variants</Link>{" · "}<Link to="/tools" className="text-action underline">Open brand asset tools</Link></p>
       <ErrorBoundary>
         <Suspense fallback={<SectionLoader />}>
           <ResourceLibraryGrid
             items={[
               {
                 kind: "datasheet",
-                code: "DS.SDM-ECO.04",
-                title: "SDM Eco inline density meter",
-                summary: "Full mechanical, electrical and process spec for the SDM Eco family.",
+                code: "DS.SDM-ECO",
+                title: "SDM ECO inline density meter",
+                summary: "Full mechanical, electrical and process spec for the SDM ECO family.",
                 format: "PDF",
-                sizeKb: 2840,
-                pages: 12,
-                revision: "Rev 4 · 2024-11",
-                href: "#",
+
+                unavailableReason: "Awaiting an approved file and revision.",
               },
               {
                 kind: "drawing",
-                code: "STEP.SDM-ECO.DN80",
-                title: "SDM Eco DN80 — STEP model",
+                code: "STEP.SDM-ECO",
+                title: "SDM ECO — CAD drawing",
                 summary: "3D STEP file for plant CAD integration.",
                 format: "STEP",
-                sizeKb: 4480,
-                revision: "Rev 3 · 2024-09",
-                href: "#",
+
+                unavailableReason: "Awaiting an approved file and revision.",
               },
               {
                 kind: "certificate",
-                code: "CERT.SDM-ECO.IECEX",
-                title: "IECEx Ex db certificate",
-                summary: "Hazardous area certification for Zone 1 and Zone 2 installations.",
+                code: "CERT.SDM-ECO",
+                title: "Product certificates",
+                summary: "Only released certificates for the specific product and configuration will be listed.",
                 format: "PDF",
-                sizeKb: 940,
-                pages: 6,
-                revision: "Rev 1 · 2024-07",
-                href: "#",
+
+                unavailableReason: "Awaiting an approved file and revision.",
               },
             ]}
           />
@@ -104,11 +102,10 @@ const ResourcesPage = () => (
     <ScrollSection id="contacts" variant="tinted">
       <header className="max-w-3xl mb-8">
         <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4">
-          One named owner per scope.
+          Responsible teams.
         </h2>
         <p className="text-muted-foreground text-base leading-relaxed">
-          Deviations from the brand system require sign-off from the owner named below. MarComms holds final
-          authority on the system itself.
+          These are the existing team contacts. A named approver and approval date must be recorded for each released asset; listing a department does not establish individual approval.
         </p>
       </header>
       <div className="grid gap-px bg-[hsl(var(--slate-200))] max-w-4xl">
@@ -123,7 +120,7 @@ const ResourcesPage = () => (
             </span>
             <a
               href={`mailto:${c.email}`}
-              className="font-data text-[12px] text-primary hover:underline"
+              className="font-data text-sm text-action dark:text-primary-400 hover:underline"
             >
               {c.email}
             </a>
@@ -168,7 +165,7 @@ const ResourcesPage = () => (
         { label: "Section", value: "10 · Resources" },
         { label: "Scope", value: "Downloads + Owners + Version" },
         { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

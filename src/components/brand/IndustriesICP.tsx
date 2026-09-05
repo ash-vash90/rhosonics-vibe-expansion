@@ -29,7 +29,7 @@ const INDUSTRIES: Industry[] = [
     context:
       "Concentrators run on slurry density. Grinding circuits, hydrocyclones, thickeners and tailings lines all key off the same number, and the number drifts the moment the ore body does.",
     position:
-      "We replace nuclear density gauges on the main slurry pipes with a non-radioactive ultrasonic measurement. Same point in the process, same accuracy band, no source licence, no decay curve.",
+      "We replace nuclear density gauges on the main slurry pipes with a non-radioactive ultrasonic measurement. State the operating conditions and approved performance specification for the proposed configuration; do not assume identical performance across methods.",
     product: { code: "SDM", name: "Slurry Density Meter" },
   },
   {

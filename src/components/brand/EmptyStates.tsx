@@ -23,7 +23,7 @@ export const EmptyStates = () => {
     {
       icon: Database,
       title: "No readings recorded",
-      description: "Connect your SDM Eco to start capturing density measurements.",
+      description: "Connect your SDM ECO to start capturing density measurements.",
       action: "Connect Device",
       context: "Dashboard on first use",
     },

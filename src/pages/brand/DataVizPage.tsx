@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { ScrollSection } from "@/components/brand/ScrollSection";
 import { SectionDivider } from "@/components/brand/SectionUtils";
 import { PageBanner } from "@/components/brand/PageBanner";
@@ -45,17 +46,17 @@ const DataVizPage = () => (
       number="08"
       title="Data Visualization"
       subtitle="A sensor company's primary product output is data. How we render it is a brand decision, not a dashboard feature."
-      meta={["Visual System", "v2025"]}
+      meta={["Visual System", `v${BRAND_SYSTEM.version}`]}
     />
 
     {/* 08.1 Principles */}
     <ScrollSection id="principles">
       <header className="max-w-3xl mb-10">
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
-          Five rules for every chart.
+          Five principles for every chart.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-          Adapted from IBM's data-viz canon with a sixth lens added for our context: honesty. Charts that flatter
+          Adapted from IBM's data-viz canon with honesty explicit for our measurement context. Charts that flatter
           us by omission damage the brand more than charts that look plain.
         </p>
       </header>
@@ -149,7 +150,7 @@ const DataVizPage = () => (
 
     <SectionCrossLink
       links={[
-        { label: "Proof & Case Studies", to: "/proof", description: "Charts in production (10.x)" },
+        { label: "Proof & Case Studies", to: "/proof", description: "Charts in production (09.B)" },
         { label: "Color", to: "/color", description: "The palette charts draw from" },
       ]}
     />
@@ -160,7 +161,7 @@ const DataVizPage = () => (
         { label: "Section", value: "08 · Data Visualization" },
         { label: "Library", value: "billboard.js" },
         { label: "Owner", value: "MarComms × Engineering" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

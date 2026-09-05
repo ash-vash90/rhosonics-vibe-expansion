@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { useNavigate } from "@/lib/router-compat";
 import { ChevronRight } from "@/lib/icons";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -35,7 +36,7 @@ const chapterGroups: ChapterGroup[] = [
       { id: "04", label: "Color", route: "/color", desc: "Palette, families, pairings, accessibility." },
       { id: "05", label: "Typography", route: "/typography", desc: "Roles, scale, micro-specs, misuse." },
       { id: "06", label: "Iconography", route: "/iconography", desc: "UI icons and pictograms, shared DNA." },
-      { id: "07", label: "Imagery", route: "/imagery", desc: "Photo categories with proportion ratios." },
+      { id: "07", label: "Imagery", route: "/imagery", desc: "Process, product and technical imagery." },
       { id: "08", label: "Data Visualization", route: "/data-viz", desc: "Honesty rules, billboard.js, no embellishment." },
     ],
   },
@@ -52,7 +53,7 @@ const chapterGroups: ChapterGroup[] = [
     code: "APP",
     title: "Appendix",
     chapters: [
-      { id: "T", label: "Tools", route: "/tools", desc: "Icon picker, photo treatment, token exports." },
+      { id: "AP", label: "Tools", route: "/tools", desc: "Icon picker, photo treatment, token exports." },
     ],
   },
 ];
@@ -63,7 +64,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative py-16 md:py-20 lg:py-24" id="about">
+    <div className="relative py-8 md:py-12" id="about">
       <DataWatermark text="Index" />
 
       <div className="relative mb-12 md:mb-16">
@@ -71,16 +72,14 @@ const HomePage = () => {
           className="mb-4"
           pulse
           label="Directory"
-          meta={[`${String(totalChapters).padStart(2, "0")} Chapters`, "v2026.06"]}
+          meta={[`${String(totalChapters).padStart(2, "0")} pages`, `v${BRAND_SYSTEM.version}`]}
         />
 
         <h2 className="font-ui text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.0] mb-6 max-w-4xl">
           Advanced measurement for more efficient, automated, and sustainable operations.
         </h2>
         <p className="text-muted-foreground text-base lg:text-lg max-w-2xl leading-relaxed">
-          Our mission, stated plainly. Everything in this brand system — every word, every visual,
-          every rule — exists to deliver it. Ten chapters and one Tools appendix. Used by our team,
-          our partners, and anyone who wants to know how we think.
+          Use this reference to create clear, consistent Rhosonics material. Ten chapters, with Applications and Proof sharing chapter 09, plus a Tools appendix. Foundation approval remains recorded in Brand Position.
         </p>
       </div>
 
@@ -123,7 +122,7 @@ const HomePage = () => {
                     <h4 className="font-ui font-semibold text-foreground text-sm lg:text-base mb-1 group-hover:text-primary transition-colors">
                       {chapter.label}
                     </h4>
-                    <p className="text-xs lg:text-[13px] text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {chapter.desc}
                     </p>
                   </button>
@@ -138,9 +137,9 @@ const HomePage = () => {
         className="mt-16 md:mt-20"
         items={[
           { label: "Standard", value: "Brand OS" },
-          { label: "Revision", value: "2026.06" },
+          { label: "Revision", value: BRAND_SYSTEM.version },
           { label: "Origin", value: "Delft, NL" },
-          { label: "Status", value: "Active", emphasis: true },
+          { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
         ]}
       />
     </div>

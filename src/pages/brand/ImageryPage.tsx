@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -16,7 +17,7 @@ const MacroPhotographySpec = lazy(() =>
 interface Ratio {
   code: string;
   category: string;
-  share: number;
+  role: string;
   body: string;
 }
 
@@ -27,25 +28,25 @@ const RATIOS: Ratio[] = [
   {
     code: "IMG.A",
     category: "Macro of medium",
-    share: 40,
-    body: "Slurry, sediment, tailings, sludge — photographed at distance under directional light. The subject of the brand is what we measure, not what we measure it with.",
+    role: "Medium",
+    body: "Show the relevant material when it helps explain the measurement. Preserve its true colour and texture.",
   },
   {
     code: "IMG.B",
     category: "Site documentation",
-    share: 30,
+    role: "Process",
     body: "Plant, dredge, concentrator, wastewater works. Wide enough to show context, never stylised. Operators in frame where consented.",
   },
   {
     code: "IMG.C",
-    category: "Instrument in situ",
-    share: 20,
-    body: "The product mounted in the line — never as hero, always inside its work. No isolated product shots on white.",
+    category: "Instrument portraits and installations",
+    role: "Product",
+    body: "Use accurate product portraits on white, neutral or transparent backgrounds for product pages, datasheets and partners. Installation photographs explain process fit. Products may be the hero.",
   },
   {
     code: "IMG.D",
     category: "Technical / cutaway",
-    share: 10,
+    role: "Mechanism",
     body: "Engineered renders and section drawings used to explain construction. Treat as illustration, not photography.",
   },
 ];
@@ -55,19 +56,18 @@ const ImageryPage = () => (
     <PageBanner
       number="07"
       title="Imagery"
-      subtitle="Four categories. Fixed proportions. Photograph the medium, not the marketing."
-      meta={["Visual System", "v2025"]}
+      subtitle="Show the process, the instrument and the measurement. Choose imagery for the application."
+      meta={["Visual System", `v${BRAND_SYSTEM.version}`]}
     />
 
     {/* 07.1 Proportion ratios */}
     <ScrollSection id="ratios">
       <header className="max-w-3xl mb-10">
         <h2 className="font-ui text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.05] mb-4">
-          The image budget.
+          Choose the right image for the job.
         </h2>
         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-          Photography is rationed, not chosen by mood. Any asset that contains more than three
-          images must hit the proportions below — measured across the spread, not per image.
+          Use these categories according to the communication task, without fixed quotas. A product sheet may lead with the instrument; a field result may lead with the process. Cleanroom and chemical applications should reflect their actual controlled environments.
         </p>
       </header>
 
@@ -82,7 +82,7 @@ const ImageryPage = () => (
             </div>
             <p className="font-ui text-sm md:text-base text-foreground/85 leading-relaxed">{r.body}</p>
             <div className="font-data text-2xl md:text-3xl text-foreground md:text-right">
-              {r.share}<span className="text-muted-foreground text-base">%</span>
+              <span className="text-sm">{r.role}</span>
             </div>
           </article>
         ))}
@@ -103,27 +103,27 @@ const ImageryPage = () => (
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><MacroPhotographySpec /></Suspense></ErrorBoundary>
     </ScrollSection>
 
-    <SectionDivider label="07.x" />
+    <SectionDivider label="07.4" />
 
-    {/* 07.x Governance */}
+    {/* 07.4 Governance */}
     <ScrollSection id="governance" variant="tinted">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
         <DecisionQuestions
-          code="07.x"
+          code="07.4"
           questions={[
-            "Across the full spread, do the four categories add up to 100% within ±5%?",
+            "Does each image explain the relevant process, product or measurement?",
             "Is the medium the hero of the macro shot — not the instrument?",
             "Did the site shot get consent for any operator visible in frame?",
-            "Could a stock photographer have shot this? If yes, reshoot.",
+            "Is the image accurately sourced and appropriate to this industry?",
           ]}
         />
         <AdditionalDonts
-          code="07.y"
+          code="07.5"
           items={[
             "Never use stock photography of generic \"industry\".",
             "Never composite logos, charts, or icons onto photography.",
             "Never duotone photography with brand Green.",
-            "Never photograph the instrument on white — always in situ.",
+            "Never alter product proportions, screen content or connections to improve a composition.",
             "Never crop a face out of a wide site shot to avoid consent paperwork.",
           ]}
         />
@@ -143,7 +143,7 @@ const ImageryPage = () => (
         { label: "Section", value: "07 · Imagery" },
         { label: "Scope", value: "Categories + Treatment + Macro" },
         { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

@@ -1,8 +1,10 @@
+import { EvidenceNotice } from "./EvidenceNotice";
 import { Leaf, Recycle, Droplets } from "@/lib/icons";
 
 export const EcoComponents = () => {
   return (
     <section id="eco" className="space-y-16 pt-16">
+      <EvidenceNotice />
       {/* Hero Statement */}
       <div>
         <div className="flex items-center gap-3 mb-6">
@@ -12,7 +14,7 @@ export const EcoComponents = () => {
         </div>
         <p className="text-lg md:text-xl font-ui text-foreground leading-relaxed max-w-4xl">
           Sustainability metrics are operational outcomes
-          <span className="text-muted-foreground">, not marketing claims. Every 0.1% accuracy improvement is waste prevented.</span>
+          <span className="text-muted-foreground">, not marketing claims. A measurement improvement alone does not establish an environmental saving; show the measured process outcome and baseline.</span>
         </p>
       </div>
 
@@ -119,7 +121,7 @@ export const EcoComponents = () => {
           {[
             { num: "01", title: "Subtle by Default", desc: "Integrated naturally. No 'greenwashing' with over-the-top eco imagery." },
             { num: "02", title: "Data First", desc: "Every claim tied to measurable data. Show numbers, not sentiment." },
-            { num: "03", title: "Contextual", desc: "Topographic patterns used exclusively on eco components." },
+            { num: "03", title: "Contextual", desc: "Topographic patterns may support relevant field contexts. Keep data surfaces plain." },
           ].map((principle, idx) => (
             <div key={idx} className="flex items-start gap-6 py-6 border-b border-border group hover:bg-muted/30 transition-colors px-4 -mx-4">
               <span className="font-data text-2xl text-primary">{principle.num}</span>

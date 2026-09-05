@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "./brand-tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -26,9 +27,9 @@
   --font-data: 'JetBrains Mono', monospace;
 
   /* Border radius (v3 config: sm/md/lg from --radius; xl+ keep v3 defaults) */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
@@ -41,6 +42,8 @@
   --color-foreground: hsl(var(--foreground));
   --color-ring-offset-background: hsl(var(--background));
 
+  --color-action: hsl(var(--action));
+  --color-action-hover: hsl(var(--action-hover));
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-primary-50: hsl(var(--primary-50));
@@ -178,75 +181,6 @@
 }
 
 :root {
-  /* Rhosonics Brand Colors - EXACT HEX VALUES */
-  /* Green: #33993c = 125 50% 40% */
-  /* Lime: #73B82E = 90 60% 45% */
-  /* Obsidian: #14171F = 224 22% 10% */
-  --rho-green: 125 50% 40%;
-  --rho-green-accent: 90 60% 45%;
-  --rho-green-glow: 90 70% 55%;
-  --rho-obsidian: 224 22% 10%;
-  --rho-obsidian-light: 224 22% 15%;
-
-  /* Primary Green Scale (50-900)
-     Full shade range for UI states: hover, active, subtle backgrounds.
-     Based on Primary Green #33993C (125 50% 40%) */
-  --primary-50: 125 45% 97%;     /* Subtle backgrounds, hover tints */
-  --primary-100: 125 42% 93%;    /* Light backgrounds, selected states */
-  --primary-200: 125 40% 85%;    /* Borders, dividers */
-  --primary-300: 125 42% 72%;    /* Muted accents, secondary elements */
-  --primary-400: 125 45% 55%;    /* De-emphasized primary elements */
-  --primary-500: 125 50% 40%;    /* PRIMARY - Default brand green */
-  --primary-600: 125 52% 35%;    /* Hover state on primary */
-  --primary-700: 125 55% 28%;    /* Active/pressed state */
-  --primary-800: 125 58% 20%;    /* Dark accents, text on light */
-  --primary-900: 125 60% 12%;    /* Darkest variant, high contrast */
-
-  /* Mineral Neutrals - Olive / Stone tones
-     These are ENVIRONMENTAL colors, not UI grays.
-     Slate is for software. Mineral is for field contexts.
-     They must NEVER substitute for Slate UI neutrals. */
-  --mineral-neutral: 60 12% 48%;      /* #847F5E - olive stone */
-  --mineral-surface: 55 15% 91%;      /* #EAE8DE - warm olive cream */
-  --mineral-deep: 65 14% 32%;         /* #555443 - deep olive stone */
-  --mineral-bronze: 55 20% 38%;       /* #736B4D - earthy olive accent */
-
-  /* Eco Tints */
-  --eco-surface: 125 43% 95%;
-  --eco-border: 125 50% 90%;
-
-  /* Info (Slate-based) */
-  --info: 215 19% 35%;
-  --info-surface: 210 40% 97%;
-  --info-border: 214 32% 85%;
-
-  /* Warning Amber */
-  --warning: 38 92% 50%;
-  --warning-surface: 48 96% 97%;
-  --warning-border: 48 90% 80%;
-
-  /* Success Green - Uses Rhosonics Green */
-  --success: 125 50% 40%;
-  --success-surface: 125 50% 97%;
-  --success-border: 125 40% 85%;
-
-  /* Error Red */
-  --error: 0 84% 51%;
-  --error-surface: 0 93% 97%;
-  --error-border: 0 80% 85%;
-
-  /* Slate Scale - Aligned with Obsidian (224° hue family, reduced blue) */
-  --slate-50: 220 20% 98%;
-  --slate-100: 220 18% 96%;
-  --slate-200: 222 16% 91%;
-  --slate-300: 222 14% 84%;
-  --slate-400: 223 14% 42%;
-  --slate-500: 223 14% 35%;
-  --slate-600: 223 16% 30%;
-  --slate-700: 224 18% 24%;
-  --slate-800: 224 20% 17%;
-  --slate-900: 224 22% 11%;
-
   /* Semantic Tokens */
   --background: var(--slate-50);
   --foreground: var(--rho-obsidian);
@@ -269,7 +203,7 @@
   --accent: var(--eco-surface);
   --accent-foreground: var(--rho-green);
 
-  --destructive: 0 84% 60%;
+  --destructive: var(--error);
   --destructive-foreground: 0 0% 100%;
 
   --border: var(--slate-200);

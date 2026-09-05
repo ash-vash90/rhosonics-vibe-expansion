@@ -1,3 +1,4 @@
+import { EvidenceNotice } from "./EvidenceNotice";
 import { ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandCallout } from "./BrandCallout";
@@ -11,11 +12,12 @@ export const InterfaceKit = () => {
   const { bodyFont } = useFontMode();
   return (
     <section id="components" className="space-y-16 pt-16">
+      <EvidenceNotice />
       {/* Hero Statement */}
       <div>
         <h2 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-6">Interface Kit</h2>
         <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-          Functional building blocks for decision-making and control. 
+          Web interface examples. HMI requirements are specified separately above.
           Every component prioritizes clarity over decoration — the primary measurement 
           must be readable at a glance, from a distance.
         </p>
@@ -57,7 +59,7 @@ export const InterfaceKit = () => {
                 Obsidian Outline
               </Button>
               <Button variant="gradient">
-                Gradient
+                Action Green
               </Button>
             </div>
           </div>
@@ -116,7 +118,7 @@ export const InterfaceKit = () => {
           <MetricTile 
             variant="obsidian" 
             value="1.4502" 
-            unit="g/L" 
+            unit="g/cm³"
             label="Density" 
             status="live"
             trend="up"
@@ -160,7 +162,7 @@ export const InterfaceKit = () => {
 
         <p className="text-muted-foreground max-w-xl">
           Four metric tile variants: obsidian (dark premium), primary (brand accent), 
-          outline (subtle), and glass (for gradient backgrounds).
+          outline (subtle), and glass (marketing demonstrations only; never operational UI).
         </p>
       </div>
 

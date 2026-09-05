@@ -1,7 +1,7 @@
 /**
  * 02.2 Before / After Rewrite Table — the central teaching tool (Klarna model).
  *
- * Each row is a real piece of production copy on the left, and the published
+ * Each row is an illustrative writing exercise, not approved product copy. The
  * voice on the right. The "pattern" column makes the rewrite generalizable.
  */
 
@@ -15,39 +15,39 @@ const ROWS: Rewrite[] = [
   {
     before:
       "Our advanced sensor technology leverages multi-axis measurement capabilities to deliver actionable insights.",
-    after: "Measures slurry density inline. ±0.001 g/cm³, across three pipe sizes.",
+    after: "Measures slurry density inline. [Approved tolerance] under [test conditions]. Source: [datasheet revision].",
     pattern: "Replace adjectives with specifications.",
   },
   {
     before: "Rhosonics is proud to be a trusted partner for industrial customers worldwide.",
-    after: "312 plant sites. 24 countries. Q2 2025.",
+    after: "[Verified installation count] across [defined regions], as of [date]. Source: [record].",
     pattern: "Replace pride with evidence.",
   },
   {
     before: "Significantly reduce chemical consumption with our innovative inline solution.",
-    after: "Polymer dosing down 28% — verified by procurement, 12-month rolling.",
+    after: "Polymer use changed by [measured amount] versus [baseline] over [period]. Source: [approved report].",
     pattern: "State the number, name the verifier.",
   },
   {
     before:
       "Enable seamless integration with your existing control infrastructure for unparalleled operational efficiency.",
-    after: "Talks to a 1980s PLC and a 2026 historian. 4–20 mA, HART, Modbus, OPC-UA.",
+    after: "Connects through [supported interfaces for this configuration]. Source: [integration guide revision].",
     pattern: "Drop \"seamless\". List the protocols.",
   },
   {
     before: "Discover how our cutting-edge density meter is revolutionizing the dredging industry.",
-    after: "North Sea capital project, 2023: cycle efficiency up 42% on density-controlled loading.",
+    after: "[Approved site], [date]: [measured outcome] with density-controlled loading. Source: [field report].",
     pattern: "One site, one outcome, one date.",
   },
   {
     before: "We are committed to sustainability through environmentally responsible practices.",
-    after: "FY2024: 2.3 GWh/yr pumping energy avoided across 312 sites. DNV-verified, ISAE 3000.",
+    after: "[Reporting period]: [measured energy saving] against [baseline]. Method and verification: [report link].",
     pattern: "Commitment is a number with a verifier.",
   },
   {
     before: "Get in touch to learn more about how we can help your business succeed.",
-    after: "Engineering: engineering@rhosonics.com. Datasheets: /resources.",
-    pattern: "Tell the reader where to go. Stop selling.",
+    after: "Discuss your process with our team. Include the medium, pipe size and operating conditions.",
+    pattern: "Give the reader a useful next step.",
   },
 ];
 

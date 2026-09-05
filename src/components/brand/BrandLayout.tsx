@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { Outlet, useLocation } from "@/lib/router-compat";
 import { useRef, useEffect } from "react";
 import { Navigation } from "./Navigation";
@@ -22,7 +23,7 @@ const BrandLayout = () => {
 
   // Hero entrance animations (only on home)
   useEffect(() => {
-    if (!isHome) return;
+    if (!isHome || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const hero = heroContentRef.current;
     if (!hero) return;
 
@@ -90,11 +91,8 @@ const BrandLayout = () => {
 
       {/* Hero */}
       {isHome && (
-        <section className="relative bg-rho-obsidian text-slate-100 overflow-hidden min-h-screen flex items-center justify-center">
-          {/* Gaussian blur orb */}
-          <div className="hero-blur-orb -top-40 -right-40 lg:right-10 lg:top-20" />
-          <div className="hero-blur-orb bottom-0 -left-60 lg:left-20 lg:bottom-10 opacity-50" style={{ width: 400, height: 400 }} />
-          <div ref={heroContentRef} className="hero-content relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
+        <section className="relative bg-rho-obsidian text-slate-100 overflow-hidden flex items-center justify-center">
+          <div ref={heroContentRef} className="hero-content relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 lg:py-16">
             {/* Oversized background data mark */}
             <DataWatermark text="Brand_OS" align="left" tone="dark" className="lg:-top-6 lg:text-[240px]" />
 
@@ -102,7 +100,7 @@ const BrandLayout = () => {
               {/* Logo lockup */}
               <div className="hero-logo flex items-center justify-center gap-3 lg:gap-4">
                 <div className="w-7 h-7 md:w-[34px] md:h-[34px] lg:w-[42px] lg:h-[42px] xl:w-[50px] xl:h-[50px]">
-                  <AnimatedLogo ref={heroLogoRef} variant="gradient" startHidden withGlow />
+                  <AnimatedLogo ref={heroLogoRef} variant="gradient" />
                 </div>
                 <span className={`font-logo text-white uppercase overflow-hidden text-xl md:text-2xl lg:text-3xl ${isPrimetime ? "xl:text-[2.35rem] tracking-normal" : "xl:text-4xl tracking-wide"}`}>
                   {isPrimetime ? (
@@ -116,15 +114,15 @@ const BrandLayout = () => {
               </div>
 
               {/* Eyebrow */}
-              <TelemetryEyebrow className="hero-version" pulse tone="dark" label="Brand System" meta={["Version 2025"]} />
+              <TelemetryEyebrow className="hero-version" pulse tone="dark" label="Brand System" meta={[`Version ${BRAND_SYSTEM.version}`, BRAND_SYSTEM.status]} />
 
               {/* Headline */}
-              <h1 className="hero-title font-ui font-bold text-white leading-[0.95] tracking-tight text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+              <h1 className="hero-title font-ui font-bold text-white leading-[0.95] tracking-tight text-display-lg">
                 Brand <span className="text-primary">Guidelines</span>.
               </h1>
 
               {/* Subtitle */}
-              <p className="hero-subtitle max-w-xl text-slate-400 text-base lg:text-lg leading-relaxed">
+              <p className="hero-subtitle max-w-xl text-slate-300 text-base lg:text-lg leading-relaxed">
                 A system of decisions ensuring clarity, consistency, and credibility wherever the Rhosonics brand appears.
               </p>
             </div>

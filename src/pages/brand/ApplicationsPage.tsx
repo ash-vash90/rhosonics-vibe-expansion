@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -20,7 +21,7 @@ const ApplicationsPage = () => (
       number="09.A"
       title="Applications"
       subtitle="How the brand system applies to products, interfaces, and industries."
-      meta={["Practice", "v2025"]}
+      meta={["Practice", `v${BRAND_SYSTEM.version}`]}
     />
     <ScrollSection id="applications">
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><IndustryApplications /></Suspense></ErrorBoundary>
@@ -42,12 +43,12 @@ const ApplicationsPage = () => (
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><EmptyStates /></Suspense></ErrorBoundary>
     </ScrollSection>
 
-    <SectionDivider label="09.A.x" />
+    <SectionDivider label="09.A.5" />
 
     <ScrollSection id="governance" variant="tinted">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
         <DecisionQuestions
-          code="09.A.x"
+          code="09.A.5"
           questions={[
             "Does the interface read in three seconds from across a control room?",
             "Are status colours used for status — never decoration?",
@@ -56,7 +57,7 @@ const ApplicationsPage = () => (
           ]}
         />
         <AdditionalDonts
-          code="09.A.y"
+          code="09.A.6"
           items={[
             "Never use chamfered components in HMI surfaces. Rounded 4px only.",
             "Never use glassmorphism or blur effects in operational UI.",
@@ -80,7 +81,7 @@ const ApplicationsPage = () => (
         { label: "Section", value: "09.A · Applications" },
         { label: "Scope", value: "Industries + Interface Kit" },
         { label: "Owner", value: "MarComms × Engineering" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

@@ -1,14 +1,16 @@
+import { FONT_CSS } from "@/lib/brandTokens";
 import { Download, Copy, Check } from "@/lib/icons";
 import { BrandCallout } from "./BrandCallout";
 import { useState } from "react";
 import { useFontMode } from "@/hooks/useFontMode";
 
 const getFontKitCSS = (logoFontName: string, logoFontFamily: string, _bodyFontName: string, bodyFontFamily: string, logoGoogleParam: string | null, bodyGoogleParam: string) => {
+  if (!logoGoogleParam && bodyFontFamily === "Instrument Sans") return FONT_CSS;
   const importUrl = logoGoogleParam
     ? `@import url('https://fonts.googleapis.com/css2?${logoGoogleParam}&${bodyGoogleParam}&family=JetBrains+Mono:wght@500&display=swap');`
     : `/* ${logoFontName} must be loaded locally — see @font-face below */\n@import url('https://fonts.googleapis.com/css2?${bodyGoogleParam}&family=JetBrains+Mono:wght@500&display=swap');`;
 
-  const localFontFace = !logoGoogleParam ? `\n\n/* Local font-face for ${logoFontName} */\n@font-face {\n  font-family: '${logoFontFamily}';\n  src: url('/fonts/${logoFontFamily.toLowerCase().replace(/\\s/g, '-')}.woff2') format('woff2');\n  font-weight: 300;\n  font-style: normal;\n  font-display: swap;\n}` : '';
+  const localFontFace = !logoGoogleParam ? `\n\n/* Local font-face for ${logoFontName} */\n@font-face {\n  font-family: '${logoFontFamily}';\n  src: url('/fonts/primetime-light.woff2') format('woff2');\n  font-weight: 300;\n  font-style: normal;\n  font-display: swap;\n}` : '';
 
   return `/* Rhosonics Font Kit */
 /* Google Fonts Import - Add to <head> or CSS */
@@ -199,7 +201,7 @@ export const TypographyScale = () => {
               <tr className="border-t border-border/50">
                 <td className="px-6 py-5 font-data text-xs text-muted-foreground uppercase">Data</td>
                 <td className="px-6 py-5">
-                  <span className="font-data text-sm bg-muted px-3 py-1.5 rounded text-foreground">1.4502 G/L</span>
+                  <span className="font-data text-sm bg-muted px-3 py-1.5 rounded text-foreground">1.4502 g/cm³</span>
                 </td>
                 <td className="px-6 py-5 text-right text-sm text-muted-foreground hidden md:table-cell">JetBrains Mono</td>
               </tr>
@@ -520,7 +522,7 @@ export const TypographyScale = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <span className={`font-logo text-lg ${isPrimetime ? 'tracking-normal' : 'tracking-wide'}`}>{logoFontName}</span>
-              <p className="font-data text-xs text-muted-foreground mt-1">500 only</p>
+              <p className="font-data text-xs text-muted-foreground mt-1">{isPrimetime ? "300 only" : "500 only"}</p>
             </div>
             <div>
               <span className="font-ui text-lg">{bodyFontName}</span>

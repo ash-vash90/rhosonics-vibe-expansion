@@ -36,14 +36,14 @@ export const ApplyFoundationCTA = () => (
         Now apply the foundation.
       </h2>
       <p className="text-base md:text-lg text-[hsl(var(--slate-300))] leading-relaxed max-w-[55ch]">
-        The position is set. The next two chapters turn it into voice and
+        Use the approved foundation where available. The next two chapters cover voice and
         identity — how Rhosonics sounds, and how it looks.
       </p>
 
       <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center">
         <Link
           to="/voice"
-          className="group inline-flex items-center justify-between gap-6 bg-primary text-primary-foreground px-5 py-3.5 rounded-[4px] hover:bg-primary/90 transition-colors sm:min-w-[260px]"
+          className="group inline-flex items-center justify-between gap-6 bg-action text-primary-foreground px-5 py-3.5 rounded-[4px] hover:bg-action-hover transition-colors sm:min-w-[260px]"
         >
           <span className="font-ui font-semibold text-sm md:text-base">
             02 · Voice &amp; Tone

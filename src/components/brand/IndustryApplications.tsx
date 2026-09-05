@@ -32,7 +32,7 @@ export const IndustryApplications = () => {
         items={[
           { label: "Industry", value: "Mineral processing" },
           { label: "Medium", value: "Copper tailings slurry" },
-          { label: "Technology", value: "SDM Eco · inline acoustic" },
+          { label: "Technology", value: "SDM ECO · inline acoustic" },
           { label: "Site", value: "Andes plant · 4,200 m" },
         ]}
       />

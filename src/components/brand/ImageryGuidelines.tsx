@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-// BeforeAfterSlider removed in Phase 2A refactor — see /imagery 07.x for treatment spec.
+// Documentary treatment guidance is maintained in the Imagery chapter.
 
 // Image style examples - AI generated
 import fieldMining from "@/assets/brand/imagery-field-mining.jpg";
@@ -21,7 +21,6 @@ import abstractWaves from "@/assets/brand/imagery-abstract-waves.jpg";
 import abstractSensor from "@/assets/brand/imagery-abstract-sensor.jpg";
 
 // Before/after treatment example (single source - treatment applied via CSS)
-import treatmentBefore from "@/assets/brand/imagery-treatment-before.jpg";
 
 // Rhosonics approved background colors for texture preview
 const approvedBackgrounds = [
@@ -582,12 +581,12 @@ export const ImageryGuidelines = () => {
         {/* Field Context */}
         <div className="bg-rho-obsidian relative overflow-hidden">
           <div className="absolute inset-0 opacity-40 bg-pattern-minerals grayscale"></div>
-          <div className="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+
           <div className="relative p-6 md:p-10 lg:p-16 flex flex-col justify-end min-h-[240px] md:min-h-[320px]">
             <span className="label-tech text-primary text-[10px] md:text-xs mb-2 md:mb-3 block">01 — FIELD CONTEXT</span>
-            <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-2 md:mb-4">Real & Gritty</h3>
+            <h3 className="font-ui text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-2 md:mb-4">Field & Process</h3>
             <p className="text-slate-400 text-sm md:text-base lg:text-lg max-w-md">
-              Authenticity, case studies, proving durability. High contrast, desaturated, selective green accent.
+              Authentic process conditions, accurate colours and clear subjects.
             </p>
           </div>
         </div>
@@ -607,8 +606,7 @@ export const ImageryGuidelines = () => {
 
       {/* Field Image Rule */}
       <BrandCallout variant="info" title="Field Image Rule">
-        Field images must show evidence of use: wear, scale, context, or operation.
-        Pristine environments without signs of real work reduce credibility.
+        Field images must show the actual process context. Mining environments may show wear; semiconductor and chemical environments may be clean and controlled.
       </BrandCallout>
 
       {/* ═══════════════════════════════════════════════════════════════
@@ -626,11 +624,11 @@ export const ImageryGuidelines = () => {
           </p>
         </div>
 
-        {/* Real & Gritty Section */}
+        {/* Field & Process Section */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
             <div className="w-3 h-3 rounded-full bg-mineral" />
-            <h4 className="font-ui text-xl font-bold text-foreground">Real & Gritty</h4>
+            <h4 className="font-ui text-xl font-bold text-foreground">Field & Process</h4>
             <span className="label-tech text-muted-foreground ml-2">FIELD PHOTOGRAPHY</span>
           </div>
           
@@ -699,15 +697,15 @@ export const ImageryGuidelines = () => {
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
-                    <span>High contrast, desaturated color palette</span>
+                    <span>Natural colour and readable detail</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
-                    <span>Visible wear, scale, and operational context</span>
+                    <span>Authentic scale and operational context</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
-                    <span>Selective green accent on indicators/displays</span>
+                    <span>Accurate instrument and display colours</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
@@ -904,185 +902,18 @@ export const ImageryGuidelines = () => {
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════════════════════════════
-            PHOTOGRAPHY TREATMENT
-         ═══════════════════════════════════════════════════════════════ */}
-        <div className="space-y-8 pt-8 border-t border-border">
-          <div>
-            <div className="flex items-baseline gap-4 md:gap-6 mb-6">
-              <span className="font-data text-xs md:text-sm text-muted-foreground">COLOR GRADING</span>
-              <div className="h-px flex-1 bg-border max-w-16 md:max-w-24" />
-            </div>
-            <h3 className="font-ui text-2xl md:text-3xl font-bold text-foreground mb-3">Photography Treatment</h3>
-            <p className="text-muted-foreground text-base md:text-lg max-w-3xl">
-              Transform raw field photography into brand-consistent imagery using this color grading process.
-            </p>
+        <section className="space-y-6 pt-8 border-t border-border">
+          <h3 className="font-ui text-2xl font-semibold">Photography treatment</h3>
+          <p className="text-base text-muted-foreground max-w-prose">Preserve the real colours of the medium, equipment and displays. Correct exposure and white balance conservatively; keep the source image for comparison. No green overlays, cinematic colour shifts or vignettes on documentary photography.</p>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              ['Field documentation', 'Show authentic working conditions. Wear is appropriate when present; cleanliness is equally authentic in a controlled process.'],
+              ['Product portraits', 'Use clean neutral, white or transparent backgrounds. Keep geometry, finish and screen details accurate.'],
+              ['Technical illustrations', 'Use brand green to explain a mechanism. Label diagrams as illustrations and have the technical content checked.'],
+            ].map(([title, body]) => <article key={title} className="bg-card p-6 rounded-lg"><h4 className="font-ui font-semibold mb-3">{title}</h4><p className="text-base text-muted-foreground">{body}</p></article>)}
           </div>
-
-          {/* Static treatment reference (interactive slider removed) */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <figure className="space-y-3">
-              <img
-                src={treatmentBefore}
-                alt="Mining site, treated to brand grade"
-                className="w-full aspect-[4/3] object-cover rounded"
-                style={{ filter: "saturate(0.85) contrast(1.2) brightness(0.96)" }}
-              />
-              <figcaption className="flex items-center justify-between">
-                <span className="label-tech-sm text-primary">MINING</span>
-                <span className="text-xs text-muted-foreground">Warm earth tones → cool industrial grade</span>
-              </figcaption>
-            </figure>
-            <figure className="space-y-3">
-              <img
-                src={fieldWastewater}
-                alt="Wastewater facility, treated to brand grade"
-                className="w-full aspect-[4/3] object-cover rounded"
-                style={{ filter: "saturate(0.9) contrast(1.12) brightness(0.97)" }}
-              />
-              <figcaption className="flex items-center justify-between">
-                <span className="label-tech-sm text-primary">WASTEWATER</span>
-                <span className="text-xs text-muted-foreground">Cool blues → cinematic brand mood</span>
-              </figcaption>
-            </figure>
-          </div>
-
-          <p className="text-sm text-muted-foreground text-center">
-            Treatment baked in — interactive slider retired in Phase 2A refactor.
-          </p>
-
-          {/* Treatment Details Grid */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-5 bg-muted/30 rounded-lg border border-border">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-3 h-3 rounded-full bg-warning" />
-                <span className="font-ui font-semibold text-foreground">Raw Capture</span>
-              </div>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="text-muted-foreground mt-1">•</span>
-                  <span>Full color saturation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-muted-foreground mt-1">•</span>
-                  <span>Warm, vibrant earth tones</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-muted-foreground mt-1">•</span>
-                  <span>Standard contrast levels</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-muted-foreground mt-1">•</span>
-                  <span>No brand color integration</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="p-5 bg-primary/5 rounded-lg border border-primary/20">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-3 h-3 rounded-full bg-primary" />
-                <span className="font-ui font-semibold text-foreground">Brand Treatment</span>
-              </div>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Gentle desaturation per source (-10% to -15%)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Cool overlay shifts warmth toward industrial tones</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Increased contrast +15–25% for dramatic weight</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Bold green accent overlay as brand signature</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Treatment Steps */}
-          <div className="bg-card rounded-lg border border-border overflow-hidden">
-            <div className="p-6 border-b border-border">
-              <h4 className="font-ui font-bold text-foreground">Color Grading Process</h4>
-            </div>
-            <div className="p-6">
-              <div className="grid md:grid-cols-4 gap-6">
-                <div className="relative">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="font-data text-sm font-semibold text-primary">01</span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground hidden md:block absolute -right-3" />
-                  </div>
-                  <span className="font-ui font-semibold text-foreground block mb-2">Color Grade</span>
-                  <p className="text-sm text-muted-foreground">
-                    Gentle desaturation per source image (-10% to -15%). Enough to cool the mood without draining life.
-                  </p>
-                </div>
-                <div className="relative">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="font-data text-sm font-semibold text-primary">02</span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground hidden md:block absolute -right-3" />
-                  </div>
-                  <span className="font-ui font-semibold text-foreground block mb-2">Cool Shift</span>
-                  <p className="text-sm text-muted-foreground">
-                    Overlay cool tones into shadows and midtones. This is where the industrial mood comes from.
-                  </p>
-                </div>
-                <div className="relative">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="font-data text-sm font-semibold text-primary">03</span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground hidden md:block absolute -right-3" />
-                  </div>
-                  <span className="font-ui font-semibold text-foreground block mb-2">Contrast</span>
-                  <p className="text-sm text-muted-foreground">
-                    Increase contrast +15–25%. Dramatic shadows add industrial weight while preserving detail.
-                  </p>
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                      <span className="font-data text-sm font-semibold text-primary-foreground">04</span>
-                    </div>
-                  </div>
-                  <span className="font-ui font-semibold text-foreground block mb-2">Brand Accent</span>
-                  <p className="text-sm text-muted-foreground">
-                    Bold green overlay as brand signature via soft-light blending with cinematic vignette.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Technical Specs */}
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="p-4 bg-muted/30 rounded-lg border border-border">
-              <span className="label-tech-sm text-primary block mb-2">SATURATION</span>
-              <span className="font-data text-2xl font-light text-foreground">-10% to -15%</span>
-              <p className="text-sm text-muted-foreground mt-1">Gentle per-image desaturation</p>
-            </div>
-            <div className="p-4 bg-muted/30 rounded-lg border border-border">
-              <span className="label-tech-sm text-primary block mb-2">CONTRAST</span>
-              <span className="font-data text-2xl font-light text-foreground">+15% to +25%</span>
-              <p className="text-sm text-muted-foreground mt-1">Dramatic industrial weight</p>
-            </div>
-            <div className="p-4 bg-muted/30 rounded-lg border border-border">
-              <span className="label-tech-sm text-primary block mb-2">BRAND ACCENT</span>
-              <span className="font-data text-2xl font-light text-foreground">#33993C</span>
-              <p className="text-sm text-muted-foreground mt-1">Soft-light blend with cinematic vignette</p>
-            </div>
-          </div>
-          </div>
-
-        </div>
+        </section>
+      </div>
 
       {/* ═══════════════════════════════════════════════════════════════
           TEXTURES SECTION
@@ -1197,7 +1028,7 @@ export const ImageryGuidelines = () => {
           </div>
           <ul className="space-y-3">
             {[
-              "Real industrial environments with visible wear",
+              "Real industrial environments appropriate to the process",
               "Close-ups of measurement displays and data",
               "Workers in proper PPE interacting with equipment",
               "Clean studio shots for product photography",
