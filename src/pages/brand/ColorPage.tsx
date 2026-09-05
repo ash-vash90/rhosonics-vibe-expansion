@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -16,7 +17,7 @@ const ColorPage = () => (
       number="04"
       title="Color"
       subtitle="Obsidian, Slate, Green. Roles, pairings, and contrast — never decoration."
-      meta={["Visual System", "v2025"]}
+      meta={["Visual System", `v${BRAND_SYSTEM.version}`]}
     />
 
     <ScrollSection id="colors" className="relative">
@@ -26,26 +27,26 @@ const ColorPage = () => (
       </div>
     </ScrollSection>
 
-    <SectionDivider label="04.x" />
+    <SectionDivider label="04.1" />
 
     <ScrollSection id="governance" variant="tinted">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
         <DecisionQuestions
-          code="04.x"
+          code="04.1"
           questions={[
             "Does every text/background pair clear WCAG AA at 4.5:1?",
-            "Is Green being used for measurement or affordance — never decoration?",
+            "Is green serving a defined brand, action, status or environmental role?",
             "Did we reach for an opacity step instead of a new hue?",
             "Would the surface still read as ours in greyscale?",
           ]}
         />
         <AdditionalDonts
-          code="04.y"
+          code="04.2"
           items={[
             "Never use pure black (#000). Obsidian is the floor.",
-            "Never use Green as a background for body copy.",
+            "Never use white normal-size text on brand green or lime; use Action Green.",
             "Never invent a new shade — use the 50–900 scale or an opacity step.",
-            "Never pair Eco Surface with Obsidian inside the same component.",
+            "Use Obsidian text on Eco Surface; test any other pairing before use.",
             "Never tint photography with brand colours.",
           ]}
         />
@@ -65,7 +66,7 @@ const ColorPage = () => (
         { label: "Section", value: "04 · Color" },
         { label: "Scope", value: "Roles + Tokens" },
         { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

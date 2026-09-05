@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -24,7 +25,7 @@ const ToolsPage = () => (
       number="AP"
       title="Tools"
       subtitle="Every interactive utility in the system, consolidated. Specs live in their chapters; work happens here."
-      meta={["Appendix", "v2025"]}
+      meta={["Appendix", `v${BRAND_SYSTEM.version}`]}
     />
 
     {/* AP.1 Photo Treatment */}
@@ -51,7 +52,7 @@ const ToolsPage = () => (
           Icon Library
         </h2>
         <p className="text-muted-foreground text-base leading-relaxed">
-          Browse, search, and copy icons from the approved Lucide set. Click any icon to copy its import code.
+          Browse, search, and copy icons from the approved Lucide set. Click any icon to copy its SVG markup.
         </p>
       </header>
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><IconPicker /></Suspense></ErrorBoundary>
@@ -67,7 +68,7 @@ const ToolsPage = () => (
           Colour Pairing Matrix
         </h2>
         <p className="text-muted-foreground text-base leading-relaxed">
-          Live pairing checker. Picks any two brand tokens and reports the contrast ratio against WCAG AA.
+          Canonical palette and approved text pairings, with calculated contrast ratios.
         </p>
       </header>
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><ColorMatrix /></Suspense></ErrorBoundary>
@@ -112,7 +113,7 @@ const ToolsPage = () => (
         { label: "Section", value: "AP · Tools" },
         { label: "Scope", value: "Utilities + Exports" },
         { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

@@ -5,13 +5,26 @@
 
 ---
 
+
+## Consistency revision — 2026-09-05
+
+- Canonical colour values: `src/data/color-tokens.json`. Run `node scripts/generate-brand-tokens.mjs` after changing them. `src/brand-tokens.css`, the colour page and token exports must agree. Older numerical colour examples in this guide are historical; read current values from the canonical source.
+- Use `bg-action text-primary-foreground hover:bg-action-hover` for normal-size white button text. Brand green and lime do not meet 4.5:1 against white. Do not reduce contrast through opacity without checking the resulting pair.
+- Primetime is weight 300, served at `/fonts/primetime-light.woff2`. Downloaded default font CSS uses the same file. Unit symbols are case-sensitive; never apply `uppercase` to units.
+- Lucide UI icons retain rounded caps and joins. Square caps and miter joins apply only to custom pictograms.
+- Separate approved evidence, illustrative examples and claims awaiting verification. No unsupported verification marks, customer quotations, certifications or installation totals. Keep placeholders explicit; do not invent replacements.
+- Unavailable resources must render as non-link cards without fabricated size, revision or certification metadata.
+- Ordinary vocabulary is allowed when accurate. Use the role-specific guidance in Voice; preserve SDM ECO and CCM SMART spelling.
+- Shared web controls use the documented 2/6/8px radius scale. The 4px HMI radius is a context-specific exception. Glass-style examples are marketing-only. Never animate critical readings.
+- Release metadata is shared in `src/data/brand-system.ts`. Keep ownership and approval status explicit; do not unlock or rewrite restricted foundation content.
+
 ## Quick Reference Card
 
 | Element | Rule | Example |
 |---------|------|---------|
 | Logo font | Primetime (Unbounded fallback), wordmark only | `font-logo` |
 | UI text | Instrument Sans, sentence case | `font-ui` |
-| Data/labels | JetBrains Mono, ALL-CAPS | `font-data uppercase` |
+| Data/labels | JetBrains Mono; uppercase labels only, preserve unit case | `font-data uppercase` |
 | Display headings | Fluid scale, negative tracking | `text-display-lg tracking-display` |
 | Primary color | Use semantic tokens | `text-primary`, `bg-primary` |
 | Black | Never #000, use Obsidian | `bg-rho-obsidian` |
@@ -115,7 +128,7 @@ When labels are necessary, make them secondary:
 // ✅ Labels recede, values dominate
 <div className="flex flex-col">
   <span className="font-data text-xs uppercase tracking-wider text-muted-foreground">DENSITY</span>
-  <span className="font-data text-2xl text-foreground">1.54 G/ML</span>
+  <span className="font-data text-2xl text-foreground">1.54 g/mL</span>
 </div>
 ```
 
@@ -137,16 +150,9 @@ Senior engineers and technical decision-makers who:
 - Make purchasing decisions based on ROI and reliability
 - Work in harsh industrial environments (mining, dredging, wastewater)
 
-### Four Core Values
+### Core Values
 
-These values anchor ALL brand decisions. Reference them when uncertain.
-
-| # | Value | Icon | Meaning | Design Implication |
-|---|-------|------|---------|-------------------|
-| 01 | **Built on Partnership** | `Users` | Trust, collaboration, long-term | Consistent patterns, stable interfaces |
-| 02 | **Engineered for Challenge** | `Wrench` | Resilience, practical solutions | Robust components, clear hierarchy |
-| 03 | **Expertise in Practice** | `BookOpen` | Knowledge, clarity, education | Readable typography, helpful callouts |
-| 04 | **Progress That Matters** | `TrendingUp` | Measurable impact, sustainability | Data visualization, metric prominence |
+Read the five current values from `src/data/brand-values.ts`: Expertise, Collaboration, Innovation, Quality and Sustainability. Do not copy legacy values from this guide.
 
 **Source file:** `src/data/brand-values.ts`
 
@@ -171,7 +177,7 @@ If uncertain, choose the more restrained option.
 | **Primetime** | Logo wordmark (default) | Title | 300 | `font-logo` |
 | **Unbounded** | Logo wordmark (fallback, opt-in via `body.logo-unbounded`) | Title | 500 | `font-logo` |
 | **Instrument Sans** | All UI text (~90%) | Sentence | 400-700 | `font-ui` |
-| **JetBrains Mono** | Data, metrics, labels | ALL-CAPS | 500 | `font-data` |
+| **JetBrains Mono** | Data, metrics, labels | Preserve unit case; uppercase labels | 500 | `font-data` |
 
 The `FontSelector` component lets designers swap to Unbounded at runtime; Primetime is the canonical default.
 
@@ -273,8 +279,8 @@ Optimal reading experience requires constrained line lengths:
 ### Logo Wordmark Typography
 
 When rendering "RHOSONICS" as text:
-- Font: Unbounded 500
-- Letter-spacing: `tracking-wide` (0.025em)
+- Font: Primetime 300
+- Letter-spacing: `tracking-normal` or the shared wordmark style
 - For exports: Use path-outlined SVG from `src/assets/brand/rhosonics-wordmark-paths.ts`
 
 ---
@@ -1184,7 +1190,7 @@ const prefersReducedMotion = window.matchMedia(
 |---------|------|--------|------|
 | UI labels | Instrument Sans | 500-600 | Sentence |
 | Data values | JetBrains Mono | 500 | ALL-CAPS |
-| Metric units | JetBrains Mono | 500 | ALL-CAPS |
+| Metric units | JetBrains Mono | 500 | Case-sensitive symbols |
 
 **Never use light/thin weights** — readability is critical.
 
@@ -1232,10 +1238,7 @@ const prefersReducedMotion = window.matchMedia(
 
 ### Image Treatment Process
 
-1. **Desaturate** — Reduce saturation 20-40%
-2. **Cool shift** — Push shadows toward blue
-3. **Increase contrast** — Enhance definition
-4. **Add green accent** — Subtle brand color overlay or accent lighting
+Preserve documentary colours. Correct exposure and white balance conservatively; do not add green overlays, cinematic tints or vignettes. Product portraits on white, neutral or transparent backgrounds are permitted. Cleanroom photography should show authentic controlled conditions, not artificial wear. The photo categories have no fixed allocation quota.
 
 ### ⛔ Imagery Violations
 
@@ -1434,5 +1437,5 @@ Add to every design review:
 
 ---
 
-*Last updated: 2026-06-10*
+*Last updated: 2026-09-05*
 *Source: Rhosonics Brand Guidelines System + Refactoring UI Principles + 2026 Design Trends Analysis + Homepage reference design alignment (Primetime primary, chamfer system, mineral-in-UI, fluid type, 5-level shadow with glow) + Visual system unification (chamfer-by-scale doctrine, four surface families, three texture families) + Page architecture unification ("precision instrument reading the field": one section system, telemetry kit, role-based texture mapping)*

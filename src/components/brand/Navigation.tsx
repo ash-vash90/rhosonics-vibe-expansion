@@ -90,7 +90,7 @@ const navSections: NavSection[] = [
     id: "09", label: "APPLICATIONS & PROOF", route: "/applications",
     items: [
       { id: "applications", label: "Industries" },
-      { id: "sdm-interface", label: "SDM Eco Interface" },
+      { id: "sdm-interface", label: "SDM ECO Interface" },
       { id: "components", label: "Interface Kit" },
       { id: "proof", label: "Proof & Case Studies" },
     ],

@@ -335,7 +335,7 @@ export const LogoAssets = () => {
                 "Maintain minimum clear space around the logo",
                 "Use high contrast for data displays",
                 "Include units with all measurements",
-                "Use chamfered button shape for CTAs",
+                "Use rounded buttons for CTAs",
                 "Apply brand colors from approved palette",
                 "Use semantic font roles consistently"
               ].map((item, idx) => (

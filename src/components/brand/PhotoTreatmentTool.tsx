@@ -81,12 +81,12 @@ function generatePreset(analysis: ColorAnalysis): TreatmentPreset {
 
   if (analysis.warmth === "warm") {
     saturation = 0.90; contrast = 1.10; brightness = 0.98;
-    label = "Warm → Industrial Cool";
-    reasoning = `Warm ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Gentle desaturation to cool the mood, light contrast lift.`;
+    label = "Warm source · neutral correction";
+    reasoning = `Warm ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Conservative correction; check the result against the source.`;
   } else if (analysis.warmth === "cool") {
     saturation = 0.93; contrast = 1.08; brightness = 0.99;
-    label = "Cool → Cinematic Brand";
-    reasoning = `Cool ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Minimal desaturation to preserve cool character with subtle contrast.`;
+    label = "Cool source · neutral correction";
+    reasoning = `Cool ${analysis.dominantTone.toLowerCase()} tones detected (avg hue ${Math.round(analysis.avgHue)}°). Conservative correction; preserve the source colours.`;
   } else {
     saturation = 0.92; contrast = 1.09; brightness = 0.98;
     label = "Neutral → Brand Standard";
@@ -142,25 +142,7 @@ function renderTreated(img: HTMLImageElement, preset: TreatmentPreset, maxDim?: 
   ctx.drawImage(img, 0, 0, w, h);
   ctx.filter = "none";
 
-  // Green accent — barely perceptible tint, no detail loss
-  ctx.globalCompositeOperation = "soft-light";
-  ctx.globalAlpha = 0.06;
-  const grd1 = ctx.createRadialGradient(w * 0.3, h * 0.6, 0, w * 0.3, h * 0.6, w * 0.55);
-  grd1.addColorStop(0, "rgba(51,153,60,0.08)"); grd1.addColorStop(1, "transparent");
-  ctx.fillStyle = grd1; ctx.fillRect(0, 0, w, h);
-  ctx.globalAlpha = 0.04;
-  const grd2 = ctx.createRadialGradient(w * 0.7, h * 0.4, 0, w * 0.7, h * 0.4, w * 0.45);
-  grd2.addColorStop(0, "rgba(51,153,60,0.06)"); grd2.addColorStop(1, "transparent");
-  ctx.fillStyle = grd2; ctx.fillRect(0, 0, w, h);
-
-  // Cool tone — near-invisible
-  ctx.globalCompositeOperation = "screen";
-  ctx.globalAlpha = 0.02;
-  const coolGrd = ctx.createLinearGradient(0, 0, 0, h);
-  coolGrd.addColorStop(0, "rgba(40,60,80,1)"); coolGrd.addColorStop(1, "rgba(35,65,70,1)");
-  ctx.fillStyle = coolGrd; ctx.fillRect(0, 0, w, h);
-
-  ctx.globalCompositeOperation = "source-over";
+  // Documentary correction only: no brand tint or colour overlays.
   return canvas;
 }
 
@@ -319,7 +301,7 @@ const PhotoTreatmentTool = () => {
       <div className="p-4 md:p-6 bg-card border-b border-border">
         <h4 className="font-ui font-bold text-foreground mb-1">Photo Treatment Tool</h4>
         <p className="text-muted-foreground text-sm">
-          Upload an image to analyze its colors and apply the correct brand treatment automatically.
+          Upload an image to analyze its colors and preview a conservative correction. Check it against the original before export.
         </p>
       </div>
 

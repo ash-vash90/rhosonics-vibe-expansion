@@ -1,3 +1,4 @@
+import { BRAND_SYSTEM } from "@/data/brand-system";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ScrollSection } from "@/components/brand/ScrollSection";
@@ -16,19 +17,19 @@ const LogoAssetsPage = () => (
       number="03"
       title="Logo"
       subtitle="The mark. Its construction, clearspace, misuse, and downloadable files."
-      meta={["Visual System", "v2025"]}
+      meta={["Visual System", `v${BRAND_SYSTEM.version}`]}
     />
 
     <ScrollSection id="logo">
       <ErrorBoundary><Suspense fallback={<SectionLoader />}><LogoAssets /></Suspense></ErrorBoundary>
     </ScrollSection>
 
-    <SectionDivider label="03.x" />
+    <SectionDivider label="03.1" />
 
     <ScrollSection id="governance" variant="tinted">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
         <DecisionQuestions
-          code="03.x"
+          code="03.1"
           questions={[
             "Is the icon-to-wordmark ratio exactly 135%?",
             "Does clearspace match the cap-height of the wordmark on all four sides?",
@@ -37,7 +38,7 @@ const LogoAssetsPage = () => (
           ]}
         />
         <AdditionalDonts
-          code="03.y"
+          code="03.2"
           items={[
             "Never stretch, skew, or re-colour the mark outside of approved variants.",
             "Never place the mark on photography without a flat panel beneath it.",
@@ -62,7 +63,7 @@ const LogoAssetsPage = () => (
         { label: "Section", value: "03 · Logo" },
         { label: "Scope", value: "Mark + Files" },
         { label: "Owner", value: "MarComms" },
-        { label: "Status", value: "Active", emphasis: true },
+        { label: "Status", value: BRAND_SYSTEM.status, emphasis: true },
       ]}
     />
   </>

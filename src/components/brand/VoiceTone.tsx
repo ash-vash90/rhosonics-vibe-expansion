@@ -31,17 +31,17 @@ export const VoiceTone = () => {
   ];
 
   const toneContexts = [
-    { context: "Technical Documentation", icon: FileText, tone: "Precise & Instructive", example: "Connect the 4-20mA output to terminals 3 and 4." },
-    { context: "Sales & Marketing", icon: Megaphone, tone: "Confident & Benefit-Focused", example: "Reduce reagent consumption by 15-25% through real-time density monitoring." },
-    { context: "Customer Support", icon: Headphones, tone: "Helpful & Direct", example: "This error occurs when flow rate drops below 0.5 m/s." },
-    { context: "Social Media", icon: MessageSquare, tone: "Factual & Engaging", example: "40 years of density measurement. 10,000+ installations. One obsession: accuracy." },
+    { context: "Technical Documentation", icon: FileText, tone: "Precise & Instructive", example: "Check the terminal assignment in the installation guide for your instrument." },
+    { context: "Sales & Marketing", icon: Megaphone, tone: "Confident & Benefit-Focused", example: "Use real-time density measurements to inform reagent dosing. Cite a field result when quantifying savings." },
+    { context: "Customer Support", icon: Headphones, tone: "Helpful & Direct", example: "Check the displayed error code against the troubleshooting guide for your model." },
+    { context: "Social Media", icon: MessageSquare, tone: "Factual & Engaging", example: "How does ultrasonic density measurement work? Start with the measurement principle." },
   ];
 
   return (
     <section id="voice" className="space-y-20">
       {/* Hero statement */}
       <p className="text-lg md:text-xl text-foreground max-w-2xl">
-        Our reader skips to the specification table. We put it first.
+        Lead with what the reader needs: a process outcome in a campaign, a specification in a datasheet, or a next action in support.
       </p>
 
       {/* Audience Profile */}
@@ -56,13 +56,13 @@ export const VoiceTone = () => {
           <div className="relative p-6 rounded-lg border border-border/50 bg-muted/20">
             <span className="font-data text-[10px] uppercase tracking-widest text-primary block mb-3">Primary Audience</span>
             <h4 className="font-ui text-lg font-bold text-foreground mb-1">Senior Process Engineer</h4>
-            <p className="text-sm text-muted-foreground mb-4">15+ years experience · Evaluates on spec sheets, not brochures</p>
+            <p className="text-sm text-muted-foreground mb-4">Evaluates measurement performance, integration and process fit</p>
             <ul className="space-y-2">
               {[
                 "Skeptical of marketing claims — wants falsifiable data",
                 "Reads technical documentation before sales material",
                 "Trusts peer recommendations and published case studies",
-                "Decides based on ±0.1% accuracy, not brand prestige",
+                "Needs accuracy stated with the relevant conditions and method",
               ].map((trait) => (
                 <li key={trait} className="flex items-start gap-2 text-xs text-muted-foreground">
                   <span className="w-1 h-1 bg-primary/50 rounded-full mt-1.5 flex-shrink-0" />
@@ -134,7 +134,7 @@ export const VoiceTone = () => {
             ["Relationship", "Partnership"],
             ["Results", "Measurable impact"],
             ["Premium", "Long-term performance"],
-            ["World-class", "40+ years experience"],
+            ["World-class", "[Verified experience and source]"],
           ].map(([avoid, prefer]) => (
             <div key={avoid} className="flex items-center gap-2 md:gap-4">
               <span className="text-xs md:text-sm text-muted-foreground line-through flex-1">{avoid}</span>

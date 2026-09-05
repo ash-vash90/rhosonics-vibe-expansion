@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
  *   │ EYEBROW · INDUSTRY · YEAR                                  │
  *   │                                                            │
  *   │   −14%               Tailings water loss, after            │
- *   │                      18 months of SDM Eco operation        │
+ *   │                      18 months of SDM ECO operation        │
  *   │   src · plant ops    at a Chilean copper concentrator.     │
  *   │                                                            │
  *   │   Problem framing line sits underneath, one sentence,      │

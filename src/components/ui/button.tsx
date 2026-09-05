@@ -9,16 +9,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-md",
+        default: "bg-action text-primary-foreground hover:bg-action-hover hover:shadow-md",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-action dark:text-primary-400 underline-offset-4 hover:underline",
         // Industrial solid variants (replacing chamfered)
         obsidian: "bg-rho-obsidian text-slate-100 hover:bg-rho-obsidian-light hover:shadow-lg",
         "obsidian-outline": "border-2 border-rho-obsidian bg-transparent text-rho-obsidian hover:bg-rho-obsidian/10",
-        gradient: "bg-gradient-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25",
+        gradient: "bg-action text-primary-foreground hover:shadow-lg hover:shadow-primary/25",
       },
       size: {
         default: "h-10 px-4 py-2",

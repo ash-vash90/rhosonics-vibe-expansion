@@ -192,7 +192,7 @@ export const IconGuidelines = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1 h-1 bg-success rounded-full mt-2 flex-shrink-0" />
-                Use muted colors for secondary/decorative icon usage
+                Use muted colors for secondary functional icons
               </li>
             </ul>
           </div>
@@ -305,7 +305,7 @@ export const IconGuidelines = () => {
           <div className="lg:col-span-2 border-l-2 border-border pl-4 md:pl-6">
             <p className="text-muted-foreground text-xs md:text-sm">
               State colors are functional, not decorative. Green = success, Amber = warning, 
-              Red = error, Blue = informational. Never use these colors outside their semantic meaning.
+              Red = error, Slate = informational. Never use these colors outside their semantic meaning.
             </p>
           </div>
         </div>

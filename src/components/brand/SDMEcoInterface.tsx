@@ -1,3 +1,4 @@
+import { EvidenceNotice } from "./EvidenceNotice";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -259,7 +260,7 @@ const LiveMetric = ({
       }`}>
         {value}
       </span>
-      <span className={`font-data text-slate-400 uppercase font-medium ${
+      <span className={`font-data text-slate-400 normal-case font-medium ${
         size === "large" ? "text-3xl" : "text-2xl"
       }`}>{unit}</span>
     </div>
@@ -758,7 +759,7 @@ const CalibrationScreen = () => (
                 {point.density && (
                   <div className="flex items-center gap-1.5">
                     <Gauge className="w-4 h-4 text-slate-400" />
-                    <span className="font-data text-base text-slate-600 uppercase">{point.density} KG/M³</span>
+                    <span className="font-data text-base text-slate-600 normal-case">{point.density} kg/m³</span>
                   </div>
                 )}
               </div>
@@ -1024,6 +1025,7 @@ export default function SDMEcoInterface() {
 
   return (
     <section className="scroll-mt-24">
+      <EvidenceNotice />
       <div className="space-y-24">
         {/* Hero */}
         <div className="max-w-3xl">

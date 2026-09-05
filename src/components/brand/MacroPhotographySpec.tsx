@@ -31,15 +31,15 @@ const RULES = [
   },
   {
     code: "M.04",
-    title: "Desaturate ambient, preserve true medium colour",
+    title: "Preserve true medium colour",
     body:
-      "Treatment grade B applies: ambient hue −60%, medium hue preserved. Copper tailings stay copper; slurry stays slurry. The medium is the fact.",
+      "Correct exposure and white balance without brand tinting or selective colour shifts. Preserve the medium and instrument as photographed.",
   },
   {
     code: "M.05",
-    title: "Negative space reserved for data overlay",
+    title: "Leave room for adjacent information",
     body:
-      "Compose with a clean 1/3 region (top-right by default) so a JetBrains Mono stat or FactFile entry can overlay without scrim or blur.",
+      "Allow room beside the image for a measurement and source. Keep charts, logos and annotations on a separate solid panel.",
   },
   {
     code: "M.06",
@@ -53,8 +53,8 @@ const SPECS = [
   { k: "Crop", v: "1:1 or 3:2, never 16:9" },
   { k: "Distance", v: "≤ 40 cm to subject" },
   { k: "Light", v: "Single key · 30–60° off-axis" },
-  { k: "Treatment", v: "Grade B · ambient −60%" },
-  { k: "Negative space", v: "≥ 33% reserved" },
+  { k: "Treatment", v: "Neutral correction; no tint" },
+  { k: "Negative space", v: "Room for adjacent information" },
   { k: "Source", v: "Field, customer site" },
 ];
 
@@ -69,9 +69,7 @@ export const MacroPhotographySpec = ({ className }: { className?: string }) => {
           Photograph the medium, not the machine.
         </h3>
         <p className="text-muted-foreground text-base leading-relaxed">
-          Macro is the evidence layer of the photo system. Every case study uses one
-          tight, tactile frame of the substance being measured — proof that the
-          instrument lives in the real medium, not a brochure.
+          Use a close view of the substance when it helps explain the measurement. If access or process safety prevents a macro photograph, use a relevant installation image or technical illustration.
         </p>
       </header>
 

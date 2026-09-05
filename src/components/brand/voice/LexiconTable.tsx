@@ -21,18 +21,18 @@ const ROWS: LexiconRow[] = [
     why: "We take a number from the world. Anything softer overclaims the action.",
   },
   {
-    use: "±0.001 g/cm³",
+    use: "[Approved tolerance] [unit]",
     avoid: ["Industry-leading accuracy", "Exceptional precision"],
     why: "Adjectives are not specs. State the tolerance.",
   },
   {
     use: "Inline",
-    avoid: ["Smart", "Intelligent", "Advanced"],
+    avoid: ["Unsupported claims of intelligence or superiority"],
     why: "Position the sensor in the process, not in the brochure.",
   },
   {
-    use: "Reduce",
-    avoid: ["Optimize", "Enhance", "Improve"],
+    use: "Describe the specific improvement",
+    avoid: ["Unspecified improvements"],
     why: "If the number went down, say it went down.",
   },
   {
@@ -41,9 +41,9 @@ const ROWS: LexiconRow[] = [
     why: "Replacement is auditable. Disruption is not.",
   },
   {
-    use: "Operator",
-    avoid: ["End user", "Stakeholder", "Customer"],
-    why: "Name the person whose hands the instrument lands in.",
+    use: "Operator / engineer / customer, as appropriate",
+    avoid: ["An ambiguous audience label"],
+    why: "Name the relevant role. The operator and purchasing customer may be different people.",
   },
   {
     use: "Site",
@@ -53,15 +53,15 @@ const ROWS: LexiconRow[] = [
   {
     use: "Calibrated",
     avoid: ["Tuned", "Dialed-in", "Optimized"],
-    why: "Calibration is traceable. The others are vibes.",
+    why: "Use calibrated only when a documented calibration is what actually happened.",
   },
   {
-    use: "Field result",
-    avoid: ["Success story", "Win", "Case study"],
+    use: "Field result / case study",
+    avoid: ["Unsubstantiated success story"],
     why: "We report outcomes from the field. We do not curate stories.",
   },
   {
-    use: "Source: plant operations · 18 mo",
+    use: "Source: [report link] · [period]",
     avoid: ["Up to 14% reduction*", "Significant savings"],
     why: "Every number gets a citation in the same sentence — or it doesn't ship.",
   },

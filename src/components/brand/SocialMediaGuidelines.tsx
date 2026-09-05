@@ -50,7 +50,7 @@ export const SocialMediaGuidelines = () => (
         Social Media Assets
       </h2>
       <p className="text-base text-muted-foreground font-ui max-w-2xl">
-        Ready-to-use LinkedIn templates featuring the SDM Eco. All assets follow the brand colour
+        Ready-to-use LinkedIn templates featuring the SDM ECO. All assets follow the brand colour
         palette, typography rules, and layout principles defined in this system.
       </p>
     </div>
@@ -81,7 +81,7 @@ export const SocialMediaGuidelines = () => (
     <div>
       <h3 className="label-tech text-muted-foreground mb-6">ADS — 1200 × 628</h3>
       <div className="grid grid-cols-1 gap-6">
-        <AssetCard src={linkedinAdProduct} label="SDM Eco — Product Ad" filename="rhosonics-linkedin-ad-product.jpg" />
+        <AssetCard src={linkedinAdProduct} label="SDM ECO — Product Ad" filename="rhosonics-linkedin-ad-product.jpg" />
         <AssetCard src={linkedinAdBanner} label="Slurry Monitoring — Awareness Ad" filename="rhosonics-linkedin-ad-banner.jpg" />
       </div>
     </div>
