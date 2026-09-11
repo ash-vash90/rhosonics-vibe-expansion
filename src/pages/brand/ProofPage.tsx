@@ -95,11 +95,12 @@ const ProofPage = () => (
       <h2 className="font-ui text-2xl font-semibold mb-4">Environmental claims need a baseline</h2>
       <p className="text-base text-muted-foreground max-w-prose">State the measured change, baseline, period and contributing process changes. For fleet totals, disclose inclusion criteria and avoid double counting. Name an independent verifier or assurance standard only when the report supports that attribution, and link the report.</p>
     </ScrollSection>
-    <SectionDivider label="09.B.4" />
+    <SectionDivider label="09.B.6" />
     <ScrollSection id="governance">
       <div className="grid lg:grid-cols-2 gap-10">
-        <DecisionQuestions code="09.B.4" questions={['Can the reader open the source behind every claim?', 'Are baseline, method, conditions and date stated?', 'Has the customer approved the quotation and reference?', 'Is the evidence status clear wherever the example appears?']} />
-        <AdditionalDonts code="09.B.5" items={['Never publish illustrative readings as product specifications.', 'Never attribute verification without a supporting report.', 'Never invent a quotation, customer reference or approval.', 'Never hide material test conditions behind a headline.']} />
+        <DecisionQuestions code="09.B.6" questions={['Can the reader open the source behind every claim?', 'Are baseline, method, conditions and date stated?', 'Has the customer approved the quotation and reference?', 'Is the evidence status clear wherever the example appears?']} />
+        <AdditionalDonts code="09.B.7" items={['Never publish illustrative readings as product specifications.', 'Never attribute verification without a supporting report.', 'Never invent a quotation, customer reference or approval.', 'Never hide material test conditions behind a headline.']} />
+
       </div>
     </ScrollSection>
     <SectionCrossLink links={[{ label: 'Applications', to: '/applications', description: 'Labelled interface examples' }, { label: 'Resources', to: '/resources', description: 'Asset availability and ownership' }]} />
