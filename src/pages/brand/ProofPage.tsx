@@ -40,11 +40,57 @@ const ProofPage = () => (
       </div>
     </ScrollSection>
     <SectionDivider label="09.B.2" />
-    <ScrollSection id="references">
+    <ScrollSection id="worked-example">
+      <h2 className="font-ui text-2xl font-semibold mb-4">What a complete record looks like</h2>
+      <p className="text-base text-muted-foreground max-w-prose mb-6">A claim is publishable when a reader can reconstruct it. Every field below is required; a missing field keeps the claim at &ldquo;awaiting verification&rdquo;.</p>
+      <EvidenceNotice>The fields below describe the required structure. The bracketed values are placeholders, not results.</EvidenceNotice>
+      <dl className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border rounded overflow-hidden">
+        {[
+          ['Claim', 'One sentence, one quantity, one unit'],
+          ['Baseline', 'What it is measured against, and when'],
+          ['Method', 'Instrument, configuration, sampling'],
+          ['Conditions', 'Process, medium, temperature, duration'],
+          ['Uncertainty', 'Stated range, not a single figure'],
+          ['Source', 'Linked report, author and date'],
+          ['Permission', 'Named customer approval on file'],
+          ['Approver', 'Who signed off, and when'],
+          ['Review date', 'When the claim must be rechecked'],
+        ].map(([term, detail]) => (
+          <div key={term} className="bg-background p-5">
+            <dt className="font-data text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{term}</dt>
+            <dd className="text-sm text-foreground">{detail}</dd>
+          </div>
+        ))}
+      </dl>
+    </ScrollSection>
+    <SectionDivider label="09.B.3" />
+    <ScrollSection id="references" variant="tinted">
       <h2 className="font-ui text-2xl font-semibold mb-4">Comparisons and references</h2>
       <p className="text-base text-muted-foreground max-w-prose">Compare named configurations under defined conditions. State the quantity, units and uncertainty; never assign a single accuracy score to a whole technology. SDM ECO uses ultrasound, so an ultrasonic comparison must identify the alternative instrument or method. Publish customer names and logos only with recorded permission. Installation totals need a definition, scope and as-of date.</p>
     </ScrollSection>
-    <SectionDivider label="09.B.3" />
+    <SectionDivider label="09.B.4" />
+    <ScrollSection id="language">
+      <h2 className="font-ui text-2xl font-semibold mb-6">Wording that holds up</h2>
+      <div className="grid md:grid-cols-2 gap-6">
+        <article className="bg-card rounded p-6 border border-border">
+          <h3 className="font-ui text-lg font-semibold mb-3">Write</h3>
+          <ul className="space-y-2 text-base text-muted-foreground list-disc pl-5 max-w-[55ch]">
+            <li>&ldquo;Density reading within ±0.5% of laboratory reference over a 30-day trial.&rdquo;</li>
+            <li>&ldquo;Calibration interval extended from monthly to quarterly at this site.&rdquo;</li>
+            <li>&ldquo;Reported by the site process engineer, March 2026.&rdquo;</li>
+          </ul>
+        </article>
+        <article className="bg-card rounded p-6 border border-border">
+          <h3 className="font-ui text-lg font-semibold mb-3">Do not write</h3>
+          <ul className="space-y-2 text-base text-muted-foreground list-disc pl-5 max-w-[55ch]">
+            <li>&ldquo;The most accurate density meter available.&rdquo;</li>
+            <li>&ldquo;Up to 30% savings&rdquo; with no baseline or period.</li>
+            <li>&ldquo;Proven worldwide&rdquo; with no installation definition or date.</li>
+          </ul>
+        </article>
+      </div>
+    </ScrollSection>
+    <SectionDivider label="09.B.5" />
     <ScrollSection id="sustainability" variant="tinted">
       <h2 className="font-ui text-2xl font-semibold mb-4">Environmental claims need a baseline</h2>
       <p className="text-base text-muted-foreground max-w-prose">State the measured change, baseline, period and contributing process changes. For fleet totals, disclose inclusion criteria and avoid double counting. Name an independent verifier or assurance standard only when the report supports that attribution, and link the report.</p>

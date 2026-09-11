@@ -912,7 +912,60 @@ export const ImageryGuidelines = () => {
               ['Technical illustrations', 'Use brand green to explain a mechanism. Label diagrams as illustrations and have the technical content checked.'],
             ].map(([title, body]) => <article key={title} className="bg-card p-6 rounded-lg"><h4 className="font-ui font-semibold mb-3">{title}</h4><p className="text-base text-muted-foreground">{body}</p></article>)}
           </div>
+
+          <div className="pt-2">
+            <h4 className="font-ui text-lg font-semibold mb-3">Treatment steps, in order</h4>
+            <ol className="grid md:grid-cols-2 gap-px bg-border rounded overflow-hidden">
+              {[
+                ['01', 'Set white balance', 'Neutralise from a known grey or the instrument housing. Do not warm or cool the scene for mood.'],
+                ['02', 'Set exposure', 'Protect highlight detail on displays and wet surfaces. Recover shadows only until texture returns.'],
+                ['03', 'Contrast', 'Gentle S-curve. Keep black point above pure black so the frame matches Obsidian rather than fighting it.'],
+                ['04', 'Saturation', 'Leave at capture, or reduce by up to 10% if the scene is unnaturally vivid. Never boost.'],
+                ['05', 'Crop and straighten', 'Level the horizon, pipe run or tank edge. Crop for the subject, not for a shape.'],
+                ['06', 'Sharpening and export', 'Light capture sharpening only. Export sRGB, no grain, no vignette, no filter preset.'],
+              ].map(([code, title, body]) => (
+                <li key={code} className="bg-background p-5 flex gap-4">
+                  <span className="font-data text-[10px] uppercase tracking-[0.25em] text-primary pt-1">{code}</span>
+                  <div>
+                    <h5 className="font-ui font-semibold text-sm mb-1">{title}</h5>
+                    <p className="text-sm text-muted-foreground max-w-[55ch]">{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 pt-2">
+            <div className="bg-card p-6 rounded border border-border">
+              <h4 className="font-ui font-semibold mb-3">Working limits</h4>
+              <dl className="space-y-2 text-sm">
+                {[
+                  ['Exposure', '±0.5 EV from capture'],
+                  ['Contrast', 'Black point 8–12, not 0'],
+                  ['Saturation', '−10% to 0%'],
+                  ['Colour shift', 'None — no brand tinting'],
+                  ['Overlays', 'Solid panels only, never gradients on the photo'],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex justify-between gap-4 border-b border-border pb-2">
+                    <dt className="font-data text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{k}</dt>
+                    <dd className="text-foreground text-right">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div className="bg-card p-6 rounded border border-border">
+              <h4 className="font-ui font-semibold mb-3">Before publishing, check</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5 max-w-[55ch]">
+                <li>The medium still looks like it does on site.</li>
+                <li>Display readings in the frame are legible and real.</li>
+                <li>Safety equipment shown matches site requirements.</li>
+                <li>Permission to publish the site and people is recorded.</li>
+                <li>The original file is archived beside the treated version.</li>
+              </ul>
+            </div>
+          </div>
         </section>
+
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════
