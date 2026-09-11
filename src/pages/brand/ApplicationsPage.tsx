@@ -46,6 +46,12 @@ const ApplicationsPage = () => (
 
     <SectionDivider label="09.A.5" />
 
+    <ScrollSection id="comparison">
+      <ErrorBoundary><Suspense fallback={<SectionLoader />}><TechComparison /></Suspense></ErrorBoundary>
+    </ScrollSection>
+
+    <SectionDivider label="09.A.6" />
+
     <ScrollSection id="governance" variant="tinted">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
         <DecisionQuestions
