@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "test": "vitest run --config vitest.config.ts",
+    "test": "node scripts/generate-brand-tokens.mjs --check && vitest run --config vitest.config.ts",
     "test:ssr": "vitest run --config vitest.config.ts",
     "test:hydration": "python3 tests/hydration_smoke.py",
     "test:brand": "node scripts/generate-brand-tokens.mjs --check && vitest run tests/brand-consistency.test.ts --config vitest.config.ts"
