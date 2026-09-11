@@ -14,6 +14,7 @@ const SDMEcoInterface = lazy(() => import("@/components/brand/SDMEcoInterface"))
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
 const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
 const EmptyStates = lazy(() => import("@/components/brand/EmptyStates"));
+const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 
 const ApplicationsPage = () => (
   <>
@@ -44,6 +45,12 @@ const ApplicationsPage = () => (
     </ScrollSection>
 
     <SectionDivider label="09.A.5" />
+
+    <ScrollSection id="comparison">
+      <ErrorBoundary><Suspense fallback={<SectionLoader />}><TechComparison /></Suspense></ErrorBoundary>
+    </ScrollSection>
+
+    <SectionDivider label="09.A.6" />
 
     <ScrollSection id="governance" variant="tinted">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
