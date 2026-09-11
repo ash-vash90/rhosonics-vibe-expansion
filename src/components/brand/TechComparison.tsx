@@ -109,10 +109,10 @@ const LazyChartCard = ({ title, subtitle, buildChart }: ChartCardProps) => {
 
     const initChart = async () => {
       try {
-        const bb = await loadBillboard();
+        const mod = await loadBillboard();
         if (!mounted || !chartRef.current) return;
 
-        instanceRef.current = buildChart(bb.default, chartRef.current);
+        instanceRef.current = buildChart(mod, chartRef.current);
         if (mounted) setLoaded(true);
       } catch (error) {
         console.error("Chart failed to initialize", error);
