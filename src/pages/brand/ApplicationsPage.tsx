@@ -14,6 +14,7 @@ const SDMEcoInterface = lazy(() => import("@/components/brand/SDMEcoInterface"))
 const EcoComponents = lazy(() => import("@/components/brand/EcoComponents"));
 const InterfaceKit = lazy(() => import("@/components/brand/InterfaceKit"));
 const EmptyStates = lazy(() => import("@/components/brand/EmptyStates"));
+const TechComparison = lazy(() => import("@/components/brand/TechComparison"));
 
 const ApplicationsPage = () => (
   <>
