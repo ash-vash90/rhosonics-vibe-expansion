@@ -44,8 +44,48 @@ const pairs: { foreground: ColorToken; background: ColorToken; use: string }[] =
   { foreground: 'white', background: 'action-hover', use: 'Primary button hover' },
   { foreground: 'rho-obsidian', background: 'eco-surface', use: 'Environmental metric text' },
 ];
+const roles: { role: string; token: string; body: string }[] = [
+  { role: 'Structure', token: 'Slate 50–300 · Obsidian', body: 'Backgrounds, panels, dividers. Carries the layout without asking for attention.' },
+  { role: 'Text', token: 'Slate 900 · Slate 600 · White', body: 'Slate 900 for primary copy, Slate 600 for supporting copy, white only on Obsidian or Action Green.' },
+  { role: 'Emphasis', token: 'Rhosonics Green', body: 'One measurement, one figure, one affordance per view. If two things are green, neither reads as important.' },
+  { role: 'Action', token: 'Action Green', body: 'Buttons and links that carry a white label. Never brand green behind small white text.' },
+  { role: 'State', token: 'Success · Info · Warning · Error', body: 'Always paired with a label or icon. Colour alone never communicates a state.' },
+  { role: 'Context', token: 'Mineral · Eco', body: 'Field imagery surrounds and sourced environmental metrics. Not general interface chrome.' },
+];
 export const ColorMatrix = () => (
   <div className="space-y-12">
+    <section>
+      <h3 className="font-ui text-2xl font-semibold mb-3">Choosing a colour</h3>
+      <p className="text-base text-muted-foreground max-w-prose mb-6">Start from the role, not the swatch. Every colour on a Rhosonics surface has to be doing one of six jobs. If a colour is not doing one of them, it should be Slate.</p>
+      <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
+        {roles.map(entry => <div key={entry.role} className="border-b border-border pb-4">
+          <div className="flex items-baseline justify-between gap-4">
+            <h4 className="font-ui font-semibold">{entry.role}</h4>
+            <span className="font-data text-xs uppercase tracking-[0.2em] text-muted-foreground text-right">{entry.token}</span>
+          </div>
+          <p className="text-sm text-muted-foreground mt-2 max-w-[60ch]">{entry.body}</p>
+        </div>)}
+      </div>
+      <BrandCallout variant="info" title="The greyscale test" className="mt-6">
+        Convert the screen to greyscale. If the hierarchy collapses, the layout was relying on colour instead of structure. Fix the spacing, weight and size first, then add colour back for emphasis only.
+      </BrandCallout>
+    </section>
+    <section>
+      <h3 className="font-ui text-2xl font-semibold mb-3">Extending the palette</h3>
+      <p className="text-base text-muted-foreground max-w-prose mb-6">There is no eighth colour. When a design needs another value, take a step on the 50–900 scale or an opacity step of an existing token — never a new hue.</p>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          ['Lighter surface', 'Move down the scale', 'Slate 900 → Slate 100'],
+          ['Deeper accent', 'Move up the scale', 'Primary 500 → Primary 700'],
+          ['Quiet separation', 'Opacity step', 'Obsidian at 8%'],
+          ['Never', 'A new hue', 'Blue, purple, teal'],
+        ].map(([title, method, example]) => <div key={title} className="bg-card p-5 rounded border border-border">
+          <h4 className="font-ui font-semibold text-sm">{title}</h4>
+          <p className="text-sm text-muted-foreground mt-2">{method}</p>
+          <p className="font-data text-xs mt-3">{example}</p>
+        </div>)}
+      </div>
+    </section>
     {groups.map(group => <section key={group.title}>
       <h3 className="font-ui text-2xl font-semibold mb-3">{group.title}</h3>
       <p className="text-base text-muted-foreground max-w-prose mb-6">{group.description}</p>
