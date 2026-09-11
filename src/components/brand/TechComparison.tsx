@@ -157,8 +157,8 @@ const LazyChartCard = ({ title, subtitle, buildChart }: ChartCardProps) => {
 export const TechComparison = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const buildLineChart = useCallback((bb: typeof import("billboard.js").default, el: HTMLDivElement) => {
-    const { spline } = bb;
+  const buildLineChart = useCallback((mod: BillboardModule, el: HTMLDivElement) => {
+    const { default: bb, spline } = mod;
     return bb.generate({
       data: {
         columns: [
@@ -194,8 +194,8 @@ export const TechComparison = () => {
     });
   }, []);
 
-  const buildBarChart = useCallback((bb: typeof import("billboard.js").default, el: HTMLDivElement) => {
-    const { bar } = bb;
+  const buildBarChart = useCallback((mod: BillboardModule, el: HTMLDivElement) => {
+    const { default: bb, bar } = mod;
     return bb.generate({
       data: {
         columns: [
@@ -230,8 +230,8 @@ export const TechComparison = () => {
     });
   }, []);
 
-  const buildRadarChart = useCallback((bb: typeof import("billboard.js").default, el: HTMLDivElement) => {
-    const { radar } = bb;
+  const buildRadarChart = useCallback((mod: BillboardModule, el: HTMLDivElement) => {
+    const { default: bb, radar } = mod;
     return bb.generate({
       data: {
         columns: [
@@ -260,8 +260,8 @@ export const TechComparison = () => {
     });
   }, []);
 
-  const buildGaugeChart = useCallback((bb: typeof import("billboard.js").default, el: HTMLDivElement) => {
-    const { gauge } = bb;
+  const buildGaugeChart = useCallback((mod: BillboardModule, el: HTMLDivElement) => {
+    const { default: bb, gauge } = mod;
     return bb.generate({
       data: {
         columns: [["Uptime", 99.7]],
