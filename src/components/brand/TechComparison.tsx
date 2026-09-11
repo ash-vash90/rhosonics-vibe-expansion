@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Zap, Leaf, Clock, DollarSign } from "@/lib/icons";
 
 // Brand color palette for charts - matches design tokens
@@ -6,19 +6,19 @@ const chartColors = {
   // Primary brand colors
   primary: "hsl(125, 50%, 40%)",      // --rho-green
   accent: "hsl(90, 60%, 45%)",        // --rho-green-accent
-  
+
   // Slate scale for secondary data
   slate700: "hsl(215, 25%, 27%)",
   slate600: "hsl(215, 19%, 30%)",
   slate500: "hsl(215, 19%, 35%)",
   slate400: "hsl(215, 20%, 42%)",
   slate300: "hsl(213, 27%, 70%)",
-  
+
   // Signal colors
   warning: "hsl(45, 80%, 50%)",       // Amber
   error: "hsl(0, 70%, 50%)",          // Red
   success: "hsl(125, 50%, 40%)",      // Green (same as primary)
-  
+
   // Mineral tones
   mineralBronze: "hsl(55, 20%, 38%)",
 };
@@ -32,7 +32,7 @@ const chartConfig = {
     left: 40,
   },
   transition: {
-    duration: 500,
+    duration: 900,
   },
 };
 
@@ -50,30 +50,41 @@ const comparisonData = [
   { name: "Ultrasonic", energy: 25, accuracy: 88, maintenance: 25, cost: 45 },
 ];
 
-// Lazy load billboard.js only when needed
-const loadBillboard = async () => {
-  const [bbModule] = await Promise.all([
-    import("billboard.js"),
-    import("billboard.js/dist/billboard.css"),
-  ]);
-  return bbModule;
+// Shared billboard.js load promise so multiple cards don't fetch the library twice
+let billboardPromise: Promise<typeof import("billboard.js")> | null = null;
+const loadBillboard = () => {
+  if (!billboardPromise) {
+    billboardPromise = import("billboard.js").then((mod) => {
+      // Load CSS once
+      import("billboard.js/dist/billboard.css");
+      return mod;
+    });
+  }
+  return billboardPromise;
 };
 
-export const TechComparison = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const chartsContainerRef = useRef<HTMLDivElement>(null);
-  const lineChartRef = useRef<HTMLDivElement>(null);
-  const barChartRef = useRef<HTMLDivElement>(null);
-  const radarChartRef = useRef<HTMLDivElement>(null);
-  const gaugeChartRef = useRef<HTMLDivElement>(null);
-  const chartInstancesRef = useRef<any[]>([]);
-  const [chartsLoaded, setChartsLoaded] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+interface ChartCardProps {
+  title: string;
+  subtitle: string;
+  buildChart: (bb: typeof import("billboard.js").default, el: HTMLDivElement) => unknown;
+}
 
-  // Use IntersectionObserver to detect when charts section enters viewport
+/**
+ * LazyChartCard
+ * Renders a chart card that only initialises billboard.js when it scrolls into
+ * view. billboard.js' built-in transition handles the animate-in — no extra
+ * animation library or custom keyframes required.
+ */
+const LazyChartCard = ({ title, subtitle, buildChart }: ChartCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
+  const instanceRef = useRef<unknown>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
-    const container = chartsContainerRef.current;
-    if (!container) return;
+    const card = cardRef.current;
+    if (!card) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -82,192 +93,196 @@ export const TechComparison = () => {
           observer.disconnect();
         }
       },
-      { rootMargin: "200px" } // Start loading slightly before visible
+      { rootMargin: "120px" }
     );
 
-    observer.observe(container);
+    observer.observe(card);
     return () => observer.disconnect();
   }, []);
 
-  // Load and initialize charts only when visible
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || !chartRef.current) return;
 
     let mounted = true;
 
-    const initCharts = async () => {
+    const initChart = async () => {
       try {
-        const { default: bb, spline, bar, radar, gauge } = await loadBillboard();
+        const bb = await loadBillboard();
+        if (!mounted || !chartRef.current) return;
 
-        if (!mounted) return;
-
-        // Clear any previous instances (defensive, in case of remounts)
-        chartInstancesRef.current.forEach((c) => {
-          try {
-            c?.destroy?.();
-          } catch {
-            // ignore
-          }
-        });
-        chartInstancesRef.current = [];
-
-        // Line Chart - Sensor Trends
-        if (lineChartRef.current) {
-          const chart = bb.generate({
-            data: {
-              columns: [
-                ["Density", 1.42, 1.44, 1.43, 1.45, 1.44, 1.46, 1.45, 1.47, 1.46, 1.48],
-                ["Velocity", 2.1, 2.3, 2.2, 2.4, 2.3, 2.5, 2.4, 2.6, 2.5, 2.7],
-              ],
-              type: spline(),
-              colors: {
-                Density: chartColors.primary,
-                Velocity: chartColors.warning,
-              },
-            },
-            point: {
-              r: 3.5,
-              focus: { expand: { r: 5.5 } },
-            },
-            axis: {
-              x: {
-                label: { text: "TIME (S)", position: "outer-center" },
-                tick: { format: (x: number) => `${x * 10}` },
-              },
-              y: {
-                label: { text: "VALUE", position: "outer-middle" },
-              },
-            },
-            grid: {
-              y: { show: true },
-            },
-            legend: { show: true },
-            padding: chartConfig.padding,
-            transition: chartConfig.transition,
-            bindto: lineChartRef.current,
-          });
-          chartInstancesRef.current.push(chart);
-        }
-
-        // Bar Chart - Energy Consumption
-        if (barChartRef.current) {
-          const chart = bb.generate({
-            data: {
-              columns: [
-                ["SDM ECO", 15],
-                ["Nuclear", 85],
-                ["Coriolis", 45],
-                ["Ultrasonic", 25],
-              ],
-              type: bar(),
-              colors: {
-                "SDM ECO": chartColors.primary,
-                Nuclear: chartColors.slate700,
-                Coriolis: chartColors.slate500,
-                Ultrasonic: chartColors.slate300,
-              },
-            },
-            bar: {
-              width: { ratio: 0.6 },
-              radius: 2,
-            },
-            axis: {
-              x: { type: "category", categories: ["ENERGY (W)"] },
-              y: { max: 100, padding: { top: 10 } },
-            },
-            grid: {
-              y: { show: true },
-            },
-            legend: { show: true },
-            padding: chartConfig.padding,
-            transition: chartConfig.transition,
-            bindto: barChartRef.current,
-          });
-          chartInstancesRef.current.push(chart);
-        }
-
-        // Radar Chart - Multi-Factor Analysis
-        if (radarChartRef.current) {
-          const chart = bb.generate({
-            data: {
-              columns: [
-                ["SDM ECO", 95, 98, 95, 100, 100, 85],
-                ["Nuclear", 20, 95, 40, 70, 30, 20],
-                ["Coriolis", 60, 92, 60, 95, 75, 50],
-              ],
-              type: radar(),
-              colors: {
-                "SDM ECO": chartColors.primary,
-                Nuclear: chartColors.slate700,
-                Coriolis: chartColors.slate400,
-              },
-            },
-            radar: {
-              axis: {
-                max: 100,
-                text: {
-                  show: true,
-                },
-              },
-              level: { depth: 4 },
-              direction: { clockwise: true },
-            },
-            padding: { top: 10, right: 10, bottom: 10, left: 10 },
-            transition: chartConfig.transition,
-            bindto: radarChartRef.current,
-          });
-          chartInstancesRef.current.push(chart);
-        }
-
-        // Gauge Chart - System Uptime
-        if (gaugeChartRef.current) {
-          const chart = bb.generate({
-            data: {
-              columns: [["Uptime", 99.7]],
-              type: gauge(),
-            },
-            gauge: {
-              label: {
-                format: (value: number) => `${value}%`,
-                extents: () => "",
-              },
-              width: 20,
-              max: 100,
-            },
-            color: {
-              pattern: [chartColors.error, chartColors.warning, chartColors.success],
-              threshold: { values: [30, 70, 100] },
-            },
-            size: { height: 180 },
-            padding: { top: 0, right: 0, bottom: 0, left: 0 },
-            transition: chartConfig.transition,
-            bindto: gaugeChartRef.current,
-          });
-          chartInstancesRef.current.push(chart);
-        }
-
-        if (mounted) setChartsLoaded(true);
+        instanceRef.current = buildChart(bb.default, chartRef.current);
+        if (mounted) setLoaded(true);
       } catch (error) {
-        console.error("TechComparison charts failed to initialize", error);
+        console.error("Chart failed to initialize", error);
       }
     };
 
-    initCharts();
+    initChart();
 
     return () => {
       mounted = false;
-
-      // Ensure billboard instances are cleaned up before React unmounts DOM
-      chartInstancesRef.current.forEach((c) => {
-        try {
-          c?.destroy?.();
-        } catch {
-          // ignore
-        }
-      });
-      chartInstancesRef.current = [];
+      try {
+        (instanceRef.current as { destroy?: () => void } | undefined)?.destroy?.();
+      } catch {
+        // ignore
+      }
+      instanceRef.current = null;
     };
-  }, [isVisible]);
+  }, [isVisible, buildChart]);
+
+  return (
+    <div
+      ref={cardRef}
+      className="bg-card border border-border rounded-lg p-6 transition-opacity duration-500"
+      style={{ opacity: isVisible ? 1 : 0 }}
+    >
+      <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">
+        {title}
+      </span>
+      <p className="text-sm text-muted-foreground mb-4">{subtitle}</p>
+      <div className="relative h-64">
+        <div ref={chartRef} className="h-full" />
+        {!loaded && (
+          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
+            <div className="animate-pulse">Loading chart...</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const TechComparison = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const buildLineChart = useCallback((bb: typeof import("billboard.js").default, el: HTMLDivElement) => {
+    const { spline } = bb;
+    return bb.generate({
+      data: {
+        columns: [
+          ["Density", 1.42, 1.44, 1.43, 1.45, 1.44, 1.46, 1.45, 1.47, 1.46, 1.48],
+          ["Velocity", 2.1, 2.3, 2.2, 2.4, 2.3, 2.5, 2.4, 2.6, 2.5, 2.7],
+        ],
+        type: spline(),
+        colors: {
+          Density: chartColors.primary,
+          Velocity: chartColors.warning,
+        },
+      },
+      point: {
+        r: 3.5,
+        focus: { expand: { r: 5.5 } },
+      },
+      axis: {
+        x: {
+          label: { text: "TIME (S)", position: "outer-center" },
+          tick: { format: (x: number) => `${x * 10}` },
+        },
+        y: {
+          label: { text: "VALUE", position: "outer-middle" },
+        },
+      },
+      grid: {
+        y: { show: true },
+      },
+      legend: { show: true },
+      padding: chartConfig.padding,
+      transition: chartConfig.transition,
+      bindto: el,
+    });
+  }, []);
+
+  const buildBarChart = useCallback((bb: typeof import("billboard.js").default, el: HTMLDivElement) => {
+    const { bar } = bb;
+    return bb.generate({
+      data: {
+        columns: [
+          ["SDM ECO", 15],
+          ["Nuclear", 85],
+          ["Coriolis", 45],
+          ["Ultrasonic", 25],
+        ],
+        type: bar(),
+        colors: {
+          "SDM ECO": chartColors.primary,
+          Nuclear: chartColors.slate700,
+          Coriolis: chartColors.slate500,
+          Ultrasonic: chartColors.slate300,
+        },
+      },
+      bar: {
+        width: { ratio: 0.6 },
+        radius: 2,
+      },
+      axis: {
+        x: { type: "category", categories: ["ENERGY (W)"] },
+        y: { max: 100, padding: { top: 10 } },
+      },
+      grid: {
+        y: { show: true },
+      },
+      legend: { show: true },
+      padding: chartConfig.padding,
+      transition: chartConfig.transition,
+      bindto: el,
+    });
+  }, []);
+
+  const buildRadarChart = useCallback((bb: typeof import("billboard.js").default, el: HTMLDivElement) => {
+    const { radar } = bb;
+    return bb.generate({
+      data: {
+        columns: [
+          ["SDM ECO", 95, 98, 95, 100, 100, 85],
+          ["Nuclear", 20, 95, 40, 70, 30, 20],
+          ["Coriolis", 60, 92, 60, 95, 75, 50],
+        ],
+        type: radar(),
+        colors: {
+          "SDM ECO": chartColors.primary,
+          Nuclear: chartColors.slate700,
+          Coriolis: chartColors.slate400,
+        },
+      },
+      radar: {
+        axis: {
+          max: 100,
+          text: { show: true },
+        },
+        level: { depth: 4 },
+        direction: { clockwise: true },
+      },
+      padding: { top: 10, right: 10, bottom: 10, left: 10 },
+      transition: chartConfig.transition,
+      bindto: el,
+    });
+  }, []);
+
+  const buildGaugeChart = useCallback((bb: typeof import("billboard.js").default, el: HTMLDivElement) => {
+    const { gauge } = bb;
+    return bb.generate({
+      data: {
+        columns: [["Uptime", 99.7]],
+        type: gauge(),
+      },
+      gauge: {
+        label: {
+          format: (value: number) => `${value}%`,
+          extents: () => "",
+        },
+        width: 20,
+        max: 100,
+      },
+      color: {
+        pattern: [chartColors.error, chartColors.warning, chartColors.success],
+        threshold: { values: [30, 70, 100] },
+      },
+      size: { height: 180 },
+      padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      transition: chartConfig.transition,
+      bindto: el,
+    });
+  }, []);
 
   // Safely render icon - prevent crashes if icon component fails to load
   const renderIcon = (IconComponent: typeof Zap, className: string) => {
@@ -304,63 +319,28 @@ export const TechComparison = () => {
         })}
       </div>
 
-      {/* Charts Grid - 2x2 billboard.js visualizations */}
-      <div ref={chartsContainerRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
-        {/* Line Chart - Sensor Trends */}
-        <div className="bg-card border border-border rounded-lg p-6">
-          <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Line Chart</span>
-          <p className="text-sm text-muted-foreground mb-4">Sensor data trends over time</p>
-          <div className="relative h-64">
-            <div ref={lineChartRef} className="h-full" />
-            {!chartsLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
-                <div className="animate-pulse">Loading chart...</div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Bar Chart - Energy Consumption */}
-        <div className="bg-card border border-border rounded-lg p-6">
-          <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Bar Chart</span>
-          <p className="text-sm text-muted-foreground mb-4">Technology energy consumption</p>
-          <div className="relative h-64">
-            <div ref={barChartRef} className="h-full" />
-            {!chartsLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
-                <div className="animate-pulse">Loading chart...</div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Radar Chart - Multi-Factor Analysis */}
-        <div className="bg-card border border-border rounded-lg p-6">
-          <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Radar Chart</span>
-          <p className="text-sm text-muted-foreground mb-4">Multi-factor performance analysis</p>
-          <div className="relative h-64">
-            <div ref={radarChartRef} className="h-full" />
-            {!chartsLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
-                <div className="animate-pulse">Loading chart...</div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Gauge Chart - System Uptime */}
-        <div className="bg-card border border-border rounded-lg p-6">
-          <span className="font-data text-xs text-muted-foreground uppercase tracking-wide block mb-1">Gauge Chart</span>
-          <p className="text-sm text-muted-foreground mb-4">System uptime indicator</p>
-          <div className="relative h-64">
-            <div ref={gaugeChartRef} className="h-full" />
-            {!chartsLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm pointer-events-none">
-                <div className="animate-pulse">Loading chart...</div>
-              </div>
-            )}
-          </div>
-        </div>
+      {/* Charts Grid - 2x2 billboard.js visualizations, each animates in on scroll */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
+        <LazyChartCard
+          title="Line Chart"
+          subtitle="Sensor data trends over time"
+          buildChart={buildLineChart}
+        />
+        <LazyChartCard
+          title="Bar Chart"
+          subtitle="Technology energy consumption"
+          buildChart={buildBarChart}
+        />
+        <LazyChartCard
+          title="Radar Chart"
+          subtitle="Multi-factor performance analysis"
+          buildChart={buildRadarChart}
+        />
+        <LazyChartCard
+          title="Gauge Chart"
+          subtitle="System uptime indicator"
+          buildChart={buildGaugeChart}
+        />
       </div>
 
       {/* Comparison Table */}
