@@ -1,47 +1,46 @@
-## What to update on the site, based on the video
+# Audit the last two Codex merges
 
-The video tells one factual story that is missing (or wrong) on the site, and reinforces things already covered. I'll only edit where the video adds verifiable substance, not where it's marketing colour.
+## Goal
+Produce an evidence-based change ledger for the two latest merge commits, separating improvements from regressions and ambiguous editorial choices.
 
-### Findings
+## Confirmed scope
 
-1. **`OriginStory.tsx` is factually wrong and currently orphaned** (not rendered anywhere). It claims Rhosonics started by measuring **beer density** for a local brewer. The video says the company started in 1992 in a small Netherlands workshop building the **Rhosonics Model 8000 ultrasonic process analyzer**. This needs correcting before it ever ships.
-2. **`/position` has no heritage chapter.** The video makes 1992 → Model 8000 → today's SDM ECO portfolio a central message. That is a foundation-level fact, not marketing — it belongs in the Brand Position chapter.
-3. **Industries section header is stale.** The intro still reads *"Five industries, ten ICP slots…"* — we now show four industries and no ICP role lists. Needs to match the rewritten brief format.
-4. **Foundation (Vision, Mission, Values) is already aligned** with the video's message. Per project memory it's canonical and must not be paraphrased. No change.
-5. **Industries copy is already aligned** with the video's measurement-focused framing (slurry density, chemical concentrations, mineral/semi/flatpanel/chemicals). No content change needed — only the section intro.
-6. **"People, craftsmanship, global service"** is the emotional through-line of the video. Per the *Brand pages ≠ landing pages* rule, /position should not grow a marketing pillar grid for this. Skip on the brand-system page; this content belongs on a future public About page, not here.
+### Merge `39ba3e8` — “Update plan”
+Compare against first parent `90936e9`.
 
-### Changes
+- Review the exact three-file change: `package.json`, `bun.lock`, and generated backend types.
+- Verify whether pinning the Lovable TanStack configuration from `^2.13.0` to `2.13.1` improves deployment stability or creates version risk.
+- Confirm the backend type update is generator-only and does not alter application behavior.
+- Check this merge against the previously fixed TanStack package alignment and SSR production compatibility.
 
-**1. Rewrite `src/components/brand/OriginStory.tsx`**
-   - Drop the beer/brewery story, the `earth-ochre` decoration, the `bg-workshop-grid`, and the hover/colour chrome.
-   - Rebuild in the same system-kit voice as `Foundation.tsx`: small sticky label column ("Heritage") + a single restrained statement + a three-step milestone strip.
-   - Statement (working draft, evidence-only, no superlatives):
-     *"Rhosonics began in 1992 in a small Netherlands workshop, with the **Model 8000** ultrasonic process analyzer. The portfolio has changed — the discipline hasn't: inline ultrasonic measurement on streams that other techniques struggle with."*
-   - Milestone strip (three cells, hairline-divided, no decorative icons competing with text):
-     - `1992 — Origin` · *Netherlands workshop. First device built by hand.*
-     - `Model 8000 — Ultrasonic process analyzer.` *The product the company was founded to build.*
-     - `Today — SDM ECO portfolio.* *Slurry density and chemical concentration, deployed worldwide.*
-   - Year/labels in JetBrains Mono uppercase (data label rule). All prose in Instrument Sans. No green except a single hairline accent.
+### Merge `90936e9` — brand-guidelines consistency
+Compare against first parent `dde776f`.
 
-**2. Mount it as chapter 01.5 on `src/pages/brand/PositioningPage.tsx`**
-   - Insert between Industries and the ApplyFoundationCTA closer.
-   - `SectionDivider label="01.5"` → `ScrollSection id="heritage"` (variant: alternate from Industries' `tinted` → default).
-   - Add a `SectionHeader2` above it: eyebrow `Heritage · 01.5`, title `Where this started`, intro one line about why heritage matters as positioning (continuity of method, not nostalgia).
-   - Lazy-load `OriginStory` like the other sections.
+- Review all 52 changed files, grouped by outcome rather than file order:
+  - shared colour-token source and generated CSS
+  - accessibility and contrast changes
+  - logo, font, and downloadable asset exports
+  - homepage and shared layout changes
+  - Color, Imagery, Proof, Resources, Typography, Voice, Applications, and Tools content changes
+  - added consistency tests and release metadata
+- Identify where the merge genuinely standardized duplicated values or corrected accessibility.
+- Identify where it removed useful guidance, examples, visual depth, motion, or established page content.
+- Flag changes that conflict with the approved brand rules, including restrained green usage, no decorative effects, typography roles, 4px geometry, evidence requirements, and reduced-motion support.
+- Distinguish objective regressions from subjective simplifications that need a product decision.
 
-**3. Fix stale Industries intro on `PositioningPage.tsx`**
-   - Replace *"Five industries, ten ICP slots. Pick a tab — the active panel shows the operator profile and the outcome shape the brand is built around."*
-   - With: *"Four industries, two product lines. Each panel describes the measurement context and where Rhosonics sits in it."*
+## Validation
 
-### Out of scope (deliberately)
+- Use commit diffs and current source references for every verdict.
+- Check current build/runtime diagnostics and the existing SSR, hydration, route-health, and brand-consistency safeguards.
+- Verify representative pages in the running preview at desktop and mobile sizes, focusing on the heavily rewritten Color, Imagery, Proof, Resources, and home pages.
+- Confirm that redirects, crawler-visible HTML, health endpoints, and client navigation were not damaged by either merge.
 
-- No edits to Foundation, Values, Design Principles, or `brand-values.ts` — already canonical and consistent with the video.
-- No new "People / craftsmanship / global service" pillars on /position — that's landing-page content; if you want it, it should land on a public About page (separate task).
-- No video embed. You asked to use the content, not the player.
+## Deliverable
 
-### Technical notes
+Provide a concise report containing:
 
-- `OriginStory.tsx` will be rewritten in full (small file, ~60 lines) to match `Foundation.tsx` patterns (system kit, design tokens, no hardcoded colours, no glassmorphism, no fake industrial chrome).
-- `PositioningPage.tsx` gets one new `lazy()` import, one new `SectionDivider`, one new `ScrollSection`, and one one-line copy edit.
-- No data layer or schema changes. No new assets.
+1. An executive verdict for each merge: better, worse, mixed, or neutral.
+2. A table of every meaningful change group with commit, affected files, classification, evidence, and user-visible impact.
+3. A separate list of confirmed regressions versus intentional-but-debatable changes.
+4. A keep / revert / revise recommendation for each change group.
+5. A prioritized cleanup list, without changing the site until the audit is reviewed.
