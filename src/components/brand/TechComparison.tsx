@@ -50,8 +50,10 @@ const comparisonData = [
   { name: "Ultrasonic", energy: 25, accuracy: 88, maintenance: 25, cost: 45 },
 ];
 
+type BillboardModule = typeof import("billboard.js");
+
 // Shared billboard.js load promise so multiple cards don't fetch the library twice
-let billboardPromise: Promise<typeof import("billboard.js")> | null = null;
+let billboardPromise: Promise<BillboardModule> | null = null;
 const loadBillboard = () => {
   if (!billboardPromise) {
     billboardPromise = import("billboard.js").then((mod) => {
@@ -66,7 +68,7 @@ const loadBillboard = () => {
 interface ChartCardProps {
   title: string;
   subtitle: string;
-  buildChart: (bb: typeof import("billboard.js").default, el: HTMLDivElement) => unknown;
+  buildChart: (mod: BillboardModule, el: HTMLDivElement) => unknown;
 }
 
 /**
